@@ -1,0 +1,43 @@
+// #!groovy
+// Check properties
+// Запретить одновременные сборки
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent any
+    options {
+        // Хранить логи последних 10 сборок и 10 артефактов
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        // вывод времени в консоли
+        timestamps()
+    }
+    stages {
+        stage("Check connect with ssh") {
+            steps {
+                sh 'ssh root@65.109.229.94'
+
+            }
+        }
+        stage("Git pull") {
+                steps {
+                    sh '''
+                        ssh root@65.109.229.94 'cd moneyswap_back/django_fastapi && git pull'
+                    '''
+                }
+            }
+        stage("Build services") {
+                steps {
+                    sh '''
+                        ssh root@65.109.229.94 'cd moneyswap_back/django_fastapi && docker-compose build --pull'
+                    '''
+                }
+            }
+        stage("Update services") {
+                steps {
+                    sh '''
+                        ssh root@65.109.229.94 'cd moneyswap_back/django_fastapi && docker-compose up -d'
+                    '''
+                }
+            }
+        }
+    }

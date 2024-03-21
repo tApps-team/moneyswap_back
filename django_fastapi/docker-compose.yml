@@ -2,6 +2,7 @@ services:
 
   firefox:
     image: selenium/standalone-firefox:4.16.1-20231219
+    restart: on-failure
     container_name: firefox
     shm_size: 2g
     ports:
@@ -23,6 +24,7 @@ services:
   django_fastapi:
     build: .
     pull_policy: build
+    restart: on-failure
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -57,6 +59,7 @@ services:
 
   nginx:
     build: ./nginx
+    restart: on-failure
     volumes:
       - static:/static
       - media:/media
@@ -72,6 +75,7 @@ services:
 
   redis_db:
     image: redis:latest
+    restart: on-failure
     ports:
       - 6379:6379
     env_file:
@@ -120,6 +124,7 @@ services:
 
   psql_db:
     image: postgres:14
+    restart: on-failure
     env_file:
       - ./.env
     volumes:
