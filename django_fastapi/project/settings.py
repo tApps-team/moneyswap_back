@@ -145,7 +145,9 @@ DJANGO_PREFIX = "/django"
 # DEBUG = True
 DEBUG = False
 
-SITE_DOMAIN = 'wttonline.ru'
+# SITE_DOMAIN = 'wttonline.ru'
+SITE_DOMAIN = ' api.moneyswap.online'
+
 # SITE_DOMAIN = '127.0.0.1:81'
 
 # ALLOWED_HOSTS = [SITE_DOMAIN]
