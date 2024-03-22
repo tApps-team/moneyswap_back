@@ -22,7 +22,7 @@ window.addEventListener('load', function () {
         let valute_from = direction_name[0];
         let valute_to = direction_name[1];
         // fetch(`http://localhost:81/api/actual_course?valute_from=${valute_from}&valute_to=${valute_to}`)
-        fetch(`https://wttonline.ru/api/actual_course?valute_from=${valute_from}&valute_to=${valute_to}`)
+        fetch(`https://api.moneyswap.online/api/actual_course?valute_from=${valute_from}&valute_to=${valute_to}`)
         .then(data => data.json())
         .then((text) => {
             console.log(text);
