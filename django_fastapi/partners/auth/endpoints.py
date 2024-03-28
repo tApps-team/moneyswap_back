@@ -18,12 +18,6 @@ auth_router = APIRouter(prefix='/auth',
                         tags=['JWT auth'])
 
 
-SECRET_KEY = '0egZfaoMiWV86XDZYOB4tvljMYTAOU'
-ALGORITHM = 'HS256'
-
-EXPIRES_ACCESS_TOKEN = timedelta(seconds=60)
-EXPIRES_REFRESH_TOKEN = timedelta(days=60)
-
 partner_dependency = Annotated[dict, Depends(get_current_partner)]
 
 

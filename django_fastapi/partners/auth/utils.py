@@ -16,9 +16,6 @@ from config import JWT_SECRET_KEY, JWT_ALGORITHM
 from partners.models import CustomUser
 
 
-JWT_SECRET_KEY = '0egZfaoMiWV86XDZYOB4tvljMYTAOU'
-JWT_ALGORITHM = 'HS256'
-
 EXPIRES_ACCESS_TOKEN = timedelta(seconds=60)
 EXPIRES_REFRESH_TOKEN = timedelta(days=60)
 
