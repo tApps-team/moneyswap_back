@@ -37,6 +37,10 @@ class CustomUser(models.Model):
                                     default=None,
                                     on_delete=models.SET_DEFAULT,
                                     related_name='account')
+    refresh_token = models.CharField('Рефреш токен',
+                                     max_length=255,
+                                     null=True,
+                                     default=None)
     
     class Meta:
         verbose_name = 'Администратор обменника'

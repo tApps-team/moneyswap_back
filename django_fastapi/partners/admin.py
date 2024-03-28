@@ -24,6 +24,11 @@ from .utils.cache import get_or_set_user_account_cache, set_user_account_cache
 class UserAdmin(admin.ModelAdmin):
     list_display = ('user', 'exchange')
 
+    fields = (
+        'user',
+        'exchange',
+    )
+
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
          return super().get_queryset(request).select_related('exchange', 'user')
 
