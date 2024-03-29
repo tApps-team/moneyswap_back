@@ -27,12 +27,15 @@ def authenticate_partner(username: str,
     http_exc_401 = HTTPException(status_code=401)
 
     try:
-        user = User.objects.get(username=username)
+        user = User.objects.select_related('moderator_account')\
+                            .get(username=username)
         
         if not user.check_password(password):
             raise http_exc_401
         
-        return user
+        partner = user.moderator_account
+
+        return partner
         
     except ObjectDoesNotExist:
         raise http_exc_401
@@ -51,12 +54,12 @@ def create_token(user_id: int,
                       algorithm=JWT_ALGORITHM)
 
 
-def generate_tokens(user: User):
-    access_token = create_token(user.pk,
+def generate_tokens(partner: CustomUser):
+    access_token = create_token(partner.pk,
                                 EXPIRES_ACCESS_TOKEN)
-    refresh_token = create_token(user.pk,
+    refresh_token = create_token(partner.pk,
                                  EXPIRES_REFRESH_TOKEN)
-    add_refresh_token_to_db(user,
+    add_refresh_token_to_db(partner,
                             refresh_token)
     
     return {
@@ -97,21 +100,18 @@ def check_refresh_token_or_raise_exception(token: str):
         if not user_id:
             raise http_exc_400
 
-        user = User.objects.select_related('moderator_account')\
-                            .filter(pk=user_id).first()
+        partner = CustomUser.objects.filter(pk=user_id).first()
         
-        if not user:
+        if not partner:
             raise http_exc_400
         
-        user_token = user.moderator_account.refresh_token
-
-        if user_token != token:
+        if token != partner.refresh_token:
             raise http_exc_400
         
-        return user
+        return partner
             
 
-def add_refresh_token_to_db(user: User,
+def add_refresh_token_to_db(partner: CustomUser,
                             refresh_token: str):
-    CustomUser.objects.filter(user=user)\
-                        .update(refresh_token=refresh_token)
+    partner.refresh_token = refresh_token
+    partner.save()
