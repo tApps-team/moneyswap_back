@@ -14,11 +14,13 @@
 - Django: для реализации админ панели
 - Django ORM: для взаимодействия с БД
 - FastAPI: для реализации REST API сервиса
+- NGINX: реверс прокси для маршрутизации запросов
 - PostgreSQL: реляционная БД
 - Redis: хранилище данных для очереди фоновых задач и кэша
 - Celery: для реализации фоновых задач
 - Django-celery-beat: для реализации периодических фоновых задач
 - Selenium: для имитации работы пользователя в браузере, парсинг отзывов/комментариев обменников
+- Jenkins+GitHubWebHook: для CI/CD
 - Uvicorn: ASGI веб-сервер
 ---
 
@@ -62,6 +64,10 @@ SELENIUM_DRIVER=
 REDIS_HOST=
 REDIS_PASSWORD=
 REDIS_PORT=
+
+#JWT
+JWT_SECRET_KEY=
+JWT_ALGORITHM=
 ```
 
 Выйдите и сохраните файл .env:
@@ -94,34 +100,6 @@ services:
                     python manage.py createsuperuser --no-input &&
                     python manage.py parse_reviews_selenium &&
                     uvicorn project.asgi:app --host 0.0.0.0"
-```
----
-
-***При повторных запусках***
----
-Предполагается, что БД уже была подключена и наполнена при первом запуске!
-
-Предполагается, что volume postgres-data, redis_data, static и media существуют после первого запуска!
-
-command для сервиса django_fastapi:
-```
-services:
-
-  django_fastapi:
-    ...
-    ...
-    command: sh -c "python manage.py makemigrations &&
-                    python manage.py migrate &&
-                    uvicorn project.asgi:app --host 0.0.0.0"
-                    #python manage.py collectstatic --no-input &&
-                    #python manage.py loaddata media/base_db.json &&
-                    #python manage.py loaddata media/new_country.json &&
-                    #python manage.py create_periodic_task_for_delete_reviews &&
-                    #python manage.py create_cities &&
-                    #python manage.py create_moderator_group &&
-                    #python manage.py periodic_task_for_parse_cash_courses &&
-                    #python manage.py createsuperuser --no-input &&
-                    #python manage.py parse_reviews_selenium &&
 ```
 ---
 

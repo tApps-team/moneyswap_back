@@ -49,7 +49,7 @@ def refresh_tokens(token: RefreshToken):
     return generate_tokens(partner)
 
 
-@auth_router.get('/logout')
-def logout(partner: partner_dependency):
-    user_id = partner.get('user_id')
-    CustomUser.objects.filter(pk=user_id).update(refresh_token=None)
+# @auth_router.get('/logout')
+# def logout(partner: partner_dependency):
+#     user_id = partner.get('user_id')
+#     CustomUser.objects.filter(pk=user_id).update(refresh_token=None)
