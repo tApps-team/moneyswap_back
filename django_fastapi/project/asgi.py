@@ -17,6 +17,7 @@ from general_models.endpoints import common_router
 from no_cash.endpoints import no_cash_router
 from cash.endpoints import cash_router
 from partners.auth.endpoints import auth_router
+from partners.endpoints import partner_router
 
 from general_models.utils.http_exc import (CustomJSONException,
                                            my_json_exception_handle)
@@ -37,6 +38,7 @@ def get_application() -> FastAPI:
     api_router.include_router(no_cash_router)
     api_router.include_router(cash_router)
     api_router.include_router(auth_router)
+    api_router.include_router(partner_router)
 
     app.add_exception_handler(CustomJSONException,
                               my_json_exception_handle)

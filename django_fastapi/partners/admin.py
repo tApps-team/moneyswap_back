@@ -15,7 +15,7 @@ from general_models.utils.admin import ReviewAdminMixin
 
 from partners.utils.endpoints import get_in_count, get_out_count, get_course_count
 
-from .models import Exchange, Direction, Review, Comment, CustomUser, PartnerCity
+from .models import Exchange, Direction, Review, Comment, CustomUser, PartnerCity, WorkingDay
 from .utils.admin import make_city_active, update_field_time_update
 from .utils.cache import get_or_set_user_account_cache, set_user_account_cache
 
@@ -191,6 +191,11 @@ class DirectionAdmin(admin.ModelAdmin):
     #     return actions
 
 
+@admin.register(WorkingDay)
+class WorkingDayAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+
+
 class PartnerCityStacked(admin.StackedInline):
     model = PartnerCity
     extra = 0
@@ -227,9 +232,11 @@ class PartnerCityAdmin(admin.ModelAdmin):
     fields = (
         'city',
         ('has_office',
-        'has_delivery',)
+        'has_delivery',),
+        'working_days',
     )
     inlines = [DirectionStacked]
+    filter_horizontal = ('working_days', )
 
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         if not change:
@@ -297,7 +304,8 @@ class PartnerCityAdmin(admin.ModelAdmin):
         if path_info.endswith('change/'):
             fields = (
                 'get_city_name',
-                ('has_office', 'has_delivery')
+                ('has_office', 'has_delivery'),
+                'working_days'
             )
         return fields
 

@@ -50,6 +50,17 @@ class CustomUser(models.Model):
         return f'Пользователь: {self.user}, Обменник: {self.exchange}'
 
 
+class WorkingDay(models.Model):
+    name = models.CharField('Название',
+                            max_length=30)
+    
+    class Meta:
+        verbose_name = 'Рабочий день'
+        verbose_name_plural = 'Рабочие дни'
+
+    def __str__(self):
+        return self.name
+
 class PartnerCity(models.Model):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.CASCADE,
@@ -60,7 +71,18 @@ class PartnerCity(models.Model):
                              related_name='partner_cities')
     has_delivery = models.BooleanField('Есть ли доставка?', default=False)
     has_office = models.BooleanField('Есть ли офис?', default=False)
-
+    working_days = models.ManyToManyField(WorkingDay,
+                                          related_name='partner_cities',
+                                          verbose_name='Рабочие дни')
+    time_from = models.CharField('Работаем с ',
+                                 max_length=50,
+                                 null=True,
+                                 default=None) 
+    time_to = models.CharField('Работаем до ',
+                               max_length=50,
+                               null=True,
+                               default=None)
+    
     class Meta:
         verbose_name = 'Партнёрский город'
         verbose_name_plural = 'Партнёрские города'

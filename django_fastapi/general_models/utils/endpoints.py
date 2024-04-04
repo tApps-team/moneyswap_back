@@ -4,7 +4,7 @@ from collections import defaultdict
 from django.conf import settings
 from django.db import connection
 
-from cash.models import ExchangeDirection as CashExDir, City, Direction as CashDirection
+from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict
@@ -47,7 +47,7 @@ def round_valute_values(exchange_direction_dict: dict):
         pass
 
 
-def try_generate_icon_url(obj: City | Valute) -> str | None:
+def try_generate_icon_url(obj: Country | Valute) -> str | None:
     '''
     Генерирует путь до иконки переданного объекта.
     '''

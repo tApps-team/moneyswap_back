@@ -1,6 +1,28 @@
-from django.db.models import Count, Q
+from collections import defaultdict
 
-from partners.models import Direction
+from django.db.models import Count, Q
+from django.db import connection
+
+from general_models.utils.endpoints import try_generate_icon_url
+
+from cash.models import Direction as CashDirection
+
+from partners.models import Direction, PartnerCity
+
+from partners.schemas import PartnerCityInfoSchema
+
+
+####
+WORKING_DAYS_DICT = {
+     'Понедельник': False,
+     'Вторник': False,
+     'Среда': False,
+     'Четверг': False,
+     'Пятница': False,
+     'Суббота': False,
+     'Воскресенье': False,
+}
+####
 
 
 def get_in_count(direction):
@@ -62,3 +84,71 @@ def get_partner_directions(city: str,
         direction.fromfee = direction.percent
 
     return directions
+
+
+def generate_partner_cities(partner_cities: list[PartnerCity]):
+
+    for city in partner_cities:
+        city.name = city.city.name
+        city.code_name = city.city.code_name
+        city.country = city.city.country.name
+        city.country_flag = try_generate_icon_url(city.city.country)
+
+        working_days = WORKING_DAYS_DICT.copy()
+        [working_days.__setitem__(day.name, True) for day in city.working_days.all()]        
+
+        city.info = PartnerCityInfoSchema(delivery=city.has_delivery,
+                                          office=city.has_office,
+                                          working_days=working_days)
+    # print(len(connection.queries))
+    return partner_cities
+
+
+def generate_partner_directions_by_city(directions: list[Direction]):
+    for direction in directions:
+        direction.valute_from = direction.direction.valute_from.code_name
+        direction.icon_valute_from = try_generate_icon_url(direction.direction.valute_from)
+
+        direction.valute_to = direction.direction.valute_to.code_name
+        direction.icon_valute_to = try_generate_icon_url(direction.direction.valute_to)
+
+        direction.in_count = get_in_count(direction)
+        direction.out_count = get_out_count(direction)
+    # print(len(connection.queries))
+    return directions
+
+
+def generate_valute_list(queries: list[CashDirection],
+                         marker: str):
+    valute_list = sorted({query.__getattribute__(marker) for query in queries},
+                         key=lambda el: el.code_name)
+
+    valute_type_list = sorted({valute.type_valute for valute in valute_list})
+    
+
+
+    # valute_type_list = sorted({query.__getattribute__(marker).type_valute\
+    #                             for query in queries})
+    
+
+    # print(valute_list)
+
+    json_dict = defaultdict(list)
+    json_dict.fromkeys(valute_type_list)
+
+    # for _id, query in enumerate(valute_list, start=1):
+    for _id, valute in enumerate(valute_list, start=1):
+
+        # type_valute = query.__getattribute__(marker).type_valute
+        type_valute = valute.type_valute
+
+        valute_dict = {}
+        # valute = query.__getattribute__(marker)
+        valute_dict['id'] = _id
+        valute_dict['name'] = valute.name
+        valute_dict['code_name'] = valute.code_name
+        valute_dict['icon_url'] = try_generate_icon_url(valute)
+
+        json_dict[type_valute] = json_dict.get(type_valute, []) + [valute_dict]
+    # print(len(connection.queries))
+    return json_dict
