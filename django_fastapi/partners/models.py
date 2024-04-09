@@ -82,8 +82,15 @@ class PartnerCity(models.Model):
                                max_length=50,
                                null=True,
                                default=None)
+    # time_update = models.DateTimeField('Время последнего обновления',
+    #                                    auto_now=True,
+    #                                    null=True,
+    #                                    default=None)
     
     class Meta:
+        #
+        unique_together = (('exchange', 'city'),)
+        #
         verbose_name = 'Партнёрский город'
         verbose_name_plural = 'Партнёрские города'
         ordering = ('exchange', 'city')
@@ -105,12 +112,23 @@ class Direction(models.Model):
                                   limit_choices_to=limit_direction,
                                   related_name='partner_directions')
 
-    percent = models.FloatField('Процент',
-                                default=0,
-                                validators=[is_positive_validator])
-    fix_amount = models.FloatField('Фиксированная ставка',
-                                   default=0,
-                                   validators=[is_positive_validator])
+    # percent = models.FloatField('Процент',
+    #                             default=0,
+    #                             validators=[is_positive_validator])
+    # fix_amount = models.FloatField('Фиксированная ставка',
+    #                                default=0,
+    #                                validators=[is_positive_validator])
+
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=10,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=10,
+                                    null=True,
+                                    default=None)
     time_update = models.DateTimeField('Последнее обновление',
                                        auto_now_add=True,
                                        help_text='Время указано по московскому часовому поясу. При не обновлении процентов или фикс. ставки в течении 3 дней, направление становится неактивным.')

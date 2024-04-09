@@ -13,7 +13,7 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseReviewStacked)
 from general_models.utils.admin import ReviewAdminMixin
 
-from partners.utils.endpoints import get_in_count, get_out_count, get_course_count
+from partners.utils.endpoints import get_course_count
 
 from .models import Exchange, Direction, Review, Comment, CustomUser, PartnerCity, WorkingDay
 from .utils.admin import make_city_active, update_field_time_update
@@ -41,19 +41,19 @@ class DirectionStacked(admin.StackedInline):
     
     fields = (
         'get_direction_name',
-        'percent',
-        'fix_amount',
-        'in_count_field',
-        'out_count_field',
+        # 'percent',
+        # 'fix_amount',
+        'in_count',
+        'out_count',
         'is_active',
         'time_update',
         )
     readonly_fields = (
         'get_direction_name',
-        'percent',
-        'fix_amount',
-        'in_count_field',
-        'out_count_field',
+        # 'percent',
+        # 'fix_amount',
+        'in_count',
+        'out_count',
         'is_active',
         'time_update',
         )
@@ -73,15 +73,15 @@ class DirectionStacked(admin.StackedInline):
     
     get_direction_name.short_description = 'Название направления'
 
-    def in_count_field(self, obj):
-        return get_in_count(obj)
+    # def in_count_field(self, obj):
+    #     return get_in_count(obj)
     
-    in_count_field.short_description = 'Сколько отдаём'
+    # in_count_field.short_description = 'Сколько отдаём'
 
-    def out_count_field(self, obj):
-        return get_out_count(obj)
+    # def out_count_field(self, obj):
+    #     return get_out_count(obj)
     
-    out_count_field.short_description = 'Сколько получаем'
+    # out_count_field.short_description = 'Сколько получаем'
 
 
 @admin.register(Direction)
@@ -90,8 +90,8 @@ class DirectionAdmin(admin.ModelAdmin):
     list_display = ('direction', 'city', 'exchange_name', 'is_active')
     readonly_fields = (
         'course',
-        'in_count_field',
-        'out_count_field',
+        # 'in_count',
+        # 'out_count',
         'is_active',
         'time_update',
         )
@@ -99,10 +99,10 @@ class DirectionAdmin(admin.ModelAdmin):
         'city',
         'direction',
         'course',
-        'percent',
-        'fix_amount',
-        'in_count_field',
-        'out_count_field',
+        # 'percent',
+        # 'fix_amount',
+        'in_count',
+        'out_count',
         'is_active',
         'time_update',
         )
@@ -140,15 +140,15 @@ class DirectionAdmin(admin.ModelAdmin):
     
     course.short_description = 'Курс обмена'
 
-    def in_count_field(self, obj=None):
-        return get_in_count(obj)
+    # def in_count_field(self, obj=None):
+    #     return get_in_count(obj)
     
-    in_count_field.short_description = 'Сколько отдаём'
+    # in_count_field.short_description = 'Сколько отдаём'
     
-    def out_count_field(self, obj=None):
-        return get_out_count(obj)
+    # def out_count_field(self, obj=None):
+    #     return get_out_count(obj)
         
-    out_count_field.short_description = 'Сколько получаем'
+    # out_count_field.short_description = 'Сколько получаем'
 
     def has_add_permission(self, request: HttpRequest) -> bool:
         if not request.user.is_superuser:

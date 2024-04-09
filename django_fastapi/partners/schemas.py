@@ -1,4 +1,6 @@
-from pydantic import BaseModel, Field
+from typing import List
+
+from pydantic import BaseModel, Field, RootModel
 
 
 class PartnerCityInfoSchema(BaseModel):
@@ -43,3 +45,61 @@ class DirectionSchema(BaseModel):
 
 class NewPasswordSchema(BaseModel):
     new_password: str
+
+
+class AccountTitleSchema(BaseModel):
+    ru: str
+    en: str
+
+
+class AccountInfoSchema(BaseModel):
+    title: AccountTitleSchema
+    partner_link: str | None
+
+
+class ActualCourseSchema(BaseModel):
+    valute_from: str
+    icon_valute_from: str
+    in_count: float
+    valute_to: str
+    icon_valute_to: str
+    out_count: float
+
+
+class AddPartnerCitySchema(BaseModel):
+    city: str
+    has_delivery: bool = Field(alias='delivery')
+    has_office: bool = Field(alias='office')
+    time_from: str
+    time_to: str
+    working_days: dict
+
+
+class PartnerDirectionSchema(BaseModel):
+    in_count: float    
+    out_count: float
+    is_active: bool
+
+
+class AddPartnerDirectionSchema(PartnerDirectionSchema):
+    city: str
+    valute_from: str
+    # id: int
+    # in_count: float
+    valute_to: str
+    # out_count: float
+    # is_active: bool
+
+
+class EditedPartnerDirectionSchema(PartnerDirectionSchema):
+    id: int
+#     city: str
+#     valute_from: str
+#     valute_to: str
+#     in_count: float
+#     out_count: float
+#     is_active: bool
+
+
+class ListEditedPartnerDirectionSchema(RootModel):
+    root: List[EditedPartnerDirectionSchema]

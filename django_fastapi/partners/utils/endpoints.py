@@ -12,7 +12,6 @@ from partners.models import Direction, PartnerCity
 from partners.schemas import PartnerCityInfoSchema
 
 
-####
 WORKING_DAYS_DICT = {
      'Понедельник': False,
      'Вторник': False,
@@ -22,30 +21,29 @@ WORKING_DAYS_DICT = {
      'Суббота': False,
      'Воскресенье': False,
 }
-####
 
 
-def get_in_count(direction):
-        if direction is None:
-            return 0
-        actual_course = direction.direction.actual_course
-        if actual_course < 1:
-            convert_course = 1 / actual_course
-            res = convert_course + (convert_course * direction.percent / 100) + direction.fix_amount
-        else:
-            res = 1
-        return round(res, 2)
+# def get_in_count(direction):
+#         if direction is None:
+#             return 0
+#         actual_course = direction.direction.actual_course
+#         if actual_course < 1:
+#             convert_course = 1 / actual_course
+#             res = convert_course + (convert_course * direction.percent / 100) + direction.fix_amount
+#         else:
+#             res = 1
+#         return round(res, 2)
 
 
-def get_out_count(direction):
-        if direction is None:
-            return 0
-        actual_course = direction.direction.actual_course
-        if actual_course < 1:
-            res = 1
-        else:
-            res = actual_course - (actual_course * direction.percent / 100) - direction.fix_amount
-        return round(res, 2)
+# def get_out_count(direction):
+#         if direction is None:
+#             return 0
+#         actual_course = direction.direction.actual_course
+#         if actual_course < 1:
+#             res = 1
+#         else:
+#             res = actual_course - (actual_course * direction.percent / 100) - direction.fix_amount
+#         return round(res, 2)
 
 
 def get_course_count(direction):
@@ -53,6 +51,21 @@ def get_course_count(direction):
             return 0
         actual_course = direction.direction.actual_course
         return actual_course if actual_course is not None else 0
+
+
+def get_partner_in_out_count(actual_course: float):
+    if actual_course < 1:
+        # k = 1 / actual_course
+        in_count = 1 / actual_course
+        out_count = 1
+    else:
+         in_count = 1
+         out_count = actual_course
+
+    return (
+         in_count,
+         out_count,
+    )
 
 
 def get_partner_directions(city: str,
@@ -76,12 +89,12 @@ def get_partner_directions(city: str,
         direction.exchange = direction.city.exchange
         direction.valute_from = valute_from
         direction.valute_to = valute_to
-        direction.in_count = get_in_count(direction)
-        direction.out_count = get_out_count(direction)
+        # direction.in_count = get_in_count(direction)
+        # direction.out_count = get_out_count(direction)
         direction.min_amount = 'Не установлено'
         direction.max_amount = 'Не установлено'
         direction.params = 'Не установлено'
-        direction.fromfee = direction.percent
+        direction.fromfee = None
 
     return directions
 
@@ -95,11 +108,12 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
         city.country_flag = try_generate_icon_url(city.city.country)
 
         working_days = WORKING_DAYS_DICT.copy()
-        [working_days.__setitem__(day.name, True) for day in city.working_days.all()]        
+        [working_days.__setitem__(day.name, True) for day in city.working_days.all()]
 
         city.info = PartnerCityInfoSchema(delivery=city.has_delivery,
                                           office=city.has_office,
                                           working_days=working_days)
+        
     # print(len(connection.queries))
     return partner_cities
 
@@ -112,8 +126,8 @@ def generate_partner_directions_by_city(directions: list[Direction]):
         direction.valute_to = direction.direction.valute_to.code_name
         direction.icon_valute_to = try_generate_icon_url(direction.direction.valute_to)
 
-        direction.in_count = get_in_count(direction)
-        direction.out_count = get_out_count(direction)
+        # direction.in_count = get_in_count(direction)
+        # direction.out_count = get_out_count(direction)
     # print(len(connection.queries))
     return directions
 
@@ -124,19 +138,10 @@ def generate_valute_list(queries: list[CashDirection],
                          key=lambda el: el.code_name)
 
     valute_type_list = sorted({valute.type_valute for valute in valute_list})
-    
-
-
-    # valute_type_list = sorted({query.__getattribute__(marker).type_valute\
-    #                             for query in queries})
-    
-
-    # print(valute_list)
 
     json_dict = defaultdict(list)
     json_dict.fromkeys(valute_type_list)
 
-    # for _id, query in enumerate(valute_list, start=1):
     for _id, valute in enumerate(valute_list, start=1):
 
         # type_valute = query.__getattribute__(marker).type_valute
@@ -152,3 +157,18 @@ def generate_valute_list(queries: list[CashDirection],
         json_dict[type_valute] = json_dict.get(type_valute, []) + [valute_dict]
     # print(len(connection.queries))
     return json_dict
+
+
+def generate_actual_course(direction: CashDirection):
+    in_count, out_count = get_partner_in_out_count(direction.actual_course)
+    icon_valute_from = try_generate_icon_url(direction.valute_from)
+    icon_valute_to = try_generate_icon_url(direction.valute_to)
+
+    return {
+        'valute_from': direction.valute_from.code_name,
+        'icon_valute_from': icon_valute_from,
+        'in_count': in_count,
+        'valute_to': direction.valute_to.code_name,
+        'icon_valute_to': icon_valute_to,
+        'out_count': out_count,
+    }

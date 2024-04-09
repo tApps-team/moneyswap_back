@@ -16,7 +16,7 @@ from config import JWT_SECRET_KEY, JWT_ALGORITHM
 from partners.models import CustomUser
 
 
-EXPIRES_ACCESS_TOKEN = timedelta(seconds=60)
+EXPIRES_ACCESS_TOKEN = timedelta(days=1)
 EXPIRES_REFRESH_TOKEN = timedelta(days=60)
 
 o2auth_bearer = OAuth2PasswordBearer(tokenUrl=f'{settings.FASTAPI_PREFIX}/auth/token')
