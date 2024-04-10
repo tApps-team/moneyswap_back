@@ -31,7 +31,7 @@ LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
-# USE_TZ = True
+USE_TZ = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
