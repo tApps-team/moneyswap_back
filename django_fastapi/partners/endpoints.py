@@ -3,6 +3,7 @@ from datetime import datetime
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 
+from django.utils import timezone
 from django.db import connection, transaction
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
@@ -297,7 +298,7 @@ def edit_partner_directions_by_city(partner: partner_dependency,
                 _id = edited_direction.pop('id')
                 partner_directions.filter(pk=_id).update(**edited_direction)
 
-            city.update(time_update=datetime.now())
+            city.update(time_update=timezone.now())
     except Exception:
         raise HTTPException(status_code=400)
     else:

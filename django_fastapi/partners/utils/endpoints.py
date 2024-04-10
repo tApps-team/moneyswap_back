@@ -115,8 +115,10 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
         date = time = None
 
         if city.time_update:
-            date, time = city.time_update.strftime('%d.%m.%Y %H:%M').split()
-            print(date, 'date', time, 'time')
+            # print('time update')
+            # print(city.time_update.astimezone())
+            date, time = city.time_update.astimezone().strftime('%d.%m.%Y %H:%M').split()
+            # print(date, 'date', time, 'time')
         
         city.updated = UpdatedTimeByPartnerCitySchema(date=date,
                                                       time=time)
