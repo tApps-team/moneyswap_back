@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 
-from django.db import connection
+from django.db import connection, transaction
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -263,14 +265,17 @@ def add_partner_direction(partner: partner_dependency,
     
 
 
-@partner_router.post('/edit_partner_directions',
-                     deprecated=True)
-def add_partner_direction(partner: partner_dependency,
-                          edited_directions: ListEditedPartnerDirectionSchema):
+@partner_router.post('/edit_partner_directions')
+def edit_partner_directions_by_city(partner: partner_dependency,
+                                    response_body: ListEditedPartnerDirectionSchema):
+    # print(len(connection.queries))
     partner_id = partner.get('user_id')
 
-    data = edited_directions.model_dump()
-    print(data)
+    data: dict = response_body.model_dump()
+
+    city_code_name = data['city']
+    edited_direction_list = data['directions']
+
     partner_directions = Direction.objects\
                                     .select_related('city',
                                                     'city__city',
@@ -279,11 +284,25 @@ def add_partner_direction(partner: partner_dependency,
                                                     'direction__valute_from',
                                                     'direction__valute_to')\
                                     .filter(city__exchange__account__pk=partner_id)
-    
-    for d in data:
-        # direction = partner_directions.filter(city__city__code_name=d['city'],
-        #                                       direction__valute_from__code_name=d['valute_from'],
-        #                                       direction__valute_to__code_name=d['valute_to']).first()
-        direction = partner_directions.filter(pk=d['id']).first()
 
-        print(direction.city)
+    city = PartnerCity.objects.select_related('exchange',
+                                              'exchange__account',
+                                              'city')\
+                                .filter(exchange__account__pk=partner_id,
+                                        city__code_name=city_code_name)
+    
+    try:
+        with transaction.atomic():
+            for edited_direction in edited_direction_list:
+                _id = edited_direction.pop('id')
+                partner_directions.filter(pk=_id).update(**edited_direction)
+
+            city.update(time_update=datetime.now())
+    except Exception:
+        raise HTTPException(status_code=400)
+    else:
+        return {'status': 'success',
+                'details': f'updated {len(edited_direction_list)} directions'}
+    # for query in connection.queries:
+    #     print(query)
+    # print(len(connection.queries))

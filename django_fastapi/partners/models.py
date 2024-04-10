@@ -82,10 +82,9 @@ class PartnerCity(models.Model):
                                max_length=50,
                                null=True,
                                default=None)
-    # time_update = models.DateTimeField('Время последнего обновления',
-    #                                    auto_now=True,
-    #                                    null=True,
-    #                                    default=None)
+    time_update = models.DateTimeField('Время последнего обновления',
+                                       null=True,
+                                       default=None)
     
     class Meta:
         #

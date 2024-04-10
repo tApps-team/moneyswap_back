@@ -11,6 +11,11 @@ class PartnerCityInfoSchema(BaseModel):
     time_to: str | None = Field(default=None)
 
 
+class UpdatedTimeByPartnerCitySchema(BaseModel):
+    date: str | None
+    time: str | None
+
+
 class PartnerCitySchema(BaseModel):
     id: int
     name: str
@@ -18,6 +23,7 @@ class PartnerCitySchema(BaseModel):
     country: str
     country_flag: str
     info: PartnerCityInfoSchema
+    updated: UpdatedTimeByPartnerCitySchema
 
 
 class CountrySchema(BaseModel):
@@ -101,5 +107,10 @@ class EditedPartnerDirectionSchema(PartnerDirectionSchema):
 #     is_active: bool
 
 
-class ListEditedPartnerDirectionSchema(RootModel):
-    root: List[EditedPartnerDirectionSchema]
+# class ListEditedPartnerDirectionSchema(RootModel):
+#     root: List[EditedPartnerDirectionSchema]
+
+
+class ListEditedPartnerDirectionSchema(BaseModel):
+    city: str
+    directions: List[EditedPartnerDirectionSchema]

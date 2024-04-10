@@ -9,7 +9,7 @@ from cash.models import Direction as CashDirection
 
 from partners.models import Direction, PartnerCity
 
-from partners.schemas import PartnerCityInfoSchema
+from partners.schemas import PartnerCityInfoSchema, UpdatedTimeByPartnerCitySchema
 
 
 WORKING_DAYS_DICT = {
@@ -55,7 +55,6 @@ def get_course_count(direction):
 
 def get_partner_in_out_count(actual_course: float):
     if actual_course < 1:
-        # k = 1 / actual_course
         in_count = 1 / actual_course
         out_count = 1
     else:
@@ -113,6 +112,14 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
         city.info = PartnerCityInfoSchema(delivery=city.has_delivery,
                                           office=city.has_office,
                                           working_days=working_days)
+        date = time = None
+
+        if city.time_update:
+            date, time = city.time_update.strftime('%d.%m.%Y %H:%M').split()
+            print(date, 'date', time, 'time')
+        
+        city.updated = UpdatedTimeByPartnerCitySchema(date=date,
+                                                      time=time)
         
     # print(len(connection.queries))
     return partner_cities

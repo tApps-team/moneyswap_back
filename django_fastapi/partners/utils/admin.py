@@ -20,3 +20,7 @@ def update_field_time_update(obj: Direction, update_fields: set):
      if not obj.is_active:
           obj.is_active = True
           update_fields.add('is_active')
+
+
+def get_saved_course(direction: Direction):
+     return f'{direction.in_count} {direction.direction.valute_from} -> {direction.out_count} {direction.direction.valute_to}'

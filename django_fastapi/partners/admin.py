@@ -16,7 +16,7 @@ from general_models.utils.admin import ReviewAdminMixin
 from partners.utils.endpoints import get_course_count
 
 from .models import Exchange, Direction, Review, Comment, CustomUser, PartnerCity, WorkingDay
-from .utils.admin import make_city_active, update_field_time_update
+from .utils.admin import make_city_active, update_field_time_update, get_saved_course
 from .utils.cache import get_or_set_user_account_cache, set_user_account_cache
 
 
@@ -90,6 +90,7 @@ class DirectionAdmin(admin.ModelAdmin):
     list_display = ('direction', 'city', 'exchange_name', 'is_active')
     readonly_fields = (
         'course',
+        'saved_partner_course',
         # 'in_count',
         # 'out_count',
         'is_active',
@@ -103,6 +104,7 @@ class DirectionAdmin(admin.ModelAdmin):
         # 'fix_amount',
         'in_count',
         'out_count',
+        'saved_partner_course',
         'is_active',
         'time_update',
         )
@@ -140,10 +142,10 @@ class DirectionAdmin(admin.ModelAdmin):
     
     course.short_description = 'Курс обмена'
 
-    # def in_count_field(self, obj=None):
-    #     return get_in_count(obj)
+    def saved_partner_course(self, obj=None):
+        return get_saved_course(obj)
     
-    # in_count_field.short_description = 'Сколько отдаём'
+    saved_partner_course.short_description = 'Сохранённый курс'
     
     # def out_count_field(self, obj=None):
     #     return get_out_count(obj)
@@ -171,6 +173,8 @@ class DirectionAdmin(admin.ModelAdmin):
             account = get_or_set_user_account_cache(request.user)
             queryset = queryset.select_related('city',
                                                'direction',
+                                               'direction__valute_from',
+                                               'direction__valute_to',
                                                'city__city',
                                                'city__exchange')\
                                 .filter(city__exchange=account.exchange)
@@ -233,6 +237,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
         'city',
         ('has_office',
         'has_delivery',),
+        'time_update',
         'working_days',
     )
     inlines = [DirectionStacked]
@@ -295,7 +300,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
         readonly_fields = super().get_readonly_fields(request, obj)
         path_info = request.environ['PATH_INFO']
         if path_info.endswith('change/'):
-            readonly_fields = ('get_city_name', ) + readonly_fields
+            readonly_fields = ('get_city_name', 'time_update', ) + readonly_fields
         return readonly_fields
 
     def get_fields(self, request: HttpRequest, obj: Any | None = ...) -> Sequence[Callable[..., Any] | str]:
@@ -305,6 +310,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
             fields = (
                 'get_city_name',
                 ('has_office', 'has_delivery'),
+                'time_update',
                 'working_days'
             )
         return fields
