@@ -23,15 +23,16 @@ def create_cash_directions_for_exchange(exchange_name: str):
     if xml_file is not None:
         if exchange.is_active:
             all_cash_directions = get_or_set_cash_directions_cache()
-            direction_list = get_cash_direction_set_for_creating(all_cash_directions,
-                                                                 exchange)
+            if all_cash_directions:
+                direction_list = get_cash_direction_set_for_creating(all_cash_directions,
+                                                                    exchange)
 
-            if direction_list:
-                direction_dict = generate_direction_dict(direction_list)
-                run_cash_background_tasks(create_direction,
-                                          exchange,
-                                          direction_dict,
-                                          xml_file)
+                if direction_list:
+                    direction_dict = generate_direction_dict(direction_list)
+                    run_cash_background_tasks(create_direction,
+                                            exchange,
+                                            direction_dict,
+                                            xml_file)
 
 
 @shared_task

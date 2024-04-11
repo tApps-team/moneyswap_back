@@ -19,13 +19,14 @@ def create_no_cash_directions_for_exchange(exchange_name: str):
     
     if xml_file is not None and exchange.is_active:
             all_no_cash_directions = get_or_set_no_cash_directions_cache()
-            direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
-                                                                    exchange)
-            if direction_list:
-                run_no_cash_background_tasks(create_direction,
-                                             exchange,
-                                             direction_list,
-                                             xml_file)
+            if all_no_cash_directions:
+                direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+                                                                        exchange)
+                if direction_list:
+                    run_no_cash_background_tasks(create_direction,
+                                                exchange,
+                                                direction_list,
+                                                xml_file)
 
 
 @shared_task
