@@ -53,6 +53,10 @@ class CustomUser(models.Model):
 class WorkingDay(models.Model):
     name = models.CharField('Название',
                             max_length=30)
+    code_name = models.CharField('Сокращение',
+                                 max_length=10,
+                                 null=True,
+                                 default=None)
     
     class Meta:
         verbose_name = 'Рабочий день'

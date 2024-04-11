@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 
@@ -20,7 +18,6 @@ from .auth.endpoints import partner_dependency
 from .utils.endpoints import (generate_partner_cities,
                               generate_partner_directions_by_city,
                               generate_valute_list,
-                              get_partner_in_out_count,
                               generate_actual_course)
 
 from .schemas import (PartnerCitySchema,
@@ -195,8 +192,10 @@ def add_partner_city(partner: partner_dependency,
                                 detail='Такой город уже существует')
         else:
             new_partner_city.working_days\
-                .add(*WorkingDay.objects.filter(name__in=working_days_set))
+                .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
             # print(len(connection.queries))
+            return {'status': 'success',
+                    'details': f'Партнёрский город {city_model.name} добавлен'}
 
 
 @partner_router.patch('/edit_partner_city')
@@ -210,11 +209,13 @@ def edit_partner_city(partner: partner_dependency,
                                                       'city')\
                                         .filter(exchange__account__pk=partner_id,
                                                 city__code_name=edited_city.city)
+    if not partner_city:
+        raise HTTPException(status_code=404)
     
     data = edited_city.model_dump()
     working_days = data.pop('working_days')
     data.pop('city')
-    # print(data)
+
     partner_city.update(**data)
 
     unworking_day_names = {working_day for working_day in working_days \
@@ -226,15 +227,14 @@ def edit_partner_city(partner: partner_dependency,
     partner_city = partner_city.first()
 
     partner_city.working_days.through.objects\
-            .filter(workingday__name__in=unworking_day_names).delete()
+            .filter(workingday__code_name__in=unworking_day_names).delete()
 
-    # partner_city.working_days\
-    #             .remove(*partner_city.working_days.filter(name__in=unworking_day_names))
     partner_city.working_days\
-                .add(*WorkingDay.objects.filter(name__in=working_day_names))
-    print(len(connection.queries))
-    # for q in connection.queries:
-    #     print(q)
+                .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
+    # print(len(connection.queries))
+    return {'status': 'success',
+            'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}
+
 
 
 @partner_router.post('/add_partner_direction')
@@ -248,8 +248,8 @@ def add_partner_direction(partner: partner_dependency,
     valute_to = data.pop('valute_to')
     try:
         city = PartnerCity.objects.select_related('exchange',
-                                                'exchange__account',
-                                                'city')\
+                                                  'exchange__account',
+                                                  'city')\
                                     .get(exchange__account__pk=partner_id,
                                         city__code_name=data['city'])    
 
@@ -265,6 +265,8 @@ def add_partner_direction(partner: partner_dependency,
 
         try:
             Direction.objects.create(**data)
+            return {'status': 'success',
+                    'details': f'Партнерское направление {direction.display_name} добавлено'}
         except IntegrityError:
             raise HTTPException(status_code=423)
     

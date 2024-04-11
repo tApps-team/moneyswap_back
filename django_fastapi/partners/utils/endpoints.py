@@ -23,6 +23,17 @@ WORKING_DAYS_DICT = {
 }
 
 
+WORKING_DAYS_DICT_2 = {
+     'Пн': False,
+     'Вт': False,
+     'Ср': False,
+     'Чт': False,
+     'Пт': False,
+     'Сб': False,
+     'Вс': False,
+}
+
+
 # def get_in_count(direction):
 #         if direction is None:
 #             return 0
@@ -106,8 +117,9 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
         city.country = city.city.country.name
         city.country_flag = try_generate_icon_url(city.city.country)
 
-        working_days = WORKING_DAYS_DICT.copy()
-        [working_days.__setitem__(day.name, True) for day in city.working_days.all()]
+        # working_days = WORKING_DAYS_DICT.copy()
+        working_days = WORKING_DAYS_DICT_2.copy()
+        [working_days.__setitem__(day.code_name, True) for day in city.working_days.all()]
 
         city.info = PartnerCityInfoSchema(delivery=city.has_delivery,
                                           office=city.has_office,
@@ -115,10 +127,7 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
         date = time = None
 
         if city.time_update:
-            # print('time update')
-            # print(city.time_update.astimezone())
             date, time = city.time_update.astimezone().strftime('%d.%m.%Y %H:%M').split()
-            # print(date, 'date', time, 'time')
         
         city.updated = UpdatedTimeByPartnerCitySchema(date=date,
                                                       time=time)
@@ -135,8 +144,6 @@ def generate_partner_directions_by_city(directions: list[Direction]):
         direction.valute_to = direction.direction.valute_to.code_name
         direction.icon_valute_to = try_generate_icon_url(direction.direction.valute_to)
 
-        # direction.in_count = get_in_count(direction)
-        # direction.out_count = get_out_count(direction)
     # print(len(connection.queries))
     return directions
 
