@@ -172,29 +172,31 @@ def add_partner_city(partner: partner_dependency,
                      city: AddPartnerCitySchema):
     print(len(connection.queries))
     partner_id = partner.get('user_id')
-
-    city_model = City.objects.get(code_name=city.city)
-    exchange = Exchange.objects.select_related('account')\
-                                .get(account__pk=partner_id)
-
-    data = city.model_dump()
-    data['city'] = city_model
-    data['exchange'] = exchange
-
-    working_days = data.pop('working_days')
-
-    working_days_set = {working_day for working_day in working_days\
-                         if working_days[working_day]}
-
     try:
-        new_partner_city = PartnerCity.objects.create(**data)
-    except IntegrityError:
-        raise HTTPException(status_code=423, # ?
-                            detail='Такой город уже существует')
+        city_model = City.objects.get(code_name=city.city)
+        exchange = Exchange.objects.select_related('account')\
+                                    .get(account__pk=partner_id)
+    except Exception:
+        raise HTTPException(status_code=404)
     else:
-        new_partner_city.working_days\
-            .add(*WorkingDay.objects.filter(name__in=working_days_set))
-        # print(len(connection.queries))
+        data = city.model_dump()
+        data['city'] = city_model
+        data['exchange'] = exchange
+
+        working_days = data.pop('working_days')
+
+        working_days_set = {working_day for working_day in working_days\
+                            if working_days[working_day]}
+
+        try:
+            new_partner_city = PartnerCity.objects.create(**data)
+        except IntegrityError:
+            raise HTTPException(status_code=423, # ?
+                                detail='Такой город уже существует')
+        else:
+            new_partner_city.working_days\
+                .add(*WorkingDay.objects.filter(name__in=working_days_set))
+            # print(len(connection.queries))
 
 
 @partner_router.patch('/edit_partner_city')
@@ -244,25 +246,27 @@ def add_partner_direction(partner: partner_dependency,
 
     valute_from = data.pop('valute_from')
     valute_to = data.pop('valute_to')
-
-    city = PartnerCity.objects.select_related('exchange',
-                                              'exchange__account',
-                                              'city')\
-                                .get(exchange__account__pk=partner_id,
-                                     city__code_name=data['city'])    
-
-    direction = CashDirection.objects.select_related('valute_from',
-                                                     'valute_to')\
-                                        .get(valute_from__code_name=valute_from,
-                                             valute_to__code_name=valute_to)
-
-    data['city'] = city
-    data['direction'] = direction
-
     try:
-        Direction.objects.create(**data)
-    except IntegrityError:
-        raise HTTPException(status_code=423)
+        city = PartnerCity.objects.select_related('exchange',
+                                                'exchange__account',
+                                                'city')\
+                                    .get(exchange__account__pk=partner_id,
+                                        city__code_name=data['city'])    
+
+        direction = CashDirection.objects.select_related('valute_from',
+                                                        'valute_to')\
+                                            .get(valute_from__code_name=valute_from,
+                                                valute_to__code_name=valute_to)
+    except Exception:
+        raise HTTPException(status_code=404)
+    else:
+        data['city'] = city
+        data['direction'] = direction
+
+        try:
+            Direction.objects.create(**data)
+        except IntegrityError:
+            raise HTTPException(status_code=423)
     
 
 
