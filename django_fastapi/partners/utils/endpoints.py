@@ -123,7 +123,9 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
 
         city.info = PartnerCityInfoSchema(delivery=city.has_delivery,
                                           office=city.has_office,
-                                          working_days=working_days)
+                                          working_days=working_days,
+                                          time_from=city.time_from,
+                                          time_to=city.time_to)
         date = time = None
 
         if city.time_update:

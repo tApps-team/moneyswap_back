@@ -15,6 +15,8 @@ from .models import PartnerCity, Direction, Exchange, WorkingDay
 
 from .auth.endpoints import partner_dependency
 
+from .utils.admin import make_city_active
+
 from .utils.endpoints import (generate_partner_cities,
                               generate_partner_directions_by_city,
                               generate_valute_list,
@@ -187,6 +189,9 @@ def add_partner_city(partner: partner_dependency,
 
         try:
             new_partner_city = PartnerCity.objects.create(**data)
+            #
+            make_city_active(city_model)
+            #
         except IntegrityError:
             raise HTTPException(status_code=423, # ?
                                 detail='Такой город уже существует')
