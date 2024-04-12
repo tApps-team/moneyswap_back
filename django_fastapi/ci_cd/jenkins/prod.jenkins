@@ -28,14 +28,14 @@ pipeline {
         stage("Build services") {
                 steps {
                     sh '''
-                        ssh root@65.109.229.94 'cd moneyswap_back/django_fastapi && docker-compose build --pull django_fastapi'
+                        ssh root@65.109.229.94 'cd moneyswap_back/django_fastapi && docker-compose build --pull celery_worker celery_beat'
                     '''
                 }
             }
         stage("Update services") {
                 steps {
                     sh '''
-                        ssh root@65.109.229.94 'cd moneyswap_back/django_fastapi && docker rollout -w 30 django_fastapi'
+                        ssh root@65.109.229.94 'cd moneyswap_back/django_fastapi && docker rollout -w 30 celery_worker && docker rollout -w 30 celery_beat'
                     '''
                 }
             }
