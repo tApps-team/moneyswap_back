@@ -294,7 +294,7 @@ def add_partner_direction(partner: partner_dependency,
     
 
 
-@partner_router.post('/edit_partner_directions')
+@partner_router.patch('/edit_partner_directions')
 def edit_partner_directions_by_city(partner: partner_dependency,
                                     response_body: ListEditedPartnerDirectionSchema):
     # print(len(connection.queries))
