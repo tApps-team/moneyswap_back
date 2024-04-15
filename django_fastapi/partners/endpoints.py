@@ -241,6 +241,23 @@ def edit_partner_city(partner: partner_dependency,
             'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}
 
 
+@partner_router.delete('/delete_partner_city')
+def delete_partner_city(partner: partner_dependency,
+                        city_id: int):
+    partner_id = partner.get('user_id')
+
+    city_on_delete = PartnerCity.objects.select_related('exchange__account')\
+                                        .filter(exchange__account__pk=partner_id,
+                                                pk=city_id)
+    
+    if not city_on_delete:
+        raise HTTPException(status_code=404)
+    
+    city_on_delete.delete()
+
+    return {'status': 'success',
+            'details': 'Партнёрский город удалён'}
+
 
 @partner_router.post('/add_partner_direction')
 def add_partner_direction(partner: partner_dependency,
@@ -318,3 +335,21 @@ def edit_partner_directions_by_city(partner: partner_dependency,
     # for query in connection.queries:
     #     print(query)
     # print(len(connection.queries))
+
+
+@partner_router.delete('/delete_partner_directions')
+def delete_partner_direction(partner: partner_dependency,
+                             direction_id: int):
+    partner_id = partner.get('user_id')
+
+    direction_on_delete = Direction.objects.select_related('city__exchange__account')\
+                                            .filter(city__exchange__account__pk=partner_id,
+                                                    pk=direction_id)
+    
+    if not direction_on_delete:
+        raise HTTPException(status_code=404)
+    
+    direction_on_delete.delete()
+
+    return {'status': 'success',
+            'details': 'Партнёрское направление удалено'}
