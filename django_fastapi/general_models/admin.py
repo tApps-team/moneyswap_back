@@ -82,17 +82,49 @@ class PartnerTimeUpdateAdmin(admin.ModelAdmin):
 #Отображение валют в админ панели
 @admin.register(Valute)
 class ValuteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code_name', 'get_icon', 'type_valute')
-    fields = ('name', 'en_name', 'code_name', 'icon_url', 'get_icon', 'type_valute')
-    readonly_fields = ('get_icon', )
-    search_fields = ('name', 'code_name', 'en_name')
+    list_display = (
+        'name',
+        'code_name',
+        'get_icon',
+        'type_valute',
+        'available_for_partners',
+        )
+    list_editable = (
+        'available_for_partners',
+        )
+    list_filter = (
+        'type_valute',
+        'available_for_partners',
+        )
+    fields = (
+        'name',
+        'en_name',
+        'code_name',
+        'icon_url',
+        'get_icon',
+        'type_valute',
+        'available_for_partners',
+        )
+    readonly_fields = (
+        'get_icon',
+        )
+    search_fields = (
+        'name',
+        'code_name',
+        'en_name',
+        )
+    ordering = (
+        '-available_for_partners',
+        'code_name',
+        )
+    list_per_page = 20
 
     def get_icon(self, obj):
         if obj.icon_url:
             icon_url = try_generate_icon_url(obj)
             return mark_safe(f"<img src='{icon_url}' width=40")
 
-    get_icon.short_description = 'Текущая иконка'
+    get_icon.short_description = 'Иконка'
 
 
 #Базовое отображение комментариев в админ панели

@@ -13,17 +13,6 @@ from partners.schemas import PartnerCityInfoSchema, UpdatedTimeByPartnerCitySche
 
 
 WORKING_DAYS_DICT = {
-     'Понедельник': False,
-     'Вторник': False,
-     'Среда': False,
-     'Четверг': False,
-     'Пятница': False,
-     'Суббота': False,
-     'Воскресенье': False,
-}
-
-
-WORKING_DAYS_DICT_2 = {
      'Пн': False,
      'Вт': False,
      'Ср': False,
@@ -117,8 +106,7 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
         city.country = city.city.country.name
         city.country_flag = try_generate_icon_url(city.city.country)
 
-        # working_days = WORKING_DAYS_DICT.copy()
-        working_days = WORKING_DAYS_DICT_2.copy()
+        working_days = WORKING_DAYS_DICT.copy()
         [working_days.__setitem__(day.code_name, True) for day in city.working_days.all()]
 
         city.info = PartnerCityInfoSchema(delivery=city.has_delivery,
@@ -161,16 +149,14 @@ def generate_valute_list(queries: list[CashDirection],
     json_dict.fromkeys(valute_type_list)
 
     for _id, valute in enumerate(valute_list, start=1):
-
-        # type_valute = query.__getattribute__(marker).type_valute
         type_valute = valute.type_valute
 
-        valute_dict = {}
-        # valute = query.__getattribute__(marker)
-        valute_dict['id'] = _id
-        valute_dict['name'] = valute.name
-        valute_dict['code_name'] = valute.code_name
-        valute_dict['icon_url'] = try_generate_icon_url(valute)
+        valute_dict = {
+            'id': _id,
+            'name': valute.name,
+            'code_name': valute.code_name,
+            'icon_url': try_generate_icon_url(valute),
+        }
 
         json_dict[type_valute] = json_dict.get(type_valute, []) + [valute_dict]
     # print(len(connection.queries))

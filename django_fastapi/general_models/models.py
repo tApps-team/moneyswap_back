@@ -44,6 +44,8 @@ class Valute(models.Model):
                                 upload_to='icons/valute/',
                                 blank=True,
                                 null=True)
+    available_for_partners = models.BooleanField('Доступно для партнёров',
+                                                 default=False)
 
     class Meta:
         verbose_name = 'Валюта'
