@@ -48,7 +48,8 @@ def request_to_xml_file(xml_url: str):
     })
     resp = requests.get(xml_url,
                         headers=headers,
-                        timeout=5) #можно меньше
+                        timeout=5,
+                        verify=False) #можно меньше
     content_type = resp.headers['Content-Type']
 
     if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
