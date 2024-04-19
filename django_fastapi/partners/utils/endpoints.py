@@ -127,6 +127,7 @@ def generate_valute_list(queries: list[CashDirection],
             'name': valute.name,
             'code_name': valute.code_name,
             'icon_url': try_generate_icon_url(valute),
+            'type_valute': type_valute,
         }
 
         json_dict[type_valute].append(valute_dict)
