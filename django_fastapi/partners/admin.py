@@ -1,6 +1,5 @@
-from collections import OrderedDict
 from collections.abc import Callable, Sequence
-from datetime import timedelta, datetime
+from datetime import datetime
 from typing import Any
 
 from django.contrib import admin, messages
@@ -15,14 +14,25 @@ from general_models.utils.admin import ReviewAdminMixin
 
 from partners.utils.endpoints import get_course_count
 
-from .models import Exchange, Direction, Review, Comment, CustomUser, PartnerCity, WorkingDay
-from .utils.admin import make_city_active, update_field_time_update, get_saved_course
-from .utils.cache import get_or_set_user_account_cache, set_user_account_cache
+from .models import (Exchange,
+                     Direction,
+                     Review,
+                     Comment,
+                     CustomUser,
+                     PartnerCity,WorkingDay)
+from .utils.admin import (make_city_active,
+                          update_field_time_update,
+                          get_saved_course)
+from .utils.cache import (get_or_set_user_account_cache,
+                          set_user_account_cache)
 
 
 @admin.register(CustomUser)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('user', 'exchange')
+    list_display = (
+        'user',
+        'exchange',
+        )
 
     fields = (
         'user',
@@ -30,19 +40,20 @@ class UserAdmin(admin.ModelAdmin):
     )
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-         return super().get_queryset(request).select_related('exchange', 'user')
+         return super().get_queryset(request)\
+                        .select_related('exchange', 'user')
 
 
 class DirectionStacked(admin.StackedInline):
     model = Direction
     extra = 0
     show_change_link = True
-    classes = ['collapse']
+    classes = [
+        'collapse',
+        ]
     
     fields = (
         'get_direction_name',
-        # 'percent',
-        # 'fix_amount',
         'in_count',
         'out_count',
         'is_active',
@@ -50,14 +61,14 @@ class DirectionStacked(admin.StackedInline):
         )
     readonly_fields = (
         'get_direction_name',
-        # 'percent',
-        # 'fix_amount',
         'in_count',
         'out_count',
         'is_active',
         'time_update',
         )
-    list_select_related = ('direction', )
+    list_select_related = (
+        'direction',
+        )
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
          return super().get_queryset(request)\
@@ -73,26 +84,21 @@ class DirectionStacked(admin.StackedInline):
     
     get_direction_name.short_description = 'Название направления'
 
-    # def in_count_field(self, obj):
-    #     return get_in_count(obj)
-    
-    # in_count_field.short_description = 'Сколько отдаём'
-
-    # def out_count_field(self, obj):
-    #     return get_out_count(obj)
-    
-    # out_count_field.short_description = 'Сколько получаем'
-
 
 @admin.register(Direction)
 class DirectionAdmin(admin.ModelAdmin):
-    actions = ('get_directions_active', )
-    list_display = ('direction', 'city', 'exchange_name', 'is_active')
+    actions = (
+        'get_directions_active',
+        )
+    list_display = (
+        'direction',
+        'city',
+        'exchange_name',
+        'is_active',
+        )
     readonly_fields = (
         'course',
         'saved_partner_course',
-        # 'in_count',
-        # 'out_count',
         'is_active',
         'time_update',
         )
@@ -100,8 +106,6 @@ class DirectionAdmin(admin.ModelAdmin):
         'city',
         'direction',
         'course',
-        # 'percent',
-        # 'fix_amount',
         'in_count',
         'out_count',
         'saved_partner_course',
@@ -146,11 +150,6 @@ class DirectionAdmin(admin.ModelAdmin):
         return get_saved_course(obj)
     
     saved_partner_course.short_description = 'Сохранённый курс'
-    
-    # def out_count_field(self, obj=None):
-    #     return get_out_count(obj)
-        
-    # out_count_field.short_description = 'Сколько получаем'
 
     def has_add_permission(self, request: HttpRequest) -> bool:
         if not request.user.is_superuser:
@@ -167,17 +166,24 @@ class DirectionAdmin(admin.ModelAdmin):
         return super().has_change_permission(request, obj)
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        queryset = super().get_queryset(request)
+        queryset = super().get_queryset(request)\
+                            .select_related('city',
+                                            'direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to',
+                                            'city__city',
+                                            'city__exchange')
 
         if not request.user.is_superuser:
             account = get_or_set_user_account_cache(request.user)
-            queryset = queryset.select_related('city',
-                                               'direction',
-                                               'direction__valute_from',
-                                               'direction__valute_to',
-                                               'city__city',
-                                               'city__exchange')\
-                                .filter(city__exchange=account.exchange)
+            # queryset = queryset.select_related('city',
+            #                                    'direction',
+            #                                    'direction__valute_from',
+            #                                    'direction__valute_to',
+            #                                    'city__city',
+            #                                    'city__exchange')\
+            #                     .filter(city__exchange=account.exchange)
+            queryset = queryset.filter(city__exchange=account.exchange)
         return queryset
     
     @admin.action(description='Обновить активность выбранных Направлений')
@@ -197,14 +203,18 @@ class DirectionAdmin(admin.ModelAdmin):
 
 @admin.register(WorkingDay)
 class WorkingDayAdmin(admin.ModelAdmin):
-    list_display = ('name', )
+    list_display = (
+        'name',
+        )
 
 
 class PartnerCityStacked(admin.StackedInline):
     model = PartnerCity
     extra = 0
     show_change_link = True
-    classes = ['collapse']
+    classes = [
+        'collapse',
+        ]
     
     fields = (
         'get_city_name',
@@ -214,7 +224,9 @@ class PartnerCityStacked(admin.StackedInline):
     readonly_fields = (
         'get_city_name',
         )
-    list_select_related = ('direction', )
+    list_select_related = (
+        'direction',
+        )
 
     def has_add_permission(self, request: HttpRequest, *args) -> bool:
         return False
@@ -231,7 +243,10 @@ class PartnerCityStacked(admin.StackedInline):
 
 @admin.register(PartnerCity)
 class PartnerCityAdmin(admin.ModelAdmin):
-    list_display = ('city', 'exchange')
+    list_display = (
+        'city',
+        'exchange',
+        )
 
     fields = (
         'city',
@@ -240,8 +255,12 @@ class PartnerCityAdmin(admin.ModelAdmin):
         'time_update',
         'working_days',
     )
-    inlines = [DirectionStacked]
-    filter_horizontal = ('working_days', )
+    inlines = [
+        DirectionStacked,
+        ]
+    filter_horizontal = (
+        'working_days',
+        )
 
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         if not change:
@@ -344,7 +363,9 @@ class CommentStacked(BaseCommentStacked):
 #Отображение отзывов в админ панели
 @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
-    inlines = [CommentStacked]
+    inlines = [
+        CommentStacked,
+        ]
 
     def has_add_permission(self, request: HttpRequest) -> bool:
         if not request.user.is_superuser:
@@ -376,10 +397,20 @@ class ReviewStacked(BaseReviewStacked):
 
 @admin.register(Exchange)
 class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
-    list_display = ('name', 'en_name', 'account', 'has_partner_link')
-    readonly_fields = ('is_active', )
+    list_display = (
+        'name',
+        'en_name',
+        'account',
+        'has_partner_link',
+        )
+    readonly_fields = (
+        'is_active',
+        )
     filter_horizontal = ()
-    inlines = [PartnerCityStacked, ReviewStacked]
+    inlines = [
+        PartnerCityStacked,
+        ReviewStacked,
+        ]
 
     def has_partner_link(self, obj=None):
         return bool(obj.partner_link)

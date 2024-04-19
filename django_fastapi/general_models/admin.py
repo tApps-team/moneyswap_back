@@ -34,10 +34,10 @@ admin.site.unregister(CrontabSchedule)
 
 @admin.register(PartnerTimeUpdate)
 class PartnerTimeUpdateAdmin(admin.ModelAdmin):
-    list_display = ('name', )
-    # readonly_fields = ('name', )
+    list_display = (
+        'name',
+        )
     fields = (
-        # 'name',
         'amount',
         'unit_time',
     )
@@ -129,10 +129,23 @@ class ValuteAdmin(admin.ModelAdmin):
 
 #Базовое отображение комментариев в админ панели
 class BaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
-    list_display = ("username", "get_exchange", "time_create", "moderation")
-    readonly_fields = ('moderation', 'review')
-    ordering = ('-time_create', 'moderation')
-    list_filter = ('time_create', )
+    list_display = (
+        "username",
+        "get_exchange",
+        "time_create",
+        "moderation",
+        )
+    readonly_fields = (
+        'moderation',
+        'review',
+        )
+    ordering = (
+        '-time_create',
+        'moderation',
+        )
+    list_filter = (
+        'time_create',
+        )
 
     def get_exchange(self, obj):
         return obj.review.exchange
@@ -150,9 +163,16 @@ class BaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
 #Базовое отображение комментариев на странице связанного отзыва
 class BaseCommentStacked(admin.StackedInline):
     extra = 0
-    readonly_fields = ('moderation', )
-    ordering = ('-time_create', 'status')
-    classes = ['collapse']
+    readonly_fields = (
+        'moderation',
+        )
+    ordering = (
+        '-time_create',
+        'status',
+        )
+    classes = [
+        'collapse',
+        ]
 
     def get_queryset(self, request):
         return super().get_queryset(request)\
@@ -161,10 +181,24 @@ class BaseCommentStacked(admin.StackedInline):
 
 #Базовое отображение отзывов в админ панели
 class BaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
-    list_display = ("username", "exchange", "time_create", "moderation", "comment_count")
-    list_filter = ('time_create', )
-    readonly_fields = ('moderation', )
-    ordering = ('exchange__name', '-time_create', 'status')
+    list_display = (
+        "username",
+        "exchange",
+        "time_create",
+        "moderation",
+        "comment_count",
+        )
+    list_filter = (
+        'time_create',
+        )
+    readonly_fields = (
+        'moderation',
+        )
+    ordering = (
+        'exchange__name',
+        '-time_create',
+        'status',
+        )
     
     def comment_count(self, obj):
         return obj.comment_count
@@ -180,14 +214,20 @@ class BaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
 #Базовое отображение отзывов на странице связанного обменника
 class BaseReviewStacked(admin.StackedInline):
     extra = 0
-    readonly_fields = ('moderation', )
+    readonly_fields = (
+        'moderation',
+        )
     show_change_link = True
-    classes = ['collapse']
+    classes = [
+        'collapse',
+        ]
 
 
 #Базовое отображение готовых направлений в админ панели
 class BaseExchangeDirectionAdmin(admin.ModelAdmin):
-    list_display = ("get_display_name", )
+    list_display = (
+        "get_display_name",
+        )
 
     def has_change_permission(self, request, obj = None):
         return False
@@ -202,7 +242,9 @@ class BaseExchangeDirectionAdmin(admin.ModelAdmin):
 
 #Базовое отображение готовых направлений на странице связанного обменника
 class BaseExchangeDirectionStacked(admin.StackedInline):
-    classes = ['collapse']
+    classes = [
+        'collapse',
+        ]
     
     def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
         return False
@@ -213,8 +255,15 @@ class BaseExchangeDirectionStacked(admin.StackedInline):
 
 #Базовое отображение обменника в админ панели
 class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
-    list_display = ("name", "xml_url", 'is_active')
-    readonly_fields = ('direction_black_list', 'is_active')
+    list_display = (
+        'name',
+        'xml_url',
+        'is_active',
+        )
+    readonly_fields = (
+        'direction_black_list',
+        'is_active',
+        )
     fieldsets = [
         (
             None,
@@ -234,10 +283,20 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
 #Базовое отображение направлений в админ панели
 class BaseDirectionAdmin(admin.ModelAdmin):
-    list_display = ('get_direction_name', )
-    list_select_related = ('valute_from', 'valute_to')
-    search_fields = ('valute_from__code_name', 'valute_to__code_name')
-    readonly_fields = ('popular_count', )
+    list_display = (
+        'get_direction_name',
+        )
+    list_select_related = (
+        'valute_from',
+        'valute_to',
+        )
+    search_fields = (
+        'valute_from__code_name',
+        'valute_to__code_name',
+        )
+    readonly_fields = (
+        'popular_count',
+        )
 
     def get_direction_name(self, obj):
         return f'{obj.valute_from} -> {obj.valute_to}'

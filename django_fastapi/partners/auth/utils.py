@@ -41,10 +41,10 @@ def authenticate_partner(username: str,
         raise http_exc_401
 
 
-def create_token(user_id: int,
+def create_token(partner_id: int,
                  expires_delta: timedelta):
     encode = {
-        'id': user_id
+        'id': partner_id,
         }
     expires = datetime.now() + expires_delta
     encode.update({'exp': expires.timestamp()})
@@ -74,38 +74,38 @@ def get_current_partner(token: Annotated[str, Depends(o2auth_bearer)]):
         payload = jwt.decode(token,
                              JWT_SECRET_KEY,
                              algorithms=[JWT_ALGORITHM])
-        user_id = payload.get('id')
+        partner_id = payload.get('id')
 
-        if not user_id:
+        if not partner_id:
             raise JWTError()
         
-        return {'user_id': user_id}
+        return {'partner_id': partner_id}
         
     except JWTError:
         raise HTTPException(status_code=401)
         
 
-def check_refresh_token_or_raise_exception(token: str):
+def get_partner_or_raise_exception(refresh_token: str):
     http_exc_400 = HTTPException(status_code=400)
 
     try:
-        payload = jwt.decode(token,
+        payload = jwt.decode(refresh_token,
                              JWT_SECRET_KEY,
                              algorithms=[JWT_ALGORITHM])
     except JWTError:
         raise http_exc_400
     else:
-        user_id = payload.get('id')
+        partner_id = payload.get('id')
 
-        if not user_id:
+        if not partner_id:
             raise http_exc_400
 
-        partner = CustomUser.objects.filter(pk=user_id).first()
+        partner = CustomUser.objects.filter(pk=partner_id).first()
         
         if not partner:
             raise http_exc_400
         
-        if token != partner.refresh_token:
+        if refresh_token != partner.refresh_token:
             raise http_exc_400
         
         return partner

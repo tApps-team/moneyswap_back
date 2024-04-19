@@ -33,11 +33,26 @@ from .models import (Country,
 #Отображение городов в админ панели
 @admin.register(City)
 class CityAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code_name', 'country', 'is_parse')
-    list_editable = ('is_parse', )
-    list_select_related = ('country', )
-    ordering = ('-is_parse', 'name')
-    search_fields = ('name', 'country__name')
+    list_display = (
+        'name',
+        'code_name',
+        'country',
+        'is_parse',
+        )
+    list_editable = (
+        'is_parse',
+        )
+    list_select_related = (
+        'country',
+        )
+    ordering = (
+        '-is_parse',
+        'name',
+        )
+    search_fields = (
+        'name',
+        'country__name',
+        )
     list_per_page = 20
 
 
@@ -45,18 +60,32 @@ class CityAdmin(admin.ModelAdmin):
 class CityStacked(admin.StackedInline):
     model = City
     extra = 0
-    fields = ('is_parse', )
-    ordering = ('-is_parse', 'name')
+    fields = (
+        'is_parse',
+        )
+    ordering = (
+        '-is_parse',
+        'name',
+        )
     show_change_link = True
 
 
 #Отображение стран в админ панели
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
-    list_display = ("name", 'get_icon')
-    readonly_fields = ('get_icon', )
-    search_fields = ('name', )
-    inlines = [CityStacked]
+    list_display = (
+        "name",
+        'get_icon',
+        )
+    readonly_fields = (
+        'get_icon',
+        )
+    search_fields = (
+        'name',
+        )
+    inlines = [
+        CityStacked,
+        ]
 
     def get_icon(self, obj):
         if obj.icon_url:
@@ -85,7 +114,9 @@ class CommentStacked(BaseCommentStacked):
 #Отображение отзывов в админ панели
 @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
-    inlines = [CommentStacked]
+    inlines = [
+        CommentStacked,
+        ]
 
     def has_add_permission(self, request: HttpRequest) -> bool:
         if not request.user.is_superuser:
@@ -115,7 +146,10 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
 #Отображение обменников в админ панели
 @admin.register(Exchange)
 class ExchangeAdmin(BaseExchangeAdmin):
-    inlines = [ExchangeDirectionStacked, ReviewStacked]
+    inlines = [
+        ExchangeDirectionStacked,
+        ReviewStacked,
+        ]
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         return super().get_queryset(request)
@@ -157,7 +191,6 @@ class ExchangeAdmin(BaseExchangeAdmin):
 #Отображение направлений в админ панели
 @admin.register(Direction)
 class DirectionAdmin(BaseDirectionAdmin):
-    # readonly_fields = ('display_name', 'actual_course')
 
     def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
         readonly_fileds = super().get_readonly_fields(request, obj)
@@ -172,9 +205,7 @@ class DirectionAdmin(BaseDirectionAdmin):
 @admin.register(ExchangeDirection)
 class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     def get_display_name(self, obj):
-        # return f'{obj.exchange} ({obj.city}: {obj.valute_from} -> {obj.valute_to})'
         return f'{obj.exchange} ({obj.city}: {obj.direction})'
-
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('exchange')

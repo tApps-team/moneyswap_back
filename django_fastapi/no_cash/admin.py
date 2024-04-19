@@ -30,7 +30,9 @@ class CommentStacked(BaseCommentStacked):
 #Отображение отзывов в админ панели
 @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
-    inlines = [CommentStacked]
+    inlines = [
+        CommentStacked,
+        ]
 
 
 #Отображение отзывов на странице связанного обменника
@@ -52,7 +54,10 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
 #Отображение обменников в админ панели
 @admin.register(Exchange)
 class ExchangeAdmin(BaseExchangeAdmin):
-    inlines = [ExchangeDirectionStacked, ReviewStacked]
+    inlines = [
+        ExchangeDirectionStacked,
+        ReviewStacked,
+        ]
 
     def save_model(self, request, obj, form, change):
         update_fields = []
@@ -95,7 +100,6 @@ class DirectionAdmin(BaseDirectionAdmin):
 @admin.register(ExchangeDirection)
 class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     def get_display_name(self, obj):
-        # return f'{obj.exchange} ({obj.valute_from} -> {obj.valute_to})'
         return f'{obj.exchange} ({obj.direction})'
     
     get_display_name.short_description = 'Название'

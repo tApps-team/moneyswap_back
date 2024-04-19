@@ -23,29 +23,6 @@ WORKING_DAYS_DICT = {
 }
 
 
-# def get_in_count(direction):
-#         if direction is None:
-#             return 0
-#         actual_course = direction.direction.actual_course
-#         if actual_course < 1:
-#             convert_course = 1 / actual_course
-#             res = convert_course + (convert_course * direction.percent / 100) + direction.fix_amount
-#         else:
-#             res = 1
-#         return round(res, 2)
-
-
-# def get_out_count(direction):
-#         if direction is None:
-#             return 0
-#         actual_course = direction.direction.actual_course
-#         if actual_course < 1:
-#             res = 1
-#         else:
-#             res = actual_course - (actual_course * direction.percent / 100) - direction.fix_amount
-#         return round(res, 2)
-
-
 def get_course_count(direction):
         if direction is None:
             return 0
@@ -88,8 +65,6 @@ def get_partner_directions(city: str,
         direction.exchange = direction.city.exchange
         direction.valute_from = valute_from
         direction.valute_to = valute_to
-        # direction.in_count = get_in_count(direction)
-        # direction.out_count = get_out_count(direction)
         direction.min_amount = 'Не установлено'
         direction.max_amount = 'Не установлено'
         direction.params = 'Не установлено'
@@ -99,7 +74,6 @@ def get_partner_directions(city: str,
 
 
 def generate_partner_cities(partner_cities: list[PartnerCity]):
-
     for city in partner_cities:
         city.name = city.city.name
         city.code_name = city.city.code_name
@@ -143,10 +117,7 @@ def generate_valute_list(queries: list[CashDirection],
     valute_list = sorted({query.__getattribute__(marker) for query in queries},
                          key=lambda el: el.code_name)
 
-    valute_type_list = sorted({valute.type_valute for valute in valute_list})
-
     json_dict = defaultdict(list)
-    json_dict.fromkeys(valute_type_list)
 
     for _id, valute in enumerate(valute_list, start=1):
         type_valute = valute.type_valute
@@ -158,7 +129,7 @@ def generate_valute_list(queries: list[CashDirection],
             'icon_url': try_generate_icon_url(valute),
         }
 
-        json_dict[type_valute] = json_dict.get(type_valute, []) + [valute_dict]
+        json_dict[type_valute].append(valute_dict)
     # print(len(connection.queries))
     return json_dict
 

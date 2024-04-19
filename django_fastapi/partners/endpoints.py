@@ -42,7 +42,7 @@ partner_router = APIRouter(prefix='/partner',
 @partner_router.get('/partner_cities',
                     response_model=list[PartnerCitySchema])
 def get_partner_cities(partner: partner_dependency):
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     partner_cities = PartnerCity.objects.select_related('exchange',
                                                         'city',
@@ -78,7 +78,7 @@ def get_cities_for_country(country_name: str):
 def get_partner_directions_by_city(partner: partner_dependency,
                                    code_name: str):
     # print(len(connection.queries))
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     directions = Direction.objects.select_related('city',
                                                   'city__city',
@@ -90,7 +90,6 @@ def get_partner_directions_by_city(partner: partner_dependency,
                                     .filter(city__exchange__account__pk=partner_id,
                                             city__city__code_name=code_name.upper())\
                                     .all()
-
     # print(len(connection.queries))
     return generate_partner_directions_by_city(directions)
 
@@ -118,7 +117,7 @@ def get_available_valutes_for_partner(base: str):
 @partner_router.post('/change_password')
 def change_user_password(partner: partner_dependency,
                          new_password: NewPasswordSchema):
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     try:
         user = User.objects.select_related('moderator_account')\
@@ -154,7 +153,7 @@ def get_actual_course_for_direction(partner: partner_dependency,
 @partner_router.get('/account_info',
                     response_model=AccountInfoSchema)
 def get_account_info(partner: partner_dependency):
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     try:
         exchange = Exchange.objects.select_related('account')\
@@ -172,7 +171,7 @@ def get_account_info(partner: partner_dependency):
 def add_partner_city(partner: partner_dependency,
                      city: AddPartnerCitySchema):
     print(len(connection.queries))
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
     try:
         city_model = City.objects.get(code_name=city.city)
         exchange = Exchange.objects.select_related('account')\
@@ -191,9 +190,7 @@ def add_partner_city(partner: partner_dependency,
 
         try:
             new_partner_city = PartnerCity.objects.create(**data)
-            #
             make_city_active(city_model)
-            #
         except IntegrityError:
             raise HTTPException(status_code=423, # ?
                                 detail='Такой город уже существует')
@@ -209,7 +206,7 @@ def add_partner_city(partner: partner_dependency,
 def edit_partner_city(partner: partner_dependency,
                       edited_city: AddPartnerCitySchema):
     print(len(connection.queries))
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     partner_city = PartnerCity.objects.select_related('exchange',
                                                       'exchange__account',
@@ -246,7 +243,7 @@ def edit_partner_city(partner: partner_dependency,
 @partner_router.delete('/delete_partner_city')
 def delete_partner_city(partner: partner_dependency,
                         city_id: int):
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     city_on_delete = PartnerCity.objects.select_related('exchange__account')\
                                         .filter(exchange__account__pk=partner_id,
@@ -264,7 +261,7 @@ def delete_partner_city(partner: partner_dependency,
 @partner_router.post('/add_partner_direction')
 def add_partner_direction(partner: partner_dependency,
                           new_direction: AddPartnerDirectionSchema):
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     data = new_direction.model_dump()
 
@@ -280,7 +277,7 @@ def add_partner_direction(partner: partner_dependency,
         direction = CashDirection.objects.select_related('valute_from',
                                                         'valute_to')\
                                             .get(valute_from__code_name=valute_from,
-                                                valute_to__code_name=valute_to)
+                                                 valute_to__code_name=valute_to)
     except Exception:
         raise HTTPException(status_code=404)
     else:
@@ -292,7 +289,8 @@ def add_partner_direction(partner: partner_dependency,
             return {'status': 'success',
                     'details': f'Партнерское направление {direction.display_name} добавлено'}
         except IntegrityError:
-            raise HTTPException(status_code=423)
+            raise HTTPException(status_code=423,
+                                detail='Такое направление уже существует')
     
 
 
@@ -300,7 +298,7 @@ def add_partner_direction(partner: partner_dependency,
 def edit_partner_directions_by_city(partner: partner_dependency,
                                     response_body: ListEditedPartnerDirectionSchema):
     # print(len(connection.queries))
-    partner_id = partner.get('user_id')
+    partner_id = partner.get('partner_id')
 
     data: dict = response_body.model_dump()
 
@@ -334,21 +332,21 @@ def edit_partner_directions_by_city(partner: partner_dependency,
     else:
         return {'status': 'success',
                 'details': f'updated {len(edited_direction_list)} directions'}
-    # for query in connection.queries:
-    #     print(query)
-    # print(len(connection.queries))
+        # for query in connection.queries:
+        #     print(query)
+        # print(len(connection.queries))
 
 
-@partner_router.delete('/delete_partner_directions')
+@partner_router.delete('/delete_partner_direction')
 def delete_partner_direction(partner: partner_dependency,
                              direction_id: int):
-    partner_id = partner.get('user_id')
-
-    direction_on_delete = Direction.objects.select_related('city__exchange__account')\
-                                            .filter(city__exchange__account__pk=partner_id,
-                                                    pk=direction_id)
+    partner_id = partner.get('partner_id')
     
-    if not direction_on_delete:
+    try:
+        direction_on_delete = Direction.objects.select_related('city__exchange__account')\
+                                                .get(city__exchange__account__pk=partner_id,
+                                                        pk=direction_id)
+    except ObjectDoesNotExist:
         raise HTTPException(status_code=404)
     
     direction_on_delete.delete()
