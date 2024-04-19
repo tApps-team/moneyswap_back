@@ -7,7 +7,7 @@ from celery import shared_task
 
 from django.db.models import Q
 
-from general_models.utils.base import get_actual_datetime, get_timedelta
+from general_models.utils.base import get_timedelta
 
 from cash.models import Direction
 
@@ -26,13 +26,12 @@ def parse_cash_courses():
     if directions:
         for direction in directions:
             valid_direction_name = direction.display_name.replace('CASH','')
-            # valute_from, valute_to = valid_direction_name.split(' -> ')
+
             valute_list = valid_direction_name.split(' -> ')
 
             valute_from, valute_to = ['USDT' if valute.startswith('USDT') else valute\
                                         for valute in valute_list]
 
-            # valute_from, valute_to = valid_valute_names(valute_list)
             try:
                 resp = requests.get(
                     f'https://api.coinbase.com/v2/prices/{valute_from}-{valute_to}/spot',

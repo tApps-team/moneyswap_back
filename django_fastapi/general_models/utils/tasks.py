@@ -1,3 +1,7 @@
+import functools
+
+from django.core.cache import cache
+
 from bs4 import BeautifulSoup
 
 from cash import models as cash_models
