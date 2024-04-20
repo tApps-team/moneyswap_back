@@ -148,7 +148,7 @@ services:
     volumes:
       - flower_data:/data
     ports:
-      - 5555:5555
+      - '5555:5555'
 
   psql_db:
     image: postgres:14
