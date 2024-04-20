@@ -141,7 +141,7 @@ services:
     # command: sh -c 'celery -A project flower'
     command:
       - "celery"
-      - "--broker=redis://redis_db:6379"
+      - "--broker=${REDIS_URL}"
       - "flower"
     # command: ['celery', 'flower', '--broker=redis://redis_db:6379', '--port=5555']
     environment:
