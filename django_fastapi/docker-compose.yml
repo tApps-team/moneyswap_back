@@ -139,6 +139,12 @@ services:
   flower:
     build: .
     command: sh -c 'celery -A project flower'
+    environment:
+      - POSTGRES_HOST=psql_db
+      - SELENIUM_DRIVER=firefox
+      - REDIS_HOST=redis_db
+    env_file:
+      - ./.env
     volumes:
       - flower_data:/data
     ports:
