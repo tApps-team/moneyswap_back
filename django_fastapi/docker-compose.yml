@@ -139,7 +139,12 @@ services:
   flower:
     image: mher/flower
     # command: sh -c 'celery -A project flower'
-    command: ['flower', '--broker=redis://redis_db:6379', '--port=5555']
+    command:
+      - "celery"
+      - "--broker=redis://redis_db:6379"
+      - "flower"
+      - "--broker_api=http://guest:guest@rabbitmq:15672/api//"
+    # command: ['celery', 'flower', '--broker=redis://redis_db:6379', '--port=5555']
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
