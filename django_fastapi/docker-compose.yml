@@ -143,7 +143,6 @@ services:
       - "celery"
       - "--broker=redis://redis_db:6379"
       - "flower"
-      - "--broker_api=http://guest:guest@rabbitmq:15672/api//"
     # command: ['celery', 'flower', '--broker=redis://redis_db:6379', '--port=5555']
     environment:
       - POSTGRES_HOST=psql_db
