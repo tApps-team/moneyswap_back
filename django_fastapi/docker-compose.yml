@@ -137,8 +137,9 @@ services:
           max-size: "20m"
 
   flower:
-    build: .
-    command: sh -c 'celery -A project flower'
+    image: mher/flower
+    # command: sh -c 'celery -A project flower'
+    command: ['flower', '--broker=redis://redis_db:6379', '--port=5555']
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
