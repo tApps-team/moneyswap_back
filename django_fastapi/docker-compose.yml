@@ -84,6 +84,18 @@ services:
     volumes:
       - redis_data:/data
 
+  rabbitmq3:
+    image: rabbitmq:management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "20m"
+
   celery_worker:
     build: .
     pull_policy: build
@@ -98,6 +110,7 @@ services:
     depends_on:
       - redis_db
       - psql_db
+      - rabbitmq3
     logging:
       driver: "json-file"
       options:
@@ -117,6 +130,7 @@ services:
       - redis_db
       - psql_db
       - celery_worker
+      - rabbitmq3
     logging:
       driver: "json-file"
       options:
@@ -138,5 +152,6 @@ volumes:
   selenium-data:
   postgres-data:
   redis_data:
+  rabbitmq_data:
   static:
   media:

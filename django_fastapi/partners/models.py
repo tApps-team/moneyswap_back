@@ -61,9 +61,13 @@ class WorkingDay(models.Model):
     class Meta:
         verbose_name = 'Рабочий день'
         verbose_name_plural = 'Рабочие дни'
+        indexes = [
+            models.Index(fields=['code_name']),
+        ]
 
     def __str__(self):
         return self.name
+
 
 class PartnerCity(models.Model):
     exchange = models.ForeignKey(Exchange,
