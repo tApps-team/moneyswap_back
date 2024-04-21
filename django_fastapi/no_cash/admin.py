@@ -48,7 +48,10 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
     model = ExchangeDirection
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('exchange')
+        return super().get_queryset(request).select_related('exchange',
+                                                            'direction',
+                                                            'direction__valute_from',
+                                                            'direction__valute_to')
 
 
 #Отображение обменников в админ панели

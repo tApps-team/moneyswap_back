@@ -140,7 +140,11 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
     model = ExchangeDirection
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        return super().get_queryset(request).select_related('exchange')
+        return super().get_queryset(request).select_related('exchange',
+                                                            'city',
+                                                            'direction',
+                                                            'direction__valute_from',
+                                                            'direction__valute_to')
 
 
 #Отображение обменников в админ панели
@@ -152,7 +156,10 @@ class ExchangeAdmin(BaseExchangeAdmin):
         ]
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        return super().get_queryset(request)
+        return super().get_queryset(request)\
+                        .prefetch_related('direction_black_list',
+                                          'direction_black_list__direction',
+                                          'direction_black_list__city')
     
     def has_add_permission(self, request: HttpRequest) -> bool:
         return super().has_add_permission(request)

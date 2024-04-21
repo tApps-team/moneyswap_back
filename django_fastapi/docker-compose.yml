@@ -100,7 +100,7 @@ services:
     build: .
     pull_policy: build
     restart: on-failure
-    command: sh -c 'celery -A project worker -l info -c 20 -Ofair'
+    command: sh -c 'celery -A project worker -l info -c 8 -Ofair'
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -137,13 +137,8 @@ services:
           max-size: "20m"
 
   flower:
-    image: mher/flower
-    # command: sh -c 'celery -A project flower'
-    command:
-      - "celery"
-      - "--broker=${REDIS_URL}"
-      - "flower"
-    # command: ['celery', 'flower', '--broker=redis://redis_db:6379', '--port=5555']
+    build: .
+    command: sh -c 'celery -A project flower'
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -153,7 +148,7 @@ services:
     volumes:
       - flower_data:/data
     ports:
-      - '5555:5555'
+      - '5554:5555'
 
   psql_db:
     image: postgres:14
