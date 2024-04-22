@@ -34,7 +34,7 @@ services:
     # container_name: django_fastapi
     depends_on:
       - psql_db
-      - redis_db
+      # - redis_db
       # - celery_worker
       - firefox
     logging:
@@ -108,9 +108,9 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - redis_db
+      # - redis_db
       - psql_db
-      # - rabbitmq3
+      - rabbitmq3
     logging:
       driver: "json-file"
       options:
@@ -127,10 +127,10 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - redis_db
+      # - redis_db
       - psql_db
       - celery_worker
-      # - rabbitmq3
+      - rabbitmq3
     logging:
       driver: "json-file"
       options:
@@ -142,7 +142,7 @@ services:
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
-      - REDIS_HOST=redis_db
+      # - REDIS_HOST=redis_db
     env_file:
       - ./.env
     volumes:
@@ -165,8 +165,8 @@ services:
 volumes:
   selenium-data:
   postgres-data:
-  redis_data:
-  # rabbitmq_data:
+  # redis_data:
+  rabbitmq_data:
   flower_data:
   static:
   media:
