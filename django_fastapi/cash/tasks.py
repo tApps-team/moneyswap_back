@@ -43,7 +43,7 @@ def create_cash_directions_for_exchange(exchange_name: str):
 def create_direction(dict_for_parse: dict,
                      xml_file: str):
     print('*' * 10)
-    print('inside task') 
+    print('inside task')
 
     try:
         direction = Direction.objects.get(valute_from=dict_for_parse['valute_from_id'],
