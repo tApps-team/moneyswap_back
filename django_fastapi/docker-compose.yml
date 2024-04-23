@@ -80,7 +80,7 @@ services:
     #   - 6379:6379
     env_file:
       - ./.env
-    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --replica-read-only no --maxmemory 200mb --maxmemory-policy allkeys-lru
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --replica-read-only no
     volumes:
       - redis_data:/data
     logging:
