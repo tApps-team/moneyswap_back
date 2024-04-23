@@ -1,3 +1,4 @@
+# from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel, Field
 
 
@@ -53,3 +54,9 @@ class SpecialDirectionMultiModel(BaseModel):
     out_count: float
     min_amount: str
     max_amount: str
+
+
+
+# class IconSchema(BaseModel):
+#     icon: UploadFile = File(...)
+# # from pydantic import BaseModel
