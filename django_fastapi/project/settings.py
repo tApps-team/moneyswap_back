@@ -99,19 +99,19 @@ DATABASES = {
 }
 
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": REDIS_URL,
-    }
-}
-
 # CACHES = {
 #     "default": {
-#         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-#         "LOCATION": "./cache_holder",
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": REDIS_URL,
 #     }
 # }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "./cache_holder",
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -163,9 +163,9 @@ PROTOCOL = 'https://'
 CSRF_TRUSTED_ORIGINS = [f'{PROTOCOL}{SITE_DOMAIN}']
 
 #RabbitMQ  PROD
-# CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq3:5672/'
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq3:5672/'
 
-CELERY_BROKER_URL = REDIS_URL
-CELERY_RESULT_BACKEND = REDIS_URL
+# CELERY_BROKER_URL = REDIS_URL
+# CELERY_RESULT_BACKEND = REDIS_URL
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
