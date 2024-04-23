@@ -150,8 +150,8 @@ DJANGO_PREFIX = "/django"
 
 ####SWITCH FOR DEV/PROD####
 
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 SITE_DOMAIN = 'api.moneyswap.online'
 # SITE_DOMAIN = '127.0.0.1:81'

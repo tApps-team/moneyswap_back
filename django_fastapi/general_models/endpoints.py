@@ -1,7 +1,6 @@
 from typing import List
 
 from fastapi import APIRouter, Request, Depends
-from fastapi import FastAPI, File, UploadFile
 
 from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions
 
@@ -53,10 +52,3 @@ def get_actual_course_for_direction(valute_from: str, valute_to: str):
     direction = Direction.objects\
                             .get(display_name=f'{valute_from.upper()} -> {valute_to.upper()}')
     return direction.actual_course
-
-
-
-@common_router.post('/update_icon')
-def update_icon(icon: UploadFile = File(...)):
-    icon_url = './icons/country/' + icon.filename
-    Country.objects.update(icon_url=icon_url)
