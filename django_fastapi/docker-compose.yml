@@ -104,7 +104,7 @@ services:
     build: .
     pull_policy: build
     restart: on-failure
-    command: sh -c 'celery -A project worker -l info -Ofair --autoscale=20,4'
+    command: sh -c 'celery -A project worker -P eventlet -c 200'
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
