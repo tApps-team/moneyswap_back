@@ -45,7 +45,9 @@ class DirectionSchema(BaseModel):
     valute_to: str
     icon_valute_to: str
     in_count: float | None = Field(default=None)
+    in_count_type: str
     out_count: float | None = Field(default=None)
+    out_count_type: str
     is_active: bool
 
 

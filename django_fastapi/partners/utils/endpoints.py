@@ -104,9 +104,11 @@ def generate_partner_directions_by_city(directions: list[Direction]):
     for direction in directions:
         direction.valute_from = direction.direction.valute_from.code_name
         direction.icon_valute_from = try_generate_icon_url(direction.direction.valute_from)
+        direction.in_count_type = direction.direction.valute_from.type_valute
 
         direction.valute_to = direction.direction.valute_to.code_name
         direction.icon_valute_to = try_generate_icon_url(direction.direction.valute_to)
+        direction.out_count_type = direction.direction.valute_to.type_valute
 
     # print(len(connection.queries))
     return directions
