@@ -73,38 +73,38 @@ services:
       options:
           max-size: "20m"
 
-  # redis_db:
-  #   image: redis:latest
-  #   restart: on-failure
-  #   # ports:
-  #   #   - 6379:6379
-  #   env_file:
-  #     - ./.env
-  #   command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --replica-read-only no --maxmemory 200mb --maxmemory-policy allkeys-lru
-  #   volumes:
-  #     - redis_data:/data
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #         max-size: "20m"
-
-  rabbitmq3:
-    image: rabbitmq:management
-    ports:
-      - '5672:5672'
-      - '15672:15672'
+  redis_db:
+    image: redis:latest
+    restart: on-failure
+    # ports:
+    #   - 6379:6379
+    env_file:
+      - ./.env
+    command: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes --replica-read-only no --maxmemory 200mb --maxmemory-policy allkeys-lru
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+      - redis_data:/data
     logging:
       driver: "json-file"
       options:
           max-size: "20m"
 
+  # rabbitmq3:
+  #   image: rabbitmq:management
+  #   ports:
+  #     - '5672:5672'
+  #     - '15672:15672'
+  #   volumes:
+  #     - rabbitmq_data:/var/lib/rabbitmq
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #         max-size: "20m"
+
   celery_worker:
     build: .
     pull_policy: build
     restart: on-failure
-    command: sh -c 'celery -A project worker -P eventlet -c 200'
+    command: sh -c 'celery -A project worker -l info -c 20 -Ofair'
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -112,17 +112,14 @@ services:
     env_file:
       - ./.env
     depends_on:
-      # - redis_db
+      - redis_db
       - psql_db
-      - rabbitmq3
+      # - rabbitmq3
     logging:
       driver: "json-file"
       options:
           max-size: "20m"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
+
 
   celery_beat:
     build: .
@@ -135,10 +132,10 @@ services:
     env_file:
       - ./.env
     depends_on:
-      # - redis_db
+      - redis_db
       - psql_db
       - celery_worker
-      - rabbitmq3
+      # - rabbitmq3
     logging:
       driver: "json-file"
       options:
@@ -173,8 +170,8 @@ services:
 volumes:
   selenium-data:
   postgres-data:
-  # redis_data:
-  rabbitmq_data:
+  redis_data:
+  # rabbitmq_data:
   flower_data:
   static:
   media:
