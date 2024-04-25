@@ -27,9 +27,6 @@ def run_cash_background_tasks(task: Proxy,
                                                 .objects\
                                                 .get_or_create(city=city_model,
                                                             direction=direction)
-                                                # .get_or_create(city=city,
-                                                #                valute_from=valute_from,
-                                                #                valute_to=valute_to)
 
                         exchange.direction_black_list.add(black_list_element)
             else:
@@ -43,7 +40,11 @@ def run_cash_background_tasks(task: Proxy,
                     if dict_for_parse.get('_state'):
                         dict_for_parse.pop('_state')
                     
-                    task.delay(dict_for_parse, xml_file)
+                    try:
+                        task.delay(dict_for_parse, xml_file)
+                    except Exception as ex:
+                        print(ex)
+                        continue
         except Exception as ex:
             print(ex)
 
@@ -63,6 +64,11 @@ def run_update_tasks(task: Proxy,
         dict_for_parse['valute_from_id'] = valute_from_id
         dict_for_parse['valute_to_id'] = valute_to_id
         dict_for_parse['city'] = city
+
         if dict_for_parse.get('_state'):
             dict_for_parse.pop('_state')
-        task.delay(dict_for_parse, xml_file)
+
+        try:
+            task.delay(dict_for_parse, xml_file)
+        except Exception as ex:
+            print(ex)

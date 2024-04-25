@@ -453,6 +453,67 @@
 
 
 
+    {
+        "model": "partners.workingday",
+        "pk": 1,
+        "fields": {
+            "name": "Понедельник",
+            "code_name": "Пн"
+                }
+    },
+    {
+        "model": "partners.workingday",
+        "pk": 2,
+        "fields": {
+            "name": "Вторник",
+            "code_name": "Вт"
+                }
+    },
+    {
+        "model": "partners.workingday",
+        "pk": 2,
+        "fields": {
+            "name": "Среда",
+            "code_name": "Ср"
+                }
+    },
+    {
+        "model": "partners.workingday",
+        "pk": 2,
+        "fields": {
+            "name": "Четверг",
+            "code_name": "Чт"
+                }
+    },
+    {
+        "model": "partners.workingday",
+        "pk": 2,
+        "fields": {
+            "name": "Пятница",
+            "code_name": "Пт"
+                }
+    },
+    {
+        "model": "partners.workingday",
+        "pk": 2,
+        "fields": {
+            "name": "Суббота",
+            "code_name": "Сб"
+                }
+    },
+    {
+        "model": "partners.workingday",
+        "pk": 2,
+        "fields": {
+            "name": "Воскресенье",
+            "code_name": "Вс"
+                }
+    },
+
+
+
+
+
 
     {
         "model": "no_cash.exchange",

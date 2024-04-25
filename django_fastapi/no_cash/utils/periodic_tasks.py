@@ -12,6 +12,12 @@ def run_no_cash_background_tasks(task: Proxy,
         dict_for_parse = exchange.__dict__.copy()
         dict_for_parse['valute_from_id'] = valute_from_id
         dict_for_parse['valute_to_id'] = valute_to_id
+
         if dict_for_parse.get('_state'):
             dict_for_parse.pop('_state')
-        task.delay(dict_for_parse, xml_file)
+
+        try:    
+            task.delay(dict_for_parse, xml_file)
+        except Exception as ex:
+            print(ex)
+            continue

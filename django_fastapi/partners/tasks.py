@@ -48,7 +48,7 @@ def parse_cash_courses():
                     direction.save()
                 except Exception:
                     pass
-            sleep(0.3)
+            sleep(0.4)
 
 
 @shared_task(name='check_update_time_for_directions')
