@@ -82,6 +82,26 @@ class PartnerTimeUpdate(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+
+class Guest(models.Model):
+    username = models.CharField('Никнейм',
+                                max_length=255,
+                                blank=True,
+                                null=True,
+                                default=None)
+    tg_id = models.BigIntegerField('Telegram id')
+
+    class Meta:
+        verbose_name = 'Гостевой пользователь'
+        verbose_name_plural = 'Гостевые пользователи'
+        indexes = [
+            models.Index(fields=('tg_id', )),
+        ]
+
+    def __str__(self):
+        return f'{self.username} - {self.tg_id}'
 
 
 #Абстрактная модель отзыва/комментария (для наследования)
