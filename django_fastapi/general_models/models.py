@@ -92,7 +92,7 @@ class Guest(models.Model):
                                 null=True,
                                 default=None)
     tg_id = models.BigIntegerField('Telegram id',
-                                   unique=True)
+                                   primary_key=True)
 
     class Meta:
         verbose_name = 'Гостевой пользователь'
