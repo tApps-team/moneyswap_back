@@ -25,6 +25,19 @@ pipeline {
                     '''
                 }
             }
-        
+        stage("Build services") {
+                steps {
+                    sh '''
+                        ssh root@65.21.49.125 'cd moneyswap_back/django_fastapi && docker-compose build --pull django_fastapi'
+                    '''
+                }
+            }
+        stage("Update services") {
+                steps {
+                    sh '''
+                        ssh root@65.21.49.125 'cd moneyswap_back/django_fastapi && docker rollout -w 30 django_fastapi'
+                    '''
+                }
+            }
         }
     }

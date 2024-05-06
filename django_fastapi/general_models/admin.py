@@ -17,7 +17,7 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 
 from .utils.admin import ReviewAdminMixin
 from .utils.endpoints import try_generate_icon_url
-from .models import Valute, PartnerTimeUpdate
+from .models import Valute, PartnerTimeUpdate, Guest
 
 
 #DONT SHOW PERIODIC TASKS IN ADMIN PANEL
@@ -78,6 +78,18 @@ class PartnerTimeUpdateAdmin(admin.ModelAdmin):
         else:
             return super().save_model(request, obj, form, change)
 
+
+#Отображение Гостевых пользователей в админ панели
+@admin.register(Guest)
+class GuestAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'tg_id',
+    )
+    readonly_fields = (
+        'username',
+        'tg_id',
+    )
 
 #Отображение валют в админ панели
 @admin.register(Valute)
