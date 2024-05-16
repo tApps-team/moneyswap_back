@@ -44,6 +44,8 @@ class SpecialDirectionMultiModel(BaseModel):
     id: int
     # name: str
     name: MultipleName
+    exchange_id: int
+    exchange_marker: str
     partner_link: str | None
     review_count: int
     valute_from: str
@@ -56,7 +58,24 @@ class SpecialDirectionMultiModel(BaseModel):
     max_amount: str
 
 
+class ReviewViewSchema(BaseModel):
+    id: int
+    username: str
+    review_date: str
+    review_time: str
+    grade: int
+    text: str
 
-# class IconSchema(BaseModel):
-#     icon: UploadFile = File(...)
-# # from pydantic import BaseModel
+
+class ReviewsByExchangeSchema(BaseModel):
+    page: int
+    element_on_page: int
+    content: list[ReviewViewSchema]
+
+
+class AddReviewSchema(BaseModel):
+    exchange_id: int
+    exchange_marker: str
+    tg_id: int
+    text: str
+    grade: int

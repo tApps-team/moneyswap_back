@@ -16,6 +16,10 @@ def get_available_countries(cities):
                                 .prefetch_related('cities').all()
 
     for country in countries:
+        #
+        # country.city_list = [el for el in country.cities.all()\
+        #                       if el.is_parse == True or el.has_partner_cities == True]
+        #
         country.city_list = list(filter(lambda el: el.is_parse == True,
                                         country.cities.all()))
         for city in country.city_list:

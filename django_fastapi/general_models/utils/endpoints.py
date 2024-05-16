@@ -72,9 +72,13 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
 
     direction_list = []
 
+    exchange_marker = 'no_cash'
+
     partner_link_pattern = f'&cur_from={valute_from}&cur_to={valute_to}'
+    
     if city:
         partner_link_pattern += f'&city={city}'
+        exchange_marker = 'cash'
 
     for _id, query in enumerate(queries, start=1):
         if query.exchange.__dict__.get('partner_link') and query.exchange.__dict__.get('period_for_create'):
@@ -94,6 +98,11 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
 
         exchange_direction = query.__dict__ | query.exchange.__dict__
         exchange_direction['id'] = _id
+        exchange_direction['exchange_id'] = query.exchange.id
+        
+        if not hasattr(query,'exchange_marker'):
+            exchange_direction['exchange_marker'] = exchange_marker
+
         exchange_direction['name'] = MultipleName(name=exchange_direction['name'],
                                                   en_name=exchange_direction['en_name'])
         exchange_direction['valute_from'] = valute_from

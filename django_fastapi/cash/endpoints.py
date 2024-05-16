@@ -28,6 +28,10 @@ cash_router = APIRouter(prefix='/cash',
                  response_model=List[RuEnCountryModel],
                  response_model_by_alias=False)
 def get_available_coutries(request: Request):
+    #
+    # cities = City.objects.filter(Q(is_parse=True) | Q(has_partner_cities=True))\
+    #                         .select_related('country').all()
+    #
     cities = City.objects.filter(is_parse=True)\
                             .select_related('country').all()
 

@@ -1,4 +1,7 @@
+from typing import Any
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http import HttpRequest
 
 from no_cash.models import Exchange, Direction, ExchangeDirection, Review, Comment
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
@@ -33,6 +36,10 @@ class ReviewAdmin(BaseReviewAdmin):
     inlines = [
         CommentStacked,
         ]
+    
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        return super().get_queryset(request)\
+                        .select_related('guest')
 
 
 #Отображение отзывов на странице связанного обменника

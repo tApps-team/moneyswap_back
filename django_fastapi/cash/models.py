@@ -6,7 +6,8 @@ from general_models.models import (BaseExchangeDirection,
                                    ParseExchange,
                                    BaseDirection,
                                    BaseReview,
-                                   BaseComment)
+                                   BaseComment,
+                                   Guest)
 
 
 #Модель страны
@@ -49,6 +50,7 @@ class City(models.Model):
                                 verbose_name='Страна',
                                 related_name='cities')
     is_parse = models.BooleanField('Статус парсинга', default=False)
+    # has_partner_cities: bool
 
     class Meta:
         verbose_name = 'Город'
@@ -75,6 +77,13 @@ class Review(BaseReview):
                                  on_delete=models.CASCADE,
                                  verbose_name='Наличный обменник',
                                  related_name='reviews')
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='cash_reviews',
+                              on_delete=models.CASCADE)
     
     class Meta:
         unique_together = (('exchange','username','time_create'), )
@@ -92,6 +101,13 @@ class Comment(BaseComment):
                                on_delete=models.CASCADE,
                                verbose_name='Отзыв',
                                related_name='comments')
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='cash_comments',
+                              on_delete=models.CASCADE)
     
     class Meta:
         unique_together = (('review','username','time_create'), )

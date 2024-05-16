@@ -63,6 +63,7 @@ def get_partner_directions(city: str,
 
     for direction in directions:
         direction.exchange = direction.city.exchange
+        direction.exchange_marker = 'partner'
         direction.valute_from = valute_from
         direction.valute_to = valute_to
         direction.min_amount = 'Не установлено'

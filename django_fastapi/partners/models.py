@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 
-from general_models.models import BaseExchange, BaseReview, BaseComment
+from general_models.models import BaseExchange, BaseReview, BaseComment, Guest
 
 from cash.models import Direction as CashDirection, City
 
@@ -156,6 +156,13 @@ class Review(BaseReview):
                                  on_delete=models.CASCADE,
                                  verbose_name='Наличный обменник',
                                  related_name='reviews')
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='partner_reviews',
+                              on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = 'Отзыв'
@@ -171,6 +178,13 @@ class Comment(BaseComment):
                                on_delete=models.CASCADE,
                                verbose_name='Отзыв',
                                related_name='comments')
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='partner_comments',
+                              on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = 'Комментарий'

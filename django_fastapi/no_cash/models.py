@@ -7,7 +7,8 @@ from general_models.models import (Valute,
                                    BaseDirection,
                                    BaseExchangeDirection,
                                    BaseReview,
-                                   BaseComment)
+                                   BaseComment,
+                                   Guest)
 
 
 #Модель обменника 
@@ -21,6 +22,13 @@ class Review(BaseReview):
                                  on_delete=models.CASCADE,
                                  verbose_name='Безналичный обменник',
                                  related_name='reviews')
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='no_cash_reviews',
+                              on_delete=models.CASCADE)
     
     class Meta:
         unique_together = (('exchange','username','time_create'), )
@@ -38,6 +46,13 @@ class Comment(BaseComment):
                                on_delete=models.CASCADE,
                                verbose_name='Отзыв',
                                related_name='comments')
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='no_cash_comments',
+                              on_delete=models.CASCADE)
     
     class Meta:
         unique_together = (('review','username','time_create'), )

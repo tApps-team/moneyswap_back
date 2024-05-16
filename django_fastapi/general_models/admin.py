@@ -188,7 +188,7 @@ class BaseCommentStacked(admin.StackedInline):
 
     def get_queryset(self, request):
         return super().get_queryset(request)\
-                        .select_related('review', 'review__exchange')
+                        .select_related('review', 'review__exchange', 'guest')
 
 
 #Базовое отображение отзывов в админ панели

@@ -38,8 +38,8 @@ def create_direction(dict_for_parse: dict,
     print('inside task')
 
     try:
-        direction = Direction.objects.get(valute_to=dict_for_parse['valute_to_id'],
-                                        valute_from=dict_for_parse['valute_from_id'])
+        direction = Direction.objects.get(valute_from=dict_for_parse['valute_from_id'],
+                                          valute_to=dict_for_parse['valute_to_id'])
         exchange = Exchange.objects.get(name=dict_for_parse['name'])
         
         dict_for_create_exchange_direction = no_cash_parse_xml(dict_for_parse, xml_file)

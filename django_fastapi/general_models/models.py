@@ -97,9 +97,9 @@ class Guest(models.Model):
     class Meta:
         verbose_name = 'Гостевой пользователь'
         verbose_name_plural = 'Гостевые пользователи'
-        indexes = [
-            models.Index(fields=('tg_id', )),
-        ]
+        # indexes = [
+        #     models.Index(fields=('tg_id', )),
+        # ]
 
     def __str__(self):
         return f'{self.username} - {self.tg_id}'
@@ -112,8 +112,27 @@ class BaseReviewComment(models.Model):
     ('Модерация', 'Модерация'),
     ('Отклонён', 'Отклонён'),
     ]
+    #
+    # grade_list = [
+    #     ('Положительный', '1'),
+    #     ('Нейтральный', '0'),
+    #     ('Отрицательный', '-1'),
+    # ]
+    #
+    class GradeChoices(models.IntegerChoices):
+        POS = 1, 'Положительный'
+        NET = 0, 'Нейтральный'
+        NEG = -1, 'Отрицальный'
+    # grade_list = [
+    #     ('1', 'Положительный'),
+    #     ('0', 'Нейтральный'),
+    #     ('-1', 'Отрицательный'),
+    # ]
     username = models.CharField('Имя пользователя',
-                                max_length=255)
+                                max_length=255,
+                                blank=True,
+                                null=True,
+                                default=None)
     text = models.TextField('Текст сообщения')
     time_create = models.DateTimeField('Дата создания',
                                        blank=True,
@@ -126,6 +145,9 @@ class BaseReviewComment(models.Model):
                                   default='Модерация',
                                   help_text='При выборе статуса "Отклонён" попадает в очередь на удаление')
     moderation = models.BooleanField('Прошел модерацию?', default=False)
+    grade = models.IntegerField('Оценка',
+                                choices=GradeChoices.choices,
+                                default=GradeChoices.NET)
 
     class Meta:
         abstract = True
@@ -168,6 +190,10 @@ class BaseExchange(models.Model):
                                     null=True,
                                     default=None)
     is_active = models.BooleanField('Статус обменника', default=True)
+    #
+    # is_vip = models.BooleanField('VIP',
+    #                              default=False)
+    #
 
     class Meta:
         abstract = True
