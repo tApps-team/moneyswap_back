@@ -86,7 +86,7 @@ class Review(BaseReview):
                               on_delete=models.CASCADE)
     
     class Meta:
-        unique_together = (('exchange','username','time_create'), )
+        # unique_together = (('exchange','username','time_create'), )
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
         ordering = ('-time_create', 'status', 'exchange')
