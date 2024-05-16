@@ -145,9 +145,9 @@ class BaseReviewComment(models.Model):
                                   default='Модерация',
                                   help_text='При выборе статуса "Отклонён" попадает в очередь на удаление')
     moderation = models.BooleanField('Прошел модерацию?', default=False)
-    # grade = models.IntegerField('Оценка',
-    #                             choices=GradeChoices.choices,
-    #                             default=GradeChoices.NET)
+    grade = models.IntegerField('Оценка',
+                                choices=GradeChoices.choices,
+                                default=GradeChoices.NET)
 
     class Meta:
         abstract = True
