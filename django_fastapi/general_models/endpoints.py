@@ -152,7 +152,7 @@ def check_user_review_permission(exchange_id: int,
 
     review = review_model.objects.select_related('guest')\
                                     .filter(exchange_id=exchange_id,
-                                            guest__tg_id=tg_id,
+                                            guest_id=tg_id,
                                             time_create__gt=check_time)\
                                     .first()
 

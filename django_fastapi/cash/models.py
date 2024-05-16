@@ -110,7 +110,7 @@ class Comment(BaseComment):
                               on_delete=models.CASCADE)
     
     class Meta:
-        unique_together = (('review','username','time_create'), )
+        # unique_together = (('review','username','time_create'), )
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ('-time_create', 'status', 'review')
