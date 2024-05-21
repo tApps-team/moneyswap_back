@@ -60,8 +60,8 @@ class SpecialDirectionMultiModel(BaseModel):
     icon_valute_to: str | None
     in_count: float
     out_count: float
-    min_amount: str
-    max_amount: str
+    min_amount: str | None
+    max_amount: str | None
 
 
 class ReviewViewSchema(BaseModel):

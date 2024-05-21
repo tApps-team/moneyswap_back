@@ -83,9 +83,9 @@ def get_partner_directions(city: str,
         direction.exchange_marker = 'partner'
         direction.valute_from = valute_from
         direction.valute_to = valute_to
-        direction.min_amount = 'Не установлено'
-        direction.max_amount = 'Не установлено'
-        direction.params = 'Не установлено'
+        direction.min_amount = None
+        direction.max_amount = None
+        direction.params = None
         direction.fromfee = None
         #
         working_days = WORKING_DAYS_DICT.copy()

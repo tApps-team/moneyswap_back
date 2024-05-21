@@ -73,5 +73,5 @@ class SpecialCashDirectionModel(SpecialDirectionModel):
 
 class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
     info: PartnerCityInfoSchema | None
-    params: str
+    params: str | None
     fromfee: float | None
