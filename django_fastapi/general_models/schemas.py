@@ -39,7 +39,7 @@ class SpecialDirectionModel(BaseModel):
     max_amount: str
 
 
-class ReviewCountScema(BaseModel):
+class ReviewCountSchema(BaseModel):
     positive: int
     neutral: int
     negative: int
@@ -53,7 +53,7 @@ class SpecialDirectionMultiModel(BaseModel):
     exchange_marker: str
     partner_link: str | None
     # review_count: int
-    review_count: ReviewCountScema
+    review_count: ReviewCountSchema
     valute_from: str
     icon_valute_from: str | None
     valute_to: str

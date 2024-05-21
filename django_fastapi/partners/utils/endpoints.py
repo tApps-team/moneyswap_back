@@ -48,14 +48,21 @@ def get_partner_directions(city: str,
                            valute_from: str,
                            valute_to: str):
     direction_name = valute_from + ' -> ' + valute_to
-    # review_count_filter = Count('city__exchange__reviews',
-    #                             filter=Q(city__exchange__reviews__moderation=True))
+
     positive_review_count_filter = Q(city__exchange__reviews__moderation=True) \
                                             & Q(city__exchange__reviews__grade='1')
     neutral_review_count_filter = Q(city__exchange__reviews__moderation=True) \
                                             & Q(city__exchange__reviews__grade='0')
     negative_review_count_filter = Q(city__exchange__reviews__moderation=True) \
                                             & Q(city__exchange__reviews__grade='-1')
+    
+    positive_review_count = Count('city__exchange__reviews',
+                                  filter=positive_review_count_filter)
+    neutral_review_count = Count('city__exchange__reviews',
+                                 filter=neutral_review_count_filter)
+    negative_review_count = Count('city__exchange__reviews',
+                                  filter=negative_review_count_filter)
+
     directions = Direction.objects\
                             .select_related('direction',
                                             'direction__valute_from',
@@ -63,9 +70,9 @@ def get_partner_directions(city: str,
                                             'city',
                                             'city__city',
                                             'city__exchange')\
-                            .annotate(positive_review_count=positive_review_count_filter)\
-                            .annotate(neutral_review_count=neutral_review_count_filter)\
-                            .annotate(negative_review_count=negative_review_count_filter)\
+                            .annotate(positive_review_count=positive_review_count)\
+                            .annotate(neutral_review_count=neutral_review_count)\
+                            .annotate(negative_review_count=negative_review_count)\
                             .filter(direction__display_name=direction_name,
                                     city__city__code_name=city,
                                     is_active=True,
@@ -93,7 +100,6 @@ def get_partner_directions(city: str,
             time_to=direction.city.time_to
             )
         #
-
     return directions
 
 

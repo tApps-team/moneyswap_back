@@ -9,7 +9,7 @@ from cash.models import ExchangeDirection as CashExDir, City, Country, Direction
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict
-from general_models.schemas import ValuteModel, EnValuteModel, MultipleName, ReviewCountScema
+from general_models.schemas import ValuteModel, EnValuteModel, MultipleName, ReviewCountSchema
 
 
 round_valute_dict = {
@@ -112,9 +112,11 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         exchange_direction = query.__dict__ | query.exchange.__dict__
         exchange_direction['id'] = _id
         exchange_direction['exchange_id'] = query.exchange.id
-        exchange_direction['review_count'] = ReviewCountScema(positive=query.positive_review_count,
-                                                              neutral=query.neutral_review_count,
-                                                              negative=query.negative_review_count)
+        exchange_direction['review_count'] = ReviewCountSchema(
+            positive=query.positive_review_count,
+            neutral=query.neutral_review_count,
+            negative=query.negative_review_count,
+            )
         
         if not hasattr(query,'exchange_marker'):
             exchange_direction['exchange_marker'] = exchange_marker
@@ -132,9 +134,9 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         round_valute_values(exchange_direction)
         direction_list.append(exchange_direction)
 
-    print(len(connection.queries))
-    for query in connection.queries:
-        print(query)
+    # print(len(connection.queries))
+    # for query in connection.queries:
+    #     print(query)
     return direction_list
 
 
