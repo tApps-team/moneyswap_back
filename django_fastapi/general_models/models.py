@@ -113,16 +113,16 @@ class BaseReviewComment(models.Model):
     ('Отклонён', 'Отклонён'),
     ]
     #
-    # grade_list = [
-    #     ('Положительный', '1'),
-    #     ('Нейтральный', '0'),
-    #     ('Отрицательный', '-1'),
-    # ]
+    grade_list = [
+        ('1', 'Положительный'),
+        ('0', 'Нейтральный'),
+        ('-1', 'Отрицательный'),
+    ]
     #
-    class GradeChoices(models.IntegerChoices):
-        POS = 1, 'Положительный'
-        NET = 0, 'Нейтральный'
-        NEG = -1, 'Отрицальный'
+    # class GradeChoices(models.IntegerChoices):
+    #     POS = 1, 'Положительный'
+    #     NET = 0, 'Нейтральный'
+    #     NEG = -1, 'Отрицальный'
     # grade_list = [
     #     ('1', 'Положительный'),
     #     ('0', 'Нейтральный'),
@@ -145,9 +145,10 @@ class BaseReviewComment(models.Model):
                                   default='Модерация',
                                   help_text='При выборе статуса "Отклонён" попадает в очередь на удаление')
     moderation = models.BooleanField('Прошел модерацию?', default=False)
-    grade = models.IntegerField('Оценка',
-                                choices=GradeChoices.choices,
-                                default=GradeChoices.NET)
+    grade = models.CharField('Оценка',
+                             choices=grade_list,
+                             default='0')
+
 
     class Meta:
         abstract = True
@@ -155,6 +156,11 @@ class BaseReviewComment(models.Model):
 
 #Абстрактная модель отзыва (для наследования)
 class BaseReview(BaseReviewComment):
+    transaction_id = models.BigIntegerField('Номер транзакции',
+                                            blank=True,
+                                            null=True,
+                                            default=None)
+    
     class Meta:
         abstract = True
     

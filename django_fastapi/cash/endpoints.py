@@ -8,7 +8,10 @@ from fastapi import APIRouter, Request
 from general_models.utils.http_exc import http_exception_json
 from general_models.utils.endpoints import (get_exchange_direction_list,
                                             get_valute_json,
-                                            increase_popular_count_direction)
+                                            increase_popular_count_direction,
+                                            positive_review_count_filter,
+                                            neutral_review_count_filter,
+                                            negative_review_count_filter)
 
 from partners.utils.endpoints import get_partner_directions
 from partners.models import Direction as PartnerDirection
@@ -99,21 +102,28 @@ def cash_exchange_directions(request: Request,
 
     city, valute_from, valute_to = (params[key] for key in params)
 
-    review_count_filter = Count('exchange__reviews',
-                                filter=Q(exchange__reviews__moderation=True))
+    # review_count_filter = Count('exchange__reviews',
+    #                             filter=Q(exchange__reviews__moderation=True))
+    positive_review_count = Count('exchange__reviews',
+                                         filter=positive_review_count_filter)
+    neutral_review_count = Count('exchange__reviews',
+                                         filter=neutral_review_count_filter)
+    negative_review_count = Count('exchange__reviews',
+                                         filter=negative_review_count_filter)
     queries = ExchangeDirection.objects\
                                 .select_related('exchange',
                                                 'city',
                                                 'direction',
                                                 'direction__valute_from',
                                                 'direction__valute_to')\
-                                .annotate(review_count=review_count_filter)\
+                                .annotate(positive_review_count=positive_review_count)\
+                                .annotate(neutral_review_count=neutral_review_count)\
+                                .annotate(negative_review_count=negative_review_count)\
                                 .filter(city__code_name=city,
                                         direction__valute_from=valute_from,
                                         direction__valute_to=valute_to,
                                         is_active=True,
                                         exchange__is_active=True).all()
-
     
     partner_directions = get_partner_directions(city,
                                                 valute_from,
@@ -125,9 +135,9 @@ def cash_exchange_directions(request: Request,
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
-    increase_popular_count_direction(valute_from=valute_from,
-                                     valute_to=valute_to,
-                                     city=city)
+    # increase_popular_count_direction(valute_from=valute_from,
+    #                                  valute_to=valute_to,
+    #                                  city=city)
 
     return get_exchange_direction_list(queries,
                                        valute_from,

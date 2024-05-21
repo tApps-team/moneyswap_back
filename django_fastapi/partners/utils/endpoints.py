@@ -48,14 +48,24 @@ def get_partner_directions(city: str,
                            valute_from: str,
                            valute_to: str):
     direction_name = valute_from + ' -> ' + valute_to
-    review_count_filter = Count('city__exchange__reviews',
-                                filter=Q(city__exchange__reviews__moderation=True))
+    # review_count_filter = Count('city__exchange__reviews',
+    #                             filter=Q(city__exchange__reviews__moderation=True))
+    positive_review_count_filter = Q(city__exchange__reviews__moderation=True) \
+                                            & Q(city__exchange__reviews__grade='1')
+    neutral_review_count_filter = Q(city__exchange__reviews__moderation=True) \
+                                            & Q(city__exchange__reviews__grade='0')
+    negative_review_count_filter = Q(city__exchange__reviews__moderation=True) \
+                                            & Q(city__exchange__reviews__grade='-1')
     directions = Direction.objects\
                             .select_related('direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to',
                                             'city',
                                             'city__city',
                                             'city__exchange')\
-                            .annotate(review_count=review_count_filter)\
+                            .annotate(positive_review_count=positive_review_count_filter)\
+                            .annotate(neutral_review_count=neutral_review_count_filter)\
+                            .annotate(negative_review_count=negative_review_count_filter)\
                             .filter(direction__display_name=direction_name,
                                     city__city__code_name=city,
                                     is_active=True,
@@ -70,6 +80,19 @@ def get_partner_directions(city: str,
         direction.max_amount = 'Не установлено'
         direction.params = 'Не установлено'
         direction.fromfee = None
+        #
+        working_days = WORKING_DAYS_DICT.copy()
+        [working_days.__setitem__(day.code_name, True)\
+          for day in direction.city.working_days.all()]
+
+        direction.info = PartnerCityInfoSchema(
+            delivery=direction.city.has_delivery,
+            office=direction.city.has_office,
+            working_days=working_days,
+            time_from=direction.city.time_from,
+            time_to=direction.city.time_to
+            )
+        #
 
     return directions
 

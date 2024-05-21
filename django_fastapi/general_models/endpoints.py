@@ -20,7 +20,12 @@ import partners.models as partner_models
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
 
-from .schemas import ValuteModel, EnValuteModel, SpecialDirectionMultiModel, ReviewViewSchema, ReviewsByExchangeSchema, AddReviewSchema
+from .schemas import (ValuteModel,
+                      EnValuteModel,
+                      SpecialDirectionMultiModel,
+                      ReviewViewSchema,
+                      ReviewsByExchangeSchema,
+                      AddReviewSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -76,7 +81,8 @@ def get_actual_course_for_direction(valute_from: str, valute_to: str):
 def get_reviews_by_exchange(exchange_id: int,
                             exchange_marker: str,
                             page: int,
-                            element_on_page: int = None):
+                            element_on_page: int = None,
+                            grade_filter: int = None):
     match exchange_marker:
         case 'no_cash':
             review_model = no_cash_models.Review
@@ -86,8 +92,16 @@ def get_reviews_by_exchange(exchange_id: int,
             review_model = partner_models.Review  
 
     reviews = review_model.objects.select_related('guest')\
-                                    .filter(exchange_id=exchange_id)\
-                                    .all()
+                                    .filter(exchange_id=exchange_id)
+    
+    if grade_filter is not None:
+        reviews = reviews.filter(grade=str(grade_filter))
+
+    # reviews = reviews.all() if grade_filter is None\
+    #              else reviews.filter(grade=str(grade_filter)).all()
+
+    reviews = reviews.all()
+
     if element_on_page:
         offset = (page - 1) * element_on_page
         limit = offset + element_on_page
@@ -110,6 +124,9 @@ def get_reviews_by_exchange(exchange_id: int,
 # для определённого обменника
 @review_router.post('/add_review_by_exchange')
 def add_review_by_exchange(review: AddReviewSchema):
+    if review.grade != -1 and review.transaction_id is not None:
+        raise HTTPException(status_code=423,
+                            detail='Неотрицательный отзыв не требует номера транзакции')
     
     match review.exchange_marker:
         case 'no_cash':
@@ -118,13 +135,25 @@ def add_review_by_exchange(review: AddReviewSchema):
             review_model = cash_models.Review
         case 'partner':
             review_model = partner_models.Review
+
+    new_review = {
+        'exchange_id': review.exchange_id,
+        'guest_id': review.tg_id,
+        'grade': review.grade,
+        'text': review.text,
+    }
+
+    if review.transaction_id:
+        new_review.update({'transaction_id': review.transaction_id})
+
     try:
-        review_model.objects.create(
-            exchange_id=review.exchange_id,
-            guest_id=review.tg_id,
-            grade=review.grade,
-            text=review.text
-            )
+        # review_model.objects.create(
+        #     exchange_id=review.exchange_id,
+        #     guest_id=review.tg_id,
+        #     grade=review.grade,
+        #     text=review.text
+        #     )
+        review_model.objects.create(**new_review)
     except Exception:
         raise HTTPException(status_code=400)
     else:

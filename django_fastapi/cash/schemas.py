@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field
 
 from general_models.schemas import SpecialDirectionModel, SpecialDirectionMultiModel
 
+from partners.schemas import PartnerCityInfoSchema
+
 
 class MultipleName(BaseModel):
     ru: str = Field(alias='name')
@@ -70,5 +72,6 @@ class SpecialCashDirectionModel(SpecialDirectionModel):
 
 
 class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
+    info: PartnerCityInfoSchema | None
     params: str
     fromfee: float | None

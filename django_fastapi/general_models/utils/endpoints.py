@@ -3,12 +3,13 @@ from collections import defaultdict
 
 from django.conf import settings
 from django.db import connection
+from django.db.models import Count, Q
 
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict
-from general_models.schemas import ValuteModel, EnValuteModel, MultipleName
+from general_models.schemas import ValuteModel, EnValuteModel, MultipleName, ReviewCountScema
 
 
 round_valute_dict = {
@@ -16,6 +17,18 @@ round_valute_dict = {
     'ETH': 3,
     'Криптовалюта': 2,
 }
+
+
+positive_review_count_filter = filter=Q(exchange__reviews__moderation=True) \
+                                        & Q(exchange__reviews__grade='1')
+neutral_review_count_filter = filter=Q(exchange__reviews__moderation=True) \
+                                        & Q(exchange__reviews__grade='0')
+negative_review_count_filter = filter=Q(exchange__reviews__moderation=True) \
+                                        & Q(exchange__reviews__grade='-1')
+# neutral_review_count_filter = Count('exchange__reviews',
+#                                         filter=Q(exchange__reviews__moderation=True) & Q(exchange__reviews__grade='0'))
+# negative_review_count_filter = Count('exchange__reviews',
+#                                         filter=Q(exchange__reviews__moderation=True) & Q(exchange__reviews__grade='-1'))
 
 
 def round_valute_values(exchange_direction_dict: dict):
@@ -99,6 +112,9 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         exchange_direction = query.__dict__ | query.exchange.__dict__
         exchange_direction['id'] = _id
         exchange_direction['exchange_id'] = query.exchange.id
+        exchange_direction['review_count'] = ReviewCountScema(positive=query.positive_review_count,
+                                                              neutral=query.neutral_review_count,
+                                                              negative=query.negative_review_count)
         
         if not hasattr(query,'exchange_marker'):
             exchange_direction['exchange_marker'] = exchange_marker
@@ -116,6 +132,9 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         round_valute_values(exchange_direction)
         direction_list.append(exchange_direction)
 
+    print(len(connection.queries))
+    for query in connection.queries:
+        print(query)
     return direction_list
 
 
