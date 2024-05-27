@@ -100,6 +100,8 @@ def cash_exchange_directions(request: Request,
         if not params[param]:
             http_exception_json(status_code=400, param=param)
 
+    # print(len(connection.queries))    
+
     city, valute_from, valute_to = (params[key] for key in params)
 
     # review_count_filter = Count('exchange__reviews',
@@ -130,7 +132,9 @@ def cash_exchange_directions(request: Request,
                                                 valute_to)
     
     queries = sorted(list(queries) + list(partner_directions),
-                     key=lambda query: (-query.out_count, query.in_count))
+                     key=lambda query: (-query.exchange.is_vip,
+                                        -query.out_count,
+                                        query.in_count))
     
     if not queries:
         http_exception_json(status_code=404, param=request.url)

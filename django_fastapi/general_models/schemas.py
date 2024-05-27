@@ -52,6 +52,7 @@ class SpecialDirectionMultiModel(BaseModel):
     exchange_id: int
     exchange_marker: str
     partner_link: str | None
+    is_vip: bool
     # review_count: int
     review_count: ReviewCountSchema
     valute_from: str

@@ -142,7 +142,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PROJECT_NAME = "django-fastapi-project"
 
 CELERY_IGNORE_RESULT = True
-# CELERYD_PREFETCH_MULTIPLIER = 1
 
 FASTAPI_PREFIX = "/api"
 DJANGO_PREFIX = "/django"

@@ -280,7 +280,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         (
             None,
             {
-                "fields": [("name", "en_name"), "xml_url", "partner_link", "is_active", ("period_for_create", "period_for_update", "period_for_parse_black_list")],
+                "fields": [("name", "en_name"), "xml_url", "partner_link", "is_active", "is_vip", ("period_for_create", "period_for_update", "period_for_parse_black_list")],
             },
         ),
         (

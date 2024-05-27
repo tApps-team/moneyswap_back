@@ -197,8 +197,8 @@ class BaseExchange(models.Model):
                                     default=None)
     is_active = models.BooleanField('Статус обменника', default=True)
     #
-    # is_vip = models.BooleanField('VIP',
-    #                              default=False)
+    is_vip = models.BooleanField('VIP',
+                                 default=False)
     #
 
     class Meta:

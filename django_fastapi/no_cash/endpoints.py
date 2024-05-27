@@ -49,7 +49,7 @@ def no_cash_valutes(request: Request,
 # Вспомогательный эндпоинт для получения безналичных готовых направлений
 def no_cash_exchange_directions(request: Request,
                                 params: dict):
-    print(len(connection.queries))
+    # print(len(connection.queries))
     params.pop('city')
     for param in params:
         if not params[param]:
@@ -86,7 +86,9 @@ def no_cash_exchange_directions(request: Request,
                                         direction__valute_to=valute_to,
                                         is_active=True,
                                         exchange__is_active=True)\
-                                .order_by('-out_count', 'in_count').all()
+                                .order_by('-exchange__is_vip',
+                                          '-out_count',
+                                          'in_count').all()
     
     # print(2)
     if not queries:
