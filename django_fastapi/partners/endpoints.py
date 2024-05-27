@@ -326,8 +326,7 @@ def edit_partner_directions_by_city(partner: partner_dependency,
         with transaction.atomic():
             for edited_direction in edited_direction_list:
                 _id = edited_direction.pop('id')
-                if edited_direction['is_active']:
-                    edited_direction['time_update'] = datetime.now()
+                edited_direction['time_update'] = datetime.now()
                 partner_directions.filter(pk=_id).update(**edited_direction)
 
             city.update(time_update=timezone.now())
