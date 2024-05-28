@@ -72,6 +72,7 @@ class ReviewViewSchema(BaseModel):
     review_time: str
     grade: int
     text: str
+    comment_count: int
 
 
 class ReviewsByExchangeSchema(BaseModel):

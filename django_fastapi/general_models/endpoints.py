@@ -1,6 +1,7 @@
 from typing import List
 from datetime import datetime, timedelta
 
+from django.db.models import Count
 from django.db import connection
 
 from fastapi import APIRouter, Request, Depends, HTTPException
@@ -92,7 +93,9 @@ def get_reviews_by_exchange(exchange_id: int,
             review_model = partner_models.Review  
 
     reviews = review_model.objects.select_related('guest')\
-                                    .filter(exchange_id=exchange_id)
+                                    .annotate(comment_count=Count('comments'))\
+                                    .filter(exchange_id=exchange_id)\
+                                    .order_by('-time_create')
     
     if grade_filter is not None:
         reviews = reviews.filter(grade=str(grade_filter))
