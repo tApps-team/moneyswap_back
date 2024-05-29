@@ -7,7 +7,8 @@ from general_models.models import (BaseExchangeDirection,
                                    BaseDirection,
                                    BaseReview,
                                    BaseComment,
-                                   Guest)
+                                   Guest,
+                                   BaseAdminComment)
 
 
 #Модель страны
@@ -114,6 +115,22 @@ class Comment(BaseComment):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ('-time_create', 'status', 'review')
+
+    def __str__(self):
+        return 'Наличный ' + super().__str__()
+
+
+class AdminComment(BaseAdminComment):
+    review = models.ForeignKey(Review,
+                               on_delete=models.CASCADE,
+                               verbose_name='Отзыв',
+                               related_name='admin_comments')
+
+    class Meta:
+        # unique_together = (('review','username','time_create'), )
+        verbose_name = 'Комментарий администрации'
+        verbose_name_plural = 'Комментарии администрации'
+        ordering = ('-time_create', 'review')
 
     def __str__(self):
         return 'Наличный ' + super().__str__()

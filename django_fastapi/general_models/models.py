@@ -179,6 +179,24 @@ class BaseComment(BaseReviewComment):
         return f' комментарий {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange}, Пользователь: {self.username}, Время создания: {date}'
 
 
+#
+class BaseAdminComment(models.Model):
+    text = models.TextField('Текст сообщения')
+    time_create = models.DateTimeField('Дата создания',
+                                       blank=True,
+                                       null=True,
+                                       default=None,
+                                       help_text='Если оставить поля пустыми, время установится автоматически по московскому часовому поясу')
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
+        return f' комментарий администрации {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange}, Время создания: {date}'
+#
+
+
 #Абстрактная модель обменника (для наследования)
 class BaseExchange(models.Model):
     name = models.CharField('Название обменника(ru)',

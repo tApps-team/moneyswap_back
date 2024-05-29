@@ -191,6 +191,18 @@ class BaseCommentStacked(admin.StackedInline):
                         .select_related('review', 'review__exchange', 'guest')
 
 
+#Базовое отображение комментариев администрации на странице связанного отзыва
+class BaseAdminCommentStacked(admin.StackedInline):
+    extra = 0
+    classes = [
+        'collapse',
+        ]
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        return super().get_queryset(request).select_related('review',
+                                                            'review__exchange')
+
+
 #Базовое отображение отзывов в админ панели
 class BaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
@@ -219,7 +231,8 @@ class BaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request)\
-                        .select_related('exchange')\
+                        .select_related('exchange',
+                                        'guest')\
                         .annotate(comment_count=Count('comments'))
 
 

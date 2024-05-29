@@ -76,8 +76,13 @@ class ReviewViewSchema(BaseModel):
 
 
 class ReviewsByExchangeSchema(BaseModel):
+    pages: int
     page: int
     element_on_page: int
+    #
+    exchange_id: int
+    exchange_marker: str
+    #
     content: list[ReviewViewSchema]
 
 
@@ -88,3 +93,10 @@ class AddReviewSchema(BaseModel):
     text: str
     grade: int
     transaction_id: int | None
+
+
+class CommentSchema(BaseModel):
+    id: int
+    comment_date: str
+    comment_time: str
+    text: str

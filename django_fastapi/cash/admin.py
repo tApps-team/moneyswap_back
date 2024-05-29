@@ -18,7 +18,8 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseExchangeAdmin,
                                   BaseExchangeDirectionAdmin,
                                   BaseExchangeDirectionStacked,
-                                  BaseDirectionAdmin)
+                                  BaseDirectionAdmin,
+                                  BaseAdminCommentStacked)
 from general_models.tasks import parse_reviews_for_exchange
 
 from .models import (Country,
@@ -27,7 +28,8 @@ from .models import (Country,
                      Direction,
                      ExchangeDirection,
                      Review,
-                     Comment)
+                     Comment,
+                     AdminComment)
 
 
 #Отображение городов в админ панели
@@ -111,11 +113,17 @@ class CommentStacked(BaseCommentStacked):
         return super().get_queryset(request).select_related('review')
 
 
+#Отображение комментариев администрации на странице связанного отзыва
+class AdminCommentStacked(BaseAdminCommentStacked):
+    model = AdminComment
+
+
 #Отображение отзывов в админ панели
 @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
     inlines = [
         CommentStacked,
+        AdminCommentStacked,
         ]
 
     def has_add_permission(self, request: HttpRequest) -> bool:

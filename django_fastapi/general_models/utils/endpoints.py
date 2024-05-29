@@ -5,6 +5,8 @@ from django.conf import settings
 from django.db import connection
 from django.db.models import Count, Q
 
+from fastapi import HTTPException
+
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
@@ -176,3 +178,9 @@ def increase_popular_count_direction(**kwargs):
                                       valute_to=valute_to)
     direction.popular_count += 1
     direction.save()
+
+
+def check_exchage_marker(exchage_marker: str):
+    if exchage_marker not in {'no_cash', 'cash', 'partner'}:
+        raise HTTPException(status_code=400,
+                            detail='Параметр "exchange_marker" должен быть одним из следующих: no_cash, cash, partner')

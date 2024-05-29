@@ -9,7 +9,8 @@ from django.http import HttpRequest
 from general_models.admin import (BaseCommentAdmin,
                                   BaseCommentStacked,
                                   BaseReviewAdmin,
-                                  BaseReviewStacked)
+                                  BaseReviewStacked,
+                                  BaseAdminCommentStacked)
 from general_models.utils.admin import ReviewAdminMixin
 
 from partners.utils.endpoints import get_course_count
@@ -19,7 +20,9 @@ from .models import (Exchange,
                      Review,
                      Comment,
                      CustomUser,
-                     PartnerCity,WorkingDay)
+                     PartnerCity,
+                     WorkingDay,
+                     AdminComment)
 from .utils.admin import (make_city_active,
                           update_field_time_update,
                           get_saved_course)
@@ -360,11 +363,17 @@ class CommentStacked(BaseCommentStacked):
         return super().get_queryset(request).select_related('review')
 
 
+#Отображение комментариев администрации на странице связанного отзыва
+class AdminCommentStacked(BaseAdminCommentStacked):
+    model = AdminComment
+
+
 #Отображение отзывов в админ панели
 @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
     inlines = [
         CommentStacked,
+        AdminCommentStacked,
         ]
 
     def has_add_permission(self, request: HttpRequest) -> bool:

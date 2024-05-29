@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 
-from no_cash.models import Exchange, Direction, ExchangeDirection, Review, Comment
+from no_cash.models import Exchange, Direction, ExchangeDirection, Review, Comment, AdminComment
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
                                     manage_periodic_task_for_update,
                                     manage_periodic_task_for_parse_black_list)
@@ -15,7 +15,8 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseExchangeAdmin,
                                   BaseExchangeDirectionAdmin,
                                   BaseExchangeDirectionStacked,
-                                  BaseDirectionAdmin)
+                                  BaseDirectionAdmin,
+                                  BaseAdminCommentStacked)
 from general_models.tasks import parse_reviews_for_exchange
 
 
@@ -30,16 +31,22 @@ class CommentStacked(BaseCommentStacked):
     model = Comment
 
 
+#Отображение комментариев администрации на странице связанного отзыва
+class AdminCommentStacked(BaseAdminCommentStacked):
+    model = AdminComment
+
+
 #Отображение отзывов в админ панели
 @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
     inlines = [
         CommentStacked,
+        AdminCommentStacked,
         ]
     
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        return super().get_queryset(request)\
-                        .select_related('guest')
+    # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+    #     return super().get_queryset(request)\
+    #                     .select_related('guest')
 
 
 #Отображение отзывов на странице связанного обменника

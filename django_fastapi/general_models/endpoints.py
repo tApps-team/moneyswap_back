@@ -1,5 +1,6 @@
 from typing import List
 from datetime import datetime, timedelta
+from math import ceil
 
 from django.db.models import Count
 from django.db import connection
@@ -20,13 +21,15 @@ import partners.models as partner_models
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
+from .utils.endpoints import check_exchage_marker
 
 from .schemas import (ValuteModel,
                       EnValuteModel,
                       SpecialDirectionMultiModel,
                       ReviewViewSchema,
                       ReviewsByExchangeSchema,
-                      AddReviewSchema)
+                      AddReviewSchema,
+                      CommentSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -84,6 +87,16 @@ def get_reviews_by_exchange(exchange_id: int,
                             page: int,
                             element_on_page: int = None,
                             grade_filter: int = None):
+    check_exchage_marker(exchange_marker)
+    if page < 1:
+        raise HTTPException(status_code=400,
+                            detail='Параметр "page" должен быть положительным числом')
+    
+    if element_on_page is not None:
+        if element_on_page < 1:
+            raise HTTPException(status_code=400,
+                                detail='Параметр "element_on_page" должен быть положительным числом')
+    
     match exchange_marker:
         case 'no_cash':
             review_model = no_cash_models.Review
@@ -93,9 +106,21 @@ def get_reviews_by_exchange(exchange_id: int,
             review_model = partner_models.Review  
 
     reviews = review_model.objects.select_related('guest')\
-                                    .annotate(comment_count=Count('comments'))\
+                                    .annotate(comment_count=Count('admin_comments'))\
                                     .filter(exchange_id=exchange_id)\
                                     .order_by('-time_create')
+    
+    pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
+
+    # if element_on_page:
+    #     pages = ceil(len(reviews) / element_on_page)
+
+
+    # if element_on_page:
+    #     pages = len(reviews) // element_on_page
+
+    #     if len(reviews) % element_on_page != 0:
+    #         pages += 1
     
     if grade_filter is not None:
         reviews = reviews.filter(grade=str(grade_filter))
@@ -104,6 +129,7 @@ def get_reviews_by_exchange(exchange_id: int,
     #              else reviews.filter(grade=str(grade_filter)).all()
 
     reviews = reviews.all()
+
 
     if element_on_page:
         offset = (page - 1) * element_on_page
@@ -119,6 +145,9 @@ def get_reviews_by_exchange(exchange_id: int,
         review_list.append(ReviewViewSchema(**review.__dict__))
 
     return ReviewsByExchangeSchema(page=page,
+                                   pages=pages,
+                                   exchange_id=exchange_id,
+                                   exchange_marker=exchange_marker,
                                    element_on_page=len(review_list),
                                    content=review_list)
 
@@ -130,6 +159,8 @@ def add_review_by_exchange(review: AddReviewSchema):
     if review.grade != -1 and review.transaction_id is not None:
         raise HTTPException(status_code=423,
                             detail='Неотрицательный отзыв не требует номера транзакции')
+    
+    check_exchage_marker(review.exchange_marker)
     
     match review.exchange_marker:
         case 'no_cash':
@@ -172,6 +203,8 @@ def check_user_review_permission(exchange_id: int,
                                  tg_id: int):
     time_delta = timedelta(days=1)
 
+    check_exchage_marker(exchange_marker)
+
     match exchange_marker:
         case 'no_cash':
             review_model = no_cash_models.Review
@@ -195,3 +228,45 @@ def check_user_review_permission(exchange_id: int,
 
     
     return {'status': 'success'}
+
+
+@review_router.get('/get_comments_by_review',
+                   response_model=list[CommentSchema])
+def get_comments_by_review(exchange_id: int,
+                           exchange_marker: str,
+                           review_id: int):
+    check_exchage_marker(exchange_marker)
+    # print(len(connection.queries))
+    match exchange_marker:
+        case 'no_cash':
+            # review_model = no_cash_models.Review
+            comment_model = no_cash_models.AdminComment
+        case 'cash':
+            # review_model = cash_models.Review
+            comment_model = cash_models.AdminComment
+        case 'partner':
+            # review_model = partner_models.Review
+            comment_model = partner_models.AdminComment
+
+    # review = review_model.objects.filter(exchange_id=exchange_id,
+    #                                      pk=review_id)
+    comments = comment_model.objects.select_related('review',
+                                                    'review__exchange')\
+                                    .filter(review_id=review_id,
+                                            review__exchange_id=exchange_id)\
+                                    .order_by('time_create').all()
+
+    if not comments:
+        raise HTTPException(status_code=404)
+    
+    #
+    # comments = review.first().admin_comments\
+    #                             .order_by('time_create').all()
+
+    for comment in comments:
+        date, time = comment.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+        comment.comment_date = date
+        comment.comment_time = time
+    #
+    # print(len(connection.queries))
+    return comments

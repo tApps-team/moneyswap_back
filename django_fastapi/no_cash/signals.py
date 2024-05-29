@@ -7,7 +7,7 @@ from django_celery_beat.models import PeriodicTask
 
 from general_models.utils.base import get_actual_datetime
 
-from .models import Exchange, Direction, ExchangeDirection, Review, Comment
+from .models import Exchange, Direction, ExchangeDirection, Review, Comment, AdminComment
 from .periodic_tasks import (manage_periodic_task_for_create,
                              manage_periodic_task_for_update,
                              manage_periodic_task_for_parse_black_list)
@@ -65,6 +65,15 @@ def change_time_create_for_review(sender, instance, **kwargs):
 #Сигнал для автоматической установки времени
 #по московскому часовому поясу при создании комментария в БД
 @receiver(pre_save, sender=Comment)
+def change_time_create_for_comment(sender, instance, **kwargs):
+    if instance.time_create is None:
+        instance.time_create = datetime.now()
+
+
+#Сигнал для автоматической установки времени
+#по московскому часовому поясу при создании комментария
+#администрации в БД
+@receiver(pre_save, sender=AdminComment)
 def change_time_create_for_comment(sender, instance, **kwargs):
     if instance.time_create is None:
         instance.time_create = datetime.now()
