@@ -107,7 +107,8 @@ def get_reviews_by_exchange(exchange_id: int,
 
     reviews = review_model.objects.select_related('guest')\
                                     .annotate(comment_count=Count('admin_comments'))\
-                                    .filter(exchange_id=exchange_id)\
+                                    .filter(exchange_id=exchange_id,
+                                            moderation=True)\
                                     .order_by('-time_create')
     
     pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
