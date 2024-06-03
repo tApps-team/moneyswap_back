@@ -21,7 +21,7 @@ import partners.models as partner_models
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
-from .utils.endpoints import check_exchage_marker
+from .utils.endpoints import check_exchage_marker, check_perms_for_adding_review
 
 from .schemas import (ValuteModel,
                       EnValuteModel,
@@ -157,11 +157,16 @@ def get_reviews_by_exchange(exchange_id: int,
 # для определённого обменника
 @review_router.post('/add_review_by_exchange')
 def add_review_by_exchange(review: AddReviewSchema):
+    check_exchage_marker(review.exchange_marker)
+    
+    check_perms_for_adding_review(exchange_id=review.exchange_id,
+                                  exchange_marker=review.exchange_marker,
+                                  tg_id=review.tg_id)
+
     if review.grade != -1 and review.transaction_id is not None:
         raise HTTPException(status_code=423,
                             detail='Неотрицательный отзыв не требует номера транзакции')
     
-    check_exchage_marker(review.exchange_marker)
     
     match review.exchange_marker:
         case 'no_cash':
@@ -190,7 +195,8 @@ def add_review_by_exchange(review: AddReviewSchema):
         #     )
         review_model.objects.create(**new_review)
     except Exception:
-        raise HTTPException(status_code=400)
+        raise HTTPException(status_code=400,
+                            detail='Переданы некорректные данные')
     else:
         return {'status': 'success'}
 
@@ -202,33 +208,36 @@ def add_review_by_exchange(review: AddReviewSchema):
 def check_user_review_permission(exchange_id: int,
                                  exchange_marker: str,
                                  tg_id: int):
-    time_delta = timedelta(days=1)
+    return check_perms_for_adding_review(exchange_id,
+                                         exchange_marker,
+                                         tg_id)
+    # time_delta = timedelta(days=1)
 
-    check_exchage_marker(exchange_marker)
+    # check_exchage_marker(exchange_marker)
 
-    match exchange_marker:
-        case 'no_cash':
-            review_model = no_cash_models.Review
-        case 'cash':
-            review_model = cash_models.Review
-        case 'partner':
-            review_model = partner_models.Review
+    # match exchange_marker:
+    #     case 'no_cash':
+    #         review_model = no_cash_models.Review
+    #     case 'cash':
+    #         review_model = cash_models.Review
+    #     case 'partner':
+    #         review_model = partner_models.Review
 
-    check_time = datetime.now() - time_delta
+    # check_time = datetime.now() - time_delta
 
-    review = review_model.objects.select_related('guest')\
-                                    .filter(exchange_id=exchange_id,
-                                            guest_id=tg_id,
-                                            time_create__gt=check_time)\
-                                    .first()
+    # review = review_model.objects.select_related('guest')\
+    #                                 .filter(exchange_id=exchange_id,
+    #                                         guest_id=tg_id,
+    #                                         time_create__gt=check_time)\
+    #                                 .first()
 
-    if review:
-        next_time_review = review.time_create.astimezone() + time_delta
-        review_exception_json(status_code=423,
-                              param=next_time_review.strftime('%d.%m.%Y %H:%M'))
+    # if review:
+    #     next_time_review = review.time_create.astimezone() + time_delta
+    #     review_exception_json(status_code=423,
+    #                           param=next_time_review.strftime('%d.%m.%Y %H:%M'))
 
     
-    return {'status': 'success'}
+    # return {'status': 'success'}
 
 
 @review_router.get('/get_comments_by_review',

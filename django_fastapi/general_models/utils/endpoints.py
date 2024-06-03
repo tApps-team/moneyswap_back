@@ -1,5 +1,6 @@
 from typing import List
 from collections import defaultdict
+from datetime import timedelta, datetime
 
 from django.conf import settings
 from django.db import connection
@@ -7,11 +8,16 @@ from django.db.models import Count, Q
 
 from fastapi import HTTPException
 
+import no_cash.models as no_cash_models
+import cash.models as cash_models
+import partners.models as partner_models
+
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict
 from general_models.schemas import ValuteModel, EnValuteModel, MultipleName, ReviewCountSchema
+from general_models.utils.http_exc import review_exception_json
 
 
 round_valute_dict = {
@@ -184,3 +190,35 @@ def check_exchage_marker(exchange_marker: str):
     if exchange_marker not in {'no_cash', 'cash', 'partner'}:
         raise HTTPException(status_code=400,
                             detail='Параметр "exchange_marker" должен быть одним из следующих: no_cash, cash, partner')
+    
+
+def check_perms_for_adding_review(exchange_id: int,
+                                  exchange_marker: str,
+                                  tg_id: int):
+    time_delta = timedelta(days=1)
+
+    check_exchage_marker(exchange_marker)
+
+    match exchange_marker:
+        case 'no_cash':
+            review_model = no_cash_models.Review
+        case 'cash':
+            review_model = cash_models.Review
+        case 'partner':
+            review_model = partner_models.Review
+
+    check_time = datetime.now() - time_delta
+
+    review = review_model.objects.select_related('guest')\
+                                    .filter(exchange_id=exchange_id,
+                                            guest_id=tg_id,
+                                            time_create__gt=check_time)\
+                                    .first()
+
+    if review:
+        next_time_review = review.time_create.astimezone() + time_delta
+        review_exception_json(status_code=423,
+                              param=next_time_review.strftime('%d.%m.%Y %H:%M'))
+
+    
+    return {'status': 'success'}
