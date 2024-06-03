@@ -92,7 +92,7 @@ class AddReviewSchema(BaseModel):
     tg_id: int
     text: str
     grade: int
-    transaction_id: int | None
+    transaction_id: str | None
 
 
 class CommentSchema(BaseModel):

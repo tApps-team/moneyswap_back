@@ -156,10 +156,10 @@ class BaseReviewComment(models.Model):
 
 #Абстрактная модель отзыва (для наследования)
 class BaseReview(BaseReviewComment):
-    transaction_id = models.BigIntegerField('Номер транзакции',
-                                            blank=True,
-                                            null=True,
-                                            default=None)
+    transaction_id = models.CharField('Номер транзакции',
+                                      blank=True,
+                                      null=True,
+                                      default=None)
     
     class Meta:
         abstract = True

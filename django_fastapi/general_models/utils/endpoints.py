@@ -180,7 +180,7 @@ def increase_popular_count_direction(**kwargs):
     direction.save()
 
 
-def check_exchage_marker(exchage_marker: str):
-    if exchage_marker not in {'no_cash', 'cash', 'partner'}:
+def check_exchage_marker(exchange_marker: str):
+    if exchange_marker not in {'no_cash', 'cash', 'partner'}:
         raise HTTPException(status_code=400,
                             detail='Параметр "exchange_marker" должен быть одним из следующих: no_cash, cash, partner')
