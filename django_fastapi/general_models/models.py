@@ -103,6 +103,33 @@ class Guest(models.Model):
 
     def __str__(self):
         return f'{self.username} - {self.tg_id}'
+    
+
+class MassSendMessage(models.Model):
+    name = models.CharField('Название',
+                            max_length=255)
+    content = models.TextField('Контент')
+
+    def __str__(self):
+        return self.name
+
+
+class MassSendImage(models.Model):
+    image = models.ImageField('Изображение',
+                              upload_to='mass_send/images/')
+    messsage = models.ForeignKey(MassSendMessage,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Cообщение',
+                                 related_name='images')
+
+
+class MassSendVideo(models.Model):
+    video = models.FileField('Видео',
+                             upload_to='mass_send/videos/')
+    messsage = models.ForeignKey(MassSendMessage,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Cообщение',
+                                 related_name='videos')
 
 
 #Абстрактная модель отзыва/комментария (для наследования)
