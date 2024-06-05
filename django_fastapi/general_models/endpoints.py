@@ -7,7 +7,7 @@ from django.db import connection
 
 from fastapi import APIRouter, Request, Depends, HTTPException
 
-from general_models.models import Valute
+from general_models.models import Valute, BaseAdminComment
 
 import no_cash.models as no_cash_models
 from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions
@@ -29,7 +29,8 @@ from .schemas import (ValuteModel,
                       ReviewViewSchema,
                       ReviewsByExchangeSchema,
                       AddReviewSchema,
-                      CommentSchema)
+                      CommentSchema,
+                      CommentRoleEnum)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -241,7 +242,8 @@ def check_user_review_permission(exchange_id: int,
 
 
 @review_router.get('/get_comments_by_review',
-                   response_model=list[CommentSchema])
+                   response_model=list[CommentSchema],
+                   response_model_exclude_none=True)
 def get_comments_by_review(exchange_id: int,
                            exchange_marker: str,
                            review_id: int):
@@ -274,6 +276,8 @@ def get_comments_by_review(exchange_id: int,
     #                             .order_by('time_create').all()
 
     for comment in comments:
+        if isinstance(comment, BaseAdminComment):
+            comment.role = CommentRoleEnum.admin
         date, time = comment.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
         comment.comment_date = date
         comment.comment_time = time

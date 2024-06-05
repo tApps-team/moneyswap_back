@@ -1,4 +1,6 @@
 # from fastapi import FastAPI, File, UploadFile
+from enum import Enum
+
 from pydantic import BaseModel, Field
 
 
@@ -95,8 +97,17 @@ class AddReviewSchema(BaseModel):
     transaction_id: str | None
 
 
+
+class CommentRoleEnum(str, Enum):
+    admin = 'admin'
+    exchenger = 'exchenger'
+    user = 'user'
+
+
 class CommentSchema(BaseModel):
     id: int
     comment_date: str
     comment_time: str
     text: str
+    role: CommentRoleEnum
+    name: str | None = Field(default=None)
