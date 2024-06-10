@@ -1,8 +1,14 @@
+from collections.abc import Callable, Sequence
+from typing import Any
 from django.contrib import admin
+from django.db.models.query import QuerySet
+from django.http import HttpRequest
+from django.utils.safestring import mark_safe
 
 from django_summernote.admin import SummernoteModelAdmin
 
-from general_models.models import MassSendMessage, MassSendImage, MassSendVideo
+from general_models.models import MassSendMessage, MassSendImage, MassSendVideo, MassSendFile
+from general_models.utils.endpoints import try_generate_icon_url
 
 from .models import SimplePage, FAQCategory, FAQPage
 
@@ -29,6 +35,14 @@ class MassSendImageStacked(admin.StackedInline):
     classes = [
         'collapse',
         ]
+    readonly_fields = ('image_icon', 'file_id')
+    
+    def image_icon(self, obj):
+        icon_url = try_generate_icon_url(obj)
+        icon_url = f'http://localhost:8000/django{obj.image.url}'
+        return mark_safe(f"<img src='{icon_url}' width=40")
+    
+    image_icon.short_description = 'Изображение'
     
 
 class MassSendVideoStacked(admin.StackedInline):
@@ -37,6 +51,18 @@ class MassSendVideoStacked(admin.StackedInline):
     classes = [
         'collapse',
         ]
+    readonly_fields = ('file_id', )
+
+
+class MassSendFileStacked(admin.StackedInline):
+    model = MassSendFile
+    extra = 0
+    classes = [
+        'collapse',
+        ]
+    readonly_fields = ('file_id', )
+
+
 
 
 @admin.register(MassSendMessage)
@@ -45,4 +71,5 @@ class MassSendMessageAdmin(SummernoteModelAdmin):
     inlines = [
         MassSendImageStacked,
         MassSendVideoStacked,
+        MassSendFileStacked,
     ]
