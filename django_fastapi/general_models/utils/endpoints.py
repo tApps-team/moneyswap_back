@@ -81,6 +81,11 @@ def try_generate_icon_url(obj: Country | Valute) -> str | None:
     return icon_url
 
 
+def generate_image_icon(icon_url: str):
+    return settings.PROTOCOL + settings.SITE_DOMAIN\
+                                + icon_url
+
+
 def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
                                 valute_from: str,
                                 valute_to: str,

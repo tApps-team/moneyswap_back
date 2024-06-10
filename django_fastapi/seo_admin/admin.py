@@ -8,7 +8,7 @@ from django.utils.safestring import mark_safe
 from django_summernote.admin import SummernoteModelAdmin
 
 from general_models.models import MassSendMessage, MassSendImage, MassSendVideo, MassSendFile
-from general_models.utils.endpoints import try_generate_icon_url
+from general_models.utils.endpoints import try_generate_icon_url, generate_image_icon
 
 from .models import SimplePage, FAQCategory, FAQPage
 
@@ -38,7 +38,7 @@ class MassSendImageStacked(admin.StackedInline):
     readonly_fields = ('image_icon', 'file_id')
     
     def image_icon(self, obj):
-        icon_url = try_generate_icon_url(obj)
+        icon_url = generate_image_icon(obj.image)
         # icon_url = f'http://localhost:8000/django{obj.image.url}'
         ##
         return mark_safe(f"<img src='{icon_url}' width=40")
