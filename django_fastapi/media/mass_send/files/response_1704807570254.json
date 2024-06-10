@@ -1,0 +1,446 @@
+[
+  {
+    "id": 99,
+    "name": {
+      "ru": "Армения",
+      "en": "Armenia"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 115,
+        "name": {
+          "ru": "Ереван",
+          "en": "Yerevan"
+        },
+        "code_name": "ERVN"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": {
+      "ru": "Грузия",
+      "en": "Georgia"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 347,
+        "name": {
+          "ru": "Тбилиси",
+          "en": "Tbilisi"
+        },
+        "code_name": "TBIL"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": {
+      "ru": "Израиль",
+      "en": "Israel"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 350,
+        "name": {
+          "ru": "Тель-Авив",
+          "en": "Tel Aviv"
+        },
+        "code_name": "TLAV"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "name": {
+      "ru": "Казахстан",
+      "en": "Kazakhstan"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 14,
+        "name": {
+          "ru": "Алма-Ата",
+          "en": "Almaty"
+        },
+        "code_name": "ALM"
+      },
+      {
+        "id": 24,
+        "name": {
+          "ru": "Астана",
+          "en": "Astana"
+        },
+        "code_name": "ASTN"
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "name": {
+      "ru": "Молдова",
+      "en": "Moldova"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 356,
+        "name": {
+          "ru": "Тирасполь",
+          "en": "Tiraspol"
+        },
+        "code_name": "TRSPL"
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "name": {
+      "ru": "Объединенные Арабские Эмираты",
+      "en": "United Arab Emirates"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 108,
+        "name": {
+          "ru": "Дубай",
+          "en": "Dubai"
+        },
+        "code_name": "DUBAI"
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "name": {
+      "ru": "Польша",
+      "en": "Poland"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 74,
+        "name": {
+          "ru": "Варшава",
+          "en": "Warsaw"
+        },
+        "code_name": "WARS"
+      },
+      {
+        "id": 167,
+        "name": {
+          "ru": "Краков",
+          "en": "Krakow"
+        },
+        "code_name": "KRKW"
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "name": {
+      "ru": "Россия",
+      "en": "Russia"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 79,
+        "name": {
+          "ru": "Владивосток",
+          "en": "Vladivostok"
+        },
+        "code_name": "VVO"
+      },
+      {
+        "id": 82,
+        "name": {
+          "ru": "Воронеж",
+          "en": "Voronezh"
+        },
+        "code_name": "VORON"
+      },
+      {
+        "id": 113,
+        "name": {
+          "ru": "Екатеринбург",
+          "en": "Yekaterinburg"
+        },
+        "code_name": "EKB"
+      },
+      {
+        "id": 126,
+        "name": {
+          "ru": "Иркутск",
+          "en": "Irkutsk"
+        },
+        "code_name": "IRK"
+      },
+      {
+        "id": 130,
+        "name": {
+          "ru": "Казань",
+          "en": "Kazan"
+        },
+        "code_name": "KZN"
+      },
+      {
+        "id": 133,
+        "name": {
+          "ru": "Калининград",
+          "en": "Kaliningrad"
+        },
+        "code_name": "KLNG"
+      },
+      {
+        "id": 169,
+        "name": {
+          "ru": "Краснодар",
+          "en": "Krasnodar"
+        },
+        "code_name": "KRASN"
+      },
+      {
+        "id": 233,
+        "name": {
+          "ru": "Москва",
+          "en": "Moscow"
+        },
+        "code_name": "MSK"
+      },
+      {
+        "id": 246,
+        "name": {
+          "ru": "Нижний Новгород",
+          "en": "Nizhny Novgorod"
+        },
+        "code_name": "NNOV"
+      },
+      {
+        "id": 255,
+        "name": {
+          "ru": "Новосибирск",
+          "en": "Novosibirsk"
+        },
+        "code_name": "NSK"
+      },
+      {
+        "id": 265,
+        "name": {
+          "ru": "Оренбург",
+          "en": "Orenburg"
+        },
+        "code_name": "OREN"
+      },
+      {
+        "id": 312,
+        "name": {
+          "ru": "Санкт-Петербург",
+          "en": "Saint Petersburg"
+        },
+        "code_name": "SPB"
+      },
+      {
+        "id": 318,
+        "name": {
+          "ru": "Севастополь",
+          "en": "Sevastopol"
+        },
+        "code_name": "SVSTP"
+      },
+      {
+        "id": 332,
+        "name": {
+          "ru": "Сочи",
+          "en": "Sochi"
+        },
+        "code_name": "SOCHI"
+      },
+      {
+        "id": 372,
+        "name": {
+          "ru": "Уфа",
+          "en": "Ufa"
+        },
+        "code_name": "UFA"
+      },
+      {
+        "id": 394,
+        "name": {
+          "ru": "Челябинск",
+          "en": "Chelyabinsk"
+        },
+        "code_name": "CHEL"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": {
+      "ru": "США",
+      "en": "United States"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 259,
+        "name": {
+          "ru": "Нью-Йорк",
+          "en": "New York"
+        },
+        "code_name": "NYC"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": {
+      "ru": "Таиланд",
+      "en": "Thailand"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 288,
+        "name": {
+          "ru": "Пхукет",
+          "en": "Phuket"
+        },
+        "code_name": "PHUK"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": {
+      "ru": "Турция",
+      "en": "Turkey"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 10,
+        "name": {
+          "ru": "Аланья",
+          "en": "Alanya"
+        },
+        "code_name": "ALAN"
+      },
+      {
+        "id": 19,
+        "name": {
+          "ru": "Анталья",
+          "en": "Antalya"
+        },
+        "code_name": "ANTL"
+      },
+      {
+        "id": 334,
+        "name": {
+          "ru": "Стамбул",
+          "en": "Istanbul"
+        },
+        "code_name": "STAM"
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "name": {
+      "ru": "Узбекистан",
+      "en": "Uzbekistan"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 346,
+        "name": {
+          "ru": "Ташкент",
+          "en": "Tashkent"
+        },
+        "code_name": "TASHK"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "name": {
+      "ru": "Украина",
+      "en": "Ukraine"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 120,
+        "name": {
+          "ru": "Запорожье",
+          "en": "Zaporizhia"
+        },
+        "code_name": "ZAP"
+      },
+      {
+        "id": 122,
+        "name": {
+          "ru": "Ивано-Франковск",
+          "en": "Ivano-Frankivsk"
+        },
+        "code_name": "IVFR"
+      },
+      {
+        "id": 152,
+        "name": {
+          "ru": "Киев",
+          "en": "Kyiv"
+        },
+        "code_name": "KIEV"
+      },
+      {
+        "id": 261,
+        "name": {
+          "ru": "Одесса",
+          "en": "Odessa"
+        },
+        "code_name": "ODS"
+      },
+      {
+        "id": 397,
+        "name": {
+          "ru": "Черкассы",
+          "en": "Cherkasy"
+        },
+        "code_name": "CHERK"
+      },
+      {
+        "id": 398,
+        "name": {
+          "ru": "Чернигов",
+          "en": "Chernihiv"
+        },
+        "code_name": "CHRN"
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "name": {
+      "ru": "Чехия",
+      "en": "Czech Republic"
+    },
+    "icon_url": "http://127.0.0.1:81/media/icons/country/Rossiyasvg-1.svg",
+    "cities": [
+      {
+        "id": 285,
+        "name": {
+          "ru": "Прага",
+          "en": "Prague"
+        },
+        "code_name": "PRAG"
+      }
+    ]
+  }
+]

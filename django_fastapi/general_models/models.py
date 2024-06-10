@@ -103,7 +103,82 @@ class Guest(models.Model):
 
     def __str__(self):
         return f'{self.username} - {self.tg_id}'
+    
 
+class MassSendMessage(models.Model):
+    name = models.CharField('Название',
+                            max_length=255)
+    content = models.TextField('Контент')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Массовая рассылка'
+        verbose_name_plural = 'Массовые рассылки'
+
+
+class MassSendImage(models.Model):
+    image = models.ImageField('Изображение',
+                              upload_to='mass_send/images/')
+    message = models.ForeignKey(MassSendMessage,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Cообщение',
+                                 related_name='images')
+    file_id = models.CharField('ID файла',
+                               max_length=255,
+                               null=True,
+                               blank=True,
+                               default=None)
+    
+    def __str__(self):
+        return f'Изображение {self.id}'
+    
+    class Meta:
+        verbose_name = 'Изображение для расслыки'
+        verbose_name_plural = 'Изображения для расслыки'
+
+
+class MassSendVideo(models.Model):
+    video = models.FileField('Видео',
+                             upload_to='mass_send/videos/')
+    message = models.ForeignKey(MassSendMessage,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Cообщение',
+                                 related_name='videos')
+    file_id = models.CharField('ID файла',
+                               max_length=255,
+                               null=True,
+                               blank=True,
+                               default=None)
+
+    def __str__(self):
+        return f'Видео {self.id}'
+
+    class Meta:
+        verbose_name = 'Видео для расслыки'
+        verbose_name_plural = 'Видео для расслыки'
+
+
+class MassSendFile(models.Model):
+    file = models.FileField('Файл',
+                            upload_to='mass_send/files/')
+    message = models.ForeignKey(MassSendMessage,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Cообщение',
+                                 related_name='files')
+    file_id = models.CharField('ID файла',
+                               max_length=255,
+                               null=True,
+                               blank=True,
+                               default=None)
+    
+    def __str__(self):
+        return f'Файл {self.id}'
+
+    class Meta:
+        verbose_name = 'Файл для расслыки'
+        verbose_name_plural = 'Файлы для расслыки'
 
 #Абстрактная модель отзыва/комментария (для наследования)
 class BaseReviewComment(models.Model):
