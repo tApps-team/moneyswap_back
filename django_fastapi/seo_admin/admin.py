@@ -39,7 +39,7 @@ class MassSendImageStacked(admin.StackedInline):
     
     def image_icon(self, obj):
         icon_url = try_generate_icon_url(obj)
-        icon_url = f'http://localhost:8000/django{obj.image.url}'
+        # icon_url = f'http://localhost:8000/django{obj.image.url}'
         return mark_safe(f"<img src='{icon_url}' width=40")
     
     image_icon.short_description = 'Изображение'
