@@ -74,3 +74,6 @@ class MassSendMessageAdmin(SummernoteModelAdmin):
         MassSendVideoStacked,
         MassSendFileStacked,
     ]
+
+    class Media:
+        js = ('seo_admin/js/test_1.js', )

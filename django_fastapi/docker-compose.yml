@@ -8,6 +8,8 @@ services:
     ports:
       - "4444:4444"
       - "7900:7900"
+    networks:
+      - common-network
     volumes:
       - selenium-data:/home/seluser/Downloads
     environment:
@@ -25,6 +27,8 @@ services:
     build: .
     pull_policy: build
     restart: on-failure
+    networks:
+      - common-network
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -61,6 +65,8 @@ services:
     build: ./nginx
     restart: on-failure
     container_name: nginx
+    networks:
+      - common-network
     volumes:
       - static:/static
       - media:/media
@@ -77,6 +83,8 @@ services:
   redis_db:
     image: redis:latest
     restart: on-failure
+    networks:
+      - common-network
     # ports:
     #   - 6379:6379
     env_file:
@@ -105,6 +113,8 @@ services:
     build: .
     pull_policy: build
     restart: on-failure
+    networks:
+      - common-network
     command: sh -c 'celery -A project worker -l info -c 20 -Ofair'
     environment:
       - POSTGRES_HOST=psql_db
@@ -126,6 +136,8 @@ services:
     build: .
     pull_policy: build
     restart: on-failure
+    networks:
+      - common-network
     command: sh -c 'celery -A project beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler'
     environment:
       - POSTGRES_HOST=psql_db
@@ -145,6 +157,8 @@ services:
   flower:
     build: .
     command: sh -c 'celery -A project flower'
+    networks:
+      - common-network
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -159,6 +173,8 @@ services:
   psql_db:
     image: postgres:14
     restart: on-failure
+    networks:
+      - common-network
     ports:
       - '5432:5432'
     env_file:
@@ -178,3 +194,7 @@ volumes:
   flower_data:
   static:
   media:
+
+networks:
+  common-network:
+    driver: bridge
