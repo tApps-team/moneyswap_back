@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
     let mass_send_button = document.createElement('button');
     mass_send_button.textContent = 'mass_send';
     mass_send_button.onclick = function() {
-        let data = fetch('http://bot/bot_api/send_mass_message')
+        let data = fetch('https://bot/bot_api/send_mass_message')
         .then(resp => {
             resp.text().then(console.log)
         })
