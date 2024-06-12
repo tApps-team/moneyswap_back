@@ -62,8 +62,8 @@ def round_valute_values(exchange_direction_dict: dict):
             min_amount = int(min_amount)
             max_amount = int(max_amount)
         
-        exchange_direction_dict['min_amount'] = f'{min_amount} {valute_from}'
-        exchange_direction_dict['max_amount'] = f'{max_amount} {valute_from}'
+        exchange_direction_dict['min_amount'] = f'{min_amount}'
+        exchange_direction_dict['max_amount'] = f'{max_amount}'
     except Exception:
         pass
 
