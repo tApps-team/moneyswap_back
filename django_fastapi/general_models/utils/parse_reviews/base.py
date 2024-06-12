@@ -45,6 +45,8 @@ def new_add_review_to_db(exchange_name: str, data: dict, marker: str):
                     exchange=exchange,
                     status='Опубликован',
                     moderation=True)
+    if data.get('grade'):
+        review.__setattr__('grade', data['grade'])
     try:
         review.save()
     except Exception:

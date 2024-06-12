@@ -7,6 +7,12 @@ from .base import add_comment_to_db, new_add_review_to_db
 
 
 def collect_data(review, indicator: str):
+    grade = None
+    try:
+        grade_class = review.get_attribute('class').split('_')[-1]
+        grade = 1 if grade_class == '1' else 0
+    except Exception:
+        pass
     header = review.find_element(By.CLASS_NAME, f'{indicator}_header')\
                     .find_elements(By.TAG_NAME, 'td')
     
@@ -27,11 +33,16 @@ def collect_data(review, indicator: str):
                         .find_element(By.CLASS_NAME, f'{indicator}_text')
     print(rate_text.text)
 
-    return {
+    data = {
         'name': name.text,
         'date': date,
         'text': rate_text.text,
     }
+
+    if grade is not None:
+        data.update({'grade': grade})
+
+    return data
 
 
 def parse_reviews(driver: WebDriver,
