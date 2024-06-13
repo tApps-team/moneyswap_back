@@ -93,6 +93,25 @@ class Guest(models.Model):
                                 default=None)
     tg_id = models.BigIntegerField('Telegram id',
                                    primary_key=True)
+    first_name = models.CharField('Имя пользователя',
+                                  max_length=255,
+                                  null=True,
+                                  blank=True,
+                                  default=None)
+    last_name = models.CharField('Фамилия пользователя',
+                                 max_length=255,
+                                 blank=True,
+                                 null=True,
+                                 default=None)
+    language_code = models.CharField('Язык интерфейса',
+                                     max_length=255,
+                                     blank=True,
+                                     null=True,
+                                     default=None)
+    is_premium = models.BooleanField('Премиум',
+                                     default=False)
+    is_active = models.BooleanField('Активен',
+                                    default=True)
 
     class Meta:
         verbose_name = 'Гостевой пользователь'

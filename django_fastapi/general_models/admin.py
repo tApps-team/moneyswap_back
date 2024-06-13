@@ -85,10 +85,16 @@ class GuestAdmin(admin.ModelAdmin):
     list_display = (
         'username',
         'tg_id',
+        'is_active',
     )
     readonly_fields = (
         'username',
         'tg_id',
+        'first_name',
+        'last_name',
+        'language_code',
+        'is_premium',
+        'is_active',
     )
 
 #Отображение валют в админ панели
