@@ -124,6 +124,7 @@ def try_update_direction(dict_for_parse: dict,
         pass
     except Exception as ex:
         print('PARSE UPDATE FAILED', ex)
+        exchange_direction.update(is_active=False)
         pass
     else:
         print('update')

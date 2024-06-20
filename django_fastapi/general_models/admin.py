@@ -17,7 +17,7 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 
 from .utils.admin import ReviewAdminMixin
 from .utils.endpoints import try_generate_icon_url
-from .models import Valute, PartnerTimeUpdate, Guest
+from .models import Valute, PartnerTimeUpdate, Guest, CustomOrder
 
 
 #DONT SHOW PERIODIC TASKS IN ADMIN PANEL
@@ -96,6 +96,19 @@ class GuestAdmin(admin.ModelAdmin):
         'is_premium',
         'is_active',
     )
+
+
+@admin.register(CustomOrder)
+class CustomOrderAdmin(admin.ModelAdmin):
+    list_display = (
+        'guest',
+        'request_type',
+        )
+    
+    readonly_fields = (
+        'time_create',
+        )
+
 
 #Отображение валют в админ панели
 @admin.register(Valute)

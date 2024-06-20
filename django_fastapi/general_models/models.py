@@ -84,7 +84,7 @@ class PartnerTimeUpdate(models.Model):
         return self.name
     
 
-
+# Модель Гостевых Пользователей
 class Guest(models.Model):
     username = models.CharField('Никнейм',
                                 max_length=255,
@@ -124,6 +124,7 @@ class Guest(models.Model):
         return f'{self.username} - {self.tg_id}'
     
 
+# Модель рассылок в телеграм боте
 class MassSendMessage(models.Model):
     name = models.CharField('Название',
                             max_length=255)
@@ -136,7 +137,7 @@ class MassSendMessage(models.Model):
         verbose_name = 'Массовая рассылка'
         verbose_name_plural = 'Массовые рассылки'
 
-
+# Модель изображений связанных с рассылкой 
 class MassSendImage(models.Model):
     image = models.ImageField('Изображение',
                               upload_to='mass_send/images/')
@@ -157,7 +158,7 @@ class MassSendImage(models.Model):
         verbose_name = 'Изображение для расслыки'
         verbose_name_plural = 'Изображения для расслыки'
 
-
+# Модель видео связанных с рассылкой 
 class MassSendVideo(models.Model):
     video = models.FileField('Видео',
                              upload_to='mass_send/videos/')
@@ -179,6 +180,7 @@ class MassSendVideo(models.Model):
         verbose_name_plural = 'Видео для расслыки'
 
 
+# Модель файлов связанных с рассылкой 
 class MassSendFile(models.Model):
     file = models.FileField('Файл',
                             upload_to='mass_send/files/')
@@ -198,6 +200,32 @@ class MassSendFile(models.Model):
     class Meta:
         verbose_name = 'Файл для расслыки'
         verbose_name_plural = 'Файлы для расслыки'
+
+
+# Модель Заявок(Swify/Sepa) гостевых пользователей
+class CustomOrder(models.Model):
+    request_type = models.CharField('Тип заявки',
+                                    max_length=255)
+    country = models.CharField('Страна',
+                               max_length=255)
+    amount = models.CharField('Сумма',
+                              max_length=255)
+    comment = models.TextField('Комментарий')
+
+    guest = models.ForeignKey(Guest,
+                              on_delete=models.CASCADE,
+                              related_name='custom_orders')
+    time_create = models.DateTimeField('Время создания',
+                                       auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Завка пользователя'
+        verbose_name_plural = 'Заявки пользователей'
+        ordering = ('-time_create', )
+
+    def __str__(self):
+        return f'Заявка №{self.pk} -> {self.guest}'
+    
 
 #Абстрактная модель отзыва/комментария (для наследования)
 class BaseReviewComment(models.Model):
