@@ -4,7 +4,7 @@ from datetime import timedelta, datetime
 
 from django.conf import settings
 from django.db import connection
-from django.db.models import Count, Q
+from django.db.models import Count, Q, F
 
 from fastapi import HTTPException
 
@@ -84,6 +84,10 @@ def try_generate_icon_url(obj: Country | Valute) -> str | None:
 def generate_image_icon(icon_url: str):
     return settings.PROTOCOL + settings.SITE_DOMAIN\
                                 + icon_url.url
+
+def new_generate_icon_url(icon_url: str):
+    return settings.PROTOCOL + settings.SITE_DOMAIN\
+                                + icon_url
 
 
 def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
@@ -178,8 +182,41 @@ def get_valute_json(queries: List[NoCashExDir | CashExDir]):
         en_type_valute = en_type_valute_dict[valute.type_valute]
         json_dict['en'][en_type_valute] = json_dict['en'].get(en_type_valute, [])\
                                                  + [EnValuteModel(**valute.__dict__)]
-
+    print(connection.queries)
     return json_dict
+
+
+#
+def new_get_valute_json(queries: List[dict]):
+    
+    '''
+    Возвращает словарь валют с необходимыми данными 
+    '''
+
+    # valute_name_list = set(map(lambda query: query[0], queries))
+    # valutes = Valute.objects.filter(code_name__in=valute_name_list).all()
+    
+    json_dict = {'ru': dict(), 'en': dict()}
+    # json_dict = defaultdict(dict)
+
+    # json_dict.fromkeys(default_dict_keys)
+
+    for id, query in enumerate(queries, start=1):
+        icon_url = new_generate_icon_url(query['icon_url'])
+        query['icon_url'] = icon_url
+        query['id'] = id
+
+        json_dict['ru'][query['type_valute']] = json_dict['ru'].get(query['type_valute'], [])\
+                                                 + [ValuteModel(**query)]
+        
+        en_type_valute = en_type_valute_dict[query['type_valute']]
+        json_dict['en'][en_type_valute] = json_dict['en'].get(en_type_valute, [])\
+                                                 + [EnValuteModel(**query)]
+    print(connection.queries)
+    # print(len(connection.queries))
+    return json_dict
+
+#
 
 
 def increase_popular_count_direction(**kwargs):

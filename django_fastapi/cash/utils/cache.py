@@ -1,5 +1,10 @@
 from django.core.cache import cache
 
+from fastapi import Request
+
+from .endpoints import get_available_countries
+from general_models.utils.http_exc import http_exception_json
+
 from cash.models import Direction, City
 
 
@@ -24,5 +29,24 @@ def get_or_set_cash_directions_cache():
         else:
             print('VALUE GETTING FROM CACHE')
         return all_cash_directions
+    except Exception as ex:
+        print(ex)
+
+
+
+def get_or_set_counries_from_cache(request: Request):
+    try:
+        if not (countries := cache.get('countries', False)):
+            cities = City.objects.filter(is_parse=True)\
+                                    .select_related('country').all()
+            if not cities:
+                http_exception_json(status_code=404, param=request.url)
+
+            countries = get_available_countries(cities)
+            cache.set('countries', countries, 30)
+            print('set to cache')
+        else:
+            print('get from cache')
+        return countries
     except Exception as ex:
         print(ex)

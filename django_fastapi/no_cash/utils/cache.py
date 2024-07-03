@@ -17,3 +17,21 @@ def get_or_set_no_cash_directions_cache():
         return set(all_no_cash_directions)
     except Exception as ex:
         print(ex)
+
+
+
+def get_or_set_all_no_cash_valutes_cache(queries):
+    if not (all_no_cash_valutes := cache.get('all_no_cash_valutes', False)):
+        all_no_cash_valutes = queries
+        cache.set('all_no_cash_valutes', all_no_cash_valutes, 30)
+
+    return all_no_cash_valutes
+
+
+def get_or_set_no_cash_valutes_by_valute_cache(base: str,
+                                               queries):
+    if not (no_cash_valutes := cache.get(f'no_cash_valutes_by_{base}', False)):
+        no_cash_valutes = queries
+        cache.set(f'no_cash_valutes_by_{base}', no_cash_valutes, 30)
+
+    return no_cash_valutes

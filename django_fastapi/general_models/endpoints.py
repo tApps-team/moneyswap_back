@@ -284,3 +284,13 @@ def get_comments_by_review(exchange_id: int,
     #
     # print(len(connection.queries))
     return comments
+
+
+@common_router.get('/test_locust')
+def test_locust():
+    valutes = Valute.objects.all()[:5]
+
+    for v in valutes:
+        print(v.name)
+
+    return {'status': 'success'}

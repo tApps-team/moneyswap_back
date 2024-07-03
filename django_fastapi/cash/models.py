@@ -159,6 +159,9 @@ class Direction(BaseDirection):
                                       null=True,
                                       default=None)
     
+    class Meta(BaseDirection.Meta):
+        indexes = BaseDirection.Meta.indexes + [models.Index(fields=('display_name', ))]
+    
     def __str__(self):
         return self.display_name
     

@@ -19,6 +19,7 @@ from partners.models import Direction as PartnerDirection
 from .models import City, ExchangeDirection
 from .schemas import RuEnCountryModel
 from .utils.endpoints import get_available_countries
+from .utils.cache import get_or_set_counries_from_cache
 
 
 cash_router = APIRouter(prefix='/cash',
@@ -31,10 +32,9 @@ cash_router = APIRouter(prefix='/cash',
                  response_model=List[RuEnCountryModel],
                  response_model_by_alias=False)
 def get_available_coutries(request: Request):
-    #
-    # cities = City.objects.filter(Q(is_parse=True) | Q(has_partner_cities=True))\
-    #                         .select_related('country').all()
-    #
+    print(connection.queries)
+    # countries = get_or_set_counries_from_cache(request)
+
     cities = City.objects.filter(is_parse=True)\
                             .select_related('country').all()
 
@@ -43,6 +43,7 @@ def get_available_coutries(request: Request):
 
     countries = get_available_countries(cities)
 
+    print(connection.queries)
     return countries
 
 

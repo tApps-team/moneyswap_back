@@ -1,15 +1,19 @@
 from fastapi import APIRouter, Request
 
-from django.db.models import Count, Q
+from django.db.models import Count, Q, F
 from django.db import connection
 
+from general_models.models import Valute
 from general_models.utils.http_exc import http_exception_json
 from general_models.utils.endpoints import (get_exchange_direction_list,
                                             get_valute_json,
+                                            new_get_valute_json,
                                             increase_popular_count_direction,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
                                             negative_review_count_filter)
+from .utils.cache import (get_or_set_all_no_cash_valutes_cache,
+                          get_or_set_no_cash_valutes_by_valute_cache)
 
 from .models import ExchangeDirection
 
@@ -35,11 +39,41 @@ def no_cash_valutes(request: Request,
                                         exchange__is_active=True)
 
     if base == 'ALL':
+        # queries = queries.values(code_name=F('direction__valute_from'),
+        #                          name=F('direction__valute_from__name'),
+        #                          en_name=F('direction__valute_from__en_name'),
+        #                          type_valute=F('direction__valute_from__type_valute'),
+        #                          icon_url=F('direction__valute_from__icon_url'))\
+        #                     .order_by('direction__valute_from')\
+        #                     .distinct().all()
         queries = queries.values_list('direction__valute_from').all()
+        # queries = get_or_set_all_no_cash_valutes_cache(queries)
     else:
+        # queries = queries.filter(direction__valute_from=base)\
+        #                     .values_list('direction__valute_to').all()
         queries = queries.filter(direction__valute_from=base)\
-                            .values_list('direction__valute_to').all()
-        
+                            .values(code_name=F('direction__valute_to'),
+                                    name=F('direction__valute_to__name'),
+                                    en_name=F('direction__valute_to__en_name'),
+                                    type_valute=F('direction__valute_to__type_valute'),
+                                    icon_url=F('direction__valute_to__icon_url'))\
+                            .order_by('direction__valute_to')\
+                            .distinct().all()
+        # queries = queries.filter(direction__valute_from=base)\
+        #                     .values_list('direction__valute_to').all()
+
+        # queries = get_or_set_no_cash_valutes_by_valute_cache(base,
+        #                                                      queries)
+
+    # print(queries)
+    # for q in queries:
+    #     print(q)
+        # print(type(q.direction.valute_from))
+        # print(q[0].name)
+    
+    # print(connection.queries)
+    # print(len(connection.queries))
+    
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
