@@ -2,6 +2,8 @@ from django.core.cache import cache
 
 from no_cash.models import Direction
 
+from general_models.models import Valute
+
 
 def get_or_set_no_cash_directions_cache():
     '''
@@ -22,8 +24,10 @@ def get_or_set_no_cash_directions_cache():
 
 def get_or_set_all_no_cash_valutes_cache(queries):
     if not (all_no_cash_valutes := cache.get('all_no_cash_valutes', False)):
-        all_no_cash_valutes = queries
-        cache.set('all_no_cash_valutes', all_no_cash_valutes, 30)
+        print('set to cache')
+        valutes = Valute.objects.filter(code_name__in=(queries)).all()
+        all_no_cash_valutes = valutes
+        cache.set('all_no_cash_valutes', all_no_cash_valutes, 300)
 
     return all_no_cash_valutes
 

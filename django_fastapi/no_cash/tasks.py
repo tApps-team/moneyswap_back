@@ -52,7 +52,10 @@ def create_direction(dict_for_parse: dict,
         pass
     else:
         dict_for_create_exchange_direction['exchange'] = exchange
-        dict_for_create_exchange_direction['direction'] = direction
+        # dict_for_create_exchange_direction['direction'] = direction
+        # dict_for_create_exchange_direction['valute_from'] = exchange
+        # dict_for_create_exchange_direction['valute_to'] = exchange
+
         try:
             ExchangeDirection.objects.create(**dict_for_create_exchange_direction)
         except Exception as ex:
@@ -69,11 +72,10 @@ def update_no_cash_diretions_for_exchange(exchange_name: str):
 
         if xml_file is not None and exchange.is_active:
                 direction_list = exchange.directions\
-                                        .select_related('direction',
-                                                        'direction__valute_from',
-                                                        'direction__valute_to')\
-                                        .values_list('direction__valute_from',
-                                                    'direction__valute_to').all()
+                                        .select_related('valute_from',
+                                                        'valute_to')\
+                                        .values_list('valute_from',
+                                                    'valute_to').all()
 
                 if direction_list:
                     run_no_cash_background_tasks(try_update_direction,
@@ -91,12 +93,11 @@ def try_update_direction(dict_for_parse: dict,
     print('inside task')
 
     exchange_direction = ExchangeDirection.objects\
-                        .select_related('direction',
-                                        'direction__valute_from',
-                                        'direction__valute_to')\
+                        .select_related('valute_from',
+                                        'valute_to')\
                         .filter(exchange=dict_for_parse['id'],
-                                direction__valute_from=dict_for_parse['valute_from_id'],
-                                direction__valute_to=dict_for_parse['valute_to_id'])
+                                valute_from=dict_for_parse['valute_from_id'],
+                                valute_to=dict_for_parse['valute_to_id'])
 
     try:
         dict_for_update_exchange_direction = no_cash_parse_xml(dict_for_parse, xml_file)

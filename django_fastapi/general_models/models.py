@@ -28,7 +28,7 @@ class Valute(models.Model):
         ]
     name = models.CharField('Название валюты(ru)',
                             max_length=50,
-                            primary_key=True)
+                            unique=True)
     en_name = models.CharField('Название валюты(en)',
                                max_length=50,
                                unique=True,
@@ -36,7 +36,7 @@ class Valute(models.Model):
                                default=None)
     code_name = models.CharField('Кодовое сокращение',
                                  max_length=10,
-                                 unique=True)
+                                 primary_key=True)
     type_valute = models.CharField('Тип валюты',
                                    max_length=30,
                                    choices=type_valute_list)
@@ -51,9 +51,6 @@ class Valute(models.Model):
         verbose_name = 'Валюта'
         verbose_name_plural = 'Валюты'
         ordering = ['code_name']
-        indexes = [
-            models.Index(fields=['code_name', ])
-        ]
 
     def __str__(self):
         return self.code_name
@@ -378,6 +375,7 @@ class ParseExchange(BaseExchange):
         indexes = [
             models.Index(fields=['name']),
             models.Index(fields=['en_name']),
+            models.Index(fields=['is_active']),
         ]
 
 #Абстрактная модель направления (для наследования)

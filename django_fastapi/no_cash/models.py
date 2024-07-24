@@ -107,24 +107,37 @@ class ExchangeDirection(BaseExchangeDirection):
                                  on_delete=models.CASCADE,
                                  verbose_name='Обменник',
                                  related_name='directions')
-    direction = models.ForeignKey(Direction,
-                                  verbose_name='Направление для обмена',
+    # direction = models.ForeignKey(Direction,
+    #                               verbose_name='Направление для обмена',
+    #                               on_delete=models.CASCADE,
+    #                               related_name='exchange_directions')
+    valute_from = models.ForeignKey(Valute,
+                                    on_delete=models.CASCADE,
+                                    to_field='code_name',
+                                    related_name='no_cash_valute_from_directions',
+                                    null=True,
+                                    default=None)
+    valute_to = models.ForeignKey(Valute,
                                   on_delete=models.CASCADE,
-                                  related_name='exchange_directions')
+                                  to_field='code_name',
+                                  related_name='no_cash_valute_to_directions',
+                                   null=True,
+                                   default=None)
     
     class Meta:
-        # unique_together = (("exchange", "valute_from", "valute_to"), )
-        unique_together = (("exchange", "direction"), )
+        unique_together = (("exchange", "valute_from", "valute_to"), )
+        # unique_together = (("exchange", "direction"), )
         verbose_name = 'Готовое направление'
         verbose_name_plural = 'Готовые направления'
         ordering = ['-is_active',
                     'exchange',
-                    'direction__valute_from',
-                    'direction__valute_to']
-        # indexes = [
-        #     models.Index(fields=['direction__valute_from', 'direction__valute_to'])
-        # ]
+                    'valute_from',
+                    'valute_to']
+        indexes = [
+            models.Index(fields=['exchange', 'is_active']),
+            models.Index(fields=['valute_from', 'valute_to', 'is_active'])
+        ]
 
     def __str__(self):
-        # return f'{self.exchange}:  {self.valute_from} -> {self.valute_to}'
-        return f'{self.exchange}:  {self.direction}'
+        return f'{self.exchange}:  {self.valute_from} -> {self.valute_to}'
+        # return f'{self.exchange}:  {self.direction}'

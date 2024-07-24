@@ -1,10 +1,11 @@
 from typing import List
 from collections import defaultdict
 from datetime import timedelta, datetime
+from time import time
 
 from django.conf import settings
 from django.db import connection
-from django.db.models import Count, Q, F
+from django.db.models import Count, Q, F, Subquery
 
 from fastapi import HTTPException
 
@@ -14,6 +15,8 @@ import partners.models as partner_models
 
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
+
+from no_cash.utils.cache import get_or_set_all_no_cash_valutes_cache
 
 from general_models.models import Valute, en_type_valute_dict
 from general_models.schemas import ValuteModel, EnValuteModel, MultipleName, ReviewCountSchema
@@ -115,13 +118,13 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
             query.exchange.__dict__['partner_link'] += partner_link_pattern
 
         if valute_from_obj is None:
-            valute_from_obj = query.direction.valute_from
+            valute_from_obj = query.valute_from
 
         icon_url_valute_from = try_generate_icon_url(valute_from_obj)
         type_valute_from = valute_from_obj.type_valute
 
         if valute_to_obj is None:
-            valute_to_obj = query.direction.valute_to
+            valute_to_obj = query.valute_to
 
         icon_url_valute_to = try_generate_icon_url(valute_to_obj)
         type_valute_to = valute_to_obj.type_valute
@@ -151,25 +154,30 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         round_valute_values(exchange_direction)
         direction_list.append(exchange_direction)
 
+    # print(connection.queries)
     # print(len(connection.queries))
     # for query in connection.queries:
     #     print(query)
     return direction_list
 
 
+# valutes = []
+
 def get_valute_json(queries: List[NoCashExDir | CashExDir]):
     
     '''
     Возвращает словарь валют с необходимыми данными 
     '''
+    # valute_name_list = set(map(lambda query: query[0], queries))
+    # valutes = get_or_set_all_no_cash_valutes_cache(queries)
+    valutes = Valute.objects.filter(code_name__in=(queries)).all()
 
-    valute_name_list = set(map(lambda query: query[0], queries))
-    valutes = Valute.objects.filter(code_name__in=valute_name_list).all()
+    # print(valutes)
     
-    default_dict_keys = {'ru': dict(), 'en': dict()}
-    json_dict = defaultdict(dict)
+    json_dict = {'ru': dict(), 'en': dict()}
+    # json_dict = defaultdict(dict)
 
-    json_dict.fromkeys(default_dict_keys)
+    # json_dict.fromkeys(default_dict_keys)
 
     for id, valute in enumerate(valutes, start=1):
         icon_url = try_generate_icon_url(valute)
@@ -182,7 +190,9 @@ def get_valute_json(queries: List[NoCashExDir | CashExDir]):
         en_type_valute = en_type_valute_dict[valute.type_valute]
         json_dict['en'][en_type_valute] = json_dict['en'].get(en_type_valute, [])\
                                                  + [EnValuteModel(**valute.__dict__)]
-    print(connection.queries)
+    # print(connection.queries)
+    # print(len(connection.queries))
+
     return json_dict
 
 

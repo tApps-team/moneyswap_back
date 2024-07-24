@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     
+    'django_prometheus',
     'debug_toolbar',
     "django_celery_beat",
     'django_summernote',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 'django_prometheus.middleware.PrometheusBeforeMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -62,6 +64,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    # 'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 INTERNAL_IPS = [
@@ -88,8 +91,8 @@ TEMPLATES = [
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "test_api_db",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "test_db",
         # "NAME": DB_NAME,
         "USER": DB_USER,
         "PASSWORD": DB_PASS,
@@ -105,6 +108,17 @@ CACHES = {
         "LOCATION": REDIS_URL,
     }
 }
+
+
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_async_redis.cache.RedisCache",
+#         "LOCATION": REDIS_URL,
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_async_redis.client.DefaultClient",
+#         }
+#     }
+# }
 
 # CACHES = {
 #     "default": {
@@ -123,7 +137,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 #DEV
-STATIC_URL = "/django/static/"
+# STATIC_URL = "/django/static/"
+STATIC_URL = "/static/"
+
 # PROD
 # STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

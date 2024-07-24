@@ -1,6 +1,12 @@
 from typing import List
 from datetime import datetime, timedelta
+from time import time
 from math import ceil
+
+import time
+import logging
+
+from asgiref.sync import sync_to_async
 
 from django.db.models import Count
 from django.db import connection
@@ -44,11 +50,11 @@ review_router = APIRouter(prefix='/reviews',
 # Эндпоинт для получения доступных валют
 @common_router.get('/available_valutes',
                  response_model=dict[str, dict[str, List[ValuteModel | EnValuteModel]]])
-def get_available_valutes(request: Request,
+async def get_available_valutes(request: Request,
                           query: AvailableValutesQuery = Depends()):
     params = query.params()
     if not params['city']:
-        json_dict = no_cash_valutes(request, params)
+        json_dict = await sync_to_async(no_cash_valutes, thread_sensitive=True)(request, params)
     else:
         json_dict = cash_valutes(request, params)
     
@@ -287,10 +293,22 @@ def get_comments_by_review(exchange_id: int,
 
 
 @common_router.get('/test_locust')
-def test_locust():
-    valutes = Valute.objects.all()[:5]
+async def test_locust():
+    valutes =  await Valute.objects.afirst()
+    # [1 for valute in valutes]
 
-    for v in valutes:
-        print(v.name)
+    print(valutes)
+    print(connection.queries)
+    # for v in valutes:
+    #     v.name
 
     return {'status': 'success'}
+
+
+
+@common_router.get('/test_locust2')
+def test_locust_2():
+    f = 22
+    d = 44
+
+    return f+d

@@ -1,0 +1,24 @@
+# yaml
+
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['localhost:9187']
+
+
+  # - job_name: 'nginx'
+  #   static_configs:
+  #     - targets: ['localhost:8000']
+
+  - job_name: 'django'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          app: 'somesite'
