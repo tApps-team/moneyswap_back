@@ -111,3 +111,22 @@ class CommentSchema(BaseModel):
     text: str
     role: CommentRoleEnum
     name: str | None = Field(default=None)
+
+
+
+class ValuteTypeNameSchema(BaseModel):
+    ru: str
+    en: str
+
+
+class ValuteTypeListSchema(BaseModel):
+    id: str
+    name: ValuteTypeNameSchema
+    code_name: str
+    icon_url: str
+
+
+class ValuteListSchema(BaseModel):
+    id: int
+    name: ValuteTypeNameSchema
+    currencies: list[ValuteTypeListSchema]

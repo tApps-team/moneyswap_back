@@ -6,6 +6,7 @@ from django.db import connection
 from general_models.utils.http_exc import http_exception_json
 from general_models.utils.endpoints import (get_exchange_direction_list,
                                             get_valute_json,
+                                            get_valute_json_2,
                                             increase_popular_count_direction,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
@@ -35,15 +36,61 @@ def no_cash_valutes(request: Request,
                                         exchange__is_active=True)
 
     if base == 'ALL':
-        queries = queries.values_list('direction__valute_from').all()
+        # queries = queries.values_list('direction__valute_from').all()
+        queries = queries.order_by('direction__valute_from_id')\
+                            .distinct('direction__valute_from_id')\
+                            .values_list('direction__valute_from_id', flat=True)
     else:
-        queries = queries.filter(direction__valute_from=base)\
-                            .values_list('direction__valute_to').all()
+        # queries = queries.filter(direction__valute_from=base)\
+        #                     .values_list('direction__valute_to').all()
+        queries = queries.filter(direction__valute_from_id=base)\
+                            .order_by('direction__valute_to_id')\
+                            .distinct('direction__valute_to_id')\
+                            .values_list('direction__valute_to_id', flat=True)
+
         
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
     return get_valute_json(queries)
+
+
+#
+# Вспомогательный эндпоинт для получения безналичных валют
+def no_cash_valutes_2(request: Request,
+                    params: dict):
+    if not params['base']:
+        http_exception_json(status_code=400, param='base')
+
+    base = params['base']
+
+    queries = ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to')\
+                                .filter(is_active=True,
+                                        exchange__is_active=True)
+
+    if base == 'ALL':
+        # queries = queries.values_list('direction__valute_from').all()
+        queries = queries.order_by('direction__valute_from_id')\
+                            .distinct('direction__valute_from_id')\
+                            .values_list('direction__valute_from_id', flat=True)
+    else:
+        # queries = queries.filter(direction__valute_from=base)\
+        #                     .values_list('direction__valute_to').all()
+        queries = queries.filter(direction__valute_from_id=base)\
+                            .order_by('direction__valute_to_id')\
+                            .distinct('direction__valute_to_id')\
+                            .values_list('direction__valute_to_id', flat=True)
+
+        
+    if not queries:
+        http_exception_json(status_code=404, param=request.url)
+
+    return get_valute_json_2(queries)
+#
 
 
 # Вспомогательный эндпоинт для получения безналичных готовых направлений

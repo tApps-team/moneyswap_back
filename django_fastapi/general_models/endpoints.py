@@ -10,10 +10,10 @@ from fastapi import APIRouter, Request, Depends, HTTPException
 from general_models.models import Valute, BaseAdminComment
 
 import no_cash.models as no_cash_models
-from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions
+from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2
 
 import cash.models as cash_models
-from cash.endpoints import  cash_valutes, cash_exchange_directions
+from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2
 from cash.schemas import SpecialCashDirectionMultiModel
 from cash.models import Direction, Country, Exchange, Review
 
@@ -30,7 +30,8 @@ from .schemas import (ValuteModel,
                       ReviewsByExchangeSchema,
                       AddReviewSchema,
                       CommentSchema,
-                      CommentRoleEnum)
+                      CommentRoleEnum,
+                      ValuteListSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -42,8 +43,7 @@ review_router = APIRouter(prefix='/reviews',
 
 
 # Эндпоинт для получения доступных валют
-@common_router.get('/available_valutes',
-                 response_model=dict[str, dict[str, List[ValuteModel | EnValuteModel]]])
+@common_router.get('/available_valutes')
 def get_available_valutes(request: Request,
                           query: AvailableValutesQuery = Depends()):
     params = query.params()
@@ -54,6 +54,18 @@ def get_available_valutes(request: Request,
     
     return json_dict
 
+#
+@common_router.get('/available_valutes_2')
+def get_available_valutes(request: Request,
+                          query: AvailableValutesQuery = Depends()):
+    params = query.params()
+    if not params['city']:
+        json_dict = no_cash_valutes_2(request, params)
+    else:
+        json_dict = cash_valutes_2(request, params)
+    
+    return json_dict
+#
 
 # Эндпоинт для получения доступных готовых направлений
 @common_router.get('/directions',

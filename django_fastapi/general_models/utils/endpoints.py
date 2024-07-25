@@ -16,7 +16,13 @@ from cash.models import ExchangeDirection as CashExDir, City, Country, Direction
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict
-from general_models.schemas import ValuteModel, EnValuteModel, MultipleName, ReviewCountSchema
+from general_models.schemas import (ValuteModel,
+                                    EnValuteModel,
+                                    MultipleName,
+                                    ReviewCountSchema,
+                                    ValuteTypeListSchema,
+                                    ValuteListSchema,
+                                    ValuteTypeNameSchema)
 from general_models.utils.http_exc import review_exception_json
 
 
@@ -159,13 +165,13 @@ def get_valute_json(queries: List[NoCashExDir | CashExDir]):
     Возвращает словарь валют с необходимыми данными 
     '''
 
-    valute_name_list = set(map(lambda query: query[0], queries))
-    valutes = Valute.objects.filter(code_name__in=valute_name_list).all()
+    # valute_name_list = set(map(lambda query: query[0], queries))
+    valutes = Valute.objects.filter(code_name__in=queries).all()
     
-    default_dict_keys = {'ru': dict(), 'en': dict()}
-    json_dict = defaultdict(dict)
+    json_dict = {'ru': dict(), 'en': dict()}
+    # json_dict = defaultdict(dict)
 
-    json_dict.fromkeys(default_dict_keys)
+    # json_dict.fromkeys(default_dict_keys)
 
     for id, valute in enumerate(valutes, start=1):
         icon_url = try_generate_icon_url(valute)
@@ -180,6 +186,43 @@ def get_valute_json(queries: List[NoCashExDir | CashExDir]):
                                                  + [EnValuteModel(**valute.__dict__)]
 
     return json_dict
+
+
+def get_valute_json_2(queries: List[NoCashExDir | CashExDir]):
+    
+    '''
+    Возвращает словарь валют с необходимыми данными 
+    '''
+
+    # valute_name_list = set(map(lambda query: query[0], queries))
+    valutes = Valute.objects.filter(code_name__in=queries).all()
+    
+    json_dict = {}
+    json_dict = defaultdict(list)
+
+    # json_dict.fromkeys(default_dict_keys)
+
+    for valute in valutes:
+        icon_url = try_generate_icon_url(valute)
+
+        dict_key = (valute.type_valute, en_type_valute_dict[valute.type_valute])
+        json_dict[dict_key].append({
+            'id': valute.pk,
+            'name': ValuteTypeNameSchema(ru=valute.name,
+                                         en=valute.en_name),
+            'code_name': valute.code_name,
+            'icon_url': icon_url,
+            }
+        )
+    
+    res = []
+    for idx, obj in enumerate(json_dict, start=1):
+        res.append(ValuteListSchema(id=idx,
+                                    name=ValuteTypeNameSchema(ru=obj[0],
+                                                              en=obj[-1]),
+                                    currencies=json_dict[obj]))
+
+    return res
 
 
 def increase_popular_count_direction(**kwargs):
