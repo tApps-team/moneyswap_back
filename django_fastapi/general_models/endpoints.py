@@ -284,3 +284,15 @@ def get_comments_by_review(exchange_id: int,
     #
     # print(len(connection.queries))
     return comments
+
+
+
+
+
+
+@common_router.get('/test_qwerty')
+def qwerty():
+    d = 22
+    w = 33
+
+    return d+w

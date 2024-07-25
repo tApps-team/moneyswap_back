@@ -30,7 +30,7 @@ services:
     networks:
       - common-network
     environment:
-      - POSTGRES_HOST=psql_db
+      - POSTGRES_HOST=pgbouncer
       - SELENIUM_DRIVER=firefox
       - REDIS_HOST=redis_db
     env_file:
@@ -38,6 +38,7 @@ services:
     # container_name: django_fastapi
     depends_on:
       - psql_db
+      - pgbouncer
       # - redis_db
       # - celery_worker
       - firefox
@@ -51,14 +52,15 @@ services:
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
                     python manage.py collectstatic --no-input &&
-                    uvicorn project.asgi:app --host 0.0.0.0"
-                    # python manage.py loaddata media/base_db.json &&
+                    python manage.py loaddata media/base_db.json &&
+                    python manage.py createsuperuser --no-input &&
+                    gunicorn -w 8 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    # uvicorn project.asgi:app --host 0.0.0.0"
                     # python manage.py loaddata media/countries.json &&
                     # python manage.py create_periodic_task_for_delete_reviews &&
                     # python manage.py create_cities &&
                     # python manage.py create_moderator_group &&
                     # python manage.py periodic_task_for_parse_cash_courses &&
-                    # python manage.py createsuperuser --no-input &&
                     # python manage.py parse_reviews_selenium &&
 
   nginx:
@@ -71,8 +73,8 @@ services:
       - static:/static
       - media:/media
     ports:
-      # - '81:80'
-      - '80:80'
+      - '81:80'
+      # - '80:80'
     depends_on:
       - django_fastapi
     logging:
@@ -96,6 +98,63 @@ services:
       driver: "json-file"
       options:
           max-size: "20m"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - common-network
+    # network_mode: host
+    depends_on:
+      - postgres-exporter
+
+
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:22222@psql_db:5432/postgres?sslmode=disable"
+      PG_EXPORTER_EXTEND_QUERY_PATH: '/etc/postgres-exporter/queries.yaml'
+    ports:
+      - "9187:9187"
+    volumes:
+      - ./queries.yaml:/etc/postgres-exporter/queries.yaml
+    depends_on:
+      - psql_db
+    networks:
+      - common-network
+    # network_mode: host
+
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - common-network
+    # network_mode: host
+
+
+  pgbouncer:
+    image: edoburu/pgbouncer
+    environment:
+      DATABASE_URL: "postgresql://postgres:22222@psql_db:5432/postgres"
+      AUTH_TYPE: scram-sha-256
+      PGBOUNCER_PORT: "5432"
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 1000
+    ports:
+      - "5432:5432"
+    depends_on:
+      - psql_db
+    networks:
+      - common-network
+
 
   # rabbitmq3:
   #   image: rabbitmq:management
@@ -175,8 +234,8 @@ services:
     restart: on-failure
     networks:
       - common-network
-    ports:
-      - '5432:5432'
+    # ports:
+    #   - '5432:5432'
     env_file:
       - ./.env
     volumes:

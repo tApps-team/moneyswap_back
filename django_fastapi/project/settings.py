@@ -11,16 +11,16 @@ from config import (DB_USER,
                     REDIS_URL)
 
 
-sentry_sdk.init(
-    dsn="https://092663a7578a856b241d61d8c326be00@o4506694926336000.ingest.sentry.io/4506739040190464",
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    traces_sample_rate=1.0,
-    # Set profiles_sample_rate to 1.0 to profile 100%
-    # of sampled transactions.
-    # We recommend adjusting this value in production.
-    profiles_sample_rate=1.0,
-)
+# sentry_sdk.init(
+#     dsn="https://092663a7578a856b241d61d8c326be00@o4506694926336000.ingest.sentry.io/4506739040190464",
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for performance monitoring.
+#     traces_sample_rate=1.0,
+#     # Set profiles_sample_rate to 1.0 to profile 100%
+#     # of sampled transactions.
+#     # We recommend adjusting this value in production.
+#     profiles_sample_rate=1.0,
+# )
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -88,13 +88,14 @@ TEMPLATES = [
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        # "NAME": "test_api_db",
+        # "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django.db.backends.postgresql",
+        # "NAME": "test_db",
         "NAME": DB_NAME,
         "USER": DB_USER,
         "PASSWORD": DB_PASS,
         "HOST": DB_HOST,
-        "PORT": DB_PORT,
+        "PORT": 5432,
     }
 }
 
@@ -123,9 +124,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 #DEV
-# STATIC_URL = "/django/static/"
+STATIC_URL = "/django/static/"
 # PROD
-STATIC_URL = "/static/"
+# STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
@@ -149,18 +150,21 @@ DJANGO_PREFIX = "/django"
 
 ####SWITCH FOR DEV/PROD####
 
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
-SITE_DOMAIN = 'api.moneyswap.online'
-# SITE_DOMAIN = '127.0.0.1:81'
+# SITE_DOMAIN = 'api.moneyswap.online'
+SITE_DOMAIN = '127.0.0.1:81'
 
 # ALLOWED_HOSTS = [SITE_DOMAIN]
 ALLOWED_HOSTS = ['*']
 
-PROTOCOL = 'https://'
+PROTOCOL = 'http://'
 
-CSRF_TRUSTED_ORIGINS = [f'{PROTOCOL}{SITE_DOMAIN}']
+CSRF_TRUSTED_ORIGINS = [
+    f'{PROTOCOL}{SITE_DOMAIN}',
+    f'{PROTOCOL}localhost:81',
+    ]
 
 #RabbitMQ  PROD
 # CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq3:5672/'
@@ -179,3 +183,5 @@ SUMMERNOTE_CONFIG = {
         ['insert', ['link']],
     ]
 }
+
+USE_X_FORWARDED_HOST = True
