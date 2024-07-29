@@ -43,7 +43,9 @@ review_router = APIRouter(prefix='/reviews',
 
 
 # Эндпоинт для получения доступных валют
-@common_router.get('/available_valutes')
+@common_router.get('/available_valutes',
+                   response_model=dict[str, dict[str, list[ValuteModel | EnValuteModel]]],
+                   response_model_by_alias=False)
 def get_available_valutes(request: Request,
                           query: AvailableValutesQuery = Depends()):
     params = query.params()
