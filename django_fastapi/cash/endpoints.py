@@ -12,13 +12,17 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             increase_popular_count_direction,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
-                                            negative_review_count_filter)
+                                            negative_review_count_filter,
+                                            try_generate_icon_url)
 
 from partners.utils.endpoints import get_partner_directions
 from partners.models import Direction as PartnerDirection
 
 from .models import City, ExchangeDirection
-from .schemas import RuEnCountryModel
+from .schemas import (MultipleName,
+                      RuEnCountryModel,
+                      SpecificCountrySchema,
+                      SpecificCitySchema)
 from .utils.endpoints import get_available_countries
 
 
@@ -46,6 +50,24 @@ def get_available_coutries(request: Request):
 
     return countries
 
+
+#
+@cash_router.get('/specific_city',
+                 response_model=SpecificCitySchema,
+                 response_model_by_alias=False)
+def get_specific_city(code_name: str):
+    code_name = code_name.upper()
+    
+    city = City.objects.select_related('country').get(code_name=code_name)
+    icon_url = try_generate_icon_url(city.country)
+    city.country_info = SpecificCountrySchema(name=MultipleName(name=city.country.name,
+                                                                en_name=city.country.en_name),
+                                        icon_url=icon_url)
+    city.name = MultipleName(name=city.name,
+                             en_name=city.en_name)
+    
+    return city
+#
 
 # Вспомогательный эндпоинт для получения наличных валют
 def cash_valutes(request: Request,

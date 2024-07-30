@@ -50,6 +50,19 @@ class RuEnCityModel(BaseModel):
         }
 
 
+#
+class SpecificCountrySchema(BaseModel):
+    name: MultipleName
+    icon_url: str | None
+#
+
+
+#
+class SpecificCitySchema(RuEnCityModel):
+    country: SpecificCountrySchema = Field(alias='country_info')
+#
+
+
 class CountryModel(BaseModel):
     id: int = Field(alias='pk', json_schema_extra={'id', 1})
     name: str

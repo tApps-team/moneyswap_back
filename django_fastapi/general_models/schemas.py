@@ -25,6 +25,13 @@ class EnValuteModel(BaseModel):
     icon_url: str | None
 
 
+class SpecificValuteSchema(BaseModel):
+    name: MultipleName = Field(alias='multiple_name')
+    code_name: str
+    icon_url: str | None = Field(alias='icon')
+    type_valute: MultipleName = Field(alias='multiple_type')
+
+
 #Схема готового направления для отображения в json ответе
 class SpecialDirectionModel(BaseModel):
     id: int

@@ -7,7 +7,7 @@ from django.db import connection
 
 from fastapi import APIRouter, Request, Depends, HTTPException
 
-from general_models.models import Valute, BaseAdminComment
+from general_models.models import Valute, BaseAdminComment, en_type_valute_dict
 
 import no_cash.models as no_cash_models
 from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2
@@ -21,7 +21,9 @@ import partners.models as partner_models
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
-from .utils.endpoints import check_exchage_marker, check_perms_for_adding_review
+from .utils.endpoints import (check_exchage_marker,
+                              check_perms_for_adding_review,
+                              try_generate_icon_url)
 
 from .schemas import (ValuteModel,
                       EnValuteModel,
@@ -31,7 +33,9 @@ from .schemas import (ValuteModel,
                       AddReviewSchema,
                       CommentSchema,
                       CommentRoleEnum,
-                      ValuteListSchema)
+                      ValuteListSchema,
+                      SpecificValuteSchema,
+                      MultipleName)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -67,6 +71,27 @@ def get_available_valutes(request: Request,
         json_dict = cash_valutes_2(request, params)
     
     return json_dict
+#
+
+
+#
+@common_router.get('/specific_valute',
+                   response_model=SpecificValuteSchema,
+                   response_model_by_alias=False)
+def get_specific_valute(code_name: str):
+    code_name = code_name.upper()
+    
+    valute = Valute.objects.get(code_name=code_name)
+    print(valute.icon_url)
+    valute.icon = try_generate_icon_url(valute)
+    print(valute.icon)
+    valute.id = 1
+    valute.multiple_name = MultipleName(name=valute.name,
+                                        en_name=valute.en_name)
+    valute.multiple_type = MultipleName(name=valute.type_valute,
+                                        en_name=en_type_valute_dict[valute.type_valute])
+    
+    return valute
 #
 
 # Эндпоинт для получения доступных готовых направлений
