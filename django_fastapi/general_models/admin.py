@@ -358,6 +358,13 @@ class BaseDirectionAdmin(admin.ModelAdmin):
 
 
 class BasePopularDirectionAdmin(admin.ModelAdmin):
+    readonly_fields = (
+        'name',
+    )
+    fields = (
+        'name',
+        'directions',
+    )
     def has_add_permission(self, request, obj = None):
         return False
     

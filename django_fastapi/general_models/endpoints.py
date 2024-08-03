@@ -285,7 +285,7 @@ def get_similar_directions(exchange_marker: str,
                                     is_active=True)
         similar_partner_direction_filter = Q(direction__valute_from=valute_from,
                                              city__city__code_name=city,
-                                             exchange__is_active=True,
+                                             city__exchange__is_active=True,
                                              is_active=True)\
                                          | Q(direction__valute_to=valute_to,
                                              city__city__code_name=city,
@@ -302,9 +302,9 @@ def get_similar_directions(exchange_marker: str,
                                                                  flat=True)\
                                                     .all()
         similar_partner_direction_pks = partner_direction_model.objects.select_related('direction',
-                                                                                       'exchange,'
                                                                                        'city',
-                                                                                       'city__city')\
+                                                                                       'city__city',
+                                                                                       'city__exchange')\
                                                     .exclude(city__city__code_name=city,
                                                              direction__valute_from=valute_from,
                                                              direction__valute_to=valute_to)\
