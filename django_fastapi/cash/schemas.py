@@ -14,6 +14,8 @@ class CityModel(BaseModel):
     id: int = Field(alias='pk')
     name: str
     code_name: str
+    exchange_count: int
+    # partner_exchange_count: int
 
     class Config:
         json_schema_extra = {

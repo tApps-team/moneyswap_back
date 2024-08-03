@@ -1,9 +1,11 @@
 from typing import List
 from datetime import datetime, timedelta
 from math import ceil
+from random import choice, shuffle
 
-from django.db.models import Count
+from django.db.models import Count, Q, OuterRef, Subquery
 from django.db import connection
+from django.core.exceptions import ObjectDoesNotExist
 
 from fastapi import APIRouter, Request, Depends, HTTPException
 
@@ -14,7 +16,7 @@ from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions, no_c
 
 import cash.models as cash_models
 from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2
-from cash.schemas import SpecialCashDirectionMultiModel
+from cash.schemas import SpecialCashDirectionMultiModel, CityModel
 from cash.models import Direction, Country, Exchange, Review
 
 import partners.models as partner_models
@@ -23,9 +25,11 @@ from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
 from .utils.endpoints import (check_exchage_marker,
                               check_perms_for_adding_review,
-                              try_generate_icon_url)
+                              try_generate_icon_url,
+                              generate_valute_for_schema)
 
-from .schemas import (ValuteModel,
+from .schemas import (PopularDirectionSchema,
+                      ValuteModel,
                       EnValuteModel,
                       SpecialDirectionMultiModel,
                       ReviewViewSchema,
@@ -80,18 +84,20 @@ def get_available_valutes(request: Request,
                    response_model_by_alias=False)
 def get_specific_valute(code_name: str):
     code_name = code_name.upper()
-    
-    valute = Valute.objects.get(code_name=code_name)
-    print(valute.icon_url)
-    valute.icon = try_generate_icon_url(valute)
-    print(valute.icon)
-    valute.id = 1
-    valute.multiple_name = MultipleName(name=valute.name,
-                                        en_name=valute.en_name)
-    valute.multiple_type = MultipleName(name=valute.type_valute,
-                                        en_name=en_type_valute_dict[valute.type_valute])
-    
-    return valute
+    try:
+        valute = Valute.objects.get(code_name=code_name)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=400)
+    else:
+        # print(valute.icon_url)
+        valute.icon = try_generate_icon_url(valute)
+        # print(valute.icon)
+        valute.multiple_name = MultipleName(name=valute.name,
+                                            en_name=valute.en_name)
+        valute.multiple_type = MultipleName(name=valute.type_valute,
+                                            en_name=en_type_valute_dict[valute.type_valute])
+        
+        return valute
 #
 
 # Эндпоинт для получения доступных готовых направлений
@@ -107,6 +113,300 @@ def get_current_exchange_directions(request: Request,
         json_dict = cash_exchange_directions(request, params)
     
     return json_dict
+
+
+@common_router.get('/popular_directions',
+                   response_model=list[PopularDirectionSchema],
+                   response_model_by_alias=False)
+def get_popular_directions(exchange_marker: str,
+                           limit: int = None):
+    limit = 9 if limit is None else limit
+    print(len(connection.queries))
+    if exchange_marker not in ('cash', 'no_cash'):
+        raise HTTPException(status_code=400)
+
+    if exchange_marker == 'no_cash':
+        popular_direction = no_cash_models.PopularDirection
+        additional_direction = no_cash_models.Direction
+        popular_direction_name = 'Безналичные популярные направления'
+    else:
+        popular_direction = cash_models.PopularDirection
+        additional_direction = cash_models.Direction
+        popular_direction_name = 'Наличные популярные направления'
+
+    directions = popular_direction.objects\
+                                    .get(name=popular_direction_name)\
+                                    .directions\
+                                    .select_related('valute_from',
+                                                    'valute_to')\
+                                    .order_by('-popular_count')\
+                                    .all()[:limit]
+    
+    res = []
+
+    pk_set = set()
+
+    for direction in directions:
+        pk_set.add(direction.pk)
+
+        valute_from = generate_valute_for_schema(direction.valute_from)
+        valute_to = generate_valute_for_schema(direction.valute_to)
+        res.append(PopularDirectionSchema(valute_from=valute_from.__dict__,
+                                          valute_to=valute_to.__dict__))
+        
+    if (len(directions) - limit) < 0:
+        more_directions = additional_direction.objects.select_related('valute_from',
+                                                                     'valute_to')\
+                                                        .filter(~Q(pk__in=pk_set))\
+                                                        .order_by('-popular_count')\
+                                                        .all()[:limit - len(directions)]
+        for direction in more_directions:
+            valute_from = generate_valute_for_schema(direction.valute_from)
+            valute_to = generate_valute_for_schema(direction.valute_to)
+            res.append(PopularDirectionSchema(valute_from=valute_from.__dict__,
+                                              valute_to=valute_to.__dict__))
+
+        # print(more_directions)
+    print(connection.queries)
+    print(len(connection.queries))
+
+    return res
+
+
+
+@common_router.get('/random_directions',
+                   response_model=list[PopularDirectionSchema],
+                   response_model_by_alias=False)
+def get_random_directions(exchange_marker: str,
+                          limit: int = None):
+    print(len(connection.queries))
+    limit = 9 if limit is None else limit
+
+    if exchange_marker not in ('cash', 'no_cash'):
+        raise HTTPException(status_code=400)
+
+    if exchange_marker == 'no_cash':
+        direction_model = no_cash_models.Direction
+        exchange_direction_model = no_cash_models.ExchangeDirection
+    else:
+        direction_model = cash_models.Direction
+        exchange_direction_model = cash_models.ExchangeDirection
+
+    # direction_pks = list(direction_model.objects.values_list('pk',
+    #                                                          flat=True))
+    random_directions = exchange_direction_model.objects\
+                                                .select_related('direction',
+                                                                'exchange')\
+                                                .filter(exchange__is_active=True,
+                                                        is_active=True)\
+                                                .order_by('direction_id')\
+                                                .distinct('direction_id')\
+                                                .values_list('direction_id',
+                                                             flat=True)
+    direction_pks = list(random_directions)
+    shuffle(direction_pks)
+
+    directions = direction_model.objects.select_related('valute_from',
+                                                        'valute_to')\
+                                        .filter(pk__in=direction_pks[:limit])
+
+    for direction in directions:
+        valute_from = generate_valute_for_schema(direction.valute_from)
+        valute_to = generate_valute_for_schema(direction.valute_to)
+        direction = PopularDirectionSchema(valute_from=valute_from.__dict__,
+                                           valute_to=valute_to.__dict__)
+
+    # print(connection.queries)
+    print(len(connection.queries))
+    return directions
+
+
+@common_router.get('/similar_directions',
+                   response_model=list[PopularDirectionSchema],
+                   response_model_by_alias=False)
+def get_similar_directions(exchange_marker: str,
+                           valute_from: str,
+                           valute_to: str,
+                           city: str = None,
+                           limit: int = None):
+    print(len(connection.queries))
+    limit = 9 if limit is None else limit
+    city = None if city is None else city.upper()
+    valute_from, valute_to = [el.upper() for el in (valute_from, valute_to)]
+
+    if exchange_marker not in ('cash', 'no_cash'):
+        raise HTTPException(status_code=400)
+
+    if exchange_marker == 'no_cash':
+        direction_model = no_cash_models.Direction
+        similar_direction_filter = Q(valute_from_id=valute_from) | Q(valute_to_id=valute_to)
+
+        similar_directions = direction_model.objects.select_related('valute_from',
+                                                                    'valute_to')\
+                                                    .exclude(valute_from_id=valute_from,
+                                                             valute_to_id=valute_to)\
+                                                    .filter(similar_direction_filter)\
+                                                    .all()[:limit]
+
+    else:
+        if not city:
+            raise HTTPException(status_code=400)
+        # direction_model = cash_models.Direction
+        direction_model = cash_models.ExchangeDirection
+        partner_direction_model = partner_models.Direction
+
+        similar_direction_filter = Q(direction__valute_from=valute_from,
+                                     city__code_name=city)\
+                                | Q(direction__valute_to=valute_to,
+                                    city__code_name=city)
+        similar_partner_direction_filter = Q(direction__valute_from=valute_from,
+                                             city__city__code_name=city)\
+                                         | Q(direction__valute_to=valute_to,
+                                             city__city__code_name=city)
+        similar_cash_direction_pks = direction_model.objects.select_related('direction',
+                                                                       'city')\
+                                                    .exclude(city__code_name=city,
+                                                             direction__valute_from=valute_from,
+                                                             direction__valute_to=valute_to)\
+                                                    .filter(similar_direction_filter)\
+                                                    .values_list('direction__pk', flat=True)\
+                                                    .all()
+        similar_partner_direction_pks = partner_direction_model.objects.select_related('direction',
+                                                                                       'city',
+                                                                                       'city__city')\
+                                                    .exclude(city__city__code_name=city,
+                                                             direction__valute_from=valute_from,
+                                                             direction__valute_to=valute_to)\
+                                                    .filter(similar_partner_direction_filter)\
+                                                    .values_list('direction__pk', flat=True)\
+                                                    .all()
+        similar_direction_pks = similar_cash_direction_pks.union(similar_partner_direction_pks)
+        similar_directions = cash_models.Direction.objects.select_related('valute_from',
+                                                                          'valute_to')\
+                                                            .filter(pk__in=similar_direction_pks)
+
+    for direction in similar_directions:
+        valute_from = generate_valute_for_schema(direction.valute_from)
+        valute_to = generate_valute_for_schema(direction.valute_to)
+        direction = PopularDirectionSchema(valute_from=valute_from.__dict__,
+                                           valute_to=valute_to.__dict__)
+    print(len(connection.queries))
+    return similar_directions    
+
+
+
+@common_router.get('/similar_cities_by_direction',
+                   response_model=list[CityModel])
+def get_similar_cities_by_direction(valute_from: str,
+                                    valute_to: str,
+                                    city: str):
+    print(len(connection.queries))
+    valute_from, valute_to, city = [el.upper() for el in (valute_from, valute_to, city)]
+
+    direction_model = cash_models.ExchangeDirection
+    partner_direction_model = partner_models.Direction
+
+    city_model = cash_models.City.objects.select_related('country')\
+                                        .get(code_name=city)
+
+
+    similar_cities = direction_model.objects.select_related('direction',
+                                                            'city')\
+                                                .exclude(city__code_name=city)\
+                                                .filter(direction__valute_from=valute_from,
+                                                        direction__valute_to=valute_to)\
+                                                .values_list('city__pk', flat=True)\
+                                                .all()
+    
+    similar_partner_cities = partner_direction_model.objects.select_related('direction',
+                                                                            'city',
+                                                                            'city__city')\
+                                                            .exclude(city__city__code_name=city)\
+                                                            .filter(direction__valute_from=valute_from,
+                                                                    direction__valute_to=valute_to)\
+                                                            .values_list('city__city__pk',
+                                                                         flat=True)\
+                                                            .all()
+    
+    similar_city_pks = similar_cities.union(similar_partner_cities)
+    print(similar_city_pks)
+
+    exchange_count_filter = Q(cash_directions__direction__valute_from=valute_from,
+                              cash_directions__direction__valute_to=valute_to,
+                              cash_directions__is_active=True)
+    partner_exchange_count_filter = Q(partner_cities__partner_directions__direction__valute_from=valute_from,
+                                      partner_cities__partner_directions__direction__valute_to=valute_to,
+                                      partner_cities__partner_directions__is_active=True)
+
+    #
+    # cities = city_model.country.cities.annotate(
+    #                             exchange_count=Count('cash_directions',
+    #                                                  filter=exchange_count_filter))
+    
+    # partner_cities = city_model.partner_cities\
+    #                             .annotate(partner_exchange_count=Count('partner_directions',
+    #                                                            filter=partner_exchange_count_filter))\
+    #                             .values('partner_exchange_count')
+    # cities = cities.annotate(partner_exchange_count=Subquery(partner_cities,
+    #                                                          output_field='partner_exchange_count'))\
+    #                 .filter(pk__in=similar_city_pks)
+
+    # partner_count_subquery = city_model.partner_cities.filter(
+    #     city=OuterRef('pk')
+    # ).annotate(
+    #     partner_exchange_count=Count('partner_cities__partner_directions', filter=partner_exchange_count_filter)
+    # ).values('partner_exchange_count')
+
+    # cities = cities.annotate(partner_exchange_count=Subquery(partner_count_subquery))\
+    #                 .filter(pk__in=similar_city_pks)
+    #
+
+    # cities = city_model.country.cities\
+    #                             .annotate(partner_exchange_count=Count('partner_cities__partner_directions',
+    #                                                            filter=partner_exchange_count_filter))\
+    #                             .annotate(exchange_count=Count('cash_directions',
+    #                                                            filter=exchange_count_filter))\
+    #                             .filter(pk__in=similar_city_pks)\
+    #                             .all()
+
+    cities = city_model.country.cities\
+                                .annotate(exchange_count=Count('cash_directions',
+                                                    filter=exchange_count_filter))\
+                                .filter(pk__in=similar_city_pks)\
+                                .all()
+    
+    partner_cities = list(city_model.country.cities\
+                                .annotate(partner_exchange_count=Count('partner_cities__partner_directions',
+                                                               filter=partner_exchange_count_filter))\
+                                .filter(pk__in=similar_city_pks)\
+                                .values_list('partner_exchange_count',
+                                             flat=True)\
+                                .all())
+    
+    for idx in range(len(cities)):
+        cities[idx].exchange_count += partner_cities[idx]
+
+    # q = partner_models.PartnerCity.objects.select_related('city')\
+    #                                         .annotate(partner_directions_count=Count('partner_directions',
+    #                                                         filter=partner_exchange_count_filter))\
+    #                                         .get(city__code_name='SPB')
+
+    # for city in cities:
+    # print(q.__dict__)
+    
+        
+        # print(city.code_name)
+        # print(city.exchange_count)
+        # print(city.partner_exchange_count)
+        # print(city.exchange_count)
+        # print(city.exq)
+        # city.exchange_count = city.exchange_count + city.partner_exchange_count
+        # print(city.partner_exchange_count)
+    # print(cities)
+    print(len(connection.queries))
+    # print(connection.queries[-1])
+    # 4 queries
+    return cities
 
 
 # Эндпоинт для получения актуального курса обмена
@@ -323,3 +623,48 @@ def get_comments_by_review(exchange_id: int,
     #
     # print(len(connection.queries))
     return comments
+
+
+# @review_router.get('/popular_directions',
+#                    response_model=list[PopularDirectionSchema],
+#                    response_model_by_alias=False)
+# def get_popular_directions(exchange_marker: str,
+#                            limit: int = None):
+#     if exchange_marker == 'no_cash':
+#         directions = no_cash_models.PopularDirection\
+#                                             .objects\
+#                                             .get(name='Безналичные популярные направления')\
+#                                             .directions\
+#                                             .select_related('valute_from',
+#                                                             'valute_to')\
+#                                             .order_by('-popular_count')\
+#                                             .all()
+#         print(directions)
+#         res = []
+#         for direction in directions:
+#             valute_from = direction.valute_from
+#             valute_from.icon = try_generate_icon_url(valute_from)
+#             print(valute_from.icon)
+#             valute_from.multiple_name = MultipleName(
+#                                     name=valute_from.name,
+#                                     en_name=valute_from.en_name
+#                                             )
+#             valute_from.multiple_type = MultipleName(
+#                                     name=valute_from.type_valute,
+#                                     en_name=en_type_valute_dict[valute_from.type_valute]
+#                                             )
+#             valute_to = direction.valute_to
+#             valute_to.icon = try_generate_icon_url(valute_to)
+#             valute_to.multiple_name = MultipleName(
+#                                         name=valute_to.name,
+#                                         en_name=valute_to.en_name
+#                                         )
+#             valute_to.multiple_type = MultipleName(
+#                                         name=valute_to.type_valute,
+#                                         en_name=en_type_valute_dict[valute_to.type_valute]
+#                                         )
+#             res.append(PopularDirectionSchema(valute_from=valute_from.__dict__,
+#                                               valute_to=valute_to.__dict__))
+#             # print(direction.__dict__)
+        
+#         return res

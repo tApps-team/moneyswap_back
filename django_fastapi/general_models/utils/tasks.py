@@ -25,10 +25,18 @@ def get_exchange_list(marker: str = None):
 def make_valid_values_for_dict(dict_for_exchange_direction: dict):
     in_count = float(dict_for_exchange_direction['in_count'])
     out_count = float(dict_for_exchange_direction['out_count'])
+    
+    if in_count != 1:
+        # in_count = 1
+        out_count = out_count / in_count
+        in_count = 1
 
     if out_count < 1:
         k = 1 / out_count
         out_count = 1
         in_count *= k
-        dict_for_exchange_direction['in_count'] = in_count
-        dict_for_exchange_direction['out_count'] = out_count
+        # dict_for_exchange_direction['in_count'] = in_count
+        # dict_for_exchange_direction['out_count'] = out_count
+    
+    dict_for_exchange_direction['in_count'] = in_count
+    dict_for_exchange_direction['out_count'] = out_count

@@ -141,8 +141,8 @@ def no_cash_exchange_directions(request: Request,
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
-    # increase_popular_count_direction(valute_from=valute_from,
-    #                                  valute_to=valute_to)
+    increase_popular_count_direction(valute_from=valute_from,
+                                     valute_to=valute_to)
     
     return get_exchange_direction_list(queries,
                                        valute_from,

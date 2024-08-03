@@ -354,3 +354,12 @@ class BaseDirectionAdmin(admin.ModelAdmin):
         return super().get_queryset(request)\
                         .select_related('valute_from',
                                         'valute_to')
+    
+
+
+class BasePopularDirectionAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request, obj = None):
+        return False
+    
+    def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+        return False

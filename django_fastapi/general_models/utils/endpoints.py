@@ -33,11 +33,11 @@ round_valute_dict = {
 }
 
 
-positive_review_count_filter = filter=Q(exchange__reviews__moderation=True) \
+positive_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='1')
-neutral_review_count_filter = filter=Q(exchange__reviews__moderation=True) \
+neutral_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='0')
-negative_review_count_filter = filter=Q(exchange__reviews__moderation=True) \
+negative_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='-1')
 # neutral_review_count_filter = Count('exchange__reviews',
 #                                         filter=Q(exchange__reviews__moderation=True) & Q(exchange__reviews__grade='0'))
@@ -153,7 +153,8 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         round_valute_values(exchange_direction)
         direction_list.append(exchange_direction)
 
-    # print(len(connection.queries))
+    print(len(connection.queries))
+    print(connection.queries)
     # for query in connection.queries:
     #     print(query)
     return direction_list
@@ -228,8 +229,10 @@ def get_valute_json_2(queries: List[NoCashExDir | CashExDir]):
 def increase_popular_count_direction(**kwargs):
     direction = CashDirection if kwargs.get('city') else NoCashDirection
     valute_from, valute_to = kwargs['valute_from'], kwargs['valute_to']
-    direction = direction.objects.get(valute_from=valute_from,
-                                      valute_to=valute_to)
+    direction = direction.objects.select_related('valute_from',
+                                                 'valute_to')\
+                                    .get(valute_from=valute_from,
+                                        valute_to=valute_to)
     direction.popular_count += 1
     direction.save()
 
@@ -270,3 +273,17 @@ def check_perms_for_adding_review(exchange_id: int,
 
     
     return {'status': 'success'}
+
+
+def generate_valute_for_schema(valute: Valute):
+    valute.icon = try_generate_icon_url(valute)
+    
+    valute.multiple_name = MultipleName(
+                            name=valute.name,
+                            en_name=valute.en_name
+                                    )
+    valute.multiple_type = MultipleName(
+                            name=valute.type_valute,
+                            en_name=en_type_valute_dict[valute.type_valute]
+                                    )
+    return valute

@@ -101,6 +101,18 @@ class Direction(BaseDirection):
             raise ValidationError('Валюты "Отдаём" и "Получаем" должны быть разные')
 
 
+#Модель попуярного направления
+class PopularDirection(models.Model):
+    name = models.CharField('Название',
+                            max_length=255)
+    directions = models.ManyToManyField(Direction,
+                                        verbose_name='Популярные направления')
+    
+    class Meta:
+        verbose_name = 'Популярное направление'
+        verbose_name_plural = 'Популярные направления'
+
+
 #Модель готового направления
 class ExchangeDirection(BaseExchangeDirection):
     exchange = models.ForeignKey(Exchange,

@@ -137,3 +137,9 @@ class ValuteListSchema(BaseModel):
     id: int
     name: ValuteTypeNameSchema
     currencies: list[ValuteTypeListSchema]
+
+
+
+class PopularDirectionSchema(BaseModel):
+    valute_from: SpecificValuteSchema
+    valute_to: SpecificValuteSchema

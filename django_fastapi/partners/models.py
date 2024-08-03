@@ -84,7 +84,7 @@ class PartnerCity(models.Model):
     has_delivery = models.BooleanField('Есть ли доставка?', default=False)
     has_office = models.BooleanField('Есть ли офис?', default=False)
     working_days = models.ManyToManyField(WorkingDay,
-                                          related_name='partner_cities',
+                                          related_name='working_days_cities',
                                           verbose_name='Рабочие дни')
     time_from = models.CharField('Работаем с ',
                                  max_length=50,

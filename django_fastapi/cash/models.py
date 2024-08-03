@@ -207,6 +207,18 @@ class ExchangeDirection(BaseExchangeDirection):
         return f'{self.city}: {self.direction}'
 
 
+#Модель попуярного направления
+class PopularDirection(models.Model):
+    name = models.CharField('Название',
+                            max_length=255)
+    directions = models.ManyToManyField(Direction,
+                                        verbose_name='Популярные направления')
+    
+    class Meta:
+        verbose_name = 'Популярное направление'
+        verbose_name_plural = 'Популярные направления'
+
+
 #Модель элемента чёрного списка
 class BlackListElement(models.Model):
     # city = models.CharField('Город', max_length=100)

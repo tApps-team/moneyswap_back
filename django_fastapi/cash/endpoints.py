@@ -1,9 +1,10 @@
 from typing import List
 
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Prefetch
 from django.db import connection
+from django.core.exceptions import ObjectDoesNotExist
 
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 
 from general_models.utils.http_exc import http_exception_json
 from general_models.utils.endpoints import (get_exchange_direction_list,
@@ -18,7 +19,7 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
 from partners.utils.endpoints import get_partner_directions
 from partners.models import Direction as PartnerDirection
 
-from .models import City, ExchangeDirection
+from .models import City, ExchangeDirection, Country
 from .schemas import (MultipleName,
                       RuEnCountryModel,
                       SpecificCountrySchema,
@@ -36,17 +37,50 @@ cash_router = APIRouter(prefix='/cash',
                  response_model=List[RuEnCountryModel],
                  response_model_by_alias=False)
 def get_available_coutries(request: Request):
+    print(len(connection.queries))
     #
     # cities = City.objects.filter(Q(is_parse=True) | Q(has_partner_cities=True))\
     #                         .select_related('country').all()
     #
-    cities = City.objects.filter(is_parse=True)\
-                            .select_related('country').all()
+    # cities = City.objects.filter(is_parse=True)\
+    #                         .select_related('country').all()
+    
+    # countries = Country.objects.prefetch_related('cities')\
+    #                             .annotate(direction_count=Count('cities__cash_directions',
+    #                                                             filter=Q(cities__cash_directions__is_active=True)))\
+    #                             .filter(direction_count__gt=0)\
+    #                             .all()
+    prefetch_cities_queryset =  City.objects.order_by('name')\
+                                            .prefetch_related('cash_directions')\
+                                            .annotate(partner_direction_count=Count('partner_cities',
+                                                                                    filter=Q(partner_cities__partner_directions__is_active=True)))\
+                                            .annotate(direction_count=Count('cash_directions',
+                                                                            filter=Q(cash_directions__is_active=True)))\
+                                            .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0))
 
-    if not cities:
+
+    # prefetch_cities = Prefetch('cities', City.objects.order_by('name')\
+    #                                                     .prefetch_related('cash_directions')\
+    #                                                     .annotate(partner_direction_count=Count('partner_cities',
+    #                                                                                             filter=Q(partner_cities__partner_directions__is_active=True)))\
+    #                                                     .annotate(direction_count=Count('cash_directions'))\
+    #                                                     .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0)))
+    prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
+
+
+
+    countries = Country.objects.prefetch_related(prefetch_cities)\
+                                .annotate(direction_count=Count('cities__cash_directions',
+                                                                filter=Q(cities__cash_directions__is_active=True)))\
+                                .filter(direction_count__gt=0)\
+                                .order_by('name')\
+                                .all()
+
+
+    if not countries:
         http_exception_json(status_code=404, param=request.url)
 
-    countries = get_available_countries(cities)
+    countries = get_available_countries(countries)
 
     return countries
 
@@ -57,16 +91,19 @@ def get_available_coutries(request: Request):
                  response_model_by_alias=False)
 def get_specific_city(code_name: str):
     code_name = code_name.upper()
-    
-    city = City.objects.select_related('country').get(code_name=code_name)
-    icon_url = try_generate_icon_url(city.country)
-    city.country_info = SpecificCountrySchema(name=MultipleName(name=city.country.name,
-                                                                en_name=city.country.en_name),
-                                        icon_url=icon_url)
-    city.name = MultipleName(name=city.name,
-                             en_name=city.en_name)
-    
-    return city
+    try:
+        city = City.objects.select_related('country').get(code_name=code_name)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=400)
+    else:
+        icon_url = try_generate_icon_url(city.country)
+        city.country_info = SpecificCountrySchema(name=MultipleName(name=city.country.name,
+                                                                    en_name=city.country.en_name),
+                                            icon_url=icon_url)
+        city.name = MultipleName(name=city.name,
+                                en_name=city.en_name)
+        
+        return city
 #
 
 # Вспомогательный эндпоинт для получения наличных валют
@@ -211,9 +248,9 @@ def cash_exchange_directions(request: Request,
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
-    # increase_popular_count_direction(valute_from=valute_from,
-    #                                  valute_to=valute_to,
-    #                                  city=city)
+    increase_popular_count_direction(valute_from=valute_from,
+                                     valute_to=valute_to,
+                                     city=city)
 
     return get_exchange_direction_list(queries,
                                        valute_from,

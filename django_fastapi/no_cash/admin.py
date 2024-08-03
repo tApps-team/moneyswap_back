@@ -3,7 +3,13 @@ from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 
-from no_cash.models import Exchange, Direction, ExchangeDirection, Review, Comment, AdminComment
+from no_cash.models import (Exchange,
+                            Direction,
+                            ExchangeDirection,
+                            Review,
+                            Comment,
+                            AdminComment,
+                            PopularDirection)
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
                                     manage_periodic_task_for_update,
                                     manage_periodic_task_for_parse_black_list)
@@ -16,7 +22,8 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseExchangeDirectionAdmin,
                                   BaseExchangeDirectionStacked,
                                   BaseDirectionAdmin,
-                                  BaseAdminCommentStacked)
+                                  BaseAdminCommentStacked,
+                                  BasePopularDirectionAdmin)
 from general_models.tasks import parse_reviews_for_exchange
 
 
@@ -126,3 +133,15 @@ class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
                                                             'direction',
                                                             'direction__valute_to',
                                                             'direction__valute_from')
+    
+
+
+
+@admin.register(PopularDirection)
+class PopularDirectionAdmin(BasePopularDirectionAdmin):
+    list_display = (
+        'name',
+    )
+    filter_horizontal = (
+        'directions',
+    )

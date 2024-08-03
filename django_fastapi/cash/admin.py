@@ -19,7 +19,8 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseExchangeDirectionAdmin,
                                   BaseExchangeDirectionStacked,
                                   BaseDirectionAdmin,
-                                  BaseAdminCommentStacked)
+                                  BaseAdminCommentStacked,
+                                  BasePopularDirectionAdmin)
 from general_models.tasks import parse_reviews_for_exchange
 
 from .models import (Country,
@@ -29,7 +30,8 @@ from .models import (Country,
                      ExchangeDirection,
                      Review,
                      Comment,
-                     AdminComment)
+                     AdminComment,
+                     PopularDirection)
 
 
 #Отображение городов в админ панели
@@ -226,3 +228,13 @@ class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
         return super().get_queryset(request).select_related('exchange',
                                                             'direction',
                                                             'city')
+    
+
+@admin.register(PopularDirection)
+class PopularDirectionAdmin(BasePopularDirectionAdmin):
+    list_display = (
+        'name',
+    )
+    filter_horizontal = (
+        'directions',
+    )
