@@ -10,8 +10,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         try:
-            CashPopularDirection.objects.create(name='Наличные полулярные направления')
-            NoCashPopularDirection.objects.create(name='Безналичные полулярные направления')            
+            CashPopularDirection.objects.create(name='Наличные популярные направления')
+            NoCashPopularDirection.objects.create(name='Безналичные популярные направления')            
 
         except Exception as ex:
             print(ex)
