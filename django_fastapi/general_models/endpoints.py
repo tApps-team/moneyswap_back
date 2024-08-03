@@ -229,7 +229,7 @@ def get_similar_directions(exchange_marker: str,
                            valute_to: str,
                            city: str = None,
                            limit: int = None):
-    print(len(connection.queries))
+    # print(len(connection.queries))
     limit = 9 if limit is None else limit
     city = None if city is None else city.upper()
     valute_from, valute_to = [el.upper() for el in (valute_from, valute_to)]
@@ -238,13 +238,27 @@ def get_similar_directions(exchange_marker: str,
         raise HTTPException(status_code=400)
 
     if exchange_marker == 'no_cash':
-        direction_model = no_cash_models.Direction
-        similar_direction_filter = Q(valute_from_id=valute_from) | Q(valute_to_id=valute_to)
+        # direction_model = no_cash_models.Direction
+        # similar_direction_filter = Q(valute_from_id=valute_from) | Q(valute_to_id=valute_to)
 
-        similar_directions = direction_model.objects.select_related('valute_from',
-                                                                    'valute_to')\
-                                                    .exclude(valute_from_id=valute_from,
-                                                             valute_to_id=valute_to)\
+        # similar_directions = direction_model.objects.select_related('valute_from',
+        #                                                             'valute_to')\
+        #                                             .exclude(valute_from_id=valute_from,
+        #                                                      valute_to_id=valute_to)\
+        #                                             .filter(similar_direction_filter)\
+        #                                             .all()[:limit]
+        direction_model = no_cash_models.ExchangeDirection
+        similar_direction_filter = Q(direction__valute_from_id=valute_from,
+                                     exchange__is_active=True,
+                                     is_active=True) \
+                                    | Q(direction__valute_to_id=valute_to,
+                                        exchange__is_active=True,
+                                        is_active=True)
+
+        similar_directions = direction_model.objects.select_related('direction',
+                                                                    'exchange')\
+                                                    .exclude(direction__valute_from_id=valute_from,
+                                                             direction__valute_to_id=valute_to)\
                                                     .filter(similar_direction_filter)\
                                                     .all()[:limit]
 
@@ -256,29 +270,41 @@ def get_similar_directions(exchange_marker: str,
         partner_direction_model = partner_models.Direction
 
         similar_direction_filter = Q(direction__valute_from=valute_from,
-                                     city__code_name=city)\
+                                     city__code_name=city,
+                                     exchange__is_active=True,
+                                     is_active=True)\
                                 | Q(direction__valute_to=valute_to,
-                                    city__code_name=city)
+                                    city__code_name=city,
+                                    exchange__is_active=True,
+                                    is_active=True)
         similar_partner_direction_filter = Q(direction__valute_from=valute_from,
-                                             city__city__code_name=city)\
+                                             city__city__code_name=city,
+                                             exchange__is_active=True,
+                                             is_active=True)\
                                          | Q(direction__valute_to=valute_to,
-                                             city__city__code_name=city)
+                                             city__city__code_name=city,
+                                             exchange__is_active=True,
+                                             is_active=True)
         similar_cash_direction_pks = direction_model.objects.select_related('direction',
-                                                                       'city')\
+                                                                            'exchange,'
+                                                                            'city')\
                                                     .exclude(city__code_name=city,
                                                              direction__valute_from=valute_from,
                                                              direction__valute_to=valute_to)\
                                                     .filter(similar_direction_filter)\
-                                                    .values_list('direction__pk', flat=True)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)\
                                                     .all()
         similar_partner_direction_pks = partner_direction_model.objects.select_related('direction',
+                                                                                       'exchange,'
                                                                                        'city',
                                                                                        'city__city')\
                                                     .exclude(city__city__code_name=city,
                                                              direction__valute_from=valute_from,
                                                              direction__valute_to=valute_to)\
                                                     .filter(similar_partner_direction_filter)\
-                                                    .values_list('direction__pk', flat=True)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)\
                                                     .all()
         similar_direction_pks = similar_cash_direction_pks.union(similar_partner_direction_pks)
         similar_directions = cash_models.Direction.objects.select_related('valute_from',
@@ -290,7 +316,7 @@ def get_similar_directions(exchange_marker: str,
         valute_to = generate_valute_for_schema(direction.valute_to)
         direction = PopularDirectionSchema(valute_from=valute_from.__dict__,
                                            valute_to=valute_to.__dict__)
-    print(len(connection.queries))
+    # print(len(connection.queries))
     return similar_directions    
 
 
