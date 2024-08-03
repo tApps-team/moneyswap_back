@@ -289,7 +289,7 @@ def get_similar_directions(exchange_marker: str,
                                              is_active=True)\
                                          | Q(direction__valute_to=valute_to,
                                              city__city__code_name=city,
-                                             exchange__is_active=True,
+                                             city__exchange__is_active=True,
                                              is_active=True)
         similar_cash_direction_pks = direction_model.objects.select_related('direction',
                                                                             'exchange,'
