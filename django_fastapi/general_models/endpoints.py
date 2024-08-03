@@ -255,12 +255,18 @@ def get_similar_directions(exchange_marker: str,
                                         exchange__is_active=True,
                                         is_active=True)
 
-        similar_directions = direction_model.objects.select_related('direction',
+        similar_direction_pks = direction_model.objects.select_related('direction',
                                                                     'exchange')\
                                                     .exclude(direction__valute_from_id=valute_from,
                                                              direction__valute_to_id=valute_to)\
                                                     .filter(similar_direction_filter)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)\
                                                     .all()[:limit]
+        similar_directions = no_cash_models.Direction.objects\
+                                                        .select_related('valute_from',
+                                                                        'valute_to')\
+                                                        .filter(pk__in=similar_direction_pks)
 
     else:
         if not city:
