@@ -218,6 +218,9 @@ class PopularDirection(models.Model):
         verbose_name = 'Популярное направление'
         verbose_name_plural = 'Популярные направления'
 
+    def __str__(self):
+        return self.name
+
 
 #Модель элемента чёрного списка
 class BlackListElement(models.Model):
