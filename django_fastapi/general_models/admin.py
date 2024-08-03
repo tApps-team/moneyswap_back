@@ -361,5 +361,5 @@ class BasePopularDirectionAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj = None):
         return False
     
-    def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
-        return False
+    # def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+    #     return False
