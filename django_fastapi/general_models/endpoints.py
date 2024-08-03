@@ -337,11 +337,11 @@ def get_similar_cities_by_direction(valute_from: str,
 
     direction_model = cash_models.ExchangeDirection
     partner_direction_model = partner_models.Direction
-
+    #try:
     city_model = cash_models.City.objects.select_related('country')\
                                         .get(code_name=city)
-
-
+    #except:
+    #else:
     similar_cities = direction_model.objects.select_related('direction',
                                                             'city')\
                                                 .exclude(city__code_name=city)\
@@ -655,48 +655,3 @@ def get_comments_by_review(exchange_id: int,
     #
     # print(len(connection.queries))
     return comments
-
-
-# @review_router.get('/popular_directions',
-#                    response_model=list[PopularDirectionSchema],
-#                    response_model_by_alias=False)
-# def get_popular_directions(exchange_marker: str,
-#                            limit: int = None):
-#     if exchange_marker == 'no_cash':
-#         directions = no_cash_models.PopularDirection\
-#                                             .objects\
-#                                             .get(name='Безналичные популярные направления')\
-#                                             .directions\
-#                                             .select_related('valute_from',
-#                                                             'valute_to')\
-#                                             .order_by('-popular_count')\
-#                                             .all()
-#         print(directions)
-#         res = []
-#         for direction in directions:
-#             valute_from = direction.valute_from
-#             valute_from.icon = try_generate_icon_url(valute_from)
-#             print(valute_from.icon)
-#             valute_from.multiple_name = MultipleName(
-#                                     name=valute_from.name,
-#                                     en_name=valute_from.en_name
-#                                             )
-#             valute_from.multiple_type = MultipleName(
-#                                     name=valute_from.type_valute,
-#                                     en_name=en_type_valute_dict[valute_from.type_valute]
-#                                             )
-#             valute_to = direction.valute_to
-#             valute_to.icon = try_generate_icon_url(valute_to)
-#             valute_to.multiple_name = MultipleName(
-#                                         name=valute_to.name,
-#                                         en_name=valute_to.en_name
-#                                         )
-#             valute_to.multiple_type = MultipleName(
-#                                         name=valute_to.type_valute,
-#                                         en_name=en_type_valute_dict[valute_to.type_valute]
-#                                         )
-#             res.append(PopularDirectionSchema(valute_from=valute_from.__dict__,
-#                                               valute_to=valute_to.__dict__))
-#             # print(direction.__dict__)
-        
-#         return res
