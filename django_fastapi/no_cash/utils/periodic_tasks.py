@@ -15,6 +15,9 @@ def run_no_cash_background_tasks(task: Proxy,
 
         if dict_for_parse.get('_state'):
             dict_for_parse.pop('_state')
+        
+        if dict_for_parse.get('_prefetched_objects_cache'):
+            dict_for_parse.pop('_prefetched_objects_cache')
 
         try:    
             task.delay(dict_for_parse, xml_file)
