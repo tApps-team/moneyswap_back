@@ -337,108 +337,109 @@ def get_similar_cities_by_direction(valute_from: str,
 
     direction_model = cash_models.ExchangeDirection
     partner_direction_model = partner_models.Direction
-    #try:
-    city_model = cash_models.City.objects.select_related('country')\
-                                        .get(code_name=city)
-    #except:
-    #else:
-    similar_cities = direction_model.objects.select_related('direction',
-                                                            'city')\
-                                                .exclude(city__code_name=city)\
-                                                .filter(direction__valute_from=valute_from,
-                                                        direction__valute_to=valute_to)\
-                                                .values_list('city__pk', flat=True)\
-                                                .all()
-    
-    similar_partner_cities = partner_direction_model.objects.select_related('direction',
-                                                                            'city',
-                                                                            'city__city')\
-                                                            .exclude(city__city__code_name=city)\
-                                                            .filter(direction__valute_from=valute_from,
-                                                                    direction__valute_to=valute_to)\
-                                                            .values_list('city__city__pk',
-                                                                         flat=True)\
-                                                            .all()
-    
-    similar_city_pks = similar_cities.union(similar_partner_cities)
-    print(similar_city_pks)
-
-    exchange_count_filter = Q(cash_directions__direction__valute_from=valute_from,
-                              cash_directions__direction__valute_to=valute_to,
-                              cash_directions__is_active=True)
-    partner_exchange_count_filter = Q(partner_cities__partner_directions__direction__valute_from=valute_from,
-                                      partner_cities__partner_directions__direction__valute_to=valute_to,
-                                      partner_cities__partner_directions__is_active=True)
-
-    #
-    # cities = city_model.country.cities.annotate(
-    #                             exchange_count=Count('cash_directions',
-    #                                                  filter=exchange_count_filter))
-    
-    # partner_cities = city_model.partner_cities\
-    #                             .annotate(partner_exchange_count=Count('partner_directions',
-    #                                                            filter=partner_exchange_count_filter))\
-    #                             .values('partner_exchange_count')
-    # cities = cities.annotate(partner_exchange_count=Subquery(partner_cities,
-    #                                                          output_field='partner_exchange_count'))\
-    #                 .filter(pk__in=similar_city_pks)
-
-    # partner_count_subquery = city_model.partner_cities.filter(
-    #     city=OuterRef('pk')
-    # ).annotate(
-    #     partner_exchange_count=Count('partner_cities__partner_directions', filter=partner_exchange_count_filter)
-    # ).values('partner_exchange_count')
-
-    # cities = cities.annotate(partner_exchange_count=Subquery(partner_count_subquery))\
-    #                 .filter(pk__in=similar_city_pks)
-    #
-
-    # cities = city_model.country.cities\
-    #                             .annotate(partner_exchange_count=Count('partner_cities__partner_directions',
-    #                                                            filter=partner_exchange_count_filter))\
-    #                             .annotate(exchange_count=Count('cash_directions',
-    #                                                            filter=exchange_count_filter))\
-    #                             .filter(pk__in=similar_city_pks)\
-    #                             .all()
-
-    cities = city_model.country.cities\
-                                .annotate(exchange_count=Count('cash_directions',
-                                                    filter=exchange_count_filter))\
-                                .filter(pk__in=similar_city_pks)\
-                                .all()
-    
-    partner_cities = list(city_model.country.cities\
-                                .annotate(partner_exchange_count=Count('partner_cities__partner_directions',
-                                                               filter=partner_exchange_count_filter))\
-                                .filter(pk__in=similar_city_pks)\
-                                .values_list('partner_exchange_count',
-                                             flat=True)\
-                                .all())
-    
-    for idx in range(len(cities)):
-        cities[idx].exchange_count += partner_cities[idx]
-
-    # q = partner_models.PartnerCity.objects.select_related('city')\
-    #                                         .annotate(partner_directions_count=Count('partner_directions',
-    #                                                         filter=partner_exchange_count_filter))\
-    #                                         .get(city__code_name='SPB')
-
-    # for city in cities:
-    # print(q.__dict__)
-    
+    try:
+        city_model = cash_models.City.objects.select_related('country')\
+                                            .get(code_name=city)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=400)
+    else:
+        similar_cities = direction_model.objects.select_related('direction',
+                                                                'city')\
+                                                    .exclude(city__code_name=city)\
+                                                    .filter(direction__valute_from=valute_from,
+                                                            direction__valute_to=valute_to)\
+                                                    .values_list('city__pk', flat=True)\
+                                                    .all()
         
-        # print(city.code_name)
-        # print(city.exchange_count)
-        # print(city.partner_exchange_count)
-        # print(city.exchange_count)
-        # print(city.exq)
-        # city.exchange_count = city.exchange_count + city.partner_exchange_count
-        # print(city.partner_exchange_count)
-    # print(cities)
-    print(len(connection.queries))
-    # print(connection.queries[-1])
-    # 4 queries
-    return cities
+        similar_partner_cities = partner_direction_model.objects.select_related('direction',
+                                                                                'city',
+                                                                                'city__city')\
+                                                                .exclude(city__city__code_name=city)\
+                                                                .filter(direction__valute_from=valute_from,
+                                                                        direction__valute_to=valute_to)\
+                                                                .values_list('city__city__pk',
+                                                                            flat=True)\
+                                                                .all()
+        
+        similar_city_pks = similar_cities.union(similar_partner_cities)
+        print(similar_city_pks)
+
+        exchange_count_filter = Q(cash_directions__direction__valute_from=valute_from,
+                                cash_directions__direction__valute_to=valute_to,
+                                cash_directions__is_active=True)
+        partner_exchange_count_filter = Q(partner_cities__partner_directions__direction__valute_from=valute_from,
+                                        partner_cities__partner_directions__direction__valute_to=valute_to,
+                                        partner_cities__partner_directions__is_active=True)
+
+        #
+        # cities = city_model.country.cities.annotate(
+        #                             exchange_count=Count('cash_directions',
+        #                                                  filter=exchange_count_filter))
+        
+        # partner_cities = city_model.partner_cities\
+        #                             .annotate(partner_exchange_count=Count('partner_directions',
+        #                                                            filter=partner_exchange_count_filter))\
+        #                             .values('partner_exchange_count')
+        # cities = cities.annotate(partner_exchange_count=Subquery(partner_cities,
+        #                                                          output_field='partner_exchange_count'))\
+        #                 .filter(pk__in=similar_city_pks)
+
+        # partner_count_subquery = city_model.partner_cities.filter(
+        #     city=OuterRef('pk')
+        # ).annotate(
+        #     partner_exchange_count=Count('partner_cities__partner_directions', filter=partner_exchange_count_filter)
+        # ).values('partner_exchange_count')
+
+        # cities = cities.annotate(partner_exchange_count=Subquery(partner_count_subquery))\
+        #                 .filter(pk__in=similar_city_pks)
+        #
+
+        # cities = city_model.country.cities\
+        #                             .annotate(partner_exchange_count=Count('partner_cities__partner_directions',
+        #                                                            filter=partner_exchange_count_filter))\
+        #                             .annotate(exchange_count=Count('cash_directions',
+        #                                                            filter=exchange_count_filter))\
+        #                             .filter(pk__in=similar_city_pks)\
+        #                             .all()
+
+        cities = city_model.country.cities\
+                                    .annotate(exchange_count=Count('cash_directions',
+                                                        filter=exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .all()
+        
+        partner_cities = list(city_model.country.cities\
+                                    .annotate(partner_exchange_count=Count('partner_cities__partner_directions',
+                                                                filter=partner_exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .values_list('partner_exchange_count',
+                                                flat=True)\
+                                    .all())
+        
+        for idx in range(len(cities)):
+            cities[idx].exchange_count += partner_cities[idx]
+
+        # q = partner_models.PartnerCity.objects.select_related('city')\
+        #                                         .annotate(partner_directions_count=Count('partner_directions',
+        #                                                         filter=partner_exchange_count_filter))\
+        #                                         .get(city__code_name='SPB')
+
+        # for city in cities:
+        # print(q.__dict__)
+        
+            
+            # print(city.code_name)
+            # print(city.exchange_count)
+            # print(city.partner_exchange_count)
+            # print(city.exchange_count)
+            # print(city.exq)
+            # city.exchange_count = city.exchange_count + city.partner_exchange_count
+            # print(city.partner_exchange_count)
+        # print(cities)
+        print(len(connection.queries))
+        # print(connection.queries[-1])
+        # 4 queries
+        return cities
 
 
 # Эндпоинт для получения актуального курса обмена
@@ -446,8 +447,12 @@ def get_similar_cities_by_direction(valute_from: str,
 @common_router.get('/actual_course')
 def get_actual_course_for_direction(valute_from: str, valute_to: str):
     direction = Direction.objects\
-                            .get(display_name=f'{valute_from.upper()} -> {valute_to.upper()}')
-    return direction.actual_course
+                            .filter(display_name=f'{valute_from.upper()} -> {valute_to.upper()}')\
+                            .first()
+    if direction:
+        return direction.actual_course
+    else:
+        raise HTTPException(status_code=404)
 
 
 # Эндпоинт для получения списка отзывов

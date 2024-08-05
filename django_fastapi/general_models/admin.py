@@ -282,6 +282,7 @@ class BaseExchangeDirectionAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request)\
                         .select_related('exchange')
+    
 
 
 #Базовое отображение готовых направлений на странице связанного обменника
@@ -329,6 +330,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 class BaseDirectionAdmin(admin.ModelAdmin):
     list_display = (
         'get_direction_name',
+        'popular_count',
         )
     list_select_related = (
         'valute_from',
@@ -341,6 +343,9 @@ class BaseDirectionAdmin(admin.ModelAdmin):
     readonly_fields = (
         'popular_count',
         )
+    list_filter = (
+        'popular_count',
+    )
 
     def get_direction_name(self, obj):
         return f'{obj.valute_from} -> {obj.valute_to}'

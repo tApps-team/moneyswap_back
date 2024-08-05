@@ -14,7 +14,9 @@ from cash.models import Direction
 from .models import Direction as PartnerDirection
 
 
-@shared_task(name='parse_cash_courses')
+@shared_task(name='parse_cash_courses',
+             soft_time_limit=120,
+             time_limit=150)
 def parse_cash_courses():
     limit_direction = Q(valute_from__type_valute='Криптовалюта',
                         valute_to__type_valute='Наличные') | \

@@ -15,7 +15,9 @@ from .models import Exchange, ExchangeDirection, BlackListElement, Direction, Ci
 
 
 #PERIODIC CREATE
-@shared_task(name='create_cash_directions_for_exchange')
+@shared_task(name='create_cash_directions_for_exchange',
+             soft_time_limit=10,
+             time_limit=15)
 def create_cash_directions_for_exchange(exchange_name: str):
     try:
         exchange = Exchange.objects.get(name=exchange_name)
@@ -75,7 +77,9 @@ def create_direction(dict_for_parse: dict,
 
 
 #PERIODIC UPDATE
-@shared_task(name='update_cash_directions_for_exchange')
+@shared_task(name='update_cash_directions_for_exchange',
+             soft_time_limit=10,
+             time_limit=15)
 def update_cash_directions_for_exchange(exchange_name: str):
     try:
         exchange = Exchange.objects.get(name=exchange_name)
@@ -134,7 +138,9 @@ def try_update_direction(dict_for_parse: dict,
 
 
 #PERIODIC BLACK LIST
-@shared_task(name='try_create_cash_directions_from_black_list')
+@shared_task(name='try_create_cash_directions_from_black_list',
+             soft_time_limit=10,
+             time_limit=15)
 def try_create_cash_directions_from_black_list(exchange_name: str):
     try:
         exchange = Exchange.objects.get(name=exchange_name)

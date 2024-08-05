@@ -18,10 +18,10 @@ services:
       - SE_VNC_PASSWORD=1234
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true 
       - SE_NODE_MAX_SESSIONS=5
-    deploy:
-      resources:
-        limits:
-          cpus: '0.4'
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '0.4'
 
   django_fastapi:
     build: .
@@ -51,8 +51,8 @@ services:
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
                     python manage.py collectstatic --no-input &&
-                    uvicorn project.asgi:app --host 0.0.0.0"
-                    # gunicorn -w 4 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    gunicorn -w 4 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    # uvicorn project.asgi:app --host 0.0.0.0"
                     # python manage.py loaddata media/base_db.json &&
                     # python manage.py loaddata media/countries.json &&
                     # python manage.py create_popular_directions_group &&
@@ -110,6 +110,8 @@ services:
   #     driver: "json-file"
   #     options:
   #         max-size: "20m"
+  #   networks:
+  #     - common-network
 
   celery_worker:
     build: .
@@ -177,12 +179,13 @@ services:
     restart: on-failure
     networks:
       - common-network
-    ports:
-      - '5432:5432'
+    # ports:
+    #   - '5432:5432'
     env_file:
       - ./.env
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    command: postgres -c max_connections=200
     logging:
       driver: "json-file"
       options:
