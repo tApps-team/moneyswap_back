@@ -106,7 +106,8 @@ class PopularDirection(models.Model):
     name = models.CharField('Название',
                             max_length=255)
     directions = models.ManyToManyField(Direction,
-                                        verbose_name='Популярные направления')
+                                        verbose_name='Популярные направления',
+                                        blank=True)
     
     class Meta:
         verbose_name = 'Популярное направление'

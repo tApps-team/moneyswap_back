@@ -122,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-#DEV
+# DEV
 # STATIC_URL = "/django/static/"
 # PROD
 STATIC_URL = "/static/"
