@@ -89,7 +89,7 @@ def update_cash_directions_for_exchange(exchange_name: str):
                                                         'direction',
                                                         'direction__valute_from',
                                                         'direction__valute_to')\
-                                        .values_list('city',
+                                        .values_list('city__code_name',
                                                     'direction__valute_from',
                                                     'direction__valute_to').all()
 
