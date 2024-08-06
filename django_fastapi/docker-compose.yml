@@ -91,7 +91,7 @@ services:
     #   - 6379:6379
     env_file:
       - ./.env
-    command: redis-server --requirepass ${REDIS_PASSWORD} --save "" --appendonly no --timeout 0
+    command: redis-server --requirepass ${REDIS_PASSWORD} --save "" --appendonly no
     volumes:
       - redis_data:/data
     logging:
