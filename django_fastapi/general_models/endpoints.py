@@ -344,19 +344,25 @@ def get_similar_cities_by_direction(valute_from: str,
         raise HTTPException(status_code=400)
     else:
         similar_cities = direction_model.objects.select_related('direction',
+                                                                'exchange',
                                                                 'city')\
                                                     .exclude(city__code_name=city)\
                                                     .filter(direction__valute_from=valute_from,
-                                                            direction__valute_to=valute_to)\
+                                                            direction__valute_to=valute_to,
+                                                            is_active=True,
+                                                            exchange__is_active=True)\
                                                     .values_list('city__pk', flat=True)\
                                                     .all()
         
         similar_partner_cities = partner_direction_model.objects.select_related('direction',
                                                                                 'city',
-                                                                                'city__city')\
+                                                                                'city__city',
+                                                                                'city__exchange')\
                                                                 .exclude(city__city__code_name=city)\
                                                                 .filter(direction__valute_from=valute_from,
-                                                                        direction__valute_to=valute_to)\
+                                                                        direction__valute_to=valute_to,
+                                                                        is_active=True,
+                                                                        city__exchange__is_active=True)\
                                                                 .values_list('city__city__pk',
                                                                             flat=True)\
                                                                 .all()
