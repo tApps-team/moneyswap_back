@@ -135,6 +135,11 @@ services:
       driver: "json-file"
       options:
           max-size: "20m"
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2GiB
 
 
   celery_beat:
