@@ -1,5 +1,3 @@
-from time import time
-
 from celery import shared_task
 
 from general_models.utils.exc import NoFoundXmlElement
@@ -19,28 +17,23 @@ from .models import Exchange, ExchangeDirection, Direction
              time_limit=15)
 def create_no_cash_directions_for_exchange(exchange_name: str):
     try:
-        start_time = time()
         exchange = Exchange.objects.prefetch_related('directions',
                                                      'direction_black_list')\
                                     .get(name=exchange_name)\
                                     
         xml_file = try_get_xml_file(exchange)
-        print('1. get Xml from exchange', f'{time() - start_time}s')
         
         if xml_file is not None and exchange.is_active:
-                start_time = time()
                 all_no_cash_directions = get_or_set_no_cash_directions_cache()
                 if all_no_cash_directions:
                     direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
                                                                             exchange)
-                    print('2. get directions to creating', f'{time() - start_time}s')
+                    
                     if direction_list:
-                        start_time = time()
                         run_no_cash_background_tasks(create_direction,
                                                     exchange,
                                                     direction_list,
                                                     xml_file)
-                        print('3. run background tasks', f'{time() - start_time}s')
     except Exception as ex:
         print(ex)
 
@@ -74,34 +67,26 @@ def create_direction(dict_for_parse: dict,
 
 
 #PERIODIC UPDATE
-@shared_task(name='update_no_cash_diretions_for_exchange',
-             soft_time_limit=10,
-             time_limit=15)
+@shared_task(name='update_no_cash_diretions_for_exchange')
 def update_no_cash_diretions_for_exchange(exchange_name: str):
     try:
-        start_time = time()
         exchange = Exchange.objects.prefetch_related('directions')\
                                     .get(name=exchange_name)
         xml_file = try_get_xml_file(exchange)
-        print('1. get Xml from exchange', f'{time() - start_time}s')
 
         if xml_file is not None and exchange.is_active:
-                start_time = time()
                 direction_list = exchange.directions\
                                         .select_related('direction',
                                                         'direction__valute_from',
                                                         'direction__valute_to')\
                                         .values_list('direction__valute_from',
                                                     'direction__valute_to').all()
-                print('2. get directions to updating', f'{time() - start_time}s')
 
                 if direction_list:
-                    start_time = time()
                     run_no_cash_background_tasks(try_update_direction,
                                                 exchange,
                                                 direction_list,
                                                 xml_file)
-                    print('3. run background tasks', f'{time() - start_time}s')
     except Exception as ex:
         print(ex)
 
@@ -138,9 +123,7 @@ def try_update_direction(dict_for_parse: dict,
 
 
 #PERIODIC BLACK LIST
-@shared_task(name='try_create_no_cash_directions_from_black_list',
-             soft_time_limit=10,
-             time_limit=15)
+@shared_task(name='try_create_no_cash_directions_from_black_list')
 def try_create_no_cash_directions_from_black_list(exchange_name: str):
     try:
         exchange = Exchange.objects.get(name=exchange_name)

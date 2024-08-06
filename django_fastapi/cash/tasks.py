@@ -1,5 +1,3 @@
-from time import time
-
 from celery import shared_task
 
 from django.db import connection
@@ -17,34 +15,26 @@ from .models import Exchange, ExchangeDirection, BlackListElement, Direction, Ci
 
 
 #PERIODIC CREATE
-@shared_task(name='create_cash_directions_for_exchange',
-             soft_time_limit=100,
-             time_limit=150)
+@shared_task(name='create_cash_directions_for_exchange')
 def create_cash_directions_for_exchange(exchange_name: str):
     try:
-        start_time = time()
         exchange = Exchange.objects.prefetch_related('directions',
                                                      'direction_black_list')\
                                     .get(name=exchange_name)
         xml_file = try_get_xml_file(exchange)
-        print('1. get Xml from exchange', f'{time() - start_time}s')
     
         if xml_file is not None and exchange.is_active:
-            start_time = time()
             all_cash_directions = get_or_set_cash_directions_cache()
             if all_cash_directions:
                 direction_list = get_cash_direction_set_for_creating(all_cash_directions,
                                                                     exchange)
-                print('2. get directions to creating', f'{time() - start_time}s')
 
                 if direction_list:
-                    start_time = time()
                     direction_dict = generate_direction_dict(direction_list)
                     run_cash_background_tasks(create_direction,
                                             exchange,
                                             direction_dict,
                                             xml_file)
-                    print('3. run background tasks', f'{exchange_name}: {time() - start_time}s')
     except Exception as ex:
         print(ex)
         
@@ -86,19 +76,14 @@ def create_direction(dict_for_parse: dict,
 
 
 #PERIODIC UPDATE
-@shared_task(name='update_cash_directions_for_exchange',
-             soft_time_limit=100,
-             time_limit=150)
+@shared_task(name='update_cash_directions_for_exchange')
 def update_cash_directions_for_exchange(exchange_name: str):
     try:
-        start_time = time()
         exchange = Exchange.objects.prefetch_related('directions')\
                                     .get(name=exchange_name)
         xml_file = try_get_xml_file(exchange)
-        print('1. get Xml from exchange', f'{time() - start_time}s')
 
         if xml_file is not None and exchange.is_active:
-            start_time = time()
             direction_list = exchange.directions\
                                         .select_related('city',
                                                         'direction',
@@ -107,15 +92,12 @@ def update_cash_directions_for_exchange(exchange_name: str):
                                         .values_list('city',
                                                     'direction__valute_from',
                                                     'direction__valute_to').all()
-            print('2. get directions to creating', f'{time() - start_time}s')
 
             if direction_list:
-                start_time = time()
                 run_update_tasks(try_update_direction,
                                 exchange,
                                 direction_list,
                                 xml_file)
-                print('3. run background tasks', f'{exchange_name}: {time() - start_time}s')
     except Exception as ex:
         print(ex)
 
@@ -154,9 +136,7 @@ def try_update_direction(dict_for_parse: dict,
 
 
 #PERIODIC BLACK LIST
-@shared_task(name='try_create_cash_directions_from_black_list',
-             soft_time_limit=10,
-             time_limit=15)
+@shared_task(name='try_create_cash_directions_from_black_list')
 def try_create_cash_directions_from_black_list(exchange_name: str):
     try:
         exchange = Exchange.objects.get(name=exchange_name)
