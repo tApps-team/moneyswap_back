@@ -120,7 +120,7 @@ services:
     restart: on-failure
     networks:
       - common-network
-    command: sh -c 'celery -A project worker -l info -c 20 -Ofair'
+    command: sh -c 'celery -A project worker -l info -c 4'
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -138,8 +138,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2.0'
-          memory: 2g
+          cpus: '1.0'
 
 
   celery_beat:
