@@ -45,7 +45,7 @@ def parse_cash_courses():
                 try:
                     json_resp = resp.json()
                     actual_course = json_resp['data']['amount']
-                    print(valid_direction_name, actual_course)
+                    # print(valid_direction_name, actual_course)
                     direction.actual_course = actual_course
                     direction.save()
                 except Exception:

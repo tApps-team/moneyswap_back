@@ -89,8 +89,8 @@ TEMPLATES = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        # "NAME": "test_db",
-        "NAME": DB_NAME,
+        "NAME": "test_db2",
+        # "NAME": DB_NAME,
         "USER": DB_USER,
         "PASSWORD": DB_PASS,
         "HOST": DB_HOST,
@@ -165,8 +165,7 @@ CSRF_TRUSTED_ORIGINS = [f'{PROTOCOL}{SITE_DOMAIN}']
 
 CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
-# CELERY_IGNORE_RESULT = True
-# CELERY_TASK_TIME_LIMIT = 3
+
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 

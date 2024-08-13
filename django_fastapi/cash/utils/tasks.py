@@ -15,7 +15,9 @@ def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
                                             'direction',
                                             'direction__valute_from',
                                             'direction__valute_to')\
-                            .values_list('city__code_name',
+                            .values_list('city__pk',
+                                         'city__code_name',
+                                         'direction__pk',
                                          'direction__valute_from',
                                          'direction__valute_to').all()
     exchange_black_list_directions = exchange\
@@ -24,24 +26,27 @@ def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
                                                 'direction',
                                                 'direction__valute_from',
                                                 'direction__valute_to')\
-                                .values_list('city__code_name',
+                                .values_list('city__pk',
+                                             'city__code_name',
+                                             'direction__pk',
                                              'direction__valute_from',
                                              'direction__valute_to').all()
     checked_directions_by_exchange = exchange_black_list_directions.union(exchange_directions)
 
     directions -= set(checked_directions_by_exchange)
-    print('DIRECTIONS FOR CREATING', directions)
+    # print('DIRECTIONS FOR CREATING', directions)
 
     return directions
 
 
-def generate_direction_dict(directions: set[str,str,str]):
+def generate_direction_dict(directions: set[str,str,str,str,str]):
     '''
     Генерирует словарь в формате: ключ - кодовое сокращение города,
     значение - список направлений. Пример направления: ('BTC', 'CASHRUB').
     '''
     direction_dict = {}
-    for city, valute_from, valute_to in directions:
-        direction_dict[city] = direction_dict.get(city, []) + [(valute_from, valute_to)]
+    for city_id, city_code_name, directon_id, valute_from, valute_to in directions:
+        direction_dict[city_code_name] = direction_dict.get(city_code_name, [])\
+                                                 + [(city_id, directon_id, valute_from, valute_to)]
 
     return direction_dict

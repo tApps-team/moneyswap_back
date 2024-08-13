@@ -1,6 +1,10 @@
 import re
 import requests
 
+import aiohttp
+
+from asgiref.sync import async_to_sync
+
 from xml.etree import ElementTree as ET
 
 from django_celery_beat.models import IntervalSchedule
@@ -27,7 +31,7 @@ def try_get_xml_file(exchange: BaseExchange) -> str | None:
     '''
     
     try:
-        is_active, xml_file = request_to_xml_file(exchange.xml_url)
+        is_active, xml_file = async_to_sync(request_to_xml_file)(exchange.xml_url)
     except Exception as ex:
         print('CHECK ACTIVE EXCEPTION!!!', ex)
         if exchange.is_active:
@@ -41,23 +45,45 @@ def try_get_xml_file(exchange: BaseExchange) -> str | None:
             return xml_file
 
 
-def request_to_xml_file(xml_url: str):
-    headers = requests.utils.default_headers()
-    headers.update({
-        'User-Agent': 'My User Agent 1.0',
-    })
-    resp = requests.get(xml_url,
-                        headers=headers,
-                        timeout=5) #можно меньше
-    content_type = resp.headers['Content-Type']
+# def request_to_xml_file(xml_url: str):
+#     headers = requests.utils.default_headers()
+#     headers.update({
+#         'User-Agent': 'My User Agent 1.0',
+#     })
+#     resp = requests.get(xml_url,
+#                         headers=headers,
+#                         timeout=5) #можно меньше
+#     content_type = resp.headers['Content-Type']
 
-    if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
-        raise RobotCheckError(f'{xml_url} требует проверку на робота')
-    else:
-        xml_file = resp.text
-        print(xml_url)
-        root = ET.fromstring(xml_file)
-        is_active = True
-        if root.text == 'Техническое обслуживание':
-            is_active = False
-        return (is_active, xml_file)
+#     if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
+#         raise RobotCheckError(f'{xml_url} требует проверку на робота')
+#     else:
+#         xml_file = resp.text
+#         print(xml_url)
+#         root = ET.fromstring(xml_file)
+#         is_active = True
+#         if root.text == 'Техническое обслуживание':
+#             is_active = False
+#         return (is_active, xml_file)
+
+
+async def request_to_xml_file(xml_url: str):
+    headers = {
+        'User-Agent': 'My User Agent 1.0',
+    }
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(xml_url,
+                               headers=headers,
+                               timeout=timeout) as response:
+            content_type = response.headers['Content-Type']
+
+            if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
+                raise RobotCheckError(f'{xml_url} требует проверку на робота')
+            else:
+                xml_file = await response.text()
+                root = ET.fromstring(xml_file)
+                is_active = True
+                if root.text == 'Техническое обслуживание':
+                    is_active = False
+                return (is_active, xml_file)
