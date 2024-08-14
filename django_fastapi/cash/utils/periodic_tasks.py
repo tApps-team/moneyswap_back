@@ -92,10 +92,12 @@ def run_update_tasks(task: Proxy,
     '''
     dict_for_parse = dict()
 
-    for direciton in direction_list:
-        city, direciton_id, valute_from_id, valute_to_id = direciton
+    for direction in direction_list:
+        city, direciton_id, valute_from_id, valute_to_id = direction
         dict_for_parse[f'{city} {valute_from_id} {valute_to_id}'] = direciton_id
 
     parse_xml_to_dict(dict_for_parse,
                       xml_file,
                       task)
+    
+

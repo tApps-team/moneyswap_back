@@ -50,3 +50,17 @@ def generate_direction_dict(directions: set[str,str,str,str,str]):
                                                  + [(city_id, directon_id, valute_from, valute_to)]
 
     return direction_dict
+
+
+
+def generate_direction_dict_black_list(directions: set[str,str,str,str,str]):
+    '''
+    Генерирует словарь в формате: ключ - кодовое сокращение города,
+    значение - список направлений. Пример направления: ('BTC', 'CASHRUB').
+    '''
+    direction_dict = {}
+    for city_id, city_code_name, directon_id, valute_from, valute_to in directions:
+        direction_dict[city_code_name] = direction_dict.get(city_code_name, [])\
+                                                 + [(city_id, directon_id, valute_from, valute_to)]
+
+    return direction_dict

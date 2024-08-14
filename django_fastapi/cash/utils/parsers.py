@@ -10,6 +10,8 @@ from celery.local import Proxy
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
 
+from cash.models import ExchangeDirection
+
 
 def cash_parse_xml(dict_for_parse: dict,
                    xml_file: str):
@@ -75,18 +77,22 @@ def parse_xml_to_dict(dict_for_parse: dict,
                                     'max_amount': element.xpath('./maxamount/text()')[0],
                                     'fromfee': fromfee,
                                     'params': param,
-                                    'direction_id': direction_id,
+                                    'is_active': True,
+                                    # 'direction_id': direction_id,
                                 }
                                 
                                 make_valid_values_for_dict(d)
-                            except AttributeError as ex:
+                            except Exception as ex:
                                 print(ex)
                                 d = {
-                                    'direction_id': direction_id,
+                                    # 'direction_id': direction_id,
                                     'is_active': False,
                                 }
                             finally:
-                                task.delay(d)
+                                # task.delay(d)
+                                ExchangeDirection.objects.filter(pk=direction_id)\
+                                                            .update(**d)
+                                
             except Exception as ex:
                 print(ex)
                 continue

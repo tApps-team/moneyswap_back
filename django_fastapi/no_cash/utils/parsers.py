@@ -9,6 +9,8 @@ from celery.local import Proxy
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
 
+from no_cash.models import ExchangeDirection
+
 
 def no_cash_parse_xml(dict_for_parser: dict,
                       xml_file: str):
@@ -22,16 +24,26 @@ def no_cash_parse_xml(dict_for_parser: dict,
         element = root.find(f'item[from="{valute_from}"][to="{valute_to}"]')
 
         if element is not None:
-            dict_for_exchange_direction = {
-                # 'valute_from': valute_from,
-                # 'valute_to': valute_to,
-                'in_count': element.find('in').text,
-                'out_count': element.find('out').text,
-                'min_amount': element.find('minamount').text,
-                'max_amount': element.find('maxamount').text
+            try:
+                dict_for_exchange_direction = {
+                    # 'valute_from': valute_from,
+                    # 'valute_to': valute_to,
+                    'in_count': element.find('in').text,
+                    'out_count': element.find('out').text,
+                    'min_amount': element.find('minamount').text,
+                    'max_amount': element.find('maxamount').text
+                    }
+                make_valid_values_for_dict(dict_for_exchange_direction)
+            except Exception as ex:
+                dict_for_exchange_direction = {
+                    'in_count': 0,
+                    'out_count': 0,
+                    'min_amount': '0',
+                    'max_amount': '0',
+                    'is_active': False,
                 }
-            make_valid_values_for_dict(dict_for_exchange_direction)
-            return dict_for_exchange_direction
+            finally:
+                return dict_for_exchange_direction
         else:
             raise NoFoundXmlElement(f'Xml элемент не найден, {xml_url}')
         
@@ -60,18 +72,21 @@ def parse_xml_to_dict(dict_for_parse: dict,
                                 'out_count': element.xpath('./out/text()')[0],
                                 'min_amount': element.xpath('./minamount/text()')[0],
                                 'max_amount': element.xpath('./maxamount/text()')[0],
-                                'direction_id': direction_id,
+                                'is_active': True,
+                                # 'direction_id': direction_id,
                             }
                             
                             make_valid_values_for_dict(d)
-                        except AttributeError as ex:
+                        except Exception as ex:
                             print(ex)
                             d = {
-                                'direction_id': direction_id,
+                                # 'direction_id': direction_id,
                                 'is_active': False,
                             }
                         finally:
-                            task.delay(d)
+                            # task.delay(d)
+                            ExchangeDirection.objects.filter(pk=direction_id)\
+                                                        .update(**d)
             except Exception as ex:
                 print(ex)
                 continue

@@ -18,20 +18,30 @@ from .models import Exchange, ExchangeDirection, Direction
 def create_no_cash_directions_for_exchange(exchange_name: str):
     try:
         exchange = Exchange.objects.get(name=exchange_name)
-                                    
-        xml_file = try_get_xml_file(exchange)
         
-        if xml_file is not None and exchange.is_active:
-                all_no_cash_directions = get_or_set_no_cash_directions_cache()
-                if all_no_cash_directions:
-                    direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
-                                                                            exchange)
+        all_no_cash_directions = get_or_set_no_cash_directions_cache()
+        
+        if all_no_cash_directions:
+            direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+                                                                    exchange)
+
+                                    
+        # xml_file = try_get_xml_file(exchange)
+        
+        # if xml_file is not None and exchange.is_active:
+        #         all_no_cash_directions = get_or_set_no_cash_directions_cache()
+        #         if all_no_cash_directions:
+        #             direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+        #                                                                     exchange)
                     
-                    if direction_list:
-                        run_no_cash_background_tasks(create_direction,
-                                                    exchange,
-                                                    direction_list,
-                                                    xml_file)
+            if direction_list:
+                xml_file = try_get_xml_file(exchange)
+
+                if xml_file is not None and exchange.is_active:
+                    run_no_cash_background_tasks(create_direction,
+                                                exchange,
+                                                direction_list,
+                                                xml_file)
     except Exception as ex:
         print(ex)
 
@@ -70,22 +80,25 @@ def create_direction(dict_for_parse: dict,
 def update_no_cash_diretions_for_exchange(exchange_name: str):
     try:
         exchange = Exchange.objects.get(name=exchange_name)
-        xml_file = try_get_xml_file(exchange)
+        # xml_file = try_get_xml_file(exchange)
 
-        if xml_file is not None and exchange.is_active:
-                direction_list = exchange.directions\
-                                        .select_related('direction',
-                                                        'direction__valute_from',
-                                                        'direction__valute_to')\
-                                        .values_list('pk',
-                                                     'direction__valute_from',
-                                                     'direction__valute_to').all()
+        # if xml_file is not None and exchange.is_active:
+        direction_list = exchange.directions\
+                                .select_related('direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to')\
+                                .values_list('pk',
+                                                'direction__valute_from',
+                                                'direction__valute_to').all()
 
-                if direction_list:
-                    run_update_tasks(try_update_direction,
-                                     exchange,
-                                     direction_list,
-                                     xml_file)
+        if direction_list:
+            xml_file = try_get_xml_file(exchange)
+
+            if xml_file is not None and exchange.is_active:
+                run_update_tasks(try_update_direction,
+                                    exchange,
+                                    direction_list,
+                                    xml_file)
     except Exception as ex:
         print(ex)
 
@@ -176,7 +189,7 @@ def try_create_black_list_direction(dict_for_parse: dict,
             direction = Direction.objects.get(pk=dict_for_parse['direction_id'])
 
             dict_for_exchange_direction['exchange'] = exchange
-            dict_for_exchange_direction['direction_'] = direction
+            dict_for_exchange_direction['direction'] = direction
 
             ExchangeDirection.objects.create(**dict_for_exchange_direction)
 
