@@ -165,11 +165,11 @@ class ExchangeAdmin(BaseExchangeAdmin):
         ReviewStacked,
         ]
 
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        return super().get_queryset(request)\
-                        .prefetch_related('direction_black_list',
-                                          'direction_black_list__direction',
-                                          'direction_black_list__city')
+    # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+    #     return super().get_queryset(request)\
+    #                     .prefetch_related('direction_black_list',
+    #                                       'direction_black_list__direction',
+    #                                       'direction_black_list__city')
     
     def has_add_permission(self, request: HttpRequest) -> bool:
         return super().has_add_permission(request)

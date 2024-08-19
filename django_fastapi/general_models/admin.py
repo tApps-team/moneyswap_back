@@ -306,7 +306,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'is_active',
         )
     readonly_fields = (
-        'direction_black_list',
+        # 'direction_black_list',
         'is_active',
         )
     fieldsets = [
@@ -316,13 +316,13 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                 "fields": [("name", "en_name"), "xml_url", "partner_link", "is_active", "is_vip", ("period_for_create", "period_for_update", "period_for_parse_black_list")],
             },
         ),
-        (
-            "Отсутствующие направления",
-            {
-                "classes": ["collapse"],
-                "fields": ["direction_black_list"],
-            },
-        ),
+        # (
+        #     "Отсутствующие направления",
+        #     {
+        #         "classes": ["collapse"],
+        #         "fields": ["direction_black_list"],
+        #     },
+        # ),
     ]
 
 
