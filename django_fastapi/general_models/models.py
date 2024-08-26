@@ -220,6 +220,7 @@ class CustomOrder(models.Model):
     chat_link = models.CharField('Ссылка на чат',
                                  max_length=255,
                                  blank=True,
+                                 null=True,
                                  default=None)
 
     class Meta:
