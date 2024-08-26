@@ -217,6 +217,10 @@ class CustomOrder(models.Model):
                               related_name='custom_orders')
     time_create = models.DateTimeField('Время создания',
                                        auto_now_add=True)
+    chat_link = models.CharField('Ссылка на чат',
+                                 max_length=255,
+                                 blank=True,
+                                 default=None)
 
     class Meta:
         verbose_name = 'Завка пользователя'
