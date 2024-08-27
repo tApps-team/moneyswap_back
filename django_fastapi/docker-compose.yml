@@ -50,6 +50,7 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
+                    python manage.py create_periodic_task_for_parse_no_cash_course &&
                     gunicorn -w 4 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
                     # python manage.py collectstatic --no-input &&
                     # python manage.py loaddata media/base_db.json &&

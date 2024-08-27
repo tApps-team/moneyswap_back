@@ -452,9 +452,17 @@ def get_similar_cities_by_direction(valute_from: str,
 # для выбранного направления
 @common_router.get('/actual_course')
 def get_actual_course_for_direction(valute_from: str, valute_to: str):
-    direction = Direction.objects\
-                            .filter(display_name=f'{valute_from.upper()} -> {valute_to.upper()}')\
+    valute_from, valute_to = valute_from.upper(), valute_to.upper()
+    
+    direction = cash_models.Direction.objects\
+                            .filter(display_name=f'{valute_from} -> {valute_to}')\
                             .first()
+    
+    if not direction:
+        direction = no_cash_models.Direction.objects\
+                                    .filter(valute_from_id=valute_from,
+                                            valute_to_id=valute_to).first()
+        
     if direction:
         return direction.actual_course
     else:

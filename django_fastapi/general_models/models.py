@@ -389,6 +389,10 @@ class ParseExchange(BaseExchange):
 class BaseDirection(models.Model):
     popular_count = models.IntegerField('Счётчик популярности',
                                         default=0)
+    actual_course = models.FloatField('Актуальный курс обмена',
+                                      blank=True,
+                                      null=True,
+                                      default=None)
     
     class Meta:
         abstract = True

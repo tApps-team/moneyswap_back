@@ -154,10 +154,10 @@ class Direction(BaseDirection):
                                     blank=True,
                                     null=True,
                                     default=None)
-    actual_course = models.FloatField('Актуальный курс обмена',
-                                      blank=True,
-                                      null=True,
-                                      default=None)
+    # actual_course = models.FloatField('Актуальный курс обмена',
+    #                                   blank=True,
+    #                                   null=True,
+    #                                   default=None)
     
     def __str__(self):
         return self.display_name

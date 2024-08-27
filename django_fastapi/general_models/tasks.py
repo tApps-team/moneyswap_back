@@ -73,3 +73,29 @@ def update_popular_count_direction():
 
     cash_direction.update(popular_count=0)
     no_cash_directions.update(popular_count=0)
+
+
+
+@shared_task(name='parse_no_cash_courses')
+def parse_no_cash_courses():
+    no_cash_directions = no_cash_models.Direction.objects.all()
+
+    for direction in no_cash_directions:
+        best_course = no_cash_models.ExchangeDirection.objects.filter(direction_id=direction.pk)\
+                                                                .order_by('-out_count',
+                                                                          '-in_count')\
+                                                                .values_list('in_count',
+                                                                             'out_count')\
+                                                                .first()
+        if best_course:
+            in_count, out_count = best_course
+
+            if out_count == 1:
+                actual_course = out_count / in_count
+            else:
+                actual_course = out_count
+            direction.actual_course = actual_course
+        else:
+            direction.actual_course = None
+            
+        direction.save()
