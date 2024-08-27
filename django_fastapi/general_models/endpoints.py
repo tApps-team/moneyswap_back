@@ -463,7 +463,7 @@ def get_actual_course_for_direction(valute_from: str, valute_to: str):
                                     .filter(valute_from_id=valute_from,
                                             valute_to_id=valute_to).first()
         
-    if direction:
+    if direction and direction.actual_course is not None:
         return direction.actual_course
     else:
         raise HTTPException(status_code=404)
