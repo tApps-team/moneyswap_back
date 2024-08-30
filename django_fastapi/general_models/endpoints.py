@@ -332,7 +332,7 @@ def get_similar_directions(exchange_marker: str,
 def get_similar_cities_by_direction(valute_from: str,
                                     valute_to: str,
                                     city: str):
-    print(len(connection.queries))
+    # print(len(connection.queries))
     valute_from, valute_to, city = [el.upper() for el in (valute_from, valute_to, city)]
 
     direction_model = cash_models.ExchangeDirection
@@ -347,11 +347,12 @@ def get_similar_cities_by_direction(valute_from: str,
                                                                 'exchange',
                                                                 'city')\
                                                     .exclude(city__code_name=city)\
-                                                    .filter(direction__valute_from=valute_from,
-                                                            direction__valute_to=valute_to,
+                                                    .filter(direction__valute_from_id=valute_from,
+                                                            direction__valute_to_id=valute_to,
                                                             is_active=True,
                                                             exchange__is_active=True)\
-                                                    .values_list('city__pk', flat=True)\
+                                                    .values_list('city__pk',
+                                                                 flat=True)\
                                                     .all()
         
         similar_partner_cities = partner_direction_model.objects.select_related('direction',
@@ -359,8 +360,8 @@ def get_similar_cities_by_direction(valute_from: str,
                                                                                 'city__city',
                                                                                 'city__exchange')\
                                                                 .exclude(city__city__code_name=city)\
-                                                                .filter(direction__valute_from=valute_from,
-                                                                        direction__valute_to=valute_to,
+                                                                .filter(direction__valute_from_id=valute_from,
+                                                                        direction__valute_to_id=valute_to,
                                                                         is_active=True,
                                                                         city__exchange__is_active=True)\
                                                                 .values_list('city__city__pk',
@@ -368,13 +369,14 @@ def get_similar_cities_by_direction(valute_from: str,
                                                                 .all()
         
         similar_city_pks = similar_cities.union(similar_partner_cities)
-        print(similar_city_pks)
+        # print(similar_city_pks)
 
-        exchange_count_filter = Q(cash_directions__direction__valute_from=valute_from,
-                                cash_directions__direction__valute_to=valute_to,
+        exchange_count_filter = Q(cash_directions__direction__valute_from_id=valute_from,
+                                cash_directions__direction__valute_to_id=valute_to,
+                                cash_directions__exchange__is_active=True,
                                 cash_directions__is_active=True)
-        partner_exchange_count_filter = Q(partner_cities__partner_directions__direction__valute_from=valute_from,
-                                        partner_cities__partner_directions__direction__valute_to=valute_to,
+        partner_exchange_count_filter = Q(partner_cities__partner_directions__direction__valute_from_id=valute_from,
+                                        partner_cities__partner_directions__direction__valute_to_id=valute_to,
                                         partner_cities__partner_directions__is_active=True)
 
         #
@@ -442,7 +444,7 @@ def get_similar_cities_by_direction(valute_from: str,
             # city.exchange_count = city.exchange_count + city.partner_exchange_count
             # print(city.partner_exchange_count)
         # print(cities)
-        print(len(connection.queries))
+        # print(len(connection.queries))
         # print(connection.queries[-1])
         # 4 queries
         return cities

@@ -153,8 +153,8 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         round_valute_values(exchange_direction)
         direction_list.append(exchange_direction)
 
-    print(len(connection.queries))
-    print(connection.queries)
+    # print(len(connection.queries))
+    # print(connection.queries)
     # for query in connection.queries:
     #     print(query)
     return direction_list

@@ -234,7 +234,8 @@ def cash_exchange_directions(request: Request,
                                         direction__valute_from=valute_from,
                                         direction__valute_to=valute_to,
                                         is_active=True,
-                                        exchange__is_active=True).all()
+                                        exchange__is_active=True)\
+                                .all()
     
     partner_directions = get_partner_directions(city,
                                                 valute_from,
