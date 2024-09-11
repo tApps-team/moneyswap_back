@@ -90,6 +90,12 @@ def parse_xml_to_dict(dict_for_parse: dict,
             except Exception as ex:
                 print(ex)
                 continue
+        else:
+            break
+    else:
+        if dict_for_parse:
+            direction_ids = list(dict_for_parse.values())
+            ExchangeDirection.objects.filter(pk__in=direction_ids).update(is_active=False)
 
             #  print(child.tag)
 

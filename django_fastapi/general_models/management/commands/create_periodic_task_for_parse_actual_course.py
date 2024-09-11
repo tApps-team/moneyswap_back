@@ -11,15 +11,15 @@ from general_models.utils.periodic_tasks import get_or_create_schedule
 
 
 class Command(BaseCommand):
-    print('Creating periodic task for parse no_cash courses...')
+    print('Creating periodic task for parse actual courses...')
 
     def handle(self, *args, **kwargs):
         try:
             schedule = get_or_create_schedule(60, IntervalSchedule.SECONDS)
             PeriodicTask.objects.create(
                     interval=schedule,
-                    name='parse_no_cash_course_task',
-                    task='parse_no_cash_courses',
+                    name='parse_actual_course_task',
+                    task='parse_actual_courses',
                     )
         except Exception as ex:
             print(ex)

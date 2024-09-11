@@ -1,6 +1,8 @@
 import functools
+from typing import Union
 
 from django.core.cache import cache
+from django.db.models import Prefetch
 
 from bs4 import BeautifulSoup
 
@@ -32,11 +34,62 @@ def make_valid_values_for_dict(dict_for_exchange_direction: dict):
         in_count = 1
 
     if out_count < 1:
-        k = 1 / out_count
+        in_count = 1 / out_count
         out_count = 1
-        in_count *= k
+        # in_count *= k
         # dict_for_exchange_direction['in_count'] = in_count
         # dict_for_exchange_direction['out_count'] = out_count
     
     dict_for_exchange_direction['in_count'] = in_count
     dict_for_exchange_direction['out_count'] = out_count
+
+
+#Type hinting for 'try_update_courses' function
+direction_union = Union[no_cash_models.Direction,
+                        cash_models.Direction]
+exchange_direction_union = Union[no_cash_models.ExchangeDirection,
+                                 cash_models.ExchangeDirection]
+
+
+def try_update_courses(direction_model: direction_union,
+                       exchange_direction_model: exchange_direction_union):
+    
+    prefetch_no_cash_queryset = exchange_direction_model.objects\
+                                                    .select_related('exchange')\
+                                                    .filter(is_active=True,
+                                                            exchange__is_active=True)\
+                                                    .order_by('-out_count',
+                                                              '-in_count')
+    
+    prefetch_filter = Prefetch('exchange_directions',
+                                prefetch_no_cash_queryset)
+    directions_with_prefetch = direction_model.objects\
+                                        .prefetch_related(prefetch_filter)\
+                                        .all()
+
+    update_list = []
+
+    for direction in directions_with_prefetch:
+        best_exchange_direction = direction.exchange_directions.first()
+
+        if best_exchange_direction:
+
+            in_count = best_exchange_direction.in_count
+            out_count = best_exchange_direction.out_count
+
+            if in_count and out_count:
+
+                if out_count == 1:
+                    actual_course = out_count / in_count
+                else:
+                    actual_course = out_count
+
+                direction.actual_course = actual_course
+        else:
+            direction.actual_course = None
+        
+        update_list.append(direction)
+
+    direction_model.objects.bulk_update(update_list,
+                                        ['actual_course'],
+                                        batch_size=1000)

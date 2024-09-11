@@ -4,6 +4,10 @@ from celery.app.task import Task
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
+from django.db.models import Prefetch, Max
+
+from django.db import connection
+
 from cash import models as cash_models
 from no_cash import models as no_cash_models
 from partners import models as partner_models
@@ -11,6 +15,7 @@ from partners import models as partner_models
 from config import SELENIUM_DRIVER
 
 from .utils.parse_reviews.selenium import parse_reviews
+from .utils.tasks import try_update_courses
 
 
 #Задача для периодического удаления отзывов и комментариев
@@ -76,26 +81,69 @@ def update_popular_count_direction():
 
 
 
-@shared_task(name='parse_no_cash_courses')
-def parse_no_cash_courses():
-    no_cash_directions = no_cash_models.Direction.objects.all()
+# @shared_task(name='parse_no_cash_courses')
+# def parse_no_cash_courses():
+#     no_cash_directions = no_cash_models.Direction.objects.all()
+#     #
+#     cash_directions = cash_models.Direction.objects.all()
+#     #
 
-    for direction in no_cash_directions:
-        best_course = no_cash_models.ExchangeDirection.objects.filter(direction_id=direction.pk)\
-                                                                .order_by('-out_count',
-                                                                          '-in_count')\
-                                                                .values_list('in_count',
-                                                                             'out_count')\
-                                                                .first()
-        if best_course:
-            in_count, out_count = best_course
+#     for direction in no_cash_directions:
+#         best_course = no_cash_models.ExchangeDirection.objects.filter(direction_id=direction.pk)\
+#                                                                 .order_by('-out_count',
+#                                                                           '-in_count')\
+#                                                                 .values_list('in_count',
+#                                                                              'out_count')\
+#                                                                 .first()
+#         if best_course:
+#             in_count, out_count = best_course
 
-            if out_count == 1:
-                actual_course = out_count / in_count
-            else:
-                actual_course = out_count
-            direction.actual_course = actual_course
-        else:
-            direction.actual_course = None
+#             if out_count == 1:
+#                 actual_course = out_count / in_count
+#             else:
+#                 actual_course = out_count
+#             direction.actual_course = actual_course
+#         else:
+#             direction.actual_course = None
             
-        direction.save()
+#         direction.save()
+
+#     for direction in cash_directions:
+#         best_course = cash_models.ExchangeDirection.objects.filter(direction_id=direction.pk)\
+#                                                                 .order_by('-out_count',
+#                                                                           '-in_count')\
+#                                                                 .values_list('in_count',
+#                                                                              'out_count')\
+#                                                                 .first()
+#         if best_course:
+#             in_count, out_count = best_course
+
+#             if out_count == 1:
+#                 actual_course = out_count / in_count
+#             else:
+#                 actual_course = out_count
+#             direction.actual_course = actual_course
+#         else:
+#             direction.actual_course = None
+            
+#         direction.save()
+
+
+
+################
+@shared_task(name='parse_actual_courses')
+def parse_actual_courses():
+    # print(len(connection.queries))
+
+    no_cash_direction_model = no_cash_models.Direction
+    no_cash_exchange_direction_model = no_cash_models.ExchangeDirection
+    try_update_courses(no_cash_direction_model,
+                       no_cash_exchange_direction_model)
+
+    cash_direction_model = cash_models.Direction
+    cash_exchange_direction_model = cash_models.ExchangeDirection
+    try_update_courses(cash_direction_model,
+                       cash_exchange_direction_model)
+
+    # print(connection.queries[-5:])
+    # print(len(connection.queries))
