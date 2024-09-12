@@ -212,4 +212,4 @@ class AdminComment(BaseAdminComment):
         ordering = ('-time_create', 'review')
 
     def __str__(self):
-        return 'Партнёрский ' + super().__str__()
+        return 'Партнёрский админский ' + super().__str__()

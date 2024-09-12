@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles import views
 
 
-admin.site.site_header = 'Админ сайт телеграм бота BestExChange'
+admin.site.site_header = 'Админ панель базы данных MoneySwap'
 
 
 def trigger_error(request):
