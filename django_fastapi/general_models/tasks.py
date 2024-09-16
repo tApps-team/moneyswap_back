@@ -173,5 +173,6 @@ def parse_actual_exchanges_info():
                                             .all()
     exchange_list = no_cash_exchanges.union(cash_exchanges)
 
-    for exchange in exchange_list:
-        parse_exchange_info(exchange)
+    parse_exchange_info(exchange_list)
+    # for exchange in exchange_list:
+    #     parse_exchange_info(exchange)
