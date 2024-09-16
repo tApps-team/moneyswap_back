@@ -143,3 +143,14 @@ class ValuteListSchema(BaseModel):
 class PopularDirectionSchema(BaseModel):
     valute_from: SpecificValuteSchema
     valute_to: SpecificValuteSchema
+
+
+class CommonExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
+    exchangerName: str = Field(alias='name')
+    exchange_marker: str
+    workStatus: bool = Field(alias='is_active')
+    reserves: str | None = Field(alias='reserve_amount')
+    courses: str | None = Field(alias='course_count')
+    url: str | None = Field(alias='partner_link')
+    reviews: ReviewCountSchema

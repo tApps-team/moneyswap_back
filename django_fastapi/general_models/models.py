@@ -345,6 +345,27 @@ class BaseExchange(models.Model):
     is_vip = models.BooleanField('VIP',
                                  default=False)
     #
+    course_count = models.CharField('Количество курсов для обмена',
+                                       max_length=255,
+                                       blank=True,
+                                       null=True,
+                                       default=None)
+    reserve_amount = models.CharField('Сумма резерва',
+                                      max_length=255,
+                                      blank=True,
+                                      null=True,
+                                      default=None)
+    age = models.CharField('Возраст',
+                           max_length=255,
+                           blank=True,
+                           null=True,
+                           default=None)
+    country = models.CharField('Страна',
+                               max_length=255,
+                               blank=True,
+                               null=True,
+                               default=None)
+    #
 
     class Meta:
         abstract = True

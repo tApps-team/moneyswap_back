@@ -10,6 +10,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from fastapi import APIRouter, Request, Depends, HTTPException
 
 from general_models.models import Valute, BaseAdminComment, en_type_valute_dict
+from general_models.utils.endpoints import (positive_review_count_filter,
+                                            neutral_review_count_filter,
+                                            negative_review_count_filter,
+                                            get_reviews_count_filters)
+from general_models.utils.base import annotate_string_field
 
 import no_cash.models as no_cash_models
 from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2
@@ -39,7 +44,9 @@ from .schemas import (PopularDirectionSchema,
                       CommentRoleEnum,
                       ValuteListSchema,
                       SpecificValuteSchema,
-                      MultipleName)
+                      MultipleName,
+                      CommonExchangeSchema,
+                      ReviewCountSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -448,6 +455,73 @@ def get_similar_cities_by_direction(valute_from: str,
         # print(connection.queries[-1])
         # 4 queries
         return cities
+    
+
+
+@common_router.get('/exchange_list',
+                   response_model=list[CommonExchangeSchema],
+                   response_model_by_alias=False)
+def get_exchange_list():
+    print(len(connection.queries))
+    review_filters = get_reviews_count_filters(marker='exchange')
+
+    positive_review_count = Count('reviews',
+                                  filter=review_filters['positive'])
+    neutral_review_count = Count('reviews',
+                                 filter=review_filters['neutral'])
+    negative_review_count = Count('reviews',
+                                  filter=review_filters['negative'])
+    
+    exchanges = []
+
+
+    for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
+                                            ('cash', cash_models.Exchange),
+                                            ('partner', partner_models.Exchange)):
+        exchange_query = exchange_model.objects\
+                                    .annotate(positive_review_count=positive_review_count)\
+                                    .annotate(neutral_review_count=neutral_review_count)\
+                                    .annotate(negative_review_count=negative_review_count)\
+                                    .annotate(exchange_marker=annotate_string_field(exchange_marker))\
+                                    .values('pk',
+                                            'name',
+                                            'reserve_amount',
+                                            'course_count',
+                                            'positive_review_count',
+                                            'neutral_review_count',
+                                            'negative_review_count',
+                                            'is_active',
+                                            'exchange_marker',
+                                            'partner_link')\
+                                    .all()
+        exchanges.append(exchange_query)
+
+    exchange_list = exchanges[0].union(exchanges[1])\
+                                .union(exchanges[2])
+
+    for exchange in exchange_list:
+        exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
+                                                neutral=exchange['neutral_review_count'],
+                                                negative=exchange['neutral_review_count'])
+
+    print(len(connection.queries))
+    return sorted(exchange_list,
+                  key=lambda el: el.get('name'))
+
+
+    # queries = ExchangeDirection.objects\
+    #                             .select_related('exchange',
+    #                                             'city',
+    #                                             'direction',
+    #                                             'direction__valute_from',
+    #                                             'direction__valute_to')\
+    #                             .annotate(positive_review_count=positive_review_count)\
+    #                             .annotate(neutral_review_count=neutral_review_count)\
+    #                             .annotate(negative_review_count=negative_review_count)\
+
+
+
+
 
 
 # Эндпоинт для получения актуального курса обмена

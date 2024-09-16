@@ -33,12 +33,42 @@ round_valute_dict = {
 }
 
 
+def get_reviews_count_filters(marker: str = None):
+    match marker:
+        case 'exchange':
+            positive_review_count_filter = Q(reviews__moderation=True) \
+                                        & Q(reviews__grade='1')
+            neutral_review_count_filter = Q(reviews__moderation=True) \
+                                                    & Q(reviews__grade='0')
+            negative_review_count_filter = Q(reviews__moderation=True) \
+                                                    & Q(reviews__grade='-1')
+        case _:
+            positive_review_count_filter = Q(exchange__reviews__moderation=True) \
+                                                    & Q(exchange__reviews__grade='1')
+            neutral_review_count_filter = Q(exchange__reviews__moderation=True) \
+                                                    & Q(exchange__reviews__grade='0')
+            negative_review_count_filter = Q(exchange__reviews__moderation=True) \
+                                                    & Q(exchange__reviews__grade='-1')   
+    return {
+        'positive': positive_review_count_filter,
+        'neutral': neutral_review_count_filter,
+        'negative': negative_review_count_filter,
+    }
+
+
 positive_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='1')
 neutral_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='0')
 negative_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='-1')
+
+# positive_review_count_filter = Q(reviews__moderation=True) \
+#                                         & Q(reviews__grade='1')
+# neutral_review_count_filter = Q(reviews__moderation=True) \
+#                                         & Q(reviews__grade='0')
+# negative_review_count_filter = Q(reviews__moderation=True) \
+#                                         & Q(reviews__grade='-1')
 # neutral_review_count_filter = Count('exchange__reviews',
 #                                         filter=Q(exchange__reviews__moderation=True) & Q(exchange__reviews__grade='0'))
 # negative_review_count_filter = Count('exchange__reviews',

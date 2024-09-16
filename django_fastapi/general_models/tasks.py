@@ -4,7 +4,7 @@ from celery.app.task import Task
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
-from django.db.models import Prefetch, Max
+from django.db.models import Value, CharField
 
 from django.db import connection
 
@@ -15,6 +15,7 @@ from partners import models as partner_models
 from config import SELENIUM_DRIVER
 
 from .utils.parse_reviews.selenium import parse_reviews
+from .utils.parse_exchange_info.base import parse_exchange_info
 from .utils.tasks import try_update_courses
 
 
@@ -147,3 +148,30 @@ def parse_actual_courses():
 
     # print(connection.queries[-5:])
     # print(len(connection.queries))
+
+
+# parse_actual_exchanges_info
+
+@shared_task(name='parse_actual_exchanges_info')
+def parse_actual_exchanges_info():
+
+    def annotate_field(exchange_marker):
+        return Value(exchange_marker,
+                     output_field=CharField())
+
+    no_cash_exchanges = no_cash_models.Exchange.objects\
+                                                .annotate(exchange_marker=annotate_field('no_cash'))\
+                                                .values_list('pk',
+                                                             'en_name',
+                                                             'exchange_marker')\
+                                                .all()
+    cash_exchanges = cash_models.Exchange.objects\
+                                            .annotate(exchange_marker=annotate_field('cash'))\
+                                            .values_list('pk',
+                                                         'en_name',
+                                                         'exchange_marker')\
+                                            .all()
+    exchange_list = no_cash_exchanges.union(cash_exchanges)
+
+    for exchange in exchange_list:
+        parse_exchange_info(exchange)
