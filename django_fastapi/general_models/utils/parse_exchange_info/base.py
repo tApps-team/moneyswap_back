@@ -116,5 +116,5 @@ def parse_exchange_info(exchange: tuple[int, str, str]):
                 print(ex)
                 pass
     finally:
-        rnd_count = random.randint(1,3)
+        rnd_count = random.randint(3, 6)
         sleep(rnd_count)
