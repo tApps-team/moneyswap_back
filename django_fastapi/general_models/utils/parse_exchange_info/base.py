@@ -8,6 +8,9 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.support import expected_conditions as EC
 
 from config import SELENIUM_DRIVER
 
@@ -83,9 +86,14 @@ def parse_exchange_info(exchange_list: list[tuple[int, str, str]]):
             url = f'https://www.bestchange.ru/{en_name.lower()}-exchanger.html'
             try:
                 driver.get(url)
+                sign_in_wait = WebDriverWait(driver, timeout=40)\
+                                            .until(EC.presence_of_element_located((By.CLASS_NAME,
+                                                                                   'exch_info_table')))
 
-                rows = driver.find_element(By.CLASS_NAME, 'exch_info_table')\
-                                .find_elements(By.TAG_NAME, 'tr')
+                rows = sign_in_wait.find_elements(By.TAG_NAME, 'tr')
+
+                # rows = sign_in_wait.find_element(By.CLASS_NAME, 'exch_info_table')\
+                #                 .find_elements(By.TAG_NAME, 'tr')
                 
                 # print(rows)
             
