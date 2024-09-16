@@ -9,6 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from fastapi import APIRouter, Request, Depends, HTTPException
 
+from .utils.periodic_tasks import get_or_create_schedule
 from general_models.models import Valute, BaseAdminComment, en_type_valute_dict
 from general_models.utils.endpoints import (positive_review_count_filter,
                                             neutral_review_count_filter,
@@ -462,7 +463,7 @@ def get_similar_cities_by_direction(valute_from: str,
                    response_model=list[CommonExchangeSchema],
                    response_model_by_alias=False)
 def get_exchange_list():
-    print(len(connection.queries))
+    # print(len(connection.queries))
     review_filters = get_reviews_count_filters(marker='exchange')
 
     positive_review_count = Count('reviews',
@@ -504,7 +505,7 @@ def get_exchange_list():
                                                 neutral=exchange['neutral_review_count'],
                                                 negative=exchange['neutral_review_count'])
 
-    print(len(connection.queries))
+    # print(len(connection.queries))
     return sorted(exchange_list,
                   key=lambda el: el.get('name'))
 
@@ -750,3 +751,26 @@ def get_comments_by_review(exchange_id: int,
     #
     # print(len(connection.queries))
     return comments
+
+
+@common_router.get('/change_interval')
+def change_interval_info_exchange_task(interval: int,
+                                       period: str):
+    from django_celery_beat.models import IntervalSchedule, PeriodicTask
+
+    period_dict = {
+        'second': IntervalSchedule.SECONDS,
+        'minute': IntervalSchedule.MINUTES,
+        'day': IntervalSchedule.DAYS,
+    }
+
+    period = period_dict[period.lower()]
+
+    task = PeriodicTask.objects.get(name='parse_actual_exchanges_info_task')
+
+    interval = get_or_create_schedule(interval, period)
+
+    task.interval = interval
+
+    task.save()
+    

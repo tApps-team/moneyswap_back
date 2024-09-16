@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         try:
-            schedule = get_or_create_schedule(30, IntervalSchedule.SECONDS)
+            schedule = get_or_create_schedule(1, IntervalSchedule.DAYS)
             PeriodicTask.objects.create(
                     interval=schedule,
                     name='parse_actual_exchanges_info_task',
