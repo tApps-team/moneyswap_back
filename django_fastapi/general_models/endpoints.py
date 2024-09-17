@@ -576,8 +576,12 @@ def get_reviews_by_exchange(exchange_id: int,
     reviews = review_model.objects.select_related('guest')\
                                     .annotate(comment_count=Count('admin_comments'))\
                                     .filter(exchange_id=exchange_id,
-                                            moderation=True)\
-                                    .order_by('-time_create')
+                                            moderation=True)
+                                    # .order_by('-time_create')
+    if grade_filter is not None:
+        reviews = reviews.filter(grade=str(grade_filter))
+
+    reviews = reviews.order_by('-time_create').all()
     
     pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
 
@@ -591,13 +595,11 @@ def get_reviews_by_exchange(exchange_id: int,
     #     if len(reviews) % element_on_page != 0:
     #         pages += 1
     
-    if grade_filter is not None:
-        reviews = reviews.filter(grade=str(grade_filter))
 
     # reviews = reviews.all() if grade_filter is None\
     #              else reviews.filter(grade=str(grade_filter)).all()
 
-    reviews = reviews.all()
+    # reviews = reviews.all()
 
 
     if element_on_page:
