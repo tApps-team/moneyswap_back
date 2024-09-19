@@ -272,6 +272,10 @@ class BaseExchangeDirectionAdmin(admin.ModelAdmin):
     list_display = (
         "get_display_name",
         )
+    list_filter = (
+        'direction',
+        'exchange',
+        )
 
     def has_change_permission(self, request, obj = None):
         return False

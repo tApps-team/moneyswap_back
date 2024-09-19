@@ -3,7 +3,7 @@ from collections import defaultdict
 from django.db.models import Count, Q
 from django.db import connection
 
-from general_models.utils.endpoints import try_generate_icon_url
+from general_models.utils.endpoints import try_generate_icon_url, get_reviews_count_filters
 
 from cash.models import Direction as CashDirection
 
@@ -44,24 +44,59 @@ def get_partner_in_out_count(actual_course: float):
     )
 
 
-def get_partner_directions(city: str,
-                           valute_from: str,
-                           valute_to: str):
+# def get_partner_directions(city: str,
+#                            valute_from: str,
+#                            valute_to: str):
+#     direction_name = valute_from + ' -> ' + valute_to
+
+#     review_counts = get_reviews_count_filters('partner_direction')
+
+#     directions = Direction.objects\
+#                             .select_related('direction',
+#                                             'direction__valute_from',
+#                                             'direction__valute_to',
+#                                             'city',
+#                                             'city__city',
+#                                             'city__exchange')\
+#                             .annotate(positive_review_count=review_counts['positive'])\
+#                             .annotate(neutral_review_count=review_counts['neutral'])\
+#                             .annotate(negative_review_count=review_counts['negative'])\
+#                             .filter(direction__display_name=direction_name,
+#                                     city__city__code_name=city,
+#                                     is_active=True,
+#                                     city__exchange__partner_link__isnull=False)
+
+#     for direction in directions:
+#         direction.exchange = direction.city.exchange
+#         direction.exchange_marker = 'partner'
+#         direction.valute_from = valute_from
+#         direction.valute_to = valute_to
+#         direction.min_amount = None
+#         direction.max_amount = None
+#         direction.params = None
+#         direction.fromfee = None
+#         #
+#         working_days = WORKING_DAYS_DICT.copy()
+#         [working_days.__setitem__(day.code_name, True)\
+#           for day in direction.city.working_days.all()]
+
+#         direction.info = PartnerCityInfoSchema(
+#             delivery=direction.city.has_delivery,
+#             office=direction.city.has_office,
+#             working_days=working_days,
+#             time_from=direction.city.time_from,
+#             time_to=direction.city.time_to
+#             )
+#         #
+#     return directions
+
+
+def get_partner_directions(valute_from: str,
+                           valute_to: str,
+                           city: str = None):
     direction_name = valute_from + ' -> ' + valute_to
 
-    positive_review_count_filter = Q(city__exchange__reviews__moderation=True) \
-                                            & Q(city__exchange__reviews__grade='1')
-    neutral_review_count_filter = Q(city__exchange__reviews__moderation=True) \
-                                            & Q(city__exchange__reviews__grade='0')
-    negative_review_count_filter = Q(city__exchange__reviews__moderation=True) \
-                                            & Q(city__exchange__reviews__grade='-1')
-    
-    positive_review_count = Count('city__exchange__reviews',
-                                  filter=positive_review_count_filter)
-    neutral_review_count = Count('city__exchange__reviews',
-                                 filter=neutral_review_count_filter)
-    negative_review_count = Count('city__exchange__reviews',
-                                  filter=negative_review_count_filter)
+    review_counts = get_reviews_count_filters('partner_direction')
 
     directions = Direction.objects\
                             .select_related('direction',
@@ -70,13 +105,14 @@ def get_partner_directions(city: str,
                                             'city',
                                             'city__city',
                                             'city__exchange')\
-                            .annotate(positive_review_count=positive_review_count)\
-                            .annotate(neutral_review_count=neutral_review_count)\
-                            .annotate(negative_review_count=negative_review_count)\
+                            .annotate(positive_review_count=review_counts['positive'])\
+                            .annotate(neutral_review_count=review_counts['neutral'])\
+                            .annotate(negative_review_count=review_counts['negative'])\
                             .filter(direction__display_name=direction_name,
-                                    city__city__code_name=city,
                                     is_active=True,
                                     city__exchange__partner_link__isnull=False)
+    if city:
+        directions = directions.filter(city__city__code_name=city)
 
     for direction in directions:
         direction.exchange = direction.city.exchange
@@ -100,6 +136,52 @@ def get_partner_directions(city: str,
             time_to=direction.city.time_to
             )
         #
+    return directions
+
+
+def get_partner_directions_with_location(valute_from: str,
+                                         valute_to: str):
+    direction_name = valute_from + ' -> ' + valute_to
+
+    review_counts = get_reviews_count_filters('partner_direction')
+
+    directions = Direction.objects\
+                            .select_related('direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to',
+                                            'city',
+                                            'city__city',
+                                            'city__city__country',
+                                            'city__exchange')\
+                            .annotate(positive_review_count=review_counts['positive'])\
+                            .annotate(neutral_review_count=review_counts['neutral'])\
+                            .annotate(negative_review_count=review_counts['negative'])\
+                            .filter(direction__display_name=direction_name,
+                                    is_active=True,
+                                    city__exchange__partner_link__isnull=False)
+
+    for direction in directions:
+        direction.exchange = direction.city.exchange
+        direction.exchange_marker = 'partner'
+        direction.valute_from = valute_from
+        direction.valute_to = valute_to
+        direction.min_amount = None
+        direction.max_amount = None
+        direction.params = None
+        direction.fromfee = None
+
+        working_days = WORKING_DAYS_DICT.copy()
+        [working_days.__setitem__(day.code_name, True)\
+          for day in direction.city.working_days.all()]
+
+        direction.info = PartnerCityInfoSchema(
+            delivery=direction.city.has_delivery,
+            office=direction.city.has_office,
+            working_days=working_days,
+            time_from=direction.city.time_from,
+            time_to=direction.city.time_to
+            )
+
     return directions
 
 

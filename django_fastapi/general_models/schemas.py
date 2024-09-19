@@ -154,3 +154,28 @@ class CommonExchangeSchema(BaseModel):
     courses: str | None = Field(alias='course_count')
     url: str | None = Field(alias='partner_link')
     reviews: ReviewCountSchema
+
+
+
+class DetailExchangeSchema(BaseModel):
+    name: str
+    iconUrl: str | None = Field(alias='icon_url',
+                                default=None)
+    workStatus: bool = Field(alias='is_active')
+    reviews: ReviewCountSchema = Field(alias='review_set')
+    country: str | None
+    amountReserves: str | None = Field(alias='reserve_amount',
+                                       default=None)
+    exchangeRates: int | None = Field(alias='course_count',
+                                      default=None)
+    open: str | None = Field(alias='age',
+                             default=None)
+    openOnMoneySwap: str | None = Field(default=None)
+
+
+class DirectionSideBarSchema(BaseModel):
+    valuteFrom: ValuteModel
+    valuteTo: ValuteModel
+    pairCount: int | None = Field(alias='pair_count',
+                                  default=None)
+    # cityCodeName: str | None = Field(default=None)

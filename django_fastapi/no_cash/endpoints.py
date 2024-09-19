@@ -10,7 +10,10 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             increase_popular_count_direction,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
-                                            negative_review_count_filter)
+                                            negative_review_count_filter,
+                                            get_reviews_count_filters)
+
+from cash.endpoints import cash_exchange_directions_with_location
 
 from .models import ExchangeDirection
 
@@ -103,32 +106,17 @@ def no_cash_exchange_directions(request: Request,
             http_exception_json(status_code=400, param=param)
 
     valute_from, valute_to = (params[key] for key in params)
-    #
-    # review_count_filter = Count('exchange__reviews',
-    #                             filter=Q(exchange__reviews__moderation=True))
-    # positive_review_count_filter = Count('exchange__reviews',
-    #                                      filter=Q(exchange__reviews__moderation=True) & Q(exchange__reviews__grade='1'))
-    # neutral_review_count_filter = Count('exchange__reviews',
-    #                                      filter=Q(exchange__reviews__moderation=True) & Q(exchange__reviews__grade='0'))
-    # negative_review_count_filter = Count('exchange__reviews',
-    #                                      filter=Q(exchange__reviews__moderation=True) & Q(exchange__reviews__grade='-1'))
-    positive_review_count = Count('exchange__reviews',
-                                         filter=positive_review_count_filter)
-    neutral_review_count = Count('exchange__reviews',
-                                         filter=neutral_review_count_filter)
-    negative_review_count = Count('exchange__reviews',
-                                         filter=negative_review_count_filter)
 
-    # print(1)
-    #
+    review_counts = get_reviews_count_filters('exchange_direction')
+
     queries = ExchangeDirection.objects\
                                 .select_related('exchange',
                                                 'direction',
                                                 'direction__valute_from',
                                                 'direction__valute_to')\
-                                .annotate(positive_review_count=positive_review_count)\
-                                .annotate(neutral_review_count=neutral_review_count)\
-                                .annotate(negative_review_count=negative_review_count)\
+                                .annotate(positive_review_count=review_counts['positive'])\
+                                .annotate(neutral_review_count=review_counts['neutral'])\
+                                .annotate(negative_review_count=review_counts['negative'])\
                                 .filter(direction__valute_from=valute_from,
                                         direction__valute_to=valute_to,
                                         is_active=True,
@@ -137,9 +125,9 @@ def no_cash_exchange_directions(request: Request,
                                           '-out_count',
                                           'in_count').all()
     
-    # print(2)
     if not queries:
-        http_exception_json(status_code=404, param=request.url)
+        return cash_exchange_directions_with_location(request,
+                                                      params)
 
     increase_popular_count_direction(valute_from=valute_from,
                                      valute_to=valute_to)

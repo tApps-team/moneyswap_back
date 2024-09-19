@@ -1,13 +1,13 @@
 from pydantic import BaseModel, Field
 
-from general_models.schemas import SpecialDirectionModel, SpecialDirectionMultiModel
+from general_models.schemas import SpecialDirectionModel, SpecialDirectionMultiModel, MultipleName
 
 from partners.schemas import PartnerCityInfoSchema
 
 
-class MultipleName(BaseModel):
-    ru: str = Field(alias='name')
-    en: str = Field(alias='en_name')
+# class MultipleName(BaseModel):
+#     ru: str = Field(alias='name')
+#     en: str = Field(alias='en_name')
 
 
 class CityModel(BaseModel):
@@ -79,7 +79,12 @@ class RuEnCountryModel(BaseModel):
 
     icon_url: str | None = Field(alias='country_flag')
     cities: list[RuEnCityModel] = Field(alias='city_list')
-    
+
+
+class LocationSchema(BaseModel):
+    country: SpecificCountrySchema
+    city: RuEnCityModel
+
 
 class SpecialCashDirectionModel(SpecialDirectionModel):
     params: str
@@ -87,6 +92,11 @@ class SpecialCashDirectionModel(SpecialDirectionModel):
 
 
 class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
-    info: PartnerCityInfoSchema | None
+    info: PartnerCityInfoSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
+
+
+
+class SpecialCashDirectionMultiWithLocationModel(SpecialCashDirectionMultiModel):
+    location: SpecificCitySchema
