@@ -512,6 +512,7 @@ def get_exchange_detail_info(exchange_id: int,
     exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
                                             neutral=exchange.neutral_review_count,
                                             negative=exchange.negative_review_count)
+    exchange.icon = try_generate_icon_url(exchange)
     
     if exchange.course_count is None or not exchange.course_count.isdigit():
         exchange.course_count = None

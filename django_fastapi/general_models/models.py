@@ -365,6 +365,11 @@ class BaseExchange(models.Model):
                                blank=True,
                                null=True,
                                default=None)
+    icon_url = models.FileField('Иконка обменника',
+                                upload_to='icons/exchange/',
+                                blank=True,
+                                null=True,
+                                default='icons/russia.svg')
     #
 
     class Meta:

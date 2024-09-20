@@ -159,7 +159,7 @@ class CommonExchangeSchema(BaseModel):
 
 class DetailExchangeSchema(BaseModel):
     name: str
-    iconUrl: str | None = Field(alias='icon_url',
+    iconUrl: str | None = Field(alias='icon',
                                 default=None)
     url: str = Field(alias='partner_link')
     workStatus: bool = Field(alias='is_active')
