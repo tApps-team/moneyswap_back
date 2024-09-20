@@ -369,8 +369,8 @@ class BaseExchange(models.Model):
                                 upload_to='icons/exchange/',
                                 blank=True,
                                 null=True,
-                                default='icons/russia.svg')
-    #
+                                default='icons/country/russia.svg')
+    
 
     class Meta:
         abstract = True
