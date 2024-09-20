@@ -161,6 +161,7 @@ class DetailExchangeSchema(BaseModel):
     name: str
     iconUrl: str | None = Field(alias='icon_url',
                                 default=None)
+    url: str = Field(alias='partner_link')
     workStatus: bool = Field(alias='is_active')
     reviews: ReviewCountSchema = Field(alias='review_set')
     country: str | None
@@ -178,4 +179,5 @@ class DirectionSideBarSchema(BaseModel):
     valuteTo: ValuteModel
     pairCount: int | None = Field(alias='pair_count',
                                   default=None)
+    direction_type: str
     # cityCodeName: str | None = Field(default=None)

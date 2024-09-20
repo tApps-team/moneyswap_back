@@ -564,8 +564,10 @@ def get_all_directions_by_exchange(exchange_id: int,
 
             exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
             exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
-
+            exchange_direction.direction_type = 'no_cash'
+            
             if exchange_marker != 'no_cash':
+                exchange_direction.direction_type = 'cash'
                 similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
                 exchange_direction.pair_count += similar_partner_direction_count
 
