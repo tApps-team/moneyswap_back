@@ -381,7 +381,7 @@ class BaseExchange(models.Model):
 
 class ParseExchange(BaseExchange):
     xml_url = models.CharField('Ссылка на XML файл',
-                               max_length=50)
+                               max_length=255)
     period_for_create = models.IntegerField('Частота добавления в секундах',
                                             blank=True,
                                             null=True,
