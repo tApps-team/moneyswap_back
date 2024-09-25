@@ -554,7 +554,7 @@ def get_all_directions_by_exchange(exchange_id: int,
 
     for exchange_direction in exchange_directions:
         if exchange_direction.direction_id not in check_direction_id_set:
-            exchange_direction_list.append(exchange_direction)
+            # exchange_direction_list.append(exchange_direction)
             check_direction_id_set.add(exchange_direction.direction_id)
         
             valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
@@ -571,6 +571,9 @@ def get_all_directions_by_exchange(exchange_id: int,
                 exchange_direction.direction_type = 'cash'
                 similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
                 exchange_direction.pair_count += similar_partner_direction_count
+
+            if exchange_direction.pair_count > 0:
+                exchange_direction_list.append(exchange_direction)
 
     # print(connection.queries)
     # print(len(connection.queries))
