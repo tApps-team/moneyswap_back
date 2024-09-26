@@ -313,6 +313,12 @@ class BaseExchangeLinkCountStacked(admin.StackedInline):
     
     def has_add_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
         return False
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange',
+                                                            'user')\
+                                            .order_by('-count')
+
 #
 
 
@@ -340,7 +346,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     def get_queryset(self, request: HttpRequest) -> QuerySet:
         queryset = super().get_queryset(request)
-        return queryset.annotate(link_count=Sum('exchangelistcount__count'))
+        return queryset.annotate(link_count=Sum('exchangelinkcount__count'))
     
     fieldsets = [
         (
