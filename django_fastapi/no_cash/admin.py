@@ -11,7 +11,7 @@ from no_cash.models import (Exchange,
                             Comment,
                             AdminComment,
                             PopularDirection,
-                            ExchangeListCount)
+                            ExchangeLinkCount)
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
                                     manage_periodic_task_for_update,
                                     manage_periodic_task_for_parse_black_list)
@@ -80,7 +80,7 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
     
 
 class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
-    model = ExchangeListCount
+    model = ExchangeLinkCount
 
     fields = (
         'count',
@@ -174,6 +174,6 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
     )
 
 
-@admin.register(ExchangeListCount)
+@admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
