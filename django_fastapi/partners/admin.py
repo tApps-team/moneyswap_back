@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Any
 
 from django.contrib import admin, messages
+from django.db.models import Sum
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 
@@ -10,7 +11,9 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseCommentStacked,
                                   BaseReviewAdmin,
                                   BaseReviewStacked,
-                                  BaseAdminCommentStacked)
+                                  BaseAdminCommentStacked,
+                                  BaseExchangeLinkCountStacked,
+                                  BaseExchangeLinkCountAdmin)
 from general_models.utils.admin import ReviewAdminMixin
 
 from partners.utils.endpoints import get_course_count
@@ -22,7 +25,8 @@ from .models import (Exchange,
                      CustomUser,
                      PartnerCity,
                      WorkingDay,
-                     AdminComment)
+                     AdminComment,
+                     ExchangeLinkCount)
 from .utils.admin import (make_city_active,
                           update_field_time_update,
                           get_saved_course)
@@ -404,6 +408,10 @@ class ReviewStacked(BaseReviewStacked):
                                         'exchange__account')
 
 
+class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
+    model = ExchangeLinkCount
+
+
 @admin.register(Exchange)
 class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
@@ -416,9 +424,11 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'is_active',
         )
     filter_horizontal = ()
+
     inlines = [
         PartnerCityStacked,
         ReviewStacked,
+        ExchangeLinkCountStacked,
         ]
 
     def has_partner_link(self, obj=None):
@@ -427,11 +437,17 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     has_partner_link.boolean = True
     has_partner_link.short_description = 'Партнёрская ссылка'
 
+    def link_count(self, obj):
+        return obj.link_count
+    
+    link_count.short_description = 'Счетчик перехода по ссылке'
+
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
         if not request.user.is_superuser:
             readonly_fields = ('partner_link', ) + readonly_fields
-        return readonly_fields
+
+        return readonly_fields + ('link_count', )
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         if not request.user.is_superuser:
@@ -440,17 +456,38 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                 
                 if not exchange:
                     # вернуть пустой queryset
-                    return super().get_queryset(request)\
+                    queryset = super().get_queryset(request)\
                                     .filter(name='Не выбрано!!!')
                 # вернуть обменник партнёра
-                return super().get_queryset(request)\
-                                .select_related('account',
-                                                'account__user',
-                                                'account__exchange')\
-                                .filter(name=exchange.name)
+                else:
+                    queryset = super().get_queryset(request)\
+                                    .select_related('account',
+                                                    'account__user',
+                                                    'account__exchange')\
+                                    .filter(name=exchange.name)
         # вернуть все партнёрские обменники
-        return super().get_queryset(request)\
-                        .select_related('account', 'account__user')
+        else:
+            queryset = super().get_queryset(request)\
+                            .select_related('account', 'account__user')
+        
+        return queryset.annotate(link_count=Sum('exchangelinkcount__count'))
+    
+    # fieldsets = [
+    #     (
+    #         None,
+    #         {
+    #             "fields": [("name", "en_name"),
+    #                        "partner_link",
+    #                        "is_active",
+    #                        "is_vip",
+    #                        "course_count",
+    #                        "reserve_amount",
+    #                        "age",
+    #                        "country",
+    #                        'link_count'],
+    #         },
+    #     ),
+    # ]
     
     def has_add_permission(self, request: HttpRequest) -> bool:
         if not request.user.is_superuser:
@@ -479,3 +516,9 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         super().delete_queryset(request, queryset)
         if not request.user.is_superuser:
             set_user_account_cache(request.user.moderator_account)
+
+
+
+@admin.register(ExchangeLinkCount)
+class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    pass

@@ -11,7 +11,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from fastapi import APIRouter, Request, Depends, HTTPException
 
 from .utils.periodic_tasks import get_or_create_schedule
-from general_models.models import Valute, BaseAdminComment, en_type_valute_dict
+from general_models.models import (Valute,
+                                   BaseAdminComment, 
+                                   Guest,
+                                   en_type_valute_dict)
 from general_models.utils.endpoints import (positive_review_count_filter,
                                             neutral_review_count_filter,
                                             negative_review_count_filter,
@@ -845,6 +848,11 @@ exchange_link_count_dict = {
 @common_router.post('/increase_link_count')
 def get_all_directions_by_exchange(data: ExchangeLinkCountSchema):
     exchange_link_count = exchange_link_count_dict.get(data.exchange_marker)
+
+    check_user = Guest.objects.filter(tg_id=data.user_id)
+
+    if not check_user.exists():
+        raise HTTPException(status_code=400)
 
     exchange_link_count_queryset = exchange_link_count.objects\
                                                 .filter(exchange_id=data.exchange_id,

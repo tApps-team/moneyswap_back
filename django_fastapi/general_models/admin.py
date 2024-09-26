@@ -308,6 +308,12 @@ class BaseExchangeLinkCountStacked(admin.StackedInline):
         'collapse',
         ]
     
+    fields = (
+        'count',
+        'user',
+        'exchange_direction',
+    )
+
     def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
         return False
     
@@ -428,7 +434,8 @@ class BasePopularDirectionAdmin(admin.ModelAdmin):
 
 class BaseExchangeLinkCountAdmin(admin.ModelAdmin):
     list_display = (
-        'exchange',
+        # 'exchange',
+        'exchange_direction',
         'user',
         'count',
         )

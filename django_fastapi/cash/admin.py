@@ -20,7 +20,9 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseExchangeDirectionStacked,
                                   BaseDirectionAdmin,
                                   BaseAdminCommentStacked,
-                                  BasePopularDirectionAdmin)
+                                  BasePopularDirectionAdmin,
+                                  BaseExchangeLinkCountAdmin,
+                                  BaseExchangeLinkCountStacked)
 from general_models.tasks import parse_reviews_for_exchange
 
 from .models import (Country,
@@ -31,7 +33,8 @@ from .models import (Country,
                      Review,
                      Comment,
                      AdminComment,
-                     PopularDirection)
+                     PopularDirection,
+                     ExchangeLinkCount)
 
 
 #Отображение городов в админ панели
@@ -157,12 +160,17 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
                                                             'direction__valute_to')
 
 
+class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
+    model = ExchangeLinkCount
+
+
 #Отображение обменников в админ панели
 @admin.register(Exchange)
 class ExchangeAdmin(BaseExchangeAdmin):
     inlines = [
         ExchangeDirectionStacked,
         ReviewStacked,
+        ExchangeLinkCountStacked
         ]
 
     # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
@@ -238,3 +246,8 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
     filter_horizontal = (
         'directions',
     )
+
+
+@admin.register(ExchangeLinkCount)
+class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    pass
