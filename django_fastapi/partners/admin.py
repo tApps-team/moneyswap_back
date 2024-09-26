@@ -183,14 +183,8 @@ class DirectionAdmin(admin.ModelAdmin):
 
         if not request.user.is_superuser:
             account = get_or_set_user_account_cache(request.user)
-            # queryset = queryset.select_related('city',
-            #                                    'direction',
-            #                                    'direction__valute_from',
-            #                                    'direction__valute_to',
-            #                                    'city__city',
-            #                                    'city__exchange')\
-            #                     .filter(city__exchange=account.exchange)
             queryset = queryset.filter(city__exchange=account.exchange)
+            
         return queryset
     
     @admin.action(description='Обновить активность выбранных Направлений')

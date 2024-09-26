@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, Subquery, F
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from django.db.models.query import QuerySet
@@ -18,6 +18,10 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 from .utils.admin import ReviewAdminMixin
 from .utils.endpoints import try_generate_icon_url
 from .models import Valute, PartnerTimeUpdate, Guest, CustomOrder
+
+from no_cash import models as no_cash_models
+from cash import models as cash_models
+from partners import models as partner_models
 
 
 #DONT SHOW PERIODIC TASKS IN ADMIN PANEL
@@ -87,15 +91,26 @@ class GuestAdmin(admin.ModelAdmin):
         'tg_id',
         'is_active',
     )
-    # readonly_fields = (
-    #     'username',
-    #     'tg_id',
-    #     'first_name',
-    #     'last_name',
-    #     'language_code',
-    #     'is_premium',
-    #     'is_active',
-    # )
+
+    readonly_fields = (
+        'link_count',
+    )
+
+    def link_count(self, obj):
+        no_cash_count = no_cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
+                                                                .aggregate(count=Sum('count'))
+        cash_count = cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
+                                                                .aggregate(count=Sum('count'))
+        partner_count = partner_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
+                                                                .aggregate(count=Sum('count'))
+
+        res = no_cash_count['count'] +\
+                cash_count['count'] +\
+                partner_count['count']
+        # print(res)
+        return res
+    
+    link_count.short_description = 'Счётчик перехода по ссылкам обменников'
 
 
 @admin.register(CustomOrder)

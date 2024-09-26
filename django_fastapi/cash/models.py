@@ -205,7 +205,7 @@ class ExchangeDirection(BaseExchangeDirection):
 
     def __str__(self):
         # return f'{self.city}: {self.valute_from} -> {self.valute_to}'
-        return f'{self.city}: {self.direction}'
+        return f'{self.exchange} {self.city}: {self.direction}'
 
 
 #Модель попуярного направления

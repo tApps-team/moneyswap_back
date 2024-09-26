@@ -153,7 +153,7 @@ class Direction(models.Model):
         ordering = ('city__exchange', 'city', 'direction')
 
     def __str__(self):
-        return f'{self.city} - {self.direction}'
+        return f'{self.city.exchange} {self.city} - {self.direction}'
 
 
 class Review(BaseReview):
