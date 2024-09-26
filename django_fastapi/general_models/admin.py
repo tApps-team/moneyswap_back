@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from django.db.models.query import QuerySet
@@ -87,15 +87,15 @@ class GuestAdmin(admin.ModelAdmin):
         'tg_id',
         'is_active',
     )
-    readonly_fields = (
-        'username',
-        'tg_id',
-        'first_name',
-        'last_name',
-        'language_code',
-        'is_premium',
-        'is_active',
-    )
+    # readonly_fields = (
+    #     'username',
+    #     'tg_id',
+    #     'first_name',
+    #     'last_name',
+    #     'language_code',
+    #     'is_premium',
+    #     'is_active',
+    # )
 
 
 @admin.register(CustomOrder)
@@ -300,6 +300,20 @@ class BaseExchangeDirectionStacked(admin.StackedInline):
     
     def has_add_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
         return False
+    
+
+#
+class BaseExchangeLinkCountStacked(admin.StackedInline):
+    classes = [
+        'collapse',
+        ]
+    
+    def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+        return False
+    
+    def has_add_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+        return False
+#
 
 
 #Базовое отображение обменника в админ панели
@@ -316,7 +330,18 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'reserve_amount',
         'age',
         'country',
+        'link_count',
         )
+    
+    def link_count(self, obj):
+        return obj.link_count
+    
+    link_count.short_description = 'Счетчик перехода по ссылке'
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet:
+        queryset = super().get_queryset(request)
+        return queryset.annotate(link_count=Sum('exchangelistcount__count'))
+    
     fieldsets = [
         (
             None,
@@ -330,7 +355,8 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                            "reserve_amount",
                            "age",
                            "country",
-                           ("period_for_create", "period_for_update", "period_for_parse_black_list")],
+                           ("period_for_create", "period_for_update", "period_for_parse_black_list"),
+                           'link_count'],
             },
         ),
         # (
@@ -392,3 +418,38 @@ class BasePopularDirectionAdmin(admin.ModelAdmin):
     
     def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
         return False
+    
+
+class BaseExchangeLinkCountAdmin(admin.ModelAdmin):
+    list_display = (
+        'exchange',
+        'user',
+        'count',
+        )
+    list_filter = (
+        'exchange',
+        'user',
+    )
+
+    ordering = (
+        '-count',
+        '-user',
+        'exchange',
+    )
+    # readonly_fields = (
+    #     'exchange',
+    #     'user',
+    #     'count',
+    #     'exchange'
+    # )
+    def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+        return False
+    # fields = (
+    #     'name',
+    #     'directions',
+    # )
+    # def has_add_permission(self, request, obj = None):
+    #     return False
+    
+    # def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+    #     return False

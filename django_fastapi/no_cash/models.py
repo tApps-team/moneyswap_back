@@ -9,7 +9,8 @@ from general_models.models import (Valute,
                                    BaseReview,
                                    BaseComment,
                                    Guest,
-                                   BaseAdminComment)
+                                   BaseAdminComment,
+                                   BaseExchangeLinkCount)
 
 
 #Модель обменника 
@@ -144,3 +145,20 @@ class ExchangeDirection(BaseExchangeDirection):
     def __str__(self):
         # return f'{self.exchange}:  {self.valute_from} -> {self.valute_to}'
         return f'{self.exchange}:  {self.direction}'
+    
+
+class ExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='no_cash_exchange_counts')
+    exchange_direction = models.ForeignKey(ExchangeDirection,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='no_cash_exchange_counts',
+                                           null=True,
+                                           default=None)
+    

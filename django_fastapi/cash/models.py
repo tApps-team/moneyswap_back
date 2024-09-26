@@ -8,7 +8,8 @@ from general_models.models import (BaseExchangeDirection,
                                    BaseReview,
                                    BaseComment,
                                    Guest,
-                                   BaseAdminComment)
+                                   BaseAdminComment,
+                                   BaseExchangeLinkCount)
 
 
 #Модель страны
@@ -253,3 +254,23 @@ class BlackListElement(models.Model):
     def __str__(self):
         # return f'({self.city}): {self.valute_from} -> {self.valute_to}\n\n'
         return f'({self.city}): {self.direction}\n\n'
+    
+
+class ExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='cash_exchange_counts')
+    exchange_direction = models.ForeignKey(ExchangeDirection,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='cash_exchange_counts',
+                                           null=True,
+                                           default=None)
+    
+
+    # def __str__(self):
+    #     return f'{self.user} {self.exchange} - {self.count}'

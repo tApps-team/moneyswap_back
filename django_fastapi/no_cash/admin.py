@@ -2,6 +2,7 @@ from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
+from django.db.models import Sum, Count
 
 from no_cash.models import (Exchange,
                             Direction,
@@ -9,7 +10,8 @@ from no_cash.models import (Exchange,
                             Review,
                             Comment,
                             AdminComment,
-                            PopularDirection)
+                            PopularDirection,
+                            ExchangeListCount)
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
                                     manage_periodic_task_for_update,
                                     manage_periodic_task_for_parse_black_list)
@@ -23,7 +25,9 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseExchangeDirectionStacked,
                                   BaseDirectionAdmin,
                                   BaseAdminCommentStacked,
-                                  BasePopularDirectionAdmin)
+                                  BasePopularDirectionAdmin,
+                                  BaseExchangeLinkCountAdmin,
+                                  BaseExchangeLinkCountStacked)
 from general_models.tasks import parse_reviews_for_exchange
 
 
@@ -73,16 +77,39 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
                                                             'direction',
                                                             'direction__valute_from',
                                                             'direction__valute_to')
+    
+
+class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
+    model = ExchangeListCount
+
+    fields = (
+        'count',
+        'user',
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange',
+                                                            'user')\
+                                            .order_by('-count')
 
 
 #Отображение обменников в админ панели
 @admin.register(Exchange)
 class ExchangeAdmin(BaseExchangeAdmin):
+    # list_display = ('link_count', )
     inlines = [
         ExchangeDirectionStacked,
         ReviewStacked,
+        ExchangeLinkCountStacked,
         ]
+    
+    # def link_count(self, obj):
+    #     return obj.link_count
 
+    # def get_queryset(self, request: HttpRequest) -> QuerySet:
+    #     queryset = super().get_queryset(request)
+    #     return queryset.annotate(link_count=Sum('exchangelistcount__count'))
+    
     def save_model(self, request, obj, form, change):
         update_fields = []
 
@@ -145,3 +172,8 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
     filter_horizontal = (
         'directions',
     )
+
+
+@admin.register(ExchangeListCount)
+class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    pass

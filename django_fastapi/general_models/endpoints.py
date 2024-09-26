@@ -5,6 +5,7 @@ from random import choice, shuffle
 
 from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch
 from django.db import connection
+from django.db.utils import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 
 from fastapi import APIRouter, Request, Depends, HTTPException
@@ -51,7 +52,8 @@ from .schemas import (PopularDirectionSchema,
                       CommonExchangeSchema,
                       ReviewCountSchema,
                       DetailExchangeSchema,
-                      DirectionSideBarSchema)
+                      DirectionSideBarSchema,
+                      ExchangeLinkCountSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -832,3 +834,34 @@ def get_comments_by_review(exchange_id: int,
 
 #     task.save()
     
+###
+exchange_link_count_dict = {
+    'cash': cash_models.ExchangeLinkCount,
+    'no_cash': no_cash_models.ExchangeLinkCount,
+    'partner': partner_models.ExchangeLinkCount,
+}
+###
+
+@common_router.post('/increase_link_count')
+def get_all_directions_by_exchange(data: ExchangeLinkCountSchema):
+    exchange_link_count = exchange_link_count_dict.get(data.exchange_marker)
+
+    exchange_link_count_queryset = exchange_link_count.objects\
+                                                .filter(exchange_id=data.exchange_id,
+                                                        exchange_marker=data.exchange_marker,
+                                                        exchange_direction_id=data.exchange_direction_id,
+                                                        user_id=data.user_id)
+    if not exchange_link_count_queryset.exists():
+        try:
+            exchange_link_count_queryset = exchange_link_count.objects.create(user_id=data.user_id,
+                                                                            exchange_id=data.exchange_id,
+                                                                            exchange_marker=data.exchange_marker,
+                                                                            exchange_direction_id=data.exchange_direction_id,
+                                                                            count=1)
+        except IntegrityError:
+            return {'status': 'error',
+                    'details': 'Constraint error. This row already exists'}
+    else:
+        exchange_link_count_queryset.update(count=F('count') + 1)
+
+    return {'status': 'success'}

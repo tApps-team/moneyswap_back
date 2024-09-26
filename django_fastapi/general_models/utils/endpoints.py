@@ -345,6 +345,7 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
 
         exchange_direction = query.__dict__ | query.exchange.__dict__
         exchange_direction['id'] = _id
+        exchange_direction['exchange_direction_id'] = query.id
         exchange_direction['exchange_id'] = query.exchange.id
         exchange_direction['review_count'] = ReviewCountSchema(
             positive=query.positive_review_count,

@@ -3,6 +3,8 @@ from datetime import datetime
 
 from django.db import models
 
+# from partners.models import CustomUser
+
 from .utils.model_validators import is_positive_validate
 
 
@@ -451,3 +453,23 @@ class BaseExchangeDirection(models.Model):
 
     class Meta:
         abstract = True
+
+
+
+class BaseExchangeLinkCount(models.Model):
+    count = models.PositiveBigIntegerField('Счетчик просмотров',
+                                           default=0)
+    exchange_marker = models.CharField('Маркер',
+                                       max_length=255)
+    # user = models.ForeignKey(Guest,
+    #                          on_delete=models.CASCADE,
+    #                          verbose_name='Гостевой пользователь')
+    
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке'
+        verbose_name_plural = 'Счётчики перехода по ссылкам'
+        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+        abstract = True
+
+    def __str__(self):
+        return f'{self.user} {self.exchange} - {self.count}'

@@ -72,6 +72,7 @@ class SpecialDirectionMultiModel(BaseModel):
     out_count: float
     min_amount: str | None
     max_amount: str | None
+    exchange_direction_id: int
 
 
 class ReviewViewSchema(BaseModel):
@@ -181,3 +182,11 @@ class DirectionSideBarSchema(BaseModel):
                                   default=None)
     direction_type: str
     # cityCodeName: str | None = Field(default=None)
+
+
+
+class ExchangeLinkCountSchema(BaseModel):
+    user_id: int
+    exchange_id: int
+    exchange_marker: str
+    exchange_direction_id: int

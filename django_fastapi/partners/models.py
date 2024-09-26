@@ -6,7 +6,8 @@ from general_models.models import (BaseExchange,
                                    BaseReview,
                                    BaseComment,
                                    Guest,
-                                   BaseAdminComment)
+                                   BaseAdminComment,
+                                   BaseExchangeLinkCount)
 
 from cash.models import Direction as CashDirection, City
 
@@ -213,3 +214,19 @@ class AdminComment(BaseAdminComment):
 
     def __str__(self):
         return 'Партнёрский админский ' + super().__str__()
+    
+
+class ExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='partner_exchange_counts')
+    exchange_direction = models.ForeignKey(Direction,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='partner_exchange_counts',
+                                           null=True,
+                                           default=None)
