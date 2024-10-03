@@ -218,6 +218,7 @@ class DirectionAdmin(admin.ModelAdmin):
 
         queryset.update(in_count=data.get('in_count'),
                         out_count=data.get('out_count'),
+                        is_active=True,
                         time_update=time_update)
 
         modeladmin.message_user(request, f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
