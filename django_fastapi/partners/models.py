@@ -219,7 +219,8 @@ class AdminComment(BaseAdminComment):
 class ExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.CASCADE,
-                                 verbose_name='Обменник')
+                                 verbose_name='Обменник',
+                                 related_name='exchange_counts')
     user = models.ForeignKey(Guest,
                              on_delete=models.CASCADE,
                              verbose_name='Гостевой пользователь',

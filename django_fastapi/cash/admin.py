@@ -220,7 +220,7 @@ class DirectionAdmin(BaseDirectionAdmin):
 
     def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
         readonly_fileds = super().get_readonly_fields(request, obj)
-        readonly_fileds += ('display_name', 'actual_course')
+        readonly_fileds += ('display_name', 'actual_course', 'previous_course')
         return readonly_fileds
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:

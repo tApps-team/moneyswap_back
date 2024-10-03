@@ -190,3 +190,21 @@ class ExchangeLinkCountSchema(BaseModel):
     exchange_id: int
     exchange_marker: str
     exchange_direction_id: int
+
+
+
+class TopExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
+    name: str
+    iconUrl: str = Field(alias='icon')
+    reviewCount: ReviewCountSchema = Field(alias='reviews')
+    exchangerMarker: str = Field(alias='exchange_marker')
+
+
+class TopCoinSchema(BaseModel):
+    name: str
+    code_name: str
+    iconUrl: str = Field(alias='icon')
+    course: float = Field(alias='actual_course')
+    isIncrease: bool | None = Field(alias='is_increase')
+    percent: float | None

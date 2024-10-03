@@ -19,7 +19,10 @@ from general_models.utils.endpoints import (positive_review_count_filter,
                                             neutral_review_count_filter,
                                             negative_review_count_filter,
                                             get_reviews_count_filters,
-                                            get_exchange)
+                                            get_exchange,
+                                            generate_image_icon,
+                                            # add_reviews_counts,
+                                            generate_top_exchanges_query_by_model)
 from general_models.utils.base import annotate_string_field
 
 import no_cash.models as no_cash_models
@@ -38,7 +41,9 @@ from .utils.endpoints import (check_exchage_marker,
                               check_perms_for_adding_review,
                               try_generate_icon_url,
                               generate_valute_for_schema,
-                              get_exchange_directions)
+                              get_exchange_directions,
+                              generate_image_icon2,
+                              generate_coin_for_schema)
 
 from .schemas import (PopularDirectionSchema,
                       ValuteModel,
@@ -56,7 +61,9 @@ from .schemas import (PopularDirectionSchema,
                       ReviewCountSchema,
                       DetailExchangeSchema,
                       DirectionSideBarSchema,
-                      ExchangeLinkCountSchema)
+                      ExchangeLinkCountSchema,
+                      TopExchangeSchema,
+                      TopCoinSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -605,7 +612,61 @@ def get_actual_course_for_direction(valute_from: str, valute_to: str):
         return direction.actual_course
     else:
         raise HTTPException(status_code=404)
+    
 
+
+@common_router.get('/top_exchanges',
+                   response_model=list[TopExchangeSchema],
+                   response_model_by_alias=False)
+def get_top_exchanges():
+    limit = 10
+    # print(len(connection.queries))
+    review_counts = get_reviews_count_filters(marker='exchange')
+
+    no_cash_exchanges = generate_top_exchanges_query_by_model('no_cash',
+                                           review_counts=review_counts)
+
+    cash_exchanges = generate_top_exchanges_query_by_model('cash',
+                                        review_counts=review_counts)
+
+    partner_exchanges = generate_top_exchanges_query_by_model('partner',
+                                           review_counts=review_counts)
+    
+    top_exchanges = no_cash_exchanges.union(cash_exchanges,
+                                            partner_exchanges)\
+    
+    for top_exchange in top_exchanges:
+        top_exchange['reviews'] = ReviewCountSchema(positive=top_exchange['positive_review_count'],
+                                                    neutral=top_exchange['neutral_review_count'],
+                                                    negative=top_exchange['negative_review_count'])
+        top_exchange['icon'] = generate_image_icon2(top_exchange['icon_url'])
+
+    # print(len(connection.queries))
+    return sorted(top_exchanges,
+                  key=lambda el: el.get('link_count'),
+                  reverse=True)[:limit]
+
+
+@common_router.get('/top_coins',
+                   response_model=list[TopCoinSchema],
+                   response_model_by_alias=False)
+def get_top_coins():
+    usd = 'CASHUSD'
+    limit = 10
+    top_coins = cash_models.Direction.objects.select_related('valute_from',
+                                                             'valute_to')\
+                                            .filter(Q(valute_to_id=usd))\
+                                            .order_by('-popular_count')[:limit]
+    coin_list = []
+
+    for direction in top_coins:
+        coin = direction.valute_from
+        coin = generate_coin_for_schema(direction,
+                                        coin)
+        coin_list.append(coin)
+
+    return coin_list
+        
 
 # Эндпоинт для получения списка отзывов
 # для определённого обменника

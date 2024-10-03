@@ -4,7 +4,7 @@ from datetime import timedelta, datetime
 
 from django.conf import settings
 from django.db import connection
-from django.db.models import Count, Q, QuerySet, Prefetch
+from django.db.models import Count, Q, QuerySet, Prefetch, Sum
 
 from fastapi import HTTPException
 
@@ -23,7 +23,9 @@ from general_models.schemas import (ValuteModel,
                                     ReviewCountSchema,
                                     ValuteTypeListSchema,
                                     ValuteListSchema,
-                                    ValuteTypeNameSchema)
+                                    ValuteTypeNameSchema,
+                                    TopCoinSchema)
+from general_models.utils.base import annotate_string_field
 from general_models.utils.http_exc import review_exception_json
 
 
@@ -111,6 +113,41 @@ def get_reviews_count_filters(marker: Literal['exchange',
     }
 
 
+def get_exchange_query_with_reviews_counts(exchange_marker: str,
+                                           review_counts: dict[str, Count]):
+    exchange_model: BaseExchange = EXCHANGE_MARKER_DICT.get(exchange_marker)
+
+    exchanges = exchange_model.objects.annotate(positive_review_count=review_counts['positive'])\
+                                        .annotate(neutral_review_count=review_counts['neutral'])\
+                                        .annotate(negative_review_count=review_counts['negative'])
+        
+    return exchanges
+
+
+def generate_top_exchanges_query_by_model(exchange_marker: str,
+                                          review_counts: dict[str, Count] = None):
+    top_exchanges = get_exchange_query_with_reviews_counts(exchange_marker,
+                                                           review_counts=review_counts)
+    
+    top_exchanges = top_exchanges\
+                        .annotate(link_count=Sum('exchange_counts__count',
+                                                 filter=Q(exchange_counts__count__isnull=False)))\
+                        .annotate(exchange_marker=annotate_string_field(exchange_marker))\
+                        .filter(link_count__isnull=False)\
+                        .values('pk',
+                                'icon_url',
+                                'name',
+                                'positive_review_count',
+                                'neutral_review_count',
+                                'negative_review_count',
+                                'link_count',
+                                'exchange_marker')
+    # print(top_exchanges)
+    # print('*' * 8)
+
+    return top_exchanges
+
+
 positive_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='1')
 neutral_review_count_filter = Q(exchange__reviews__moderation=True) \
@@ -175,6 +212,52 @@ def try_generate_icon_url(obj: Country | Valute) -> str | None:
 def generate_image_icon(icon_url: str):
     return settings.PROTOCOL + settings.SITE_DOMAIN\
                                 + icon_url.url
+
+
+def generate_image_icon2(icon_url: str | None):
+    # print(settings.PROTOCOL)
+    # print(settings.SITE_DOMAIN)
+    # print(icon_url)
+    icon = settings.PROTOCOL +\
+                            settings.SITE_DOMAIN\
+                                + '/media'
+    
+    if icon_url is not None:
+        icon += icon_url
+
+    return icon
+
+
+def generate_coin_for_schema(direction: CashDirection,
+                             coin: Valute):
+    icon = try_generate_icon_url(coin)
+    coin.icon = icon
+    coin.actual_course = direction.actual_course
+
+    if direction.previous_course:
+
+        defferent = direction.actual_course - direction.previous_course
+
+        if defferent:
+            is_increase = True if defferent > 0 else False
+
+            one_percent = direction.previous_course / 100
+
+            percent = abs(defferent) / one_percent
+            
+            coin.percent = percent
+            coin.is_increase = is_increase
+        else:
+            coin.percent = None
+            coin.is_increase = None  
+    else:
+        coin.percent = None
+        coin.is_increase = None     
+
+    return TopCoinSchema.model_construct(**coin.__dict__)  
+
+
+
 
 
 def get_exchange(exchange_id: int,

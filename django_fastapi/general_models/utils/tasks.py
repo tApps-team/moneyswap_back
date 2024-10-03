@@ -3,6 +3,7 @@ from typing import Union
 
 from django.core.cache import cache
 from django.db.models import Prefetch
+from django.db import connection
 
 from bs4 import BeautifulSoup
 
@@ -53,6 +54,10 @@ exchange_direction_union = Union[no_cash_models.ExchangeDirection,
 
 def try_update_courses(direction_model: direction_union,
                        exchange_direction_model: exchange_direction_union):
+    bulk_update_fileds = ['actual_course']
+    
+    if direction_model == cash_models.Direction:
+        bulk_update_fileds.append('previous_course')
     
     prefetch_no_cash_queryset = exchange_direction_model.objects\
                                                     .select_related('exchange')\
@@ -84,12 +89,29 @@ def try_update_courses(direction_model: direction_union,
                 else:
                     actual_course = out_count
 
+                if direction.valute_to_id == 'CASHUSD':
+                    # print('actual',direction.actual_course)
+                    direction.previous_course = direction.actual_course
+                    # print('previous',direction.previous_course)
+
+                else:
+                    if direction_model == cash_models.Direction:
+                        direction.previous_course = None
+                    # print( direction.previous_course)
+                    # bulk_update_fileds.append('previous_course')
+                # else:
+                #     direction.previous_course = direction.actual_course
+
                 direction.actual_course = actual_course
         else:
             direction.actual_course = None
-        
+
+        # if direction.valute_to_id == 'CASHUSD':
+        #     print('previous',direction.previous_course)
+
         update_list.append(direction)
 
     direction_model.objects.bulk_update(update_list,
-                                        ['actual_course'],
+                                        bulk_update_fileds,
                                         batch_size=1000)
+    # print(connection.queries)
