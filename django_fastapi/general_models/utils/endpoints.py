@@ -100,11 +100,14 @@ def get_reviews_count_filters(marker: Literal['exchange',
                                                     & Q(exchange__reviews__grade='-1')
             
     positive_review_count = Count(related_field_name,
-                                  filter=positive_review_count_filter)
+                                  filter=positive_review_count_filter,
+                                  distinct=True)
     neutral_review_count = Count(related_field_name,
-                                 filter=neutral_review_count_filter)
+                                 filter=neutral_review_count_filter,
+                                 distinct=True)
     negative_review_count = Count(related_field_name,
-                                  filter=negative_review_count_filter)
+                                  filter=negative_review_count_filter,
+                                  distinct=True)
 
     return {
         'positive': positive_review_count,
@@ -117,9 +120,11 @@ def get_exchange_query_with_reviews_counts(exchange_marker: str,
                                            review_counts: dict[str, Count]):
     exchange_model: BaseExchange = EXCHANGE_MARKER_DICT.get(exchange_marker)
 
-    exchanges = exchange_model.objects.annotate(positive_review_count=review_counts['positive'])\
-                                        .annotate(neutral_review_count=review_counts['neutral'])\
-                                        .annotate(negative_review_count=review_counts['negative'])
+    exchanges = exchange_model.objects.annotate(positive_review_count=review_counts['positive'],
+                                                neutral_review_count=review_counts['neutral'],
+                                                negative_review_count=review_counts['negative'])\
+                                        # .annotate(neutral_review_count=review_counts['neutral'])\
+                                        # .annotate(negative_review_count=review_counts['negative'])
         
     return exchanges
 
@@ -130,8 +135,7 @@ def generate_top_exchanges_query_by_model(exchange_marker: str,
                                                            review_counts=review_counts)
     
     top_exchanges = top_exchanges\
-                        .annotate(link_count=Sum('exchange_counts__count',
-                                                 filter=Q(exchange_counts__count__isnull=False)))\
+                        .annotate(link_count=Sum('exchange_counts__count'))\
                         .annotate(exchange_marker=annotate_string_field(exchange_marker))\
                         .filter(link_count__isnull=False)\
                         .values('pk',
@@ -234,11 +238,11 @@ def generate_coin_for_schema(direction: CashDirection,
     coin.icon = icon
     coin.actual_course = direction.actual_course
 
-    if direction.previous_course:
+    if direction.previous_course is not None:
 
         defferent = direction.actual_course - direction.previous_course
 
-        if defferent:
+        if defferent != 0:
             is_increase = True if defferent > 0 else False
 
             one_percent = direction.previous_course / 100

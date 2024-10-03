@@ -356,7 +356,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'course_count',
         'reserve_amount',
         'age',
-        'country',
+        # 'country',
         'link_count',
         )
     

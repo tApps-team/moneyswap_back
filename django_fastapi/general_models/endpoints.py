@@ -633,8 +633,8 @@ def get_top_exchanges():
                                            review_counts=review_counts)
     
     top_exchanges = no_cash_exchanges.union(cash_exchanges,
-                                            partner_exchanges)\
-    
+                                            partner_exchanges)
+                                                
     for top_exchange in top_exchanges:
         top_exchange['reviews'] = ReviewCountSchema(positive=top_exchange['positive_review_count'],
                                                     neutral=top_exchange['neutral_review_count'],
