@@ -122,7 +122,7 @@ class DirectionAdmin(admin.ModelAdmin):
         )
     list_filter = (
         'city__city',
-        'city__exchange',
+        'city__exchange__name',
         'direction',
         )
     readonly_fields = (
