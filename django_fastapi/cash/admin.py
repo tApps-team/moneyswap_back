@@ -171,7 +171,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
     inlines = [
         ExchangeDirectionStacked,
         ReviewStacked,
-        ExchangeLinkCountStacked
+        ExchangeLinkCountStacked,
         ]
 
     # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:

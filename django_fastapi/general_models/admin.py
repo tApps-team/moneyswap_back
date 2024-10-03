@@ -367,7 +367,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     def get_queryset(self, request: HttpRequest) -> QuerySet:
         queryset = super().get_queryset(request)
-        return queryset.annotate(link_count=Sum('exchangelinkcount__count'))
+        return queryset.annotate(link_count=Sum('exchange_counts__count'))
     
     fieldsets = [
         (
