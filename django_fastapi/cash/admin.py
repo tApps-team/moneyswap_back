@@ -1,3 +1,4 @@
+from collections.abc import Sequence
 from typing import Any
 
 from django.contrib import admin
@@ -231,6 +232,11 @@ class DirectionAdmin(BaseDirectionAdmin):
 class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     def get_display_name(self, obj):
         return f'{obj.exchange} ({obj.city}: {obj.direction})'
+    
+    def get_list_filter(self, request: HttpRequest) -> Sequence[str]:
+        list_filter = super().get_list_filter(request)
+        list_filter = list_filter + ('city', )
+        return list_filter
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('exchange',

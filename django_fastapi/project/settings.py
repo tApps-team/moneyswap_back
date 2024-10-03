@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     "django_celery_beat",
     'django_summernote',
+    'django_admin_action_forms',
 
     "general_models",
     "no_cash",

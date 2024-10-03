@@ -2,10 +2,14 @@ from collections.abc import Callable, Sequence
 from datetime import datetime
 from typing import Any
 
+from django_admin_action_forms import action_with_form, AdminActionForm
+
+from django import forms
 from django.contrib import admin, messages
 from django.db.models import Sum
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
+from django.shortcuts import render
 
 from general_models.admin import (BaseCommentAdmin,
                                   BaseCommentStacked,
@@ -92,16 +96,34 @@ class DirectionStacked(admin.StackedInline):
     get_direction_name.short_description = 'Название направления'
 
 
+class ChangeOrderStatusActionForm(AdminActionForm):
+    in_count = forms.FloatField(
+        label="Отдаём",
+        required=True,
+    )
+    out_count = forms.FloatField(
+        label="Получаем",
+        required=True,
+    )
+
+
+
 @admin.register(Direction)
 class DirectionAdmin(admin.ModelAdmin):
     actions = (
-        'get_directions_active',
+        'update_directions',
         )
+    
     list_display = (
         'direction',
         'city',
         'exchange_name',
         'is_active',
+        )
+    list_filter = (
+        'city__city',
+        'city__exchange',
+        'direction',
         )
     readonly_fields = (
         'course',
@@ -186,16 +208,21 @@ class DirectionAdmin(admin.ModelAdmin):
             queryset = queryset.filter(city__exchange=account.exchange)
             
         return queryset
-    
-    @admin.action(description='Обновить активность выбранных Направлений')
-    def get_directions_active(modeladmin, request, queryset):
+
+    @action_with_form(
+        ChangeOrderStatusActionForm,
+        description="Обновить курс выбранных направлений",
+    )
+    def update_directions(modeladmin, request, queryset, data):
         time_update = datetime.now()
-        queryset.update(is_active=True,
+
+        queryset.update(in_count=data.get('in_count'),
+                        out_count=data.get('out_count'),
                         time_update=time_update)
-        messages.success(request,
-                         f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
-        
-    # def get_actions(self, request: HttpRequest) -> OrderedDict[Any, Any]:
+
+        modeladmin.message_user(request, f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
+    
+    # def get_actions(self, request: HttpRequest):
     #     actions = super().get_actions(request)
     #     if request.user.is_superuser:
     #         del actions['get_directions_active']
@@ -247,8 +274,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
     list_display = (
         'city',
         'exchange',
-        )
-
+        )   
     fields = (
         'city',
         ('has_office',

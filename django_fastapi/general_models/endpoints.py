@@ -331,7 +331,7 @@ def get_similar_directions(exchange_marker: str,
         direction = PopularDirectionSchema(valute_from=valute_from.__dict__,
                                            valute_to=valute_to.__dict__)
     # print(len(connection.queries))
-    return similar_directions    
+    return similar_directions
 
 
 
@@ -453,7 +453,7 @@ def get_similar_cities_by_direction(valute_from: str,
             # print(city.partner_exchange_count)
         # print(cities)
         # print(len(connection.queries))
-        # print(connection.queries[-1])
+        print(connection.queries)
         # 4 queries
         return cities
     
