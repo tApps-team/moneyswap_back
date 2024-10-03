@@ -220,7 +220,7 @@ def generate_image_icon2(icon_url: str | None):
     # print(icon_url)
     icon = settings.PROTOCOL +\
                             settings.SITE_DOMAIN\
-                                + '/media'
+                                + '/media/'
     
     if icon_url is not None:
         icon += icon_url

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from math import ceil
 from random import choice, shuffle
 
-from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch
+from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch, Sum
 from django.db import connection
 from django.db.utils import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
@@ -655,7 +655,7 @@ def get_top_coins():
     limit = 10
     top_coins = cash_models.Direction.objects.select_related('valute_from',
                                                              'valute_to')\
-                                            .filter(Q(valute_to_id=usd))\
+                                            .filter(valute_to_id=usd)\
                                             .order_by('-popular_count')[:limit]
     coin_list = []
 
@@ -666,7 +666,7 @@ def get_top_coins():
         coin_list.append(coin)
 
     return coin_list
-        
+
 
 # Эндпоинт для получения списка отзывов
 # для определённого обменника
