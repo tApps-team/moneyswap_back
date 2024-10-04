@@ -114,7 +114,8 @@ class ChangeOrderStatusActionForm(AdminActionForm):
 @admin.register(Direction)
 class DirectionAdmin(admin.ModelAdmin):
     actions = (
-        'update_directions',
+        'update_direction_course',
+        'update_direction_activity'
         )
     
     list_display = (
@@ -216,7 +217,7 @@ class DirectionAdmin(admin.ModelAdmin):
         ChangeOrderStatusActionForm,
         description="Обновить курс выбранных направлений",
     )
-    def update_directions(modeladmin, request, queryset, data):
+    def update_direction_course(modeladmin, request, queryset, data):
         time_update = datetime.now()
 
         queryset.update(in_count=data.get('in_count'),
@@ -225,7 +226,14 @@ class DirectionAdmin(admin.ModelAdmin):
                         time_update=time_update)
 
         modeladmin.message_user(request, f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
-    
+
+    @admin.action(description='Обновить активность выбранных направлений')
+    def update_direction_activity(modeladmin, request, queryset):
+        time_update = datetime.now()
+        queryset.update(is_active=True,
+                        time_update=time_update)
+        messages.success(request,
+                         f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
     # def get_actions(self, request: HttpRequest):
     #     actions = super().get_actions(request)
     #     if request.user.is_superuser:
