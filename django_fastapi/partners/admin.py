@@ -106,6 +106,9 @@ class ChangeOrderStatusActionForm(AdminActionForm):
         required=True,
     )
 
+    class Meta:
+        list_objects = True
+
 
 
 @admin.register(Direction)
