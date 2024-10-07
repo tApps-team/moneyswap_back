@@ -1,4 +1,5 @@
 # from fastapi import FastAPI, File, UploadFile
+from typing import Literal
 from enum import Enum
 
 from pydantic import BaseModel, Field
@@ -208,3 +209,17 @@ class TopCoinSchema(BaseModel):
     course: float = Field(alias='actual_course')
     isIncrease: bool | None = Field(alias='is_increase')
     percent: float | None
+
+
+feedback_reasons_listeral = Literal[
+    'Ошибка',
+    'Проблемма с обменником',
+    'Сотрудничество',
+    'Другое',
+]
+
+class FeedbackFormSchema(BaseModel):
+    username: str
+    email: str
+    reasons: feedback_reasons_listeral
+    description: str

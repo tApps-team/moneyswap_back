@@ -123,7 +123,14 @@ class DirectionAdmin(admin.ModelAdmin):
         'city',
         'exchange_name',
         'is_active',
+        'in_count',
+        'out_count',
+
         )
+    list_editable = (
+        'in_count',
+        'out_count',
+    )
     list_filter = (
         'city__city',
         'city__exchange__name',
@@ -152,22 +159,40 @@ class DirectionAdmin(admin.ModelAdmin):
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         if change:
             update_fields = set()
-            for key, value in form.cleaned_data.items():
-                if value != form.initial[key]:
+            if not form.cleaned_data.get('id'):
+                for key, value in form.cleaned_data.items():
+                    if value != form.initial[key]:
+                        update_field_time_update(obj, update_fields)
+                        update_fields.add(key)
+                obj.save(update_fields=update_fields)
+            else:
+                for key in ('in_count', 'out_count'):
+                    if form.cleaned_data[key] != form.initial[key]:
+                        # update_field_time_update(obj, update_fields)
+                        update_fields.add(key)
+                if update_fields:
                     update_field_time_update(obj, update_fields)
-                    update_fields.add(key)
-            obj.save(update_fields=update_fields)
+                    obj.save(update_fields=update_fields)
         else:
             return super().save_model(request, obj, form, change)
     
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         field = super().formfield_for_foreignkey(db_field, request, **kwargs)
-        if not request.user.is_superuser:
+        
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            pass
+        else:
             if db_field.name == 'city':
                 account = get_or_set_user_account_cache(request.user)
                 field.queryset = field.queryset.filter(exchange=account.exchange)\
                                                 .select_related('city')
         return field
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #     if db_field.name == 'city':
+        #         account = get_or_set_user_account_cache(request.user)
+        #         field.queryset = field.queryset.filter(exchange=account.exchange)\
+        #                                         .select_related('city')
+        # return field
 
     def exchange_name(self, obj=None):
         return obj.city.exchange
@@ -185,18 +210,20 @@ class DirectionAdmin(admin.ModelAdmin):
     saved_partner_course.short_description = 'Сохранённый курс'
 
     def has_add_permission(self, request: HttpRequest) -> bool:
-        if not request.user.is_superuser:
+        # print(request.user.groups.all())
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            return False
+        else:
             account = get_or_set_user_account_cache(request.user)
 
             if account.exchange:
                 return super().has_add_permission(request)
         
-        return False
     
-    def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
-        if request.user.is_superuser:
-            return False
-        return super().has_change_permission(request, obj)
+    # def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+    #     if request.user.is_superuser:
+    #         return False
+    #     return super().has_change_permission(request, obj)
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         queryset = super().get_queryset(request)\
@@ -207,11 +234,19 @@ class DirectionAdmin(admin.ModelAdmin):
                                             'city__city',
                                             'city__exchange')
 
-        if not request.user.is_superuser:
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            pass
+        else:
             account = get_or_set_user_account_cache(request.user)
             queryset = queryset.filter(city__exchange=account.exchange)
-            
+
         return queryset
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #     account = get_or_set_user_account_cache(request.user)
+        #     queryset = queryset.filter(city__exchange=account.exchange)
+            
+        # return queryset
 
     @action_with_form(
         ChangeOrderStatusActionForm,
@@ -303,7 +338,9 @@ class PartnerCityAdmin(admin.ModelAdmin):
 
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         if not change:
-            if not request.user.is_superuser:
+            if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+                pass
+            else:
                 account = get_or_set_user_account_cache(request.user)
                 partner_cities = account.exchange.partner_cities\
                                                     .filter(city=obj.city)\
@@ -319,14 +356,39 @@ class PartnerCityAdmin(admin.ModelAdmin):
                     change = True
                 else:
                     obj.exchange = account.exchange
+
+            # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+            #     account = get_or_set_user_account_cache(request.user)
+            #     partner_cities = account.exchange.partner_cities\
+            #                                         .filter(city=obj.city)\
+            #                                         .all()
+            #     make_city_active(obj.city)
+
+            #     if partner_cities:
+            #         has_office = obj.has_office
+            #         has_delivery = obj.has_delivery
+            #         obj = partner_cities.get()
+            #         obj.has_office = has_office
+            #         obj.has_delivery = has_delivery
+            #         change = True
+            #     else:
+            #         obj.exchange = account.exchange
         return super().save_model(request, obj, form, change)
     
     def has_add_permission(self, request: HttpRequest) -> bool:
-        if not request.user.is_superuser:
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            return False
+        else:
             account = get_or_set_user_account_cache(request.user)
             if account.exchange:
                 return super().has_add_permission(request)
-        return False
+        # return False
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #     account = get_or_set_user_account_cache(request.user)
+        #     if account.exchange:
+        #         return super().has_add_permission(request)
+        # return False
     
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         field = super().formfield_for_foreignkey(db_field, request, **kwargs)
@@ -340,7 +402,9 @@ class PartnerCityAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)\
                             .select_related('city',
                                             'exchange')
-        if not request.user.is_superuser:
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            pass
+        else:
             account = get_or_set_user_account_cache(request.user)
             if account.exchange:
                 queryset = queryset.filter(exchange=account.exchange)
@@ -348,6 +412,15 @@ class PartnerCityAdmin(admin.ModelAdmin):
                 # вернуть пустой queryset
                 queryset = queryset.filter(id=0)
         return queryset
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #     account = get_or_set_user_account_cache(request.user)
+        #     if account.exchange:
+        #         queryset = queryset.filter(exchange=account.exchange)
+        #     else:
+        #         # вернуть пустой queryset
+        #         queryset = queryset.filter(id=0)
+        # return queryset
     
     def get_city_name(self, obj=None):
         return obj.city
@@ -379,16 +452,29 @@ class CommentAdmin(BaseCommentAdmin):
     
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        
-        if not request.user.is_superuser:
-                account = get_or_set_user_account_cache(request.user)
-                if account.exchange:
-                    queryset = queryset\
-                                    .select_related('review')\
-                                    .filter(review__in=account.exchange.reviews.all())
-                else:
-                    queryset = queryset.filter(status='На ожидании')
+
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+                pass
+        else:
+            account = get_or_set_user_account_cache(request.user)
+            if account.exchange:
+                queryset = queryset\
+                                .select_related('review')\
+                                .filter(review__in=account.exchange.reviews.all())
+            else:
+                queryset = queryset.filter(status='На ожидании')
         return queryset
+
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #         account = get_or_set_user_account_cache(request.user)
+        #         if account.exchange:
+        #             queryset = queryset\
+        #                             .select_related('review')\
+        #                             .filter(review__in=account.exchange.reviews.all())
+        #         else:
+        #             queryset = queryset.filter(status='На ожидании')
+        # return queryset
 
 
 #Отображение комментариев на странице связанного отзыва
@@ -413,21 +499,37 @@ class ReviewAdmin(BaseReviewAdmin):
         ]
 
     def has_add_permission(self, request: HttpRequest) -> bool:
-        if not request.user.is_superuser:
-                return False
-        return super().has_add_permission(request)
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            return super().has_add_permission(request)
+        else:
+            return False
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #         return False
+        # return super().has_add_permission(request)
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        
-        if not request.user.is_superuser:
-                account = get_or_set_user_account_cache(request.user)
-                if account.exchange:
-                    queryset = queryset.select_related('exchange')\
-                                        .filter(exchange=account.exchange)
-                else:
-                    queryset = queryset.filter(status='На ожидании')
+
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            pass
+        else:
+            account = get_or_set_user_account_cache(request.user)
+            if account.exchange:
+                queryset = queryset.select_related('exchange')\
+                                    .filter(exchange=account.exchange)
+            else:
+                queryset = queryset.filter(status='На ожидании')
         return queryset
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #         account = get_or_set_user_account_cache(request.user)
+        #         if account.exchange:
+        #             queryset = queryset.select_related('exchange')\
+        #                                 .filter(exchange=account.exchange)
+        #         else:
+        #             queryset = queryset.filter(status='На ожидании')
+        # return queryset
 
 
 #Отображение отзывов на странице связанного обменника
@@ -476,33 +578,60 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
-        if not request.user.is_superuser:
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            pass
+        else:
             readonly_fields = ('partner_link', ) + readonly_fields
 
         return readonly_fields + ('link_count', )
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        if not request.user.is_superuser:
-                account = get_or_set_user_account_cache(request.user)
-                exchange = account.exchange
-                
-                if not exchange:
-                    # вернуть пустой queryset
-                    queryset = super().get_queryset(request)\
-                                    .filter(name='Не выбрано!!!')
-                # вернуть обменник партнёра
-                else:
-                    queryset = super().get_queryset(request)\
-                                    .select_related('account',
-                                                    'account__user',
-                                                    'account__exchange')\
-                                    .filter(name=exchange.name)
-        # вернуть все партнёрские обменники
-        else:
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
             queryset = super().get_queryset(request)\
                             .select_related('account', 'account__user')
+        else:
+            account = get_or_set_user_account_cache(request.user)
+            exchange = account.exchange
+            
+            if not exchange:
+                # вернуть пустой queryset
+                queryset = super().get_queryset(request)\
+                                .filter(name='Не выбрано!!!')
+            # вернуть обменник партнёра
+            else:
+                queryset = super().get_queryset(request)\
+                                .select_related('account',
+                                                'account__user',
+                                                'account__exchange')\
+                                .filter(name=exchange.name)
+        # вернуть все партнёрские обменники
+        # else:
+        #     queryset = super().get_queryset(request)\
+        #                     .select_related('account', 'account__user')
         
-        return queryset.annotate(link_count=Sum('exchangelinkcount__count'))
+        return queryset.annotate(link_count=Sum('exchange_counts__count'))
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #         account = get_or_set_user_account_cache(request.user)
+        #         exchange = account.exchange
+                
+        #         if not exchange:
+        #             # вернуть пустой queryset
+        #             queryset = super().get_queryset(request)\
+        #                             .filter(name='Не выбрано!!!')
+        #         # вернуть обменник партнёра
+        #         else:
+        #             queryset = super().get_queryset(request)\
+        #                             .select_related('account',
+        #                                             'account__user',
+        #                                             'account__exchange')\
+        #                             .filter(name=exchange.name)
+        # # вернуть все партнёрские обменники
+        # else:
+        #     queryset = super().get_queryset(request)\
+        #                     .select_related('account', 'account__user')
+        
+        # return queryset.annotate(link_count=Sum('exchange_counts__count'))
     
     # fieldsets = [
     #     (
@@ -522,22 +651,45 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     # ]
     
     def has_add_permission(self, request: HttpRequest) -> bool:
-        if not request.user.is_superuser:
+        perms = super().has_add_permission(request)
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            pass
+        else:
             account = get_or_set_user_account_cache(request.user)
 
             if account.exchange:
                 return False
-        return super().has_add_permission(request)
+        return perms
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
+        #     account = get_or_set_user_account_cache(request.user)
+
+        #     if account.exchange:
+        #         return False
+        # return super().has_add_permission(request)
     
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
-        if not request.user.is_superuser and not change:
-            account = get_or_set_user_account_cache(request.user)
-            account.exchange = obj
-            super().save_model(request, obj, form, change)
-            account.save()
-            set_user_account_cache(account)
-        else:
+        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
             return super().save_model(request, obj, form, change)
+        else:
+            if not change:
+                account = get_or_set_user_account_cache(request.user)
+                account.exchange = obj
+                super().save_model(request, obj, form, change)
+                account.save()
+                set_user_account_cache(account)
+        # else:
+        #     return super().save_model(request, obj, form, change)
+
+        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groupse.all()):
+        #     if not change:
+        #         account = get_or_set_user_account_cache(request.user)
+        #         account.exchange = obj
+        #         super().save_model(request, obj, form, change)
+        #         account.save()
+        #         set_user_account_cache(account)
+        # else:
+        #     return super().save_model(request, obj, form, change)
 
     def delete_model(self, request, obj):
         obj.delete()

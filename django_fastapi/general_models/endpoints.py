@@ -14,6 +14,7 @@ from .utils.periodic_tasks import get_or_create_schedule
 from general_models.models import (Valute,
                                    BaseAdminComment, 
                                    Guest,
+                                   FeedbackForm,
                                    en_type_valute_dict)
 from general_models.utils.endpoints import (positive_review_count_filter,
                                             neutral_review_count_filter,
@@ -63,7 +64,8 @@ from .schemas import (PopularDirectionSchema,
                       DirectionSideBarSchema,
                       ExchangeLinkCountSchema,
                       TopExchangeSchema,
-                      TopCoinSchema)
+                      TopCoinSchema,
+                      FeedbackFormSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -591,7 +593,18 @@ def get_all_directions_by_exchange(exchange_id: int,
     # print(len(connection.queries))
     return exchange_direction_list
     
-    
+
+@common_router.post('/feedback_form')
+def add_feedback_form(feedback: FeedbackFormSchema):
+    try:
+        FeedbackForm.objects.create(**feedback.model_dump())
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=400)
+    else:
+        return {'status': 'success',
+                'details': 'feedback added'}
+
 
 # Эндпоинт для получения актуального курса обмена
 # для выбранного направления

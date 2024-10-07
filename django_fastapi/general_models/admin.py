@@ -17,7 +17,7 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 
 from .utils.admin import ReviewAdminMixin
 from .utils.endpoints import try_generate_icon_url
-from .models import Valute, PartnerTimeUpdate, Guest, CustomOrder
+from .models import Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm
 
 from no_cash import models as no_cash_models
 from cash import models as cash_models
@@ -34,6 +34,27 @@ admin.site.unregister(CrontabSchedule)
 #DONT SHOW USER AND GROUP IN ADMIN PANEL
 # admin.site.unregister(User)
 # admin.site.unregister(Group)
+
+@admin.register(FeedbackForm)
+class FeedbackFormAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        )
+    
+    readonly_fields = (
+        'time_create',
+    )
+    
+    fields = (
+        'username',
+        'email',
+        'reasons',
+        'time_create',
+    )
+
+    ordering = (
+        '-time_create',
+    )
 
 
 @admin.register(PartnerTimeUpdate)

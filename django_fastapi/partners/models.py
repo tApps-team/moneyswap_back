@@ -228,6 +228,6 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
     exchange_direction = models.ForeignKey(Direction,
                                            on_delete=models.CASCADE,
                                            verbose_name='Готовое направление',
-                                           related_name='partner_exchange_counts',
+                                           related_name='exchange_counts',
                                            null=True,
                                            default=None)

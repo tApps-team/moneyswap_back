@@ -234,6 +234,33 @@ class CustomOrder(models.Model):
         return f'Заявка №{self.pk} -> {self.guest}'
     
 
+class FeedbackForm(models.Model):
+    reasons_choice = [
+        ('Ошибка', 'Ошибка'),
+        ('Проблемма с обменником', 'Проблемма с обменником'),
+        ('Сотрудничество', 'Сотрудничество'),
+        ('Другое', 'Другое'),
+    ]
+    username = models.CharField('Имя пользователя',
+                                max_length=255)
+    email = models.CharField('Email',
+                            max_length=255)
+    reasons = models.CharField('Причина',
+                               max_length=255,
+                               choices=reasons_choice)
+    description = models.TextField('Описание')
+    time_create = models.DateTimeField('Время создания',
+                                    #    auto_created=True,
+                                       auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.username} {self.reasons} {self.time_create}'
+    
+    class Meta:
+        verbose_name = 'Форма обратной связи'
+        verbose_name_plural = 'Формы обратной связи'
+    
+
 #Абстрактная модель отзыва/комментария (для наследования)
 class BaseReviewComment(models.Model):
     status_list = [
