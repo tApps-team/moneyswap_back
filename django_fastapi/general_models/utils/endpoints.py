@@ -148,7 +148,6 @@ def generate_top_exchanges_query_by_model(exchange_marker: str,
                                 'exchange_marker')
     # print(top_exchanges)
     # print('*' * 8)
-
     return top_exchanges
 
 

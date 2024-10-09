@@ -374,9 +374,9 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     readonly_fields = (
         # 'direction_black_list',
         'is_active',
-        'course_count',
-        'reserve_amount',
-        'age',
+        # 'course_count',
+        # 'reserve_amount',
+        # 'age',
         # 'country',
         'link_count',
         )

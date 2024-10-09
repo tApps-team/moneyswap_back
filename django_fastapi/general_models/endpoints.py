@@ -654,7 +654,7 @@ def get_top_exchanges():
                                                     negative=top_exchange['negative_review_count'])
         top_exchange['icon'] = generate_image_icon2(top_exchange['icon_url'])
 
-    # print(len(connection.queries))
+
     return sorted(top_exchanges,
                   key=lambda el: el.get('link_count'),
                   reverse=True)[:limit]
@@ -920,7 +920,7 @@ exchange_link_count_dict = {
 ###
 
 @common_router.post('/increase_link_count')
-def get_all_directions_by_exchange(data: ExchangeLinkCountSchema):
+def increase_link_count(data: ExchangeLinkCountSchema):
     exchange_link_count = exchange_link_count_dict.get(data.exchange_marker)
 
     check_user = Guest.objects.filter(tg_id=data.user_id)
