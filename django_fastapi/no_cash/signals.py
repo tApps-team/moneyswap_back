@@ -22,6 +22,24 @@ from .periodic_tasks import (manage_periodic_task_for_create,
 #     direction_list.delete()
 
 
+#Сигнал для попытке создания обратного направления
+#при создании направления в БД
+@receiver(post_save, sender=Direction)
+def try_create_reverse_direction(sender, instance, **kwargs):
+    valute_from_id = instance.valute_from_id
+    valute_to_id = instance.valute_to_id
+
+    if not Direction.objects.filter(valute_from_id=valute_to_id,
+                                    valute_to_id=valute_from_id)\
+                            .exists():
+        
+        try:
+            Direction.objects.create(valute_from_id=valute_to_id,
+                                    valute_to_id=valute_from_id)
+        except Exception:
+            pass
+
+
 #Сигнал для добавления поля en_name обменника
 #перед созданием в БД
 @receiver(pre_save, sender=Exchange)

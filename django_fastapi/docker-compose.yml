@@ -27,6 +27,8 @@ services:
     build: .
     pull_policy: build
     restart: on-failure
+    ports:
+     - '8000:8000'
     networks:
       - common-network
     environment:

@@ -20,6 +20,23 @@ def add_display_name_for_direction(sender, instance, **kwargs):
     instance.display_name = instance.valute_from.code_name + ' -> ' + instance.valute_to.code_name
 
 
+#Сигнал для попытке создания обратного направления
+#при создании направления в БД
+@receiver(post_save, sender=Direction)
+def try_create_reverse_direction(sender, instance, **kwargs):
+    valute_from_id = instance.valute_from_id
+    valute_to_id = instance.valute_to_id
+
+    if not Direction.objects.filter(valute_from_id=valute_to_id,
+                                    valute_to_id=valute_from_id)\
+                            .exists():
+        
+        try:
+            Direction.objects.create(valute_from_id=valute_to_id,
+                                    valute_to_id=valute_from_id)
+        except Exception:
+            pass
+
 #Сигнал для удаления всех связанных готовых направлений
 #при удалении направления из БД
 # @receiver(post_delete, sender=Direction)
