@@ -190,9 +190,10 @@ def try_create_no_cash_directions_from_black_list(exchange_name: str):
                                             .all()
 
             if black_list_directions:
+                black_list_direction_dict = generate_direction_dict(black_list_directions)
                 run_no_cash_background_tasks(try_create_black_list_direction,
                                             exchange,
-                                            black_list_directions,
+                                            black_list_direction_dict,
                                             xml_file,
                                             black_list_parse=True)
     except Exception as ex:
