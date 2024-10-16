@@ -163,6 +163,7 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
             continue
 
     try:
+        print(22)
         if black_list_parse:
             with transaction.atomic():
                 exchange.direction_black_list.remove(
