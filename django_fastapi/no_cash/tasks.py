@@ -5,11 +5,45 @@ from general_models.utils.periodic_tasks import try_get_xml_file
 
 from .utils.periodic_tasks import run_no_cash_background_tasks, run_update_tasks
 from .utils.parsers import no_cash_parse_xml
-from .utils.tasks import get_no_cash_direction_set_for_creating
+from .utils.tasks import get_no_cash_direction_set_for_creating, generate_direction_dict
 from .utils.cache import get_or_set_no_cash_directions_cache
 
 from .models import Exchange, ExchangeDirection, Direction
 
+
+# #PERIODIC CREATE
+# @shared_task(name='create_no_cash_directions_for_exchange',
+#              soft_time_limit=10,
+#              time_limit=15)
+# def create_no_cash_directions_for_exchange(exchange_name: str):
+#     try:
+#         exchange = Exchange.objects.get(name=exchange_name)
+        
+#         all_no_cash_directions = get_or_set_no_cash_directions_cache()
+        
+#         if all_no_cash_directions:
+#             direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+#                                                                     exchange)
+
+                                    
+#         # xml_file = try_get_xml_file(exchange)
+        
+#         # if xml_file is not None and exchange.is_active:
+#         #         all_no_cash_directions = get_or_set_no_cash_directions_cache()
+#         #         if all_no_cash_directions:
+#         #             direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+#         #                                                                     exchange)
+                    
+#             if direction_list:
+#                 xml_file = try_get_xml_file(exchange)
+
+#                 if xml_file is not None and exchange.is_active:
+#                     run_no_cash_background_tasks(create_direction,
+#                                                 exchange,
+#                                                 direction_list,
+#                                                 xml_file)
+#     except Exception as ex:
+#         print(ex)
 
 #PERIODIC CREATE
 @shared_task(name='create_no_cash_directions_for_exchange',
@@ -24,26 +58,20 @@ def create_no_cash_directions_for_exchange(exchange_name: str):
         if all_no_cash_directions:
             direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
                                                                     exchange)
-
-                                    
-        # xml_file = try_get_xml_file(exchange)
-        
-        # if xml_file is not None and exchange.is_active:
-        #         all_no_cash_directions = get_or_set_no_cash_directions_cache()
-        #         if all_no_cash_directions:
-        #             direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
-        #                                                                     exchange)
                     
             if direction_list:
                 xml_file = try_get_xml_file(exchange)
 
                 if xml_file is not None and exchange.is_active:
+                    direction_dict = generate_direction_dict(direction_list)
                     run_no_cash_background_tasks(create_direction,
                                                 exchange,
-                                                direction_list,
+                                                direction_dict,
                                                 xml_file)
     except Exception as ex:
         print(ex)
+
+
 
 @shared_task
 def create_direction(dict_for_parse: dict,
@@ -165,7 +193,8 @@ def try_create_no_cash_directions_from_black_list(exchange_name: str):
                 run_no_cash_background_tasks(try_create_black_list_direction,
                                             exchange,
                                             black_list_directions,
-                                            xml_file)
+                                            xml_file,
+                                            black_list_parse=True)
     except Exception as ex:
         print(ex)
 

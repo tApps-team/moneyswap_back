@@ -36,3 +36,14 @@ def get_no_cash_direction_set_for_creating(directions: set[tuple[str,str]],
     directions -= set(checked_directions_by_exchange)
     # print('DIRECTION FOR CREATING', directions)
     return directions
+
+
+
+def generate_direction_dict(direction_list: set[str, str, str]):
+    direction_dict = {}
+
+    for direction_id, valute_from, valute_to in direction_list:
+        key = f'{valute_from} {valute_to}'
+        direction_dict[key] = direction_id
+
+    return direction_dict

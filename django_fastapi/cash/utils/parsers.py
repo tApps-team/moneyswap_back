@@ -7,10 +7,12 @@ from lxml import etree
 
 from celery.local import Proxy
 
+from django.db import transaction
+
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
 
-from cash.models import ExchangeDirection
+from cash.models import ExchangeDirection, Exchange
 
 
 def cash_parse_xml(dict_for_parse: dict,
@@ -96,6 +98,92 @@ def parse_xml_to_dict(dict_for_parse: dict,
             except Exception as ex:
                 print(ex)
                 continue
+
+
+def parse_xml_to_dict_2(dict_for_parse: dict,
+                      xml_file: str,
+                      exchange: Exchange,
+                      black_list_parse: bool = False):
+    # root = etree.fromstring(xml_file.encode())
+    xml_file = xml_file.encode()
+
+    bulk_create_list = []
+
+    if black_list_parse:
+        city_id_list = []
+        direction_id_list = []
+
+    for event, element in etree.iterparse(BytesIO(xml_file), tag='item'):
+        # if dict_for_parse:
+    #  print(event)
+            try:
+                city = element.xpath('./city/text()')
+                
+                if city:
+                    city = city[0].upper()
+                    valute_from = element.xpath('./from/text()')
+                    valute_to = element.xpath('./to/text()')
+                    
+                    if all(el for el in (valute_from, valute_to)):
+                        inner_key = f'{valute_from[0]} {valute_to[0]}'
+                        
+                        if dict_for_parse.get(city, None) is not None:
+                            if dict_for_parse[city].get(inner_key):
+                                city_id, direction_id = dict_for_parse[city].pop(inner_key)
+                            # direction_id = dict_for_parse.pop(key)
+                                fromfee = element.xpath('./fromfee/text()')
+                                param = element.xpath('./param/text()')
+
+                                fromfee = None if not fromfee else fromfee[0]
+                                param = None if not param else param[0]
+
+                                try:
+                                    d = {
+                                        'in_count': element.xpath('./in/text()')[0],
+                                        'out_count': element.xpath('./out/text()')[0],
+                                        'min_amount': element.xpath('./minamount/text()')[0],
+                                        'max_amount': element.xpath('./maxamount/text()')[0],
+                                        'fromfee': fromfee,
+                                        'params': param,
+                                        'is_active': True,
+                                        'city_id': city_id,
+                                        'direction_id': direction_id,
+                                        'exchange_id': exchange.id,
+                                        # 'direction_id': direction_id,
+                                    }
+                                
+                                    make_valid_values_for_dict(d)
+                                except Exception as ex:
+                                    print(ex)
+                                    continue
+                                else:
+                                    try:
+                                        bulk_create_list.append(ExchangeDirection(**d))
+
+                                        if black_list_parse:
+                                            city_id_list.append(city_id)
+                                            direction_id_list.append(direction_id)
+
+                                    except Exception as ex:
+                                        print(ex)
+                                        continue
+                                
+            except Exception as ex:
+                print(ex)
+                continue
+    
+    try:
+        if black_list_parse:
+            with transaction.atomic():
+                exchange.direction_black_list.remove(
+                        *exchange.direction_black_list.filter(city_id__in=city_id_list,
+                                                            direction_id__in=direction_id_list)
+                    )
+                ExchangeDirection.objects.bulk_create(bulk_create_list)
+        else:
+            ExchangeDirection.objects.bulk_create(bulk_create_list)
+    except Exception as ex:
+        print(ex)
         
 
 def check_city_in_xml_file(city: str, xml_file: str):
