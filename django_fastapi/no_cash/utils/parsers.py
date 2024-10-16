@@ -166,7 +166,7 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
         if black_list_parse:
             with transaction.atomic():
                 exchange.direction_black_list.remove(
-                        *exchange.direction_black_list.filter(direction_id__in=direction_id_list)
+                        *exchange.direction_black_list.filter(pk__in=direction_id_list)
                     )
                 ExchangeDirection.objects.bulk_create(bulk_create_list)
         else:
