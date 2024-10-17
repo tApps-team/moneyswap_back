@@ -49,9 +49,9 @@ from .models import Exchange, ExchangeDirection, Direction
 @shared_task(name='create_no_cash_directions_for_exchange',
              soft_time_limit=10,
              time_limit=15)
-def create_no_cash_directions_for_exchange(exchange_name: str):
+def create_no_cash_directions_for_exchange(exchange_id: int):
     try:
-        exchange = Exchange.objects.get(name=exchange_name)
+        exchange = Exchange.objects.get(pk=exchange_id)
         
         all_no_cash_directions = get_or_set_no_cash_directions_cache()
         
@@ -105,9 +105,9 @@ def create_direction(dict_for_parse: dict,
 
 #PERIODIC UPDATE
 @shared_task(name='update_no_cash_diretions_for_exchange')
-def update_no_cash_diretions_for_exchange(exchange_name: str):
+def update_no_cash_diretions_for_exchange(exchange_id: int):
     try:
-        exchange = Exchange.objects.get(name=exchange_name)
+        exchange = Exchange.objects.get(pk=exchange_id)
         # xml_file = try_get_xml_file(exchange)
 
         # if xml_file is not None and exchange.is_active:
@@ -175,21 +175,22 @@ def try_update_direction(dict_for_parse: dict):
 
 #PERIODIC BLACK LIST
 @shared_task(name='try_create_no_cash_directions_from_black_list')
-def try_create_no_cash_directions_from_black_list(exchange_name: str):
+def try_create_no_cash_directions_from_black_list(exchange_id: int):
     try:
-        exchange = Exchange.objects.get(name=exchange_name)
-        xml_file = try_get_xml_file(exchange)
+        exchange = Exchange.objects.get(pk=exchange_id)
         
-        if xml_file is not None and exchange.is_active:
-            black_list_directions = exchange.direction_black_list\
-                                            .select_related('valute_from',
-                                                            'valute_to')\
-                                            .values_list('pk',
-                                                         'valute_from',
-                                                         'valute_to')\
-                                            .all()
+        black_list_directions = exchange.direction_black_list\
+                                        .select_related('valute_from',
+                                                        'valute_to')\
+                                        .values_list('pk',
+                                                        'valute_from',
+                                                        'valute_to')\
+                                        .all()
 
-            if black_list_directions:
+        if black_list_directions:
+            xml_file = try_get_xml_file(exchange)
+            
+            if xml_file is not None and exchange.is_active:
                 black_list_direction_dict = generate_direction_dict(black_list_directions)
                 run_no_cash_background_tasks(try_create_black_list_direction,
                                             exchange,

@@ -53,9 +53,9 @@ from .models import Exchange, ExchangeDirection, BlackListElement, Direction, Ci
 
 #PERIODIC CREATE
 @shared_task(name='create_cash_directions_for_exchange')
-def create_cash_directions_for_exchange(exchange_name: str):
+def create_cash_directions_for_exchange(exchange_id: int):
     try:
-        exchange = Exchange.objects.get(name=exchange_name)
+        exchange = Exchange.objects.get(pk=exchange_id)
 
         all_cash_directions = get_or_set_cash_directions_cache()
 
@@ -114,9 +114,9 @@ def create_direction(dict_for_parse: dict,
 
 #PERIODIC UPDATE
 @shared_task(name='update_cash_directions_for_exchange')
-def update_cash_directions_for_exchange(exchange_name: str):
+def update_cash_directions_for_exchange(exchange_id: int):
     try:
-        exchange = Exchange.objects.get(name=exchange_name)
+        exchange = Exchange.objects.get(pk=exchange_id)
         # xml_file = try_get_xml_file(exchange)
 
         # if xml_file is not None and exchange.is_active:
@@ -216,9 +216,9 @@ def try_update_direction(dict_for_parse: dict):
 
 #PERIODIC BLACK LIST
 @shared_task(name='try_create_cash_directions_from_black_list')
-def try_create_cash_directions_from_black_list(exchange_name: str):
+def try_create_cash_directions_from_black_list(exchange_id: int):
     try:
-        exchange = Exchange.objects.get(name=exchange_name)
+        exchange = Exchange.objects.get(pk=exchange_id)
 
         black_list_directions = exchange.direction_black_list\
                                         .select_related('city',

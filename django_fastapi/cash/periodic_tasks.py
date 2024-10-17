@@ -27,7 +27,7 @@ def manage_periodic_task_for_create(exchange_id: int,
                     interval=schedule,
                     name=f'{exchange_id} cash task creation',
                     task='create_cash_directions_for_exchange',
-                    args=json.dumps([exchange_name,]),
+                    args=json.dumps([exchange_id,]),
                     )
     else:
         if interval == 0:
@@ -60,7 +60,7 @@ def manage_periodic_task_for_update(exchange_id: int,
                     interval=schedule,
                     name=f'{exchange_id} cash task update',
                     task='update_cash_directions_for_exchange',
-                    args=json.dumps([exchange_name,]),
+                    args=json.dumps([exchange_id,]),
                     )
     else:
         if interval == 0:
@@ -97,7 +97,7 @@ def manage_periodic_task_for_parse_black_list(exchange_id: int,
                     interval=schedule,
                     name=f'{exchange_id} cash task black list',
                     task='try_create_cash_directions_from_black_list',
-                    args=json.dumps([exchange_name,]),
+                    args=json.dumps([exchange_id,]),
                     )
     else:
         if interval == 0:
