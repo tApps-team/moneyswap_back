@@ -52,8 +52,8 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
-                    python manage.py recreate_backround_tasks &&
                     gunicorn -w 4 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    # python manage.py recreate_backround_tasks &&
                     # python manage.py create_moder_group &&
                     # python manage.py create_periodic_task_for_update_exchange_info &&
                     # python manage.py create_periodic_task_for_parse_actual_course &&
