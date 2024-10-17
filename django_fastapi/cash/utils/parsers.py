@@ -182,6 +182,8 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                 ExchangeDirection.objects.bulk_create(bulk_create_list)
         else:
             ExchangeDirection.objects.bulk_create(bulk_create_list)
+
+            # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
     except Exception as ex:
         print(ex)
         
