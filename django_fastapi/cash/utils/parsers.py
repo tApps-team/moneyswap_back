@@ -12,7 +12,7 @@ from django.db import transaction
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
 
-from cash.models import ExchangeDirection, Exchange
+from cash.models import ExchangeDirection, Exchange, BlackListElement
 
 
 def cash_parse_xml(dict_for_parse: dict,
@@ -98,12 +98,18 @@ def parse_xml_to_dict(dict_for_parse: dict,
             except Exception as ex:
                 print(ex)
                 continue
+        else:
+            break
+    else:    
+        if dict_for_parse:
+            direction_ids = list(dict_for_parse.values())
+            ExchangeDirection.objects.filter(pk__in=direction_ids).update(is_active=False)
 
 
 def parse_xml_to_dict_2(dict_for_parse: dict,
                       xml_file: str,
                       exchange: Exchange,
-                      black_list_parse: bool = False):
+                      black_list_parse: bool):
     # root = etree.fromstring(xml_file.encode())
     xml_file = xml_file.encode()
 
@@ -172,20 +178,34 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                 print(ex)
                 continue
     
-    try:
-        if black_list_parse:
-            with transaction.atomic():
-                exchange.direction_black_list.remove(
-                        *exchange.direction_black_list.filter(city_id__in=city_id_list,
-                                                            direction_id__in=direction_id_list)
-                    )
+    with transaction.atomic():
+        try:
+            if black_list_parse:
+                    exchange.direction_black_list.remove(
+                            *exchange.direction_black_list.filter(city_id__in=city_id_list,
+                                                                direction_id__in=direction_id_list)
+                        )
+                    ExchangeDirection.objects.bulk_create(bulk_create_list)
+                    
+            else:
                 ExchangeDirection.objects.bulk_create(bulk_create_list)
-        else:
-            ExchangeDirection.objects.bulk_create(bulk_create_list)
 
-            # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
-    except Exception as ex:
-        print(ex)
+                black_list = []
+                for city in dict_for_parse:
+                    if inner_dict := dict_for_parse.get(city):
+                        for inner_key in inner_dict:
+                            if value := inner_dict.get(inner_key):
+                                city_id, direction_id = value
+                                black_list_direction, _ = BlackListElement\
+                                                        .objects\
+                                                        .get_or_create(city_id=city_id,
+                                                                       direction_id=direction_id)
+                                black_list.append(black_list_direction)
+                exchange.direction_black_list.add(*black_list)
+                # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
+        except Exception as ex:
+            print('CREATE OR BLACK LIST ERROR')
+            print(ex)
         
 
 def check_city_in_xml_file(city: str, xml_file: str):

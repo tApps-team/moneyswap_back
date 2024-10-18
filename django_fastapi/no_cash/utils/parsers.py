@@ -11,7 +11,7 @@ from django.db import transaction
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
 
-from no_cash.models import ExchangeDirection, Exchange
+from no_cash.models import ExchangeDirection, Exchange, Direction
 
 
 def no_cash_parse_xml(dict_for_parser: dict,
@@ -163,15 +163,25 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
             continue
 
     try:
-        print(22)
-        if black_list_parse:
-            with transaction.atomic():
-                exchange.direction_black_list.remove(
-                        *exchange.direction_black_list.filter(pk__in=direction_id_list)
-                    )
+        with transaction.atomic():
+            if black_list_parse:
+                    exchange.direction_black_list.remove(
+                            *exchange.direction_black_list.filter(pk__in=direction_id_list)
+                        )
+                    ExchangeDirection.objects.bulk_create(bulk_create_list)
+            else:
                 ExchangeDirection.objects.bulk_create(bulk_create_list)
-        else:
-            ExchangeDirection.objects.bulk_create(bulk_create_list)
+
+                if dict_for_parse:
+                    black_list = []
+                    for key in dict_for_parse:
+                        if direction_id := dict_for_parse.get(key):
+                            black_list_direction = Direction\
+                                                    .objects\
+                                                    .get(pk=direction_id)
+                            black_list.append(black_list_direction)
+                    exchange.direction_black_list.add(*black_list)
+
     except Exception as ex:
         print(ex)
 

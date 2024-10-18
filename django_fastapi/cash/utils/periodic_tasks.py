@@ -1,6 +1,9 @@
 from celery.local import Proxy
 
+from django.db import transaction
+
 from cash.models import Exchange as CashExchange, BlackListElement, Direction, City
+
 from .parsers import check_city_in_xml_file, parse_xml_to_dict, parse_xml_to_dict_2
 
 
@@ -67,15 +70,19 @@ def run_cash_background_tasks(task: Proxy,
             if not check_city_in_xml_file(city, xml_file):
                 # print(f'Нет города {city} в {exchange.name}')
                 if not black_list_parse:
-                    for key in direction_dict[city]:
-                        # valute_from , valute_to = key.split()
-                        city_id , direction_id = direction_dict[city][key]
-                        black_list_element, _ = BlackListElement\
-                                                .objects\
-                                                .get_or_create(city_id=city_id,
-                                                               direction_id=direction_id)
+                    black_list = []
+                    with transaction.atomic():
+                        for key in direction_dict[city]:
+                            city_id , direction_id = direction_dict[city][key]
+                            black_list_element, _ = BlackListElement\
+                                                    .objects\
+                                                    .get_or_create(city_id=city_id,
+                                                                direction_id=direction_id)
+                            black_list.append(black_list_element)
 
-                        exchange.direction_black_list.add(black_list_element)
+                            
+
+                        exchange.direction_black_list.add(*black_list)
 
                 direction_dict[city] = None
 
@@ -86,7 +93,7 @@ def run_cash_background_tasks(task: Proxy,
     parse_xml_to_dict_2(direction_dict,
                         xml_file,
                         exchange,
-                        black_list_parse=True)
+                        black_list_parse)
     
 
         # except Exception as ex:
