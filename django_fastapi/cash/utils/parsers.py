@@ -86,6 +86,9 @@ def parse_xml_to_dict(dict_for_parse: dict,
                             param = None if not param else param[0]
 
                             try:
+                                if fromfee is not None:
+                                    fromfee = fromfee if fromfee.isdigit() else None
+                                    
                                 d = {
                                     'in_count': element.xpath('./in/text()')[0],
                                     'out_count': element.xpath('./out/text()')[0],
