@@ -169,12 +169,15 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                                 param = None if not param else param[0]
 
                                 try:
+                                    if fromfee is not None:
+                                        fromfee = fromfee if fromfee.isdigit() else None
+
                                     d = {
                                         'in_count': element.xpath('./in/text()')[0],
                                         'out_count': element.xpath('./out/text()')[0],
                                         'min_amount': element.xpath('./minamount/text()')[0],
                                         'max_amount': element.xpath('./maxamount/text()')[0],
-                                        'fromfee': fromfee if fromfee.isdigit() else None,
+                                        'fromfee': fromfee,
                                         'params': param,
                                         'is_active': True,
                                         'city_id': city_id,
