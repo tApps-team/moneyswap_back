@@ -120,13 +120,19 @@ def update_cash_directions_for_exchange(exchange_id: int):
         # xml_file = try_get_xml_file(exchange)
 
         # if xml_file is not None and exchange.is_active:
+        # direction_list = exchange.directions\
+        #                             .select_related('city',
+        #                                             'direction',
+        #                                             'direction__valute_from',
+        #                                             'direction__valute_to')\
+        #                             .values_list('city__code_name',
+        #                                             'pk',
+        #                                             'direction__valute_from',
+        #                                             'direction__valute_to')\
+        #                             .all()
         direction_list = exchange.directions\
                                     .select_related('city',
                                                     'direction',
-                                                    'direction__valute_from',
-                                                    'direction__valute_to')\
-                                    .values_list('city__code_name',
-                                                    'pk',
                                                     'direction__valute_from',
                                                     'direction__valute_to')\
                                     .all()

@@ -108,16 +108,22 @@ def create_direction(dict_for_parse: dict,
 def update_no_cash_diretions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
+
         # xml_file = try_get_xml_file(exchange)
 
         # if xml_file is not None and exchange.is_active:
+        # direction_list = exchange.directions\
+        #                         .select_related('direction',
+        #                                         'direction__valute_from',
+        #                                         'direction__valute_to')\
+        #                         .values_list('pk',
+        #                                         'direction__valute_from',
+        #                                         'direction__valute_to').all()
         direction_list = exchange.directions\
                                 .select_related('direction',
                                                 'direction__valute_from',
                                                 'direction__valute_to')\
-                                .values_list('pk',
-                                                'direction__valute_from',
-                                                'direction__valute_to').all()
+                                .all()
 
         if direction_list:
             xml_file = try_get_xml_file(exchange)

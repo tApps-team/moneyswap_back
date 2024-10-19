@@ -141,8 +141,12 @@ def run_update_tasks(task: Proxy,
     dict_for_parse = dict()
 
     for direction in direction_list:
-        city, direciton_id, valute_from_id, valute_to_id = direction
-        dict_for_parse[f'{city} {valute_from_id} {valute_to_id}'] = direciton_id
+        # city, direciton_id, valute_from_id, valute_to_id = direction
+        city = direction.city.code_name
+        valute_from_id = direction.direction.valute_from_id
+        valute_to_id = direction.direction.valute_to_id
+        # dict_for_parse[f'{city} {valute_from_id} {valute_to_id}'] = direciton_id
+        dict_for_parse[f'{city} {valute_from_id} {valute_to_id}'] = direction
 
     parse_xml_to_dict(dict_for_parse,
                       xml_file,

@@ -56,6 +56,18 @@ def parse_xml_to_dict(dict_for_parse: dict,
     # root = etree.fromstring(xml_file.encode())
     xml_file = xml_file.encode()
 
+    update_fields = [
+        'in_count',
+        'out_count',
+        'min_amount',
+        'max_amount',
+        # 'fromfee',
+        # 'params',
+        'is_active',
+    ]
+
+    update_list = []    
+
     for event, element in etree.iterparse(BytesIO(xml_file), tag='item'):
         if dict_for_parse:
     #  print(event)
@@ -67,7 +79,9 @@ def parse_xml_to_dict(dict_for_parse: dict,
                     key = f'{valute_from[0]} {valute_to[0]}'
                     
                     if dict_for_parse.get(key, False):
-                        direction_id = dict_for_parse.pop(key)
+                        # direction_id = dict_for_parse.pop(key)
+                        direction = dict_for_parse.pop(key)
+
                         try:
                             d = {
                                 'in_count': element.xpath('./in/text()')[0],
@@ -86,18 +100,29 @@ def parse_xml_to_dict(dict_for_parse: dict,
                                 'is_active': False,
                             }
                         finally:
+                                for field, value in d.items():
+                                    setattr(direction, field, value)
+                                update_list.append(direction)
                             # task.delay(d)
-                            ExchangeDirection.objects.filter(pk=direction_id)\
-                                                        .update(**d)
+                            # ExchangeDirection.objects.filter(pk=direction_id)\
+                            #                             .update(**d)
             except Exception as ex:
                 print(ex)
                 continue
         else:
             break
-    else:
+
+    with transaction.atomic():
         if dict_for_parse:
-            direction_ids = list(dict_for_parse.values())
-            ExchangeDirection.objects.filter(pk__in=direction_ids).update(is_active=False)
+            for direction in dict_for_parse.values():
+                direction.is_active = False
+                update_list.append(direction)
+            # direction_ids = [el.pk for el in dict_for_parse.values()]
+            # ExchangeDirection.objects.filter(pk__in=direction_ids).update(is_active=False)
+        try:
+            ExchangeDirection.objects.bulk_update(update_list, update_fields)
+        except Exception as ex:
+            print('NO CASH BULK UPDATE ERROR', ex)
 
 
 def parse_xml_to_dict_2(dict_for_parse: dict,

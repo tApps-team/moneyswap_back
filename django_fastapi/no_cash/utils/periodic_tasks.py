@@ -83,9 +83,11 @@ def run_update_tasks(task: Proxy,
     наличных готовых направлений
     '''
     dict_for_parse = dict()
-    for direciton in direction_list:
-        direciton_id, valute_from_id, valute_to_id = direciton
-        dict_for_parse[f'{valute_from_id} {valute_to_id}'] = direciton_id
+    for direction in direction_list:
+        # direciton_id, valute_from_id, valute_to_id = direction
+        valute_from_id =  direction.direction.valute_from_id
+        valute_to_id = direction.direction.valute_to_id
+        dict_for_parse[f'{valute_from_id} {valute_to_id}'] = direction
     parse_xml_to_dict(dict_for_parse,
                       xml_file,
                       task)
