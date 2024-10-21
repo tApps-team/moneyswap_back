@@ -224,10 +224,10 @@ def edit_partner_city(partner: partner_dependency,
 
     partner_city.update(**data)
 
-    unworking_day_names = {working_day for working_day in working_days \
+    unworking_day_names = {working_day.capitazile() for working_day in working_days \
                             if not working_days[working_day]}
     
-    working_day_names = {working_day for working_day in working_days \
+    working_day_names = {working_day.capitazile() for working_day in working_days \
                          if working_days[working_day]}
     
     partner_city = partner_city.first()
