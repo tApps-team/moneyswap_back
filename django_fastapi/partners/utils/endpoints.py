@@ -30,7 +30,10 @@ def get_course_count(direction):
         return actual_course if actual_course is not None else 0
 
 
-def get_partner_in_out_count(actual_course: float):
+def get_partner_in_out_count(actual_course: float | None):
+    if actual_course is None:
+        return None
+    
     if actual_course < 1:
         in_count = 1 / actual_course
         out_count = 1
@@ -250,9 +253,14 @@ def generate_valute_list(queries: list[CashDirection],
 
 
 def generate_actual_course(direction: CashDirection):
-    in_count, out_count = get_partner_in_out_count(direction.actual_course)
+    in_out_count = get_partner_in_out_count(direction.actual_course)
     icon_valute_from = try_generate_icon_url(direction.valute_from)
     icon_valute_to = try_generate_icon_url(direction.valute_to)
+
+    if in_out_count is not None:
+        in_count, out_count = in_out_count
+    else:
+        in_count = out_count = 0
 
     return {
         'valute_from': direction.valute_from.code_name,
