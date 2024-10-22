@@ -28,11 +28,11 @@ window.addEventListener('load', function () {
         fetch(`https://api.moneyswap.online/api/actual_course?valute_from=${valute_from}&valute_to=${valute_to}`)
         .then(data => data.json())
         .then((text) => {
-          console.log(text);
+          // console.log(text);
           if (typeof text === 'object') {
               text = 0;
           } else {
-              console.log(text);
+              // console.log(text);
               course.textContent = String(text);
 
               // let percent_val = Number(percent.value);
