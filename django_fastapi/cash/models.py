@@ -168,8 +168,8 @@ class Direction(BaseDirection):
         return self.display_name
     
     def clean(self) -> None:
-        if self.valute_from.type_valute == self.valute_to.type_valute:
-            raise ValidationError('Значения "Отдаём" и "Получаем" должны иметь разные типы валют')
+        # if self.valute_from.type_valute == self.valute_to.type_valute:
+        #     raise ValidationError('Значения "Отдаём" и "Получаем" должны иметь разные типы валют')
         
         if not 'Наличные' in (self.valute_from.type_valute, self.valute_to.type_valute):
             raise ValidationError('Одно из значений "Отдаём" и "Получаем" должно иметь наличный тип валюты, другое - безналичный')

@@ -54,17 +54,17 @@ exchange_direction_union = Union[no_cash_models.ExchangeDirection,
 
 def try_update_courses(direction_model: direction_union,
                        exchange_direction_model: exchange_direction_union):
-    bulk_update_fileds = ['actual_course']
+    bulk_update_fields = ['actual_course']
     
     if direction_model == cash_models.Direction:
-        bulk_update_fileds.append('previous_course')
+        bulk_update_fields.append('previous_course')
     
     prefetch_no_cash_queryset = exchange_direction_model.objects\
                                                     .select_related('exchange')\
                                                     .filter(is_active=True,
                                                             exchange__is_active=True)\
                                                     .order_by('-out_count',
-                                                              '-in_count')
+                                                              'in_count')
     
     prefetch_filter = Prefetch('exchange_directions',
                                 prefetch_no_cash_queryset)
@@ -112,6 +112,6 @@ def try_update_courses(direction_model: direction_union,
         update_list.append(direction)
 
     direction_model.objects.bulk_update(update_list,
-                                        bulk_update_fileds,
+                                        bulk_update_fields,
                                         batch_size=1000)
     # print(connection.queries)

@@ -28,13 +28,18 @@ window.addEventListener('load', function () {
         fetch(`https://api.moneyswap.online/api/actual_course?valute_from=${valute_from}&valute_to=${valute_to}`)
         .then(data => data.json())
         .then((text) => {
-            console.log(text);
-            course.textContent = String(text);
+          console.log(text);
+          if (typeof text === 'object') {
+              text = 0;
+          } else {
+              console.log(text);
+              course.textContent = String(text);
 
-            // let percent_val = Number(percent.value);
-            // let fix_amount_val = Number(fix_amount.value);
+              // let percent_val = Number(percent.value);
+              // let fix_amount_val = Number(fix_amount.value);
 
-            edit_in_out(text);
+              edit_in_out(text);
+          }
           })
       }
     }
