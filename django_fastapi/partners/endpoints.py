@@ -103,9 +103,12 @@ def get_available_valutes_for_partner(base: str):
 
     queries = CashDirection.objects.select_related('valute_from',
                                                    'valute_to')\
-                                    .filter(actual_course__isnull=False,
-                                            valute_from__available_for_partners=True,
+                                    .filter(valute_from__available_for_partners=True,
                                             valute_to__available_for_partners=True)
+                                                   
+                                    # .filter(actual_course__isnull=False,
+                                    #         valute_from__available_for_partners=True,
+                                    #         valute_to__available_for_partners=True)
     
     if base == 'ALL':
         marker = 'valute_from'
