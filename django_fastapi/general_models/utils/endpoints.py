@@ -1,3 +1,4 @@
+import re
 from typing import Any, List, Literal
 from collections import defaultdict
 from datetime import timedelta, datetime
@@ -390,13 +391,12 @@ def get_valid_partner_link(partner_link: str | None):
         if partner_link.find('/ref/') != -1:
             link_tail = partner_link[-2:]
 
-            match link_tail:
-                case '/?':
-                    pass
-                case r'.\/':
-                    partner_link += '?'
-                case _:
-                    partner_link += '/?'
+            if link_tail == '/?':
+                pass
+            elif re.match(r'.\/', link_tail): 
+                partner_link += '?'
+            else:
+                partner_link += '/?'
                     
     return partner_link
 
