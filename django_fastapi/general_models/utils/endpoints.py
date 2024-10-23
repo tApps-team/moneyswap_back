@@ -383,6 +383,24 @@ def add_location_to_exchange_direction(exchange_direction: dict[str, Any],
 #     return direction_list
 
 
+def get_valid_partner_link(partner_link: str | None):
+    if partner_link is None:
+        pass
+    else:
+        if partner_link.find('/ref/') != -1:
+            link_tail = partner_link[-2:]
+
+            match link_tail:
+                case '/?':
+                    pass
+                case r'.\/':
+                    partner_link += '?'
+                case _:
+                    partner_link += '/?'
+                    
+    return partner_link
+
+
 def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
                                 valute_from: str,
                                 valute_to: str,
@@ -412,8 +430,11 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
 
     for _id, query in enumerate(queries, start=1):
         if query.exchange.__dict__.get('partner_link') and query.exchange.__dict__.get('period_for_create'):
-            query.exchange.__dict__['partner_link'] += partner_link_pattern
-
+            # query.exchange.__dict__['partner_link'] += partner_link_pattern
+#
+            partner_link = get_valid_partner_link(query.exchange.__dict__.get('partner_link'))
+            query.exchange.__dict__['partner_link'] = partner_link + partner_link_pattern
+#
             if with_location:
                 query.exchange.__dict__['partner_link'] += f'&city={query.city.code_name}'
 
