@@ -552,11 +552,11 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'name',
         'en_name',
         'account',
-        'has_partner_link',
+        'is_available',
         )
-    readonly_fields = (
-        'is_active',
-        )
+    # readonly_fields = (
+    #     'is_available',
+    #     )
     filter_horizontal = ()
 
     inlines = [
@@ -565,11 +565,11 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         ExchangeLinkCountStacked,
         ]
 
-    def has_partner_link(self, obj=None):
-        return bool(obj.partner_link)
+    def is_available(self, obj=None):
+        return bool(obj.partner_link and obj.is_active)
     
-    has_partner_link.boolean = True
-    has_partner_link.short_description = 'Партнёрская ссылка'
+    is_available.boolean = True
+    is_available.short_description = 'Активен'
 
     def link_count(self, obj):
         return obj.link_count
@@ -583,7 +583,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         else:
             readonly_fields = ('partner_link', ) + readonly_fields
 
-        return readonly_fields + ('link_count', )
+        return readonly_fields + ('link_count', 'is_available')
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):

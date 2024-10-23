@@ -113,6 +113,7 @@ def get_partner_directions(valute_from: str,
                             .annotate(negative_review_count=review_counts['negative'])\
                             .filter(direction__display_name=direction_name,
                                     is_active=True,
+                                    city__exchange__is_active=True,
                                     city__exchange__partner_link__isnull=False)
     if city:
         directions = directions.filter(city__city__code_name=city)

@@ -134,7 +134,8 @@ def cash_valutes(request: Request,
                                                         'city__exchange')\
                                         .filter(city__city__code_name=city,
                                                 is_active=True,
-                                                city__exchange__isnull=False)
+                                                city__exchange__isnull=False,
+                                                city__exchange__is_active=True)
 
     if base == 'ALL':
         cash_queries = cash_queries\
@@ -182,6 +183,7 @@ def cash_valutes_2(request: Request,
                                                         'city__exchange')\
                                         .filter(city__city__code_name=city,
                                                 is_active=True,
+                                                city__exchange__is_active=True,
                                                 city__exchange__isnull=False)
 
     if base == 'ALL':
