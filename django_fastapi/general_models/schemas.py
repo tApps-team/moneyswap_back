@@ -10,6 +10,11 @@ class MultipleName(BaseModel):
     en: str = Field(alias='en_name')
 
 
+class MultipleName2(BaseModel):
+    ru: str
+    en: str
+
+
 #Схема валюты для отображения в json ответе
 class ValuteModel(BaseModel):
     id: int

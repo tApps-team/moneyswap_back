@@ -5,11 +5,17 @@ from django.db import connection
 
 from general_models.utils.endpoints import try_generate_icon_url, get_reviews_count_filters
 
+from general_models.schemas import MultipleName, MultipleName2
+
 from cash.models import Direction as CashDirection
 
 from partners.models import Direction, PartnerCity
 
-from partners.schemas import PartnerCityInfoSchema, UpdatedTimeByPartnerCitySchema
+from partners.schemas import (PartnerCityInfoSchema,
+                              UpdatedTimeByPartnerCitySchema,
+                              PartnerCitySchema2,
+                              WeekDaySchema,
+                              PartnerCityInfoSchema2)
 
 
 WORKING_DAYS_DICT = {
@@ -123,8 +129,8 @@ def get_partner_directions(valute_from: str,
         direction.exchange_marker = 'partner'
         direction.valute_from = valute_from
         direction.valute_to = valute_to
-        direction.min_amount = None
-        direction.max_amount = None
+        direction.min_amount = str(direction.min_amount)
+        direction.max_amount = str(direction.max_amount)
         direction.params = None
         direction.fromfee = None
         #
@@ -196,14 +202,59 @@ def generate_partner_cities(partner_cities: list[PartnerCity]):
         city.country = city.city.country.name
         city.country_flag = try_generate_icon_url(city.city.country)
 
-        working_days = WORKING_DAYS_DICT.copy()
-        [working_days.__setitem__(day.code_name, True) for day in city.working_days.all()]
+        # working_days = WORKING_DAYS_DICT.copy()
+        # [working_days.__setitem__(day.code_name, True) for day in city.working_days.all()]
+        working_days = {key.upper(): value \
+                        for key, value in WORKING_DAYS_DICT.items()}
+        
+        [working_days.__setitem__(day.code_name.upper(), True) \
+         for day in city.working_days.all()]
 
         city.info = PartnerCityInfoSchema(delivery=city.has_delivery,
                                           office=city.has_office,
                                           working_days=working_days,
                                           time_from=city.time_from,
                                           time_to=city.time_to)
+        date = time = None
+
+        if city.time_update:
+            date, time = city.time_update.astimezone().strftime('%d.%m.%Y %H:%M').split()
+        
+        city.updated = UpdatedTimeByPartnerCitySchema(date=date,
+                                                      time=time)
+        
+    # print(len(connection.queries))
+    return partner_cities
+
+
+def generate_partner_cities2(partner_cities: list[PartnerCity]):
+    for city in partner_cities:
+        city.city_multiple_name = MultipleName(name=city.city.name,
+                                               en_name=city.city.en_name)
+        city.code_name = city.city.code_name
+        city.country_multiple_name = MultipleName(name=city.city.country.name,
+                                                  en_name=city.city.country.en_name)
+        city.country_flag = try_generate_icon_url(city.city.country)
+
+        weekdays = WeekDaySchema(time_from=city.time_from,
+                                      time_to=city.time_to)
+
+        weekends = WeekDaySchema(time_from=city.weekend_time_from,
+                                      time_to=city.weekend_time_to)
+
+
+        # working_days = WORKING_DAYS_DICT.copy()
+        working_days = {key.upper(): value \
+                        for key, value in WORKING_DAYS_DICT.items()}
+        
+        [working_days.__setitem__(day.code_name.upper(), True) \
+         for day in city.working_days.all()]
+
+        city.info = PartnerCityInfoSchema2(delivery=city.has_delivery,
+                                          office=city.has_office,
+                                          working_days=working_days,
+                                          weekdays=weekdays,
+                                          weekends=weekends)
         date = time = None
 
         if city.time_update:
@@ -243,6 +294,30 @@ def generate_valute_list(queries: list[CashDirection],
         valute_dict = {
             'id': _id,
             'name': valute.name,
+            'code_name': valute.code_name,
+            'icon_url': try_generate_icon_url(valute),
+            'type_valute': type_valute,
+        }
+
+        json_dict[type_valute].append(valute_dict)
+    # print(len(connection.queries))
+    return json_dict
+
+
+def generate_valute_list2(queries: list[CashDirection],
+                         marker: str):
+    valute_list = sorted({query.__getattribute__(marker) for query in queries},
+                         key=lambda el: el.code_name)
+
+    json_dict = defaultdict(list)
+
+    for _id, valute in enumerate(valute_list, start=1):
+        type_valute = valute.type_valute
+
+        valute_dict = {
+            'id': _id,
+            'name': MultipleName2(ru=valute.name,
+                                 en=valute.en_name),
             'code_name': valute.code_name,
             'icon_url': try_generate_icon_url(valute),
             'type_valute': type_valute,

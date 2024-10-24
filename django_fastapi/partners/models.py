@@ -95,6 +95,14 @@ class PartnerCity(models.Model):
                                max_length=50,
                                null=True,
                                default=None)
+    weekend_time_from = models.CharField('Работаем с (выходные)',
+                                         max_length=50,
+                                         null=True,
+                                         default=None) 
+    weekend_time_to = models.CharField('Работаем до (выходные)',
+                                       max_length=50,
+                                       null=True,
+                                       default=None)
     time_update = models.DateTimeField('Время последнего обновления',
                                        null=True,
                                        default=None)
@@ -123,6 +131,14 @@ class Direction(models.Model):
                                   on_delete=models.CASCADE,
                                   limit_choices_to=limit_direction,
                                   related_name='partner_directions')
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
 
     # percent = models.FloatField('Процент',
     #                             default=0,

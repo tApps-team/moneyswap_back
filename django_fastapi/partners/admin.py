@@ -322,13 +322,47 @@ class PartnerCityAdmin(admin.ModelAdmin):
         'city',
         'exchange',
         )   
-    fields = (
-        'city',
-        ('has_office',
-        'has_delivery',),
-        'time_update',
-        'working_days',
-    )
+
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ['city',
+                           ('has_office',
+                            'has_delivery'),
+                           "time_update",
+                           ],
+            },
+        ),
+        (
+            "Будние рабочие часы",
+            {
+                "classes": ["wide"],
+                "fields": [
+                    'time_from',
+                    'time_to',
+                ],
+            },
+        ),
+        (
+            "Выходные рабочие часы",
+            {
+                "classes": ["wide"],
+                "fields": [
+                    'weekend_time_from',
+                    'weekend_time_to',
+                ],
+            },
+        ),
+        (
+            None,
+            {
+                "fields": [
+                    "working_days",
+                           ],
+            },
+        ),
+    ]
     inlines = [
         DirectionStacked,
         ]

@@ -2,6 +2,13 @@ from typing import List
 
 from pydantic import BaseModel, Field, RootModel
 
+from general_models.schemas import MultipleName
+
+
+class WeekDaySchema(BaseModel):
+    time_from: str | None
+    time_to: str | None
+
 
 class PartnerCityInfoSchema(BaseModel):
     delivery: bool | None
@@ -9,6 +16,16 @@ class PartnerCityInfoSchema(BaseModel):
     working_days: dict[str, bool]
     time_from: str | None = Field(default=None)
     time_to: str | None = Field(default=None)
+
+
+class PartnerCityInfoSchema2(BaseModel):
+    delivery: bool | None
+    office: bool | None
+    working_days: dict[str, bool]
+    # time_from: str | None = Field(default=None)
+    # time_to: str | None = Field(default=None)
+    weekdays: WeekDaySchema
+    weekends: WeekDaySchema
 
 
 class UpdatedTimeByPartnerCitySchema(BaseModel):
@@ -26,15 +43,37 @@ class PartnerCitySchema(BaseModel):
     updated: UpdatedTimeByPartnerCitySchema
 
 
+class PartnerCitySchema2(BaseModel):
+    id: int
+    name: MultipleName = Field(alias='city_multiple_name')
+    code_name: str
+    country: MultipleName = Field(alias='country_multiple_name')
+    country_flag: str
+    info: PartnerCityInfoSchema2
+    updated: UpdatedTimeByPartnerCitySchema
+
+
 class CountrySchema(BaseModel):
     id: int
     name: str
     country_flag: str
 
 
+class CountrySchema2(BaseModel):
+    id: int
+    name: MultipleName = Field(alias='multiple_name')
+    country_flag: str
+
+
 class CitySchema(BaseModel):
     id: int = Field(alias='pk')
     name: str
+    code_name: str
+
+
+class CitySchema2(BaseModel):
+    id: int = Field(alias='pk')
+    name: MultipleName = Field(alias='multiple_name')
     code_name: str
 
 
@@ -83,6 +122,18 @@ class AddPartnerCitySchema(BaseModel):
     working_days: dict
 
 
+
+class AddPartnerCitySchema2(BaseModel):
+    city: str
+    has_delivery: bool = Field(alias='delivery')
+    has_office: bool = Field(alias='office')
+    weekdays: WeekDaySchema
+    weekends: WeekDaySchema
+    # time_from: str
+    # time_to: str
+    working_days: dict
+
+
 class PartnerDirectionSchema(BaseModel):
     in_count: float    
     out_count: float
@@ -97,6 +148,11 @@ class AddPartnerDirectionSchema(PartnerDirectionSchema):
     valute_to: str
     # out_count: float
     # is_active: bool
+
+
+class AddPartnerDirectionSchema2(AddPartnerDirectionSchema):
+    min_amount: float | None
+    max_amount: float | None
 
 
 class EditedPartnerDirectionSchema(PartnerDirectionSchema):
