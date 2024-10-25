@@ -125,25 +125,43 @@ def get_partner_directions(valute_from: str,
         directions = directions.filter(city__city__code_name=city)
 
     for direction in directions:
-        direction.exchange = direction.city.exchange
+        city = direction.city
+        min_amount = str(direction.min_amount) if direction.min_amount else '-'
+        max_amount = str(direction.max_amount) if direction.max_amount else '-'
+
+        direction.exchange = city.exchange
         direction.exchange_marker = 'partner'
         direction.valute_from = valute_from
         direction.valute_to = valute_to
-        direction.min_amount = str(direction.min_amount)
-        direction.max_amount = str(direction.max_amount)
+        direction.min_amount = min_amount
+        direction.max_amount = max_amount
         direction.params = None
         direction.fromfee = None
-        #
-        working_days = WORKING_DAYS_DICT.copy()
-        [working_days.__setitem__(day.code_name, True)\
-          for day in direction.city.working_days.all()]
 
-        direction.info = PartnerCityInfoSchema(
-            delivery=direction.city.has_delivery,
-            office=direction.city.has_office,
+        weekdays = WeekDaySchema(time_from=city.time_from,
+                                      time_to=city.time_to)
+
+        weekends = WeekDaySchema(time_from=city.weekend_time_from,
+                                      time_to=city.weekend_time_to)
+
+
+        # working_days = WORKING_DAYS_DICT.copy()
+        working_days = {key.upper(): value \
+                        for key, value in WORKING_DAYS_DICT.items()}
+        
+        [working_days.__setitem__(day.code_name.upper(), True) \
+         for day in city.working_days.all()]
+        #
+        # working_days = WORKING_DAYS_DICT.copy()
+        # [working_days.__setitem__(day.code_name, True)\
+        #   for day in direction.city.working_days.all()]
+
+        direction.info = PartnerCityInfoSchema2(
+            delivery=city.has_delivery,
+            office=city.has_office,
             working_days=working_days,
-            time_from=direction.city.time_from,
-            time_to=direction.city.time_to
+            weekdays=weekdays,
+            weekends=weekends,
             )
         #
     return directions
