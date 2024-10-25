@@ -228,3 +228,11 @@ class FeedbackFormSchema(BaseModel):
     email: str
     reasons: feedback_reasons_listeral
     description: str
+
+
+
+class SiteMapDirectonSchema(BaseModel):
+    valute_from : str
+    valute_to: str
+    exchange_marker: str
+    city: str | None

@@ -65,7 +65,8 @@ from .schemas import (PopularDirectionSchema,
                       ExchangeLinkCountSchema,
                       TopExchangeSchema,
                       TopCoinSchema,
-                      FeedbackFormSchema)
+                      FeedbackFormSchema,
+                      SiteMapDirectonSchema)
 
 
 common_router = APIRouter(tags=['Общее'])
@@ -947,3 +948,83 @@ def increase_link_count(data: ExchangeLinkCountSchema):
         exchange_link_count_queryset.update(count=F('count') + 1)
 
     return {'status': 'success'}
+
+
+
+@common_router.get('/sitemap_directions',
+                   response_model=list[SiteMapDirectonSchema])
+def get_directions_for_sitemap():
+    # print(len(connection.queries))
+    #valute_from
+    #valute_to
+    #city | None
+    #exchange_marker
+    no_cash_directions = no_cash_models.ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction')\
+                                .annotate(exchange_marker=annotate_string_field('no_cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'exchange_marker',
+                                             'exchange__name')\
+                                .order_by('direction_id')\
+                                .distinct('direction_id')
+    
+    # print(no_cash_directions)
+
+    cash_directions = cash_models.ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction',
+                                                'city')\
+                                .annotate(exchange_marker=annotate_string_field('cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'exchange_marker',
+                                             'city__code_name')\
+                                .order_by('direction_id')\
+                                .distinct('direction_id',
+                                          'city_id')
+    # print(cash_directions)
+
+    partner_directions = partner_models.Direction.objects\
+                                .select_related('direction',
+                                                'city',
+                                                'city__city',
+                                                'city__exchange')\
+                                .annotate(exchange_marker=annotate_string_field('partner'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'exchange_marker',
+                                             'city__city__code_name')\
+                                .order_by('direction_id')\
+                                .distinct('direction_id',
+                                          'city__city_id')
+    
+    # print(partner_directions)
+
+    directions = no_cash_directions.union(cash_directions,
+                                          partner_directions)
+    
+    # print(len(list(directions)) == len(set(directions)))
+
+    result = []
+
+    for direction in directions:
+        valute_from, valute_to, exchange_marker, city = direction
+
+        #
+        if exchange_marker == 'no_cash':
+            city = None
+        #
+
+        result.append(
+            {
+                'valute_from': valute_from,
+                'valute_to': valute_to,
+                'exchange_marker': exchange_marker,
+                'city': city,
+            }
+        )
+
+    # print(connection.queries)
+    return result
