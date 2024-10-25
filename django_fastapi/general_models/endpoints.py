@@ -991,7 +991,7 @@ def get_directions_for_sitemap():
                                                 'city',
                                                 'city__city',
                                                 'city__exchange')\
-                                .annotate(exchange_marker=annotate_string_field('partner'))\
+                                .annotate(exchange_marker=annotate_string_field('cash'))\
                                 .values_list('direction__valute_from',
                                              'direction__valute_to',
                                              'exchange_marker',
