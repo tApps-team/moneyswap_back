@@ -61,8 +61,8 @@ class PartnerCitySchema3(BaseModel):
     country_flag: str
     info: PartnerCityInfoSchema2
     updated: UpdatedTimeByPartnerCitySchema
-    max_amount: float
-    min_amount: float
+    max_amount: float | None
+    min_amount: float | None
 
 
 class CountrySchema(BaseModel):
