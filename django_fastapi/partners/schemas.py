@@ -53,6 +53,18 @@ class PartnerCitySchema2(BaseModel):
     updated: UpdatedTimeByPartnerCitySchema
 
 
+class PartnerCitySchema3(BaseModel):
+    id: int
+    name: MultipleName = Field(alias='city_multiple_name')
+    code_name: str
+    country: MultipleName = Field(alias='country_multiple_name')
+    country_flag: str
+    info: PartnerCityInfoSchema2
+    updated: UpdatedTimeByPartnerCitySchema
+    max_amount: float
+    min_amount: float
+
+
 class CountrySchema(BaseModel):
     id: int
     name: str
@@ -132,6 +144,17 @@ class AddPartnerCitySchema2(BaseModel):
     # time_from: str
     # time_to: str
     working_days: dict
+
+
+class AddPartnerCitySchema3(BaseModel):
+    city: str
+    has_delivery: bool = Field(alias='delivery')
+    has_office: bool = Field(alias='office')
+    weekdays: WeekDaySchema
+    weekends: WeekDaySchema
+    working_days: dict
+    min_amount: float | None
+    max_amount: float | None
 
 
 class PartnerDirectionSchema(BaseModel):

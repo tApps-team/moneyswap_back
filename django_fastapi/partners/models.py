@@ -106,7 +106,13 @@ class PartnerCity(models.Model):
     time_update = models.DateTimeField('Время последнего обновления',
                                        null=True,
                                        default=None)
-    
+    max_amount = models.FloatField('Максимальное количество',
+                                   null=True,
+                                   default=None)
+    min_amount = models.FloatField('Минимальное количество',
+                                   null=True,
+                                   default=None)
+
     class Meta:
         #
         unique_together = (('exchange', 'city'),)
