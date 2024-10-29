@@ -55,8 +55,24 @@ test_partner_router = APIRouter(prefix='/test/partner',
 
 
 
+# @partner_router.get('/partner_cities',
+#                     response_model=list[PartnerCitySchema2],
+#                     response_model_by_alias=False)
+# def get_partner_cities(partner: partner_dependency):
+#     partner_id = partner.get('partner_id')
+
+#     partner_cities = PartnerCity.objects.select_related('exchange',
+#                                                         'city',
+#                                                         'city__country',
+#                                                         'exchange__account')\
+#                                         .prefetch_related('working_days')\
+#                                         .filter(exchange__account__pk=partner_id).all()
+
+#     return generate_partner_cities2(partner_cities)
+
+
 @partner_router.get('/partner_cities',
-                    response_model=list[PartnerCitySchema2],
+                    response_model=list[PartnerCitySchema3],
                     response_model_by_alias=False)
 def get_partner_cities(partner: partner_dependency):
     partner_id = partner.get('partner_id')
@@ -207,9 +223,57 @@ def get_account_info(partner: partner_dependency):
         return exchange
 
 
+# @partner_router.post('/add_partner_city')
+# def add_partner_city(partner: partner_dependency,
+#                      city: AddPartnerCitySchema2):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
+#     try:
+#         city_model = City.objects.get(code_name=city.city)
+#         exchange = Exchange.objects.select_related('account')\
+#                                     .get(account__pk=partner_id)
+#     except Exception:
+#         raise HTTPException(status_code=404)
+#     else:
+#         data = city.model_dump()
+#         data['city'] = city_model
+#         data['exchange'] = exchange
+
+#         working_days = data.pop('working_days')
+
+#         working_days_set = {working_day.capitalize() for working_day in working_days\
+#                             if working_days[working_day]}
+        
+#         weekdays = data.pop('weekdays')
+
+#         weekends = data.pop('weekends')
+
+#         data.update(
+#             {
+#                 'time_from': weekdays.get('time_from'),
+#                 'time_to': weekdays.get('time_to'),
+#                 'weekend_time_from': weekends.get('time_from'),
+#                 'weekend_time_to': weekends.get('time_to'),
+#             }
+#         )
+
+#         try:
+#             new_partner_city = PartnerCity.objects.create(**data)
+#             make_city_active(city_model)
+#         except IntegrityError:
+#             raise HTTPException(status_code=423, # ?
+#                                 detail='Такой город уже существует')
+#         else:
+#             new_partner_city.working_days\
+#                 .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
+#             # print(len(connection.queries))
+#             return {'status': 'success',
+#                     'details': f'Партнёрский город {city_model.name} добавлен'}
+
+
 @partner_router.post('/add_partner_city')
 def add_partner_city(partner: partner_dependency,
-                     city: AddPartnerCitySchema2):
+                     city: AddPartnerCitySchema3):
     # print(len(connection.queries))
     partner_id = partner.get('partner_id')
     try:
@@ -253,7 +317,7 @@ def add_partner_city(partner: partner_dependency,
             # print(len(connection.queries))
             return {'status': 'success',
                     'details': f'Партнёрский город {city_model.name} добавлен'}
-        
+
 
 @test_partner_router.post('/add_partner_city')
 def add_partner_city2(partner: partner_dependency,
@@ -303,9 +367,59 @@ def add_partner_city2(partner: partner_dependency,
                     'details': f'Партнёрский город {city_model.name} добавлен'}
 
 
+# @partner_router.patch('/edit_partner_city')
+# def edit_partner_city(partner: partner_dependency,
+#                        edited_city: AddPartnerCitySchema2):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
+
+#     partner_city = PartnerCity.objects.select_related('exchange',
+#                                                       'exchange__account',
+#                                                       'city')\
+#                                         .filter(exchange__account__pk=partner_id,
+#                                                 city__code_name=edited_city.city)
+#     if not partner_city:
+#         raise HTTPException(status_code=404)
+    
+#     data = edited_city.model_dump()
+#     working_days = data.pop('working_days')
+#     data.pop('city')
+
+#     weekdays = data.pop('weekdays')
+#     weekends = data.pop('weekends')
+
+#     data.update(
+#         {
+#             'time_from': weekdays.get('time_from'),
+#             'time_to': weekdays.get('time_to'),
+#             'weekend_time_from': weekends.get('time_from'),
+#             'weekend_time_to': weekends.get('time_to'),
+#         }
+#     )
+
+#     partner_city.update(**data)
+
+#     unworking_day_names = {working_day.capitalize() for working_day in working_days \
+#                             if not working_days[working_day]}
+    
+#     working_day_names = {working_day.capitalize() for working_day in working_days \
+#                          if working_days[working_day]}
+    
+#     partner_city = partner_city.first()
+
+#     partner_city.working_days.through.objects\
+#             .filter(workingday__code_name__in=unworking_day_names).delete()
+
+#     partner_city.working_days\
+#                 .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
+#     # print(len(connection.queries))
+#     return {'status': 'success',
+#             'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}
+
+
 @partner_router.patch('/edit_partner_city')
 def edit_partner_city(partner: partner_dependency,
-                       edited_city: AddPartnerCitySchema2):
+                       edited_city: AddPartnerCitySchema3):
     # print(len(connection.queries))
     partner_id = partner.get('partner_id')
 
@@ -351,6 +465,7 @@ def edit_partner_city(partner: partner_dependency,
     # print(len(connection.queries))
     return {'status': 'success',
             'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}
+
 
 
 @test_partner_router.patch('/edit_partner_city')
@@ -422,9 +537,44 @@ def delete_partner_city(partner: partner_dependency,
             'details': 'Партнёрский город удалён'}
 
 
+# @partner_router.post('/add_partner_direction')
+# def add_partner_direction(partner: partner_dependency,
+#                           new_direction: AddPartnerDirectionSchema2):
+#     partner_id = partner.get('partner_id')
+
+#     data = new_direction.model_dump()
+
+#     valute_from = data.pop('valute_from')
+#     valute_to = data.pop('valute_to')
+#     try:
+#         city = PartnerCity.objects.select_related('exchange',
+#                                                   'exchange__account',
+#                                                   'city')\
+#                                     .get(exchange__account__pk=partner_id,
+#                                         city__code_name=data['city'])    
+
+#         direction = CashDirection.objects.select_related('valute_from',
+#                                                         'valute_to')\
+#                                             .get(valute_from__code_name=valute_from,
+#                                                  valute_to__code_name=valute_to)
+#     except Exception:
+#         raise HTTPException(status_code=404)
+#     else:
+#         data['city'] = city
+#         data['direction'] = direction
+
+#         try:
+#             Direction.objects.create(**data)
+#             return {'status': 'success',
+#                     'details': f'Партнерское направление {direction.display_name} добавлено'}
+#         except IntegrityError:
+#             raise HTTPException(status_code=423,
+#                                 detail='Такое направление уже существует')
+
+
 @partner_router.post('/add_partner_direction')
 def add_partner_direction(partner: partner_dependency,
-                          new_direction: AddPartnerDirectionSchema2):
+                          new_direction: AddPartnerDirectionSchema):
     partner_id = partner.get('partner_id')
 
     data = new_direction.model_dump()
@@ -455,6 +605,7 @@ def add_partner_direction(partner: partner_dependency,
         except IntegrityError:
             raise HTTPException(status_code=423,
                                 detail='Такое направление уже существует')
+
         
 
 @test_partner_router.post('/add_partner_direction')
