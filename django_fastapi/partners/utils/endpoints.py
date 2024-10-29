@@ -126,8 +126,8 @@ def get_partner_directions(valute_from: str,
 
     for direction in directions:
         city: PartnerCity = direction.city
-        min_amount = str(city.min_amount) if city.min_amount else None
-        max_amount = str(city.max_amount) if city.max_amount else None
+        min_amount = str(int(city.min_amount)) if city.min_amount else None
+        max_amount = str(int(city.max_amount)) if city.max_amount else None
 
         direction.exchange = city.exchange
         direction.exchange_marker = 'partner'
@@ -190,8 +190,8 @@ def get_partner_directions_with_location(valute_from: str,
 
     for direction in directions:
         city: PartnerCity = direction.city
-        min_amount = str(city.min_amount) if city.min_amount else None
-        max_amount = str(city.max_amount) if city.max_amount else None
+        min_amount = str(int(city.min_amount)) if city.min_amount else None
+        max_amount = str(int(city.max_amount)) if city.max_amount else None
 
         direction.exchange = direction.city.exchange
         direction.exchange_marker = 'partner'

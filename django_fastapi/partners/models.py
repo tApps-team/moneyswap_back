@@ -86,11 +86,12 @@ class PartnerCity(models.Model):
     has_office = models.BooleanField('Есть ли офис?', default=False)
     working_days = models.ManyToManyField(WorkingDay,
                                           related_name='working_days_cities',
-                                          verbose_name='Рабочие дни')
+                                          verbose_name='Рабочие дни',
+                                          blank=True)
     time_from = models.CharField('Работаем с ',
                                  max_length=50,
                                  null=True,
-                                 default=None) 
+                                 default=None)
     time_to = models.CharField('Работаем до ',
                                max_length=50,
                                null=True,
@@ -107,9 +108,11 @@ class PartnerCity(models.Model):
                                        null=True,
                                        default=None)
     max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
                                    null=True,
                                    default=None)
     min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
                                    null=True,
                                    default=None)
 

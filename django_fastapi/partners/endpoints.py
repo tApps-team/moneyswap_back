@@ -455,13 +455,14 @@ def edit_partner_city(partner: partner_dependency,
     working_day_names = {working_day.capitalize() for working_day in working_days \
                          if working_days[working_day]}
     
-    partner_city = partner_city.first()
+    with transaction.atomic():
+        partner_city = partner_city.first()
 
-    partner_city.working_days.through.objects\
-            .filter(workingday__code_name__in=unworking_day_names).delete()
+        partner_city.working_days.through.objects\
+                .filter(workingday__code_name__in=unworking_day_names).delete()
 
-    partner_city.working_days\
-                .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
+        partner_city.working_days\
+                    .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
     # print(len(connection.queries))
     return {'status': 'success',
             'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}

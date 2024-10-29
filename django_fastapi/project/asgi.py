@@ -40,7 +40,7 @@ def get_application() -> FastAPI:
     api_router.include_router(cash_router)
     api_router.include_router(auth_router)
     api_router.include_router(partner_router)
-    api_router.include_router(test_partner_router)
+    # api_router.include_router(test_partner_router)
 
     app.add_exception_handler(CustomJSONException,
                               my_json_exception_handle)
