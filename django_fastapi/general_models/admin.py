@@ -438,6 +438,9 @@ class BaseDirectionAdmin(admin.ModelAdmin):
         'popular_count',
     )
 
+    autocomplete_fields = ['valute_from',
+                           'valute_to']
+
     def get_direction_name(self, obj):
         return f'{obj.valute_from} -> {obj.valute_to}'
     
