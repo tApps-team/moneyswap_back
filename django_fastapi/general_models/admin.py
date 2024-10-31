@@ -125,10 +125,15 @@ class GuestAdmin(admin.ModelAdmin):
                                                                 .aggregate(count=Sum('count'))
         partner_count = partner_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
                                                                 .aggregate(count=Sum('count'))
+        
+        sum_count = [count for count in (no_cash_count,
+                                         cash_count,
+                                         partner_count) if count is not None]
 
-        res = no_cash_count['count'] +\
-                cash_count['count'] +\
-                partner_count['count']
+        # res = no_cash_count['count'] +\
+        #         cash_count['count'] +\
+        #         partner_count['count']
+        res = sum(sum_count) if sum_count else 0
         # print(res)
         return res
     
