@@ -179,7 +179,7 @@ class DirectionAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         field = super().formfield_for_foreignkey(db_field, request, **kwargs)
         
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             pass
         else:
             if db_field.name == 'city':
@@ -211,7 +211,7 @@ class DirectionAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request: HttpRequest) -> bool:
         # print(request.user.groups.all())
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             return False
         else:
             account = get_or_set_user_account_cache(request.user)
@@ -234,7 +234,7 @@ class DirectionAdmin(admin.ModelAdmin):
                                             'city__city',
                                             'city__exchange')
 
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             pass
         else:
             account = get_or_set_user_account_cache(request.user)
@@ -374,7 +374,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
 
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         if not change:
-            if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+            if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
                 pass
             else:
                 account = get_or_set_user_account_cache(request.user)
@@ -412,7 +412,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
     
     def has_add_permission(self, request: HttpRequest) -> bool:
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             return False
         else:
             account = get_or_set_user_account_cache(request.user)
@@ -438,7 +438,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)\
                             .select_related('city',
                                             'exchange')
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             pass
         else:
             account = get_or_set_user_account_cache(request.user)
@@ -489,7 +489,7 @@ class CommentAdmin(BaseCommentAdmin):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
 
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
                 pass
         else:
             account = get_or_set_user_account_cache(request.user)
@@ -535,7 +535,7 @@ class ReviewAdmin(BaseReviewAdmin):
         ]
 
     def has_add_permission(self, request: HttpRequest) -> bool:
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             return super().has_add_permission(request)
         else:
             return False
@@ -547,7 +547,7 @@ class ReviewAdmin(BaseReviewAdmin):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
 
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             pass
         else:
             account = get_or_set_user_account_cache(request.user)
@@ -614,7 +614,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             pass
         else:
             readonly_fields = ('partner_link', ) + readonly_fields
@@ -622,7 +622,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         return readonly_fields + ('link_count', 'is_available')
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             queryset = super().get_queryset(request)\
                             .select_related('account', 'account__user')
         else:
@@ -688,7 +688,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     
     def has_add_permission(self, request: HttpRequest) -> bool:
         perms = super().has_add_permission(request)
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             pass
         else:
             account = get_or_set_user_account_cache(request.user)
@@ -705,7 +705,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         # return super().has_add_permission(request)
     
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
-        if request.user.is_superuser or (request.user.groups.filter(name='Модераторы').exists()):
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             return super().save_model(request, obj, form, change)
         else:
             if not change:
