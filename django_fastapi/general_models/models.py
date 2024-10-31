@@ -119,6 +119,11 @@ class Guest(models.Model):
                                  blank=True,
                                  null=True,
                                  default=None)
+    utm_source = models.CharField('Ресурс, с которого пришёл пользователь',
+                                  max_length=64,
+                                  null=True,
+                                  blank=True,
+                                  default=None)
 
     class Meta:
         verbose_name = 'Гостевой пользователь'
