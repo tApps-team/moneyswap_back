@@ -458,8 +458,11 @@ def edit_partner_city(partner: partner_dependency,
     with transaction.atomic():
         partner_city = partner_city.first()
 
-        partner_city.working_days.through.objects\
-                .filter(workingday__code_name__in=unworking_day_names).delete()
+        # partner_city.working_days.through.objects\
+        #         .filter(workingday__code_name__in=unworking_day_names).delete()
+        partner_city.working_days\
+                    .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
+
 
         partner_city.working_days\
                     .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
