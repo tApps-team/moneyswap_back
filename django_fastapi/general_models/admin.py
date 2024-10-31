@@ -115,6 +115,7 @@ class GuestAdmin(admin.ModelAdmin):
 
     readonly_fields = (
         'link_count',
+        'utm_source',
     )
 
     def link_count(self, obj):
