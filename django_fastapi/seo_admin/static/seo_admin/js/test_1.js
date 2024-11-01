@@ -3,7 +3,7 @@ window.addEventListener('load', function () {
     let name = document.getElementById('id_name');
 
     if (name) {
-        let name_send = name.textContent;
+        let name_send = name.value;
         console.log(name_send);
     }
 
