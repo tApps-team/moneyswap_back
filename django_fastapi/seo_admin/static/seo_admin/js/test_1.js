@@ -1,6 +1,7 @@
 window.addEventListener('load', function () {
     let is_detail_view = document.getElementsByClassName('change-form').length;
     let name = document.getElementById('id_name');
+    console.log(name);
 
     if (name) {
         let name_send = name.value;
