@@ -653,7 +653,10 @@ def get_all_directions_by_exchange(exchange_id: int,
                                                                filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
                                                                         direction__exchange_directions__is_active=True,
                                                                         direction__exchange_directions__exchange__is_active=True)))\
-                                                                        
+
+    if exchange_marker == 'both':
+        exchange_marker = 'no_cash'
+
     if exchange_marker != 'no_cash':
         prefetch_queryset = Prefetch('direction__partner_directions',
                                      partner_models.Direction.objects.filter(is_active=True,
