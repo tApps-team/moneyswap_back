@@ -570,6 +570,8 @@ def get_exchange_direction_list_with_location(queries: List[NoCashExDir | CashEx
 
 def get_exchange_directions(exchange: QuerySet[BaseExchange],
                             exchange_marker: str):
+    if exchange_marker == 'both':
+        exchange_marker = 'no_cash'
     # print(exchange)
     match exchange_marker:
         case 'partner':
