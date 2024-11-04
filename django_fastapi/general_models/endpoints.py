@@ -71,6 +71,9 @@ from .schemas import (PopularDirectionSchema,
 
 common_router = APIRouter(tags=['Общее'])
 
+test_router = APIRouter(prefix='/test',
+                          tags=['Общее(Changed)'])
+
 #
 review_router = APIRouter(prefix='/reviews',
                           tags=['Отзывы'])
@@ -512,11 +515,104 @@ def get_exchange_list():
                   key=lambda el: el.get('name'))
 
 
+# новый exchange_marker 'both'
+@test_router.get('/exchange_list',
+                   response_model=list[CommonExchangeSchema],
+                   response_model_by_alias=False)
+def get_exchange_list2():
+
+    review_counts = get_reviews_count_filters(marker='exchange')
+    
+    queries = []
+
+    for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
+                                            ('cash', cash_models.Exchange),
+                                            ('partner', partner_models.Exchange)):
+        exchange_query = exchange_model.objects\
+                                    .annotate(positive_review_count=review_counts['positive'])\
+                                    .annotate(neutral_review_count=review_counts['neutral'])\
+                                    .annotate(negative_review_count=review_counts['negative'])\
+                                    .annotate(exchange_marker=annotate_string_field(exchange_marker))\
+                                    .values('pk',
+                                            'name',
+                                            'reserve_amount',
+                                            'course_count',
+                                            'positive_review_count',
+                                            'neutral_review_count',
+                                            'negative_review_count',
+                                            'is_active',
+                                            'exchange_marker',
+                                            'partner_link')\
+                                    .all()
+        queries.append(exchange_query)
+
+    exchange_list = queries[0].union(queries[1])\
+                                .union(queries[2])
+    
+    exchange_dict = {}
+    exchange_name_set = set()
+
+    for exchange in exchange_list:
+        exchange_name = exchange.get('name').lower()   # lower() для name !
+
+        if exchange_name in exchange_name_set:
+            exchange_marker = exchange['exchange_marker']
+            exchange_dict[exchange_name]['exchange_marker'] = 'both'
+
+            if exchange_marker == 'no_cash':
+                exchange_dict[exchange_name]['pk'] = exchange['pk'] # id no_cash обменников
+        else:
+            exchange_name_set.add(exchange_name)
+
+            exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
+                                                    neutral=exchange['neutral_review_count'],
+                                                    negative=exchange['neutral_review_count'])
+            
+            exchange_dict[exchange_name] = exchange
+
+    # print(len(connection.queries))
+    # return sorted(exchange_list,
+                #   key=lambda el: el.get('name'))
+    return sorted(exchange_dict.values(),
+                  key=lambda el: el.get('name'))
+
+
+
 @common_router.get('/exchange_detail',
                    response_model=DetailExchangeSchema,
                    response_model_by_alias=False)
 def get_exchange_detail_info(exchange_id: int,
                              exchange_marker: str):
+    review_counts = get_reviews_count_filters(marker='exchange')
+
+    exchange = get_exchange(exchange_id,
+                            exchange_marker,
+                            review_counts=review_counts)
+    exchange = exchange.first()
+
+    exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
+                                            neutral=exchange.neutral_review_count,
+                                            negative=exchange.negative_review_count)
+    exchange.icon = try_generate_icon_url(exchange)
+    
+    if exchange.course_count is None or not exchange.course_count.isdigit():
+        exchange.course_count = None
+    else:
+        exchange.course_count = int(exchange.course_count)
+    
+    return exchange
+
+
+@test_router.get('/exchange_detail',
+                   response_model=DetailExchangeSchema,
+                   response_model_by_alias=False)
+def get_exchange_detail_info2(exchange_id: int,
+                             exchange_marker: str):
+    # is_both = None
+    # if exchange_marker == 'both':
+    #     exchange_marker = 'no_cash'
+    #     is_both = True
+
     review_counts = get_reviews_count_filters(marker='exchange')
 
     exchange = get_exchange(exchange_id,
@@ -593,6 +689,77 @@ def get_all_directions_by_exchange(exchange_id: int,
     # print(connection.queries)
     # print(len(connection.queries))
     return exchange_direction_list
+
+
+# @test_router.get('/direction_pair_by_exchange',
+#                    response_model=list[DirectionSideBarSchema],
+#                    response_model_by_alias=False)
+# def get_all_directions_by_exchange2(exchange_id: int,
+#                                    exchange_marker: str):
+#     # print(len(connection.queries))
+#     exchange = get_exchange(exchange_id,
+#                             exchange_marker)
+    
+#     exchange_directions_queryset = get_exchange_directions(exchange,
+#                                                            exchange_marker)
+    
+#     if isinstance(exchange_directions_queryset, tuple):
+#         for exchange_directions in exchange_directions_queryset:
+#             exchange_directions = exchange_directions_queryset\
+#                                             .select_related('direction',
+#                                                             'direction__valute_from',
+#                                                             'direction__valute_to')\
+#                                             .annotate(pair_count=Count('direction__exchange_directions',
+#                                                                     filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
+#                                                                                 direction__exchange_directions__is_active=True,
+#                                                                                 direction__exchange_directions__exchange__is_active=True)))\
+                                                                        
+
+
+#     exchange_directions = exchange_directions_queryset\
+#                                     .select_related('direction',
+#                                                     'direction__valute_from',
+#                                                     'direction__valute_to')\
+#                                     .annotate(pair_count=Count('direction__exchange_directions',
+#                                                                filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
+#                                                                         direction__exchange_directions__is_active=True,
+#                                                                         direction__exchange_directions__exchange__is_active=True)))\
+                                                                        
+#     if exchange_marker != 'no_cash':
+#         prefetch_queryset = Prefetch('direction__partner_directions',
+#                                      partner_models.Direction.objects.filter(is_active=True,
+#                                                                              pk=F('pk')))
+#         exchange_directions = exchange_directions.prefetch_related(prefetch_queryset)
+
+#     check_direction_id_set = set()
+#     exchange_direction_list = []
+
+#     for exchange_direction in exchange_directions:
+#         if exchange_direction.direction_id not in check_direction_id_set:
+#             # exchange_direction_list.append(exchange_direction)
+#             check_direction_id_set.add(exchange_direction.direction_id)
+        
+#             valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
+#             exchange_direction.direction.valute_from.icon_url = valute_from_icon
+
+#             valute_to_icon = try_generate_icon_url(exchange_direction.direction.valute_to)
+#             exchange_direction.direction.valute_to.icon_url = valute_to_icon
+
+#             exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
+#             exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
+#             exchange_direction.direction_type = 'no_cash'
+            
+#             if exchange_marker != 'no_cash':
+#                 exchange_direction.direction_type = 'cash'
+#                 similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
+#                 exchange_direction.pair_count += similar_partner_direction_count
+
+#             if exchange_direction.pair_count > 0:
+#                 exchange_direction_list.append(exchange_direction)
+
+#     # print(connection.queries)
+#     # print(len(connection.queries))
+#     return exchange_direction_list
     
 
 @common_router.post('/feedback_form')
@@ -691,7 +858,11 @@ def get_reviews_by_exchange(exchange_id: int,
                             page: int,
                             element_on_page: int = None,
                             grade_filter: int = None):
+    if exchange_marker == 'both':     # !
+        exchange_marker = 'no_cash'
+
     check_exchage_marker(exchange_marker)
+
     if page < 1:
         raise HTTPException(status_code=400,
                             detail='Параметр "page" должен быть положительным числом')
@@ -707,7 +878,7 @@ def get_reviews_by_exchange(exchange_id: int,
         case 'cash':
             review_model = cash_models.Review
         case 'partner':
-            review_model = partner_models.Review  
+            review_model = partner_models.Review
 
     reviews = review_model.objects.select_related('guest')\
                                     .annotate(comment_count=Count('admin_comments'))\

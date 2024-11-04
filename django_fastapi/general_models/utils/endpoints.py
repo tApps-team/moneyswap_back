@@ -268,6 +268,9 @@ def get_exchange(exchange_id: int,
                  exchange_marker: str,
                  review_counts: dict[str, Count] = None):
     # print(len(connection.queries))
+    if exchange_marker == 'both':     # !
+        exchange_marker = 'no_cash'
+
     exchange_model: BaseExchange = EXCHANGE_MARKER_DICT.get(exchange_marker)
 
     if not exchange_model:
@@ -575,10 +578,20 @@ def get_exchange_directions(exchange: QuerySet[BaseExchange],
                                                                                   'direction')\
                                                                 .filter(city__exchange__in=exchange,
                                                                         is_active=True)
+        # case 'both':
+        #     exchange = exchange.first()
+        #     cash_exchange_directions = cash_models.ExchangeDirection.objects\
+        #                                                         .select_related('exchange')\
+        #                                                         .filter(exchange__name__icontains=f'{exchange.name}',
+        #                                                                 is_active=True)
+        #     no_cash_exchange_directions = exchange.directions
+
+        #     exchange_directions = (no_cash_exchange_directions, cash_exchange_directions)
         case _:
             exchange_directions = exchange.first().directions
         
     return exchange_directions
+
 
 def get_valute_json(queries: List[NoCashExDir | CashExDir]):
     
