@@ -154,12 +154,21 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                     fromfee = None if not fromfee else fromfee[0]
                     param = None if not param else param[0]
 
+                    # min_amount = element.xpath('./minamount/text()')
+                    if not (min_amount := element.xpath('./minamount/text()')):
+                        min_amount = element.xpath('./minAmount/text()')
+
+                    # max_amount = element.xpath('./maxamount/text()')
+                    if not (max_amount := element.xpath('./maxamount/text()')):
+                        max_amount = element.xpath('./maxAmount/text()')
+
+
                     try:
                         d = {
                             'in_count': element.xpath('./in/text()')[0],
                             'out_count': element.xpath('./out/text()')[0],
-                            'min_amount': element.xpath('./minamount/text()')[0],
-                            'max_amount': element.xpath('./maxamount/text()')[0],
+                            'min_amount': min_amount[0],
+                            'max_amount': max_amount[0],
                             # 'fromfee': fromfee,
                             # 'params': param,
                             'is_active': True,

@@ -138,7 +138,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
         else:
             print('NOT CHANGE!!!!')
             super().save_model(request, obj, form, change)
-            parse_reviews_for_exchange.delay(obj.en_name, 'no_cash')
+            # parse_reviews_for_exchange.delay(obj.en_name, 'no_cash')
 
 
 #Отображение направлений в админ панели
