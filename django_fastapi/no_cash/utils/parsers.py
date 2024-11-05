@@ -82,12 +82,20 @@ def parse_xml_to_dict(dict_for_parse: dict,
                         # direction_id = dict_for_parse.pop(key)
                         direction = dict_for_parse.pop(key)
 
+                        # min_amount = element.xpath('./minamount/text()')
+                        if not (min_amount := element.xpath('./minamount/text()')):
+                            min_amount = element.xpath('./minAmount/text()')
+
+                        # max_amount = element.xpath('./maxamount/text()')
+                        if not (max_amount := element.xpath('./maxamount/text()')):
+                            max_amount = element.xpath('./maxAmount/text()')
+
                         try:
                             d = {
                                 'in_count': element.xpath('./in/text()')[0],
                                 'out_count': element.xpath('./out/text()')[0],
-                                'min_amount': element.xpath('./minamount/text()')[0],
-                                'max_amount': element.xpath('./maxamount/text()')[0],
+                                'min_amount': min_amount[0],
+                                'max_amount': max_amount[0],
                                 'is_active': True,
                                 # 'direction_id': direction_id,
                             }
