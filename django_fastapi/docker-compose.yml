@@ -139,7 +139,7 @@ services:
       - redis_db
       - psql_db
       # - rabbitmq3
-    cpus: '2.0'
+    cpus: '1.5'
     logging:
       driver: "json-file"
       options:
@@ -199,7 +199,7 @@ services:
       - ./.env
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    command: postgres -c max_connections=2000
+    command: postgres -c max_connections=200
     logging:
       driver: "json-file"
       options:
