@@ -370,7 +370,7 @@ class BaseExchange(models.Model):
                                null=True,
                                default=None)
     partner_link = models.CharField('Партнёрская ссылка',
-                                    max_length=50,
+                                    max_length=255,
                                     blank=True,
                                     null=True,
                                     default=None)
