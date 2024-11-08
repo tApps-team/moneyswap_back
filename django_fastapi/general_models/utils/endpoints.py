@@ -496,7 +496,7 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
             add_location_to_exchange_direction(exchange_direction,
                                                query)
             
-        try_convert_course_with_frofee(exchange_direction)
+        # try_convert_course_with_frofee(exchange_direction)
         round_valute_values(exchange_direction)
 
         direction_list.append(exchange_direction)

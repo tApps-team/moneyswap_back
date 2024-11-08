@@ -45,8 +45,8 @@ def make_valid_values_for_dict(dict_for_exchange_direction: dict):
             defferent = (in_count / 100) * fromfee
             in_count = in_count - defferent  
     
-    dict_for_exchange_direction['in_count'] = in_count
-    dict_for_exchange_direction['out_count'] = out_count
+    dict_for_exchange_direction['in_count'] = round(in_count, 2)
+    dict_for_exchange_direction['out_count'] = round(out_count, 2)
 
 
 #Type hinting for 'try_update_courses' function
