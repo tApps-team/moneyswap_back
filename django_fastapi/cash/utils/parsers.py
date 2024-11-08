@@ -101,8 +101,8 @@ def parse_xml_to_dict(dict_for_parse: dict,
                                 max_amount = element.xpath('./maxAmount/text()')
 
                             try:
-                                if fromfee and not fromfee.isdigit():
-                                    fromfee = None
+                                # if fromfee and not fromfee.isdigit():
+                                #     fromfee = None
                                     
                                 d = {
                                     'in_count': element.xpath('./in/text()')[0],
@@ -184,6 +184,11 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                                 param = element.xpath('./param/text()')
 
                                 fromfee = None if not fromfee else fromfee[0]
+                                if fromfee:
+                                    fromfee: str
+                                    if fromfee.endswith('%'):
+                                        fromfee = float(fromfee[:-1].strip())
+
                                 param = None if not param else param[0]
 
                                 # min_amount = element.xpath('./minamount/text()')
@@ -195,8 +200,8 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                                     max_amount = element.xpath('./maxAmount/text()')
 
                                 try:
-                                    if fromfee is not None:
-                                        fromfee = fromfee if fromfee.isdigit() else None
+                                    # if fromfee is not None:
+                                    #     fromfee = fromfee if fromfee.isdigit() else None
 
                                     d = {
                                         'in_count': element.xpath('./in/text()')[0],
