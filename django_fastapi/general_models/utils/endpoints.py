@@ -413,11 +413,11 @@ def try_convert_course_with_frofee(exchange_direction: dict):
         if in_count == 1:
             different = (out_count / 100) * fromfee
             out_count = out_count - different
-            exchange_direction['out_count'] = out_count
+            exchange_direction['out_count'] = round(out_count, 2)
         else:
             different = (in_count / 100) * fromfee
             in_count = in_count - different
-            exchange_direction['in_count'] = in_count
+            exchange_direction['in_count'] = round(in_count, 2)
 
 
 def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
@@ -496,8 +496,8 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
             add_location_to_exchange_direction(exchange_direction,
                                                query)
             
-        round_valute_values(exchange_direction)
         try_convert_course_with_frofee(exchange_direction)
+        round_valute_values(exchange_direction)
 
         direction_list.append(exchange_direction)
 
