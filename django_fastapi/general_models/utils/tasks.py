@@ -30,16 +30,20 @@ def make_valid_values_for_dict(dict_for_exchange_direction: dict):
     out_count = float(dict_for_exchange_direction['out_count'])
     
     if in_count != 1:
-        # in_count = 1
         out_count = out_count / in_count
         in_count = 1
 
     if out_count < 1:
         in_count = 1 / out_count
         out_count = 1
-        # in_count *= k
-        # dict_for_exchange_direction['in_count'] = in_count
-        # dict_for_exchange_direction['out_count'] = out_count
+
+    if fromfee := dict_for_exchange_direction.get('fromfee'):
+        if in_count == 1:
+            defferent = (out_count / 100) * fromfee
+            out_count = out_count - defferent
+        else:
+            defferent = (in_count / 100) * fromfee
+            in_count = in_count - defferent  
     
     dict_for_exchange_direction['in_count'] = in_count
     dict_for_exchange_direction['out_count'] = out_count

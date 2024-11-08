@@ -141,6 +141,8 @@ def get_current_exchange_directions(request: Request,
         exchange_direction_list = no_cash_exchange_directions(request, params)
     else:
         exchange_direction_list = cash_exchange_directions(request, params)
+        # exchange_direction_list = sorted(exchange_direction_list,
+        #                                  key=lambda el: (el.get('in_count')))
     
     return exchange_direction_list
 
