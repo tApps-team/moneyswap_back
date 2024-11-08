@@ -37,13 +37,11 @@ def premoderation_custom_order(sender, instance, **kwargs):
         user_id = instance.guest_id
 
         data = {
-            'request_state': instance.request_state,
-            'country': instance.country,
-            'amount': instance.amount,
-            'comment': instance.comment,
+            'user_id': instance.guest_id,
+            'order_id': instance.pk,
         }
-        request_to_bot_swift_sepa(user_id,
-                                  data)
+
+        request_to_bot_swift_sepa(data)
         # print(user_id)
 
 

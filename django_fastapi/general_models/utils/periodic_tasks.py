@@ -88,14 +88,11 @@ async def request_to_xml_file(xml_url: str):
                     is_active = False
                 return (is_active, xml_file)
             
-def request_to_bot_swift_sepa(user_id: int,
-                              data: dict):
-    async_to_sync(request_to_bot_send_swift_sepa)(user_id,
-                                                  data)
+def request_to_bot_swift_sepa(data: dict):
+    async_to_sync(request_to_bot_send_swift_sepa)(data)
 
 
-async def request_to_bot_send_swift_sepa(user_id: int,
-                                         data: dict):
+async def request_to_bot_send_swift_sepa(data: dict):
     _url = 'https://api.moneyswap.online/test_swift_sepa'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
