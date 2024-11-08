@@ -216,6 +216,11 @@ class MassSendFile(models.Model):
 
 # Модель Заявок(Swify/Sepa) гостевых пользователей
 class CustomOrder(models.Model):
+    status_choice = (
+        ('Модерация', 'Модерация'),
+        ('В обработке', 'В обработке'),
+        ('Завершен', 'Завершен'),
+    )
     request_type = models.CharField('Тип заявки',
                                     max_length=255)
     country = models.CharField('Страна',
@@ -229,6 +234,12 @@ class CustomOrder(models.Model):
                               related_name='custom_orders')
     time_create = models.DateTimeField('Время создания',
                                        auto_now_add=True)
+    status = models.CharField('Статус модерации',
+                              max_length=255,
+                              choices=status_choice,
+                              default='Модерация')
+    moderation = models.BooleanField('Прошел модерацию',
+                                     default=False)
 
     class Meta:
         verbose_name = 'Завка пользователя'

@@ -196,6 +196,7 @@ def round_valute_values(exchange_direction_dict: dict):
         
         exchange_direction_dict['min_amount'] = f'{min_amount}'
         exchange_direction_dict['max_amount'] = f'{max_amount}'
+
     except Exception:
         pass
 
@@ -404,6 +405,21 @@ def get_valid_partner_link(partner_link: str | None):
     return partner_link
 
 
+def try_convert_course_with_frofee(exchange_direction: dict):
+    if fromfee := exchange_direction.get('fromfee'):
+        in_count = float(exchange_direction.get('in_count'))
+        out_count = float(exchange_direction.get('out_count'))
+
+        if in_count == 1:
+            different = (out_count / 100) * fromfee
+            out_count = out_count - different
+            exchange_direction['out_count'] = out_count
+        else:
+            different = (in_count / 100) * fromfee
+            in_count = in_count - different
+            exchange_direction['in_count'] = in_count
+
+
 def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
                                 valute_from: str,
                                 valute_to: str,
@@ -481,6 +497,8 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
                                                query)
             
         round_valute_values(exchange_direction)
+        try_convert_course_with_frofee(exchange_direction)
+
         direction_list.append(exchange_direction)
 
     # print(len(connection.queries))

@@ -87,3 +87,21 @@ async def request_to_xml_file(xml_url: str):
                 if root.text == 'Техническое обслуживание':
                     is_active = False
                 return (is_active, xml_file)
+            
+def request_to_bot_swift_sepa(user_id: int,
+                              data: dict):
+    async_to_sync(request_to_bot_send_swift_sepa)(user_id,
+                                                  data)
+
+
+async def request_to_bot_send_swift_sepa(user_id: int,
+                                         data: dict):
+    _url = 'https://api.moneyswap.online/test_swift_sepa'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(_url,
+                                data=data,
+                               timeout=timeout) as response:
+            res = await response.json()
+
+            print(res)

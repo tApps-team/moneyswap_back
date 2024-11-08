@@ -149,11 +149,22 @@ class CustomOrderAdmin(admin.ModelAdmin):
     list_display = (
         'guest',
         'request_type',
+        'has_moderation',
+        'time_create',
         )
     
     readonly_fields = (
         'time_create',
         )
+    ordering = (
+        '-time_create',
+        'moderation',
+    )
+
+    def has_moderation(self, obj):
+        return obj.status != 'Модерация' and obj.moderation
+    
+    has_moderation.boolean = True
 
 
 #Отображение валют в админ панели

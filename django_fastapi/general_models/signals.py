@@ -7,8 +7,9 @@ from django.dispatch import receiver
 
 from partners.models import CustomUser
 
-from .models import Valute
+from .models import Valute, CustomOrder
 from .utils.base import get_actual_datetime
+from .utils.periodic_tasks import request_to_bot_swift_sepa
 
 
 #Сигнал для автоматической установки английского названия
@@ -25,6 +26,25 @@ def add_fields_for_user(sender, instance, **kwargs):
     if not instance.is_superuser:
         instance.is_active = True
         instance.is_staff = True
+
+
+@receiver(pre_save, sender=CustomOrder)
+def premoderation_custom_order(sender, instance, **kwargs):
+    if instance.moderation and instance.status == 'Модерация':
+        # print('True')
+        instance.status = 'В обработке'
+
+        user_id = instance.guest_id
+
+        data = {
+            'request_state': instance.request_state,
+            'country': instance.country,
+            'amount': instance.amount,
+            'comment': instance.comment,
+        }
+        request_to_bot_swift_sepa(user_id,
+                                  data)
+        # print(user_id)
 
 
 #Сигнал для создания связующей модели (пользователь + наличный обменник)
