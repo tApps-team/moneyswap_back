@@ -101,6 +101,4 @@ async def request_to_bot_send_swift_sepa(data: dict):
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,
                                timeout=timeout) as response:
-            res = await response.json()
-
-            print(res)
+            pass
