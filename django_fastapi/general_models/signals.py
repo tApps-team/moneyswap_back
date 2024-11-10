@@ -40,8 +40,12 @@ def premoderation_custom_order(sender, instance, **kwargs):
             'user_id': instance.guest_id,
             'order_id': instance.pk,
         }
-
-        request_to_bot_swift_sepa(data)
+        try:
+            request_to_bot_swift_sepa(data)
+        except Exception as ex:
+            pass
+        else:
+            instance.status = 'Завершен'
         # print(user_id)
 
 
