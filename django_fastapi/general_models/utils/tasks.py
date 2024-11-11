@@ -39,10 +39,10 @@ def make_valid_values_for_dict(dict_for_exchange_direction: dict):
 
     if fromfee := dict_for_exchange_direction.get('fromfee'):
         if in_count == 1:
-            defferent = (out_count / 100) * fromfee
+            defferent = out_count / 100 * fromfee
             out_count = out_count - defferent
         else:
-            defferent = (in_count / 100) * fromfee
+            defferent = in_count / 100 * fromfee
             in_count = in_count - defferent  
     
     dict_for_exchange_direction['in_count'] = round(in_count, 2)
