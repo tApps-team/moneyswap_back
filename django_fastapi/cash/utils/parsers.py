@@ -84,7 +84,6 @@ def parse_xml_to_dict(dict_for_parse: dict,
                             param = element.xpath('./param/text()')
 
                             fromfee = None if not fromfee else fromfee[0]
-                            print('fromfee',fromfee, sep='***')
                             
                             if fromfee:
                                 fromfee: str
