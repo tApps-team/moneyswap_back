@@ -43,6 +43,7 @@ def premoderation_custom_order(sender, instance, **kwargs):
         try:
             request_to_bot_swift_sepa(data)
         except Exception as ex:
+            print(ex)
             pass
         else:
             instance.status = 'Завершен'
