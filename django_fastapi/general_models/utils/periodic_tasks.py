@@ -79,6 +79,10 @@ async def request_to_xml_file(xml_url: str):
             content_type = response.headers['Content-Type']
 
             if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
+
+                if xml_url == 'https://alfa.exchange/request-exportxml.xml?lang=ru':
+                    print('test22', content_type, await response.text(), sep='***')
+
                 raise RobotCheckError(f'{xml_url} требует проверку на робота')
             else:
                 xml_file = await response.text()
@@ -88,6 +92,7 @@ async def request_to_xml_file(xml_url: str):
                     is_active = False
                 return (is_active, xml_file)
             
+
 def request_to_bot_swift_sepa(data: dict):
     async_to_sync(request_to_bot_send_swift_sepa)(data)
 
