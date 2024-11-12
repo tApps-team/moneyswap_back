@@ -158,12 +158,12 @@ class Direction(models.Model):
 
     in_count = models.DecimalField('Сколько отдаём',
                                    max_digits=20,
-                                   decimal_places=2,
+                                   decimal_places=5,
                                    null=True,
                                    default=None)
     out_count = models.DecimalField('Сколько получаем',
                                     max_digits=20,
-                                    decimal_places=2,
+                                    decimal_places=5,
                                     null=True,
                                     default=None)
     time_update = models.DateTimeField('Последнее обновление',

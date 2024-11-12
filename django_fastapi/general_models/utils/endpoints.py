@@ -32,9 +32,12 @@ from general_models.utils.http_exc import review_exception_json
 
 round_valute_dict = {
     'BTC': 5,
-    'ETH': 3,
-    'Криптовалюта': 2,
+    # 'ETH': 3,
+    'Криптовалюта': 3,
+    'Наличные': 3,
 }
+
+DEFAUT_ROUND = 3
 
 
 EXCHANGE_MARKER_DICT = {
@@ -178,24 +181,44 @@ def round_valute_values(exchange_direction_dict: dict):
     '''
 
     try:
+        # print('1',exchange_direction_dict)
         valute_from = exchange_direction_dict['valute_from']
         type_valute_from = exchange_direction_dict['type_valute_from']
+
+        valute_to = exchange_direction_dict['valute_to']
+        type_valute_to = exchange_direction_dict['type_valute_to']
         
         min_amount = float(exchange_direction_dict['min_amount'].split()[0])
         max_amount = float(exchange_direction_dict['max_amount'].split()[0])
+        in_count = exchange_direction_dict.get('in_count')
+        out_count = exchange_direction_dict.get('out_count')
 
         if valute_from in round_valute_dict:
             min_amount = round(min_amount, round_valute_dict[valute_from])
             max_amount = round(max_amount, round_valute_dict[valute_from])
+            out_count = round(out_count, round_valute_dict[valute_from])
         elif type_valute_from in round_valute_dict:
             min_amount = round(min_amount, round_valute_dict[type_valute_from])
             max_amount = round(max_amount, round_valute_dict[type_valute_from])
+            out_count = round(out_count, round_valute_dict[type_valute_from])
         else:
             min_amount = int(min_amount)
             max_amount = int(max_amount)
+            out_count = round(out_count, DEFAUT_ROUND)
+
+        if valute_to in round_valute_dict:
+            in_count = round(in_count, round_valute_dict[valute_to])
+        elif type_valute_to in round_valute_dict:
+            in_count = round(in_count, round_valute_dict[type_valute_to])
+        else:
+            in_count = round(in_count, DEFAUT_ROUND)
         
         exchange_direction_dict['min_amount'] = f'{min_amount}'
         exchange_direction_dict['max_amount'] = f'{max_amount}'
+        exchange_direction_dict['in_count'] = in_count
+        exchange_direction_dict['out_count'] = out_count
+
+        # print('2', exchange_direction_dict)
 
     except Exception:
         pass

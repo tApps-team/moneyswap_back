@@ -486,10 +486,10 @@ class BaseExchangeDirection(models.Model):
     # valute_to = models.CharField('Получаем', max_length=10)
     in_count = models.DecimalField('Сколько отдаём',
                                    max_digits=20,
-                                   decimal_places=2)
+                                   decimal_places=5)
     out_count = models.DecimalField('Сколько получаем',
                                     max_digits=20,
-                                    decimal_places=2)
+                                    decimal_places=5)
     min_amount = models.CharField('Минимальное количество', max_length=50)
     max_amount = models.CharField('Максимальное количество', max_length=50)
     is_active = models.BooleanField('Активно?', default=True)
