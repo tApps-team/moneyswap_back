@@ -13,7 +13,7 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             negative_review_count_filter,
                                             get_reviews_count_filters)
 
-from cash.endpoints import cash_exchange_directions_with_location
+from cash.endpoints import cash_exchange_directions_with_location, cash_exchange_directions_with_location2
 
 from .models import ExchangeDirection
 
@@ -127,6 +127,47 @@ def no_cash_exchange_directions(request: Request,
     
     if not queries:
         return cash_exchange_directions_with_location(request,
+                                                      params)
+
+    increase_popular_count_direction(valute_from=valute_from,
+                                     valute_to=valute_to)
+    
+    return get_exchange_direction_list(queries,
+                                       valute_from,
+                                       valute_to)
+
+
+# Вспомогательный эндпоинт для получения безналичных готовых направлений
+def no_cash_exchange_directions2(request: Request,
+                                params: dict):
+    # print(len(connection.queries))
+    params.pop('city')
+    for param in params:
+        if not params[param]:
+            http_exception_json(status_code=400, param=param)
+
+    valute_from, valute_to = (params[key] for key in params)
+
+    review_counts = get_reviews_count_filters('exchange_direction')
+
+    queries = ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to')\
+                                .annotate(positive_review_count=review_counts['positive'])\
+                                .annotate(neutral_review_count=review_counts['neutral'])\
+                                .annotate(negative_review_count=review_counts['negative'])\
+                                .filter(direction__valute_from=valute_from,
+                                        direction__valute_to=valute_to,
+                                        is_active=True,
+                                        exchange__is_active=True)\
+                                .order_by('-exchange__is_vip',
+                                          '-out_count',
+                                          'in_count').all()
+    
+    if not queries:
+        return cash_exchange_directions_with_location2(request,
                                                       params)
 
     increase_popular_count_direction(valute_from=valute_from,

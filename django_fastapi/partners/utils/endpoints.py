@@ -9,7 +9,7 @@ from general_models.schemas import MultipleName, MultipleName2
 
 from cash.models import Direction as CashDirection
 
-from partners.models import Direction, PartnerCity
+from partners.models import Direction, PartnerCity, CountryDirection
 
 from partners.schemas import (PartnerCityInfoSchema,
                               UpdatedTimeByPartnerCitySchema,
@@ -166,6 +166,115 @@ def get_partner_directions(valute_from: str,
         #
     return directions
 
+
+def get_partner_directions2(valute_from: str,
+                           valute_to: str,
+                           city: str = None):
+    direction_name = valute_from + ' -> ' + valute_to
+
+    review_counts = get_reviews_count_filters('partner_direction')
+
+    directions = Direction.objects\
+                            .select_related('direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to',
+                                            'city',
+                                            'city__city',
+                                            'city__exchange')\
+                            .annotate(positive_review_count=review_counts['positive'])\
+                            .annotate(neutral_review_count=review_counts['neutral'])\
+                            .annotate(negative_review_count=review_counts['negative'])\
+                            .filter(direction__display_name=direction_name,
+                                    is_active=True,
+                                    city__exchange__is_active=True,
+                                    city__exchange__partner_link__isnull=False)
+    
+    review_counts = get_reviews_count_filters('partner_country_direction')
+
+    country_directions = CountryDirection.objects.select_related('direction',
+                                                                 'country',
+                                                                 'country__country')\
+                                                .prefetch_related('country__country__cities')\
+                                                .annotate(positive_review_count=review_counts['positive'])\
+                                                .annotate(neutral_review_count=review_counts['neutral'])\
+                                                .annotate(negative_review_count=review_counts['negative'])\
+                                                .filter(direction__valute_from=valute_from,
+                                                        direction__valute_to=valute_to,
+                                                        country__exchange__is_active=True,
+                                                        country__exchange__partner_link__isnull=False)
+
+    if city:
+        directions = directions.filter(city__city__code_name=city)
+        country_directions = country_directions.filter(country__country__cities__code_name=city)
+
+    for direction in directions:
+        city: PartnerCity = direction.city
+        min_amount = str(int(city.min_amount)) if city.min_amount else None
+        max_amount = str(int(city.max_amount)) if city.max_amount else None
+
+        direction.exchange = city.exchange
+        direction.exchange_marker = 'partner'
+        direction.valute_from = valute_from
+        direction.valute_to = valute_to
+        direction.min_amount = min_amount
+        direction.max_amount = max_amount
+        direction.params = None
+        direction.fromfee = None
+
+        weekdays = WeekDaySchema(time_from=city.time_from,
+                                 time_to=city.time_to)
+
+        weekends = WeekDaySchema(time_from=city.weekend_time_from,
+                                 time_to=city.weekend_time_to)
+
+
+        # working_days = WORKING_DAYS_DICT.copy()
+        working_days = {key.upper(): value \
+                        for key, value in WORKING_DAYS_DICT.items()}
+        
+        [working_days.__setitem__(day.code_name.upper(), True) \
+         for day in city.working_days.all()]
+        #
+        # working_days = WORKING_DAYS_DICT.copy()
+        # [working_days.__setitem__(day.code_name, True)\
+        #   for day in direction.city.working_days.all()]
+
+        direction.info = PartnerCityInfoSchema2(
+            delivery=city.has_delivery,
+            office=city.has_office,
+            working_days=working_days,
+            weekdays=weekdays,
+            weekends=weekends,
+            )
+        #
+
+    for direction in country_directions:
+        direction.exchange = direction.country.exchange
+        direction.exchange_marker = 'partner'
+        direction.valute_from = valute_from
+        direction.valute_to = valute_to
+        direction.min_amount = None
+        direction.max_amount = None
+        direction.params = None
+        direction.fromfee = None
+
+    # print(directions)
+    # print(country_directions)
+
+    check_set = set()
+
+    result = []
+
+    for sequence in (directions, country_directions):
+        for direction in sequence:
+            if not direction.exchange in check_set:
+                check_set.add(direction.exchange)
+                result.append(direction)
+
+    # return directions
+    # print(result)
+
+    return result
 
 def get_partner_directions_with_location(valute_from: str,
                                          valute_to: str):

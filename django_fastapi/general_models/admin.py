@@ -7,6 +7,8 @@ from django.db.models.query import QuerySet
 from django.utils.safestring import mark_safe
 from django.http.request import HttpRequest
 
+from django.contrib.admin.models import LogEntry
+
 from django_celery_beat.models import (SolarSchedule,
                                        PeriodicTask,
                                        IntervalSchedule,
@@ -34,6 +36,13 @@ admin.site.unregister(CrontabSchedule)
 #DONT SHOW USER AND GROUP IN ADMIN PANEL
 # admin.site.unregister(User)
 # admin.site.unregister(Group)
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+    )
 
 @admin.register(FeedbackForm)
 class FeedbackFormAdmin(admin.ModelAdmin):

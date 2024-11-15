@@ -30,7 +30,9 @@ from .models import (Exchange,
                      PartnerCity,
                      WorkingDay,
                      AdminComment,
-                     ExchangeLinkCount)
+                     ExchangeLinkCount,
+                     PartnerCountry,
+                     CountryDirection)
 from .utils.admin import (make_city_active,
                           update_field_time_update,
                           get_saved_course)
@@ -314,6 +316,30 @@ class PartnerCityStacked(admin.StackedInline):
         return obj.city
     
     get_city_name.short_description = 'Город'
+
+
+@admin.register(PartnerCountry)
+class PartnerCountryAdmin(admin.ModelAdmin):
+    list_display = (
+        'exchange',
+        'country',
+    )
+
+
+@admin.register(CountryDirection)
+class CountryDirectionAdmin(admin.ModelAdmin):
+    list_display = (
+        'country',
+        'direction',
+        'exchange_name',
+    )
+
+    readonly_fields = (
+        'exchange_name',
+    )
+
+    def exchange_name(self, obj):
+        return obj.country.exchange
 
 
 @admin.register(PartnerCity)

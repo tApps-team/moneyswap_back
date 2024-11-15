@@ -9,7 +9,7 @@ from general_models.models import (BaseExchange,
                                    BaseAdminComment,
                                    BaseExchangeLinkCount)
 
-from cash.models import Direction as CashDirection, City
+from cash.models import Direction as CashDirection, City, Country
 
 from .utils.models import get_limit_direction, is_positive_validator
 
@@ -74,6 +74,22 @@ class WorkingDay(models.Model):
         return self.name
 
 
+class PartnerCountry(models.Model):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 related_name='partner_countries')
+    country = models.ForeignKey(Country,
+                                on_delete=models.CASCADE,
+                                related_name='partner_countries')
+    
+    class Meta:
+        verbose_name = 'Партнёрская страна'
+        verbose_name_plural = 'Партнёрские страны'
+
+    def __str__(self):
+        return self.country.name
+
+
 class PartnerCity(models.Model):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.CASCADE,
@@ -126,6 +142,59 @@ class PartnerCity(models.Model):
 
     def __str__(self):
         return f'{self.city}'
+
+
+class CountryDirection(models.Model):
+    limit_direction = get_limit_direction()
+
+    country = models.ForeignKey(PartnerCountry,
+                             on_delete=models.CASCADE,
+                             verbose_name='Страна',
+                             related_name='partner_directions')
+    direction = models.ForeignKey(CashDirection,
+                                  verbose_name='Направление',
+                                  on_delete=models.CASCADE,
+                                  limit_choices_to=limit_direction,
+                                  related_name='partner_country_directions')
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+
+    # percent = models.FloatField('Процент',
+    #                             default=0,
+    #                             validators=[is_positive_validator])
+    # fix_amount = models.FloatField('Фиксированная ставка',
+    #                                default=0,
+    #                                validators=[is_positive_validator])
+
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=5,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=5,
+                                    null=True,
+                                    default=None)
+    time_update = models.DateTimeField('Последнее обновление',
+                                       auto_now_add=True,
+                                       help_text='Время указано по московскому часовому поясу. При не обновлении процентов или фикс. ставки в течении 3 дней, направление становится неактивным.')
+    is_active = models.BooleanField('Активно?', default=True)
+
+    class Meta:
+        verbose_name = 'Направление страны'
+        verbose_name_plural = 'Направления страны'
+        unique_together = (('country', 'direction'), )
+        ordering = ('country__exchange', 'country', 'direction')
+
+    def __str__(self):
+        return f'{self.country.exchange} {self.country} - {self.direction}'
 
 
 class Direction(models.Model):

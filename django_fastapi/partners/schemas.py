@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Literal
 
 from pydantic import BaseModel, Field, RootModel
 
@@ -63,6 +63,12 @@ class PartnerCitySchema3(BaseModel):
     updated: UpdatedTimeByPartnerCitySchema
     max_amount: float | None
     min_amount: float | None
+
+
+class PartnerCountrySchema(BaseModel):
+    id: int = Field(alias='pk')
+    name: MultipleName = Field(alias='multiple_name')
+    country_flag: str | None
 
 
 class CountrySchema(BaseModel):
@@ -157,6 +163,17 @@ class AddPartnerCitySchema3(BaseModel):
     max_amount: float | None
 
 
+class AddPartnerCountrySchema(BaseModel):
+    country_id: int
+    # has_delivery: bool = Field(alias='delivery')
+    # has_office: bool = Field(alias='office')
+    # weekdays: WeekDaySchema
+    # weekends: WeekDaySchema
+    # working_days: dict
+    # min_amount: float | None
+    # max_amount: float | None
+
+
 class PartnerDirectionSchema(BaseModel):
     in_count: float    
     out_count: float
@@ -173,9 +190,11 @@ class AddPartnerDirectionSchema(PartnerDirectionSchema):
     # is_active: bool
 
 
-class AddPartnerDirectionSchema2(AddPartnerDirectionSchema):
-    min_amount: float | None
-    max_amount: float | None
+class AddPartnerDirectionSchema2(PartnerDirectionSchema):
+    id: int
+    marker: Literal['country', 'city']
+    valute_from: str
+    valute_to: str
 
 
 class EditedPartnerDirectionSchema(PartnerDirectionSchema):
@@ -194,4 +213,10 @@ class EditedPartnerDirectionSchema(PartnerDirectionSchema):
 
 class ListEditedPartnerDirectionSchema(BaseModel):
     city: str
+    directions: List[EditedPartnerDirectionSchema]
+
+
+class ListEditedPartnerDirectionSchema2(BaseModel):
+    id: int
+    marker: Literal['country', 'city']
     directions: List[EditedPartnerDirectionSchema]

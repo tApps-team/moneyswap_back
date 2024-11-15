@@ -1,5 +1,7 @@
 from celery import shared_task
 
+# from celery_once import QueueOnce
+
 from django.db import connection
 
 from general_models.utils.exc import NoFoundXmlElement

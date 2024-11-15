@@ -92,6 +92,15 @@ def get_reviews_count_filters(marker: Literal['exchange',
                                                     & Q(city__exchange__reviews__grade='0')
             negative_review_count_filter = Q(city__exchange__reviews__moderation=True) \
                                                     & Q(city__exchange__reviews__grade='-1')
+        case 'partner_country_direction':
+            related_field_name = 'country__exchange__' + related_field_name
+            
+            positive_review_count_filter = Q(country__exchange__reviews__moderation=True) \
+                                                    & Q(country__exchange__reviews__grade='1')
+            neutral_review_count_filter = Q(country__exchange__reviews__moderation=True) \
+                                                    & Q(country__exchange__reviews__grade='0')
+            negative_review_count_filter = Q(country__exchange__reviews__moderation=True) \
+                                                    & Q(country__exchange__reviews__grade='-1')
         case 'exchange_direction':
         # case _:
             related_field_name = 'exchange__' + related_field_name
@@ -319,8 +328,12 @@ def add_location_to_exchange_direction(exchange_direction: dict[str, Any],
                                        query):
     
     if exchange_direction['exchange_marker'] == 'partner':
-        country_model = query.city.city.country
-        city_model = query.city.city
+        try:
+            country_model = query.city.city.country
+            city_model = query.city.city
+        except AttributeError:
+            country_model = query.country.country
+            city_model = query.city.city
 
     else:
         country_model = query.city.country

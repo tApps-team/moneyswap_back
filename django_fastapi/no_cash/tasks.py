@@ -1,5 +1,7 @@
 from celery import shared_task
 
+# from celery_once import QueueOnce
+
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.periodic_tasks import try_get_xml_file
 
@@ -46,9 +48,7 @@ from .models import Exchange, ExchangeDirection, Direction
 #         print(ex)
 
 #PERIODIC CREATE
-@shared_task(name='create_no_cash_directions_for_exchange',
-             soft_time_limit=10,
-             time_limit=15)
+@shared_task(name='create_no_cash_directions_for_exchange')
 def create_no_cash_directions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)

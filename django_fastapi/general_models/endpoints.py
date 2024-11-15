@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 from math import ceil
 from random import choice, shuffle
 
+
+from django.contrib.admin.models import LogEntry
 from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch, Sum
 from django.db import connection
 from django.db.utils import IntegrityError
@@ -27,10 +29,10 @@ from general_models.utils.endpoints import (positive_review_count_filter,
 from general_models.utils.base import annotate_string_field
 
 import no_cash.models as no_cash_models
-from no_cash.endpoints import no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2
+from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2
 
 import cash.models as cash_models
-from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2
+from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2
 from cash.schemas import SpecialCashDirectionMultiModel, CityModel, SpecialCashDirectionMultiWithLocationModel
 from cash.models import Direction, Country, Exchange, Review
 
@@ -141,8 +143,20 @@ def get_current_exchange_directions(request: Request,
         exchange_direction_list = no_cash_exchange_directions(request, params)
     else:
         exchange_direction_list = cash_exchange_directions(request, params)
-        # exchange_direction_list = sorted(exchange_direction_list,
-        #                                  key=lambda el: (el.get('in_count')))
+    
+    return exchange_direction_list
+
+
+@test_router.get('/directions',
+                 response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
+                 response_model_by_alias=False)
+def get_current_exchange_directions(request: Request,
+                                    query: SpecificDirectionsQuery = Depends()):
+    params = query.params()
+    if not params['city']:
+        exchange_direction_list = no_cash_exchange_directions2(request, params)
+    else:
+        exchange_direction_list = cash_exchange_directions2(request, params)
     
     return exchange_direction_list
 
@@ -1204,3 +1218,15 @@ def get_directions_for_sitemap():
 
     # print(connection.queries)
     return result
+
+
+
+@common_router.get('/test_logentry')
+def test_log_entry():
+    w = LogEntry.objects.all()[:5]
+    for q in w:
+        print(q)
+        print(q.__dict__)
+        print(q.action_time)
+    # print(w.content_type.get_object_for_this_type(pk=w.object_id))
+    # print(w.objects)
