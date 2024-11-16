@@ -1221,12 +1221,12 @@ def get_directions_for_sitemap():
 
 
 
-@common_router.get('/test_logentry')
-def test_log_entry():
-    w = LogEntry.objects.all()[:5]
-    for q in w:
-        print(q)
-        print(q.__dict__)
-        print(q.action_time)
+# @common_router.get('/test_logentry')
+# def test_log_entry():
+#     w = LogEntry.objects.all()[:5]
+#     for q in w:
+#         print(q)
+#         print(q.__dict__)
+#         print(q.action_time)
     # print(w.content_type.get_object_for_this_type(pk=w.object_id))
     # print(w.objects)

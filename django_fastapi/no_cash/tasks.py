@@ -1,6 +1,6 @@
 from celery import shared_task
 
-# from celery_once import QueueOnce
+from celery_once import QueueOnce
 
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.periodic_tasks import try_get_xml_file
@@ -48,7 +48,8 @@ from .models import Exchange, ExchangeDirection, Direction
 #         print(ex)
 
 #PERIODIC CREATE
-@shared_task(name='create_no_cash_directions_for_exchange')
+@shared_task(base=QueueOnce,
+             name='create_no_cash_directions_for_exchange')
 def create_no_cash_directions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
@@ -108,7 +109,8 @@ def create_direction(dict_for_parse: dict,
 
 
 #PERIODIC UPDATE
-@shared_task(name='update_no_cash_diretions_for_exchange')
+@shared_task(base=QueueOnce,
+             name='update_no_cash_diretions_for_exchange')
 def update_no_cash_diretions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
@@ -184,7 +186,8 @@ def try_update_direction(dict_for_parse: dict):
 
 
 #PERIODIC BLACK LIST
-@shared_task(name='try_create_no_cash_directions_from_black_list')
+@shared_task(base=QueueOnce,
+             name='try_create_no_cash_directions_from_black_list')
 def try_create_no_cash_directions_from_black_list(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
