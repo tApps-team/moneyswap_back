@@ -49,6 +49,7 @@ from .models import Exchange, ExchangeDirection, Direction
 
 #PERIODIC CREATE
 @shared_task(base=QueueOnce,
+             once={'graceful': True},
              name='create_no_cash_directions_for_exchange')
 def create_no_cash_directions_for_exchange(exchange_id: int):
     try:
@@ -110,6 +111,7 @@ def create_direction(dict_for_parse: dict,
 
 #PERIODIC UPDATE
 @shared_task(base=QueueOnce,
+             once={'graceful': True},
              name='update_no_cash_diretions_for_exchange')
 def update_no_cash_diretions_for_exchange(exchange_id: int):
     try:
@@ -187,6 +189,7 @@ def try_update_direction(dict_for_parse: dict):
 
 #PERIODIC BLACK LIST
 @shared_task(base=QueueOnce,
+             once={'graceful': True},
              name='try_create_no_cash_directions_from_black_list')
 def try_create_no_cash_directions_from_black_list(exchange_id: int):
     try:
