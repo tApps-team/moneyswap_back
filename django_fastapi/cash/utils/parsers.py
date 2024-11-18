@@ -80,7 +80,7 @@ def parse_xml_to_dict(dict_for_parse: dict,
                             direction = dict_for_parse.pop(key)
 
                             fromfee = element.xpath('./fromfee/text()')
-                            # print(fromfee)
+                            # print('fromfee', fromfee)
                             param = element.xpath('./param/text()')
 
                             fromfee = None if not fromfee else fromfee[0]
