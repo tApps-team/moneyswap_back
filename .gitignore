@@ -1,4 +1,7 @@
+.env
+.gitignore
+userlist.txt
+pgbouncer.ini
 venv/
 __pycache__/
-.env
 cache_holder/

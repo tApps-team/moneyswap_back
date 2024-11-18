@@ -17,6 +17,9 @@ CSRF_TOKEN = os.environ.get('CSRF_TOKEN')
 # SELENIUM
 SELENIUM_DRIVER = os.environ.get('SELENIUM_DRIVER')
 
+#PGBOUNCER
+PGBOUNCER_HOST = os.environ.get('PGBOUNCER_HOST')
+
 # REDIS
 REDIS_HOST = os.environ.get('REDIS_HOST')
 REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')

@@ -8,7 +8,8 @@ from config import (DB_USER,
                     DB_NAME,
                     DB_PORT,
                     CSRF_TOKEN,
-                    REDIS_URL)
+                    REDIS_URL,
+                    PGBOUNCER_HOST)
 
 
 sentry_sdk.init(
@@ -94,7 +95,7 @@ DATABASES = {
         "NAME": DB_NAME,
         "USER": DB_USER,
         "PASSWORD": DB_PASS,
-        "HOST": DB_HOST,
+        "HOST": PGBOUNCER_HOST,
         "PORT": DB_PORT,
     }
 }

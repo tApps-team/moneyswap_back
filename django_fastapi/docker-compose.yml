@@ -35,11 +35,13 @@ services:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
       - REDIS_HOST=redis_db
+      - PGBOUNCER_HOST=pgbouncer
     env_file:
       - ./.env
     # container_name: django_fastapi
     depends_on:
       - psql_db
+      - pgbouncer
       # - redis_db
       # - celery_worker
       - firefox
@@ -133,11 +135,13 @@ services:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
       - REDIS_HOST=redis_db
+      - PGBOUNCER_HOST=pgbouncer
     env_file:
       - ./.env
     depends_on:
       - redis_db
       - psql_db
+      - pgbouncer
       # - rabbitmq3
     cpus: '1.5'
     logging:
@@ -160,12 +164,14 @@ services:
     environment:
       - POSTGRES_HOST=psql_db
       - REDIS_HOST=redis_db
+      - PGBOUNCER_HOST=pgbouncer
     cpus: '0.5'
     env_file:
       - ./.env
     depends_on:
       - redis_db
       - psql_db
+      - pgbouncer
       - celery_worker
       # - rabbitmq3
     logging:
@@ -182,6 +188,7 @@ services:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
       - REDIS_HOST=redis_db
+      - PGBOUNCER_HOST=pgbouncer
     env_file:
       - ./.env
     volumes:
@@ -206,6 +213,22 @@ services:
       options:
           max-size: "20m"
 
+  pgbouncer:
+    image: edoburu/pgbouncer
+    environment:
+      DATABASE_URL: postgres://postgres:os6ARnMaXLPMFPqsbb@psql_db:5432/postgres
+      # PGBOUNCER_USER: your_user
+      # PGBOUNCER_PASSWORD: your_password
+    ports:
+      - "5432:5432"  # Порт для PgBouncer
+    networks:
+      - common-network
+    volumes:
+      - ./pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini
+      # - ./pgbouncer_hba.conf:/etc/pgbouncer/pgbouncer_hba.conf
+      - ./userlist.txt:/etc/pgbouncer/userlist.txt
+      - pgbouncer_data:/var/run/pgbouncer
+
 volumes:
   selenium-data:
   postgres-data:
@@ -214,6 +237,7 @@ volumes:
   flower_data:
   static:
   media:
+  pgbouncer_data:
 
 networks:
   common-network:
