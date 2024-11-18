@@ -215,8 +215,10 @@ services:
 
   pgbouncer:
     image: edoburu/pgbouncer
-    environment:
-      DATABASE_URL: postgres://postgres:os6ARnMaXLPMFPqsbb@psql_db:5432/postgres
+    env_file:
+      - ./.env
+    # environment:
+    #   DATABASE_URL: postgres://postgres:os6ARnMaXLPMFPqsbb@psql_db:5432/postgres
       # PGBOUNCER_USER: your_user
       # PGBOUNCER_PASSWORD: your_password
     ports:
