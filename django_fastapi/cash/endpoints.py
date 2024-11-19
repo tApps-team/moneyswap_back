@@ -18,7 +18,7 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             try_generate_icon_url,
                                             get_reviews_count_filters)
 
-from partners.utils.endpoints import get_partner_directions, get_partner_directions_with_location, get_partner_directions2
+from partners.utils.endpoints import get_partner_directions, get_partner_directions3, get_partner_directions_with_location, get_partner_directions2
 from partners.models import Direction as PartnerDirection
 
 from .models import City, ExchangeDirection, Country
@@ -371,8 +371,10 @@ def cash_exchange_directions_with_location2(request: Request,
                                         exchange__is_active=True)\
                                 .all()
     
-    partner_directions = get_partner_directions2(valute_from,
+    partner_directions = get_partner_directions3(valute_from,
                                                 valute_to)
+    
+    # print(partner_directions)
     
     queries = sorted(list(queries) + list(partner_directions),
                      key=lambda query: (-query.exchange.is_vip,

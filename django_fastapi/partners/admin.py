@@ -324,6 +324,51 @@ class PartnerCountryAdmin(admin.ModelAdmin):
         'exchange',
         'country',
     )
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ['country',
+                           ('has_office',
+                            'has_delivery'),
+                           'time_update',
+                           'min_amount',
+                           'max_amount',
+                           ],
+            },
+        ),
+        (
+            "Будние рабочие часы",
+            {
+                "classes": ["wide"],
+                "fields": [
+                    'time_from',
+                    'time_to',
+                ],
+            },
+        ),
+        (
+            "Выходные рабочие часы",
+            {
+                "classes": ["wide"],
+                "fields": [
+                    'weekend_time_from',
+                    'weekend_time_to',
+                ],
+            },
+        ),
+        (
+            None,
+            {
+                "fields": [
+                    "working_days",
+                           ],
+            },
+        ),
+    ]
+    filter_horizontal = (
+        'working_days',
+        )
 
 
 @admin.register(CountryDirection)

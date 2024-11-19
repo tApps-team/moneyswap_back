@@ -96,6 +96,7 @@ DATABASES = {
         "USER": DB_USER,
         "PASSWORD": DB_PASS,
         "HOST": PGBOUNCER_HOST,
+        # "HOST": DB_HOST,
         "PORT": DB_PORT,
     }
 }

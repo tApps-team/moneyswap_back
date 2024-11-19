@@ -65,6 +65,16 @@ class PartnerCitySchema3(BaseModel):
     min_amount: float | None
 
 
+class PartnerCountrySchema3(BaseModel):
+    id: int
+    name: MultipleName = Field(alias='country_multiple_name')
+    country_flag: str
+    info: PartnerCityInfoSchema2
+    updated: UpdatedTimeByPartnerCitySchema
+    max_amount: float | None
+    min_amount: float | None
+
+
 class PartnerCountrySchema(BaseModel):
     id: int = Field(alias='pk')
     name: MultipleName = Field(alias='multiple_name')
@@ -165,6 +175,29 @@ class AddPartnerCitySchema3(BaseModel):
 
 class AddPartnerCountrySchema(BaseModel):
     country_id: int
+    has_delivery: bool = Field(alias='delivery')
+    has_office: bool = Field(alias='office')
+    weekdays: WeekDaySchema
+    weekends: WeekDaySchema
+    working_days: dict
+    min_amount: float | None
+    max_amount: float | None
+
+
+class DeletePartnerCountrySchema(BaseModel):
+    country_id: int
+
+
+class AddPartnerCityCountrySchema(BaseModel):
+    id: int
+    marker: Literal['country', 'city']
+    has_delivery: bool = Field(alias='delivery')
+    has_office: bool = Field(alias='office')
+    weekdays: WeekDaySchema
+    weekends: WeekDaySchema
+    working_days: dict
+    min_amount: float | None
+    max_amount: float | None
     # has_delivery: bool = Field(alias='delivery')
     # has_office: bool = Field(alias='office')
     # weekdays: WeekDaySchema
@@ -172,6 +205,17 @@ class AddPartnerCountrySchema(BaseModel):
     # working_days: dict
     # min_amount: float | None
     # max_amount: float | None
+
+
+class DeletePartnerDirectionSchema(BaseModel):
+    id: int
+    marker: Literal['country', 'city']
+    direction_id: int
+
+
+class DeletePartnerCityCountrySchema(BaseModel):
+    id: int
+    marker: Literal['country', 'city']
 
 
 class PartnerDirectionSchema(BaseModel):
@@ -220,3 +264,10 @@ class ListEditedPartnerDirectionSchema2(BaseModel):
     id: int
     marker: Literal['country', 'city']
     directions: List[EditedPartnerDirectionSchema]
+
+
+class CountryDirectionWithLocationSchema(BaseModel):
+    id: int
+    country_id: int
+    direction_id: int
+    
