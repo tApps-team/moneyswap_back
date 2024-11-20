@@ -489,6 +489,28 @@ def edit_partner_city_country(partner: partner_dependency,
         working_days_set = {working_day.capitalize() for working_day in working_days\
                             if working_days[working_day]}
         
+
+        unworking_day_names = {working_day.capitalize() for working_day in working_days \
+                                if not working_days[working_day]}
+    
+    # working_day_names = {working_day.capitalize() for working_day in working_days \
+    #                      if working_days[working_day]}
+    
+    # with transaction.atomic():
+    #     partner_city = partner_city.first()
+
+    #     # partner_city.working_days.through.objects\
+    #     #         .filter(workingday__code_name__in=unworking_day_names).delete()
+    #     partner_city.working_days\
+    #                 .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
+
+
+    #     partner_city.working_days\
+    #                 .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
+    # # print(len(connection.queries))
+    # return {'status': 'success',
+    #         'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}
+        
         weekdays = _data.pop('weekdays')
 
         weekends = _data.pop('weekends')
@@ -521,20 +543,24 @@ def edit_partner_city_country(partner: partner_dependency,
             obj_to_update = obj_to_update.first()
 
             obj_to_update.working_days\
+                        .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
+
+            obj_to_update.working_days\
                 .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
-        
-        # name = new_obj.city.name if marker == 'city' else new_obj.country.name
+            
         if marker == 'city':
             name = obj_to_update.city.name
             _text = 'город'
             suffix = ''
+            prefix = 'ий'
         else:
             name = obj_to_update.country.name
             _text = 'страна'
             suffix = 'а'
+            prefix = 'ая'
         # print(len(connection.queries))
         return {'status': 'success',
-                'details': f'Партнёрский {_text} {name} изменен{suffix}'}
+                'details': f'Партнёрск{prefix} {_text} {name} изменен{suffix}'}
     
 
 @test_partner_router.delete('/delete_partner_city_country')
