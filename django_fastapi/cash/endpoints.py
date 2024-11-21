@@ -115,7 +115,8 @@ def get_available_coutries2(request: Request):
                                                                             filter=Q(cash_directions__is_active=True)))\
                                             .filter(Q(direction_count__gt=0) \
                                                     | Q(partner_direction_count__gt=0) \
-                                                        | Q(country__partner_countries__partner_directions__isnull=False))
+                                                        | Q(country__partner_countries__partner_directions__isnull=False))\
+                                            .distinct()
 
 
     prefetch_counries_queryset =  PartnerCountry.objects.prefetch_related('partner_directions')\

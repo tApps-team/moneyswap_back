@@ -57,7 +57,7 @@ def get_available_countries2(countries):
 
     for country in countries:
 
-        country.city_list = country.cities.distinct().all()
+        country.city_list = country.cities.all()
 
         # if country.partner_countries.exists():
         #     partner_cities = country.partner_countries.partner_cities.values_list('city', flat=True)
@@ -76,5 +76,7 @@ def get_available_countries2(countries):
                                    en_name=country.en_name)
     # print(len(connection.queries))
     # print(connection.queries)
+    # for query in connection.queries:
+    #     print(query)
 
     return countries
