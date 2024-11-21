@@ -133,21 +133,21 @@ def get_specific_valute(code_name: str):
 #
 
 # Эндпоинт для получения доступных готовых направлений
-@common_router.get('/directions',
-                 response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
-                 response_model_by_alias=False)
-def get_current_exchange_directions(request: Request,
-                                    query: SpecificDirectionsQuery = Depends()):
-    params = query.params()
-    if not params['city']:
-        exchange_direction_list = no_cash_exchange_directions(request, params)
-    else:
-        exchange_direction_list = cash_exchange_directions(request, params)
+# @common_router.get('/directions',
+#                  response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
+#                  response_model_by_alias=False)
+# def get_current_exchange_directions(request: Request,
+#                                     query: SpecificDirectionsQuery = Depends()):
+#     params = query.params()
+#     if not params['city']:
+#         exchange_direction_list = no_cash_exchange_directions(request, params)
+#     else:
+#         exchange_direction_list = cash_exchange_directions(request, params)
     
-    return exchange_direction_list
+#     return exchange_direction_list
 
 
-@test_router.get('/directions',
+@common_router.get('/directions',
                  response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
                  response_model_by_alias=False)
 def get_current_exchange_directions(request: Request,

@@ -163,9 +163,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # DEV
-# STATIC_URL = "/django/static/"
+STATIC_URL = "/django/static/"
 # PROD
-STATIC_URL = "/static/"
+# STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
@@ -187,8 +187,8 @@ DJANGO_PREFIX = "/django"
 
 ####SWITCH FOR DEV/PROD####
 
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 SITE_DOMAIN = 'api.moneyswap.online'
 # SITE_DOMAIN = '127.0.0.1:81'
