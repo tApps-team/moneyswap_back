@@ -47,3 +47,34 @@ def get_available_countries(countries):
     print(connection.queries)
 
     return countries
+
+
+def get_available_countries2(countries):
+
+    '''
+    Возвращает QuerySet доступных стран с необходимыми данными
+    '''
+
+    for country in countries:
+
+        country.city_list = country.cities.distinct().all()
+
+        # if country.partner_countries.exists():
+        #     partner_cities = country.partner_countries.partner_cities.values_list('city', flat=True)
+            # country.city_list += country.partner_countries.partner_cities.values_list('city', flat=True)
+
+        # print(country.city_list)
+
+        for city in country.city_list:
+            # print(city)
+            city.name = MultipleName(name=city.name,
+                                     en_name=city.en_name)
+        
+        country.country_flag = try_generate_icon_url(country)
+
+        country.name = MultipleName(name=country.name,
+                                   en_name=country.en_name)
+    # print(len(connection.queries))
+    # print(connection.queries)
+
+    return countries

@@ -19,14 +19,14 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             get_reviews_count_filters)
 
 from partners.utils.endpoints import get_partner_directions, get_partner_directions3, get_partner_directions_with_location, get_partner_directions2
-from partners.models import Direction as PartnerDirection, PartnerCountry
+from partners.models import CountryDirection, Direction as PartnerDirection, PartnerCountry
 
 from .models import City, ExchangeDirection, Country
 from .schemas import (MultipleName,
                       RuEnCountryModel,
                       SpecificCountrySchema,
                       SpecificCitySchema)
-from .utils.endpoints import get_available_countries
+from .utils.endpoints import get_available_countries, get_available_countries2
 
 
 cash_router = APIRouter(prefix='/cash',
@@ -107,12 +107,15 @@ def get_available_coutries2(request: Request):
     #                             .filter(direction_count__gt=0)\
     #                             .all()
     prefetch_cities_queryset =  City.objects.order_by('name')\
+                                            .select_related('country')\
                                             .prefetch_related('cash_directions')\
                                             .annotate(partner_direction_count=Count('partner_cities',
                                                                                     filter=Q(partner_cities__partner_directions__is_active=True)))\
                                             .annotate(direction_count=Count('cash_directions',
                                                                             filter=Q(cash_directions__is_active=True)))\
-                                            .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0))
+                                            .filter(Q(direction_count__gt=0) \
+                                                    | Q(partner_direction_count__gt=0) \
+                                                        | Q(country__partner_countries__partner_directions__isnull=False))
 
 
     prefetch_counries_queryset =  PartnerCountry.objects.prefetch_related('partner_directions')\
@@ -128,8 +131,6 @@ def get_available_coutries2(request: Request):
     prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
     prefetch_countries = Prefetch('partner_countries', prefetch_counries_queryset)
 
-
-
     countries = Country.objects.prefetch_related(prefetch_cities,
                                                  prefetch_countries)\
                                 .annotate(direction_count=Count('cities__cash_directions',
@@ -144,7 +145,7 @@ def get_available_coutries2(request: Request):
     if not countries:
         http_exception_json(status_code=404, param=request.url)
 
-    countries = get_available_countries(countries)
+    countries = get_available_countries2(countries)
 
     return countries
 
@@ -247,19 +248,34 @@ def cash_valutes_2(request: Request,
                                                 is_active=True,
                                                 city__exchange__is_active=True,
                                                 city__exchange__isnull=False)
+    
+    country_directions_query = CountryDirection.objects\
+                                .select_related('direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to',
+                                                'country',
+                                                'country__exchange')\
+                                .filter(is_active=True,
+                                        country__exchange__is_active=True,
+                                        country__exchange__isnull=False)
 
     if base == 'ALL':
         cash_queries = cash_queries\
                                 .values_list('direction__valute_from').all()
         partner_queries = partner_queries\
                                 .values_list('direction__valute_from__code_name').all()
+        country_directions_query = country_directions_query\
+                                .values_list('direction__valute_from__code_name').all()
     else:
         cash_queries = cash_queries.filter(direction__valute_from=base)\
                                     .values_list('direction__valute_to').all()
         partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
                                         .values_list('direction__valute_to__code_name').all()
+        country_directions_query = country_directions_query\
+                                        .filter(direction__valute_from__code_name=base)\
+                                        .values_list('direction__valute_to__code_name').all()
 
-    queries = cash_queries.union(partner_queries)
+    queries = cash_queries.union(partner_queries, country_directions_query)
 
     if not queries:
         http_exception_json(status_code=404, param=request.url)
