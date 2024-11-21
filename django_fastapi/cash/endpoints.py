@@ -35,61 +35,61 @@ cash_router = APIRouter(prefix='/cash',
 
 # Эндпоинт для получения доступных стран
 # и связанных с ними городов
-@cash_router.get('/countries',
-                 response_model=List[RuEnCountryModel],
-                 response_model_by_alias=False)
-def get_available_coutries(request: Request):
-    print(len(connection.queries))
-    #
-    # cities = City.objects.filter(Q(is_parse=True) | Q(has_partner_cities=True))\
-    #                         .select_related('country').all()
-    #
-    # cities = City.objects.filter(is_parse=True)\
-    #                         .select_related('country').all()
+# @cash_router.get('/countries',
+#                  response_model=List[RuEnCountryModel],
+#                  response_model_by_alias=False)
+# def get_available_coutries(request: Request):
+#     print(len(connection.queries))
+#     #
+#     # cities = City.objects.filter(Q(is_parse=True) | Q(has_partner_cities=True))\
+#     #                         .select_related('country').all()
+#     #
+#     # cities = City.objects.filter(is_parse=True)\
+#     #                         .select_related('country').all()
     
-    # countries = Country.objects.prefetch_related('cities')\
-    #                             .annotate(direction_count=Count('cities__cash_directions',
-    #                                                             filter=Q(cities__cash_directions__is_active=True)))\
-    #                             .filter(direction_count__gt=0)\
-    #                             .all()
-    prefetch_cities_queryset =  City.objects.order_by('name')\
-                                            .prefetch_related('cash_directions')\
-                                            .annotate(partner_direction_count=Count('partner_cities',
-                                                                                    filter=Q(partner_cities__partner_directions__is_active=True)))\
-                                            .annotate(direction_count=Count('cash_directions',
-                                                                            filter=Q(cash_directions__is_active=True)))\
-                                            .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0))
+#     # countries = Country.objects.prefetch_related('cities')\
+#     #                             .annotate(direction_count=Count('cities__cash_directions',
+#     #                                                             filter=Q(cities__cash_directions__is_active=True)))\
+#     #                             .filter(direction_count__gt=0)\
+#     #                             .all()
+#     prefetch_cities_queryset =  City.objects.order_by('name')\
+#                                             .prefetch_related('cash_directions')\
+#                                             .annotate(partner_direction_count=Count('partner_cities',
+#                                                                                     filter=Q(partner_cities__partner_directions__is_active=True)))\
+#                                             .annotate(direction_count=Count('cash_directions',
+#                                                                             filter=Q(cash_directions__is_active=True)))\
+#                                             .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0))
 
 
-    # prefetch_cities = Prefetch('cities', City.objects.order_by('name')\
-    #                                                     .prefetch_related('cash_directions')\
-    #                                                     .annotate(partner_direction_count=Count('partner_cities',
-    #                                                                                             filter=Q(partner_cities__partner_directions__is_active=True)))\
-    #                                                     .annotate(direction_count=Count('cash_directions'))\
-    #                                                     .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0)))
-    prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
+#     # prefetch_cities = Prefetch('cities', City.objects.order_by('name')\
+#     #                                                     .prefetch_related('cash_directions')\
+#     #                                                     .annotate(partner_direction_count=Count('partner_cities',
+#     #                                                                                             filter=Q(partner_cities__partner_directions__is_active=True)))\
+#     #                                                     .annotate(direction_count=Count('cash_directions'))\
+#     #                                                     .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0)))
+#     prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
 
 
 
-    countries = Country.objects.prefetch_related(prefetch_cities)\
-                                .annotate(direction_count=Count('cities__cash_directions',
-                                                                filter=Q(cities__cash_directions__is_active=True)))\
-                                .filter(direction_count__gt=0)\
-                                .order_by('name')\
-                                .all()
+#     countries = Country.objects.prefetch_related(prefetch_cities)\
+#                                 .annotate(direction_count=Count('cities__cash_directions',
+#                                                                 filter=Q(cities__cash_directions__is_active=True)))\
+#                                 .filter(direction_count__gt=0)\
+#                                 .order_by('name')\
+#                                 .all()
 
 
-    if not countries:
-        http_exception_json(status_code=404, param=request.url)
+#     if not countries:
+#         http_exception_json(status_code=404, param=request.url)
 
-    countries = get_available_countries(countries)
+#     countries = get_available_countries(countries)
 
-    return countries
+#     return countries
 
 
 # Эндпоинт для получения доступных стран
 # и связанных с ними городов
-@cash_router.get('/test_countries',
+@cash_router.get('/countries',
                  response_model=List[RuEnCountryModel],
                  response_model_by_alias=False)
 def get_available_coutries2(request: Request):
