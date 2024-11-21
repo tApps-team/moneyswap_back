@@ -199,19 +199,34 @@ def cash_valutes(request: Request,
                                                 is_active=True,
                                                 city__exchange__isnull=False,
                                                 city__exchange__is_active=True)
+    
+    country_directions_query = CountryDirection.objects\
+                                .select_related('direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to',
+                                                'country',
+                                                'country__exchange')\
+                                .filter(is_active=True,
+                                        country__exchange__is_active=True,
+                                        country__exchange__isnull=False)
 
     if base == 'ALL':
         cash_queries = cash_queries\
                                 .values_list('direction__valute_from').all()
         partner_queries = partner_queries\
                                 .values_list('direction__valute_from__code_name').all()
+        country_directions_query = country_directions_query\
+                                .values_list('direction__valute_from__code_name').all()
     else:
         cash_queries = cash_queries.filter(direction__valute_from=base)\
                                     .values_list('direction__valute_to').all()
         partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
                                         .values_list('direction__valute_to__code_name').all()
+        country_directions_query = country_directions_query\
+                                        .filter(direction__valute_from__code_name=base)\
+                                        .values_list('direction__valute_to__code_name').all()
 
-    queries = cash_queries.union(partner_queries)
+    queries = cash_queries.union(partner_queries, country_directions_query)
 
     if not queries:
         http_exception_json(status_code=404, param=request.url)
