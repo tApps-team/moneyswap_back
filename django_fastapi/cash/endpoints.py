@@ -205,10 +205,12 @@ def cash_valutes(request: Request,
                                                 'direction__valute_from',
                                                 'direction__valute_to',
                                                 'country',
+                                                'country__country',
                                                 'country__exchange')\
                                 .filter(is_active=True,
                                         country__exchange__is_active=True,
-                                        country__exchange__isnull=False)
+                                        country__exchange__isnull=False,
+                                        country__country__cities__code_name=city)
 
     if base == 'ALL':
         cash_queries = cash_queries\
@@ -269,10 +271,12 @@ def cash_valutes_2(request: Request,
                                                 'direction__valute_from',
                                                 'direction__valute_to',
                                                 'country',
+                                                'country__country',
                                                 'country__exchange')\
                                 .filter(is_active=True,
                                         country__exchange__is_active=True,
-                                        country__exchange__isnull=False)
+                                        country__exchange__isnull=False,
+                                        country__country__cities__code_name=city)
 
     if base == 'ALL':
         cash_queries = cash_queries\
