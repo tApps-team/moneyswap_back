@@ -488,54 +488,54 @@ def get_similar_cities_by_direction(valute_from: str,
     
 
 
+# @common_router.get('/exchange_list',
+#                    response_model=list[CommonExchangeSchema],
+#                    response_model_by_alias=False)
+# def get_exchange_list():
+
+#     review_counts = get_reviews_count_filters(marker='exchange')
+    
+#     exchanges = []
+
+#     for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
+#                                             ('cash', cash_models.Exchange),
+#                                             ('partner', partner_models.Exchange)):
+#         exchange_query = exchange_model.objects\
+#                                     .annotate(positive_review_count=review_counts['positive'])\
+#                                     .annotate(neutral_review_count=review_counts['neutral'])\
+#                                     .annotate(negative_review_count=review_counts['negative'])\
+#                                     .annotate(exchange_marker=annotate_string_field(exchange_marker))\
+#                                     .values('pk',
+#                                             'name',
+#                                             'reserve_amount',
+#                                             'course_count',
+#                                             'positive_review_count',
+#                                             'neutral_review_count',
+#                                             'negative_review_count',
+#                                             'is_active',
+#                                             'exchange_marker',
+#                                             'partner_link')\
+#                                     .all()
+#         exchanges.append(exchange_query)
+
+#     exchange_list = exchanges[0].union(exchanges[1])\
+#                                 .union(exchanges[2])
+
+#     for exchange in exchange_list:
+#         exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
+#                                                 neutral=exchange['neutral_review_count'],
+#                                                 negative=exchange['neutral_review_count'])
+
+#     # print(len(connection.queries))
+#     return sorted(exchange_list,
+#                   key=lambda el: el.get('name'))
+
+
+# новый exchange_marker 'both'
 @common_router.get('/exchange_list',
                    response_model=list[CommonExchangeSchema],
                    response_model_by_alias=False)
 def get_exchange_list():
-
-    review_counts = get_reviews_count_filters(marker='exchange')
-    
-    exchanges = []
-
-    for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
-                                            ('cash', cash_models.Exchange),
-                                            ('partner', partner_models.Exchange)):
-        exchange_query = exchange_model.objects\
-                                    .annotate(positive_review_count=review_counts['positive'])\
-                                    .annotate(neutral_review_count=review_counts['neutral'])\
-                                    .annotate(negative_review_count=review_counts['negative'])\
-                                    .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-                                    .values('pk',
-                                            'name',
-                                            'reserve_amount',
-                                            'course_count',
-                                            'positive_review_count',
-                                            'neutral_review_count',
-                                            'negative_review_count',
-                                            'is_active',
-                                            'exchange_marker',
-                                            'partner_link')\
-                                    .all()
-        exchanges.append(exchange_query)
-
-    exchange_list = exchanges[0].union(exchanges[1])\
-                                .union(exchanges[2])
-
-    for exchange in exchange_list:
-        exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
-                                                neutral=exchange['neutral_review_count'],
-                                                negative=exchange['neutral_review_count'])
-
-    # print(len(connection.queries))
-    return sorted(exchange_list,
-                  key=lambda el: el.get('name'))
-
-
-# новый exchange_marker 'both'
-@test_router.get('/exchange_list',
-                   response_model=list[CommonExchangeSchema],
-                   response_model_by_alias=False)
-def get_exchange_list2():
 
     review_counts = get_reviews_count_filters(marker='exchange')
     
@@ -594,35 +594,35 @@ def get_exchange_list2():
 
 
 
+# @common_router.get('/exchange_detail',
+#                    response_model=DetailExchangeSchema,
+#                    response_model_by_alias=False)
+# def get_exchange_detail_info(exchange_id: int,
+#                              exchange_marker: str):
+#     review_counts = get_reviews_count_filters(marker='exchange')
+
+#     exchange = get_exchange(exchange_id,
+#                             exchange_marker,
+#                             review_counts=review_counts)
+#     exchange = exchange.first()
+
+#     exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
+#                                             neutral=exchange.neutral_review_count,
+#                                             negative=exchange.negative_review_count)
+#     exchange.icon = try_generate_icon_url(exchange)
+    
+#     if exchange.course_count is None or not exchange.course_count.isdigit():
+#         exchange.course_count = None
+#     else:
+#         exchange.course_count = int(exchange.course_count)
+    
+#     return exchange
+
+
 @common_router.get('/exchange_detail',
                    response_model=DetailExchangeSchema,
                    response_model_by_alias=False)
 def get_exchange_detail_info(exchange_id: int,
-                             exchange_marker: str):
-    review_counts = get_reviews_count_filters(marker='exchange')
-
-    exchange = get_exchange(exchange_id,
-                            exchange_marker,
-                            review_counts=review_counts)
-    exchange = exchange.first()
-
-    exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
-                                            neutral=exchange.neutral_review_count,
-                                            negative=exchange.negative_review_count)
-    exchange.icon = try_generate_icon_url(exchange)
-    
-    if exchange.course_count is None or not exchange.course_count.isdigit():
-        exchange.course_count = None
-    else:
-        exchange.course_count = int(exchange.course_count)
-    
-    return exchange
-
-
-@test_router.get('/exchange_detail',
-                   response_model=DetailExchangeSchema,
-                   response_model_by_alias=False)
-def get_exchange_detail_info2(exchange_id: int,
                              exchange_marker: str):
     # is_both = None
     # if exchange_marker == 'both':
