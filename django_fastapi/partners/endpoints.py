@@ -1165,39 +1165,39 @@ def delete_partner_country(partner: partner_dependency,
 #                                 detail='Такое направление уже существует')
 
 
-@partner_router.post('/add_partner_direction')
-def add_partner_direction(partner: partner_dependency,
-                          new_direction: AddPartnerDirectionSchema):
-    partner_id = partner.get('partner_id')
+# @partner_router.post('/add_partner_direction')
+# def add_partner_direction(partner: partner_dependency,
+#                           new_direction: AddPartnerDirectionSchema):
+#     partner_id = partner.get('partner_id')
 
-    data = new_direction.model_dump()
+#     data = new_direction.model_dump()
 
-    valute_from = data.pop('valute_from')
-    valute_to = data.pop('valute_to')
-    try:
-        city = PartnerCity.objects.select_related('exchange',
-                                                  'exchange__account',
-                                                  'city')\
-                                    .get(exchange__account__pk=partner_id,
-                                        city__code_name=data['city'])    
+#     valute_from = data.pop('valute_from')
+#     valute_to = data.pop('valute_to')
+#     try:
+#         city = PartnerCity.objects.select_related('exchange',
+#                                                   'exchange__account',
+#                                                   'city')\
+#                                     .get(exchange__account__pk=partner_id,
+#                                         city__code_name=data['city'])    
 
-        direction = CashDirection.objects.select_related('valute_from',
-                                                        'valute_to')\
-                                            .get(valute_from__code_name=valute_from,
-                                                 valute_to__code_name=valute_to)
-    except Exception:
-        raise HTTPException(status_code=404)
-    else:
-        data['city'] = city
-        data['direction'] = direction
+#         direction = CashDirection.objects.select_related('valute_from',
+#                                                         'valute_to')\
+#                                             .get(valute_from__code_name=valute_from,
+#                                                  valute_to__code_name=valute_to)
+#     except Exception:
+#         raise HTTPException(status_code=404)
+#     else:
+#         data['city'] = city
+#         data['direction'] = direction
 
-        try:
-            Direction.objects.create(**data)
-            return {'status': 'success',
-                    'details': f'Партнерское направление {direction.display_name} добавлено'}
-        except IntegrityError:
-            raise HTTPException(status_code=423,
-                                detail='Такое направление уже существует')
+#         try:
+#             Direction.objects.create(**data)
+#             return {'status': 'success',
+#                     'details': f'Партнерское направление {direction.display_name} добавлено'}
+#         except IntegrityError:
+#             raise HTTPException(status_code=423,
+#                                 detail='Такое направление уже существует')
 
         
 
