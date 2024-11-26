@@ -61,7 +61,12 @@ def create_cash_directions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
 
+        # print(exchange)
+
         all_cash_directions = get_or_set_cash_directions_cache()
+
+        # if exchange.name == 'test':
+        #     print('direct22',all_cash_directions)
 
         if all_cash_directions:
             direction_list = get_cash_direction_set_for_creating(all_cash_directions,
