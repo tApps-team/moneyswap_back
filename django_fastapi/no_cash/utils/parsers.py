@@ -117,6 +117,8 @@ def parse_xml_to_dict(dict_for_parse: dict,
             except Exception as ex:
                 print(ex)
                 continue
+            finally:
+                element.clear()
         else:
             break
 
@@ -203,6 +205,8 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
         except Exception as ex:
             print(ex)
             continue
+        finally:
+            element.clear()
 
     try:
         with transaction.atomic():
