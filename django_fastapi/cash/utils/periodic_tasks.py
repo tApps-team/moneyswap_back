@@ -65,6 +65,9 @@ def run_cash_background_tasks(task: Proxy,
     наличных готовых направлений
     '''
 
+    # if exchange.name == 'test':
+    #     print('direct22',direction_dict)
+
     for city in direction_dict:
         try:
             if not check_city_in_xml_file(city, xml_file):
@@ -89,6 +92,9 @@ def run_cash_background_tasks(task: Proxy,
         except Exception as ex:
             print(ex)
             continue
+
+    # if exchange.name == 'test':
+    #     print('direct22',direction_dict)
 
     parse_xml_to_dict_2(direction_dict,
                         xml_file,

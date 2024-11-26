@@ -80,8 +80,8 @@ async def request_to_xml_file(xml_url: str):
 
             if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
 
-                if xml_url == 'https://obmenko.org/export.xml':
-                    print('test22', content_type, await response.text(), sep='***')
+                # if xml_url == 'https://obmenko.org/export.xml':
+                #     print('test22', content_type, await response.text(), sep='***')
 
                 raise RobotCheckError(f'{xml_url} требует проверку на робота')
             else:

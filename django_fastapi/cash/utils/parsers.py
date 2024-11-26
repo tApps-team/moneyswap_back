@@ -43,6 +43,73 @@ def cash_parse_xml(dict_for_parse: dict,
         
 
 
+def parse_update_direction_by_city(dict_for_parse: dict,
+                                   element: Element,
+                                   city: str,
+                                   valute_from: str,
+                                   valute_to: str,
+                                   update_list: list):
+    inner_key = f'{city} {valute_from[0]} {valute_to[0]}'
+
+    if dict_for_parse.get(inner_key, False):
+        # direction_id = dict_for_parse.pop(key)
+        direction = dict_for_parse.pop(inner_key)
+
+        fromfee = element.xpath('./fromfee/text()')
+        # print('fromfee', fromfee)
+        param = element.xpath('./param/text()')
+
+        fromfee = None if not fromfee else fromfee[0]
+        
+        if fromfee:
+            fromfee: str
+            if fromfee.endswith('%'):
+                fromfee = float(fromfee[:-1].strip())
+            else:
+                fromfee = None
+
+        param = None if not param else param[0]
+
+        # min_amount = element.xpath('./minamount/text()')
+        if not (min_amount := element.xpath('./minamount/text()')):
+            min_amount = element.xpath('./minAmount/text()')
+
+        # max_amount = element.xpath('./maxamount/text()')
+        if not (max_amount := element.xpath('./maxamount/text()')):
+            max_amount = element.xpath('./maxAmount/text()')
+
+        try:
+            # if fromfee and not fromfee.isdigit():
+            #     fromfee = None
+                
+            d = {
+                'in_count': element.xpath('./in/text()')[0],
+                'out_count': element.xpath('./out/text()')[0],
+                'min_amount': min_amount[0],
+                'max_amount': max_amount[0],
+                'fromfee': fromfee,
+                'params': param,
+                'is_active': True,
+                # 'direction_id': direction_id,
+            }
+            
+            make_valid_values_for_dict(d)
+        except Exception as ex:
+            print(ex)
+            d = {
+                # 'direction_id': direction_id,
+                'is_active': False,
+            }
+        finally:
+            # task.delay(d)
+            # ExchangeDirection.objects.filter(pk=direction_id)\
+            #                             .update(**d)
+            for field, value in d.items():
+                setattr(direction, field, value)
+            update_list.append(direction)
+
+
+
 def parse_xml_to_dict(dict_for_parse: dict,
                       xml_file: str,
                       task: Proxy):
@@ -61,8 +128,9 @@ def parse_xml_to_dict(dict_for_parse: dict,
 
     update_list = []
 
-    for event, element in etree.iterparse(BytesIO(xml_file), tag='item'):
+    for event, element in etree.iterparse(BytesIO(xml_file), events=('end',), tag='item'):
         if dict_for_parse:
+            element: Element
     #  print(event)
             try:
                 city = element.xpath('./city/text()')
@@ -72,65 +140,81 @@ def parse_xml_to_dict(dict_for_parse: dict,
                     valute_from = element.xpath('./from/text()')
                     valute_to = element.xpath('./to/text()')
                     
-                    if all(el for el in (valute_from, valute_to)):
-                        key = f'{city} {valute_from[0]} {valute_to[0]}'
+                    if city.find(',') == -1:
+                        parse_update_direction_by_city(dict_for_parse,
+                                                       element,
+                                                       city,
+                                                       valute_from,
+                                                       valute_to,
+                                                       update_list)
+                    else:
+                        cities = [c.strip() for c in city.split(',')]
                         
-                        if dict_for_parse.get(key, False):
-                            # direction_id = dict_for_parse.pop(key)
-                            direction = dict_for_parse.pop(key)
+                        for city in cities:
+                            parse_update_direction_by_city(dict_for_parse,
+                                                            element,
+                                                            city,
+                                                            valute_from,
+                                                            valute_to,
+                                                            update_list)
+                        # inner_key = f'{city} {valute_from[0]} {valute_to[0]}'
+                        
+                        # if dict_for_parse.get(key, False):
+                        #     # direction_id = dict_for_parse.pop(key)
+                        #     direction = dict_for_parse.pop(key)
 
-                            fromfee = element.xpath('./fromfee/text()')
-                            # print('fromfee', fromfee)
-                            param = element.xpath('./param/text()')
+                        #     fromfee = element.xpath('./fromfee/text()')
+                        #     # print('fromfee', fromfee)
+                        #     param = element.xpath('./param/text()')
 
-                            fromfee = None if not fromfee else fromfee[0]
+                        #     fromfee = None if not fromfee else fromfee[0]
                             
-                            if fromfee:
-                                fromfee: str
-                                if fromfee.endswith('%'):
-                                    fromfee = float(fromfee[:-1].strip())
-                                else:
-                                    fromfee = None
+                        #     if fromfee:
+                        #         fromfee: str
+                        #         if fromfee.endswith('%'):
+                        #             fromfee = float(fromfee[:-1].strip())
+                        #         else:
+                        #             fromfee = None
 
-                            param = None if not param else param[0]
+                        #     param = None if not param else param[0]
 
-                            # min_amount = element.xpath('./minamount/text()')
-                            if not (min_amount := element.xpath('./minamount/text()')):
-                                min_amount = element.xpath('./minAmount/text()')
+                        #     # min_amount = element.xpath('./minamount/text()')
+                        #     if not (min_amount := element.xpath('./minamount/text()')):
+                        #         min_amount = element.xpath('./minAmount/text()')
 
-                            # max_amount = element.xpath('./maxamount/text()')
-                            if not (max_amount := element.xpath('./maxamount/text()')):
-                                max_amount = element.xpath('./maxAmount/text()')
+                        #     # max_amount = element.xpath('./maxamount/text()')
+                        #     if not (max_amount := element.xpath('./maxamount/text()')):
+                        #         max_amount = element.xpath('./maxAmount/text()')
 
-                            try:
-                                # if fromfee and not fromfee.isdigit():
-                                #     fromfee = None
+                        #     try:
+                        #         # if fromfee and not fromfee.isdigit():
+                        #         #     fromfee = None
                                     
-                                d = {
-                                    'in_count': element.xpath('./in/text()')[0],
-                                    'out_count': element.xpath('./out/text()')[0],
-                                    'min_amount': min_amount[0],
-                                    'max_amount': max_amount[0],
-                                    'fromfee': fromfee,
-                                    'params': param,
-                                    'is_active': True,
-                                    # 'direction_id': direction_id,
-                                }
+                        #         d = {
+                        #             'in_count': element.xpath('./in/text()')[0],
+                        #             'out_count': element.xpath('./out/text()')[0],
+                        #             'min_amount': min_amount[0],
+                        #             'max_amount': max_amount[0],
+                        #             'fromfee': fromfee,
+                        #             'params': param,
+                        #             'is_active': True,
+                        #             # 'direction_id': direction_id,
+                        #         }
                                 
-                                make_valid_values_for_dict(d)
-                            except Exception as ex:
-                                print(ex)
-                                d = {
-                                    # 'direction_id': direction_id,
-                                    'is_active': False,
-                                }
-                            finally:
-                                # task.delay(d)
-                                # ExchangeDirection.objects.filter(pk=direction_id)\
-                                #                             .update(**d)
-                                for field, value in d.items():
-                                    setattr(direction, field, value)
-                                update_list.append(direction)
+                        #         make_valid_values_for_dict(d)
+                        #     except Exception as ex:
+                        #         print(ex)
+                        #         d = {
+                        #             # 'direction_id': direction_id,
+                        #             'is_active': False,
+                        #         }
+                        #     finally:
+                        #         # task.delay(d)
+                        #         # ExchangeDirection.objects.filter(pk=direction_id)\
+                        #         #                             .update(**d)
+                        #         for field, value in d.items():
+                        #             setattr(direction, field, value)
+                        #         update_list.append(direction)
                                 
             except Exception as ex:
                 print(ex)
@@ -153,6 +237,198 @@ def parse_xml_to_dict(dict_for_parse: dict,
             print('CASH BULK UPDATE ERROR', ex)
 
 
+# def parse_xml_to_dict_2(dict_for_parse: dict,
+#                       xml_file: str,
+#                       exchange: Exchange,
+#                       black_list_parse: bool):
+#     # root = etree.fromstring(xml_file.encode())
+#     xml_file = xml_file.encode()
+
+#     bulk_create_list = []
+
+#     if black_list_parse:
+#         city_id_list = []
+#         direction_id_list = []
+
+#     for event, element in etree.iterparse(BytesIO(xml_file), tag='item'):
+#         # if dict_for_parse:
+#     #  print(event)
+#             try:
+#                 city = element.xpath('./city/text()')
+                
+#                 if city:
+#                     city = city[0].upper()
+#                     valute_from = element.xpath('./from/text()')
+#                     valute_to = element.xpath('./to/text()')
+                    
+#                     if all(el for el in (valute_from, valute_to)):
+#                         inner_key = f'{valute_from[0]} {valute_to[0]}'
+                        
+#                         if dict_for_parse.get(city, None) is not None:
+#                             if dict_for_parse[city].get(inner_key):
+#                                 city_id, direction_id = dict_for_parse[city].pop(inner_key)
+#                             # direction_id = dict_for_parse.pop(key)
+#                                 fromfee = element.xpath('./fromfee/text()')
+#                                 param = element.xpath('./param/text()')
+
+#                                 fromfee = None if not fromfee else fromfee[0]
+#                                 if fromfee:
+#                                     fromfee: str
+#                                     if fromfee.endswith('%'):
+#                                         fromfee = float(fromfee[:-1].strip())
+
+#                                 param = None if not param else param[0]
+
+#                                 # min_amount = element.xpath('./minamount/text()')
+#                                 if not (min_amount := element.xpath('./minamount/text()')):
+#                                     min_amount = element.xpath('./minAmount/text()')
+
+#                                 # max_amount = element.xpath('./maxamount/text()')
+#                                 if not (max_amount := element.xpath('./maxamount/text()')):
+#                                     max_amount = element.xpath('./maxAmount/text()')
+
+#                                 try:
+#                                     # if fromfee is not None:
+#                                     #     fromfee = fromfee if fromfee.isdigit() else None
+
+#                                     d = {
+#                                         'in_count': element.xpath('./in/text()')[0],
+#                                         'out_count': element.xpath('./out/text()')[0],
+#                                         'min_amount': min_amount[0],
+#                                         'max_amount': max_amount[0],
+#                                         'fromfee': fromfee,
+#                                         'params': param,
+#                                         'is_active': True,
+#                                         'city_id': city_id,
+#                                         'direction_id': direction_id,
+#                                         'exchange_id': exchange.id,
+#                                         # 'direction_id': direction_id,
+#                                     }
+                                
+#                                     make_valid_values_for_dict(d)
+#                                 except Exception as ex:
+#                                     print(ex)
+#                                     continue
+#                                 else:
+#                                     try:
+#                                         bulk_create_list.append(ExchangeDirection(**d))
+
+#                                         if black_list_parse:
+#                                             city_id_list.append(city_id)
+#                                             direction_id_list.append(direction_id)
+
+#                                     except Exception as ex:
+#                                         print(ex)
+#                                         continue
+                                
+#             except Exception as ex:
+#                 print(ex)
+#                 continue
+#             finally:
+#                 element.clear()
+    
+#     with transaction.atomic():
+#         try:
+#             if black_list_parse:
+#                     exchange.direction_black_list.remove(
+#                             *exchange.direction_black_list.filter(city_id__in=city_id_list,
+#                                                                 direction_id__in=direction_id_list)
+#                         )
+#                     ExchangeDirection.objects.bulk_create(bulk_create_list)
+                    
+#             else:
+#                 ExchangeDirection.objects.bulk_create(bulk_create_list)
+
+#                 black_list = []
+#                 for city in dict_for_parse:
+#                     if inner_dict := dict_for_parse.get(city):
+#                         for inner_key in inner_dict:
+#                             if value := inner_dict.get(inner_key):
+#                                 city_id, direction_id = value
+#                                 black_list_direction, _ = BlackListElement\
+#                                                         .objects\
+#                                                         .get_or_create(city_id=city_id,
+#                                                                        direction_id=direction_id)
+#                                 black_list.append(black_list_direction)
+#                 exchange.direction_black_list.add(*black_list)
+#                 # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
+#         except Exception as ex:
+#             print('CREATE OR BLACK LIST ERROR')
+#             print(ex)
+
+
+def parse_create_direction_by_city(dict_for_parse: dict,
+                                    element: Element,
+                                    city: str,
+                                    black_list_parse: bool,
+                                    exchange: Exchange,
+                                    bulk_create_list: list,
+                                    city_id_list: list,
+                                    direction_id_list: list):
+    valute_from = element.xpath('./from/text()')
+    valute_to = element.xpath('./to/text()')
+    
+    if all(el for el in (valute_from, valute_to)):
+        inner_key = f'{valute_from[0]} {valute_to[0]}'
+        
+        if dict_for_parse.get(city, None) is not None:
+            if dict_for_parse[city].get(inner_key):
+                city_id, direction_id = dict_for_parse[city].pop(inner_key)
+            # direction_id = dict_for_parse.pop(key)
+                fromfee = element.xpath('./fromfee/text()')
+                param = element.xpath('./param/text()')
+
+                fromfee = None if not fromfee else fromfee[0]
+                if fromfee:
+                    fromfee: str
+                    if fromfee.endswith('%'):
+                        fromfee = float(fromfee[:-1].strip())
+
+                param = None if not param else param[0]
+
+                # min_amount = element.xpath('./minamount/text()')
+                if not (min_amount := element.xpath('./minamount/text()')):
+                    min_amount = element.xpath('./minAmount/text()')
+
+                # max_amount = element.xpath('./maxamount/text()')
+                if not (max_amount := element.xpath('./maxamount/text()')):
+                    max_amount = element.xpath('./maxAmount/text()')
+
+                try:
+                    # if fromfee is not None:
+                    #     fromfee = fromfee if fromfee.isdigit() else None
+
+                    d = {
+                        'in_count': element.xpath('./in/text()')[0],
+                        'out_count': element.xpath('./out/text()')[0],
+                        'min_amount': min_amount[0],
+                        'max_amount': max_amount[0],
+                        'fromfee': fromfee,
+                        'params': param,
+                        'is_active': True,
+                        'city_id': city_id,
+                        'direction_id': direction_id,
+                        'exchange_id': exchange.id,
+                        # 'direction_id': direction_id,
+                    }
+                
+                    make_valid_values_for_dict(d)
+                except Exception as ex:
+                    print(ex)
+                else:
+                    try:
+                        bulk_create_list.append(ExchangeDirection(**d))
+
+                        if black_list_parse:
+                            city_id_list.append(city_id)
+                            direction_id_list.append(direction_id)
+
+                    except Exception as ex:
+                        print(ex)
+
+
+
+
 def parse_xml_to_dict_2(dict_for_parse: dict,
                       xml_file: str,
                       exchange: Exchange,
@@ -165,8 +441,11 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
     if black_list_parse:
         city_id_list = []
         direction_id_list = []
+    else:
+        city_id_list = None
+        direction_id_list = None
 
-    for event, element in etree.iterparse(BytesIO(xml_file), tag='item'):
+    for event, element in etree.iterparse(BytesIO(xml_file), events=('end',), tag='item'):
         # if dict_for_parse:
     #  print(event)
             try:
@@ -174,68 +453,90 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                 
                 if city:
                     city = city[0].upper()
-                    valute_from = element.xpath('./from/text()')
-                    valute_to = element.xpath('./to/text()')
-                    
-                    if all(el for el in (valute_from, valute_to)):
-                        inner_key = f'{valute_from[0]} {valute_to[0]}'
+
+                    if city.find(',') == -1:
+                        parse_create_direction_by_city(dict_for_parse,
+                                                        element,
+                                                        city,
+                                                        black_list_parse,
+                                                        exchange,
+                                                        bulk_create_list,
+                                                        city_id_list,
+                                                        direction_id_list)
+                    else:
+                        cities = [c.strip() for c in city.split(',')]
                         
-                        if dict_for_parse.get(city, None) is not None:
-                            if dict_for_parse[city].get(inner_key):
-                                city_id, direction_id = dict_for_parse[city].pop(inner_key)
-                            # direction_id = dict_for_parse.pop(key)
-                                fromfee = element.xpath('./fromfee/text()')
-                                param = element.xpath('./param/text()')
+                        for city in cities:
+                            parse_create_direction_by_city(dict_for_parse,
+                                                            element,
+                                                            city,
+                                                            black_list_parse,
+                                                            exchange,
+                                                            bulk_create_list,
+                                                            city_id_list,
+                                                            direction_id_list)
+                    # valute_from = element.xpath('./from/text()')
+                    # valute_to = element.xpath('./to/text()')
+                    
+                    # if all(el for el in (valute_from, valute_to)):
+                    #     inner_key = f'{valute_from[0]} {valute_to[0]}'
+                        
+                    #     if dict_for_parse.get(city, None) is not None:
+                    #         if dict_for_parse[city].get(inner_key):
+                    #             city_id, direction_id = dict_for_parse[city].pop(inner_key)
+                    #         # direction_id = dict_for_parse.pop(key)
+                    #             fromfee = element.xpath('./fromfee/text()')
+                    #             param = element.xpath('./param/text()')
 
-                                fromfee = None if not fromfee else fromfee[0]
-                                if fromfee:
-                                    fromfee: str
-                                    if fromfee.endswith('%'):
-                                        fromfee = float(fromfee[:-1].strip())
+                    #             fromfee = None if not fromfee else fromfee[0]
+                    #             if fromfee:
+                    #                 fromfee: str
+                    #                 if fromfee.endswith('%'):
+                    #                     fromfee = float(fromfee[:-1].strip())
 
-                                param = None if not param else param[0]
+                    #             param = None if not param else param[0]
 
-                                # min_amount = element.xpath('./minamount/text()')
-                                if not (min_amount := element.xpath('./minamount/text()')):
-                                    min_amount = element.xpath('./minAmount/text()')
+                    #             # min_amount = element.xpath('./minamount/text()')
+                    #             if not (min_amount := element.xpath('./minamount/text()')):
+                    #                 min_amount = element.xpath('./minAmount/text()')
 
-                                # max_amount = element.xpath('./maxamount/text()')
-                                if not (max_amount := element.xpath('./maxamount/text()')):
-                                    max_amount = element.xpath('./maxAmount/text()')
+                    #             # max_amount = element.xpath('./maxamount/text()')
+                    #             if not (max_amount := element.xpath('./maxamount/text()')):
+                    #                 max_amount = element.xpath('./maxAmount/text()')
 
-                                try:
-                                    # if fromfee is not None:
-                                    #     fromfee = fromfee if fromfee.isdigit() else None
+                    #             try:
+                    #                 # if fromfee is not None:
+                    #                 #     fromfee = fromfee if fromfee.isdigit() else None
 
-                                    d = {
-                                        'in_count': element.xpath('./in/text()')[0],
-                                        'out_count': element.xpath('./out/text()')[0],
-                                        'min_amount': min_amount[0],
-                                        'max_amount': max_amount[0],
-                                        'fromfee': fromfee,
-                                        'params': param,
-                                        'is_active': True,
-                                        'city_id': city_id,
-                                        'direction_id': direction_id,
-                                        'exchange_id': exchange.id,
-                                        # 'direction_id': direction_id,
-                                    }
+                    #                 d = {
+                    #                     'in_count': element.xpath('./in/text()')[0],
+                    #                     'out_count': element.xpath('./out/text()')[0],
+                    #                     'min_amount': min_amount[0],
+                    #                     'max_amount': max_amount[0],
+                    #                     'fromfee': fromfee,
+                    #                     'params': param,
+                    #                     'is_active': True,
+                    #                     'city_id': city_id,
+                    #                     'direction_id': direction_id,
+                    #                     'exchange_id': exchange.id,
+                    #                     # 'direction_id': direction_id,
+                    #                 }
                                 
-                                    make_valid_values_for_dict(d)
-                                except Exception as ex:
-                                    print(ex)
-                                    continue
-                                else:
-                                    try:
-                                        bulk_create_list.append(ExchangeDirection(**d))
+                    #                 make_valid_values_for_dict(d)
+                    #             except Exception as ex:
+                    #                 print(ex)
+                    #                 continue
+                    #             else:
+                    #                 try:
+                    #                     bulk_create_list.append(ExchangeDirection(**d))
 
-                                        if black_list_parse:
-                                            city_id_list.append(city_id)
-                                            direction_id_list.append(direction_id)
+                    #                     if black_list_parse:
+                    #                         city_id_list.append(city_id)
+                    #                         direction_id_list.append(direction_id)
 
-                                    except Exception as ex:
-                                        print(ex)
-                                        continue
+                    #                 except Exception as ex:
+                    #                     print(ex)
+                    #                     continue
                                 
             except Exception as ex:
                 print(ex)
@@ -279,9 +580,20 @@ def check_city_in_xml_file(city: str, xml_file: str):
     '''
     
     root = ET.fromstring(xml_file)
+    
     element = root.find(f'item[city="{city.upper()}"]')
+
     if element is None:
           element = root.find(f'item[city="{city.lower()}"]')
+    
+    if element is None:
+        cities = [item.find('city').text for item in root.findall('item')]
+        cities = ' '.join(cities).replace(',', ' ').split()
+
+        return city in set(cities)
+        # if city in set(cities):
+        #     return True
+
     return bool(element)
 
 
