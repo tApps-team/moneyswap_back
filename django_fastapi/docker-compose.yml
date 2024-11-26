@@ -130,7 +130,7 @@ services:
     restart: on-failure
     networks:
       - common-network
-    command: sh -c 'celery -A project worker -l info -c 8'
+    command: sh -c 'celery -A project worker -l info -c 2'
     environment:
       - POSTGRES_HOST=psql_db
       # - SELENIUM_DRIVER=firefox
