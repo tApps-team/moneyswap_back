@@ -57,7 +57,8 @@ def get_available_countries2(countries):
 
     for country in countries:
 
-        country.city_list = country.cities.all()
+        country.city_list = sorted(set(country.cities.all()),
+                                   key=lambda el: el.name)
 
         # if country.partner_countries.exists():
         #     partner_cities = country.partner_countries.partner_cities.values_list('city', flat=True)
