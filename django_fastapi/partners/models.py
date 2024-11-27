@@ -7,7 +7,8 @@ from general_models.models import (BaseExchange,
                                    BaseComment,
                                    Guest,
                                    BaseAdminComment,
-                                   BaseExchangeLinkCount)
+                                   BaseExchangeLinkCount,
+                                   Valute)
 
 from cash.models import Direction as CashDirection, City, Country
 
@@ -361,3 +362,22 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                                            related_name='exchange_counts',
                                            null=True,
                                            default=None)
+    
+
+class Bankomat(models.Model):
+    limit_valutes = Q(type_valute='ATM QR')
+    name = models.CharField('Название',
+                            unique=True,
+                            max_length=255)
+    valutes = models.ManyToManyField(Valute,
+                                     limit_choices_to=limit_valutes,
+                                     related_name='bankomats',
+                                     verbose_name='Валюты',
+                                     blank=True)
+    
+    class Meta:
+        verbose_name = 'Банкомат'
+        verbose_name_plural = 'Банкоматы'
+
+    def __str__(self):
+        return self.name

@@ -14,6 +14,9 @@ def get_limit_direction():
     
     return first_limit | second_filter | third_filter
 
+def get_limit_vautes():
+    return Q(type_valute='ATM QR')
+
 
 def is_positive_validator(value: float):
     if value < 0:

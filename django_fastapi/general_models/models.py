@@ -27,6 +27,7 @@ class Valute(models.Model):
         ('Банкинг', 'Банкинг'),
         ('Денежные переводы', 'Денежные переводы'),
         ('Наличные', 'Наличные'),
+        ('ATM QR', 'ATM QR'),
         ]
     name = models.CharField('Название валюты(ru)',
                             max_length=50,
