@@ -381,3 +381,31 @@ class Bankomat(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+# class BankomatValutes(models.Model):
+#     bankomat = models.ForeignKey(Bankomat,
+#                                  on_delete=models.CASCADE,
+#                                  verbose_name='Банкомат')
+#     valute = models.ForeignKey(Valute,
+#                                on_delete=models.CASCADE,
+#                                to_field='code_name',
+#                                verbose_name='Валюта')
+    
+#     class Meta:
+#         unique_together = (('bankomat', 'valute'), )
+
+# Intermate table Partner/Valute
+class QRValutePartner(models.Model):
+    valute = models.ForeignKey(Valute,
+                               verbose_name='Валюта',
+                               on_delete=models.CASCADE)
+    partner = models.ForeignKey(CustomUser,
+                                verbose_name='Партнёр',
+                                on_delete=models.CASCADE)
+    bankomats = models.ManyToManyField(Bankomat,
+                                       verbose_name='Банкоматы',
+                                       blank=True)
+    
+    class Meta:
+        unique_together = (('partner', 'valute'), )

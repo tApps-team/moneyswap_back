@@ -1,15 +1,22 @@
 from collections import defaultdict
 
 from django.db.models import Count, Q
-from django.db import connection
+from django.db import connection, transaction
 
 from general_models.utils.endpoints import try_generate_icon_url, get_reviews_count_filters
 
 from general_models.schemas import MultipleName, MultipleName2
 
+from general_models.models import Valute
+
 from cash.models import Direction as CashDirection
 
-from partners.models import Direction, PartnerCity, CountryDirection, PartnerCountry
+from partners.models import (Direction,
+                             PartnerCity,
+                             CountryDirection,
+                             PartnerCountry,
+                             QRValutePartner,
+                             Bankomat)
 
 from partners.schemas import (PartnerCityInfoSchema,
                               UpdatedTimeByPartnerCitySchema,
@@ -761,3 +768,25 @@ def generate_actual_course(direction: CashDirection):
         'icon_valute_to': icon_valute_to,
         'out_count': out_count,
     }
+
+
+def try_add_bankomats_to_valute(partner_id: int,
+                                valute_to: str,
+                                bankomats: list):
+    try:
+        valute_id = Valute.objects.get(code_name=valute_to).name
+    except Exception:
+        pass
+    else:
+        selected_bankomats = [bankomat.get('id') for bankomat in bankomats \
+                              if bankomat.get('available')]
+        unselected_bankomats = [bankomat.get('id') for bankomat in bankomats \
+                              if not bankomat.get('available')]
+        with transaction.atomic():
+            partner_valute, _ = QRValutePartner.objects.get_or_create(partner_id=partner_id,
+                                                                    valute_id=valute_id)
+            
+            # bankomat_ids = [bankomat.get('id') for bankomat in bankomats if bankomat.get('available')]
+            # for bankomat in bankomats:
+            partner_valute.bankomats.add(*selected_bankomats)
+            partner_valute.bankomats.remove(*unselected_bankomats)

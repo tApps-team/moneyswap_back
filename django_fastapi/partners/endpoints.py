@@ -6,7 +6,7 @@ from fastapi.exceptions import HTTPException
 
 from django.utils import timezone
 from django.db import connection, transaction
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -15,8 +15,16 @@ from cash.models import Country, City, Direction as CashDirection
 
 from general_models.utils.endpoints import try_generate_icon_url
 from general_models.schemas import MultipleName, MultipleName2
+from general_models.models import Valute
 
-from .models import PartnerCity, Direction, Exchange, WorkingDay, PartnerCountry, CountryDirection
+from .models import (PartnerCity,
+                     Direction,
+                     Exchange,
+                     WorkingDay,
+                     PartnerCountry,
+                     CountryDirection,
+                     QRValutePartner,
+                     Bankomat)
 
 from .auth.endpoints import partner_dependency
 
@@ -27,9 +35,10 @@ from .utils.endpoints import (generate_partner_cities, generate_partner_countrie
                               generate_valute_list,
                               generate_actual_course,
                               generate_valute_list2,
-                              generate_partner_cities2)
+                              generate_partner_cities2,
+                              try_add_bankomats_to_valute)
 
-from .schemas import (AddPartnerCountrySchema,
+from .schemas import (AddPartnerCountrySchema, AddPartnerDirectionSchema3,
                       DeletePartnerDirectionSchema,
                       ListEditedPartnerDirectionSchema2,
                       DeletePartnerCityCountrySchema,
@@ -96,19 +105,19 @@ def get_partner_cities(partner: partner_dependency):
     return generate_partner_cities2(partner_cities)
 
 
-@test_partner_router.get('/partner_countries',
-                    response_model=list[PartnerCountrySchema3],
-                    response_model_by_alias=False)
-def get_partner_countries(partner: partner_dependency):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.get('/partner_countries',
+#                     response_model=list[PartnerCountrySchema3],
+#                     response_model_by_alias=False)
+# def get_partner_countries(partner: partner_dependency):
+#     partner_id = partner.get('partner_id')
 
-    partner_counrties = PartnerCountry.objects.select_related('exchange',
-                                                              'exchange__account',
-                                                              'country')\
-                                        .filter(exchange__account__pk=partner_id)\
-                                        .all()
+#     partner_counrties = PartnerCountry.objects.select_related('exchange',
+#                                                               'exchange__account',
+#                                                               'country')\
+#                                         .filter(exchange__account__pk=partner_id)\
+#                                         .all()
     
-    return generate_partner_countries(partner_counrties)
+#     return generate_partner_countries(partner_counrties)
 
 
 @partner_router.get('/partner_countries',
@@ -199,32 +208,32 @@ def get_cities_for_country(country_name: str):
 
 #     return generate_partner_directions_by_city(directions)
 
-@test_partner_router.get('/directions_by',
-                    response_model=list[DirectionSchema])
-def get_partner_directions_by(partner: partner_dependency,
-                              id: int,
-                              marker: Literal['country', 'city']):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.get('/directions_by',
+#                     response_model=list[DirectionSchema])
+# def get_partner_directions_by(partner: partner_dependency,
+#                               id: int,
+#                               marker: Literal['country', 'city']):
+#     partner_id = partner.get('partner_id')
 
-    if marker == 'country':
-        direction_model = CountryDirection
-        additional_filter = Q(country__exchange__account__pk=partner_id,
-                              country__pk=id)
-    else:
-        direction_model = Direction
-        additional_filter = Q(city__exchange__account__pk=partner_id,
-                              city__pk=id)
+#     if marker == 'country':
+#         direction_model = CountryDirection
+#         additional_filter = Q(country__exchange__account__pk=partner_id,
+#                               country__pk=id)
+#     else:
+#         direction_model = Direction
+#         additional_filter = Q(city__exchange__account__pk=partner_id,
+#                               city__pk=id)
 
-    directions = direction_model.objects.select_related(marker,
-                                                        f'{marker}__exchange',
-                                                        f'{marker}__exchange__account',
-                                                        'direction',
-                                                        'direction__valute_from',
-                                                        'direction__valute_to')\
-                                        .filter(additional_filter)\
-                                        .all()
+#     directions = direction_model.objects.select_related(marker,
+#                                                         f'{marker}__exchange',
+#                                                         f'{marker}__exchange__account',
+#                                                         'direction',
+#                                                         'direction__valute_from',
+#                                                         'direction__valute_to')\
+#                                         .filter(additional_filter)\
+#                                         .all()
 
-    return generate_partner_directions_by_city(directions)
+#     return generate_partner_directions_by_city(directions)
 
 
 @partner_router.get('/directions_by',
@@ -422,76 +431,76 @@ def get_account_info(partner: partner_dependency):
 #                     'details': f'Партнёрский город {city_model.name} добавлен'}
         
 
-@test_partner_router.post('/add_partner_city_country')
-def add_partner_city_country(partner: partner_dependency,
-                             data: AddPartnerCityCountrySchema):
-    # print(len(connection.queries))
-    partner_id = partner.get('partner_id')
-    try:
-        # city_model = City.objects.get(code_name=city.city)
-        exchange = Exchange.objects.select_related('account')\
-                                    .get(account__pk=partner_id)
-    except Exception:
-        raise HTTPException(status_code=404)
-    else:
-        _data = data.model_dump()
-        # data['city'] = city_model
-        _data['exchange'] = exchange
+# @test_partner_router.post('/add_partner_city_country')
+# def add_partner_city_country(partner: partner_dependency,
+#                              data: AddPartnerCityCountrySchema):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
+#     try:
+#         # city_model = City.objects.get(code_name=city.city)
+#         exchange = Exchange.objects.select_related('account')\
+#                                     .get(account__pk=partner_id)
+#     except Exception:
+#         raise HTTPException(status_code=404)
+#     else:
+#         _data = data.model_dump()
+#         # data['city'] = city_model
+#         _data['exchange'] = exchange
 
-        _id = _data.pop('id')
-        marker = _data.pop('marker')
+#         _id = _data.pop('id')
+#         marker = _data.pop('marker')
 
-        working_days = _data.pop('working_days')
+#         working_days = _data.pop('working_days')
 
-        working_days_set = {working_day.capitalize() for working_day in working_days\
-                            if working_days[working_day]}
+#         working_days_set = {working_day.capitalize() for working_day in working_days\
+#                             if working_days[working_day]}
         
-        weekdays = _data.pop('weekdays')
+#         weekdays = _data.pop('weekdays')
 
-        weekends = _data.pop('weekends')
+#         weekends = _data.pop('weekends')
 
-        _data.update(
-            {
-                'time_from': weekdays.get('time_from'),
-                'time_to': weekdays.get('time_to'),
-                'weekend_time_from': weekends.get('time_from'),
-                'weekend_time_to': weekends.get('time_to'),
-            }
-        )
+#         _data.update(
+#             {
+#                 'time_from': weekdays.get('time_from'),
+#                 'time_to': weekdays.get('time_to'),
+#                 'weekend_time_from': weekends.get('time_from'),
+#                 'weekend_time_to': weekends.get('time_to'),
+#             }
+#         )
 
-        try:
-            if marker == 'country':
-                _model = PartnerCountry
-                _data.update({
-                    'country_id': _id,
-                })
-            else:
-                _model = PartnerCity
-                _data.update({
-                    'city_id': _id,
-                })
-            # new_partner_city = PartnerCity.objects.create(**data)
-            new_obj = _model.objects.create(**_data)
-            # make_city_active(city_model)
-        except IntegrityError:
-            raise HTTPException(status_code=423, # ?
-                                detail='Такой город уже существует')
-        else:
-            new_obj.working_days\
-                .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
+#         try:
+#             if marker == 'country':
+#                 _model = PartnerCountry
+#                 _data.update({
+#                     'country_id': _id,
+#                 })
+#             else:
+#                 _model = PartnerCity
+#                 _data.update({
+#                     'city_id': _id,
+#                 })
+#             # new_partner_city = PartnerCity.objects.create(**data)
+#             new_obj = _model.objects.create(**_data)
+#             # make_city_active(city_model)
+#         except IntegrityError:
+#             raise HTTPException(status_code=423, # ?
+#                                 detail='Такой город уже существует')
+#         else:
+#             new_obj.working_days\
+#                 .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
             
-            # name = new_obj.city.name if marker == 'city' else new_obj.country.name
-            if marker == 'city':
-                name = new_obj.city.name
-                _text = 'город'
-                suffix = ''
-            else:
-                name = new_obj.country.name
-                _text = 'страна'
-                suffix = 'а'
-            # print(len(connection.queries))
-            return {'status': 'success',
-                    'details': f'Партнёрский {_text} {name} добавлен{suffix}'}
+#             # name = new_obj.city.name if marker == 'city' else new_obj.country.name
+#             if marker == 'city':
+#                 name = new_obj.city.name
+#                 _text = 'город'
+#                 suffix = ''
+#             else:
+#                 name = new_obj.country.name
+#                 _text = 'страна'
+#                 suffix = 'а'
+#             # print(len(connection.queries))
+#             return {'status': 'success',
+#                     'details': f'Партнёрский {_text} {name} добавлен{suffix}'}
         
 
 @partner_router.post('/add_partner_city_country')
@@ -566,102 +575,102 @@ def add_partner_city_country(partner: partner_dependency,
                     'details': f'Партнёрский {_text} {name} добавлен{suffix}'}
         
 
-@test_partner_router.patch('/edit_partner_city_country')
-def edit_partner_city_country(partner: partner_dependency,
-                             data: AddPartnerCityCountrySchema):
-    # print(len(connection.queries))
-    partner_id = partner.get('partner_id')
-    try:
-        # city_model = City.objects.get(code_name=city.city)
-        exchange = Exchange.objects.select_related('account')\
-                                    .get(account__pk=partner_id)
-    except Exception:
-        raise HTTPException(status_code=404)
-    else:
-        _data = data.model_dump()
-        # data['city'] = city_model
-        _data['exchange'] = exchange
+# @test_partner_router.patch('/edit_partner_city_country')
+# def edit_partner_city_country(partner: partner_dependency,
+#                              data: AddPartnerCityCountrySchema):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
+#     try:
+#         # city_model = City.objects.get(code_name=city.city)
+#         exchange = Exchange.objects.select_related('account')\
+#                                     .get(account__pk=partner_id)
+#     except Exception:
+#         raise HTTPException(status_code=404)
+#     else:
+#         _data = data.model_dump()
+#         # data['city'] = city_model
+#         _data['exchange'] = exchange
 
-        _id = _data.pop('id')
-        marker = _data.pop('marker')
+#         _id = _data.pop('id')
+#         marker = _data.pop('marker')
 
-        working_days = _data.pop('working_days')
+#         working_days = _data.pop('working_days')
 
-        working_days_set = {working_day.capitalize() for working_day in working_days\
-                            if working_days[working_day]}
+#         working_days_set = {working_day.capitalize() for working_day in working_days\
+#                             if working_days[working_day]}
         
 
-        unworking_day_names = {working_day.capitalize() for working_day in working_days \
-                                if not working_days[working_day]}
+#         unworking_day_names = {working_day.capitalize() for working_day in working_days \
+#                                 if not working_days[working_day]}
     
-    # working_day_names = {working_day.capitalize() for working_day in working_days \
-    #                      if working_days[working_day]}
+#     # working_day_names = {working_day.capitalize() for working_day in working_days \
+#     #                      if working_days[working_day]}
     
-    # with transaction.atomic():
-    #     partner_city = partner_city.first()
+#     # with transaction.atomic():
+#     #     partner_city = partner_city.first()
 
-    #     # partner_city.working_days.through.objects\
-    #     #         .filter(workingday__code_name__in=unworking_day_names).delete()
-    #     partner_city.working_days\
-    #                 .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
+#     #     # partner_city.working_days.through.objects\
+#     #     #         .filter(workingday__code_name__in=unworking_day_names).delete()
+#     #     partner_city.working_days\
+#     #                 .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
 
 
-    #     partner_city.working_days\
-    #                 .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
-    # # print(len(connection.queries))
-    # return {'status': 'success',
-    #         'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}
+#     #     partner_city.working_days\
+#     #                 .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
+#     # # print(len(connection.queries))
+#     # return {'status': 'success',
+#     #         'details': f'Партнёрский город {partner_city.city.name} успешно изменён'}
         
-        weekdays = _data.pop('weekdays')
+#         weekdays = _data.pop('weekdays')
 
-        weekends = _data.pop('weekends')
+#         weekends = _data.pop('weekends')
 
-        _data.update(
-            {
-                'time_from': weekdays.get('time_from'),
-                'time_to': weekdays.get('time_to'),
-                'weekend_time_from': weekends.get('time_from'),
-                'weekend_time_to': weekends.get('time_to'),
-            }
-        )
+#         _data.update(
+#             {
+#                 'time_from': weekdays.get('time_from'),
+#                 'time_to': weekdays.get('time_to'),
+#                 'weekend_time_from': weekends.get('time_from'),
+#                 'weekend_time_to': weekends.get('time_to'),
+#             }
+#         )
 
 
-        if marker == 'country':
-            _model = PartnerCountry
-        else:
-            _model = PartnerCity
-        with transaction.atomic():
-            obj_to_update = _model.objects.select_related(marker,
-                                            'exchange',
-                                            'exchange__account')\
-                                        .filter(pk=_id,
-                                                exchange__account__pk=partner_id)
+#         if marker == 'country':
+#             _model = PartnerCountry
+#         else:
+#             _model = PartnerCity
+#         with transaction.atomic():
+#             obj_to_update = _model.objects.select_related(marker,
+#                                             'exchange',
+#                                             'exchange__account')\
+#                                         .filter(pk=_id,
+#                                                 exchange__account__pk=partner_id)
             
-            if not obj_to_update:
-                raise HTTPException(status_code=404)
-            # else:
-            obj_to_update.update(**_data)
-            obj_to_update = obj_to_update.first()
+#             if not obj_to_update:
+#                 raise HTTPException(status_code=404)
+#             # else:
+#             obj_to_update.update(**_data)
+#             obj_to_update = obj_to_update.first()
 
-            obj_to_update.working_days\
-                        .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
+#             obj_to_update.working_days\
+#                         .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
 
-            obj_to_update.working_days\
-                .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
+#             obj_to_update.working_days\
+#                 .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
             
-        if marker == 'city':
-            name = obj_to_update.city.name
-            _text = 'город'
-            suffix = ''
-            prefix = 'ий'
-        else:
-            name = obj_to_update.country.name
-            _text = 'страна'
-            suffix = 'а'
-            prefix = 'ая'
-        # print(len(connection.queries))
-        return {'status': 'success',
-                'details': f'Партнёрск{prefix} {_text} {name} изменен{suffix}'}
+#         if marker == 'city':
+#             name = obj_to_update.city.name
+#             _text = 'город'
+#             suffix = ''
+#             prefix = 'ий'
+#         else:
+#             name = obj_to_update.country.name
+#             _text = 'страна'
+#             suffix = 'а'
+#             prefix = 'ая'
+#         # print(len(connection.queries))
+#         return {'status': 'success',
+#                 'details': f'Партнёрск{prefix} {_text} {name} изменен{suffix}'}
 
 
 @partner_router.patch('/edit_partner_city_country')
@@ -762,21 +771,21 @@ def edit_partner_city_country(partner: partner_dependency,
                 'details': f'Партнёрск{prefix} {_text} {name} изменен{suffix}'}
 
 
-@test_partner_router.delete('/delete_partner_city_country')
-def delete_partner_city_country(partner: partner_dependency,
-                                data: DeletePartnerCityCountrySchema):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.delete('/delete_partner_city_country')
+# def delete_partner_city_country(partner: partner_dependency,
+#                                 data: DeletePartnerCityCountrySchema):
+#     partner_id = partner.get('partner_id')
     
-    if data.marker == 'country':
-        _model = PartnerCountry
-    else:
-        _model = PartnerCity
+#     if data.marker == 'country':
+#         _model = PartnerCountry
+#     else:
+#         _model = PartnerCity
 
-    _model.objects.select_related('exchange',
-                                  'exchange__account')\
-                    .filter(pk=data.id,
-                            exchange__account__pk=partner_id)\
-                    .delete()
+#     _model.objects.select_related('exchange',
+#                                   'exchange__account')\
+#                     .filter(pk=data.id,
+#                             exchange__account__pk=partner_id)\
+#                     .delete()
 
 
 @partner_router.delete('/delete_partner_city_country')
@@ -796,116 +805,116 @@ def delete_partner_city_country(partner: partner_dependency,
                     .delete()
 
 
-@test_partner_router.post('/add_partner_country')
-def add_partner_country(partner: partner_dependency,
-                        country: AddPartnerCountrySchema):
-    # print(len(connection.queries))
-    partner_id = partner.get('partner_id')
-    try:
-        exchange = Exchange.objects.select_related('account')\
-                                    .get(account__pk=partner_id)
-        country = PartnerCountry.objects.create(country_id=country.country_id,
-                                                exchange=exchange)
-        # city_model = City.objects.get(code_name=city.city)
-        # exchange = Exchange.objects.select_related('account')\
-        #                             .get(account__pk=partner_id)
-    except Exception:
-        raise HTTPException(status_code=404)
-    else:
-        return {
-            'status': 'success',
-            'details': 'partner country successfully added',
-        }
+# @test_partner_router.post('/add_partner_country')
+# def add_partner_country(partner: partner_dependency,
+#                         country: AddPartnerCountrySchema):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
+#     try:
+#         exchange = Exchange.objects.select_related('account')\
+#                                     .get(account__pk=partner_id)
+#         country = PartnerCountry.objects.create(country_id=country.country_id,
+#                                                 exchange=exchange)
+#         # city_model = City.objects.get(code_name=city.city)
+#         # exchange = Exchange.objects.select_related('account')\
+#         #                             .get(account__pk=partner_id)
+#     except Exception:
+#         raise HTTPException(status_code=404)
+#     else:
+#         return {
+#             'status': 'success',
+#             'details': 'partner country successfully added',
+#         }
 
 
-@test_partner_router.post('/edit_partner_country')
-def edit_partner_country(partner: partner_dependency,
-                        country: AddPartnerCountrySchema):
-    # print(len(connection.queries))
-    partner_id = partner.get('partner_id')
+# @test_partner_router.post('/edit_partner_country')
+# def edit_partner_country(partner: partner_dependency,
+#                         country: AddPartnerCountrySchema):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
     
-    data = country.model_dump()
-    country_id = data.pop('country_id')
-    # try:
-        # exchange = Exchange.objects.select_related('account')\
-        #                             .get(account__pk=partner_id)
-    partner_country = PartnerCountry.objects.select_related('country',
-                                                    'exchange',
-                                                    'exchange__account')\
-                                    .filter(pk=country_id,
-                                            exchange__account__pk=partner_id)
-    # city_model = City.objects.get(code_name=city.city)
-    # exchange = Exchange.objects.select_related('account')\
-    #                             .get(account__pk=partner_id)
-    if not partner_country:
-        raise HTTPException(status_code=404)
+#     data = country.model_dump()
+#     country_id = data.pop('country_id')
+#     # try:
+#         # exchange = Exchange.objects.select_related('account')\
+#         #                             .get(account__pk=partner_id)
+#     partner_country = PartnerCountry.objects.select_related('country',
+#                                                     'exchange',
+#                                                     'exchange__account')\
+#                                     .filter(pk=country_id,
+#                                             exchange__account__pk=partner_id)
+#     # city_model = City.objects.get(code_name=city.city)
+#     # exchange = Exchange.objects.select_related('account')\
+#     #                             .get(account__pk=partner_id)
+#     if not partner_country:
+#         raise HTTPException(status_code=404)
     
-    working_days = data.pop('working_days')
+#     working_days = data.pop('working_days')
 
-    weekdays = data.pop('weekdays')
-    weekends = data.pop('weekends')
+#     weekdays = data.pop('weekdays')
+#     weekends = data.pop('weekends')
 
-    data.update(
-        {
-            'time_from': weekdays.get('time_from'),
-            'time_to': weekdays.get('time_to'),
-            'weekend_time_from': weekends.get('time_from'),
-            'weekend_time_to': weekends.get('time_to'),
-        }
-    )
+#     data.update(
+#         {
+#             'time_from': weekdays.get('time_from'),
+#             'time_to': weekdays.get('time_to'),
+#             'weekend_time_from': weekends.get('time_from'),
+#             'weekend_time_to': weekends.get('time_to'),
+#         }
+#     )
 
 
-    unworking_day_names = {working_day.capitalize() for working_day in working_days \
-                            if not working_days[working_day]}
+#     unworking_day_names = {working_day.capitalize() for working_day in working_days \
+#                             if not working_days[working_day]}
     
-    working_day_names = {working_day.capitalize() for working_day in working_days \
-                         if working_days[working_day]}
-    try:
-        with transaction.atomic():
-            partner_country.update(**data)
-            partner_country = partner_country.first()
+#     working_day_names = {working_day.capitalize() for working_day in working_days \
+#                          if working_days[working_day]}
+#     try:
+#         with transaction.atomic():
+#             partner_country.update(**data)
+#             partner_country = partner_country.first()
 
-            # partner_city.working_days.through.objects\
-            #         .filter(workingday__code_name__in=unworking_day_names).delete()
-            partner_country.working_days\
-                        .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
-
-
-            partner_country.working_days\
-                        .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
-        # print(len(connection.queries))
-        return {'status': 'success',
-                'details': f'Партнёрский страна {partner_country.country.name} успешно изменёна'}
-
-    except Exception as ex:
-        print('EDIT PARTNER COUNTRY ERROR', ex)
-        raise HTTPException(status_code=400)
-    # else:
-    #     return {
-    #         'status': 'success',
-    #         'details': 'partner country successfully added',
-    #     }
+#             # partner_city.working_days.through.objects\
+#             #         .filter(workingday__code_name__in=unworking_day_names).delete()
+#             partner_country.working_days\
+#                         .remove(*WorkingDay.objects.filter(code_name__in=unworking_day_names))
 
 
-@test_partner_router.delete('/delete_partner_country')
-def delete_partner_country(partner: partner_dependency,
-                           country: DeletePartnerCountrySchema):
-    # print(len(connection.queries))
-    partner_id = partner.get('partner_id')
+#             partner_country.working_days\
+#                         .add(*WorkingDay.objects.filter(code_name__in=working_day_names))
+#         # print(len(connection.queries))
+#         return {'status': 'success',
+#                 'details': f'Партнёрский страна {partner_country.country.name} успешно изменёна'}
 
-    partner_country = PartnerCountry.objects.select_related('exchange',
-                                                            'exchange__account')\
-                                            .filter(exchange__account__pk=partner_id,
-                                                    pk=country.country_id)
-    if not partner_country:
-        raise HTTPException(status_code=404)
+#     except Exception as ex:
+#         print('EDIT PARTNER COUNTRY ERROR', ex)
+#         raise HTTPException(status_code=400)
+#     # else:
+#     #     return {
+#     #         'status': 'success',
+#     #         'details': 'partner country successfully added',
+#     #     }
+
+
+# @test_partner_router.delete('/delete_partner_country')
+# def delete_partner_country(partner: partner_dependency,
+#                            country: DeletePartnerCountrySchema):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
+
+#     partner_country = PartnerCountry.objects.select_related('exchange',
+#                                                             'exchange__account')\
+#                                             .filter(exchange__account__pk=partner_id,
+#                                                     pk=country.country_id)
+#     if not partner_country:
+#         raise HTTPException(status_code=404)
     
-    partner_country.delete()
+#     partner_country.delete()
 
-    return {
-        'status': 'success',
-        'details': 'partner country successfully deleted',
-    }
+#     return {
+#         'status': 'success',
+#         'details': 'partner country successfully deleted',
+#     }
         # exchange = Exchange.objects.select_related('account')\
         #                             .get(account__pk=partner_id)
         # country = PartnerCountry.objects.create(country_id=country.country_id,
@@ -1201,74 +1210,74 @@ def delete_partner_country(partner: partner_dependency,
 
         
 
-@test_partner_router.post('/add_partner_direction')
-def add_partner_direction2(partner: partner_dependency,
-                          new_direction: AddPartnerDirectionSchema2):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.post('/add_partner_direction')
+# def add_partner_direction2(partner: partner_dependency,
+#                           new_direction: AddPartnerDirectionSchema2):
+#     partner_id = partner.get('partner_id')
 
-    data = new_direction.model_dump()
+#     data = new_direction.model_dump()
 
-    _id = data.pop('id')
-    valute_from = data.pop('valute_from')
-    valute_to = data.pop('valute_to')
-    marker = data.pop('marker')
+#     _id = data.pop('id')
+#     valute_from = data.pop('valute_from')
+#     valute_to = data.pop('valute_to')
+#     marker = data.pop('marker')
     
-    foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
-    foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
+#     foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
+#     foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
 
-    direction_model = CountryDirection if marker == 'country' else Direction
+#     direction_model = CountryDirection if marker == 'country' else Direction
 
 
-    check_partner = foreign_key_model.objects.select_related('exchange',
-                                                             'exchange__account')\
-                                            .filter(pk=_id,
-                                                    exchange__account__pk=partner_id)\
-                                            .exists()
+#     check_partner = foreign_key_model.objects.select_related('exchange',
+#                                                              'exchange__account')\
+#                                             .filter(pk=_id,
+#                                                     exchange__account__pk=partner_id)\
+#                                             .exists()
     
-    # print(check_partner)
+#     # print(check_partner)
     
-    if not check_partner:
-        raise HTTPException(status_code=404)
+#     if not check_partner:
+#         raise HTTPException(status_code=404)
         
-    try:
-        direction = CashDirection.objects.select_related('valute_from',
-                                                        'valute_to')\
-                                        .prefetch_related('partner_country_directions')\
-                                            .get(valute_from__code_name=valute_from,
-                                                 valute_to__code_name=valute_to)
-    except Exception as ex:
-        print(ex)
-        raise HTTPException(status_code=404)
-    else:
-        data[foreign_key_name] = _id
-        data['direction'] = direction
+#     try:
+#         direction = CashDirection.objects.select_related('valute_from',
+#                                                         'valute_to')\
+#                                         .prefetch_related('partner_country_directions')\
+#                                             .get(valute_from__code_name=valute_from,
+#                                                  valute_to__code_name=valute_to)
+#     except Exception as ex:
+#         print(ex)
+#         raise HTTPException(status_code=404)
+#     else:
+#         data[foreign_key_name] = _id
+#         data['direction'] = direction
 
-        try:
-            if marker == 'city':
-                city = PartnerCity.objects.select_related('city')\
-                                            .get(pk=_id)
-                country_direction = CountryDirection.objects.select_related('country',
-                                                                            'country__country',
-                                                                            'country__exchange',
-                                                                            'country__exchange__account',
-                                                                            'direction')\
-                                        .prefetch_related('country__country__cities')\
-                                        .filter(country__country__cities__code_name=city.city.code_name,
-                                                country__exchange__account=partner_id,
-                                                direction__valute_from=valute_from,
-                                                direction__valute_to=valute_to)
+#         try:
+#             if marker == 'city':
+#                 city = PartnerCity.objects.select_related('city')\
+#                                             .get(pk=_id)
+#                 country_direction = CountryDirection.objects.select_related('country',
+#                                                                             'country__country',
+#                                                                             'country__exchange',
+#                                                                             'country__exchange__account',
+#                                                                             'direction')\
+#                                         .prefetch_related('country__country__cities')\
+#                                         .filter(country__country__cities__code_name=city.city.code_name,
+#                                                 country__exchange__account=partner_id,
+#                                                 direction__valute_from=valute_from,
+#                                                 direction__valute_to=valute_to)
                 
-                if country_direction.exists():
-                    raise HTTPException(status_code=424,
-                                        detail='Такое направление уже существует на уровне партнерской страны')
+#                 if country_direction.exists():
+#                     raise HTTPException(status_code=424,
+#                                         detail='Такое направление уже существует на уровне партнерской страны')
 
-            direction_model.objects.create(**data)
-            return {'status': 'success',
-                    'details': f'Партнерское направление {direction.display_name} добавлено'}
-        except IntegrityError as ex:
-            print(ex)
-            raise HTTPException(status_code=423,
-                                detail='Такое направление уже существует')
+#             direction_model.objects.create(**data)
+#             return {'status': 'success',
+#                     'details': f'Партнерское направление {direction.display_name} добавлено'}
+#         except IntegrityError as ex:
+#             print(ex)
+#             raise HTTPException(status_code=423,
+#                                 detail='Такое направление уже существует')
         
 
 @partner_router.post('/add_partner_direction')
@@ -1382,55 +1391,55 @@ def add_partner_direction(partner: partner_dependency,
 #                 'details': f'updated {len(edited_direction_list)} directions'}
     
 
-@test_partner_router.patch('/edit_partner_directions')
-def edit_partner_directions_by2(partner: partner_dependency,
-                               response_body: ListEditedPartnerDirectionSchema2):
-    # print(len(connection.queries))
-    partner_id = partner.get('partner_id')
+# @test_partner_router.patch('/edit_partner_directions')
+# def edit_partner_directions_by2(partner: partner_dependency,
+#                                response_body: ListEditedPartnerDirectionSchema2):
+#     # print(len(connection.queries))
+#     partner_id = partner.get('partner_id')
 
-    data: dict = response_body.model_dump()
+#     data: dict = response_body.model_dump()
 
-    location_id = data['id']
-    marker = data['marker']
-    edited_direction_list = data['directions']
+#     location_id = data['id']
+#     marker = data['marker']
+#     edited_direction_list = data['directions']
 
-    city = None
+#     city = None
 
-    if marker == 'country':
-        direction_model = CountryDirection
-        _filter = Q(country__exchange__account__pk=partner_id,
-                    country__pk=location_id)
-    else:
-        direction_model = Direction
-        _filter = Q(city__exchange__account__pk=partner_id,
-                    city__pk=location_id)
-        city = PartnerCity.objects.select_related('exchange',
-                                                'exchange__account',
-                                                'city')\
-                                    .filter(exchange__account__pk=partner_id,
-                                            pk=location_id)
+#     if marker == 'country':
+#         direction_model = CountryDirection
+#         _filter = Q(country__exchange__account__pk=partner_id,
+#                     country__pk=location_id)
+#     else:
+#         direction_model = Direction
+#         _filter = Q(city__exchange__account__pk=partner_id,
+#                     city__pk=location_id)
+#         city = PartnerCity.objects.select_related('exchange',
+#                                                 'exchange__account',
+#                                                 'city')\
+#                                     .filter(exchange__account__pk=partner_id,
+#                                             pk=location_id)
 
-    partner_directions = direction_model.objects\
-                                    .select_related(marker,
-                                                    f'{marker}__exchange__account',
-                                                    'direction',
-                                                    'direction__valute_from',
-                                                    'direction__valute_to')\
-                                    .filter(_filter)
-    try:
-        with transaction.atomic():
-            for edited_direction in edited_direction_list:
-                _id = edited_direction.pop('id')
-                edited_direction['time_update'] = datetime.now()
-                partner_directions.filter(pk=_id).update(**edited_direction)
+#     partner_directions = direction_model.objects\
+#                                     .select_related(marker,
+#                                                     f'{marker}__exchange__account',
+#                                                     'direction',
+#                                                     'direction__valute_from',
+#                                                     'direction__valute_to')\
+#                                     .filter(_filter)
+#     try:
+#         with transaction.atomic():
+#             for edited_direction in edited_direction_list:
+#                 _id = edited_direction.pop('id')
+#                 edited_direction['time_update'] = datetime.now()
+#                 partner_directions.filter(pk=_id).update(**edited_direction)
 
-            if city:
-                city.update(time_update=timezone.now())
-    except Exception:
-        raise HTTPException(status_code=400)
-    else:
-        return {'status': 'success',
-                'details': f'updated {len(edited_direction_list)} directions'}
+#             if city:
+#                 city.update(time_update=timezone.now())
+#     except Exception:
+#         raise HTTPException(status_code=400)
+#     else:
+#         return {'status': 'success',
+#                 'details': f'updated {len(edited_direction_list)} directions'}
     
 
 @partner_router.patch('/edit_partner_directions')
@@ -1508,28 +1517,28 @@ def delete_partner_direction(partner: partner_dependency,
             'details': 'Партнёрское направление удалено'}
 
 
-@test_partner_router.delete('/delete_partner_direction')
-def delete_partner_direction2(partner: partner_dependency,
-                             data: DeletePartnerDirectionSchema):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.delete('/delete_partner_direction')
+# def delete_partner_direction2(partner: partner_dependency,
+#                              data: DeletePartnerDirectionSchema):
+#     partner_id = partner.get('partner_id')
     
-    if data.marker == 'country':
-        _model = CountryDirection
-        _filter = Q(country_id=data.id,
-                    country__exchange__account__pk=partner_id)
-    else:
-        _model = Direction
-        _filter = Q(city_id=data.id,
-                    city__exchange__account__pk=partner_id)
+#     if data.marker == 'country':
+#         _model = CountryDirection
+#         _filter = Q(country_id=data.id,
+#                     country__exchange__account__pk=partner_id)
+#     else:
+#         _model = Direction
+#         _filter = Q(city_id=data.id,
+#                     city__exchange__account__pk=partner_id)
 
-    _model.objects.select_related(data.marker,
-                                  f'{data.marker}__exchange',
-                                  f'{data.marker}__exchange__account')\
-                    .filter(_filter,
-                            pk=data.direction_id)\
-                    .delete()
-    return {'status': 'success',
-            'details': 'Партнёрское направление удалено'}
+#     _model.objects.select_related(data.marker,
+#                                   f'{data.marker}__exchange',
+#                                   f'{data.marker}__exchange__account')\
+#                     .filter(_filter,
+#                             pk=data.direction_id)\
+#                     .delete()
+#     return {'status': 'success',
+#             'details': 'Партнёрское направление удалено'}
 
 
 # @partner_router.delete('/delete_partner_direction')
@@ -1548,3 +1557,121 @@ def delete_partner_direction2(partner: partner_dependency,
 
 #     return {'status': 'success',
 #             'details': 'Партнёрское направление удалено'}
+
+
+@test_partner_router.get('/bankomats_by_valute')
+def get_bankomat_list_by_valute(partner: partner_dependency,
+                                valute: str):
+    partner_id = partner.get('partner_id')
+    
+    try:
+        if Valute.objects.get(pk=valute).type_valute != 'ATM QR':
+            raise HTTPException(status_code=400,
+                                detail='Некорректная валюта')
+    except Exception:
+        raise HTTPException(status_code=400,
+                            detail='Некорректная валюта')
+    
+    bankomats = Bankomat.objects.all()
+
+    partner_valute = QRValutePartner.objects.filter(partner_id=partner_id,
+                                                    valute_id=valute)
+                                                
+    partner_bankomats = []
+
+    if partner_valute.exists():
+        partner_valute = partner_valute.first()
+
+        partner_valute_bankomats = partner_valute.bankomats\
+                                                    .values_list('pk',
+                                                                flat=True)
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'name': bankomat.name,
+                'available': bankomat.pk in partner_valute_bankomats
+            }
+            partner_bankomats.append(partner_bankomat)
+    else:
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'name': bankomat.name,
+                'available': False,
+            }
+            partner_bankomats.append(partner_bankomat)
+    
+    return partner_bankomats
+
+
+@test_partner_router.post('/add_partner_direction')
+def add_partner_direction(partner: partner_dependency,
+                          new_direction: AddPartnerDirectionSchema3):
+    partner_id = partner.get('partner_id')
+
+    data = new_direction.model_dump()
+
+    _id = data.pop('id')
+    valute_from = data.pop('valute_from')
+    valute_to = data.pop('valute_to')
+    marker = data.pop('marker')
+    bankomats = data.pop('bankomats')
+    
+    foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
+    foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
+
+    direction_model = CountryDirection if marker == 'country' else Direction
+
+
+    check_partner = foreign_key_model.objects.select_related('exchange',
+                                                             'exchange__account')\
+                                            .filter(pk=_id,
+                                                    exchange__account__pk=partner_id)\
+                                            .exists()
+    
+    # print(check_partner)
+    
+    if not check_partner:
+        raise HTTPException(status_code=404)
+        
+    try:
+        direction = CashDirection.objects.select_related('valute_from',
+                                                        'valute_to')\
+                                        .prefetch_related('partner_country_directions')\
+                                            .get(valute_from__code_name=valute_from,
+                                                 valute_to__code_name=valute_to)
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404)
+    else:
+        data[foreign_key_name] = _id
+        data['direction'] = direction
+
+        try:
+            if marker == 'city':
+                city = PartnerCity.objects.select_related('city')\
+                                            .get(pk=_id)
+                country_direction = CountryDirection.objects.select_related('country',
+                                                                            'country__country',
+                                                                            'country__exchange',
+                                                                            'country__exchange__account',
+                                                                            'direction')\
+                                        .prefetch_related('country__country__cities')\
+                                        .filter(country__country__cities__code_name=city.city.code_name,
+                                                country__exchange__account=partner_id,
+                                                direction__valute_from=valute_from,
+                                                direction__valute_to=valute_to)
+                
+                if country_direction.exists():
+                    raise HTTPException(status_code=424,
+                                        detail='Такое направление уже существует на уровне партнерской страны')
+            with transaction.atomic():
+                direction_model.objects.create(**data)
+                if bankomats:
+                    try_add_bankomats_to_valute(partner_id,
+                                                valute_to,
+                                                bankomats)
+            return {'status': 'success',
+                    'details': f'Партнерское направление {direction.display_name} добавлено'}
+        except IntegrityError as ex:
+            print(ex)
+            raise HTTPException(status_code=423,
+                                detail='Такое направление уже существует')
