@@ -38,7 +38,7 @@ from .utils.endpoints import (generate_partner_cities, generate_partner_countrie
                               generate_partner_cities2,
                               try_add_bankomats_to_valute)
 
-from .schemas import (AddPartnerCountrySchema, AddPartnerDirectionSchema3,
+from .schemas import (AddPartnerCountrySchema, AddPartnerDirectionSchema3, BankomatSchema,
                       DeletePartnerDirectionSchema,
                       ListEditedPartnerDirectionSchema2,
                       DeletePartnerCityCountrySchema,
@@ -1559,7 +1559,9 @@ def delete_partner_direction(partner: partner_dependency,
 #             'details': 'Партнёрское направление удалено'}
 
 
-@test_partner_router.get('/bankomats_by_valute')
+@test_partner_router.get('/bankomats_by_valute',
+                         response_model=list[BankomatSchema],
+                         response_model_by_alias=False)
 def get_bankomat_list_by_valute(partner: partner_dependency,
                                 valute: str):
     partner_id = partner.get('partner_id')
@@ -1587,6 +1589,7 @@ def get_bankomat_list_by_valute(partner: partner_dependency,
                                                                 flat=True)
         for bankomat in bankomats:
             partner_bankomat = {
+                'id': bankomat.pk,
                 'name': bankomat.name,
                 'available': bankomat.pk in partner_valute_bankomats
             }
@@ -1594,6 +1597,7 @@ def get_bankomat_list_by_valute(partner: partner_dependency,
     else:
         for bankomat in bankomats:
             partner_bankomat = {
+                'id': bankomat.pk,
                 'name': bankomat.name,
                 'available': False,
             }
