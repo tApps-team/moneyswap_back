@@ -241,6 +241,16 @@ class AddPartnerDirectionSchema2(PartnerDirectionSchema):
     valute_to: str
 
 
+class BankomatSchema(BaseModel):
+    id: int
+    name: str
+    available: bool
+
+
+class AddPartnerDirectionSchema3(AddPartnerDirectionSchema2):
+    bankomats: list[BankomatSchema] | None
+
+
 class EditedPartnerDirectionSchema(PartnerDirectionSchema):
     id: int
 #     city: str

@@ -7,7 +7,8 @@ from general_models.models import (BaseExchange,
                                    BaseComment,
                                    Guest,
                                    BaseAdminComment,
-                                   BaseExchangeLinkCount)
+                                   BaseExchangeLinkCount,
+                                   Valute)
 
 from cash.models import Direction as CashDirection, City, Country
 
@@ -361,3 +362,50 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                                            related_name='exchange_counts',
                                            null=True,
                                            default=None)
+    
+
+class Bankomat(models.Model):
+    limit_valutes = Q(type_valute='ATM QR')
+    name = models.CharField('Название',
+                            unique=True,
+                            max_length=255)
+    valutes = models.ManyToManyField(Valute,
+                                     limit_choices_to=limit_valutes,
+                                     related_name='bankomats',
+                                     verbose_name='Валюты',
+                                     blank=True)
+    
+    class Meta:
+        verbose_name = 'Банкомат'
+        verbose_name_plural = 'Банкоматы'
+
+    def __str__(self):
+        return self.name
+    
+
+# class BankomatValutes(models.Model):
+#     bankomat = models.ForeignKey(Bankomat,
+#                                  on_delete=models.CASCADE,
+#                                  verbose_name='Банкомат')
+#     valute = models.ForeignKey(Valute,
+#                                on_delete=models.CASCADE,
+#                                to_field='code_name',
+#                                verbose_name='Валюта')
+    
+#     class Meta:
+#         unique_together = (('bankomat', 'valute'), )
+
+# Intermate table Partner/Valute
+class QRValutePartner(models.Model):
+    valute = models.ForeignKey(Valute,
+                               verbose_name='Валюта',
+                               on_delete=models.CASCADE)
+    partner = models.ForeignKey(CustomUser,
+                                verbose_name='Партнёр',
+                                on_delete=models.CASCADE)
+    bankomats = models.ManyToManyField(Bankomat,
+                                       verbose_name='Банкоматы',
+                                       blank=True)
+    
+    class Meta:
+        unique_together = (('partner', 'valute'), )

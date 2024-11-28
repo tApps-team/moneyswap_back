@@ -108,7 +108,8 @@ def get_available_coutries2(request: Request):
     #                             .all()
     prefetch_cities_queryset =  City.objects.order_by('name')\
                                             .select_related('country')\
-                                            .prefetch_related('cash_directions')\
+                                            .prefetch_related('cash_directions',
+                                                              'partner_cities')\
                                             .annotate(partner_direction_count=Count('partner_cities',
                                                                                     filter=Q(partner_cities__partner_directions__is_active=True)))\
                                             .annotate(direction_count=Count('cash_directions',

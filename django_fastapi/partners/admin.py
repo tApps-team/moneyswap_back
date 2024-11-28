@@ -32,7 +32,8 @@ from .models import (Exchange,
                      AdminComment,
                      ExchangeLinkCount,
                      PartnerCountry,
-                     CountryDirection)
+                     CountryDirection,
+                     Bankomat)
 from .utils.admin import (make_city_active,
                           update_field_time_update,
                           get_saved_course)
@@ -813,3 +814,15 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 @admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
+
+
+#Отображение банкоматов в админ панели
+@admin.register(Bankomat)
+class BankomatAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+    )
+
+    filter_horizontal = (
+        'valutes',
+    )
