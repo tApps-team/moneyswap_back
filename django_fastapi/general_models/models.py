@@ -15,6 +15,7 @@ en_type_valute_dict = {
     'Банкинг': 'Online banking',
     'Денежные переводы': 'Money transfers',
     'Наличные': 'Cash',
+    'ATM QR': 'ATM QR',
 }
 
 
