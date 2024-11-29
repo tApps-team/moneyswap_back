@@ -241,14 +241,22 @@ class AddPartnerDirectionSchema2(PartnerDirectionSchema):
     valute_to: str
 
 
-class BankomatSchema(BaseModel):
+# class BankomatSchema(BaseModel):
+#     id: int = Field(alias='pk')
+#     name: str
+#     available: bool
+
+class AddBankomatSchema(BaseModel):
     id: int = Field(alias='pk')
-    name: str
     available: bool
 
 
+class BankomatDetailSchema(AddBankomatSchema):
+    name: str
+
+
 class AddPartnerDirectionSchema3(AddPartnerDirectionSchema2):
-    bankomats: list[BankomatSchema] | None
+    bankomats: list[AddBankomatSchema] | None
 
 
 class EditedPartnerDirectionSchema(PartnerDirectionSchema):

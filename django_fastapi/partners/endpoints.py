@@ -38,7 +38,10 @@ from .utils.endpoints import (generate_partner_cities, generate_partner_countrie
                               generate_partner_cities2,
                               try_add_bankomats_to_valute)
 
-from .schemas import (AddPartnerCountrySchema, AddPartnerDirectionSchema3, BankomatSchema,
+from .schemas import (AddPartnerCountrySchema,
+                      AddPartnerDirectionSchema3,
+                      AddBankomatSchema,
+                      BankomatDetailSchema,
                       DeletePartnerDirectionSchema,
                       ListEditedPartnerDirectionSchema2,
                       DeletePartnerCityCountrySchema,
@@ -1560,7 +1563,7 @@ def delete_partner_direction(partner: partner_dependency,
 
 
 @test_partner_router.get('/bankomats_by_valute',
-                         response_model=list[BankomatSchema],
+                         response_model=list[BankomatDetailSchema],
                          response_model_by_alias=False)
 def get_bankomat_list_by_valute(partner: partner_dependency,
                                 valute: str):
