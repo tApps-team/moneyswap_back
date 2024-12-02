@@ -27,6 +27,7 @@ services:
     build: .
     pull_policy: build
     restart: on-failure
+    cpus: '1.0'
     # ports:
     #  - '8000:8000'
     networks:
@@ -75,6 +76,7 @@ services:
     build: ./nginx
     restart: on-failure
     container_name: nginx
+    cpus: '0.5'
     networks:
       - common-network
     volumes:
@@ -95,6 +97,7 @@ services:
   redis_db:
     image: redis:latest
     restart: on-failure
+    cpus: '0.5'
     networks:
       - common-network
     # ports:
@@ -183,6 +186,7 @@ services:
     build: .
     restart: on-failure
     command: sh -c 'celery -A project flower'
+    cpus: '0.5'
     networks:
       - common-network
     environment:
@@ -219,6 +223,7 @@ services:
   pgbouncer:
     image: edoburu/pgbouncer
     restart: on-failure
+    cpus: '0.5'
     env_file:
       - ./.env
     # environment:
