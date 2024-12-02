@@ -247,7 +247,7 @@ class AddPartnerDirectionSchema2(PartnerDirectionSchema):
 #     available: bool
 
 class AddBankomatSchema(BaseModel):
-    id: int = Field(alias='pk')
+    id: int
     available: bool
 
 
