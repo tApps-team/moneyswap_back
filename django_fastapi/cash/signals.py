@@ -29,7 +29,7 @@ def try_create_reverse_direction(sender, instance, **kwargs):
 
     if not Direction.objects.filter(valute_from_id=valute_to_id,
                                     valute_to_id=valute_from_id)\
-                            .exists():
+                            .exists() and instance.valute_to.type_valute != 'ATM QR':
         
         try:
             Direction.objects.create(valute_from_id=valute_to_id,
