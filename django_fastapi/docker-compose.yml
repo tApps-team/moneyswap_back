@@ -181,6 +181,7 @@ services:
 
   flower:
     build: .
+    restart: on-failure
     command: sh -c 'celery -A project flower'
     networks:
       - common-network
@@ -205,6 +206,8 @@ services:
     #   - '5432:5432'
     env_file:
       - ./.env
+    cpus: '2.0'
+    mem_limit: 4g
     volumes:
       - postgres-data:/var/lib/postgresql/data
     command: postgres -c max_connections=200
@@ -215,6 +218,7 @@ services:
 
   pgbouncer:
     image: edoburu/pgbouncer
+    restart: on-failure
     env_file:
       - ./.env
     # environment:
