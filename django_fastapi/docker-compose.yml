@@ -26,7 +26,7 @@ services:
   django_fastapi:
     build: .
     pull_policy: build
-    restart: on-failure
+    restart: always
     cpus: '1.0'
     # ports:
     #  - '8000:8000'
@@ -55,7 +55,7 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
-                    gunicorn -w 4 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    gunicorn -w 2 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
                     # python manage.py collectstatic --no-input &&
                     # python manage.py create_moder_group &&
                     # python manage.py create_periodic_task_for_update_exchange_info &&
@@ -74,7 +74,7 @@ services:
 
   nginx:
     build: ./nginx
-    restart: on-failure
+    restart: always
     container_name: nginx
     cpus: '0.5'
     networks:
@@ -96,7 +96,7 @@ services:
 
   redis_db:
     image: redis:latest
-    restart: on-failure
+    restart: always
     cpus: '0.5'
     networks:
       - common-network
@@ -130,7 +130,7 @@ services:
   celery_worker:
     build: .
     pull_policy: build
-    restart: on-failure
+    restart: always
     networks:
       - common-network
     command: sh -c 'celery -A project worker -l info -c 4'
@@ -160,7 +160,7 @@ services:
   celery_beat:
     build: .
     pull_policy: build
-    restart: on-failure
+    restart: always
     networks:
       - common-network
     command: sh -c 'celery -A project beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler'
@@ -184,7 +184,7 @@ services:
 
   flower:
     build: .
-    restart: on-failure
+    restart: always
     command: sh -c 'celery -A project flower'
     cpus: '0.5'
     networks:
@@ -203,7 +203,7 @@ services:
 
   psql_db:
     image: postgres:14
-    restart: on-failure
+    restart: always
     networks:
       - common-network
     # ports:
@@ -215,6 +215,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     command: postgres -c max_connections=200 -c shared_buffers=2GB
+    #command: postgres -c max_connections=100 -c shared_buffers=2GB -c work_mem=16MB -c maintenance_work_mem=512MB -c effective_cache_size=6GB
     logging:
       driver: "json-file"
       options:
@@ -222,7 +223,7 @@ services:
 
   pgbouncer:
     image: edoburu/pgbouncer
-    restart: on-failure
+    restart: always
     cpus: '0.5' 
     env_file:
       - ./.env
