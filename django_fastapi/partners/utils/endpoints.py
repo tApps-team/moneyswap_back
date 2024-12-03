@@ -696,7 +696,8 @@ def generate_partner_cities2(partner_cities: list[PartnerCity]):
                                           office=city.has_office,
                                           working_days=working_days,
                                           weekdays=weekdays,
-                                          weekends=weekends)
+                                          weekends=weekends,
+                                          bankomats=None)
         date = time = None
 
         if city.time_update:
@@ -765,7 +766,8 @@ def generate_partner_countries(partner_countries: list[PartnerCountry]):
                                               office=country.has_office,
                                               working_days=working_days,
                                               weekdays=weekdays,
-                                              weekends=weekends)
+                                              weekends=weekends,
+                                              bankomats=None)
         date = time = None
 
         if country.time_update:
