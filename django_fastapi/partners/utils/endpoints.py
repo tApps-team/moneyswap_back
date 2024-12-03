@@ -126,7 +126,8 @@ def get_partner_bankomats_by_valute(partner_id: int,
             partner_bankomat = {
                 'id': bankomat.pk,
                 'name': bankomat.name,
-                'available': bankomat.pk in partner_valute_bankomats
+                'available': bankomat.pk in partner_valute_bankomats,
+                'icon': try_generate_icon_url(bankomat)
             }
             partner_bankomats.append(partner_bankomat)
     else:
@@ -135,6 +136,7 @@ def get_partner_bankomats_by_valute(partner_id: int,
                 'id': bankomat.pk,
                 'name': bankomat.name,
                 'available': False,
+                'icon': try_generate_icon_url(bankomat)
             }
             partner_bankomats.append(partner_bankomat)
     
