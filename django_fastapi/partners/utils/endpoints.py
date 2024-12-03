@@ -305,6 +305,9 @@ def get_partner_directions2(valute_from: str,
 
 
     for direction in country_directions:
+        _valute_to: Valute = direction.direction.valute_to
+        _partner_id = direction.country.exchange.account.pk
+
         min_amount = str(int(direction.country.min_amount)) \
             if direction.country.min_amount else None
         max_amount = str(int(direction.country.max_amount)) \
