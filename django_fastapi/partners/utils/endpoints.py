@@ -290,7 +290,8 @@ def get_partner_directions2(valute_from: str,
         #   for day in direction.city.working_days.all()]
         if _valute_to.type_valute == 'ATM QR':
             bankomats = get_partner_bankomats_by_valute(_partner_id,
-                                                        _valute_to.name)
+                                                        _valute_to.name,
+                                                        only_active=True)
         else:
             bankomats = None
 
@@ -341,7 +342,8 @@ def get_partner_directions2(valute_from: str,
         #   for day in direction.city.working_days.all()]
         if _valute_to.type_valute == 'ATM QR':
             bankomats = get_partner_bankomats_by_valute(_partner_id,
-                                                        _valute_to.name)
+                                                        _valute_to.name,
+                                                        only_active=True)
         else:
             bankomats = None
 
