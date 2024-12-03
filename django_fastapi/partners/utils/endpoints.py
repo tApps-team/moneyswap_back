@@ -288,7 +288,7 @@ def get_partner_directions2(valute_from: str,
         # working_days = WORKING_DAYS_DICT.copy()
         # [working_days.__setitem__(day.code_name, True)\
         #   for day in direction.city.working_days.all()]
-        if _valute_to.type_valute == 'AMT QR':
+        if _valute_to.type_valute == 'ATM QR':
             bankomats = get_partner_bankomats_by_valute(_partner_id,
                                                         _valute_to.name)
         else:
