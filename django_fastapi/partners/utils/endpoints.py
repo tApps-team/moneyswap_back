@@ -106,6 +106,44 @@ def get_partner_in_out_count(actual_course: float | None):
 #         #
 #     return directions
 
+def get_partner_bankomats_by_valute(partner_id: int,
+                                    valute: str,
+                                    only_active: bool = False):
+    bankomats = Bankomat.objects.all()
+
+    partner_valute = QRValutePartner.objects.filter(partner_id=partner_id,
+                                                    valute_id=valute)
+                                                
+    partner_bankomats = []
+
+    if partner_valute.exists():
+        partner_valute = partner_valute.first()
+
+        partner_valute_bankomats = partner_valute.bankomats\
+                                                    .values_list('pk',
+                                                                flat=True)
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'id': bankomat.pk,
+                'name': bankomat.name,
+                'available': bankomat.pk in partner_valute_bankomats
+            }
+            partner_bankomats.append(partner_bankomat)
+    else:
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'id': bankomat.pk,
+                'name': bankomat.name,
+                'available': False,
+            }
+            partner_bankomats.append(partner_bankomat)
+    
+    if only_active:
+        partner_bankomats = [bankomat for bankomat in partner_bankomats \
+                             if bankomat['available']]
+
+    return partner_bankomats
+
 
 def get_partner_directions(valute_from: str,
                            valute_to: str,
@@ -170,6 +208,7 @@ def get_partner_directions(valute_from: str,
             weekdays=weekdays,
             weekends=weekends,
             )
+        
         #
     return directions
 
@@ -187,7 +226,8 @@ def get_partner_directions2(valute_from: str,
                                             'direction__valute_to',
                                             'city',
                                             'city__city',
-                                            'city__exchange')\
+                                            'city__exchange',
+                                            'city__exchange__account')\
                             .annotate(positive_review_count=review_counts['positive'])\
                             .annotate(neutral_review_count=review_counts['neutral'])\
                             .annotate(negative_review_count=review_counts['negative'])\
@@ -216,6 +256,9 @@ def get_partner_directions2(valute_from: str,
 
     for direction in directions:
         city: PartnerCity = direction.city
+        _valute_to: Valute = direction.direction.valute_to
+        _partner_id = city.exchange.account.pk
+        
         min_amount = str(int(city.min_amount)) if city.min_amount else None
         max_amount = str(int(city.max_amount)) if city.max_amount else None
 
@@ -245,6 +288,11 @@ def get_partner_directions2(valute_from: str,
         # working_days = WORKING_DAYS_DICT.copy()
         # [working_days.__setitem__(day.code_name, True)\
         #   for day in direction.city.working_days.all()]
+        if _valute_to.type_valute == 'AMT QR':
+            bankomats = get_partner_bankomats_by_valute(_partner_id,
+                                                        _valute_to.name)
+        else:
+            bankomats = None
 
         direction.info = PartnerCityInfoSchema2(
             delivery=city.has_delivery,
@@ -252,8 +300,9 @@ def get_partner_directions2(valute_from: str,
             working_days=working_days,
             weekdays=weekdays,
             weekends=weekends,
+            bankomats=bankomats,
             )
-        #
+
 
     for direction in country_directions:
         min_amount = str(int(direction.country.min_amount)) \
@@ -336,6 +385,7 @@ def get_partner_directions3(valute_from: str,
     review_counts = get_reviews_count_filters('partner_country_direction')
 
     country_directions = CountryDirection.objects.select_related('direction',
+                                                                 'direction__valute_to',
                                                                  'country',
                                                                  'country__exchange',
                                                                  'country__country')\
@@ -354,6 +404,9 @@ def get_partner_directions3(valute_from: str,
 
     for direction in directions:
         city: PartnerCity = direction.city
+        _valute_to = direction.direction.valute_to
+        _partner_id = city.exchange.account.pk
+
         min_amount = str(int(city.min_amount)) if city.min_amount else None
         max_amount = str(int(city.max_amount)) if city.max_amount else None
 
@@ -383,6 +436,14 @@ def get_partner_directions3(valute_from: str,
         # working_days = WORKING_DAYS_DICT.copy()
         # [working_days.__setitem__(day.code_name, True)\
         #   for day in direction.city.working_days.all()]
+        if _valute_to.type_valute == 'ATM QR':
+            bankomats = get_partner_bankomats_by_valute(_partner_id,
+                                                        _valute_to.name,
+                                                        only_active=True)
+        else:
+            bankomats = None
+
+        # print(bankomats)
 
         direction.info = PartnerCityInfoSchema2(
             delivery=city.has_delivery,
@@ -390,12 +451,16 @@ def get_partner_directions3(valute_from: str,
             working_days=working_days,
             weekdays=weekdays,
             weekends=weekends,
+            bankomats=bankomats,
             )
-        #
+
 
     country_directions_with_city = []
 
     for direction in country_directions:
+        _valute_to = direction.direction.valute_to
+        _partner_id = direction.country.exchange.account.pk
+
         for city in direction.country.exchange.partner_cities.filter(city__country_id=direction.country.country.pk).all():
             # print(city)
             # print(direction.__dict__)
@@ -458,6 +523,14 @@ def get_partner_directions3(valute_from: str,
             # working_days = WORKING_DAYS_DICT.copy()
             # [working_days.__setitem__(day.code_name, True)\
             #   for day in direction.city.working_days.all()]
+            if _valute_to.type_valute == 'ATM QR':
+                bankomats = get_partner_bankomats_by_valute(_partner_id,
+                                                            _valute_to.name,
+                                                            only_active=True)
+            else:
+                bankomats = None
+
+            # print(bankomats)
 
             new_direction.info = PartnerCityInfoSchema2(
                 delivery=direction.country.has_delivery,
@@ -465,7 +538,10 @@ def get_partner_directions3(valute_from: str,
                 working_days=working_days,
                 weekdays=weekdays,
                 weekends=weekends,
+                bankomats=bankomats,
                 )
+            # new_direction.info.bankomats = None
+
             
             country_directions_with_city.append(new_direction)
             
@@ -790,3 +866,5 @@ def try_add_bankomats_to_valute(partner_id: int,
             # for bankomat in bankomats:
             partner_valute.bankomats.add(*selected_bankomats)
             partner_valute.bankomats.remove(*unselected_bankomats)
+
+

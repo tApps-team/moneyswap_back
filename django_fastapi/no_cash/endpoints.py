@@ -11,7 +11,8 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
                                             negative_review_count_filter,
-                                            get_reviews_count_filters)
+                                            get_reviews_count_filters,
+                                            check_valute_on_cash)
 
 from cash.endpoints import cash_exchange_directions_with_location, cash_exchange_directions_with_location2
 
@@ -148,6 +149,11 @@ def no_cash_exchange_directions2(request: Request,
 
     valute_from, valute_to = (params[key] for key in params)
 
+    if check_valute_on_cash(valute_from,
+                            valute_to):
+        return cash_exchange_directions_with_location2(request,
+                                                      params)
+
     review_counts = get_reviews_count_filters('exchange_direction')
 
     queries = ExchangeDirection.objects\
@@ -167,8 +173,9 @@ def no_cash_exchange_directions2(request: Request,
                                           'in_count').all()
     
     if not queries:
-        return cash_exchange_directions_with_location2(request,
-                                                      params)
+        http_exception_json(status_code=404, param=request.url)
+        # return cash_exchange_directions_with_location2(request,
+        #                                               params)
 
     increase_popular_count_direction(valute_from=valute_from,
                                      valute_to=valute_to)

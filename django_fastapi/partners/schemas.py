@@ -10,6 +10,15 @@ class WeekDaySchema(BaseModel):
     time_to: str | None
 
 
+class AddBankomatSchema(BaseModel):
+    id: int
+    available: bool
+
+
+class BankomatDetailSchema(AddBankomatSchema):
+    name: str
+
+
 class PartnerCityInfoSchema(BaseModel):
     delivery: bool | None
     office: bool | None
@@ -26,6 +35,7 @@ class PartnerCityInfoSchema2(BaseModel):
     # time_to: str | None = Field(default=None)
     weekdays: WeekDaySchema
     weekends: WeekDaySchema
+    bankomats: list[BankomatDetailSchema] | None
 
 
 class UpdatedTimeByPartnerCitySchema(BaseModel):
@@ -246,13 +256,13 @@ class AddPartnerDirectionSchema2(PartnerDirectionSchema):
 #     name: str
 #     available: bool
 
-class AddBankomatSchema(BaseModel):
-    id: int
-    available: bool
+# class AddBankomatSchema(BaseModel):
+#     id: int
+#     available: bool
 
 
-class BankomatDetailSchema(AddBankomatSchema):
-    name: str
+# class BankomatDetailSchema(AddBankomatSchema):
+#     name: str
 
 
 class AddPartnerDirectionSchema3(AddPartnerDirectionSchema2):

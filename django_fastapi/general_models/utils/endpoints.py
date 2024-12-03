@@ -776,3 +776,10 @@ def generate_valute_for_schema(valute: Valute):
                             en_name=en_type_valute_dict[valute.type_valute]
                                     )
     return valute
+
+
+def check_valute_on_cash(valute_from: str,
+                         valute_to: str):
+    return Valute.objects.filter(code_name__in=(valute_from,valute_to),
+                                 type_valute__in=('Наличные', 'ATM QR'))\
+                            .exists()

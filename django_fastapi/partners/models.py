@@ -374,6 +374,11 @@ class Bankomat(models.Model):
                                      related_name='bankomats',
                                      verbose_name='Валюты',
                                      blank=True)
+    icon_url = models.FileField('Иконка банкомата',
+                                upload_to='icons/bankomat/',
+                                blank=True,
+                                null=True,
+                                default='icons/country/russia.svg')
     
     class Meta:
         verbose_name = 'Банкомат'
