@@ -109,7 +109,9 @@ def get_partner_in_out_count(actual_course: float | None):
 def get_partner_bankomats_by_valute(partner_id: int,
                                     valute: str,
                                     only_active: bool = False):
-    bankomats = Bankomat.objects.all()
+    bankomats = Bankomat.objects.prefetch_related('valutes')\
+                                .filter(valutes__name=valute)\
+                                .all()
 
     partner_valute = QRValutePartner.objects.filter(partner_id=partner_id,
                                                     valute_id=valute)

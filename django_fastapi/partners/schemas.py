@@ -13,11 +13,11 @@ class WeekDaySchema(BaseModel):
 class AddBankomatSchema(BaseModel):
     id: int
     available: bool
-    icon: str | None
 
 
 class BankomatDetailSchema(AddBankomatSchema):
     name: str
+    icon: str | None
 
 
 class PartnerCityInfoSchema(BaseModel):
