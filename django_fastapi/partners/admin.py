@@ -183,7 +183,9 @@ class DirectionAdmin(admin.ModelAdmin):
         field = super().formfield_for_foreignkey(db_field, request, **kwargs)
         
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
-            pass
+            if db_field.name == 'city':
+                # account = get_or_set_user_account_cache(request.user)
+                field.queryset = field.queryset.select_related('city')
         else:
             if db_field.name == 'city':
                 account = get_or_set_user_account_cache(request.user)
@@ -374,18 +376,105 @@ class PartnerCountryAdmin(admin.ModelAdmin):
 
 @admin.register(CountryDirection)
 class CountryDirectionAdmin(admin.ModelAdmin):
+    actions = (
+        'update_direction_course',
+        'update_direction_activity'
+        )
     list_display = (
-        'country',
         'direction',
+        'country',
         'exchange_name',
+        'is_active',
+        'in_count',
+        'out_count',
     )
-
+    list_filter = (
+        'country__country',
+        'country__exchange__name',
+        'direction',
+        )
+    list_editable = (
+        'in_count',
+        'out_count',
+    )
     readonly_fields = (
         'exchange_name',
     )
 
     def exchange_name(self, obj):
         return obj.country.exchange
+    
+    def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
+        if change:
+            update_fields = set()
+            if not form.cleaned_data.get('id'):
+                for key, value in form.cleaned_data.items():
+                    if value != form.initial[key]:
+                        update_field_time_update(obj, update_fields)
+                        update_fields.add(key)
+                obj.save(update_fields=update_fields)
+            else:
+                for key in ('in_count', 'out_count'):
+                    if form.cleaned_data[key] != form.initial[key]:
+                        # update_field_time_update(obj, update_fields)
+                        update_fields.add(key)
+                if update_fields:
+                    update_field_time_update(obj, update_fields)
+                    obj.save(update_fields=update_fields)
+        else:
+            return super().save_model(request, obj, form, change)
+        
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        queryset = super().get_queryset(request)\
+                            .select_related('country',
+                                            'direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to',
+                                            'country__country',
+                                            'country__exchange')
+
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
+            pass
+        else:
+            account = get_or_set_user_account_cache(request.user)
+            queryset = queryset.filter(city__exchange=account.exchange)
+
+        return queryset
+    
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        field = super().formfield_for_foreignkey(db_field, request, **kwargs)
+        
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
+            if db_field.name == 'country':
+                field.queryset = field.queryset.select_related('country')
+        else:
+            if db_field.name == 'country':
+                account = get_or_set_user_account_cache(request.user)
+                field.queryset = field.queryset.filter(exchange=account.exchange)\
+                                                .select_related('country')
+        return field
+    
+    @action_with_form(
+        ChangeOrderStatusActionForm,
+        description="Обновить курс выбранных направлений",
+    )
+    def update_direction_course(modeladmin, request, queryset, data):
+        time_update = datetime.now()
+
+        queryset.update(in_count=data.get('in_count'),
+                        out_count=data.get('out_count'),
+                        is_active=True,
+                        time_update=time_update)
+
+        modeladmin.message_user(request, f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
+
+    @admin.action(description='Обновить активность выбранных направлений')
+    def update_direction_activity(modeladmin, request, queryset):
+        time_update = datetime.now()
+        queryset.update(is_active=True,
+                        time_update=time_update)
+        messages.success(request,
+                         f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
 
 
 @admin.register(PartnerCity)
