@@ -1287,7 +1287,7 @@ def delete_partner_city_country(partner: partner_dependency,
 
 @partner_router.post('/add_partner_direction')
 def add_partner_direction(partner: partner_dependency,
-                          new_direction: AddPartnerDirectionSchema2):
+                          new_direction: AddPartnerDirectionSchema3):
     partner_id = partner.get('partner_id')
 
     data = new_direction.model_dump()
@@ -1296,6 +1296,7 @@ def add_partner_direction(partner: partner_dependency,
     valute_from = data.pop('valute_from')
     valute_to = data.pop('valute_to')
     marker = data.pop('marker')
+    bankomats = data.pop('bankomats')
     
     foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
     foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
@@ -1345,14 +1346,86 @@ def add_partner_direction(partner: partner_dependency,
                 if country_direction.exists():
                     raise HTTPException(status_code=424,
                                         detail='Такое направление уже существует на уровне партнерской страны')
-
-            direction_model.objects.create(**data)
+            with transaction.atomic():
+                direction_model.objects.create(**data)
+                if bankomats:
+                    try_add_bankomats_to_valute(partner_id,
+                                                valute_to,
+                                                bankomats)
             return {'status': 'success',
                     'details': f'Партнерское направление {direction.display_name} добавлено'}
         except IntegrityError as ex:
             print(ex)
             raise HTTPException(status_code=423,
                                 detail='Такое направление уже существует')
+# @partner_router.post('/add_partner_direction')
+# def add_partner_direction(partner: partner_dependency,
+#                           new_direction: AddPartnerDirectionSchema2):
+#     partner_id = partner.get('partner_id')
+
+#     data = new_direction.model_dump()
+
+#     _id = data.pop('id')
+#     valute_from = data.pop('valute_from')
+#     valute_to = data.pop('valute_to')
+#     marker = data.pop('marker')
+    
+#     foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
+#     foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
+
+#     direction_model = CountryDirection if marker == 'country' else Direction
+
+
+#     check_partner = foreign_key_model.objects.select_related('exchange',
+#                                                              'exchange__account')\
+#                                             .filter(pk=_id,
+#                                                     exchange__account__pk=partner_id)\
+#                                             .exists()
+    
+#     # print(check_partner)
+    
+#     if not check_partner:
+#         raise HTTPException(status_code=404)
+        
+#     try:
+#         direction = CashDirection.objects.select_related('valute_from',
+#                                                         'valute_to')\
+#                                         .prefetch_related('partner_country_directions')\
+#                                             .get(valute_from__code_name=valute_from,
+#                                                  valute_to__code_name=valute_to)
+#     except Exception as ex:
+#         print(ex)
+#         raise HTTPException(status_code=404)
+#     else:
+#         data[foreign_key_name] = _id
+#         data['direction'] = direction
+
+#         try:
+#             if marker == 'city':
+#                 city = PartnerCity.objects.select_related('city')\
+#                                             .get(pk=_id)
+#                 country_direction = CountryDirection.objects.select_related('country',
+#                                                                             'country__country',
+#                                                                             'country__exchange',
+#                                                                             'country__exchange__account',
+#                                                                             'direction')\
+#                                         .prefetch_related('country__country__cities')\
+#                                         .filter(country__country__cities__code_name=city.city.code_name,
+#                                                 country__exchange__account=partner_id,
+#                                                 direction__valute_from=valute_from,
+#                                                 direction__valute_to=valute_to)
+                
+#                 if country_direction.exists():
+#                     raise HTTPException(status_code=424,
+#                                         detail='Такое направление уже существует на уровне партнерской страны')
+
+#             direction_model.objects.create(**data)
+#             return {'status': 'success',
+#                     'details': f'Партнерское направление {direction.display_name} добавлено'}
+#         except IntegrityError as ex:
+#             print(ex)
+#             raise HTTPException(status_code=423,
+#                                 detail='Такое направление уже существует')
 
 
 # @partner_router.patch('/edit_partner_directions')
@@ -1562,6 +1635,23 @@ def delete_partner_direction(partner: partner_dependency,
 
 #     return {'status': 'success',
 #             'details': 'Партнёрское направление удалено'}
+@partner_router.get('/bankomats_by_valute',
+                         response_model=list[BankomatDetailSchema],
+                         response_model_by_alias=False)
+def get_bankomat_list_by_valute(partner: partner_dependency,
+                                valute: str):
+    partner_id = partner.get('partner_id')
+    
+    try:
+        if Valute.objects.get(pk=valute).type_valute != 'ATM QR':
+            raise HTTPException(status_code=400,
+                                detail='Некорректная валюта')
+    except Exception:
+        raise HTTPException(status_code=400,
+                            detail='Некорректная валюта')
+    
+    return get_partner_bankomats_by_valute(partner_id,
+                                           valute)
 
 
 @test_partner_router.get('/bankomats_by_valute',
