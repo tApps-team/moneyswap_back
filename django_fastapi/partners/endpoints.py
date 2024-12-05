@@ -32,7 +32,7 @@ from .utils.admin import make_city_active
 
 from .utils.endpoints import (generate_partner_cities,
                               generate_partner_countries,
-                              generate_partner_directions_by_city,
+                              generate_partner_directions_by_city, generate_partner_directions_by_city2,
                               generate_valute_list,
                               generate_actual_course,
                               generate_valute_list2,
@@ -44,7 +44,7 @@ from .schemas import (AddPartnerCountrySchema,
                       AddPartnerDirectionSchema3,
                       AddBankomatSchema,
                       BankomatDetailSchema,
-                      DeletePartnerDirectionSchema,
+                      DeletePartnerDirectionSchema, DirectionSchema2,
                       ListEditedPartnerDirectionSchema2,
                       DeletePartnerCityCountrySchema,
                       PartnerCitySchema,
@@ -267,6 +267,35 @@ def get_partner_directions_by(partner: partner_dependency,
                                         .all()
 
     return generate_partner_directions_by_city(directions)
+
+
+@test_partner_router.get('/directions_by',
+                    response_model=list[DirectionSchema2])
+def get_partner_directions_by2(partner: partner_dependency,
+                              id: int,
+                              marker: Literal['country', 'city']):
+    partner_id = partner.get('partner_id')
+
+    if marker == 'country':
+        direction_model = CountryDirection
+        additional_filter = Q(country__exchange__account__pk=partner_id,
+                              country__pk=id)
+    else:
+        direction_model = Direction
+        additional_filter = Q(city__exchange__account__pk=partner_id,
+                              city__pk=id)
+
+    directions = direction_model.objects.select_related(marker,
+                                                        f'{marker}__exchange',
+                                                        f'{marker}__exchange__account',
+                                                        'direction',
+                                                        'direction__valute_from',
+                                                        'direction__valute_to')\
+                                        .filter(additional_filter)\
+                                        .all()
+
+    return generate_partner_directions_by_city2(directions,
+                                                marker)
 
 
 @partner_router.get('/available_valutes')
@@ -1654,23 +1683,23 @@ def get_bankomat_list_by_valute(partner: partner_dependency,
                                            valute)
 
 
-@test_partner_router.get('/bankomats_by_valute',
-                         response_model=list[BankomatDetailSchema],
-                         response_model_by_alias=False)
-def get_bankomat_list_by_valute(partner: partner_dependency,
-                                valute: str):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.get('/bankomats_by_valute',
+#                          response_model=list[BankomatDetailSchema],
+#                          response_model_by_alias=False)
+# def get_bankomat_list_by_valute(partner: partner_dependency,
+#                                 valute: str):
+#     partner_id = partner.get('partner_id')
     
-    try:
-        if Valute.objects.get(pk=valute).type_valute != 'ATM QR':
-            raise HTTPException(status_code=400,
-                                detail='Некорректная валюта')
-    except Exception:
-        raise HTTPException(status_code=400,
-                            detail='Некорректная валюта')
+#     try:
+#         if Valute.objects.get(pk=valute).type_valute != 'ATM QR':
+#             raise HTTPException(status_code=400,
+#                                 detail='Некорректная валюта')
+#     except Exception:
+#         raise HTTPException(status_code=400,
+#                             detail='Некорректная валюта')
     
-    return get_partner_bankomats_by_valute(partner_id,
-                                           valute)
+#     return get_partner_bankomats_by_valute(partner_id,
+#                                            valute)
     
     # bankomats = Bankomat.objects.all()
 
@@ -1704,76 +1733,76 @@ def get_bankomat_list_by_valute(partner: partner_dependency,
     # return partner_bankomats
 
 
-@test_partner_router.post('/add_partner_direction')
-def add_partner_direction(partner: partner_dependency,
-                          new_direction: AddPartnerDirectionSchema3):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.post('/add_partner_direction')
+# def add_partner_direction(partner: partner_dependency,
+#                           new_direction: AddPartnerDirectionSchema3):
+#     partner_id = partner.get('partner_id')
 
-    data = new_direction.model_dump()
+#     data = new_direction.model_dump()
 
-    _id = data.pop('id')
-    valute_from = data.pop('valute_from')
-    valute_to = data.pop('valute_to')
-    marker = data.pop('marker')
-    bankomats = data.pop('bankomats')
+#     _id = data.pop('id')
+#     valute_from = data.pop('valute_from')
+#     valute_to = data.pop('valute_to')
+#     marker = data.pop('marker')
+#     bankomats = data.pop('bankomats')
     
-    foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
-    foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
+#     foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
+#     foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
 
-    direction_model = CountryDirection if marker == 'country' else Direction
+#     direction_model = CountryDirection if marker == 'country' else Direction
 
 
-    check_partner = foreign_key_model.objects.select_related('exchange',
-                                                             'exchange__account')\
-                                            .filter(pk=_id,
-                                                    exchange__account__pk=partner_id)\
-                                            .exists()
+#     check_partner = foreign_key_model.objects.select_related('exchange',
+#                                                              'exchange__account')\
+#                                             .filter(pk=_id,
+#                                                     exchange__account__pk=partner_id)\
+#                                             .exists()
     
-    # print(check_partner)
+#     # print(check_partner)
     
-    if not check_partner:
-        raise HTTPException(status_code=404)
+#     if not check_partner:
+#         raise HTTPException(status_code=404)
         
-    try:
-        direction = CashDirection.objects.select_related('valute_from',
-                                                        'valute_to')\
-                                        .prefetch_related('partner_country_directions')\
-                                            .get(valute_from__code_name=valute_from,
-                                                 valute_to__code_name=valute_to)
-    except Exception as ex:
-        print(ex)
-        raise HTTPException(status_code=404)
-    else:
-        data[foreign_key_name] = _id
-        data['direction'] = direction
+#     try:
+#         direction = CashDirection.objects.select_related('valute_from',
+#                                                         'valute_to')\
+#                                         .prefetch_related('partner_country_directions')\
+#                                             .get(valute_from__code_name=valute_from,
+#                                                  valute_to__code_name=valute_to)
+#     except Exception as ex:
+#         print(ex)
+#         raise HTTPException(status_code=404)
+#     else:
+#         data[foreign_key_name] = _id
+#         data['direction'] = direction
 
-        try:
-            if marker == 'city':
-                city = PartnerCity.objects.select_related('city')\
-                                            .get(pk=_id)
-                country_direction = CountryDirection.objects.select_related('country',
-                                                                            'country__country',
-                                                                            'country__exchange',
-                                                                            'country__exchange__account',
-                                                                            'direction')\
-                                        .prefetch_related('country__country__cities')\
-                                        .filter(country__country__cities__code_name=city.city.code_name,
-                                                country__exchange__account=partner_id,
-                                                direction__valute_from=valute_from,
-                                                direction__valute_to=valute_to)
+#         try:
+#             if marker == 'city':
+#                 city = PartnerCity.objects.select_related('city')\
+#                                             .get(pk=_id)
+#                 country_direction = CountryDirection.objects.select_related('country',
+#                                                                             'country__country',
+#                                                                             'country__exchange',
+#                                                                             'country__exchange__account',
+#                                                                             'direction')\
+#                                         .prefetch_related('country__country__cities')\
+#                                         .filter(country__country__cities__code_name=city.city.code_name,
+#                                                 country__exchange__account=partner_id,
+#                                                 direction__valute_from=valute_from,
+#                                                 direction__valute_to=valute_to)
                 
-                if country_direction.exists():
-                    raise HTTPException(status_code=424,
-                                        detail='Такое направление уже существует на уровне партнерской страны')
-            with transaction.atomic():
-                direction_model.objects.create(**data)
-                if bankomats:
-                    try_add_bankomats_to_valute(partner_id,
-                                                valute_to,
-                                                bankomats)
-            return {'status': 'success',
-                    'details': f'Партнерское направление {direction.display_name} добавлено'}
-        except IntegrityError as ex:
-            print(ex)
-            raise HTTPException(status_code=423,
-                                detail='Такое направление уже существует')
+#                 if country_direction.exists():
+#                     raise HTTPException(status_code=424,
+#                                         detail='Такое направление уже существует на уровне партнерской страны')
+#             with transaction.atomic():
+#                 direction_model.objects.create(**data)
+#                 if bankomats:
+#                     try_add_bankomats_to_valute(partner_id,
+#                                                 valute_to,
+#                                                 bankomats)
+#             return {'status': 'success',
+#                     'details': f'Партнерское направление {direction.display_name} добавлено'}
+#         except IntegrityError as ex:
+#             print(ex)
+#             raise HTTPException(status_code=423,
+#                                 detail='Такое направление уже существует')

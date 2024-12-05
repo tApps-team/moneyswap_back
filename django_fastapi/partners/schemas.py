@@ -119,14 +119,28 @@ class CitySchema2(BaseModel):
 class DirectionSchema(BaseModel):
     id: int
     valute_from: str
-    icon_valute_from: str
+    icon_valute_from: str | None
     valute_to: str
-    icon_valute_to: str
+    icon_valute_to: str | None
     in_count: float | None = Field(default=None)
     in_count_type: str
     out_count: float | None = Field(default=None)
     out_count_type: str
     is_active: bool
+
+
+class DirectionSchema2(BaseModel):
+    id: int
+    valute_from: str
+    icon_valute_from: str | None
+    valute_to: str
+    icon_valute_to: str | None
+    in_count: float | None = Field(default=None)
+    in_count_type: str
+    out_count: float | None = Field(default=None)
+    out_count_type: str
+    is_active: bool
+    bankomats: list[BankomatDetailSchema] | None
 
 
 class NewPasswordSchema(BaseModel):

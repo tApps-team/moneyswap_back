@@ -6,12 +6,13 @@ from datetime import datetime
 from celery import shared_task
 
 from django.db.models import Q
+from django.db import transaction
 
 from general_models.utils.base import get_timedelta
 
 from cash.models import Direction
 
-from .models import Direction as PartnerDirection
+from .models import Direction as PartnerDirection, CountryDirection
 
 
 @shared_task(name='parse_cash_courses',
@@ -58,6 +59,11 @@ def check_update_time_for_directions():
     time_delta = get_timedelta()
     check_time = datetime.now() - time_delta
     
-    PartnerDirection.objects\
-                    .filter(time_update__lt=check_time)\
-                    .update(is_active=False)
+    with transaction.atomic():
+        PartnerDirection.objects\
+                        .filter(time_update__lt=check_time)\
+                        .update(is_active=False)
+        
+        CountryDirection.objects\
+                        .filter(time_update__lt=check_time)\
+                        .update(is_active=False)
