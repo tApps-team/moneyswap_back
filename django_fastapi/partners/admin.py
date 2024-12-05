@@ -399,7 +399,18 @@ class CountryDirectionAdmin(admin.ModelAdmin):
     )
     readonly_fields = (
         'exchange_name',
+        'time_update',
     )
+    fields = (
+        'country',
+        'direction',
+        # 'course',
+        'in_count',
+        'out_count',
+        # 'saved_partner_course',
+        'is_active',
+        'time_update',
+        )
 
     def exchange_name(self, obj):
         return obj.country.exchange
