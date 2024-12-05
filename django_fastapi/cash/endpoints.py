@@ -98,7 +98,7 @@ cash_router = APIRouter(prefix='/cash',
                  response_model=List[RuEnCountryModel],
                  response_model_by_alias=False)
 def get_available_coutries2(request: Request):
-    print(len(connection.queries))
+    # print(len(connection.queries))
 
     countries = get_or_set_cache_available_countries(request)
     #
