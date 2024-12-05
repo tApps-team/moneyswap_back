@@ -796,6 +796,41 @@ def generate_partner_directions_by_city(directions: list[Direction]):
     return directions
 
 
+def generate_partner_directions_by_city2(directions: list[Direction],
+                                        marker: str):
+    for direction in directions:
+        if direction.direction.valute_to.type_valute == 'ATM QR':
+            match marker:
+                case 'country':
+                    partner_id = direction.country.exchange.account.pk
+                case 'city':
+                    partner_id = direction.city.exchange.account.pk
+            # partner_valute = QRValutePartner.objects.filter(partner_id=partner_id,
+            #                                            valute=direction.direction.valute_to.name)
+            # if partner_valute.exists():
+            #     bankomats = get_partner_bankomats_by_valute(partner_id,
+            #                                                 direction.direction.valute_to.name)
+            # else:
+            #     bankomats = None
+        bankomats = get_partner_bankomats_by_valute(partner_id,
+                                                    direction.direction.valute_to.name,
+                                                    only_active=True)
+
+
+        direction.valute_from = direction.direction.valute_from.code_name
+        direction.icon_valute_from = try_generate_icon_url(direction.direction.valute_from)
+        direction.in_count_type = direction.direction.valute_from.type_valute
+
+        direction.valute_to = direction.direction.valute_to.code_name
+        direction.icon_valute_to = try_generate_icon_url(direction.direction.valute_to)
+        direction.out_count_type = direction.direction.valute_to.type_valute
+        direction.bankomats = bankomats
+
+
+    # print(len(connection.queries))
+    return directions
+
+
 def generate_valute_list(queries: list[CashDirection],
                          marker: str):
     valute_list = sorted({query.__getattribute__(marker) for query in queries},

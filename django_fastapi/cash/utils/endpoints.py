@@ -2,7 +2,7 @@ from django.db.models import Count, Q
 from django.db import connection
 
 from cash.models import Country
-from cash.schemas import MultipleName
+from cash.schemas import MultipleName, RuEnCountryModel
 
 from general_models.utils.endpoints import try_generate_icon_url
 
@@ -75,9 +75,61 @@ def get_available_countries2(countries):
 
         country.name = MultipleName(name=country.name,
                                    en_name=country.en_name)
-    # print(len(connection.queries))
+    print(len(connection.queries))
+    # print(connection.queries)
+    for query in connection.queries:
+        print(query)
+
+    return countries
+
+
+
+
+def get_available_countries3(countries):
+
+    '''
+    Возвращает QuerySet доступных стран с необходимыми данными
+    '''
+    available_counrties = []
+
+    for country in countries:
+
+        _country_dict = {
+            'pk': country.pk,
+            'name': {
+                'name': country.name,
+                'en_name': country.en_name,
+            },
+            'country_flag': try_generate_icon_url(country),
+        }
+
+        country.city_list = sorted(set(country.cities.all()),
+                                   key=lambda el: el.name)
+
+        city_list = []
+
+        for city in country.city_list:
+            _city_dict = {
+                'pk': city.pk,
+                'code_name': city.code_name,
+                'name': {
+                    'name': city.name,
+                    'en_name': city.en_name,
+                }
+            }
+            city_list.append(_city_dict)
+            # city.name = MultipleName(name=city.name,
+            #                          en_name=city.en_name)
+        _country_dict.update(
+                {
+                'city_list': city_list,
+                }
+            )
+        available_counrties.append(_country_dict)
+        
     # print(connection.queries)
     # for query in connection.queries:
     #     print(query)
-
-    return countries
+        # available_counrties.append(RuEnCountryModel.model_construct(**country.__dict__))
+    # print(available_counrties)
+    return available_counrties
