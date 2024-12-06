@@ -812,10 +812,11 @@ def generate_partner_directions_by_city2(directions: list[Direction],
             #                                                 direction.direction.valute_to.name)
             # else:
             #     bankomats = None
-        bankomats = get_partner_bankomats_by_valute(partner_id,
-                                                    direction.direction.valute_to.name,
-                                                    only_active=True)
-
+            bankomats = get_partner_bankomats_by_valute(partner_id,
+                                                        direction.direction.valute_to.name,
+                                                        only_active=True)
+        else:
+            bankomats = None
 
         direction.valute_from = direction.direction.valute_from.code_name
         direction.icon_valute_from = try_generate_icon_url(direction.direction.valute_from)
