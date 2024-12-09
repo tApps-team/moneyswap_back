@@ -373,7 +373,7 @@ def parse_create_direction_by_city(dict_for_parse: dict,
         
         if dict_for_parse.get(city, None) is not None:
             if dict_for_parse[city].get(inner_key):
-                city_id, direction_id = dict_for_parse[city].pop(inner_key)
+                city_id, direction_id = dict_for_parse[city].get(inner_key)
             # direction_id = dict_for_parse.pop(key)
                 fromfee = element.xpath('./fromfee/text()')
                 param = element.xpath('./param/text()')
@@ -422,6 +422,8 @@ def parse_create_direction_by_city(dict_for_parse: dict,
                         if black_list_parse:
                             city_id_list.append(city_id)
                             direction_id_list.append(direction_id)
+                        
+                        dict_for_parse[city].pop(inner_key)
 
                     except Exception as ex:
                         print(ex)
@@ -587,7 +589,7 @@ def check_city_in_xml_file(city: str, xml_file: str):
           element = root.find(f'item[city="{city.lower()}"]')
     
     if element is None:
-        cities = [item.find('city').text for item in root.findall('item')]
+        cities = {item.find('city').text for item in root.findall('item')}
         cities = ' '.join(cities).replace(',', ' ').split()
 
         return city in set(cities)
