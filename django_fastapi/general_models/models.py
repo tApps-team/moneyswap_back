@@ -126,10 +126,17 @@ class Guest(models.Model):
                                   null=True,
                                   blank=True,
                                   default=None)
+    time_create = models.DateTimeField('Время добавления',
+                                       default=None,
+                                       blank=True,
+                                       null=True)
 
     class Meta:
         verbose_name = 'Гостевой пользователь'
         verbose_name_plural = 'Гостевые пользователи'
+        ordering = (
+            'username',
+        )
         # indexes = [
         #     models.Index(fields=('tg_id', )),
         # ]

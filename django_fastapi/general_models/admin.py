@@ -38,11 +38,11 @@ admin.site.unregister(CrontabSchedule)
 # admin.site.unregister(Group)
 
 
-@admin.register(LogEntry)
-class LogEntryAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-    )
+# @admin.register(LogEntry)
+# class LogEntryAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'user',
+#     )
 
 @admin.register(FeedbackForm)
 class FeedbackFormAdmin(admin.ModelAdmin):
@@ -125,6 +125,12 @@ class GuestAdmin(admin.ModelAdmin):
     readonly_fields = (
         'link_count',
         'utm_source',
+        'time_create',
+    )
+
+    list_filter = (
+        'utm_source',
+        'time_create',
     )
 
     def link_count(self, obj):
