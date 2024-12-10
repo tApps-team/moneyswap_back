@@ -855,7 +855,8 @@ def get_top_coins():
     limit = 10
     top_coins = cash_models.Direction.objects.select_related('valute_from',
                                                              'valute_to')\
-                                            .filter(valute_to_id=usd)\
+                                            .filter(valute_to_id=usd,
+                                                    actual_course__isnull=False)\
                                             .order_by('-popular_count')[:limit]
     coin_list = []
 
