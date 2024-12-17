@@ -138,6 +138,7 @@ class ValuteTypeListSchema(BaseModel):
     name: ValuteTypeNameSchema
     code_name: str
     icon_url: str
+    is_popular: bool
 
 
 class ValuteListSchema(BaseModel):

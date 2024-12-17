@@ -10,7 +10,7 @@ from general_models.utils.http_exc import http_exception_json
 from general_models.utils.endpoints import (get_exchange_direction_list,
                                             get_exchange_direction_list_with_location,
                                             get_valute_json,
-                                            get_valute_json_2,
+                                            get_valute_json_2, get_valute_json_3,
                                             increase_popular_count_direction,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
@@ -310,6 +310,70 @@ def cash_valutes_2(request: Request,
 
     return get_valute_json_2(queries)
 #
+
+
+def cash_valutes_3(request: Request,
+                 params: dict):
+    for param in params:
+        if not params[param]:
+            http_exception_json(status_code=400, param=param)
+    
+    city, base = (params[key] for key in params)
+
+    cash_queries = ExchangeDirection.objects\
+                                    .select_related('exchange',
+                                                    'city',
+                                                    'direction',
+                                                    'direction__valute_from',
+                                                    'direction__valute_to')\
+                                    .filter(city__code_name=city,
+                                            is_active=True,
+                                            exchange__is_active=True)
+    partner_queries = PartnerDirection.objects\
+                                        .select_related('direction',
+                                                        'city',
+                                                        'direction__valute_from',
+                                                        'direction__valute_to',
+                                                        'city__exchange')\
+                                        .filter(city__city__code_name=city,
+                                                is_active=True,
+                                                city__exchange__is_active=True,
+                                                city__exchange__isnull=False)
+    
+    country_directions_query = CountryDirection.objects\
+                                .select_related('direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to',
+                                                'country',
+                                                'country__country',
+                                                'country__exchange')\
+                                .filter(is_active=True,
+                                        country__exchange__is_active=True,
+                                        country__exchange__isnull=False,
+                                        country__country__cities__code_name=city)
+
+    if base == 'ALL':
+        cash_queries = cash_queries\
+                                .values_list('direction__valute_from').all()
+        partner_queries = partner_queries\
+                                .values_list('direction__valute_from__code_name').all()
+        country_directions_query = country_directions_query\
+                                .values_list('direction__valute_from__code_name').all()
+    else:
+        cash_queries = cash_queries.filter(direction__valute_from=base)\
+                                    .values_list('direction__valute_to').all()
+        partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
+                                        .values_list('direction__valute_to__code_name').all()
+        country_directions_query = country_directions_query\
+                                        .filter(direction__valute_from__code_name=base)\
+                                        .values_list('direction__valute_to__code_name').all()
+
+    queries = cash_queries.union(partner_queries, country_directions_query)
+
+    if not queries:
+        http_exception_json(status_code=404, param=request.url)
+
+    return get_valute_json_3(queries)
 
 
 # Вспомогательный эндпоинт для получения наличных готовых направлений

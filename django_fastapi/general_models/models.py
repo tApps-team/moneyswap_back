@@ -50,6 +50,8 @@ class Valute(models.Model):
                                 null=True)
     available_for_partners = models.BooleanField('Доступно для партнёров',
                                                  default=False)
+    is_popular = models.BooleanField('Популярная',
+                                     default=False)
 
     class Meta:
         verbose_name = 'Валюта'

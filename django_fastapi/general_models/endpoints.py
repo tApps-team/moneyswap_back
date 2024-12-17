@@ -29,10 +29,10 @@ from general_models.utils.endpoints import (positive_review_count_filter,
 from general_models.utils.base import annotate_string_field
 
 import no_cash.models as no_cash_models
-from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2
+from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3
 
 import cash.models as cash_models
-from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2
+from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3
 from cash.schemas import SpecialCashDirectionMultiModel, CityModel, SpecialCashDirectionMultiWithLocationModel
 from cash.models import Direction, Country, Exchange, Review
 
@@ -108,6 +108,18 @@ def get_available_valutes(request: Request,
     
     return json_dict
 #
+
+
+@test_router.get('/available_valutes_2')
+def get_available_valutes2(request: Request,
+                          query: AvailableValutesQuery = Depends()):
+    params = query.params()
+    if not params['city']:
+        json_dict = no_cash_valutes_3(request, params)
+    else:
+        json_dict = cash_valutes_3(request, params)
+    
+    return json_dict
 
 
 #

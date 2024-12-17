@@ -198,6 +198,7 @@ class ValuteAdmin(admin.ModelAdmin):
     list_filter = (
         'type_valute',
         'available_for_partners',
+        'is_popular',
         )
     fields = (
         'name',
@@ -206,6 +207,7 @@ class ValuteAdmin(admin.ModelAdmin):
         'icon_url',
         'get_icon',
         'type_valute',
+        'is_popular',
         'available_for_partners',
         )
     readonly_fields = (
