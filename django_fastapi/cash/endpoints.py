@@ -100,7 +100,7 @@ cash_router = APIRouter(prefix='/cash',
 def get_available_coutries2(request: Request):
     # print(len(connection.queries))
 
-    countries = get_or_set_cache_available_countries(request)
+    countries = get_or_set_cache_available_countries2(request)
     #
     # cities = City.objects.filter(Q(is_parse=True) | Q(has_partner_cities=True))\
     #                         .select_related('country').all()
@@ -159,14 +159,14 @@ def get_available_coutries2(request: Request):
     return countries
 
 
-@cash_router.get('/countries2',
-                 response_model=List[RuEnCountryModel],
-                 response_model_by_alias=False)
-def get_available_coutries2(request: Request):
+# @cash_router.get('/countries2',
+#                  response_model=List[RuEnCountryModel],
+#                  response_model_by_alias=False)
+# def get_available_coutries2(request: Request):
 
-    countries = get_or_set_cache_available_countries2(request)
+#     countries = get_or_set_cache_available_countries2(request)
 
-    return countries
+#     return countries
 
 
 #
