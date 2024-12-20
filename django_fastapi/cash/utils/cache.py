@@ -211,13 +211,13 @@ def get_or_set_cache_available_countries3(request: Request):
                                                     prefetch_countries)\
                                     .annotate(direction_count=Count('cities__cash_directions',
                                                                     filter=Q(cities__cash_directions__is_active=True)))\
+                                    .annotate(partner_direction_count=Count('cities__partner_cities__partner_directions',
+                                                                    filter=Q(cities__partner_cities__partner_directions__is_active=True)))\
                                     .annotate(country_direction_count=Count('partner_countries__partner_directions',
                                                                             filter=Q(partner_countries__partner_directions__is_active=True)))\
-                                    .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0))\
+                                    .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0) | Q(partner_direction_count__gt=0))\
                                     .order_by('name')\
                                     .all()
-                                    # .annotate(partner_direction_count=Count('cities__partner_cities__partner_directions',
-                                    #                                 filter=Q(cities__partner_cities__partner_directions__is_active=True)))\
                                     # | Q(partner_direction_count__gt=0)
 
 
