@@ -234,12 +234,12 @@ def get_or_set_cache_available_countries3(request: Request):
             if country.name in _country_direction_count_dict:
                 country.country_direction_count = _country_direction_count_dict[country.name]
 
-        countries = [el for el in countries if (el.direction_count > 0 or el.partner_direction_count >0 or  el.country_direction_count > 0)]
+        countries = [el for el in countries if (el.direction_count > 0 or el.partner_direction_count > 0 or el.country_direction_count > 0)]
 
         if not countries:
             http_exception_json(status_code=404, param=request.url)
 
         available_countries = get_available_countries3(countries)
-        cache.set('available_countries2', available_countries, 180)
+        cache.set('available_countries', available_countries, 180)
     
     return available_countries
