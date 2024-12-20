@@ -213,28 +213,29 @@ def get_or_set_cache_available_countries3(request: Request):
                                                                     filter=Q(cities__cash_directions__is_active=True)))\
                                     .annotate(partner_direction_count=Count('cities__partner_cities__partner_directions',
                                                                     filter=Q(cities__partner_cities__partner_directions__is_active=True)))\
+                                    .annotate(country_direction_count=Count('partner_countries__partner_directions',
+                                                                filter=Q(partner_countries__partner_directions__is_active=True)))\
+                                    .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0) | Q(partner_direction_count__gt=0))\
                                     .order_by('name')\
                                     .all()
-                                    # .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0))\
-                                    # | Q(partner_direction_count__gt=0)
-        country_direction_count =  Country.objects.prefetch_related(prefetch_cities,
-                                                    prefetch_countries)\
-                                                .annotate(country_direction_count=Count('partner_countries__partner_directions',
-                                                                            filter=Q(partner_countries__partner_directions__is_active=True)))\
-                                    .filter(Q(country_direction_count=0))\
-                                    .order_by('name')\
-                                    .values('name', 'country_direction_count')\
-                                    .all()
+        # country_direction_count =  Country.objects.prefetch_related(prefetch_cities,
+        #                                             prefetch_countries)\
+        #                                         .annotate(country_direction_count=Count('partner_countries__partner_directions',
+        #                                                                     filter=Q(partner_countries__partner_directions__is_active=True)))\
+        #                             .filter(Q(country_direction_count=0))\
+        #                             .order_by('name')\
+        #                             .values('name', 'country_direction_count')\
+        #                             .all()
         
         # print(country_direction_count)
 
-        _country_direction_count_dict = {el['name']: el['country_direction_count'] for el in country_direction_count}
+        # _country_direction_count_dict = {el['name']: el['country_direction_count'] for el in country_direction_count}
         
-        for country in countries:
-            if country.name in _country_direction_count_dict:
-                country.country_direction_count = _country_direction_count_dict[country.name]
+        # for country in countries:
+        #     if country.name in _country_direction_count_dict:
+        #         country.country_direction_count = _country_direction_count_dict[country.name]
 
-        countries = [el for el in countries if (el.direction_count > 0 or el.partner_direction_count > 0 or el.country_direction_count > 0)]
+        # countries = [el for el in countries if (el.direction_count > 0 or el.partner_direction_count > 0 or el.country_direction_count > 0)]
 
         if not countries:
             http_exception_json(status_code=404, param=request.url)
