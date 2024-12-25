@@ -12,36 +12,100 @@ from cash.models import Direction, City, Country
 from partners.models import PartnerCountry
 
 
+def generate_all_cash_directions(cash_directions,
+                                 cities_for_parse):
+    cash_directions = cash_directions\
+                            .values_list('pk',
+                                        'valute_from__code_name',
+                                        'valute_to__code_name')\
+                            .all()
+    cities_for_parse = cities_for_parse.values_list('pk',
+                                                    'code_name')\
+                                        .all()
+    all_cash_directions = set()
+
+    for city_id, city_code_name in cities_for_parse:
+        for direction_id, valute_from, valute_to in cash_directions:
+            all_cash_directions.add((city_id, city_code_name, direction_id, valute_from, valute_to))
+            
+    cache.set('all_cash_directions', all_cash_directions, 3600)
+
+    return all_cash_directions
+
+
 def get_or_set_cash_directions_cache():
     '''
     Получить или установить кэш значение наличных направлений с городами
     '''
-    # try:
-    if not (all_cash_directions := cache.get('all_cash_directions', False)):
-        cash_directions = Direction.objects\
-                                .select_related('valute_from',
-                                                'valute_to')\
-                                .values_list('pk',
-                                            'valute_from',
-                                            'valute_to')\
-                                .all()
-        cities_for_parse = City.objects.filter(is_parse=True)\
-                                        .values_list('pk',
-                                                    'code_name')\
-                                        .all()
-        all_cash_directions = set()
+    
+    cash_directions = Direction.objects\
+                            .select_related('valute_from',
+                                            'valute_to')
 
-        for city_id, city_code_name in cities_for_parse:
-            for direction_id, valute_from, valute_to in cash_directions:
-                all_cash_directions.add((city_id, city_code_name, direction_id, valute_from, valute_to))
+    cities_for_parse = City.objects.filter(is_parse=True)
+    
+    city_direction_count = cash_directions.count() * cities_for_parse.count()
+
+    # print('city_direction_count', city_direction_count)
+    _r = False
+
+    if not (cache_city_directon_count := cache.get('cache_city_directon_count', None)):
+        cache.set('cache_city_directon_count', city_direction_count, 3600)
+        _r = True
+    else:
+        different = city_direction_count - cache_city_directon_count
+
+        # print('different', different)
+        if different > 0:
+            _r = True
+            cache.set('cache_city_directon_count', city_direction_count, 3600)
+
+    if not (all_cash_directions := cache.get('all_cash_directions', False)):
+        all_cash_directions = generate_all_cash_directions(cash_directions,
+                                                           cities_for_parse)
+
+    else:
+        if _r:
+            all_cash_directions = generate_all_cash_directions(cash_directions,
+                                                               cities_for_parse)
+
+
+    return (
+        len(all_cash_directions),
+        all_cash_directions,
+        )
+
+
+# def get_or_set_cash_directions_cache():
+#     '''
+#     Получить или установить кэш значение наличных направлений с городами
+#     '''
+#     # try:
+#     if not (all_cash_directions := cache.get('all_cash_directions', False)):
+#         cash_directions = Direction.objects\
+#                                 .select_related('valute_from',
+#                                                 'valute_to')\
+#                                 .values_list('pk',
+#                                             'valute_from',
+#                                             'valute_to')\
+#                                 .all()
+#         cities_for_parse = City.objects.filter(is_parse=True)\
+#                                         .values_list('pk',
+#                                                     'code_name')\
+#                                         .all()
+#         all_cash_directions = set()
+
+#         for city_id, city_code_name in cities_for_parse:
+#             for direction_id, valute_from, valute_to in cash_directions:
+#                 all_cash_directions.add((city_id, city_code_name, direction_id, valute_from, valute_to))
                 
-        cache.set('all_cash_directions', all_cash_directions, 60)
-    # print('SET VALUE TO CACHE')
-# else:
-    # print('VALUE GETTING FROM CACHE')
-    return all_cash_directions
-    # except Exception as ex:
-    #     print(ex)
+#         cache.set('all_cash_directions', all_cash_directions, 60)
+#     # print('SET VALUE TO CACHE')
+# # else:
+#     # print('VALUE GETTING FROM CACHE')
+#     return all_cash_directions
+#     # except Exception as ex:
+#     #     print(ex)
 
 
 

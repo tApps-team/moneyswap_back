@@ -9,34 +9,93 @@ def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
     Получить перечень направлений для создания
     '''
 
+    direction_count, _directions = directions
+
+    print('direction_count', direction_count)
+
     exchange_directions = exchange\
                             .directions\
                             .select_related('city',
                                             'direction',
                                             'direction__valute_from',
-                                            'direction__valute_to')\
-                            .values_list('city__pk',
-                                         'city__code_name',
-                                         'direction__pk',
-                                         'direction__valute_from',
-                                         'direction__valute_to').all()
+                                            'direction__valute_to')
+                            # .values_list('city__pk',
+                            #              'city__code_name',
+                            #              'direction__pk',
+                            #              'direction__valute_from',
+                            #              'direction__valute_to').all()
     exchange_black_list_directions = exchange\
                                 .direction_black_list\
                                 .select_related('city',
                                                 'direction',
                                                 'direction__valute_from',
-                                                'direction__valute_to')\
-                                .values_list('city__pk',
-                                             'city__code_name',
-                                             'direction__pk',
-                                             'direction__valute_from',
-                                             'direction__valute_to').all()
-    checked_directions_by_exchange = exchange_black_list_directions.union(exchange_directions)
+                                                'direction__valute_to')
+    if direction_count:                               
+        if check_direction_count(direction_count,
+                                exchange_directions.count(),
+                                exchange_black_list_directions.count()):
+            print('not empty', exchange.name)
+            exchange_directions = exchange_directions\
+                                        .values_list('city__pk',
+                                                    'city__code_name',
+                                                    'direction__pk',
+                                                    'direction__valute_from__code_name',
+                                                    'direction__valute_to__code_name').all()
+            exchange_black_list_directions = exchange_black_list_directions\
+                                        .values_list('city__pk',
+                                                    'city__code_name',
+                                                    'direction__pk',
+                                                    'direction__valute_from__code_name',
+                                                    'direction__valute_to__code_name').all()
+            
+            checked_directions_by_exchange = exchange_black_list_directions.union(exchange_directions)
 
-    directions -= set(checked_directions_by_exchange)
+            _directions -= set(checked_directions_by_exchange)
+            # print(_directions)
+            return _directions
+        else:
+            print('empty')
+            return set()
+    else:
+        print('empty')
+        return set()
     # print('DIRECTIONS FOR CREATING', directions)
 
-    return directions
+
+# def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
+#                                         exchange: Exchange):
+#     '''
+#     Получить перечень направлений для создания
+#     '''
+
+#     exchange_directions = exchange\
+#                             .directions\
+#                             .select_related('city',
+#                                             'direction',
+#                                             'direction__valute_from',
+#                                             'direction__valute_to')\
+#                             .values_list('city__pk',
+#                                          'city__code_name',
+#                                          'direction__pk',
+#                                          'direction__valute_from',
+#                                          'direction__valute_to').all()
+#     exchange_black_list_directions = exchange\
+#                                 .direction_black_list\
+#                                 .select_related('city',
+#                                                 'direction',
+#                                                 'direction__valute_from',
+#                                                 'direction__valute_to')\
+#                                 .values_list('city__pk',
+#                                              'city__code_name',
+#                                              'direction__pk',
+#                                              'direction__valute_from',
+#                                              'direction__valute_to').all()
+#     checked_directions_by_exchange = exchange_black_list_directions.union(exchange_directions)
+
+#     directions -= set(checked_directions_by_exchange)
+#     # print('DIRECTIONS FOR CREATING', directions)
+
+#     return directions
 
 
 def generate_direction_dict(directions: set[str,str,str,str,str]):
