@@ -102,7 +102,7 @@ def parse_xml_to_dict(dict_for_parse: dict,
                             
                             make_valid_values_for_dict(d)
                         except Exception as ex:
-                            print(ex)
+                            # print(ex)
                             d = {
                                 # 'direction_id': direction_id,
                                 'is_active': False,
