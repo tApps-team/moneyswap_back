@@ -203,7 +203,7 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                             continue
 
         except Exception as ex:
-            print(ex)
+            # print(ex)
             continue
         finally:
             element.clear()

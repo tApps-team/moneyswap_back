@@ -590,10 +590,13 @@ def check_city_in_xml_file(city: str, xml_file: str):
           element = root.find(f'item[city="{city.lower()}"]')
     
     if element is None:
-        cities = {item.find('city').text for item in root.findall('item')}
-        cities = ' '.join(cities).replace(',', ' ').split()
-
-        return city in set(cities)
+        try:
+            cities = {item.find('city').text for item in root.findall('item')}
+            cities = ' '.join(cities).replace(',', ' ').split()
+        except Exception:
+            return None
+        else:
+            return city in set(cities)
         # if city in set(cities):
         #     return True
 
