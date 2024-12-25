@@ -414,7 +414,8 @@ def parse_create_direction_by_city(dict_for_parse: dict,
                 
                     make_valid_values_for_dict(d)
                 except Exception as ex:
-                    print(ex)
+                    # print(ex)
+                    pass
                 else:
                     try:
                         bulk_create_list.append(ExchangeDirection(**d))
