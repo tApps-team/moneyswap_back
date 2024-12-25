@@ -20,6 +20,7 @@ window.addEventListener('load', function () {
             .then(resp => {
                 resp.text().then(console.log)
             })
+            alert("Рассылка запущена")
         };
         main_div.appendChild(mass_send_button);
         // main_ul.append(new_li);

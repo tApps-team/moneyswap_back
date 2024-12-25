@@ -129,9 +129,9 @@ def parse_xml_to_dict(dict_for_parse: dict,
     update_list = []
 
     for event, element in etree.iterparse(BytesIO(xml_file), events=('end',), tag='item'):
-        if dict_for_parse:
+        if any(v for v in dict_for_parse.values()):
             element: Element
-    #  print(event)
+            
             try:
                 city = element.xpath('./city/text()')
                 
@@ -217,7 +217,7 @@ def parse_xml_to_dict(dict_for_parse: dict,
                         #         update_list.append(direction)
                                 
             except Exception as ex:
-                print(ex)
+                # print(ex)
                 continue
             finally:
                 element.clear()
@@ -448,7 +448,7 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
         direction_id_list = None
 
     for event, element in etree.iterparse(BytesIO(xml_file), events=('end',), tag='item'):
-        # if dict_for_parse:
+        if any(v for v in dict_for_parse.values()):
     #  print(event)
             try:
                 city = element.xpath('./city/text()')
@@ -541,7 +541,7 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                     #                     continue
                                 
             except Exception as ex:
-                print(ex)
+                # print(ex)
                 continue
             finally:
                 element.clear()

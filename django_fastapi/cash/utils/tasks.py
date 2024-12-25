@@ -3,6 +3,13 @@ from cash.models import Exchange
 from django.db import connection
 
 
+def check_direction_count(direction_count: int,
+                          exchange_direction_count: int,
+                          exchange_black_list_count: int):
+    # print(exchange_direction_count + exchange_black_list_count)
+    return bool(direction_count - exchange_direction_count - exchange_black_list_count)
+
+
 def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
                                         exchange: Exchange):
     '''
@@ -11,7 +18,7 @@ def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
 
     direction_count, _directions = directions
 
-    print('direction_count', direction_count)
+    # print('direction_count', direction_count)
 
     exchange_directions = exchange\
                             .directions\
@@ -34,7 +41,7 @@ def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
         if check_direction_count(direction_count,
                                 exchange_directions.count(),
                                 exchange_black_list_directions.count()):
-            print('not empty', exchange.name)
+            # print('not empty', exchange.name)
             exchange_directions = exchange_directions\
                                         .values_list('city__pk',
                                                     'city__code_name',
@@ -54,10 +61,10 @@ def get_cash_direction_set_for_creating(directions: set[tuple[str,str,str]],
             # print(_directions)
             return _directions
         else:
-            print('empty')
+            # print('empty')
             return set()
     else:
-        print('empty')
+        # print('empty')
         return set()
     # print('DIRECTIONS FOR CREATING', directions)
 

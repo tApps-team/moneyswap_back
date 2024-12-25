@@ -115,7 +115,7 @@ def parse_xml_to_dict(dict_for_parse: dict,
                             # ExchangeDirection.objects.filter(pk=direction_id)\
                             #                             .update(**d)
             except Exception as ex:
-                print(ex)
+                # print(ex)
                 continue
             finally:
                 element.clear()
@@ -188,7 +188,7 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                     
                         make_valid_values_for_dict(d)
                     except Exception as ex:
-                        print(ex)
+                        # print(ex)
                         continue
 
                     else:

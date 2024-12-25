@@ -72,7 +72,9 @@ def create_cash_directions_for_exchange(exchange_id: int):
             direction_list = get_cash_direction_set_for_creating(all_cash_directions,
                                                                  exchange)
 
+            print(len(direction_list))
             if direction_list:
+                print(f'request to exchanger {exchange.name}')
                 xml_file = try_get_xml_file(exchange)
                 
                 if xml_file is not None and exchange.is_active:
