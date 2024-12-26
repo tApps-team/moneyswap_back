@@ -1,9 +1,8 @@
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles import views
-from django.views.generic import RedirectView
 
 
 admin.site.site_header = 'Админ панель базы данных MoneySwap'
@@ -18,7 +17,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('sentry-debug/', trigger_error),
     path('summernote/', include('django_summernote.urls')),
-    re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/general_models/favicon.ico', permanent=True)),
     ]
 
 
