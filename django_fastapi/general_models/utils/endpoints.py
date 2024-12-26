@@ -850,7 +850,7 @@ def get_valute_json_3(queries: List[NoCashExDir | CashExDir]):
 
     # valute_name_list = set(map(lambda query: query[0], queries))
     valutes = Valute.objects.filter(code_name__in=queries)\
-                            .order_by('-is_popular', '-name')\
+                            .order_by('-is_popular', 'name')\
                             .all()
     
     json_dict = {}
