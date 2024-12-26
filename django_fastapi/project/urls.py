@@ -18,7 +18,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('sentry-debug/', trigger_error),
     path('summernote/', include('django_summernote.urls')),
-    re_path(r'^favicon\.ico$', RedirectView.as_view(url='/staticfiles/general_models/favicon.ico', permanent=True)),
+    re_path(r'^favicon\.ico$', RedirectView.as_view(url='/static/general_models/favicon.ico', permanent=True)),
     ]
 
 
