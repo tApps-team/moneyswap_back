@@ -81,6 +81,14 @@ class RuEnCountryModel(BaseModel):
     cities: list[RuEnCityModel] = Field(alias='city_list')
 
 
+class RuEnCountryModel1(BaseModel):
+    id: int = Field(alias='pk', json_schema_extra={'id', 1})
+    name: MultipleName
+    is_popular: bool
+    icon_url: str | None = Field(alias='country_flag')
+    cities: list[RuEnCityModel] = Field(alias='city_list')
+
+
 class LocationSchema(BaseModel):
     country: SpecificCountrySchema
     city: RuEnCityModel

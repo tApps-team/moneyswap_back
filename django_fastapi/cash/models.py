@@ -22,6 +22,8 @@ class Country(models.Model):
                                 upload_to='icons/country/',
                                 blank=True,
                                 null=True)
+    is_popular = models.BooleanField('Популярная',
+                                     default=False)
 
     class Meta:
         verbose_name = 'Страна'

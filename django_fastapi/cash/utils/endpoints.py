@@ -100,6 +100,7 @@ def get_available_countries3(countries):
                 'name': country.name,
                 'en_name': country.en_name,
             },
+            'is_popular': country.is_popular,
             'country_flag': try_generate_icon_url(country),
         }
 

@@ -26,13 +26,13 @@ from partners.models import CountryDirection, Direction as PartnerDirection, Par
 
 from .models import City, ExchangeDirection, Country
 from .schemas import (MultipleName,
-                      RuEnCountryModel,
+                      RuEnCountryModel, RuEnCountryModel1,
                       SpecificCountrySchema,
                       SpecificCitySchema)
 from .utils.endpoints import (get_available_countries,
                               get_available_countries2,
                               get_available_countries3)
-from .utils.cache import get_or_set_cache_available_countries, get_or_set_cache_available_countries2, get_or_set_cache_available_countries3
+from .utils.cache import get_or_set_cache_available_countries, get_or_set_cache_available_countries2, get_or_set_cache_available_countries3, get_or_set_cache_available_countries4
 
 cash_router = APIRouter(prefix='/cash',
                         tags=['Наличные'])
@@ -165,6 +165,17 @@ cash_router = APIRouter(prefix='/cash',
 def get_available_coutries2(request: Request):
 
     countries = get_or_set_cache_available_countries3(request)
+
+    return countries
+
+
+
+@cash_router.get('/countries2',
+                 response_model=List[RuEnCountryModel1],
+                 response_model_by_alias=False)
+def get_available_coutries2(request: Request):
+
+    countries = get_or_set_cache_available_countries4(request)
 
     return countries
 
