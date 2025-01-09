@@ -298,33 +298,33 @@ def get_partner_directions_by(partner: partner_dependency,
                                                 marker)
 
 
-@test_partner_router.get('/directions_by',
-                    response_model=list[DirectionSchema2])
-def get_partner_directions_by2(partner: partner_dependency,
-                              id: int,
-                              marker: Literal['country', 'city']):
-    partner_id = partner.get('partner_id')
+# @test_partner_router.get('/directions_by',
+#                     response_model=list[DirectionSchema2])
+# def get_partner_directions_by2(partner: partner_dependency,
+#                               id: int,
+#                               marker: Literal['country', 'city']):
+#     partner_id = partner.get('partner_id')
 
-    if marker == 'country':
-        direction_model = CountryDirection
-        additional_filter = Q(country__exchange__account__pk=partner_id,
-                              country__pk=id)
-    else:
-        direction_model = Direction
-        additional_filter = Q(city__exchange__account__pk=partner_id,
-                              city__pk=id)
+#     if marker == 'country':
+#         direction_model = CountryDirection
+#         additional_filter = Q(country__exchange__account__pk=partner_id,
+#                               country__pk=id)
+#     else:
+#         direction_model = Direction
+#         additional_filter = Q(city__exchange__account__pk=partner_id,
+#                               city__pk=id)
 
-    directions = direction_model.objects.select_related(marker,
-                                                        f'{marker}__exchange',
-                                                        f'{marker}__exchange__account',
-                                                        'direction',
-                                                        'direction__valute_from',
-                                                        'direction__valute_to')\
-                                        .filter(additional_filter)\
-                                        .all()
+#     directions = direction_model.objects.select_related(marker,
+#                                                         f'{marker}__exchange',
+#                                                         f'{marker}__exchange__account',
+#                                                         'direction',
+#                                                         'direction__valute_from',
+#                                                         'direction__valute_to')\
+#                                         .filter(additional_filter)\
+#                                         .all()
 
-    return generate_partner_directions_by_city2(directions,
-                                                marker)
+#     return generate_partner_directions_by_city2(directions,
+#                                                 marker)
 
 
 @partner_router.get('/available_valutes')

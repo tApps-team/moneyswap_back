@@ -83,18 +83,18 @@ review_router = APIRouter(prefix='/reviews',
 
 
 # Эндпоинт для получения доступных валют
-@common_router.get('/available_valutes',
-                   response_model=dict[str, dict[str, list[ValuteModel | EnValuteModel]]],
-                   response_model_by_alias=False)
-def get_available_valutes(request: Request,
-                          query: AvailableValutesQuery = Depends()):
-    params = query.params()
-    if not params['city']:
-        json_dict = no_cash_valutes(request, params)
-    else:
-        json_dict = cash_valutes(request, params)
+# @common_router.get('/available_valutes',
+#                    response_model=dict[str, dict[str, list[ValuteModel | EnValuteModel]]],
+#                    response_model_by_alias=False)
+# def get_available_valutes(request: Request,
+#                           query: AvailableValutesQuery = Depends()):
+#     params = query.params()
+#     if not params['city']:
+#         json_dict = no_cash_valutes(request, params)
+#     else:
+#         json_dict = cash_valutes(request, params)
     
-    return json_dict
+#     return json_dict
 
 #
 # @common_router.get('/available_valutes_2')
@@ -121,16 +121,16 @@ def get_available_valutes2(request: Request,
     return json_dict
 
 
-@test_router.get('/available_valutes_2')
-def get_available_valutes2(request: Request,
-                          query: AvailableValutesQuery = Depends()):
-    params = query.params()
-    if not params['city']:
-        json_dict = no_cash_valutes_3(request, params)
-    else:
-        json_dict = cash_valutes_3(request, params)
+# @test_router.get('/available_valutes_2')
+# def get_available_valutes2(request: Request,
+#                           query: AvailableValutesQuery = Depends()):
+#     params = query.params()
+#     if not params['city']:
+#         json_dict = no_cash_valutes_3(request, params)
+#     else:
+#         json_dict = cash_valutes_3(request, params)
     
-    return json_dict
+#     return json_dict
 
 
 #
