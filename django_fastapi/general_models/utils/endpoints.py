@@ -798,6 +798,8 @@ def get_valute_json_2(queries: List[NoCashExDir | CashExDir]):
                                     name=ValuteTypeNameSchema(ru=obj[0],
                                                               en=obj[-1]),
                                     currencies=json_dict[obj]))
+        
+    # print(connection.queries)
 
     return res
 

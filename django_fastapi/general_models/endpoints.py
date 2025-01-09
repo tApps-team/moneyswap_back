@@ -97,17 +97,28 @@ def get_available_valutes(request: Request,
     return json_dict
 
 #
+# @common_router.get('/available_valutes_2')
+# def get_available_valutes(request: Request,
+#                           query: AvailableValutesQuery = Depends()):
+#     params = query.params()
+#     if not params['city']:
+#         json_dict = no_cash_valutes_2(request, params)
+#     else:
+#         json_dict = cash_valutes_2(request, params)
+    
+#     return json_dict
+#
+
 @common_router.get('/available_valutes_2')
-def get_available_valutes(request: Request,
+def get_available_valutes2(request: Request,
                           query: AvailableValutesQuery = Depends()):
     params = query.params()
     if not params['city']:
-        json_dict = no_cash_valutes_2(request, params)
+        json_dict = no_cash_valutes_3(request, params)
     else:
-        json_dict = cash_valutes_2(request, params)
+        json_dict = cash_valutes_3(request, params)
     
     return json_dict
-#
 
 
 @test_router.get('/available_valutes_2')
@@ -494,7 +505,7 @@ def get_similar_cities_by_direction(valute_from: str,
             # print(city.partner_exchange_count)
         # print(cities)
         # print(len(connection.queries))
-        print(connection.queries)
+        # print(connection.queries)
         # 4 queries
         return cities
     
