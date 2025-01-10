@@ -120,6 +120,7 @@ class GuestAdmin(admin.ModelAdmin):
         'username',
         'tg_id',
         'is_active',
+        'utm_source',
     )
 
     readonly_fields = (
