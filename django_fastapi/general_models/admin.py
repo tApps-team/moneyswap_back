@@ -129,7 +129,7 @@ class GuestAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
-        'DateTimeRangeFilter',
+        # 'DateTimeRangeFilter',
         'time_create',
     )
 
