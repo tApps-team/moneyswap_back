@@ -17,7 +17,7 @@ from django_celery_beat.models import (SolarSchedule,
 
 from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on_active
 
-from .utils.admin import ReviewAdminMixin
+from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter
 from .utils.endpoints import try_generate_icon_url
 from .models import Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm
 
@@ -129,7 +129,7 @@ class GuestAdmin(admin.ModelAdmin):
     )
 
     list_filter = (
-        'utm_source',
+        'DateTimeRangeFilter',
         'time_create',
     )
 
