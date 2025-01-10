@@ -36,10 +36,10 @@ class DateTimeRangeFilter(admin.SimpleListFilter):
         if self.value() == 'direct_ar_251224':
             # start_date = timezone.now() - timedelta(days=7)
             return queryset.filter(utm_source__startswith='direct_ar_251224')
-        if self.value() == 'last_30_days':
+        if self.value() == 'direct_indonesia_281224':
             # start_date = timezone.now() - timedelta(days=30)
             return queryset.filter(utm_source__startswith='direct_indonesia_281224')
-        if self.value() == 'this_month':
+        if self.value() == 'direct_th_261224':
             # start_date = timezone.now().replace(day=1)
             return queryset.filter(utm_source__startswith='direct_th_261224')
         return queryset
