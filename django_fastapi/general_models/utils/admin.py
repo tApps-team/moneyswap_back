@@ -98,7 +98,7 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
                 # return [('_'.join(prefix.split('_')[2:]), '_'.join(prefix.split('_')[2:])) \
                 #         for prefix in set(prefixes) if prefix is not None]
             else:
-                request.session['prefix_utm'] = None
+                # request.session['prefix_utm'] = None
                 return [('--', '--')]
         # return [(prefix, prefix) for prefix in set(prefixes) if prefix is not None]
 
@@ -123,6 +123,8 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
                     queryset = queryset.filter(utm_source__startswith=prefix_utm,
                                             utm_source__endswith=utm_source,
                                             utm_source__isnull=False)
+                    
+                    request.session['prefix_utm'] = None
 
                 # utm_source_start = utm_source_start[0]
                 # queryset = queryset.filter(utm_source__startswith=utm_source_start)
