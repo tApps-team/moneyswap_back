@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from cash.models import Country, City, Direction as CashDirection
 
-from general_models.utils.endpoints import get_valute_json_3, try_generate_icon_url
+from general_models.utils.endpoints import get_valute_json_3, get_valute_json_4, try_generate_icon_url
 from general_models.schemas import MultipleName, MultipleName2
 from general_models.models import Valute
 
@@ -345,7 +345,7 @@ def get_available_valutes_for_partner2(base: str):
         queries = queries.values_list('valute_to_id', flat=True)
 
     # return generate_valute_list2(queries, marker)
-    return get_valute_json_3(queries)
+    return get_valute_json_4(queries)
 
 
 @partner_router.get('/available_valutes')
