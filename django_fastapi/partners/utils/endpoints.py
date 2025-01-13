@@ -251,6 +251,7 @@ def get_partner_directions2(valute_from: str,
                                                 .annotate(negative_review_count=review_counts['negative'])\
                                                 .filter(direction__valute_from=valute_from,
                                                         direction__valute_to=valute_to,
+                                                        is_active=True,
                                                         country__exchange__is_active=True,
                                                         country__exchange__partner_link__isnull=False)
 
