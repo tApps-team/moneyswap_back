@@ -147,6 +147,14 @@ class ValuteTypeListSchema1(BaseModel):
     icon_url: str
     is_popular: bool
 
+class ValuteTypeListSchema2(BaseModel):
+    id: str
+    name: ValuteTypeNameSchema
+    code_name: str
+    type_valute: str
+    icon_url: str
+    is_popular: bool
+
 
 class ValuteListSchema(BaseModel):
     id: int
@@ -158,6 +166,12 @@ class ValuteListSchema1(BaseModel):
     id: int
     name: ValuteTypeNameSchema
     currencies: list[ValuteTypeListSchema1]
+
+
+class ValuteListSchema2(BaseModel):
+    id: int
+    name: ValuteTypeNameSchema
+    currencies: list[ValuteTypeListSchema2]
     
 
 

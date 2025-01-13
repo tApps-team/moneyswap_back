@@ -18,7 +18,7 @@ from cash.schemas import SpecificCitySchema, SpecificCountrySchema, RuEnCityMode
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict, BaseExchange
-from general_models.schemas import (ValuteListSchema1, ValuteModel,
+from general_models.schemas import (ValuteListSchema1, ValuteListSchema2, ValuteModel,
                                     EnValuteModel,
                                     MultipleName,
                                     ReviewCountSchema,
@@ -909,7 +909,7 @@ def get_valute_json_4(queries: List[NoCashExDir | CashExDir]):
             'name': ValuteTypeNameSchema(ru=valute.name,
                                          en=valute.en_name),
             'code_name': valute.code_name,
-            'tye_valute': valute.type_valute,
+            'type_valute': valute.type_valute,
             'icon_url': icon_url,
             'is_popular': valute.is_popular,
             }
@@ -917,7 +917,7 @@ def get_valute_json_4(queries: List[NoCashExDir | CashExDir]):
     
     res = []
     for idx, obj in enumerate(json_dict, start=1):
-        res.append(ValuteListSchema1(id=idx,
+        res.append(ValuteListSchema2(id=idx,
                                     name=ValuteTypeNameSchema(ru=obj[0],
                                                               en=obj[-1]),
                                     currencies=json_dict[obj]))
