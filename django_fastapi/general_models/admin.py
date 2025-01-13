@@ -17,7 +17,7 @@ from django_celery_beat.models import (SolarSchedule,
 
 from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on_active
 
-from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter
+from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
 from .models import Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm
 
@@ -119,6 +119,7 @@ class GuestAdmin(admin.ModelAdmin):
     list_display = (
         'username',
         'tg_id',
+        'link_count',
         'is_active',
         'utm_source',
     )
@@ -129,11 +130,16 @@ class GuestAdmin(admin.ModelAdmin):
         'time_create',
     )
 
+    # list_filter = (
+    #     'time_create',
+    #     'utm_source',
+    #     DateTimeRangeFilter,
+    # )
     list_filter = (
+        UTMSourceFilter,
         'time_create',
-        'utm_source',
-        DateTimeRangeFilter,
-    )
+        # UTMSourceSecondPartFilter,
+        )
 
     def link_count(self, obj):
         no_cash_count = no_cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\

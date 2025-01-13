@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from cash.models import Country, City, Direction as CashDirection
 
-from general_models.utils.endpoints import try_generate_icon_url
+from general_models.utils.endpoints import get_valute_json_3, try_generate_icon_url
 from general_models.schemas import MultipleName, MultipleName2
 from general_models.models import Valute
 
@@ -325,6 +325,27 @@ def get_partner_directions_by(partner: partner_dependency,
 
 #     return generate_partner_directions_by_city2(directions,
 #                                                 marker)
+
+
+@test_partner_router.get('/available_valutes')
+def get_available_valutes_for_partner2(base: str):
+    base = base.upper()
+
+    queries = CashDirection.objects.select_related('valute_from',
+                                                   'valute_to')\
+                                    .filter(valute_from__available_for_partners=True,
+                                            valute_to__available_for_partners=True)
+    
+    if base == 'ALL':
+        marker = 'valute_from'
+        queries = queries.values_list('valute_from_id', flat=True)
+    else:
+        marker = 'valute_to'
+        queries = queries.filter(valute_from=base)
+        queries = queries.values_list('valute_to_id', flat=True)
+
+    # return generate_valute_list2(queries, marker)
+    return get_valute_json_3(queries)
 
 
 @partner_router.get('/available_valutes')
