@@ -244,8 +244,8 @@ def get_partner_directions2(valute_from: str,
 
     country_directions = CountryDirection.objects.select_related('direction',
                                                                  'country',
-                                                                 'city__exchange',
-                                                                 'city__exchange__account',
+                                                                 'country__exchange',
+                                                                 'country__exchange__account',
                                                                  'country__country')\
                                                 .prefetch_related('country__country__cities')\
                                                 .annotate(positive_review_count=review_counts['positive'])\
