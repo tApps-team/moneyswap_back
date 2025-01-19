@@ -244,6 +244,8 @@ def get_partner_directions2(valute_from: str,
 
     country_directions = CountryDirection.objects.select_related('direction',
                                                                  'country',
+                                                                 'city__exchange',
+                                                                 'city__exchange__account',
                                                                  'country__country')\
                                                 .prefetch_related('country__country__cities')\
                                                 .annotate(positive_review_count=review_counts['positive'])\
@@ -389,7 +391,8 @@ def get_partner_directions3(valute_from: str,
                                             'direction__valute_to',
                                             'city',
                                             'city__city',
-                                            'city__exchange')\
+                                            'city__exchange',
+                                            'city__exchange__account')\
                             .annotate(positive_review_count=review_counts['positive'])\
                             .annotate(neutral_review_count=review_counts['neutral'])\
                             .annotate(negative_review_count=review_counts['negative'])\
@@ -404,6 +407,7 @@ def get_partner_directions3(valute_from: str,
                                                                  'direction__valute_to',
                                                                  'country',
                                                                  'country__exchange',
+                                                                 'country__exchange__account',
                                                                  'country__country')\
                                                 .prefetch_related('country__exchange__partner_cities')\
                                                 .annotate(positive_review_count=review_counts['positive'])\

@@ -80,7 +80,7 @@ def run_cash_background_tasks(task: Proxy,
                             black_list_element, _ = BlackListElement\
                                                     .objects\
                                                     .get_or_create(city_id=city_id,
-                                                                direction_id=direction_id)
+                                                                   direction_id=direction_id)
                             black_list.append(black_list_element)
 
                             
