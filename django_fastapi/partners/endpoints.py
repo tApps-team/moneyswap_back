@@ -327,25 +327,25 @@ def get_partner_directions_by(partner: partner_dependency,
 #                                                 marker)
 
 
-@test_partner_router.get('/available_valutes')
-def get_available_valutes_for_partner2(base: str):
-    base = base.upper()
+# @test_partner_router.get('/available_valutes')
+# def get_available_valutes_for_partner2(base: str):
+#     base = base.upper()
 
-    queries = CashDirection.objects.select_related('valute_from',
-                                                   'valute_to')\
-                                    .filter(valute_from__available_for_partners=True,
-                                            valute_to__available_for_partners=True)
+#     queries = CashDirection.objects.select_related('valute_from',
+#                                                    'valute_to')\
+#                                     .filter(valute_from__available_for_partners=True,
+#                                             valute_to__available_for_partners=True)
     
-    if base == 'ALL':
-        marker = 'valute_from'
-        queries = queries.values_list('valute_from_id', flat=True)
-    else:
-        marker = 'valute_to'
-        queries = queries.filter(valute_from=base)
-        queries = queries.values_list('valute_to_id', flat=True)
+#     if base == 'ALL':
+#         marker = 'valute_from'
+#         queries = queries.values_list('valute_from_id', flat=True)
+#     else:
+#         marker = 'valute_to'
+#         queries = queries.filter(valute_from=base)
+#         queries = queries.values_list('valute_to_id', flat=True)
 
-    # return generate_valute_list2(queries, marker)
-    return get_valute_json_4(queries)
+#     # return generate_valute_list2(queries, marker)
+#     return get_valute_json_4(queries)
 
 
 # @partner_router.get('/available_valutes')
