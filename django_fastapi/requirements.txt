@@ -26,6 +26,7 @@ cron-descriptor==1.4.0
 cryptography==42.0.5
 Django==4.2.7
 django-admin-action-forms==1.2.1
+django-admin-rangefilter==0.13.2
 django-celery-beat==2.5.0
 django-debug-toolbar==4.2.0
 django-dynamic-admin-forms==2.2.1

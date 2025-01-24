@@ -15,6 +15,13 @@ from django_celery_beat.models import (SolarSchedule,
                                        ClockedSchedule,
                                        CrontabSchedule)
 
+from rangefilter.filters import (
+    DateRangeFilterBuilder,
+    DateTimeRangeFilterBuilder,
+    NumericRangeFilterBuilder,
+    DateRangeQuickSelectListFilterBuilder,
+)
+
 from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on_active
 
 from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
@@ -131,13 +138,30 @@ class GuestAdmin(admin.ModelAdmin):
     )
 
     # list_filter = (
+    #     ("created_at", DateRangeFilterBuilder()),
+    #     (
+    #         "updated_at",
+    #         DateTimeRangeFilterBuilder(
+    #             title="Custom title",
+    #             default_start=datetime(2020, 1, 1),
+    #             default_end=datetime(2030, 1, 1),
+    #         ),
+    #     ),
+    #     ("num_value", NumericRangeFilterBuilder()),
+    #     ("created_at", DateRangeQuickSelectListFilterBuilder()),  # Range + QuickSelect Filter
+    # )
+
+    # list_filter = (
     #     'time_create',
     #     'utm_source',
     #     DateTimeRangeFilter,
     # )
     list_filter = (
+        ("time_create", DateRangeFilterBuilder()),
         UTMSourceFilter,
-        'time_create',
+        # ("time_create", NumericRangeFilterBuilder()),
+        # ('time_create', DateRangeQuickSelectListFilterBuilder()),
+        # 'time_create',
         # UTMSourceSecondPartFilter,
         )
 

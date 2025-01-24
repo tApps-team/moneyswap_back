@@ -54,10 +54,16 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
 
         # Получаем уникальные значения начала строки
         # utm_source_start = request.GET.get('utm_source_start')
-        # print('lookup',request.GET)
+        print('lookup',request.GET)
+        print('request session', request_session.__dict__)
         # if not utm_source_start:
+
+        if request_session.get('prefix_utm') and \
+            request_session.get('second_part_utm'):
+            print('22')
+
         utm_source = self.value()
-        # print(utm_source)
+        print(utm_source)
         if not utm_source:
             prefixes = Guest.objects.filter(utm_source__isnull=False)\
                                     .values_list('utm_source', flat=True)\
@@ -66,6 +72,9 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
             unique_prefix =  [('_'.join(prefix.split('_')[:2]), '_'.join(prefix.split('_')[:2])) \
                                 for prefix in set(prefixes) if prefix is not None]
             
+            request_session['prefix_utm'] = None
+            request_session['second_part_utm'] = None
+
             return sorted(set(unique_prefix))
 
 
@@ -79,6 +88,8 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
                                                 utm_source__startswith=prefix_utm)\
                                         .values_list('utm_source', flat=True)\
                                         .distinct()
+                
+                request.session['second_part_utm'] = utm_source
 
             check_value = (utm_source[:2].isdigit()) or (utm_source == '--')
             
@@ -105,7 +116,16 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
 
     def queryset(self, request, queryset):
         request_session = request.session
-        # print(request.GET)
+        
+        # if any(key for key in request.GET if key.startswith('time_create')):
+        #     request.GET['time_create__isnull'] = ['False']
+        # else:
+        #     try:
+        #         del request.GET['time_create__isnull']
+        #     except Exception as ex:
+        #         print(ex)
+        print(request.GET)
+        print('request session', request_session.__dict__)
         # utm_source_start = request.GET.get('utm_source_start')
         utm_source = self.value()
         # print(utm_source)
@@ -124,7 +144,7 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
                                             utm_source__endswith=utm_source,
                                             utm_source__isnull=False)
                     
-                    request.session['prefix_utm'] = None
+                    # request.session['prefix_utm'] = None
 
                 # utm_source_start = utm_source_start[0]
                 # queryset = queryset.filter(utm_source__startswith=utm_source_start)
