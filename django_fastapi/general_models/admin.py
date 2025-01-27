@@ -59,12 +59,14 @@ class FeedbackFormAdmin(admin.ModelAdmin):
     
     readonly_fields = (
         'time_create',
+        'description',
     )
     
     fields = (
         'username',
         'email',
         'reasons',
+        'description',
         'time_create',
     )
 
@@ -157,10 +159,10 @@ class GuestAdmin(admin.ModelAdmin):
     #     DateTimeRangeFilter,
     # )
     list_filter = (
-        ("time_create", DateRangeFilterBuilder()),
+        # ("time_create", DateRangeFilterBuilder()),
+        ('time_create', DateRangeQuickSelectListFilterBuilder()),
         UTMSourceFilter,
         # ("time_create", NumericRangeFilterBuilder()),
-        # ('time_create', DateRangeQuickSelectListFilterBuilder()),
         # 'time_create',
         # UTMSourceSecondPartFilter,
         )
