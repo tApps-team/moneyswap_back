@@ -35,7 +35,7 @@ def delete_cancel_reviews():
 #WITH SELENIUM
 #Фоновая задача парсинга отзывов и комментариев
 #для всех обменников из БД при запуске сервиса
-@shared_task(acks_late=True, task_reject_on_worker_lost=True)
+@shared_task
 def parse_reviews_with_start_service():
     # driver = webdriver.Remote(f'http://localhost:4444', options=options)
     # print('DRIVER', driver)
