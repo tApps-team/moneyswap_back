@@ -1,3 +1,4 @@
+import random
 from datetime import datetime
 
 from selenium.webdriver.common.by import By
@@ -49,6 +50,8 @@ def parse_reviews(driver: WebDriver,
                   exchange_name: str,
                   marker: str,
                   limit: int = 20):
+    random_num = random.randrange(5,20)
+    
     link = f'https://www.bestchange.ru/{exchange_name}-exchanger.html'
     try:
         driver.get(link)
@@ -58,29 +61,33 @@ def parse_reviews(driver: WebDriver,
                         .find_elements(By.XPATH, '//div[starts-with(@class, "review_block")]')          
         print(len(rows))
 
-        for row in rows[:limit]:
+        for row in rows[:random_num]:
             try:
                 data = collect_data(row, 'review')
             except ValueError as ex:
                 print(ex)
                 continue
             else:
-                review = new_add_review_to_db(exchange_name, data, marker)
+                # review = new_add_review_to_db(exchange_name, data, marker)
 ##
                 comments = row.find_element(By.CLASS_NAME, 'review_comment_expand')
 
                 print(comments.is_displayed())
 
                 if comments.is_displayed():
-                    comments.click()
-                    comments = row.find_elements(By.CLASS_NAME, 'review_comment')
-                    for comment in comments:
-                        try:
-                            data = collect_data(comment, 'comment')
-                        except ValueError:
-                            continue
-                        else:
-                            add_comment_to_db(review, data, marker)
+                    pass
+                    # comments.click()
+                    # comments = row.find_elements(By.CLASS_NAME, 'review_comment')
+                    # for comment in comments:
+                    #     try:
+                    #         data = collect_data(comment, 'comment')
+                    #     except ValueError:
+                    #         continue
+                    #     else:
+                    #         add_comment_to_db(review, data, marker)
+                else:
+                    review = new_add_review_to_db(exchange_name, data, marker)
+
     except Exception as ex:
         print(ex)
     except BaseException as ex:

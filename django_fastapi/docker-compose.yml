@@ -1,27 +1,27 @@
 services:
 
-  # firefox:
-  #   image: selenium/standalone-firefox:4.16.1-20231219
-  #   restart: on-failure
-  #   container_name: firefox
-  #   shm_size: 2g
-  #   ports:
-  #     - "4444:4444"
-  #     - "7900:7900"
-  #   networks:
-  #     - common-network
-  #   volumes:
-  #     - selenium-data:/home/seluser/Downloads
-  #   environment:
-  #     - SE_SESSION_REQUEST_TIMEOUT=3600
-  #     - SE_NODE_SESSION_TIMEOUT=3600
-  #     - SE_VNC_PASSWORD=1234
-  #     - SE_NODE_OVERRIDE_MAX_SESSIONS=true 
-  #     - SE_NODE_MAX_SESSIONS=5
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         cpus: '0.4'
+  firefox:
+    image: selenium/standalone-firefox:4.16.1-20231219
+    restart: on-failure
+    container_name: firefox
+    shm_size: 2g
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    networks:
+      - common-network
+    volumes:
+      - selenium-data:/home/seluser/Downloads
+    environment:
+      - SE_SESSION_REQUEST_TIMEOUT=3600
+      - SE_NODE_SESSION_TIMEOUT=3600
+      - SE_VNC_PASSWORD=1234
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true 
+      - SE_NODE_MAX_SESSIONS=5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.4'
 
   django_fastapi:
     build: .
@@ -45,7 +45,7 @@ services:
       - pgbouncer
       # - redis_db
       # - celery_worker
-      # - firefox
+      - firefox
     logging:
       driver: "json-file"
       options:
@@ -55,6 +55,7 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
+                    python manage.py parse_reviews_selenium &&
                     gunicorn -w 2 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
                     # python manage.py collectstatic --no-input &&
                     # python manage.py create_moder_group &&
@@ -69,7 +70,6 @@ services:
                     # python manage.py createsuperuser --no-input &&
                     # python manage.py periodic_task_for_parse_cash_courses &&
                     # python manage.py recreate_backround_tasks &&
-                    # python manage.py parse_reviews_selenium &&
                     # uvicorn project.asgi:app --host 0.0.0.0"
 
   nginx:
@@ -136,7 +136,7 @@ services:
     command: sh -c 'celery -A project worker -l info -c 4'
     environment:
       - POSTGRES_HOST=psql_db
-      # - SELENIUM_DRIVER=firefox
+      - SELENIUM_DRIVER=firefox
       - REDIS_HOST=redis_db
       - PGBOUNCER_HOST=pgbouncer
     env_file:
@@ -146,6 +146,7 @@ services:
       - psql_db
       - pgbouncer
       # - rabbitmq3
+      - firefox
     cpus: '2.0'
     logging:
       driver: "json-file"
@@ -191,7 +192,7 @@ services:
       - common-network
     environment:
       - POSTGRES_HOST=psql_db
-      # - SELENIUM_DRIVER=firefox
+      - SELENIUM_DRIVER=firefox
       - REDIS_HOST=redis_db
       - PGBOUNCER_HOST=pgbouncer
     env_file:
@@ -242,7 +243,7 @@ services:
       - pgbouncer_data:/var/run/pgbouncer
 
 volumes:
-  # selenium-data:
+  selenium-data:
   postgres-data:
   redis_data:
   # rabbitmq_data:

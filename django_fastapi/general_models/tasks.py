@@ -37,6 +37,8 @@ def delete_cancel_reviews():
 #для всех обменников из БД при запуске сервиса
 @shared_task(acks_late=True, task_reject_on_worker_lost=True)
 def parse_reviews_with_start_service():
+    # driver = webdriver.Remote(f'http://localhost:4444', options=options)
+    # print('DRIVER', driver)
     try:
         # driver = webdriver.Firefox()
         options = Options()
@@ -51,7 +53,7 @@ def parse_reviews_with_start_service():
                               exchange_name,
                               marker)
     except (Exception, BaseException) as ex:
-        print(ex)
+        print('SELENIUM ERROR', ex)
     finally:
         driver.quit()
 
