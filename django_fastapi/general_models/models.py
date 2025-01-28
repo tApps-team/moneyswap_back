@@ -235,9 +235,15 @@ class CustomOrder(models.Model):
     request_type = models.CharField('Тип заявки',
                                     max_length=255)
     country = models.CharField('Страна',
-                               max_length=255)
+                               max_length=255,
+                               blank=True,
+                               null=True,
+                               default=None)
     amount = models.CharField('Сумма',
-                              max_length=255)
+                              max_length=255,
+                              blank=True,
+                              null=True,
+                              default=None)
     comment = models.TextField('Комментарий')
 
     guest = models.ForeignKey(Guest,
