@@ -3,6 +3,7 @@ from typing import Any, List, Literal
 from collections import defaultdict
 from datetime import timedelta, datetime
 
+import aiohttp
 from django.conf import settings
 from django.db import connection
 from django.db.models import Count, Q, QuerySet, Prefetch, Sum
@@ -993,3 +994,18 @@ def check_valute_on_cash(valute_from: str,
     return Valute.objects.filter(code_name__in=(valute_from,valute_to),
                                  type_valute__in=('Наличные', 'ATM QR'))\
                             .exists()
+
+
+async def pust_to_send_bot(user_id: int,
+                           order_id: int,
+                           marker: str):
+    try:
+        _url = f'https://api.moneyswap.online/send_to_tg_group?user_id={user_id}&order_id={order_id}&marker={marker}'
+        timeout = aiohttp.ClientTimeout(total=5)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(_url,
+                                timeout=timeout) as response:
+                pass
+    except Exception as ex:
+        print(ex)
+        pass

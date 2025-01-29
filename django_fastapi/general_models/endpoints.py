@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from math import ceil
 from random import choice, shuffle
 
+from asgiref.sync import async_to_sync
 
 from django.contrib.admin.models import LogEntry
 from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch, Sum
@@ -41,7 +42,7 @@ import partners.models as partner_models
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
 from .utils.endpoints import (check_exchage_marker,
-                              check_perms_for_adding_review,
+                              check_perms_for_adding_review, pust_to_send_bot,
                               try_generate_icon_url,
                               generate_valute_for_schema,
                               get_exchange_directions,
@@ -807,11 +808,14 @@ def get_all_directions_by_exchange(exchange_id: int,
 @common_router.post('/feedback_form')
 def add_feedback_form(feedback: FeedbackFormSchema):
     try:
-        FeedbackForm.objects.create(**feedback.model_dump())
+        feedback_form = FeedbackForm.objects.create(**feedback.model_dump())
     except Exception as ex:
         print(ex)
         raise HTTPException(status_code=400)
     else:
+        async_to_sync(pust_to_send_bot)(user_id=1,
+                                        order_id=feedback_form.pk,
+                                        marker='feedback_form')
         return {'status': 'success',
                 'details': 'feedback added'}
 
