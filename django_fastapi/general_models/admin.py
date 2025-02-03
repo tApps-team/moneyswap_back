@@ -140,6 +140,7 @@ class CustomDateTimeFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         today = datetime.now()
+        print(today)
         if self.value() == 'today':
             start_of_today = today.replace(hour=0, minute=0, second=0, microsecond=0)
             end_of_today = today.replace(hour=23, minute=59, second=59, microsecond=999999)
@@ -147,13 +148,13 @@ class CustomDateTimeFilter(admin.SimpleListFilter):
         elif self.value() == 'yesterday':
             start_of_yesterday = today - timedelta(days=1)
             end_of_yesterday = today.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(seconds=1)
-            return queryset.filter(time_create__range=(start_of_yesterday, end_of_yesterday))
+            return queryset.filter(time_create__range=(start_of_yesterday, today))
         elif self.value() == 'this_week':
             # start_of_week = today - timedelta(days=today.weekday())
             start_of_week = today - timedelta(days=6, hours=23, minutes=59, seconds=59)
 
             # end_of_week = start_of_week + timedelta(days=6, hours=23, minutes=59, seconds=59)
-            end_of_week = start_of_week
+            end_of_week = today
 
             return queryset.filter(time_create__range=(start_of_week, end_of_week))
         elif self.value() == 'this_month':
