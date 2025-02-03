@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from django.db.models import Count, Sum, Subquery, F
@@ -122,6 +123,52 @@ class PartnerTimeUpdateAdmin(admin.ModelAdmin):
             return super().save_model(request, obj, form, change)
 
 
+class CustomDateTimeFilter(admin.SimpleListFilter):
+    title = 'Фильтры по дате'
+    parameter_name = 'custom_date_filter'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('today', 'Сегодня'),
+            ('yesterday', 'Вчера'),
+            ('this_week', 'На этой неделе'),
+            ('this_month', 'В этом месяце'),
+            ('this_year', 'В этом году'),
+            ('date_exists', 'Дата указана'),
+            ('date_not_exists', 'Дата не указана'),
+        )
+
+    def queryset(self, request, queryset):
+        today = datetime.now()
+        if self.value() == 'today':
+            start_of_today = today.replace(hour=0, minute=0, second=0, microsecond=0)
+            end_of_today = today.replace(hour=23, minute=59, second=59, microsecond=999999)
+            return queryset.filter(time_create__range=(start_of_today, end_of_today))
+        elif self.value() == 'yesterday':
+            start_of_yesterday = today - timedelta(days=1)
+            end_of_yesterday = today.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(seconds=1)
+            return queryset.filter(time_create__range=(start_of_yesterday, end_of_yesterday))
+        elif self.value() == 'this_week':
+            start_of_week = today - timedelta(days=today.weekday())
+            end_of_week = start_of_week + timedelta(days=6, hours=23, minutes=59, seconds=59)
+            return queryset.filter(time_create__range=(start_of_week, end_of_week))
+        elif self.value() == 'this_month':
+            start_of_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            end_of_month = (start_of_month + timedelta(days=32)).replace(day=1) - timedelta(seconds=1)
+            return queryset.filter(time_create__range=(start_of_month, end_of_month))
+        elif self.value() == 'this_year':
+            start_of_year = today.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+            end_of_year = today.replace(month=12, day=31, hour=23, minute=59, second=59, microsecond=999999)
+            return queryset.filter(time_create__range=(start_of_year, end_of_year))
+        elif self.value() == 'date_exists':
+            return queryset.exclude(time_create__isnull=True)
+        elif self.value() == 'date_not_exists':
+            return queryset.filter(time_create__isnull=True)
+        
+        return queryset
+
+
+
 #Отображение Гостевых пользователей в админ панели
 @admin.register(Guest)
 class GuestAdmin(admin.ModelAdmin):
@@ -138,6 +185,10 @@ class GuestAdmin(admin.ModelAdmin):
         'utm_source',
         'time_create',
     )
+
+
+
+    # date_hierarchy = 'time_create'
 
     # list_filter = (
     #     ("created_at", DateRangeFilterBuilder()),
@@ -159,9 +210,10 @@ class GuestAdmin(admin.ModelAdmin):
     #     DateTimeRangeFilter,
     # )
     list_filter = (
-        # ("time_create", DateRangeFilterBuilder()),
-        ('time_create', DateRangeQuickSelectListFilterBuilder()),
+        CustomDateTimeFilter,
+        ("time_create", DateRangeFilterBuilder()),
         UTMSourceFilter,
+        # ('time_create', DateRangeQuickSelectListFilterBuilder()),
         # ("time_create", NumericRangeFilterBuilder()),
         # 'time_create',
         # UTMSourceSecondPartFilter,
