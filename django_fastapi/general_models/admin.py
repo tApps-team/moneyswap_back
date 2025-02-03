@@ -131,7 +131,7 @@ class CustomDateTimeFilter(admin.SimpleListFilter):
         return (
             ('today', 'Сегодня'),
             ('yesterday', 'Вчера'),
-            ('this_week', 'На этой неделе'),
+            ('this_week', 'В течении 7 дней'),
             ('this_month', 'В этом месяце'),
             ('this_year', 'В этом году'),
             ('date_exists', 'Дата указана'),
@@ -149,8 +149,12 @@ class CustomDateTimeFilter(admin.SimpleListFilter):
             end_of_yesterday = today.replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(seconds=1)
             return queryset.filter(time_create__range=(start_of_yesterday, end_of_yesterday))
         elif self.value() == 'this_week':
-            start_of_week = today - timedelta(days=today.weekday())
-            end_of_week = start_of_week + timedelta(days=6, hours=23, minutes=59, seconds=59)
+            # start_of_week = today - timedelta(days=today.weekday())
+            start_of_week = today - timedelta(days=6, hours=23, minutes=59, seconds=59)
+
+            # end_of_week = start_of_week + timedelta(days=6, hours=23, minutes=59, seconds=59)
+            end_of_week = start_of_week
+
             return queryset.filter(time_create__range=(start_of_week, end_of_week))
         elif self.value() == 'this_month':
             start_of_month = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
