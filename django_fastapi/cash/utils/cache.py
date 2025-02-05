@@ -56,7 +56,7 @@ def get_or_set_cash_directions_cache():
         different = city_direction_count - cache_city_directon_count
 
         # print('different', different)
-        if different > 0:
+        if different != 0:
             _r = True
             cache.set('cache_city_directon_count', city_direction_count, 3600)
 
