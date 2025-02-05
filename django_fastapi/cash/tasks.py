@@ -65,8 +65,8 @@ def create_cash_directions_for_exchange(exchange_id: int):
 
         all_cash_directions = get_or_set_cash_directions_cache()
 
-        # if exchange.name == 'test':
-        #     print('direct22',all_cash_directions)
+        if exchange.name == 'CoinPoint':
+            print('direct22',all_cash_directions)
 
         if all_cash_directions:
             direction_list = get_cash_direction_set_for_creating(all_cash_directions,
