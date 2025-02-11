@@ -513,7 +513,7 @@ def add_location_to_exchange_direction(exchange_direction: dict[str, Any],
 
 
 def get_valid_partner_link(partner_link: str | None):
-    if partner_link is None:
+    if partner_link is None or partner_link.startswith('https://t.me'):
         pass
     else:
         if partner_link.find('/ref/') != -1:
