@@ -575,14 +575,14 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         if query.exchange.__dict__.get('partner_link') and query.exchange.__dict__.get('period_for_create'):
             # query.exchange.__dict__['partner_link'] += partner_link_pattern
 #           
-            if partner_link.startswith('https://t.me'):
-                pass
-            else:
-                partner_link = get_valid_partner_link(query.exchange.__dict__.get('partner_link'))
-                query.exchange.__dict__['partner_link'] = partner_link + partner_link_pattern
+            # if partner_link.startswith('https://t.me'):
+            #     pass
+            # else:
+        partner_link = get_valid_partner_link(query.exchange.__dict__.get('partner_link'))
+        query.exchange.__dict__['partner_link'] = partner_link + partner_link_pattern
 #
-                if with_location:
-                    query.exchange.__dict__['partner_link'] += f'&city={query.city.code_name}'
+        if with_location:
+            query.exchange.__dict__['partner_link'] += f'&city={query.city.code_name}'
 
         if valute_from_obj is None:
             valute_from_obj = query.direction.valute_from
