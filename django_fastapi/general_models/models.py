@@ -114,6 +114,11 @@ class Guest(models.Model):
                                      blank=True,
                                      null=True,
                                      default=None)
+    select_language = models.CharField('Выбранный язык',
+                                       max_length=255,
+                                       choices=(('ru', 'ru'),
+                                                ('en', 'en')),
+                                        default='ru')
     is_premium = models.BooleanField('Премиум',
                                      default=False)
     is_active = models.BooleanField('Активен',
