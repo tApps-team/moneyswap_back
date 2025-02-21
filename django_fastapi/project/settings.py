@@ -185,6 +185,7 @@ PROJECT_NAME = "django-fastapi-project"
 FASTAPI_PREFIX = "/api"
 DJANGO_PREFIX = "/django"
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 ####SWITCH FOR DEV/PROD####
 
