@@ -201,14 +201,6 @@ class CountryDirection(models.Model):
                                    blank=True,
                                    null=True,
                                    default=None)
-
-    # percent = models.FloatField('Процент',
-    #                             default=0,
-    #                             validators=[is_positive_validator])
-    # fix_amount = models.FloatField('Фиксированная ставка',
-    #                                default=0,
-    #                                validators=[is_positive_validator])
-
     in_count = models.DecimalField('Сколько отдаём',
                                    max_digits=20,
                                    decimal_places=5,
@@ -254,14 +246,6 @@ class Direction(models.Model):
                                    blank=True,
                                    null=True,
                                    default=None)
-
-    # percent = models.FloatField('Процент',
-    #                             default=0,
-    #                             validators=[is_positive_validator])
-    # fix_amount = models.FloatField('Фиксированная ставка',
-    #                                default=0,
-    #                                validators=[is_positive_validator])
-
     in_count = models.DecimalField('Сколько отдаём',
                                    max_digits=20,
                                    decimal_places=5,
@@ -388,18 +372,6 @@ class Bankomat(models.Model):
         return self.name
     
 
-# class BankomatValutes(models.Model):
-#     bankomat = models.ForeignKey(Bankomat,
-#                                  on_delete=models.CASCADE,
-#                                  verbose_name='Банкомат')
-#     valute = models.ForeignKey(Valute,
-#                                on_delete=models.CASCADE,
-#                                to_field='code_name',
-#                                verbose_name='Валюта')
-    
-#     class Meta:
-#         unique_together = (('bankomat', 'valute'), )
-
 # Intermate table Partner/Valute
 class QRValutePartner(models.Model):
     valute = models.ForeignKey(Valute,
@@ -414,3 +386,36 @@ class QRValutePartner(models.Model):
     
     class Meta:
         unique_together = (('partner', 'valute'), )
+
+
+class DirectionRate(models.Model):
+    marker_choice = (
+        ('city', 'city'),
+        ('country', 'country'),
+    )
+
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 related_name='partner_rates')
+    direction_id = models.IntegerField('ID направления')
+    direction_marker = models.CharField('Маркер направления',
+                                        max_length=50,
+                                        choices=marker_choice)
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=5,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=5,
+                                    null=True,
+                                    default=None)
+    min_limit_count = models.IntegerField('Минимальный лимит')
+    max_limit_count = models.IntegerField('Максимальный лимит',
+                                          null=True,
+                                          blank=True,
+                                          default=None)
+    
+    class Meta:
+        unique_together = (('exchange', 'direction_id', 'direction_marker', 'min_limit_count'), )

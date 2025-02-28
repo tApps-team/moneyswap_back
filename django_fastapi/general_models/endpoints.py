@@ -39,6 +39,8 @@ from cash.models import Direction, Country, Exchange, Review
 
 import partners.models as partner_models
 
+from partners.utils.endpoints import get_partner_directions_for_test
+
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
 from .utils.endpoints import (check_exchage_marker,
@@ -169,6 +171,12 @@ def get_specific_valute(code_name: str):
 #         exchange_direction_list = cash_exchange_directions(request, params)
     
 #     return exchange_direction_list
+@test_router.get('/directions')
+def get_current_exchange_directions(valute_from: str,
+                                    valute_to: str):
+    get_partner_directions_for_test(valute_from=valute_from,
+                                    valute_to=valute_to)
+    pass
 
 
 @common_router.get('/directions',

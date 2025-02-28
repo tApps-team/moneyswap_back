@@ -33,7 +33,8 @@ from .models import (Exchange,
                      ExchangeLinkCount,
                      PartnerCountry,
                      CountryDirection,
-                     Bankomat)
+                     Bankomat,
+                     DirectionRate)
 from .utils.admin import (make_city_active,
                           update_field_time_update,
                           get_saved_course)
@@ -926,3 +927,18 @@ class BankomatAdmin(admin.ModelAdmin):
     filter_horizontal = (
         'valutes',
     )
+
+
+#Отображение банкоматов в админ панели
+@admin.register(DirectionRate)
+class DirectionRateAdmin(admin.ModelAdmin):
+    list_display = (
+        'exchange',
+        'direction_id',
+        'direction_marker',
+        'min_limit_count',
+    )
+
+    # filter_horizontal = (
+    #     'valutes',
+    # )
