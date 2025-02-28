@@ -331,6 +331,11 @@ def try_generate_icon_url(obj: Country | Valute) -> str | None:
     if obj.icon_url.name:
         icon_url = settings.PROTOCOL + settings.SITE_DOMAIN\
                                             + obj.icon_url.url
+        
+    if not icon_url:
+        icon_url = settings.PROTOCOL + settings.SITE_DOMAIN\
+                                            + '/media/icons/valute/BTC.svg'
+        
     return icon_url
 
 
