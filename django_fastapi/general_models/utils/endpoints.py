@@ -15,18 +15,27 @@ import cash.models as cash_models
 import partners.models as partner_models
 
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
-from cash.schemas import SpecificCitySchema, SpecificCountrySchema, RuEnCityModel
+from cash.schemas import (SpecificCitySchema,
+                          SpecificCountrySchema,
+                          RuEnCityModel,
+                          SpecialCashDirectionMultiPrtnerModel,
+                          SpecialCashDirectionMultiWithLocationModel,
+                          SpecialCashDirectionMultiModel,
+                          SpecialCashDirectionMultiPrtnerWithLocationModel)
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict, BaseExchange
-from general_models.schemas import (ValuteListSchema1, ValuteListSchema2, ValuteModel,
+from general_models.schemas import (ValuteListSchema1,
+                                    ValuteListSchema2,
+                                    ValuteModel,
                                     EnValuteModel,
                                     MultipleName,
                                     ReviewCountSchema,
                                     ValuteTypeListSchema,
                                     ValuteListSchema,
                                     ValuteTypeNameSchema,
-                                    TopCoinSchema)
+                                    TopCoinSchema,
+                                    SpecialDirectionMultiModel)
 from general_models.utils.base import annotate_string_field
 from general_models.utils.http_exc import review_exception_json
 
@@ -331,11 +340,10 @@ def try_generate_icon_url(obj: Country | Valute) -> str | None:
     if obj.icon_url.name:
         icon_url = settings.PROTOCOL + settings.SITE_DOMAIN\
                                             + obj.icon_url.url
-        
     if not icon_url:
         icon_url = settings.PROTOCOL + settings.SITE_DOMAIN\
                                             + '/media/icons/valute/BTC.svg'
-        
+
     return icon_url
 
 
@@ -549,6 +557,23 @@ def try_convert_course_with_frofee(exchange_direction: dict):
             exchange_direction['in_count'] = round(in_count, 2)
 
 
+def get_schema_model_by_exchange_marker(exchange_marker: Literal['no_cash',
+                                                                 'cash',
+                                                                 'partner'],
+                                        with_location: bool):
+    match exchange_marker:
+        case 'no_cash':
+            schema_model = SpecialDirectionMultiModel
+        case 'cash':
+            schema_model = SpecialCashDirectionMultiModel if not with_location\
+                                                             else SpecialCashDirectionMultiWithLocationModel
+        case 'partner':
+            schema_model = SpecialCashDirectionMultiPrtnerModel if not with_location\
+                                                             else SpecialCashDirectionMultiPrtnerWithLocationModel
+    
+    return schema_model
+
+
 def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
                                 valute_from: str,
                                 valute_to: str,
@@ -630,6 +655,12 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
             
         # try_convert_course_with_frofee(exchange_direction)
         round_valute_values(exchange_direction)
+
+        schema_model = get_schema_model_by_exchange_marker(exchange_direction['exchange_marker'],
+                                                           with_location)
+
+        # if exchange_direction['exchange_marker'] == 'partner':
+        exchange_direction = schema_model(**exchange_direction)
 
         direction_list.append(exchange_direction)
 

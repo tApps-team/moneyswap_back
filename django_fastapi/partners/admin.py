@@ -4,9 +4,12 @@ from typing import Any
 
 from django_admin_action_forms import action_with_form, AdminActionForm
 
+from django.db import connection
+
 from django import forms
 from django.contrib import admin, messages
-from django.db.models import Sum
+from django.db.models import Sum, Value, OuterRef, Subquery
+from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.shortcuts import render
@@ -22,7 +25,7 @@ from general_models.utils.admin import ReviewAdminMixin
 
 from partners.utils.endpoints import get_course_count
 
-from .models import (Exchange,
+from .models import (CountryExchangeLinkCount, Exchange,
                      Direction,
                      Review,
                      Comment,
@@ -750,8 +753,8 @@ class ReviewStacked(BaseReviewStacked):
                                         'exchange__account')
 
 
-class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
-    model = ExchangeLinkCount
+# class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
+#     model = ExchangeLinkCount
 
 
 @admin.register(Exchange)
@@ -770,7 +773,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     inlines = [
         PartnerCityStacked,
         ReviewStacked,
-        ExchangeLinkCountStacked,
+        # ExchangeLinkCountStacked,
         ]
 
     def is_available(self, obj=None):
@@ -780,9 +783,40 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     is_available.short_description = 'Активен'
 
     def link_count(self, obj):
+        # print(obj.__dict__)
+        # print(len(connection.queries))
+
+        # link_count = 0
+        
+        # if obj.count:
+        #     link_count += obj.count
+
+        # if obj.country_link_count:
+        #     link_count += obj.country_link_count
         return obj.link_count
+
+    def country_link_count(self, obj):
+    #     print(len(connection.queries))
+
+    #     # print(obj.__dict__)
+    #     # link_count = 0
+        
+    #     # if obj.count:
+    #     #     link_count += obj.count
+
+    #     # if obj.country_link_count:
+    #     #     link_count += obj.country_link_count
+    #     # # return obj.link_count
+    #     # return 1
+    #     _count = obj.exchange_country_counts.aggregate(Sum('count')).get('count__sum') or 0
+    #     print(len(connection.queries))
+    #     print(connection.queries)
+
+        return obj.country_link_count
     
     link_count.short_description = 'Счетчик перехода по ссылке'
+
+    country_link_count.short_description = 'Счетчик перехода по ссылке (страны)'
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
@@ -791,9 +825,11 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         else:
             readonly_fields = ('partner_link', ) + readonly_fields
 
-        return readonly_fields + ('link_count', 'is_available')
+        return readonly_fields + ('link_count', 'country_link_count', 'is_available')
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        # print(len(connection.queries))
+
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы', 'тест')).exists()):
             queryset = super().get_queryset(request)\
                             .select_related('account', 'account__user')
@@ -817,7 +853,28 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         #     queryset = super().get_queryset(request)\
         #                     .select_related('account', 'account__user')
         
-        return queryset.annotate(link_count=Sum('exchange_counts__count'))
+        # queryset = queryset.prefetch_related('exchange_counts',
+        #                                  'exchange_country_counts')
+        # print(queryset)
+        # print(len(connection.queries))
+        link_count_subquery = ExchangeLinkCount.objects.filter(
+            exchange_id=OuterRef('id')
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        country_link_count_subquery = CountryExchangeLinkCount.objects.filter(
+            exchange_id=OuterRef('id')
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        # return queryset.annotate(link_count=Sum('exchange_counts__count'))\
+        #                 .annotate(country_link_count=Sum('exchange_country_counts__count'))
+        return queryset.annotate(link_count=Subquery(link_count_subquery),
+                                 country_link_count=Subquery(country_link_count_subquery))
+                        # .annotate(link_count=ExpressionWrapper(F('count') + F('country_link_count'),
+                        #                                        output_field=IntegerField()))
 
         # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
         #         account = get_or_set_user_account_cache(request.user)
@@ -916,6 +973,11 @@ class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
+@admin.register(CountryExchangeLinkCount)
+class CountryExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    pass
+
+
 #Отображение банкоматов в админ панели
 @admin.register(Bankomat)
 class BankomatAdmin(admin.ModelAdmin):
@@ -926,3 +988,18 @@ class BankomatAdmin(admin.ModelAdmin):
     filter_horizontal = (
         'valutes',
     )
+
+
+#Отображение банкоматов в админ панели
+# @admin.register(DirectionRate)
+# class DirectionRateAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'exchange',
+#         'direction_id',
+#         'direction_marker',
+#         'min_limit_count',
+#     )
+
+    # filter_horizontal = (
+    #     'valutes',
+    # )

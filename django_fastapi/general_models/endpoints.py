@@ -34,10 +34,16 @@ from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_
 
 import cash.models as cash_models
 from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3
-from cash.schemas import SpecialCashDirectionMultiModel, CityModel, SpecialCashDirectionMultiWithLocationModel
+from cash.schemas import (SpecialCashDirectionMultiModel,
+                          CityModel,
+                          SpecialCashDirectionMultiWithLocationModel,
+                          SpecialCashDirectionMultiPrtnerWithLocationModel,
+                          SpecialCashDirectionMultiPrtnerModel)
 from cash.models import Direction, Country, Exchange, Review
 
 import partners.models as partner_models
+
+# from partners.utils.endpoints import get_partner_directions_for_test
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
@@ -169,10 +175,16 @@ def get_specific_valute(code_name: str):
 #         exchange_direction_list = cash_exchange_directions(request, params)
     
 #     return exchange_direction_list
+# @test_router.get('/directions')
+# def get_current_exchange_directions(valute_from: str,
+#                                     valute_to: str):
+#     get_partner_directions_for_test(valute_from=valute_from,
+#                                     valute_to=valute_to)
+#     pass
 
 
 @common_router.get('/directions',
-                 response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
+                 response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
                  response_model_by_alias=False)
 def get_current_exchange_directions(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
@@ -1140,7 +1152,13 @@ exchange_link_count_dict = {
 
 @common_router.post('/increase_link_count')
 def increase_link_count(data: ExchangeLinkCountSchema):
-    exchange_link_count = exchange_link_count_dict.get(data.exchange_marker)
+    exchange_link_count: Union[cash_models.ExchangeLinkCount,
+                               no_cash_models.ExchangeLinkCount,
+                               partner_models.ExchangeLinkCount] = exchange_link_count_dict.get(data.exchange_marker)
+
+    if not exchange_link_count:
+        raise HTTPException(status_code=400,
+                            detail='invalid marker')
 
     check_user = Guest.objects.filter(tg_id=data.user_id)
 
@@ -1160,8 +1178,10 @@ def increase_link_count(data: ExchangeLinkCountSchema):
                                                                             exchange_direction_id=data.exchange_direction_id,
                                                                             count=1)
         except IntegrityError:
-            return {'status': 'error',
-                    'details': 'Constraint error. This row already exists'}
+            raise HTTPException(status_code=400,
+                                detail='Constraint error. This row already exists')
+            # return {'status': 'error',
+            #         'details': 'Constraint error. This row already exists'}
     else:
         exchange_link_count_queryset.update(count=F('count') + 1)
 
