@@ -1,3 +1,4 @@
+from typing import Literal
 from pydantic import BaseModel, Field
 
 from general_models.schemas import SpecialDirectionModel, SpecialDirectionMultiModel, MultipleName
@@ -105,6 +106,16 @@ class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
     fromfee: float | None
 
 
+class SpecialCashDirectionMultiPrtnerModel(SpecialDirectionMultiModel):
+    direction_marker: Literal['city', 'country']
+    info: PartnerCityInfoSchema2 | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
 
 class SpecialCashDirectionMultiWithLocationModel(SpecialCashDirectionMultiModel):
+    location: SpecificCitySchema
+
+
+class SpecialCashDirectionMultiPrtnerWithLocationModel(SpecialCashDirectionMultiPrtnerModel):
     location: SpecificCitySchema

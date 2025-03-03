@@ -348,6 +348,27 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                                            default=None)
     
 
+class CountryExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_country_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='partner_exchange_country_counts')
+    exchange_direction = models.ForeignKey(CountryDirection,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='country_exchange_counts',
+                                           null=True,
+                                           default=None)
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке (страны)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (страны)'
+        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+    
+
 class Bankomat(models.Model):
     limit_valutes = Q(type_valute='ATM QR')
     name = models.CharField('Название',
@@ -388,34 +409,34 @@ class QRValutePartner(models.Model):
         unique_together = (('partner', 'valute'), )
 
 
-class DirectionRate(models.Model):
-    marker_choice = (
-        ('city', 'city'),
-        ('country', 'country'),
-    )
+# class DirectionRate(models.Model):
+#     marker_choice = (
+#         ('city', 'city'),
+#         ('country', 'country'),
+#     )
 
-    exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
-                                 related_name='partner_rates')
-    direction_id = models.IntegerField('ID направления')
-    direction_marker = models.CharField('Маркер направления',
-                                        max_length=50,
-                                        choices=marker_choice)
-    in_count = models.DecimalField('Сколько отдаём',
-                                   max_digits=20,
-                                   decimal_places=5,
-                                   null=True,
-                                   default=None)
-    out_count = models.DecimalField('Сколько получаем',
-                                    max_digits=20,
-                                    decimal_places=5,
-                                    null=True,
-                                    default=None)
-    min_limit_count = models.IntegerField('Минимальный лимит')
-    max_limit_count = models.IntegerField('Максимальный лимит',
-                                          null=True,
-                                          blank=True,
-                                          default=None)
+#     exchange = models.ForeignKey(Exchange,
+#                                  on_delete=models.CASCADE,
+#                                  related_name='partner_rates')
+#     direction_id = models.IntegerField('ID направления')
+#     direction_marker = models.CharField('Маркер направления',
+#                                         max_length=50,
+#                                         choices=marker_choice)
+#     in_count = models.DecimalField('Сколько отдаём',
+#                                    max_digits=20,
+#                                    decimal_places=5,
+#                                    null=True,
+#                                    default=None)
+#     out_count = models.DecimalField('Сколько получаем',
+#                                     max_digits=20,
+#                                     decimal_places=5,
+#                                     null=True,
+#                                     default=None)
+#     min_limit_count = models.IntegerField('Минимальный лимит')
+#     max_limit_count = models.IntegerField('Максимальный лимит',
+#                                           null=True,
+#                                           blank=True,
+#                                           default=None)
     
-    class Meta:
-        unique_together = (('exchange', 'direction_id', 'direction_marker', 'min_limit_count'), )
+#     class Meta:
+#         unique_together = (('exchange', 'direction_id', 'direction_marker', 'min_limit_count'), )

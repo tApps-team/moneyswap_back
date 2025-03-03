@@ -1,12 +1,12 @@
 from datetime import datetime
-from typing import Literal
+from typing import Literal, Union
 
 from fastapi import APIRouter
 from fastapi.exceptions import HTTPException
 
 from django.utils import timezone
 from django.db import connection, transaction
-from django.db.models import Q, Prefetch
+from django.db.models import Q, Prefetch, F
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -15,7 +15,7 @@ from cash.models import Country, City, Direction as CashDirection
 
 from general_models.utils.endpoints import get_valute_json_3, get_valute_json_4, try_generate_icon_url
 from general_models.schemas import MultipleName, MultipleName2
-from general_models.models import Valute
+from general_models.models import Valute, Guest
 
 from .models import (PartnerCity,
                      Direction,
@@ -24,7 +24,9 @@ from .models import (PartnerCity,
                      PartnerCountry,
                      CountryDirection,
                      QRValutePartner,
-                     Bankomat)
+                     Bankomat,
+                     ExchangeLinkCount,
+                     CountryExchangeLinkCount)
 
 from .auth.endpoints import partner_dependency
 
@@ -67,7 +69,9 @@ from .schemas import (AddPartnerCountrySchema,
                       AddPartnerCitySchema3,
                       PartnerCountrySchema,
                       AddPartnerCityCountrySchema,
-                      DeletePartnerCountrySchema, PartnerCountrySchema3)
+                      DeletePartnerCountrySchema,
+                      PartnerCountrySchema3,
+                      ExchangeLinkCountSchema)
 
 
 partner_router = APIRouter(prefix='/partner',
@@ -1693,6 +1697,47 @@ def delete_partner_direction(partner: partner_dependency,
     return {'status': 'success',
             'details': 'Партнёрское направление удалено'}
 
+
+exchange_link_count_dict = {
+    'city': ExchangeLinkCount,
+    'country': CountryExchangeLinkCount,
+}
+
+@partner_router.post('/increase_link_count')
+def increase_link_count(data: ExchangeLinkCountSchema):
+    exchange_link_count: Union[ExchangeLinkCount,
+                               CountryExchangeLinkCount] = exchange_link_count_dict.get(data.direction_marker)
+
+    if not exchange_link_count:
+        raise HTTPException(status_code=400,
+                            detail='invalid marker')
+
+    check_user = Guest.objects.filter(tg_id=data.user_id)
+
+    if not check_user.exists():
+        raise HTTPException(status_code=400)
+
+    exchange_link_count_queryset = exchange_link_count.objects\
+                                                .filter(exchange_id=data.exchange_id,
+                                                        exchange_marker=data.direction_marker,
+                                                        exchange_direction_id=data.exchange_direction_id,
+                                                        user_id=data.user_id)
+    if not exchange_link_count_queryset.exists():
+        try:
+            exchange_link_count_queryset = exchange_link_count.objects.create(user_id=data.user_id,
+                                                                            exchange_id=data.exchange_id,
+                                                                            exchange_marker=data.direction_marker,
+                                                                            exchange_direction_id=data.exchange_direction_id,
+                                                                            count=1)
+        except IntegrityError:
+            raise HTTPException(status_code=400,
+                                detail='Constraint error. This row already exists')
+            # return {'status': 'error',
+            #         'details': 'Constraint error. This row already exists'}
+    else:
+        exchange_link_count_queryset.update(count=F('count') + 1)
+
+    return {'status': 'success'}
 
 # @test_partner_router.delete('/delete_partner_direction')
 # def delete_partner_direction2(partner: partner_dependency,

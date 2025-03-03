@@ -314,3 +314,9 @@ class CountryDirectionWithLocationSchema(BaseModel):
     country_id: int
     direction_id: int
     
+
+class ExchangeLinkCountSchema(BaseModel):
+    user_id: int
+    exchange_id: int
+    direction_marker: str
+    exchange_direction_id: int

@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from django.db.models import Count, Sum, Subquery, F
+from django.db.models import Count, Sum, Value, OuterRef, Subquery
+from django.db.models.functions import Coalesce
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 from django.db.models.query import QuerySet
@@ -225,29 +226,83 @@ class GuestAdmin(admin.ModelAdmin):
         )
 
     def link_count(self, obj):
-        no_cash_count = no_cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
-                                                                .aggregate(count=Sum('count'))
-        cash_count = cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
-                                                                .aggregate(count=Sum('count'))
-        partner_count = partner_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
-                                                                .aggregate(count=Sum('count'))
+        # print(obj.__dict__)
+        # no_cash_count = no_cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
+        #                                                         .aggregate(count=Sum('count'))
+        # cash_count = cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
+        #                                                         .aggregate(count=Sum('count'))
+        # partner_count = partner_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
+        #                                                         .aggregate(count=Sum('count'))
         
         # sum_count = [count for count in (no_cash_count,
         #                                  cash_count,
         #                                  partner_count) if count is not None]
-        sum_count = []
-        for count in (no_cash_count, cash_count, partner_count):
-            if count['count'] is not None:
-                sum_count.append(count['count'])
+        sum_count = 0
 
-        # res = no_cash_count['count'] +\
-        #         cash_count['count'] +\
-        #         partner_count['count']
-        res = sum(sum_count) if sum_count else 0
-        # print(res)
-        return res
+        # sum_count = []
+
+        if obj.no_cash_link_count:
+            sum_count += obj.no_cash_link_count
+
+        if obj.cash_link_count:
+            sum_count += obj.cash_link_count
+
+        if obj.partner_link_count:
+            sum_count += obj.partner_link_count
+
+        if obj.partner_country_link_count:
+            sum_count += obj.partner_country_link_count
+
+        # sum_count += obj.no_cash_link_count + obj.cash_link_count\
+        #                  + obj.partner_link_count + obj.partner_country_link_count
+        
+        return sum_count
+
+
+        # for count in (no_cash_count, cash_count, partner_count):
+        #     if count['count'] is not None:
+        #         sum_count.append(count['count'])
+
+        # # res = no_cash_count['count'] +\
+        # #         cash_count['count'] +\
+        # #         partner_count['count']
+        # res = sum(sum_count) if sum_count else 0
+        # # print(res)
+        # return res
     
     link_count.short_description = 'Счётчик перехода по ссылкам обменников'
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        no_cash_link_count_subquery = no_cash_models.ExchangeLinkCount.objects.filter(
+            user_id=OuterRef('tg_id')
+        ).values('user_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        cash_link_count_subquery = cash_models.ExchangeLinkCount.objects.filter(
+            user_id=OuterRef('tg_id')
+        ).values('user_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        partner_link_count_subquery = partner_models.ExchangeLinkCount.objects.filter(
+            user_id=OuterRef('tg_id')
+        ).values('user_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        partner_country_link_count_subquery = partner_models.CountryExchangeLinkCount.objects.filter(
+            user_id=OuterRef('tg_id')
+        ).values('user_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        return queryset.annotate(no_cash_link_count=Subquery(no_cash_link_count_subquery),
+                                 cash_link_count=Subquery(cash_link_count_subquery),
+                                partner_link_count=Subquery(partner_link_count_subquery),
+                                partner_country_link_count=Subquery(partner_country_link_count_subquery))
 
 
 @admin.register(CustomOrder)
