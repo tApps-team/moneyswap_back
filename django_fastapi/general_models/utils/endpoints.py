@@ -570,6 +570,7 @@ def get_schema_model_by_exchange_marker(exchange_marker: Literal['no_cash',
         case 'partner':
             schema_model = SpecialCashDirectionMultiPrtnerModel if not with_location\
                                                              else SpecialCashDirectionMultiPrtnerWithLocationModel
+            print(schema_model)
     
     return schema_model
 

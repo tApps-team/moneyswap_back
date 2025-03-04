@@ -555,6 +555,7 @@ def get_partner_directions2(valute_from: str,
 
 def get_partner_directions3(valute_from: str,
                            valute_to: str):
+    print('here')
     direction_name = valute_from + ' -> ' + valute_to
 
     review_counts = get_reviews_count_filters('partner_direction')
@@ -606,6 +607,8 @@ def get_partner_directions3(valute_from: str,
 
         direction.exchange = city.exchange
         direction.exchange_marker = 'partner'
+        # direction.direction_marker = 'city'
+        direction.__setattr__('direction_marker', 'city')
         direction.valute_from = valute_from
         direction.valute_to = valute_to
         direction.min_amount = min_amount
@@ -692,6 +695,8 @@ def get_partner_directions3(valute_from: str,
 
             new_direction.exchange = direction.country.exchange
             new_direction.exchange_marker = 'partner'
+            new_direction.direction_marker = 'country'
+            new_direction.__setattr__('direction_marker', 'country')
             new_direction.valute_from = valute_from
             new_direction.valute_to = valute_to
             new_direction.min_amount = min_amount

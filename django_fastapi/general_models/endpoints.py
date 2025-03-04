@@ -181,11 +181,16 @@ def get_specific_valute(code_name: str):
 #     get_partner_directions_for_test(valute_from=valute_from,
 #                                     valute_to=valute_to)
 #     pass
-
+union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerWithLocationModel,
+                                         SpecialCashDirectionMultiWithLocationModel,
+                                         SpecialCashDirectionMultiPrtnerModel,
+                                         SpecialCashDirectionMultiModel,
+                                         SpecialDirectionMultiModel]
 
 @common_router.get('/directions',
-                 response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
-                 response_model_by_alias=False)
+                   response_model=list[union_directions_response_models],
+                   response_model_by_alias=False)
+                #  response_model=list[SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
 def get_current_exchange_directions(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
     params = query.params()
