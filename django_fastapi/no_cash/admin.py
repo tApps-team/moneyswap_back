@@ -146,10 +146,30 @@ class ExchangeAdmin(BaseExchangeAdmin):
 class DirectionAdmin(BaseDirectionAdmin):
     pass
 
+# Кастомный фильтр для ExchangeDirection для отпимизации sql запросов ( решение для N+1 prodlem ) 
+class CustomDirectionFilter(admin.SimpleListFilter):
+    title = 'Direction'
+    parameter_name = 'direction'
+
+    def lookups(self, request, model_admin):
+        # Используйте select_related для оптимизации запроса
+        directions = Direction.objects.select_related('valute_from',
+                                                      'valute_to').distinct()
+        return [(d.id, str(d)) for d in directions]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(direction__id=self.value())
+        return queryset
+
 
 #Отображение готовых направлений в админ панели
 @admin.register(ExchangeDirection)
 class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
+    list_filter = (
+        'exchange',
+        CustomDirectionFilter,
+    )
     def get_display_name(self, obj):
         return f'{obj.exchange} ({obj.direction})'
     

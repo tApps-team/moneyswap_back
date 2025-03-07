@@ -307,6 +307,9 @@ def round_valute_values(exchange_direction_dict: dict):
             elif len(check_valutes) == 2:
                 # 1 знак
                 _sign_number = 3
+                
+                in_count = round(in_count, _sign_number)
+                out_count = round(out_count, _sign_number)
             else:
                 # 1 знак
                 _sign_number = 1

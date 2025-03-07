@@ -315,18 +315,45 @@ class CustomOrderAdmin(admin.ModelAdmin):
         )
     
     readonly_fields = (
+        'request_type',
+        'comment',
+        'guest',
+        'utm_source',
         'time_create',
         )
     ordering = (
         '-time_create',
         'moderation',
     )
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ['request_type',
+                           "comment",
+                           "guest",
+                           "utm_source",
+                           "time_create",
+                           "moderation"]
+            },
+        ),
+    ]
 
     def has_moderation(self, obj):
         return obj.status != 'Модерация' and obj.moderation
     
+    def utm_source(self, obj):
+        return obj.guest.utm_source
+    
+    utm_source.short_description = 'UTM метка'
+    
     has_moderation.boolean = True
+    has_moderation.short_description = 'Модерация'
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        return queryset.select_related('guest')
 
 #Отображение валют в админ панели
 @admin.register(Valute)
@@ -492,10 +519,10 @@ class BaseExchangeDirectionAdmin(admin.ModelAdmin):
     list_display = (
         "get_display_name",
         )
-    list_filter = (
-        'direction',
-        'exchange',
-        )
+    # list_filter = (
+    #     'direction',
+    #     'exchange',
+    #     )
 
     def has_change_permission(self, request, obj = None):
         return False
@@ -505,7 +532,10 @@ class BaseExchangeDirectionAdmin(admin.ModelAdmin):
     
     def get_queryset(self, request):
         return super().get_queryset(request)\
-                        .select_related('exchange')
+                        .select_related('exchange',
+                                        'direction',
+                                        'direction__valute_from',
+                                        'direction__valute_to')
     
 
 
