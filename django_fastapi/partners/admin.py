@@ -12,7 +12,6 @@ from django.db.models import Sum, Value, OuterRef, Subquery
 from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
-from django.shortcuts import render
 
 from general_models.admin import (BaseCommentAdmin,
                                   BaseCommentStacked,
@@ -36,7 +35,9 @@ from .models import (CountryExchangeLinkCount, Exchange,
                      ExchangeLinkCount,
                      PartnerCountry,
                      CountryDirection,
-                     Bankomat)
+                     Bankomat,
+                     DirectionRate,
+                     CountryDirectionRate)
 from .utils.admin import (make_city_active,
                           update_field_time_update,
                           get_saved_course)
@@ -125,6 +126,7 @@ class DirectionAdmin(admin.ModelAdmin):
         )
     
     list_display = (
+        'pk',
         'direction',
         'city',
         'exchange_name',
@@ -390,6 +392,7 @@ class CountryDirectionAdmin(admin.ModelAdmin):
         'update_direction_activity'
         )
     list_display = (
+        'pk',
         'direction',
         'country',
         'exchange_name',
@@ -782,6 +785,7 @@ class ReviewStacked(BaseReviewStacked):
 @admin.register(Exchange)
 class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
+        'pk',
         'name',
         'en_name',
         'account',
@@ -1000,12 +1004,46 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
 @admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request)\
+                                    .select_related('exchange',
+                                                    'user',
+                                                    'exchange_direction',
+                                                    'exchange_direction__city')
     pass
 
 
 @admin.register(CountryExchangeLinkCount)
 class CountryExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    def get_queryset(self, request):
+        return super().get_queryset(request)\
+                                    .select_related('exchange',
+                                                    'user',
+                                                    'exchange_direction',
+                                                    'exchange_direction__country')
     pass
+
+
+@admin.register(DirectionRate)
+class DirectionRateAdmin(admin.ModelAdmin):
+    list_display = (
+        'exchange',
+        'exchange_direction',
+        'min_rate_limit',
+    )
+
+    raw_id_fields = ('exchange', 'exchange_direction')
+
+
+@admin.register(CountryDirectionRate)
+class CountryDirectionRateAdmin(admin.ModelAdmin):
+    list_display = (
+        'exchange',
+        'exchange_direction',
+        'min_rate_limit',
+    )
+
+    raw_id_fields = ('exchange', 'exchange_direction')
 
 
 #Отображение банкоматов в админ панели
