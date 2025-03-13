@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Literal
 
 from django.db.models import Count, Q, Prefetch, F
 from django.db import connection, transaction
@@ -551,6 +552,18 @@ def get_partner_directions2(valute_from: str,
 #     print(len(connection.queries))
 #     print(connection.queries)
 #     return result
+
+def convert_min_max_count(exchange_rate: dict,
+                          marker: Literal['main','additional']):
+    if marker == 'main':
+        _min = 'min_amount'
+        _max = 'max_amount'
+    else:
+        _min = 'min_rate_limit'
+        _max = 'max_rate_limit'
+        
+    exchange_rate[_min] = exchange_rate.pop('min_count')
+    exchange_rate[_max] = exchange_rate.pop('max_count')
 
 
 def get_partner_directions3(valute_from: str,

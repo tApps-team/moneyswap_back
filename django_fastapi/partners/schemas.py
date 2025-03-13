@@ -284,6 +284,27 @@ class AddPartnerDirectionSchema3(AddPartnerDirectionSchema2):
     bankomats: list[AddBankomatSchema] | None
 
 
+class PartnerExchangeRate(BaseModel):
+    min_count: int | None
+    max_count: int | None
+    in_count: int
+    out_count: int
+
+
+class NewAddPartnerDirectionSchema(BaseModel):
+    id: int
+    marker: Literal['country', 'city']
+    valute_from: str
+    valute_to: str
+    is_active: bool
+    bankomats: list[AddBankomatSchema] | None
+    exchange_rates: list[PartnerExchangeRate]
+    # id: int
+    # valute_from: str
+    # valute_to: str
+    # is_active: bool
+
+
 class EditedPartnerDirectionSchema(PartnerDirectionSchema):
     id: int
 #     city: str

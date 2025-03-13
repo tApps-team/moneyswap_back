@@ -13,11 +13,13 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from cash.models import Country, City, Direction as CashDirection
 
-from general_models.utils.endpoints import get_valute_json_3, get_valute_json_4, try_generate_icon_url
+from general_models.utils.endpoints import (get_valute_json_3,
+                                            get_valute_json_4,
+                                            try_generate_icon_url)
 from general_models.schemas import MultipleName, MultipleName2
 from general_models.models import Valute, Guest
 
-from .models import (PartnerCity,
+from .models import (CustomUser, PartnerCity,
                      Direction,
                      Exchange,
                      WorkingDay,
@@ -26,7 +28,9 @@ from .models import (PartnerCity,
                      QRValutePartner,
                      Bankomat,
                      ExchangeLinkCount,
-                     CountryExchangeLinkCount)
+                     CountryExchangeLinkCount,
+                     DirectionRate,
+                     CountryDirectionRate)
 
 from .auth.endpoints import partner_dependency
 
@@ -34,13 +38,15 @@ from .utils.admin import make_city_active
 
 from .utils.endpoints import (generate_partner_cities,
                               generate_partner_countries,
-                              generate_partner_directions_by_city, generate_partner_directions_by_city2,
+                              generate_partner_directions_by_city,
+                              generate_partner_directions_by_city2,
                               generate_valute_list,
                               generate_actual_course,
                               generate_valute_list2,
                               generate_partner_cities2,
                               try_add_bankomats_to_valute,
-                              get_partner_bankomats_by_valute)
+                              get_partner_bankomats_by_valute,
+                              convert_min_max_count)
 
 from .schemas import (AddPartnerCountrySchema,
                       AddPartnerDirectionSchema3,
@@ -71,7 +77,8 @@ from .schemas import (AddPartnerCountrySchema,
                       AddPartnerCityCountrySchema,
                       DeletePartnerCountrySchema,
                       PartnerCountrySchema3,
-                      ExchangeLinkCountSchema)
+                      ExchangeLinkCountSchema,
+                      NewAddPartnerDirectionSchema)
 
 
 partner_router = APIRouter(prefix='/partner',
@@ -1386,7 +1393,6 @@ def delete_partner_city_country(partner: partner_dependency,
 #             print(ex)
 #             raise HTTPException(status_code=423,
 #                                 detail='Такое направление уже существует')
-        
 
 @partner_router.post('/add_partner_direction')
 def add_partner_direction(partner: partner_dependency,
@@ -1455,6 +1461,131 @@ def add_partner_direction(partner: partner_dependency,
                     try_add_bankomats_to_valute(partner_id,
                                                 valute_to,
                                                 bankomats)
+            return {'status': 'success',
+                    'details': f'Партнерское направление {direction.display_name} добавлено'}
+        except IntegrityError as ex:
+            print(ex)
+            raise HTTPException(status_code=423,
+                                detail='Такое направление уже существует')
+
+
+
+@test_partner_router.post('/add_partner_direction')
+def add_partner_direction(partner: partner_dependency,
+                          new_direction: NewAddPartnerDirectionSchema):
+    partner_id = partner.get('partner_id')
+
+    data = new_direction.model_dump()
+
+    _id = data.pop('id')
+    valute_from = data.pop('valute_from')
+    valute_to = data.pop('valute_to')
+    marker = data.pop('marker')
+    bankomats = data.pop('bankomats')
+    exchange_rates = data.pop('exchange_rates')
+    
+    foreign_key_name = 'country_id' if marker == 'country' else 'city_id'
+    foreign_key_model = PartnerCountry if marker == 'country' else PartnerCity
+
+    direction_model = CountryDirection if marker == 'country' else Direction
+
+
+    check_partner = foreign_key_model.objects.select_related('exchange',
+                                                             'exchange__account')\
+                                            .filter(pk=_id,
+                                                    exchange__account__pk=partner_id)\
+                                            .exists()
+    
+    # print(check_partner)
+    
+    if not check_partner:
+        raise HTTPException(status_code=404)
+        
+    try:
+        direction = CashDirection.objects.select_related('valute_from',
+                                                        'valute_to')\
+                                        .prefetch_related('partner_country_directions')\
+                                            .get(valute_from__code_name=valute_from,
+                                                 valute_to__code_name=valute_to)
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404)
+    else:
+        data[foreign_key_name] = _id
+        data['direction'] = direction
+
+        if len(exchange_rates) > 4:
+            raise HTTPException(status_code=400,
+                                detail='Количество доп объемов для направления должно быть не больше 3 шт')
+
+
+        main_exchange_rate, additional_exchange_rates = exchange_rates[0], exchange_rates[1:]
+
+        print(main_exchange_rate)
+
+        convert_min_max_count(main_exchange_rate,
+                              marker='main')
+        
+        print(main_exchange_rate)
+
+        data.update(main_exchange_rate)
+
+        try:
+            if marker == 'city':
+                city = PartnerCity.objects.select_related('city')\
+                                            .get(pk=_id)
+                country_direction = CountryDirection.objects.select_related('country',
+                                                                            'country__country',
+                                                                            'country__exchange',
+                                                                            'country__exchange__account',
+                                                                            'direction')\
+                                        .prefetch_related('country__country__cities')\
+                                        .filter(country__country__cities__code_name=city.city.code_name,
+                                                country__exchange__account=partner_id,
+                                                direction__valute_from=valute_from,
+                                                direction__valute_to=valute_to)
+                
+                if country_direction.exists():
+                    raise HTTPException(status_code=424,
+                                        detail='Такое направление уже существует на уровне партнерской страны')
+            
+            with transaction.atomic():
+                new_partner_dirction = direction_model.objects.create(**data)
+                if bankomats:
+                    try_add_bankomats_to_valute(partner_id,
+                                                valute_to,
+                                                bankomats)
+                if additional_exchange_rates:
+                    partner = CustomUser.objects.filter(pk=partner_id).get()
+                    exchange_id = partner.exchange_id
+
+                    min_count_list = [_exchange_rate.get('min_count') for _exchange_rate in additional_exchange_rates]
+
+                    if len(min_count_list) != len(set(min_count_list)):
+                            raise HTTPException(status_code=400,
+                                                detail='Несколько записей об объемах содержат одинаковые min_count')
+
+                    for additional_exchange_rate in additional_exchange_rates:
+                        
+                        if not additional_exchange_rate.get('min_count'):
+                            raise HTTPException(status_code=400,
+                                                detail='Одна или несколько записей об объемах содержит пустой min_count')
+
+                        sub_foreign_key_model = DirectionRate if foreign_key_name == 'city_id'\
+                                                                else CountryDirectionRate
+                        exchange_rate_data = {
+                            'exchange_id': exchange_id,
+                            'exchange_direction_id': new_partner_dirction.pk,
+                        }
+
+                        convert_min_max_count(additional_exchange_rate,
+                                              marker='additional')
+                        
+                        exchange_rate_data.update(additional_exchange_rate)
+                        
+                        sub_foreign_key_model.objects.create(**exchange_rate_data)
+                    
+
             return {'status': 'success',
                     'details': f'Партнерское направление {direction.display_name} добавлено'}
         except IntegrityError as ex:
