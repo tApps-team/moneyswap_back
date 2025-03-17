@@ -38,6 +38,7 @@ from .utils.admin import make_city_active
 
 from .utils.endpoints import (generate_partner_cities,
                               generate_partner_countries,
+                              generate_partner_directions_by_3,
                               generate_partner_directions_by_city,
                               generate_partner_directions_by_city2,
                               generate_valute_list,
@@ -52,7 +53,7 @@ from .schemas import (AddPartnerCountrySchema,
                       AddPartnerDirectionSchema3,
                       AddBankomatSchema,
                       BankomatDetailSchema,
-                      DeletePartnerDirectionSchema, DirectionSchema2,
+                      DeletePartnerDirectionSchema, DirectionSchema2, DirectionSchema3,
                       ListEditedPartnerDirectionSchema2,
                       DeletePartnerCityCountrySchema,
                       PartnerCitySchema,
@@ -78,7 +79,8 @@ from .schemas import (AddPartnerCountrySchema,
                       DeletePartnerCountrySchema,
                       PartnerCountrySchema3,
                       ExchangeLinkCountSchema,
-                      NewAddPartnerDirectionSchema)
+                      NewAddPartnerDirectionSchema,
+                      NewListEditedPartnerDirectionSchema)
 
 
 partner_router = APIRouter(prefix='/partner',
@@ -278,6 +280,42 @@ def get_cities_for_country(country_name: str):
 #                                         .all()
 
 #     return generate_partner_directions_by_city(directions)
+
+
+@test_partner_router.get('/directions_by',
+                    response_model=list[DirectionSchema3])
+def get_partner_directions_by(partner: partner_dependency,
+                              id: int,
+                              marker: Literal['country', 'city']):
+    print(len(connection.queries))
+    partner_id = partner.get('partner_id')
+
+    if marker == 'country':
+        direction_model = CountryDirection
+        direction_rate_model = CountryDirectionRate
+        additional_filter = Q(country__exchange__account__pk=partner_id,
+                              country__pk=id)
+    else:
+        direction_model = Direction
+        direction_rate_model = DirectionRate
+        additional_filter = Q(city__exchange__account__pk=partner_id,
+                              city__pk=id)
+        
+    direction_rate_prefetch = Prefetch('direction_rates',
+                                       direction_rate_model.objects.order_by('min_rate_limit'))
+
+    directions = direction_model.objects.select_related(marker,
+                                                        f'{marker}__exchange',
+                                                        f'{marker}__exchange__account',
+                                                        'direction',
+                                                        'direction__valute_from',
+                                                        'direction__valute_to')\
+                                        .prefetch_related(direction_rate_prefetch)\
+                                        .filter(additional_filter)\
+                                        .all()
+
+    return generate_partner_directions_by_3(directions,
+                                                marker)
 
 
 @partner_router.get('/directions_by',
@@ -1528,6 +1566,8 @@ def add_partner_direction(partner: partner_dependency,
         
         print(main_exchange_rate)
 
+        main_exchange_rate.pop('rate_coefficient')
+
         data.update(main_exchange_rate)
 
         try:
@@ -1565,11 +1605,18 @@ def add_partner_direction(partner: partner_dependency,
                             raise HTTPException(status_code=400,
                                                 detail='Несколько записей об объемах содержат одинаковые min_count')
 
+                    bulk_create_list = []
+
                     for additional_exchange_rate in additional_exchange_rates:
                         
                         if not additional_exchange_rate.get('min_count'):
                             raise HTTPException(status_code=400,
                                                 detail='Одна или несколько записей об объемах содержит пустой min_count')
+
+                        if not additional_exchange_rate.get('rate_coefficient'):
+                            raise HTTPException(status_code=400,
+                                                detail='Одна или несколько записей об объемах содержит пустой rate_coefficient')
+
 
                         sub_foreign_key_model = DirectionRate if foreign_key_name == 'city_id'\
                                                                 else CountryDirectionRate
@@ -1583,8 +1630,11 @@ def add_partner_direction(partner: partner_dependency,
                         
                         exchange_rate_data.update(additional_exchange_rate)
                         
-                        sub_foreign_key_model.objects.create(**exchange_rate_data)
+                        new_exchangedirection_rate = sub_foreign_key_model(**exchange_rate_data)
+
+                        bulk_create_list.append(new_exchangedirection_rate)
                     
+                    sub_foreign_key_model.objects.bulk_create(bulk_create_list)
 
             return {'status': 'success',
                     'details': f'Партнерское направление {direction.display_name} добавлено'}
@@ -1805,6 +1855,125 @@ def edit_partner_directions_by(partner: partner_dependency,
                 'details': f'updated {len(edited_direction_list)} directions'}
     
 
+@test_partner_router.patch('/edit_partner_directions')
+def edit_partner_directions_by(partner: partner_dependency,
+                               response_body: NewListEditedPartnerDirectionSchema):
+    # print(len(connection.queries))
+    partner_id = partner.get('partner_id')
+
+    data: dict = response_body.model_dump()
+
+    location_id = data['id']
+    marker = data['marker']
+    edited_direction_list = data['directions']
+
+    city = None
+
+    if marker == 'country':
+        direction_model = CountryDirection
+        direction_rate_model = CountryDirectionRate
+        _filter = Q(country__exchange__account__pk=partner_id,
+                    country__pk=location_id)
+    else:
+        direction_model = Direction
+        direction_rate_model = DirectionRate
+        _filter = Q(city__exchange__account__pk=partner_id,
+                    city__pk=location_id)
+        city = PartnerCity.objects.select_related('exchange',
+                                                'exchange__account',
+                                                'city')\
+                                    .filter(exchange__account__pk=partner_id,
+                                            pk=location_id)
+
+    partner_directions = direction_model.objects\
+                                    .select_related(marker,
+                                                    f'{marker}__exchange__account',
+                                                    'direction',
+                                                    'direction__valute_from',
+                                                    'direction__valute_to')\
+                                    .filter(_filter)
+                                    # .prefetch_related('direction_rates')\
+    try:
+        with transaction.atomic():
+            for edited_direction in edited_direction_list:
+                _id = edited_direction.pop('id')
+                
+                exchange_rates: list[dict] = edited_direction.pop('exchange_rates')
+                
+                main_exchange_rate, additional_exchange_rates = exchange_rates[0], exchange_rates[1:]
+
+                convert_min_max_count(main_exchange_rate,
+                                    marker='main')
+                
+                print(main_exchange_rate)
+
+                main_exchange_rate.pop('rate_coefficient')
+                main_exchange_rate.pop('id')
+
+                edited_direction['time_update'] = datetime.now()
+                edited_direction.update(main_exchange_rate)
+
+                print(edited_direction)
+
+                partner_directions.filter(pk=_id).update(**edited_direction)
+
+                min_count_list = [_exchange_rate.get('min_count') for _exchange_rate in additional_exchange_rates]
+
+                if len(min_count_list) != len(set(min_count_list)):
+                        raise HTTPException(status_code=400,
+                                            detail='Несколько записей об объемах содержат одинаковые min_count')
+
+                # current_partner_diretction = partner_directions.get(pk=_id)
+
+                # direction_rates = current_partner_diretction.direction_rates.all()
+
+                # print(direction_rates)
+
+                # direction_rates_dict = {direction_rate.min_rate_limit: direction_rate\
+                #                          for direction_rate in direction_rates}
+                
+                # print(direction_rates_dict)
+
+                direction_rate_id_set = set(direction_rate_model.objects\
+                                                        .filter(exchange_direction_id=_id)\
+                                                        .values_list('pk', flat=True))
+
+                # direction_rate_id_set = {el.get('id') for el in additional_exchange_rates}
+
+                for additional_exchange_rate in additional_exchange_rates:
+                    
+                    if not additional_exchange_rate.get('min_count'):
+                        raise HTTPException(status_code=400,
+                                            detail='Одна или несколько записей об объемах содержит пустой min_count')
+
+                    if not additional_exchange_rate.get('rate_coefficient'):
+                        raise HTTPException(status_code=400,
+                                            detail='Одна или несколько записей об объемах содержит пустой rate_coefficient')
+
+                    _direction_rate_id = additional_exchange_rate.pop('id')
+
+                    convert_min_max_count(additional_exchange_rate,
+                                          marker='additional')
+                    
+                    direction_rate_model.objects.filter(pk=_direction_rate_id)\
+                                                .update(**additional_exchange_rate)
+                    
+                    direction_rate_id_set.remove(_direction_rate_id)
+                
+                if direction_rate_id_set:
+                    print('in delete', direction_rate_id_set)
+                    direction_rate_model.objects.filter(pk__in=direction_rate_id_set).delete()
+
+            if city:
+                city.update(time_update=timezone.now())
+    except Exception as ex:
+        print('EXCEPTION', ex)
+        raise HTTPException(status_code=400)
+    else:
+        return {'status': 'success',
+                'details': f'updated {len(edited_direction_list)} directions'}
+    
+
 @partner_router.delete('/delete_partner_direction')
 def delete_partner_direction(partner: partner_dependency,
                              data: DeletePartnerDirectionSchema):
@@ -1921,7 +2090,8 @@ def get_bankomat_list_by_valute(partner: partner_dependency,
         if Valute.objects.get(pk=valute).type_valute != 'ATM QR':
             raise HTTPException(status_code=400,
                                 detail='Некорректная валюта')
-    except Exception:
+    except Exception as ex:
+        print('here', ex)
         raise HTTPException(status_code=400,
                             detail='Некорректная валюта')
     

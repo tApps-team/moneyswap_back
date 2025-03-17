@@ -1027,6 +1027,7 @@ class CountryExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
 @admin.register(DirectionRate)
 class DirectionRateAdmin(admin.ModelAdmin):
     list_display = (
+        'pk',
         'exchange',
         'exchange_direction',
         'min_rate_limit',
@@ -1038,6 +1039,7 @@ class DirectionRateAdmin(admin.ModelAdmin):
 @admin.register(CountryDirectionRate)
 class CountryDirectionRateAdmin(admin.ModelAdmin):
     list_display = (
+        'pk',
         'exchange',
         'exchange_direction',
         'min_rate_limit',

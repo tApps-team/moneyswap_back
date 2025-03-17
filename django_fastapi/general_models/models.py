@@ -556,6 +556,9 @@ class BaseDirectionRate(models.Model):
                                    blank=True,
                                    null=True,
                                    default=None)
+    rate_coefficient = models.FloatField('Коэффициент разницы курса от объема',
+                                         null=True,
+                                         default=None)
 
     class Meta:
         # verbose_name = ''

@@ -33,12 +33,13 @@ import no_cash.models as no_cash_models
 from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3
 
 import cash.models as cash_models
-from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3
+from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3, test_cash_exchange_directions2
 from cash.schemas import (SpecialCashDirectionMultiModel,
                           CityModel,
                           SpecialCashDirectionMultiWithLocationModel,
                           SpecialCashDirectionMultiPrtnerWithLocationModel,
-                          SpecialCashDirectionMultiPrtnerModel)
+                          SpecialCashDirectionMultiPrtnerModel,
+                          SpecialCashDirectionMultiPrtnerWithExchangeRatesModel)
 from cash.models import Direction, Country, Exchange, Review
 
 import partners.models as partner_models
@@ -183,6 +184,7 @@ def get_specific_valute(code_name: str):
 #     pass
 union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerWithLocationModel,
                                          SpecialCashDirectionMultiWithLocationModel,
+                                         SpecialCashDirectionMultiPrtnerWithExchangeRatesModel,
                                          SpecialCashDirectionMultiPrtnerModel,
                                          SpecialCashDirectionMultiModel,
                                          SpecialDirectionMultiModel]
@@ -198,6 +200,21 @@ def get_current_exchange_directions(request: Request,
         exchange_direction_list = no_cash_exchange_directions2(request, params)
     else:
         exchange_direction_list = cash_exchange_directions2(request, params)
+    
+    return exchange_direction_list
+
+
+@test_router.get('/directions',
+                   response_model=list[union_directions_response_models],
+                   response_model_by_alias=False)
+                #  response_model=list[SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
+def get_current_exchange_directions(request: Request,
+                                    query: SpecificDirectionsQuery = Depends()):
+    params = query.params()
+    if not params['city']:
+        exchange_direction_list = no_cash_exchange_directions2(request, params)
+    else:
+        exchange_direction_list = test_cash_exchange_directions2(request, params)
     
     return exchange_direction_list
 
