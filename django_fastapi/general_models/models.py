@@ -538,3 +538,30 @@ class BaseExchangeLinkCount(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.exchange} - {self.count}'
+    
+
+class BaseDirectionRate(models.Model):
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=5,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=5,
+                                    null=True,
+                                    default=None)
+    min_rate_limit = models.FloatField('Минимальный лимит')
+    max_rate_limit = models.FloatField('Максимальный лимит',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    rate_coefficient = models.FloatField('Коэффициент разницы курса от объема',
+                                         null=True,
+                                         default=None)
+
+    class Meta:
+        # verbose_name = ''
+        # verbose_name_plural = 'Счётчики перехода по ссылкам'
+        unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
+        abstract = True

@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
+# from django.forms import ValidationError
+from django.core.exceptions import ValidationError
 
 from general_models.models import (BaseExchange,
                                    BaseReview,
@@ -8,7 +10,8 @@ from general_models.models import (BaseExchange,
                                    Guest,
                                    BaseAdminComment,
                                    BaseExchangeLinkCount,
-                                   Valute)
+                                   Valute,
+                                   BaseDirectionRate)
 
 from cash.models import Direction as CashDirection, City, Country
 
@@ -367,6 +370,56 @@ class CountryExchangeLinkCount(BaseExchangeLinkCount):
         verbose_name = 'Счётчик перехода по ссылке (страны)'
         verbose_name_plural = 'Счётчики перехода по ссылкам (страны)'
         unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+
+
+class DirectionRate(BaseDirectionRate):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_rates')
+    exchange_direction = models.ForeignKey(Direction,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='direction_rates')
+    
+    def clean(self):
+        direction_rate_count = DirectionRate.objects.filter(exchange_id=self.exchange_id,
+                                                            exchange_direction_id=self.exchange_direction_id)\
+                                                    .count()
+        if direction_rate_count >= 3:
+            raise ValidationError('Достигнут лимит записей по Объемам для партнера на выбранное направление (3 шт)')
+        
+        return super().clean()
+
+    class Meta:
+        verbose_name = 'Объём направления'
+        verbose_name_plural = 'Объёмы направлений'
+        unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
+
+
+class CountryDirectionRate(BaseDirectionRate):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_country_rates')
+    exchange_direction = models.ForeignKey(CountryDirection,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='direction_rates')
+    
+    def clean(self):
+        direction_rate_count = CountryDirectionRate.objects.filter(exchange_id=self.exchange_id,
+                                                                   exchange_direction_id=self.exchange_direction_id)\
+                                                            .count()
+        if direction_rate_count >= 3:
+            raise ValidationError('Достигнут лимит записей по Объемам для партнера на выбранное направление (3 шт)')
+        
+        return super().clean()
+    
+    class Meta:
+        verbose_name = 'Объём направления (страны)'
+        verbose_name_plural = 'Объёмы направлений (страны)'
+        unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
     
 
 class Bankomat(models.Model):

@@ -143,6 +143,33 @@ class DirectionSchema2(BaseModel):
     bankomats: list[BankomatDetailSchema] | None
 
 
+class PartnerExchangeRate(BaseModel):
+    min_count: int | None
+    max_count: int | None
+    in_count: float
+    out_count: float
+    rate_coefficient: float | None = Field(default=None)
+
+
+class PartnerExchangeRateForEdit(PartnerExchangeRate):
+    id: int | None = Field(default=None)
+
+
+class DirectionSchema3(BaseModel):
+    id: int
+    valute_from: str
+    icon_valute_from: str | None
+    valute_to: str
+    icon_valute_to: str | None
+    # in_count: float | None = Field(default=None)
+    in_count_type: str
+    # out_count: float | None = Field(default=None)
+    out_count_type: str
+    is_active: bool
+    bankomats: list[BankomatDetailSchema] | None
+    exchange_rates: list[PartnerExchangeRateForEdit]
+
+
 class NewPasswordSchema(BaseModel):
     new_password: str
 
@@ -284,6 +311,32 @@ class AddPartnerDirectionSchema3(AddPartnerDirectionSchema2):
     bankomats: list[AddBankomatSchema] | None
 
 
+# class PartnerExchangeRate(BaseModel):
+#     min_count: int | None
+#     max_count: int | None
+#     in_count: float
+#     out_count: float
+#     rate_coefficient: float | None = Field(default=None)
+
+
+# class PartnerExchangeRateForEdit(PartnerExchangeRate):
+#     id: int | None = Field(default=None)
+
+
+class NewAddPartnerDirectionSchema(BaseModel):
+    id: int
+    marker: Literal['country', 'city']
+    valute_from: str
+    valute_to: str
+    is_active: bool
+    bankomats: list[AddBankomatSchema] | None
+    exchange_rates: list[PartnerExchangeRate]
+    # id: int
+    # valute_from: str
+    # valute_to: str
+    # is_active: bool
+
+
 class EditedPartnerDirectionSchema(PartnerDirectionSchema):
     id: int
 #     city: str
@@ -307,6 +360,18 @@ class ListEditedPartnerDirectionSchema2(BaseModel):
     id: int
     marker: Literal['country', 'city']
     directions: List[EditedPartnerDirectionSchema]
+
+
+class NewEditedPartnerDirectionSchema(BaseModel):
+    id: int
+    is_active: bool
+    exchange_rates: list[PartnerExchangeRateForEdit]
+
+
+class NewListEditedPartnerDirectionSchema(BaseModel):
+    id: int
+    marker: Literal['country', 'city']
+    directions: List[NewEditedPartnerDirectionSchema]
 
 
 class CountryDirectionWithLocationSchema(BaseModel):

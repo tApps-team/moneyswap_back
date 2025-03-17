@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 from general_models.schemas import SpecialDirectionModel, SpecialDirectionMultiModel, MultipleName
 
-from partners.schemas import PartnerCityInfoSchema, PartnerCityInfoSchema2
+from partners.schemas import PartnerCityInfoSchema, PartnerCityInfoSchema2, PartnerExchangeRate
 
 
 # class MultipleName(BaseModel):
@@ -111,6 +111,10 @@ class SpecialCashDirectionMultiPrtnerModel(SpecialDirectionMultiModel):
     info: PartnerCityInfoSchema2 | None = Field(default=None)
     params: str | None
     fromfee: float | None
+
+
+class SpecialCashDirectionMultiPrtnerWithExchangeRatesModel(SpecialCashDirectionMultiPrtnerModel):
+    exchange_rates: list[PartnerExchangeRate] | None
 
 
 class SpecialCashDirectionMultiWithLocationModel(SpecialCashDirectionMultiModel):
