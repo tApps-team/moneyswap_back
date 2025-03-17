@@ -135,6 +135,7 @@ class DirectionAdmin(admin.ModelAdmin):
         'out_count',
 
         )
+    list_display_links = ('direction',)
     list_editable = (
         'in_count',
         'out_count',
@@ -400,6 +401,7 @@ class CountryDirectionAdmin(admin.ModelAdmin):
         'in_count',
         'out_count',
     )
+    list_display_links = ('direction',)
     list_filter = (
         'country__country',
         'country__exchange__name',
