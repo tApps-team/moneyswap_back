@@ -627,7 +627,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                            "country",
                            ("period_for_create", "period_for_update", "period_for_parse_black_list"),
                            'icon_url',
-                           'get_icon'
+                           'get_icon',
                            'link_count'],
             },
         ),
