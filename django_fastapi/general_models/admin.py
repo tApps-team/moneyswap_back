@@ -592,6 +592,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         # 'reserve_amount',
         # 'age',
         # 'country',
+        'get_icon',
         'link_count',
         )
     
@@ -603,6 +604,13 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     def get_queryset(self, request: HttpRequest) -> QuerySet:
         queryset = super().get_queryset(request)
         return queryset.annotate(link_count=Sum('exchange_counts__count'))
+    
+    def get_icon(self, obj):
+        if obj.icon_url:
+            icon_url = try_generate_icon_url(obj)
+            return mark_safe(f"<img src='{icon_url}' width=40")
+
+    get_icon.short_description = 'Иконка'
     
     fieldsets = [
         (
@@ -618,6 +626,8 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                            "age",
                            "country",
                            ("period_for_create", "period_for_update", "period_for_parse_black_list"),
+                           'icon_url',
+                           'get_icon'
                            'link_count'],
             },
         ),
