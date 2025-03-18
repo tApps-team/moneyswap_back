@@ -793,6 +793,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'account',
         'is_available',
         )
+    list_display_links = ('name',)
     # readonly_fields = (
     #     'is_available',
     #     )
