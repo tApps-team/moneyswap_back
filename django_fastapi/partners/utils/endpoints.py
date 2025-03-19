@@ -567,6 +567,8 @@ def test_get_partner_directions2(valute_from: str,
             
             best_exchange_rate = sorted_exchange_rates[0]
             _in_count, _out_count, min_amount, max_amount = best_exchange_rate
+            min_amount = str(int(min_amount)) if min_amount else None
+            max_amount = str(int(max_amount)) if max_amount else None
             # print(sorted_exchange_rates)
             addittional_exchange_rates = sorted_exchange_rates[1:]
 
