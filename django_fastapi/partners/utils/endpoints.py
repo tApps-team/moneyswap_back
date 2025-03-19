@@ -563,7 +563,7 @@ def test_get_partner_directions2(valute_from: str,
                                        _direction_max_amount))
 
             sorted_exchange_rates = sorted(exchange_rate_list,
-                                           key=lambda el: (el[-1], -el[0]))
+                                           key=lambda el: (-el[1], el[0]))
             
             best_exchange_rate = sorted_exchange_rates[0]
             _in_count, _out_count, min_amount, max_amount = best_exchange_rate
