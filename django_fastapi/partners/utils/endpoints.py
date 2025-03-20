@@ -460,21 +460,25 @@ def test_get_partner_directions2(valute_from: str,
             exchange_rate_list = [(el.in_count,
                                    el.out_count,
                                    el.min_rate_limit,
-                                   el.max_rate_limit) for el in exchange_rates]
+                                   el.max_rate_limit,
+                                   el.rate_coefficient) for el in exchange_rates]
             exchange_rate_list.append((_in_count,
                                        _out_count,
                                        _direction_min_amount,
-                                       _direction_max_amount))
+                                       _direction_max_amount,
+                                       None))
 
             sorted_exchange_rates = sorted(exchange_rate_list,
                                            key=lambda el: (-el[1], el[0]))
             
             best_exchange_rate = sorted_exchange_rates[0]
-            _in_count, _out_count, min_amount, max_amount = best_exchange_rate
-            min_amount = str(int(min_amount)) if min_amount else None
-            max_amount = str(int(max_amount)) if max_amount else None
+            _in_count, _out_count, _min_amount, _max_amount, _ = best_exchange_rate
+            # min_amount = str(int(min_amount)) if min_amount else None
+            # max_amount = str(int(max_amount)) if max_amount else None
             # print(sorted_exchange_rates)
-            addittional_exchange_rates = sorted_exchange_rates[1:]
+            # addittional_exchange_rates = sorted_exchange_rates[1:]
+            addittional_exchange_rates = sorted_exchange_rates
+
 
         print('after', _in_count, _out_count)
 
@@ -483,7 +487,8 @@ def test_get_partner_directions2(valute_from: str,
             direction.exchange_rates = [{'in_count': el[0],
                                          'out_count': el[1],
                                          'min_count': el[2],
-                                         'max_count': el[-1]} for el in addittional_exchange_rates]
+                                         'max_count': el[3],
+                                         'rate_coefficient': el[-1]} for el in addittional_exchange_rates]
         else:
             direction.exchange_rates = None
 
@@ -556,28 +561,33 @@ def test_get_partner_directions2(valute_from: str,
             exchange_rate_list = [(el.in_count,
                                    el.out_count,
                                    el.min_rate_limit,
-                                   el.max_rate_limit) for el in exchange_rates]
+                                   el.max_rate_limit,
+                                   el.rate_coefficient) for el in exchange_rates]
             exchange_rate_list.append((_in_count,
                                        _out_count,
                                        _direction_min_amount,
-                                       _direction_max_amount))
+                                       _direction_max_amount,
+                                       None))
 
             sorted_exchange_rates = sorted(exchange_rate_list,
                                            key=lambda el: (-el[1], el[0]))
             
             best_exchange_rate = sorted_exchange_rates[0]
-            _in_count, _out_count, min_amount, max_amount = best_exchange_rate
-            min_amount = str(int(min_amount)) if min_amount else None
-            max_amount = str(int(max_amount)) if max_amount else None
+            _in_count, _out_count, _min_amount, _max_amount, _ = best_exchange_rate
+            # min_amount = str(int(min_amount)) if min_amount else None
+            # max_amount = str(int(max_amount)) if max_amount else None
             # print(sorted_exchange_rates)
-            addittional_exchange_rates = sorted_exchange_rates[1:]
+            # addittional_exchange_rates = sorted_exchange_rates[1:]
+            addittional_exchange_rates = sorted_exchange_rates
+
 
         # print(exchange_rates)
         if addittional_exchange_rates:
             direction.exchange_rates = [{'in_count': el[0],
                                          'out_count': el[1],
                                          'min_count': el[2],
-                                         'max_count': el[-1]} for el in addittional_exchange_rates]
+                                         'max_count': el[3],
+                                         'rate_coefficient': el[-1]} for el in addittional_exchange_rates]
         else:
             direction.exchange_rates = None
 
