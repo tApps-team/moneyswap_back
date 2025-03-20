@@ -450,7 +450,7 @@ def test_get_partner_directions2(valute_from: str,
 
         _in_count = direction.in_count
         _out_count = direction.out_count
-        print('before', _in_count, _out_count)
+        # print('before', _in_count, _out_count)
         _direction_min_amount = direction.min_amount
         _direction_max_amount = direction.max_amount
 
