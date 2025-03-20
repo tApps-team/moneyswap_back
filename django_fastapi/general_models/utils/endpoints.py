@@ -329,8 +329,8 @@ def round_valute_values(exchange_direction_dict: dict):
             in_count = round(in_count, _sign_number)
             out_count = round(out_count, _sign_number)
         
-        exchange_direction_dict['min_amount'] = f'{min_amount}'
-        exchange_direction_dict['max_amount'] = f'{max_amount}'
+        exchange_direction_dict['min_amount'] = f'{min_amount}' if min_amount else None
+        exchange_direction_dict['max_amount'] = f'{max_amount}' if max_amount else None
         exchange_direction_dict['in_count'] = in_count
         exchange_direction_dict['out_count'] = out_count
 
