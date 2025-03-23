@@ -789,10 +789,11 @@ def test_get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
 
         direction_list.append(exchange_direction)
 
-    # print(len(connection.queries))
     # print(connection.queries)
-    # for query in connection.queries:
-    #     print(query)
+    for query in connection.queries:
+        print(query)
+        print('*' * 8)
+    print(len(connection.queries))
     return direction_list
 
 

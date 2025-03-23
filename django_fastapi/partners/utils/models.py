@@ -11,8 +11,13 @@ def get_limit_direction():
                     # actual_course__isnull=False)
     third_filter = Q(valute_from__type_valute='Наличные',
                       valute_to__type_valute='Наличные')
+    fourth_filter = Q(valute_from__type_valute='Банкинг',
+                      valute_to__type_valute='Наличные')
+    fifth_filter = Q(valute_from__type_valute='Банкинг',
+                      valute_to__type_valute='ATM QR')
     
-    return first_limit | second_filter | third_filter
+    return first_limit | second_filter | third_filter | fourth_filter | fifth_filter
+
 
 def get_limit_vautes():
     return Q(type_valute='ATM QR')
