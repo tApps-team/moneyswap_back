@@ -170,6 +170,7 @@ class Direction(BaseDirection):
         return self.display_name
     
     def clean(self) -> None:
+        super().clean()
         # if self.valute_from.type_valute == self.valute_to.type_valute:
         #     raise ValidationError('Значения "Отдаём" и "Получаем" должны иметь разные типы валют')
         
@@ -178,7 +179,7 @@ class Direction(BaseDirection):
             raise ValidationError('Одно из значений "Отдаём" и "Получаем" должно иметь наличный тип валюты, другое - безналичный')
 
         # проверить это
-        return super().clean()
+        # return super().clean()
 
 #Модель готового направления
 class ExchangeDirection(BaseExchangeDirection):
