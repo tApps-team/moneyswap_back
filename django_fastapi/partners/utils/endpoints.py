@@ -1289,7 +1289,8 @@ def test_get_partner_directions3(valute_from: str,
             _valute_to = direction.direction.valute_to
             _partner_id = direction.country.exchange.account.pk
 
-            partner_cities_by_exchange = partner_cities_dict.get(direction.country.exchange_id)
+            partner_cities_by_exchange = partner_cities_dict.get(direction.country.exchange_id,
+                                                                 list())
 
             partner_cities_by_country = [_city for _city in partner_cities_by_exchange \
                                          if _city.city.country.pk == direction.country.country.pk]
