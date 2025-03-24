@@ -15,7 +15,7 @@ import cash.models as cash_models
 import partners.models as partner_models
 
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
-from cash.schemas import (SpecificCitySchema,
+from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel, SpecificCitySchema,
                           SpecificCountrySchema,
                           RuEnCityModel,
                           SpecialCashDirectionMultiPrtnerModel,
@@ -595,9 +595,13 @@ def test_get_schema_model_by_exchange_marker(exchange_marker: Literal['no_cash',
             schema_model = SpecialCashDirectionMultiModel if not with_location\
                                                              else SpecialCashDirectionMultiWithLocationModel
         case 'partner':
+            # schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesModel if not with_location\
+            #                                                  else SpecialCashDirectionMultiPrtnerWithLocationModel
             schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesModel if not with_location\
-                                                             else SpecialCashDirectionMultiPrtnerWithLocationModel
+                                                             else SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
+
             print(schema_model)
+            # SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
     
     return schema_model
 

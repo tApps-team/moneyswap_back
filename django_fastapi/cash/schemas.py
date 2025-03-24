@@ -123,3 +123,7 @@ class SpecialCashDirectionMultiWithLocationModel(SpecialCashDirectionMultiModel)
 
 class SpecialCashDirectionMultiPrtnerWithLocationModel(SpecialCashDirectionMultiPrtnerModel):
     location: SpecificCitySchema
+
+
+class SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel(SpecialCashDirectionMultiPrtnerWithExchangeRatesModel):
+    location: SpecificCitySchema

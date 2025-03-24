@@ -30,7 +30,7 @@ from general_models.utils.endpoints import (positive_review_count_filter,
 from general_models.utils.base import annotate_string_field
 
 import no_cash.models as no_cash_models
-from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3
+from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3, test_no_cash_exchange_directions2
 
 import cash.models as cash_models
 from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3, test_cash_exchange_directions2
@@ -39,7 +39,8 @@ from cash.schemas import (SpecialCashDirectionMultiModel,
                           SpecialCashDirectionMultiWithLocationModel,
                           SpecialCashDirectionMultiPrtnerWithLocationModel,
                           SpecialCashDirectionMultiPrtnerModel,
-                          SpecialCashDirectionMultiPrtnerWithExchangeRatesModel)
+                          SpecialCashDirectionMultiPrtnerWithExchangeRatesModel,
+                          SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel)
 from cash.models import Direction, Country, Exchange, Review
 
 import partners.models as partner_models
@@ -182,7 +183,8 @@ def get_specific_valute(code_name: str):
 #     get_partner_directions_for_test(valute_from=valute_from,
 #                                     valute_to=valute_to)
 #     pass
-union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerWithLocationModel,
+union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                                         SpecialCashDirectionMultiPrtnerWithLocationModel,
                                          SpecialCashDirectionMultiWithLocationModel,
                                          SpecialCashDirectionMultiPrtnerWithExchangeRatesModel,
                                          SpecialCashDirectionMultiPrtnerModel,
@@ -212,7 +214,7 @@ def get_current_exchange_directions(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
     params = query.params()
     if not params['city']:
-        exchange_direction_list = no_cash_exchange_directions2(request, params)
+        exchange_direction_list = test_no_cash_exchange_directions2(request, params)
     else:
         exchange_direction_list = test_cash_exchange_directions2(request, params)
     
