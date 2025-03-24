@@ -191,17 +191,31 @@ union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchange
                                          SpecialCashDirectionMultiModel,
                                          SpecialDirectionMultiModel]
 
+# @common_router.get('/directions',
+#                    response_model=list[union_directions_response_models],
+#                    response_model_by_alias=False)
+#                 #  response_model=list[SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
+# def get_current_exchange_directions(request: Request,
+#                                     query: SpecificDirectionsQuery = Depends()):
+#     params = query.params()
+#     if not params['city']:
+#         exchange_direction_list = no_cash_exchange_directions2(request, params)
+#     else:
+#         exchange_direction_list = cash_exchange_directions2(request, params)
+    
+#     return exchange_direction_list
+
+
 @common_router.get('/directions',
                    response_model=list[union_directions_response_models],
                    response_model_by_alias=False)
-                #  response_model=list[SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
 def get_current_exchange_directions(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
     params = query.params()
     if not params['city']:
-        exchange_direction_list = no_cash_exchange_directions2(request, params)
+        exchange_direction_list = test_no_cash_exchange_directions2(request, params)
     else:
-        exchange_direction_list = cash_exchange_directions2(request, params)
+        exchange_direction_list = test_cash_exchange_directions2(request, params)
     
     return exchange_direction_list
 
@@ -209,7 +223,6 @@ def get_current_exchange_directions(request: Request,
 @test_router.get('/directions',
                    response_model=list[union_directions_response_models],
                    response_model_by_alias=False)
-                #  response_model=list[SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
 def get_current_exchange_directions(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
     params = query.params()
@@ -619,6 +632,7 @@ def get_exchange_list():
                                             'is_active',
                                             'exchange_marker',
                                             'partner_link')\
+                                    .filter(is_active=True)\
                                     .all()
         queries.append(exchange_query)
 
