@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from django.db.models import Count, Sum, Value, OuterRef, Subquery
+from django.db.models import Count, Sum, Value, OuterRef, Subquery, DateTimeField
 from django.db.models.functions import Coalesce
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
@@ -184,37 +184,17 @@ class GuestAdmin(admin.ModelAdmin):
         'link_count',
         'is_active',
         'utm_source',
+        # 'time_create',
+        'time_field_sort',
     )
 
     readonly_fields = (
         'link_count',
         'utm_source',
         'time_create',
+        'time_field_sort',
     )
 
-
-
-    # date_hierarchy = 'time_create'
-
-    # list_filter = (
-    #     ("created_at", DateRangeFilterBuilder()),
-    #     (
-    #         "updated_at",
-    #         DateTimeRangeFilterBuilder(
-    #             title="Custom title",
-    #             default_start=datetime(2020, 1, 1),
-    #             default_end=datetime(2030, 1, 1),
-    #         ),
-    #     ),
-    #     ("num_value", NumericRangeFilterBuilder()),
-    #     ("created_at", DateRangeQuickSelectListFilterBuilder()),  # Range + QuickSelect Filter
-    # )
-
-    # list_filter = (
-    #     'time_create',
-    #     'utm_source',
-    #     DateTimeRangeFilter,
-    # )
     list_filter = (
         CustomDateTimeFilter,
         ("time_create", DateRangeFilterBuilder()),
@@ -224,6 +204,13 @@ class GuestAdmin(admin.ModelAdmin):
         # 'time_create',
         # UTMSourceSecondPartFilter,
         )
+    # ordering = (
+    #     'time_create',
+    #     'username',
+    # )
+    search_fields = (
+        'username',
+    )
 
     def link_count(self, obj):
         # print(obj.__dict__)
@@ -272,6 +259,12 @@ class GuestAdmin(admin.ModelAdmin):
     
     link_count.short_description = 'Счётчик перехода по ссылкам обменников'
 
+    def time_field_sort(self,obj):
+        return obj.time_create_sort
+    
+    time_field_sort.short_description = 'Дата добавления'
+    time_field_sort.admin_order_field = '-time_create_sort'
+
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
 
@@ -302,7 +295,8 @@ class GuestAdmin(admin.ModelAdmin):
         return queryset.annotate(no_cash_link_count=Subquery(no_cash_link_count_subquery),
                                  cash_link_count=Subquery(cash_link_count_subquery),
                                 partner_link_count=Subquery(partner_link_count_subquery),
-                                partner_country_link_count=Subquery(partner_country_link_count_subquery))
+                                partner_country_link_count=Subquery(partner_country_link_count_subquery),
+                                time_create_sort=Coalesce('time_create', Value(datetime(1900, 1, 1, 0, 0, 0))))
 
 
 @admin.register(CustomOrder)
