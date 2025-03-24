@@ -184,15 +184,13 @@ class GuestAdmin(admin.ModelAdmin):
         'link_count',
         'is_active',
         'utm_source',
-        # 'time_create',
-        'time_field_sort',
+        'time_create',
     )
 
     readonly_fields = (
         'link_count',
         'utm_source',
         'time_create',
-        'time_field_sort',
     )
 
     list_filter = (
@@ -204,10 +202,10 @@ class GuestAdmin(admin.ModelAdmin):
         # 'time_create',
         # UTMSourceSecondPartFilter,
         )
-    # ordering = (
-    #     'time_create',
-    #     'username',
-    # )
+    ordering = (
+        '-time_create',
+        'username',
+    )
     search_fields = (
         'username',
     )
@@ -259,12 +257,6 @@ class GuestAdmin(admin.ModelAdmin):
     
     link_count.short_description = 'Счётчик перехода по ссылкам обменников'
 
-    def time_field_sort(self,obj):
-        return obj.time_create_sort
-    
-    time_field_sort.short_description = 'Дата добавления'
-    time_field_sort.admin_order_field = '-time_create_sort'
-
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
 
@@ -295,8 +287,7 @@ class GuestAdmin(admin.ModelAdmin):
         return queryset.annotate(no_cash_link_count=Subquery(no_cash_link_count_subquery),
                                  cash_link_count=Subquery(cash_link_count_subquery),
                                 partner_link_count=Subquery(partner_link_count_subquery),
-                                partner_country_link_count=Subquery(partner_country_link_count_subquery),
-                                time_create_sort=Coalesce('time_create', Value(datetime(1900, 1, 1, 0, 0, 0))))
+                                partner_country_link_count=Subquery(partner_country_link_count_subquery))
 
 
 @admin.register(CustomOrder)
