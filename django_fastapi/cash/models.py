@@ -177,6 +177,8 @@ class Direction(BaseDirection):
             (not 'ATM QR' in self.valute_to.type_valute):
             raise ValidationError('Одно из значений "Отдаём" и "Получаем" должно иметь наличный тип валюты, другое - безналичный')
 
+        # проверить это
+        return super().clean()
 
 #Модель готового направления
 class ExchangeDirection(BaseExchangeDirection):
