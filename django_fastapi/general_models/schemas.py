@@ -81,6 +81,14 @@ class SpecialDirectionMultiModel(BaseModel):
     exchange_direction_id: int
 
 
+class InfoSchema(BaseModel):
+    high_aml: bool
+
+
+class SpecialDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
+    info: InfoSchema
+
+
 class ReviewViewSchema(BaseModel):
     id: int
     username: str

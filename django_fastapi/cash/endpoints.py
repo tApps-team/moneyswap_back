@@ -14,14 +14,14 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             increase_popular_count_direction,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
-                                            negative_review_count_filter, test_get_exchange_direction_list,
+                                            negative_review_count_filter, test_get_exchange_direction_list, test_get_exchange_direction_list_with_aml,
                                             try_generate_icon_url,
                                             get_reviews_count_filters)
 
 from partners.utils.endpoints import (get_partner_directions,
                                       get_partner_directions3,
                                       get_partner_directions_with_location,
-                                      get_partner_directions2, test_get_partner_directions2, test_get_partner_directions3)
+                                      get_partner_directions2, test_get_partner_directions2, test_get_partner_directions2_with_aml, test_get_partner_directions3)
 from partners.models import CountryDirection, Direction as PartnerDirection, PartnerCountry
 
 from .models import City, ExchangeDirection, Country
@@ -540,6 +540,55 @@ def test_cash_exchange_directions2(request: Request,
                                      city=city)
 
     return test_get_exchange_direction_list(queries,
+                                       valute_from,
+                                       valute_to,
+                                       city=city)
+
+
+def test_cash_exchange_directions3(request: Request,
+                                   params: dict):
+    for param in params:
+        if not params[param]:
+            http_exception_json(status_code=400, param=param) 
+
+    city, valute_from, valute_to = (params[key] for key in params)
+
+    review_counts = get_reviews_count_filters('exchange_direction')
+
+    queries = ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'city',
+                                                'city__country',
+                                                'direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to')\
+                                .annotate(positive_review_count=review_counts['positive'])\
+                                .annotate(neutral_review_count=review_counts['neutral'])\
+                                .annotate(negative_review_count=review_counts['negative'])\
+                                .filter(city__code_name=city,
+                                        direction__valute_from=valute_from,
+                                        direction__valute_to=valute_to,
+                                        is_active=True,
+                                        exchange__is_active=True)\
+                                .all()
+    
+    partner_directions = test_get_partner_directions2_with_aml(valute_from,
+                                                valute_to,
+                                                city)
+    
+    queries = sorted(list(queries) + list(partner_directions),
+                     key=lambda query: (-query.exchange.is_vip,
+                                        -query.out_count,
+                                        query.in_count))
+    
+    if not queries:
+        http_exception_json(status_code=404, param=request.url)
+
+    increase_popular_count_direction(valute_from=valute_from,
+                                     valute_to=valute_to,
+                                     city=city)
+
+    return test_get_exchange_direction_list_with_aml(queries,
                                        valute_from,
                                        valute_to,
                                        city=city)

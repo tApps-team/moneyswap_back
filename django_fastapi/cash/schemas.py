@@ -1,9 +1,12 @@
 from typing import Literal
 from pydantic import BaseModel, Field
 
-from general_models.schemas import SpecialDirectionModel, SpecialDirectionMultiModel, MultipleName
+from general_models.schemas import InfoSchema, SpecialDirectionModel, SpecialDirectionMultiModel, MultipleName
 
-from partners.schemas import PartnerCityInfoSchema, PartnerCityInfoSchema2, PartnerExchangeRate
+from partners.schemas import (PartnerCityInfoSchema,
+                              PartnerCityInfoSchema2,
+                              PartnerCityInfoWithAmlSchema,
+                              PartnerExchangeRate)
 
 
 # class MultipleName(BaseModel):
@@ -106,11 +109,28 @@ class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
     fromfee: float | None
 
 
+class SpecialCashDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
+    info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
+
 class SpecialCashDirectionMultiPrtnerModel(SpecialDirectionMultiModel):
     direction_marker: Literal['city', 'country']
     info: PartnerCityInfoSchema2 | None = Field(default=None)
     params: str | None
     fromfee: float | None
+
+
+class SpecialCashDirectionMultiPrtnerWithAmlModel(SpecialDirectionMultiModel):
+    direction_marker: Literal['city', 'country']
+    info: PartnerCityInfoWithAmlSchema | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
+
+class SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel(SpecialCashDirectionMultiPrtnerWithAmlModel):
+    exchange_rates: list[PartnerExchangeRate] | None
 
 
 class SpecialCashDirectionMultiPrtnerWithExchangeRatesModel(SpecialCashDirectionMultiPrtnerModel):

@@ -39,6 +39,10 @@ class PartnerCityInfoSchema2(BaseModel):
     bankomats: list[BankomatDetailSchema] | None
 
 
+class PartnerCityInfoWithAmlSchema(PartnerCityInfoSchema2):
+    high_aml: bool
+
+
 class UpdatedTimeByPartnerCitySchema(BaseModel):
     date: str | None
     time: str | None

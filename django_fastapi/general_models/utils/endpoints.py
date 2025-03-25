@@ -15,7 +15,7 @@ import cash.models as cash_models
 import partners.models as partner_models
 
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
-from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel, SpecificCitySchema,
+from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel, SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel, SpecialCashDirectionMultiWithAmlModel, SpecificCitySchema,
                           SpecificCountrySchema,
                           RuEnCityModel,
                           SpecialCashDirectionMultiPrtnerModel,
@@ -26,7 +26,7 @@ from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocati
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict, BaseExchange
-from general_models.schemas import (ValuteListSchema1,
+from general_models.schemas import (SpecialDirectionMultiWithAmlModel, ValuteListSchema1,
                                     ValuteListSchema2,
                                     ValuteModel,
                                     EnValuteModel,
@@ -36,7 +36,8 @@ from general_models.schemas import (ValuteListSchema1,
                                     ValuteListSchema,
                                     ValuteTypeNameSchema,
                                     TopCoinSchema,
-                                    SpecialDirectionMultiModel)
+                                    SpecialDirectionMultiModel,
+                                    InfoSchema)
 from general_models.utils.base import annotate_string_field
 from general_models.utils.http_exc import review_exception_json
 
@@ -600,7 +601,29 @@ def test_get_schema_model_by_exchange_marker(exchange_marker: Literal['no_cash',
             schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesModel if not with_location\
                                                              else SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
 
-            print(schema_model)
+            # print(schema_model)
+            # SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
+    
+    return schema_model
+
+
+def test_get_schema_model_by_exchange_marker_with_aml(exchange_marker: Literal['no_cash',
+                                                                               'cash',
+                                                                               'partner'],
+                                                    with_location: bool):
+    match exchange_marker:
+        case 'no_cash':
+            schema_model = SpecialDirectionMultiWithAmlModel
+        case 'cash':
+            schema_model = SpecialCashDirectionMultiWithAmlModel if not with_location\
+                                                             else SpecialCashDirectionMultiWithLocationModel
+        case 'partner':
+            # schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesModel if not with_location\
+            #                                                  else SpecialCashDirectionMultiPrtnerWithLocationModel
+            schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel if not with_location\
+                                                             else SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
+
+            # print(schema_model)
             # SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
     
     return schema_model
@@ -690,6 +713,106 @@ def get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
 
         schema_model = get_schema_model_by_exchange_marker(exchange_direction['exchange_marker'],
                                                            with_location)
+
+        # if exchange_direction['exchange_marker'] == 'partner':
+        exchange_direction = schema_model(**exchange_direction)
+
+        direction_list.append(exchange_direction)
+
+    # print(len(connection.queries))
+    # print(connection.queries)
+    # for query in connection.queries:
+    #     print(query)
+    return direction_list
+
+
+def get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
+                                        valute_from: str,
+                                        valute_to: str,
+                                        city: str = None,
+                                        with_location: bool = False):
+    '''
+    Возвращает список готовых направлений с необходимыми данными
+    '''
+
+    if city and with_location:
+        raise AttributeError('сity and with_location args can`t use together')
+    
+    valute_from_obj = valute_to_obj = None
+
+    direction_list = []
+
+    exchange_marker = 'no_cash'
+
+    partner_link_pattern = f'&cur_from={valute_from}&cur_to={valute_to}'
+    
+    if city:
+        partner_link_pattern += f'&city={city}'
+        exchange_marker = 'cash'
+
+    if with_location:
+        exchange_marker = 'cash'
+
+    for _id, query in enumerate(queries, start=1):
+        if query.exchange.__dict__.get('partner_link') and query.exchange.__dict__.get('period_for_create'):
+            # query.exchange.__dict__['partner_link'] += partner_link_pattern
+#           
+            if query.exchange.__dict__.get('partner_link').startswith('https://t.me'):
+                pass
+            else:
+                partner_link = get_valid_partner_link(query.exchange.__dict__.get('partner_link'))
+                query.exchange.__dict__['partner_link'] = partner_link + partner_link_pattern
+#
+                if with_location:
+                    query.exchange.__dict__['partner_link'] += f'&city={query.city.code_name}'
+
+        if valute_from_obj is None:
+            valute_from_obj = query.direction.valute_from
+
+        icon_url_valute_from = try_generate_icon_url(valute_from_obj)
+        type_valute_from = valute_from_obj.type_valute
+
+        if valute_to_obj is None:
+            valute_to_obj = query.direction.valute_to
+
+        icon_url_valute_to = try_generate_icon_url(valute_to_obj)
+        type_valute_to = valute_to_obj.type_valute
+
+        exchange_direction = query.__dict__ | query.exchange.__dict__
+        exchange_direction['id'] = _id
+        exchange_direction['exchange_direction_id'] = query.id
+        exchange_direction['exchange_id'] = query.exchange.id
+        exchange_direction['review_count'] = ReviewCountSchema(
+            positive=query.positive_review_count,
+            neutral=query.neutral_review_count,
+            negative=query.negative_review_count,
+            )
+        
+        if not hasattr(query,'exchange_marker'):
+            exchange_direction['exchange_marker'] = exchange_marker
+
+        exchange_direction['name'] = MultipleName(name=exchange_direction['name'],
+                                                  en_name=exchange_direction['en_name'])
+        exchange_direction['valute_from'] = valute_from
+        exchange_direction['icon_valute_from'] = icon_url_valute_from
+        exchange_direction['type_valute_from'] = type_valute_from
+
+        exchange_direction['valute_to'] = valute_to
+        exchange_direction['icon_valute_to'] = icon_url_valute_to
+        exchange_direction['type_valute_to'] = type_valute_to
+
+        if not exchange_direction.get('info'):
+            exchange_direction['info'] = InfoSchema(high_aml=exchange_direction['high_aml'])
+
+        if with_location:
+            add_location_to_exchange_direction(exchange_direction,
+                                               query)
+            
+        # try_convert_course_with_frofee(exchange_direction)
+        round_valute_values(exchange_direction)
+
+        schema_model = test_get_schema_model_by_exchange_marker_with_aml(exchange_direction['exchange_marker'],
+                                                                         with_location)
 
         # if exchange_direction['exchange_marker'] == 'partner':
         exchange_direction = schema_model(**exchange_direction)
@@ -794,10 +917,111 @@ def test_get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
         direction_list.append(exchange_direction)
 
     # print(connection.queries)
-    for query in connection.queries:
-        print(query)
-        print('*' * 8)
-    print(len(connection.queries))
+    # for query in connection.queries:
+    #     print(query)
+    #     print('*' * 8)
+    # print(len(connection.queries))
+    return direction_list
+
+
+def test_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
+                                valute_from: str,
+                                valute_to: str,
+                                city: str = None,
+                                with_location: bool = False):
+    '''
+    Возвращает список готовых направлений с необходимыми данными
+    '''
+
+    if city and with_location:
+        raise AttributeError('сity and with_location args can`t use together')
+    
+    valute_from_obj = valute_to_obj = None
+
+    direction_list = []
+
+    exchange_marker = 'no_cash'
+
+    partner_link_pattern = f'&cur_from={valute_from}&cur_to={valute_to}'
+    
+    if city:
+        partner_link_pattern += f'&city={city}'
+        exchange_marker = 'cash'
+
+    if with_location:
+        exchange_marker = 'cash'
+
+    for _id, query in enumerate(queries, start=1):
+        if query.exchange.__dict__.get('partner_link') and query.exchange.__dict__.get('period_for_create'):
+            # query.exchange.__dict__['partner_link'] += partner_link_pattern
+#           
+            if query.exchange.__dict__.get('partner_link').startswith('https://t.me'):
+                pass
+            else:
+                partner_link = get_valid_partner_link(query.exchange.__dict__.get('partner_link'))
+                query.exchange.__dict__['partner_link'] = partner_link + partner_link_pattern
+#
+                if with_location:
+                    query.exchange.__dict__['partner_link'] += f'&city={query.city.code_name}'
+
+        if valute_from_obj is None:
+            valute_from_obj = query.direction.valute_from
+
+        icon_url_valute_from = try_generate_icon_url(valute_from_obj)
+        type_valute_from = valute_from_obj.type_valute
+
+        if valute_to_obj is None:
+            valute_to_obj = query.direction.valute_to
+
+        icon_url_valute_to = try_generate_icon_url(valute_to_obj)
+        type_valute_to = valute_to_obj.type_valute
+
+        exchange_direction = query.__dict__ | query.exchange.__dict__
+        exchange_direction['id'] = _id
+        exchange_direction['exchange_direction_id'] = query.id
+        exchange_direction['exchange_id'] = query.exchange.id
+        exchange_direction['review_count'] = ReviewCountSchema(
+            positive=query.positive_review_count,
+            neutral=query.neutral_review_count,
+            negative=query.negative_review_count,
+            )
+        
+        if not hasattr(query,'exchange_marker'):
+            exchange_direction['exchange_marker'] = exchange_marker
+
+        exchange_direction['name'] = MultipleName(name=exchange_direction['name'],
+                                                  en_name=exchange_direction['en_name'])
+        exchange_direction['valute_from'] = valute_from
+        exchange_direction['icon_valute_from'] = icon_url_valute_from
+        exchange_direction['type_valute_from'] = type_valute_from
+
+        exchange_direction['valute_to'] = valute_to
+        exchange_direction['icon_valute_to'] = icon_url_valute_to
+        exchange_direction['type_valute_to'] = type_valute_to
+
+        if not exchange_direction.get('info'):
+            exchange_direction['info'] = InfoSchema(high_aml=exchange_direction['high_aml'])
+
+        if with_location:
+            add_location_to_exchange_direction(exchange_direction,
+                                               query)
+            
+        # try_convert_course_with_frofee(exchange_direction)
+        round_valute_values(exchange_direction)
+
+        schema_model = test_get_schema_model_by_exchange_marker_with_aml(exchange_direction['exchange_marker'],
+                                                                         with_location)
+
+        # if exchange_direction['exchange_marker'] == 'partner':
+        exchange_direction = schema_model(**exchange_direction)
+
+        direction_list.append(exchange_direction)
+
+    # print(connection.queries)
+    # for query in connection.queries:
+    #     print(query)
+    #     print('*' * 8)
+    # print(len(connection.queries))
     return direction_list
 
 

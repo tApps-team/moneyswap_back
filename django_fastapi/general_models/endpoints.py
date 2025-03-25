@@ -30,12 +30,12 @@ from general_models.utils.endpoints import (positive_review_count_filter,
 from general_models.utils.base import annotate_string_field
 
 import no_cash.models as no_cash_models
-from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3, test_no_cash_exchange_directions2
+from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3, test_no_cash_exchange_directions2, test_no_cash_exchange_directions3
 
 import cash.models as cash_models
-from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3, test_cash_exchange_directions2
+from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3, test_cash_exchange_directions2, test_cash_exchange_directions3
 from cash.schemas import (SpecialCashDirectionMultiModel,
-                          CityModel,
+                          CityModel, SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel, SpecialCashDirectionMultiWithAmlModel,
                           SpecialCashDirectionMultiWithLocationModel,
                           SpecialCashDirectionMultiPrtnerWithLocationModel,
                           SpecialCashDirectionMultiPrtnerModel,
@@ -59,7 +59,7 @@ from .utils.endpoints import (check_exchage_marker,
                               generate_image_icon2,
                               generate_coin_for_schema)
 
-from .schemas import (PopularDirectionSchema,
+from .schemas import (PopularDirectionSchema, SpecialDirectionMultiWithAmlModel,
                       ValuteModel,
                       EnValuteModel,
                       SpecialDirectionMultiModel,
@@ -222,18 +222,27 @@ def get_current_exchange_directions(request: Request,
     return exchange_direction_list
 
 
-# @test_router.get('/directions',
-#                    response_model=list[union_directions_response_models],
-#                    response_model_by_alias=False)
-# def get_current_exchange_directions(request: Request,
-#                                     query: SpecificDirectionsQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         exchange_direction_list = test_no_cash_exchange_directions2(request, params)
-#     else:
-#         exchange_direction_list = test_cash_exchange_directions2(request, params)
+test_union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                                         SpecialCashDirectionMultiPrtnerWithLocationModel,
+                                         SpecialCashDirectionMultiWithLocationModel,
+                                         SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                                         SpecialCashDirectionMultiPrtnerModel,
+                                         SpecialCashDirectionMultiWithAmlModel,
+                                         SpecialDirectionMultiWithAmlModel]
+
+# SpecialDirectionMultiWithAmlModel
+@test_router.get('/directions',
+                   response_model=list[test_union_directions_response_models],
+                   response_model_by_alias=False)
+def get_current_exchange_directions(request: Request,
+                                    query: SpecificDirectionsQuery = Depends()):
+    params = query.params()
+    if not params['city']:
+        exchange_direction_list = test_no_cash_exchange_directions3(request, params)
+    else:
+        exchange_direction_list = test_cash_exchange_directions3(request, params)
     
-#     return exchange_direction_list
+    return exchange_direction_list
 
 
 @common_router.get('/popular_directions',

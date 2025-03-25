@@ -4,7 +4,7 @@ from django.db.models import Count, Q
 from django.db import connection
 
 from general_models.utils.http_exc import http_exception_json
-from general_models.utils.endpoints import (get_exchange_direction_list,
+from general_models.utils.endpoints import (get_exchange_direction_list, get_exchange_direction_list_with_aml,
                                             get_valute_json,
                                             get_valute_json_2, get_valute_json_3,
                                             increase_popular_count_direction,
@@ -264,3 +264,49 @@ def test_no_cash_exchange_directions2(request: Request,
     return get_exchange_direction_list(queries,
                                        valute_from,
                                        valute_to)
+
+
+def test_no_cash_exchange_directions3(request: Request,
+                                      params: dict):
+    # print(len(connection.queries))
+    params.pop('city')
+    for param in params:
+        if not params[param]:
+            http_exception_json(status_code=400, param=param)
+
+    valute_from, valute_to = (params[key] for key in params)
+
+    if check_valute_on_cash(valute_from,
+                            valute_to):
+        return test_cash_exchange_directions_with_location2(request,
+                                                            params)
+
+    review_counts = get_reviews_count_filters('exchange_direction')
+
+    queries = ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to')\
+                                .annotate(positive_review_count=review_counts['positive'])\
+                                .annotate(neutral_review_count=review_counts['neutral'])\
+                                .annotate(negative_review_count=review_counts['negative'])\
+                                .filter(direction__valute_from=valute_from,
+                                        direction__valute_to=valute_to,
+                                        is_active=True,
+                                        exchange__is_active=True)\
+                                .order_by('-exchange__is_vip',
+                                          '-out_count',
+                                          'in_count').all()
+    
+    if not queries:
+        http_exception_json(status_code=404, param=request.url)
+        # return cash_exchange_directions_with_location2(request,
+        #                                               params)
+
+    increase_popular_count_direction(valute_from=valute_from,
+                                     valute_to=valute_to)
+    
+    return get_exchange_direction_list_with_aml(queries,
+                                                valute_from,
+                                                valute_to)
