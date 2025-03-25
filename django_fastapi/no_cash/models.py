@@ -98,6 +98,8 @@ class Direction(BaseDirection):
                                   related_name='no_cash_valutes_to')
     
     def clean(self) -> None:
+        super().clean_fields()
+        
         if self.valute_from == self.valute_to:
             raise ValidationError('Валюты "Отдаём" и "Получаем" должны быть разные')
 

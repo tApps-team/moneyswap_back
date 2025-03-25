@@ -169,8 +169,10 @@ class Direction(BaseDirection):
     def __str__(self):
         return self.display_name
     
+    
     def clean(self) -> None:
-        super().clean()
+        super().clean_fields()
+        
         # if self.valute_from.type_valute == self.valute_to.type_valute:
         #     raise ValidationError('Значения "Отдаём" и "Получаем" должны иметь разные типы валют')
         
@@ -178,8 +180,6 @@ class Direction(BaseDirection):
             (not 'ATM QR' in self.valute_to.type_valute):
             raise ValidationError('Одно из значений "Отдаём" и "Получаем" должно иметь наличный тип валюты, другое - безналичный')
 
-        # проверить это
-        # return super().clean()
 
 #Модель готового направления
 class ExchangeDirection(BaseExchangeDirection):
