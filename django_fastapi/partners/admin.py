@@ -792,7 +792,11 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'en_name',
         'account',
         'is_available',
+        'high_aml',
         )
+    list_editable = (
+        'high_aml',
+    )
     list_display_links = ('name',)
     # readonly_fields = (
     #     'is_available',

@@ -45,6 +45,8 @@ from cash.models import Direction, Country, Exchange, Review
 
 import partners.models as partner_models
 
+from partners.utils.endpoints import generate_actual_course
+
 # from partners.utils.endpoints import get_partner_directions_for_test
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
@@ -890,6 +892,27 @@ def get_actual_course_for_direction(valute_from: str, valute_to: str):
     else:
         raise HTTPException(status_code=404)
     
+
+@test_router.get('/actual_course')
+def get_actual_course_for_direction(valute_from: str, valute_to: str):
+    valute_from, valute_to = valute_from.upper(), valute_to.upper()
+    
+    direction = cash_models.Direction.objects\
+                            .filter(display_name=f'{valute_from} -> {valute_to}')\
+                            .first()
+    
+    if not direction:
+        direction = no_cash_models.Direction.objects\
+                                    .filter(valute_from_id=valute_from,
+                                            valute_to_id=valute_to).first()
+        
+    # if direction and direction.actual_course is not None:
+    #     return direction.actual_course
+    # else:
+    if not direction:
+        raise HTTPException(status_code=404)
+    
+    return generate_actual_course(direction) 
 
 
 @common_router.get('/top_exchanges',

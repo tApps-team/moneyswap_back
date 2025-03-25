@@ -437,7 +437,7 @@ class BaseExchange(models.Model):
                                 blank=True,
                                 null=True,
                                 default='icons/country/russia.svg')
-    
+    high_aml = models.BooleanField('Высокий AML риск?', default=False)
 
     class Meta:
         abstract = True

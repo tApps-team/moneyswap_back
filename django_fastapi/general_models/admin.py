@@ -569,6 +569,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'name',
         'xml_url',
         'is_active',
+        'high_aml',
         )
     readonly_fields = (
         # 'direction_black_list',
@@ -580,6 +581,10 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'get_icon',
         'link_count',
         )
+    
+    list_editable = (
+        'high_aml',
+    )
     
     def link_count(self, obj):
         return obj.link_count
@@ -606,6 +611,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                            "partner_link",
                            "is_active",
                            "is_vip",
+                           'high_aml',
                            "course_count",
                            "reserve_amount",
                            "age",

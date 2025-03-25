@@ -187,10 +187,13 @@ class ExchangeAdmin(BaseExchangeAdmin):
         update_fields = []
 
         if change: 
+            print(form.cleaned_data.items())
             for key, value in form.cleaned_data.items():
                 # print(obj.name)
                 # print('key', key)
                 # print('value', value)
+                if key == 'id':
+                    continue
                 if value != form.initial[key]:
                     match key:
                         case 'period_for_create':
