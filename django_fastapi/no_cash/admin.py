@@ -119,6 +119,8 @@ class ExchangeAdmin(BaseExchangeAdmin):
                 # print(obj.name)
                 # print('key', key)
                 # print('value', value)
+                if key == 'id':
+                    continue
                 if value != form.initial[key]:
                     match key:
                         case 'period_for_create':

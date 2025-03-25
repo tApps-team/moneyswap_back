@@ -44,3 +44,26 @@ Traceback (most recent call last):
   File "/home/skxnny/web/moneyswap_back/django_fastapi/cash/admin.py", line 195, in save_model
     if value != form.initial[key]:
 KeyError: 'id'
+ERROR 2025-03-25 12:53:49,821 log Internal Server Error: /django/admin/no_cash/exchange/
+Traceback (most recent call last):
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/contrib/admin/options.py", line 688, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/views/decorators/cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 242, in inner
+    return view(request, *args, **kwargs)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 134, in _wrapper_view
+    response = view_func(request, *args, **kwargs)
+  File "/home/skxnny/web/moneyswap_back/venv/lib/python3.10/site-packages/django/contrib/admin/options.py", line 2019, in changelist_view
+    self.save_model(request, obj, form, change=True)
+  File "/home/skxnny/web/moneyswap_back/django_fastapi/no_cash/admin.py", line 122, in save_model
+    if value != form.initial[key]:
+KeyError: 'id'
