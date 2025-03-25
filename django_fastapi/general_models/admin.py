@@ -643,9 +643,9 @@ class BaseDirectionAdmin(admin.ModelAdmin):
     readonly_fields = (
         'popular_count',
         )
-    list_filter = (
-        'popular_count',
-    )
+    # list_filter = (
+    #     'popular_count',
+    # )
 
     autocomplete_fields = ['valute_from',
                            'valute_to']
