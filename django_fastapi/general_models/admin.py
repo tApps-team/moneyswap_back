@@ -302,6 +302,7 @@ class CustomOrderAdmin(admin.ModelAdmin):
     readonly_fields = (
         'request_type',
         'comment',
+        'amount',
         'guest',
         'utm_source',
         'time_create',
@@ -316,6 +317,7 @@ class CustomOrderAdmin(admin.ModelAdmin):
             {
                 "fields": ['request_type',
                            "comment",
+                           "amount",
                            "guest",
                            "utm_source",
                            "time_create",
