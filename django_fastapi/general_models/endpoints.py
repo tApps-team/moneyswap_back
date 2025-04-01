@@ -878,8 +878,9 @@ def add_feedback_form(feedback: FeedbackFormSchema):
                                    email=feedback.email,
                                    time_create__gt=check_datetime)\
                             .exists():
-        return {'status': 'success',
-                'details': 'duble feedback has been ignored'}
+        raise HTTPException(status_code=423)
+        # return {'status': 'success',
+        #         'details': 'duble feedback has been ignored'}
 
     try:
         feedback_form = FeedbackForm.objects.create(**feedback.model_dump())
