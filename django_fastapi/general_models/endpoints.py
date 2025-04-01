@@ -868,6 +868,8 @@ def get_all_directions_by_exchange(exchange_id: int,
 
 @common_router.post('/feedback_form')
 def add_feedback_form(feedback: FeedbackFormSchema):
+    if feedback.reasons.lower() == 'проблема с обменником':
+        feedback.reasons = 'Проблемма с обменником'
     try:
         feedback_form = FeedbackForm.objects.create(**feedback.model_dump())
     except Exception as ex:

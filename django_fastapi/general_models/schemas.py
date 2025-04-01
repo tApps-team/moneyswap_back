@@ -255,7 +255,7 @@ class TopCoinSchema(BaseModel):
 
 feedback_reasons_listeral = Literal[
     'Ошибка',
-    'Проблемма с обменником',
+    'Проблема с обменником',
     'Сотрудничество',
     'Другое',
 ]
