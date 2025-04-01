@@ -870,6 +870,17 @@ def get_all_directions_by_exchange(exchange_id: int,
 def add_feedback_form(feedback: FeedbackFormSchema):
     if feedback.reasons.lower() == 'проблема с обменником':
         feedback.reasons = 'Проблемма с обменником'
+
+    check_datetime = datetime.now() - timedelta(minutes=2)
+    
+    if FeedbackForm.objects.filter(reasons=feedback.reasons,
+                                   username=feedback.username,
+                                   email=feedback.email,
+                                   time_create__gt=check_datetime)\
+                            .exists():
+        return {'status': 'success',
+                'details': 'duble feedback has been ignored'}
+
     try:
         feedback_form = FeedbackForm.objects.create(**feedback.model_dump())
     except Exception as ex:
