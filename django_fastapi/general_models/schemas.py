@@ -97,6 +97,7 @@ class ReviewViewSchema(BaseModel):
     grade: int
     text: str
     comment_count: int
+    review_from: Literal['moneyswap', 'bestchange']
 
 
 class ReviewsByExchangeSchema(BaseModel):
