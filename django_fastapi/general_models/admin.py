@@ -472,9 +472,9 @@ class BaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'moderation',
         )
     ordering = (
-        'exchange__name',
+        # 'exchange__name',
         '-time_create',
-        'status',
+        # 'status',
         )
     
     def comment_count(self, obj):
