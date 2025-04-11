@@ -44,6 +44,7 @@ def new_add_review_to_db(exchange_name: str, data: dict, marker: str):
                     time_create=data['date'],
                     exchange=exchange,
                     status='Опубликован',
+                    review_from=data['review_from'],
                     moderation=True)
     if data.get('grade'):
         review.__setattr__('grade', data['grade'])

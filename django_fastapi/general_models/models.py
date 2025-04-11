@@ -312,6 +312,11 @@ class BaseReviewComment(models.Model):
         ('0', 'Нейтральный'),
         ('-1', 'Отрицательный'),
     ]
+
+    review_from_list = [
+        ('bestchange', 'bestchange'),
+        ('moneyswap', 'moneyswap'),
+    ]
     #
     # class GradeChoices(models.IntegerChoices):
     #     POS = 1, 'Положительный'
@@ -342,7 +347,10 @@ class BaseReviewComment(models.Model):
     grade = models.CharField('Оценка',
                              choices=grade_list,
                              default='0')
-
+    review_from = models.CharField('Откуда отзыв',
+                                   max_length=50,
+                                   choices=review_from_list,
+                                   default='moneyswap')
 
     class Meta:
         abstract = True
