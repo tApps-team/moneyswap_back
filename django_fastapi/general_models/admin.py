@@ -571,6 +571,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'name',
         'xml_url',
         'is_active',
+        'time_create',
         'high_aml',
         )
     readonly_fields = (
@@ -617,6 +618,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                            "course_count",
                            "reserve_amount",
                            "age",
+                           'time_create',
                            "country",
                            ("period_for_create", "period_for_update", "period_for_parse_black_list"),
                            'icon_url',
