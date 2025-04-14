@@ -1402,3 +1402,13 @@ async def pust_to_send_bot(user_id: int,
     except Exception as ex:
         print(ex)
         pass
+
+
+async def send_review_notifitation(review_id: int,
+                                   marker: str):
+    _url = f'https://api.moneyswap.online/send_to_tg_group_review?review_id={review_id}&marker={marker}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass

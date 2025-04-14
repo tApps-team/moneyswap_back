@@ -57,7 +57,8 @@ from .utils.endpoints import (check_exchage_marker,
                               generate_valute_for_schema,
                               get_exchange_directions,
                               generate_image_icon2,
-                              generate_coin_for_schema)
+                              generate_coin_for_schema,
+                              send_review_notifitation)
 
 from .schemas import (PopularDirectionSchema, SpecialDirectionMultiWithAmlModel,
                       ValuteModel,
@@ -1113,11 +1114,15 @@ def add_review_by_exchange(review: AddReviewSchema):
         #     grade=review.grade,
         #     text=review.text
         #     )
-        review_model.objects.create(**new_review)
+        new_review_record = review_model.objects.create(**new_review)
     except Exception:
         raise HTTPException(status_code=400,
                             detail='Переданы некорректные данные')
     else:
+        # уведомление об отзыве в бота уведомлений
+        async_to_sync(send_review_notifitation)(new_review_record.pk,
+                                                review.exchange_marker)
+
         return {'status': 'success'}
 
 
