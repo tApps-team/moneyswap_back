@@ -435,6 +435,10 @@ class BaseExchange(models.Model):
                            blank=True,
                            null=True,
                            default=None)
+    time_create = models.DateTimeField('Время добавления',
+                                       blank=True,
+                                       null=True,
+                                       auto_now_add=True)
     country = models.CharField('Страна',
                                max_length=255,
                                blank=True,
