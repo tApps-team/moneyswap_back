@@ -857,9 +857,9 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
                                                                               'тест',
                                                                               'СММ группа')).exists()):
-            pass
+            readonly_fields = ('time_create', ) + readonly_fields
         else:
-            readonly_fields = ('partner_link', ) + readonly_fields
+            readonly_fields = ('partner_link', 'time_create',) + readonly_fields
 
         return readonly_fields + ('link_count', 'country_link_count', 'is_available')
 
