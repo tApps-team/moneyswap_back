@@ -5,8 +5,9 @@ from datetime import timedelta, datetime
 
 import aiohttp
 from django.conf import settings
-from django.db import connection
-from django.db.models import Count, Q, QuerySet, Prefetch, Sum
+from django.db import connection, models
+from django.db.models import Count, Q, QuerySet, Prefetch, Sum, OuterRef, Subquery, Value, F, IntegerField
+from django.db.models.functions import Coalesce
 
 from fastapi import HTTPException
 
@@ -405,9 +406,6 @@ def generate_coin_for_schema(direction: CashDirection,
     return TopCoinSchema.model_construct(**coin.__dict__)  
 
 
-
-
-
 def get_exchange(exchange_id: int,
                  exchange_marker: str,
                  review_counts: dict[str, Count] = None):
@@ -433,6 +431,146 @@ def get_exchange(exchange_id: int,
     
     return exchange
 
+
+def get_exchange_with_direction_count(exchange: models.Manager[BaseExchange],
+                                      exchange_id: int,
+                                      exchange_marker: str):
+    # print(len(connection.queries))
+    match exchange_marker:
+        case 'no_cash':
+            direction_count_subquery = no_cash_models.ExchangeDirection.objects.filter(
+                exchange_id=exchange_id,
+                is_active=True,
+            ).values('exchange_id').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+            return exchange.annotate(direction_count=direction_count_subquery)
+            pass
+        case 'cash':
+            direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
+                exchange_id=exchange_id,
+                is_active=True,
+            ).values('exchange_id').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+            return exchange.annotate(direction_count=direction_count_subquery)
+            pass
+        case 'both':
+            no_cash_direction_count_subquery = no_cash_models.ExchangeDirection.objects.filter(
+                exchange_id=exchange_id,
+                is_active=True,
+            ).values('exchange_id').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+
+            # no_cash_exchange_name = no_cash_models.Exchange.objects.get(pk=exchange_id).name
+            no_cash_exchange_name_subquery = no_cash_models.Exchange.objects.filter(pk=exchange_id).values('name')[:1]
+            cash_exchange_id = cash_models.Exchange.objects.get(name=Subquery(no_cash_exchange_name_subquery))
+
+            cash_direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
+                exchange_id=cash_exchange_id,
+                is_active=True,
+            ).values('exchange_id').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+            return exchange.annotate(no_cash_diretion_count=no_cash_direction_count_subquery,
+                                     cash_diretion_count=cash_direction_count_subquery,
+                                     direction_count=Coalesce(F('no_cash_diretion_count'), Value(0))+Coalesce(F('cash_diretion_count'), Value(0)))
+            pass
+        case 'partner':
+            city_direction_count_subquery = partner_models.Direction.objects.select_related(
+                'city',
+                'city__exchange',
+            ).filter(
+                city__exchange__pk=exchange_id,
+                is_active=True,
+            ).values('city__exchange__pk').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+
+            country_direction_count_subquery = partner_models.CountryDirection.objects.select_related(
+                'country',
+                'country__exchange',
+            ).filter(
+                country__exchange__pk=exchange_id,
+                is_active=True,
+            ).values('country__exchange__pk').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+
+            return exchange.annotate(city_direction_count=city_direction_count_subquery,
+                                     country_direction_count=country_direction_count_subquery,
+                                     direction_count=Coalesce(F('city_direction_count'), Value(0))+Coalesce(F('country_direction_count'), Value(0)))
+
+
+def get_exchange_with_direction_count_for_exchange_list(exchange_list: models.Manager[BaseExchange],
+                                                        exchange_marker: str):
+    # print(len(connection.queries))
+    match exchange_marker:
+        case 'no_cash':
+            direction_count_subquery = no_cash_models.ExchangeDirection.objects.filter(
+                exchange_id=OuterRef('id'),
+                is_active=True,
+            ).values('exchange_id').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+            return exchange_list.annotate(direction_count=Coalesce(direction_count_subquery, Value(0)))
+            pass
+        case 'cash':
+            direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
+                exchange_id=OuterRef('id'),
+                is_active=True,
+            ).values('exchange_id').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+            return exchange_list.annotate(direction_count=Coalesce(direction_count_subquery, Value(0)))
+            pass
+        # case 'both':
+        #     no_cash_direction_count_subquery = no_cash_models.ExchangeDirection.objects.filter(
+        #         exchange_id=exchange_id,
+        #         is_active=True,
+        #     ).values('exchange_id').annotate(
+        #         direction_count=Coalesce(Count('id'), Value(0))
+        #     ).values('direction_count')
+
+            # no_cash_exchange_name = no_cash_models.Exchange.objects.get(pk=exchange_id).name
+            # no_cash_exchange_name_subquery = no_cash_models.Exchange.objects.filter(pk=exchange_id).values('name')[:1]
+            # cash_exchange_id = cash_models.Exchange.objects.get(name=Subquery(no_cash_exchange_name_subquery))
+
+            # cash_direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
+            #     exchange_id=cash_exchange_id,
+            #     is_active=True,
+            # ).values('exchange_id').annotate(
+            #     direction_count=Coalesce(Count('id'), Value(0))
+            # ).values('direction_count')
+            # return exchange.annotate(no_cash_diretion_count=no_cash_direction_count_subquery,
+            #                          cash_diretion_count=cash_direction_count_subquery,
+            #                          direction_count=Coalesce(F('no_cash_diretion_count'), Value(0))+Coalesce(F('cash_diretion_count'), Value(0)))
+            # pass
+        case 'partner':
+            city_direction_count_subquery = partner_models.Direction.objects.select_related(
+                'city',
+                'city__exchange',
+            ).filter(
+                city__exchange__pk=OuterRef('id'),
+                is_active=True,
+            ).values('city__exchange__pk').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+
+            country_direction_count_subquery = partner_models.CountryDirection.objects.select_related(
+                'country',
+                'country__exchange',
+            ).filter(
+                country__exchange__pk=OuterRef('id'),
+                is_active=True,
+            ).values('country__exchange__pk').annotate(
+                direction_count=Coalesce(Count('id'), Value(0))
+            ).values('direction_count')
+
+            return exchange_list.annotate(city_direction_count=city_direction_count_subquery,
+                                     country_direction_count=country_direction_count_subquery,
+                                     direction_count=Coalesce(F('city_direction_count'), Value(0))+Coalesce(F('country_direction_count'), Value(0)))
 
 
 def add_location_to_exchange_direction(exchange_direction: dict[str, Any],

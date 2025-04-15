@@ -1,6 +1,7 @@
 # from fastapi import FastAPI, File, UploadFile
 from typing import Literal
 from enum import Enum
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 
@@ -196,7 +197,7 @@ class CommonExchangeSchema(BaseModel):
     exchange_marker: str
     workStatus: bool = Field(alias='is_active')
     reserves: str | None = Field(alias='reserve_amount')
-    courses: str | None = Field(alias='course_count')
+    courses: int | None = Field(alias='direction_count')
     url: str | None = Field(alias='partner_link')
     reviews: ReviewCountSchema
 
@@ -207,6 +208,7 @@ class DetailExchangeSchema(BaseModel):
     iconUrl: str | None = Field(alias='icon',
                                 default=None)
     url: str = Field(alias='partner_link')
+    high_aml: bool
     workStatus: bool = Field(alias='is_active')
     reviews: ReviewCountSchema = Field(alias='review_set')
     country: str | None
@@ -216,7 +218,8 @@ class DetailExchangeSchema(BaseModel):
                                       default=None)
     open: str | None = Field(alias='age',
                              default=None)
-    openOnMoneySwap: str | None = Field(default=None)
+    openOnMoneySwap: datetime | None = Field(alias='time_create',
+                                        default=None)
 
 
 class DirectionSideBarSchema(BaseModel):
