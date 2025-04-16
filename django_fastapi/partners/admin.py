@@ -24,6 +24,8 @@ from general_models.utils.admin import ReviewAdminMixin
 
 from partners.utils.endpoints import get_course_count
 
+from no_cash.models import Direction as NoCashDirection
+
 from .models import (CountryExchangeLinkCount, Exchange,
                      Direction,
                      Review,
@@ -37,7 +39,9 @@ from .models import (CountryExchangeLinkCount, Exchange,
                      CountryDirection,
                      Bankomat,
                      DirectionRate,
-                     CountryDirectionRate)
+                     CountryDirectionRate,
+                     NonCashDirection,
+                     NonCashDirectionRate)
 from .utils.admin import (make_city_active,
                           update_field_time_update,
                           get_saved_course)
@@ -481,6 +485,140 @@ class CountryDirectionAdmin(admin.ModelAdmin):
                 account = get_or_set_user_account_cache(request.user)
                 field.queryset = field.queryset.filter(exchange=account.exchange)\
                                                 .select_related('country')
+        return field
+    
+    @action_with_form(
+        ChangeOrderStatusActionForm,
+        description="Обновить курс выбранных направлений",
+    )
+    def update_direction_course(modeladmin, request, queryset, data):
+        time_update = datetime.now()
+
+        queryset.update(in_count=data.get('in_count'),
+                        out_count=data.get('out_count'),
+                        is_active=True,
+                        time_update=time_update)
+
+        modeladmin.message_user(request, f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
+
+    @admin.action(description='Обновить активность выбранных направлений')
+    def update_direction_activity(modeladmin, request, queryset):
+        time_update = datetime.now()
+        queryset.update(is_active=True,
+                        time_update=time_update)
+        messages.success(request,
+                         f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
+
+
+# Кастомный фильтр для ExchangeDirection для отпимизации sql запросов ( решение для N+1 prodlem ) 
+class CustomDirectionFilter(admin.SimpleListFilter):
+    title = 'Direction'
+    parameter_name = 'direction'
+
+    def lookups(self, request, model_admin):
+        # Используйте select_related для оптимизации запроса
+        directions = NoCashDirection.objects.select_related('valute_from',
+                                                      'valute_to').distinct()
+        return [(d.id, str(d)) for d in directions]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(direction__id=self.value())
+        return queryset
+
+
+@admin.register(NonCashDirection)
+class NonCashDirectionAdmin(admin.ModelAdmin):
+    actions = (
+        'update_direction_course',
+        'update_direction_activity'
+        )
+    list_display = (
+        'pk',
+        'direction',
+        'exchange_name',
+        'is_active',
+        'in_count',
+        'out_count',
+    )
+    list_display_links = ('direction',)
+    list_filter = (
+        'exchange',
+        CustomDirectionFilter,
+        )
+    list_editable = (
+        'in_count',
+        'out_count',
+    )
+    readonly_fields = (
+        'time_update',
+    )
+    fields = (
+        'exchange',
+        'direction',
+        # 'course',
+        'in_count',
+        'out_count',
+        # 'saved_partner_course',
+        'is_active',
+        'time_update',
+        )
+
+    def exchange_name(self, obj):
+        return obj.exchange.name
+    
+    def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
+        if change:
+            update_fields = set()
+            if not form.cleaned_data.get('id'):
+                for key, value in form.cleaned_data.items():
+                    if value != form.initial[key]:
+                        update_field_time_update(obj, update_fields)
+                        update_fields.add(key)
+                obj.save(update_fields=update_fields)
+            else:
+                for key in ('in_count', 'out_count'):
+                    if form.cleaned_data[key] != form.initial[key]:
+                        # update_field_time_update(obj, update_fields)
+                        update_fields.add(key)
+                if update_fields:
+                    update_field_time_update(obj, update_fields)
+                    obj.save(update_fields=update_fields)
+        else:
+            return super().save_model(request, obj, form, change)
+        
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        queryset = super().get_queryset(request)\
+                            .select_related('exchange',
+                                            'direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to')
+
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
+                                                                              'тест',
+                                                                              'СММ группа')).exists()):
+            pass
+        else:
+            account = get_or_set_user_account_cache(request.user)
+            queryset = queryset.filter(exchange=account.exchange)
+
+        return queryset
+    
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        field = super().formfield_for_foreignkey(db_field, request, **kwargs)
+        
+        if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
+                                                                              'тест',
+                                                                              'СММ группа')).exists()):
+            pass
+            # if db_field.name == 'country':
+            #     field.queryset = field.queryset.select_related('country')
+        else:
+            # if db_field.name == 'country':
+            #     account = get_or_set_user_account_cache(request.user)
+            #     field.queryset = field.queryset.filter(exchange=account.exchange)\
+            #                                     .select_related('country')
+            pass
         return field
     
     @action_with_form(
@@ -1046,6 +1184,18 @@ class DirectionRateAdmin(admin.ModelAdmin):
 
 @admin.register(CountryDirectionRate)
 class CountryDirectionRateAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'exchange',
+        'exchange_direction',
+        'min_rate_limit',
+    )
+
+    raw_id_fields = ('exchange', 'exchange_direction')
+
+
+@admin.register(NonCashDirectionRate)
+class NonCashDirectionRateRateAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'exchange',

@@ -13,6 +13,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from cash.models import Country, City, Direction as CashDirection
 
+from no_cash.models import Direction as NoCashDirection
+
 from general_models.utils.endpoints import (get_valute_json_3,
                                             get_valute_json_4,
                                             try_generate_icon_url)
@@ -30,7 +32,9 @@ from .models import (CustomUser, PartnerCity,
                      ExchangeLinkCount,
                      CountryExchangeLinkCount,
                      DirectionRate,
-                     CountryDirectionRate)
+                     CountryDirectionRate,
+                     NonCashDirection,
+                     NonCashDirectionRate)
 
 from .auth.endpoints import partner_dependency
 
@@ -80,7 +84,9 @@ from .schemas import (AddPartnerCountrySchema,
                       PartnerCountrySchema3,
                       ExchangeLinkCountSchema,
                       NewAddPartnerDirectionSchema,
-                      NewListEditedPartnerDirectionSchema)
+                      NewListEditedPartnerDirectionSchema,
+                      AddPartnerNoCashDirectionSchema,
+                      ListEditedPartnerNoCashDirectionSchema)
 
 
 partner_router = APIRouter(prefix='/partner',
@@ -354,6 +360,40 @@ def get_partner_directions_by(partner: partner_dependency,
                                                 marker)
 
 
+@partner_router.get('/no_cash_directions',
+                    response_model=list[DirectionSchema3])
+def get_partner_no_cash_directions(partner: partner_dependency):
+    # print(len(connection.queries))
+    partner_id = partner.get('partner_id')
+    marker = 'no_cash'
+
+    # if marker == 'country':
+    #     direction_model = CountryDirection
+    #     direction_rate_model = CountryDirectionRate
+    #     additional_filter = Q(country__exchange__account__pk=partner_id,
+    #                           country__pk=id)
+    # else:
+    #     direction_model = Direction
+    #     direction_rate_model = DirectionRate
+    #     additional_filter = Q(city__exchange__account__pk=partner_id,
+    #                           city__pk=id)
+        
+    direction_rate_prefetch = Prefetch('direction_rates',
+                                       NonCashDirectionRate.objects.order_by('min_rate_limit'))
+
+    directions = NonCashDirection.objects.select_related('exchange',
+                                                         'exchange__account',
+                                                         'direction',
+                                                        'direction__valute_from',
+                                                        'direction__valute_to')\
+                                        .prefetch_related(direction_rate_prefetch)\
+                                        .filter(exchange__account__pk=partner_id)\
+                                        .all()
+
+    return generate_partner_directions_by_3(directions,
+                                                marker)
+
+
 
 # @partner_router.get('/directions_by',
 #                     response_model=list[DirectionSchema2])
@@ -452,10 +492,13 @@ def get_partner_directions_by(partner: partner_dependency,
 #     return generate_valute_list2(queries, marker)
 
 @partner_router.get('/available_valutes')
-def get_available_valutes_for_partner2(base: str):
+def get_available_valutes_for_partner2(base: str,
+                                       is_no_cash: bool = False):
     base = base.upper()
 
-    queries = CashDirection.objects.select_related('valute_from',
+    direction_model = CashDirection if not is_no_cash else NoCashDirection
+
+    queries = direction_model.objects.select_related('valute_from',
                                                    'valute_to')\
                                     .filter(valute_from__available_for_partners=True,
                                             valute_to__available_for_partners=True)
@@ -470,6 +513,27 @@ def get_available_valutes_for_partner2(base: str):
 
     # return generate_valute_list2(queries, marker)
     return get_valute_json_4(queries)
+
+
+# @partner_router.get('/no_cash_available_valutes')
+# def get_no_cash_available_valutes_for_partner(base: str):
+#     base = base.upper()
+
+#     queries = NoCashDirection.objects.select_related('valute_from',
+#                                                      'valute_to')\
+#                                     .filter(valute_from__available_for_partners=True,
+#                                             valute_to__available_for_partners=True)
+    
+#     if base == 'ALL':
+#         marker = 'valute_from'
+#         queries = queries.values_list('valute_from_id', flat=True)
+#     else:
+#         marker = 'valute_to'
+#         queries = queries.filter(valute_from=base)
+#         queries = queries.values_list('valute_to_id', flat=True)
+
+#     # return generate_valute_list2(queries, marker)
+#     return get_valute_json_4(queries)
 
 
 @partner_router.post('/change_password')
@@ -1680,6 +1744,97 @@ def add_partner_direction(partner: partner_dependency,
                                 detail='Такое направление уже существует')
 
 
+@partner_router.post('/add_partner_no_cash_direction')
+def add_partner_direction(partner: partner_dependency,
+                          new_direction: AddPartnerNoCashDirectionSchema):
+    partner_id = partner.get('partner_id')
+
+    data = new_direction.model_dump()
+
+    valute_from = data.pop('valute_from')
+    valute_to = data.pop('valute_to')
+    exchange_rates = data.pop('exchange_rates')
+        
+    try:
+        direction = NoCashDirection.objects.select_related('valute_from',
+                                                           'valute_to')\
+                                            .get(valute_from__code_name=valute_from,
+                                                 valute_to__code_name=valute_to)
+        partner = CustomUser.objects.filter(pk=partner_id).get()
+        exchange_id = partner.exchange_id
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404)
+    else:
+        # data['direction'] = direction
+        data.update(
+            {'direction_id': direction.pk,
+             'exchange_id': exchange_id}
+        )
+
+        if len(exchange_rates) > 4:
+            raise HTTPException(status_code=400,
+                                detail='Количество доп объемов для направления должно быть не больше 3 шт')
+
+        main_exchange_rate, additional_exchange_rates = exchange_rates[0], exchange_rates[1:]
+
+        convert_min_max_count(main_exchange_rate,
+                              marker='main')
+
+        main_exchange_rate.pop('rate_coefficient')
+
+        data.update(main_exchange_rate)
+
+        try:
+            with transaction.atomic():
+                new_partner_dirction = NonCashDirection.objects.create(**data)
+
+                if additional_exchange_rates:
+                    partner = CustomUser.objects.filter(pk=partner_id).get()
+                    exchange_id = partner.exchange_id
+
+                    min_count_list = [_exchange_rate.get('min_count') for _exchange_rate in additional_exchange_rates]
+
+                    if len(min_count_list) != len(set(min_count_list)):
+                            raise HTTPException(status_code=400,
+                                                detail='Несколько записей об объемах содержат одинаковые min_count')
+
+                    bulk_create_list = []
+
+                    for additional_exchange_rate in additional_exchange_rates:
+                        
+                        if not additional_exchange_rate.get('min_count'):
+                            raise HTTPException(status_code=400,
+                                                detail='Одна или несколько записей об объемах содержит пустой min_count')
+
+                        if not additional_exchange_rate.get('rate_coefficient'):
+                            raise HTTPException(status_code=400,
+                                                detail='Одна или несколько записей об объемах содержит пустой rate_coefficient')
+
+
+                        exchange_rate_data = {
+                            'exchange_id': exchange_id,
+                            'exchange_direction_id': new_partner_dirction.pk,
+                        }
+
+                        convert_min_max_count(additional_exchange_rate,
+                                              marker='additional')
+                        
+                        exchange_rate_data.update(additional_exchange_rate)
+                        
+                        new_exchangedirection_rate = NonCashDirectionRate(**exchange_rate_data)
+
+                        bulk_create_list.append(new_exchangedirection_rate)
+                    
+                    NonCashDirectionRate.objects.bulk_create(bulk_create_list)
+
+            return {'status': 'success',
+                    'details': f'Партнерское направление {direction.valute_from_id} -> {direction.valute_to_id} добавлено'}
+        except IntegrityError as ex:
+            print(ex)
+            raise HTTPException(status_code=423,
+                                detail='Такое направление уже существует')
+
 
 # @test_partner_router.post('/add_partner_direction')
 # def add_partner_direction(partner: partner_dependency,
@@ -2149,6 +2304,124 @@ def edit_partner_directions_by(partner: partner_dependency,
                 'details': f'updated {len(edited_direction_list)} directions'}
 
 
+@partner_router.patch('/edit_partner_no_cash_directions')
+def edit_partner_no_cash_directions(partner: partner_dependency,
+                                    response_body: ListEditedPartnerNoCashDirectionSchema):
+    # print(len(connection.queries))
+    partner_id = partner.get('partner_id')
+
+    data: dict = response_body.model_dump()
+
+    # location_id = data['id']
+    # marker = data['marker']
+    edited_direction_list = data['directions']
+
+    city = None
+
+    # if marker == 'country':
+    #     direction_model = CountryDirection
+    #     direction_rate_model = CountryDirectionRate
+    #     _filter = Q(country__exchange__account__pk=partner_id,
+    #                 country__pk=location_id)
+    # else:
+    #     direction_model = Direction
+    #     direction_rate_model = DirectionRate
+    #     _filter = Q(city__exchange__account__pk=partner_id,
+    #                 city__pk=location_id)
+    #     city = PartnerCity.objects.select_related('exchange',
+    #                                             'exchange__account',
+    #                                             'city')\
+    #                                 .filter(exchange__account__pk=partner_id,
+    #                                         pk=location_id)
+
+    partner_directions = NonCashDirection.objects\
+                                    .select_related('exchange',
+                                                    'direction',
+                                                    'direction__valute_from',
+                                                    'direction__valute_to')\
+                                    .filter(exchange__account__pk=partner_id)
+                                    # .prefetch_related('direction_rates')\
+    try:
+        with transaction.atomic():
+            for edited_direction in edited_direction_list:
+                _id = edited_direction.pop('id')
+                
+                exchange_rates: list[dict] = edited_direction.pop('exchange_rates')
+                
+                main_exchange_rate, additional_exchange_rates = exchange_rates[0], exchange_rates[1:]
+
+                convert_min_max_count(main_exchange_rate,
+                                    marker='main')
+                
+                # print(main_exchange_rate)
+
+                main_exchange_rate.pop('rate_coefficient')
+                main_exchange_rate.pop('id')
+
+                edited_direction['time_update'] = datetime.now()
+                edited_direction.update(main_exchange_rate)
+
+                # print(edited_direction)
+
+                partner_directions.filter(pk=_id).update(**edited_direction)
+
+                min_count_list = [_exchange_rate.get('min_count') for _exchange_rate in additional_exchange_rates]
+
+                if len(min_count_list) != len(set(min_count_list)):
+                        raise HTTPException(status_code=400,
+                                            detail='Несколько записей об объемах содержат одинаковые min_count')
+
+                # current_partner_diretction = partner_directions.get(pk=_id)
+
+                # direction_rates = current_partner_diretction.direction_rates.all()
+
+                # print(direction_rates)
+
+                # direction_rates_dict = {direction_rate.min_rate_limit: direction_rate\
+                #                          for direction_rate in direction_rates}
+                
+                # print(direction_rates_dict)
+
+                direction_rate_id_set = set(NonCashDirectionRate.objects\
+                                                        .filter(exchange_direction_id=_id)\
+                                                        .values_list('pk', flat=True))
+
+                # direction_rate_id_set = {el.get('id') for el in additional_exchange_rates}
+
+                for additional_exchange_rate in additional_exchange_rates:
+                    
+                    if not additional_exchange_rate.get('min_count'):
+                        raise HTTPException(status_code=400,
+                                            detail='Одна или несколько записей об объемах содержит пустой min_count')
+
+                    if not additional_exchange_rate.get('rate_coefficient'):
+                        raise HTTPException(status_code=400,
+                                            detail='Одна или несколько записей об объемах содержит пустой rate_coefficient')
+
+                    _direction_rate_id = additional_exchange_rate.pop('id')
+
+                    convert_min_max_count(additional_exchange_rate,
+                                          marker='additional')
+                    
+                    NonCashDirectionRate.objects.filter(pk=_direction_rate_id)\
+                                                .update(**additional_exchange_rate)
+                    
+                    direction_rate_id_set.remove(_direction_rate_id)
+                
+                if direction_rate_id_set:
+                    print('in delete', direction_rate_id_set)
+                    NonCashDirectionRate.objects.filter(pk__in=direction_rate_id_set).delete()
+
+            # if city:
+            #     city.update(time_update=timezone.now())
+    except Exception as ex:
+        print('EXCEPTION', ex)
+        raise HTTPException(status_code=400)
+    else:
+        return {'status': 'success',
+                'details': f'updated {len(edited_direction_list)} directions'}
+
+
 # @test_partner_router.patch('/edit_partner_directions')
 # def edit_partner_directions_by(partner: partner_dependency,
 #                                response_body: NewListEditedPartnerDirectionSchema):
@@ -2274,17 +2547,35 @@ def delete_partner_direction(partner: partner_dependency,
     partner_id = partner.get('partner_id')
     
     if data.marker == 'country':
+        if data.id is None:
+            raise HTTPException(status_code=400,
+                                detail='field "id" is required')
+        
         _model = CountryDirection
         _filter = Q(country_id=data.id,
                     country__exchange__account__pk=partner_id)
-    else:
+        select_related_fileds = f'{data.marker}, {data.marker}__exchange, {data.marker}__exchange__account'
+    elif data.marker == 'city':
+        if data.id is None:
+            raise HTTPException(status_code=400,
+                                detail='field "id" is required')
+        
         _model = Direction
         _filter = Q(city_id=data.id,
                     city__exchange__account__pk=partner_id)
+        select_related_fileds = f'{data.marker}, {data.marker}__exchange, {data.marker}__exchange__account'
+    elif data.marker == 'no_cash':
+        _model = NonCashDirection
+        _filter = Q(exchange__account__pk=partner_id)
+        select_related_fileds = 'exchange, exchange__account'
 
-    _model.objects.select_related(data.marker,
-                                  f'{data.marker}__exchange',
-                                  f'{data.marker}__exchange__account')\
+    # _model.objects.select_related(data.marker,
+    #                               f'{data.marker}__exchange',
+    #                               f'{data.marker}__exchange__account')\
+    #                 .filter(_filter,
+    #                         pk=data.direction_id)\
+    #                 .delete()
+    _model.objects.select_related(select_related_fileds)\
                     .filter(_filter,
                             pk=data.direction_id)\
                     .delete()

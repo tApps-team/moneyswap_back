@@ -4,6 +4,8 @@ from typing import Literal
 from django.db.models import Count, Q, Prefetch, F
 from django.db import connection, transaction
 
+from fastapi.exceptions import HTTPException
+
 from general_models.utils.endpoints import try_generate_icon_url, get_reviews_count_filters
 
 from general_models.schemas import MultipleName, MultipleName2
@@ -1972,6 +1974,9 @@ def generate_partner_directions_by_3(directions: list[Direction],
                     partner_id = direction.country.exchange.account.pk
                 case 'city':
                     partner_id = direction.city.exchange.account.pk
+                case _:
+                    raise HTTPException(status_code=400,
+                                        detail='ATM QR in non cash direction!')
             # partner_valute = QRValutePartner.objects.filter(partner_id=partner_id,
             #                                            valute=direction.direction.valute_to.name)
             # if partner_valute.exists():
@@ -2017,7 +2022,7 @@ def generate_partner_directions_by_3(directions: list[Direction],
         
         direction.exchange_rates = exchange_rates
 
-    print(len(connection.queries))
+    # print(len(connection.queries))
     return directions
 
 
