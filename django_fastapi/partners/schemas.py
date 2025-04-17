@@ -174,6 +174,21 @@ class DirectionSchema3(BaseModel):
     exchange_rates: list[PartnerExchangeRateForEdit]
 
 
+class NoCashDirectionSchema(BaseModel):
+    id: int
+    valute_from: str
+    icon_valute_from: str | None
+    valute_to: str
+    icon_valute_to: str | None
+    # in_count: float | None = Field(default=None)
+    in_count_type: str
+    # out_count: float | None = Field(default=None)
+    out_count_type: str
+    is_active: bool
+    # bankomats: list[BankomatDetailSchema] | None
+    exchange_rates: list[PartnerExchangeRateForEdit]
+
+
 class NewPasswordSchema(BaseModel):
     new_password: str
 

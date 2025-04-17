@@ -60,7 +60,7 @@ from .schemas import (AddPartnerCountrySchema,
                       BankomatDetailSchema,
                       DeletePartnerDirectionSchema, DirectionSchema2, DirectionSchema3,
                       ListEditedPartnerDirectionSchema2,
-                      DeletePartnerCityCountrySchema,
+                      DeletePartnerCityCountrySchema, NoCashDirectionSchema,
                       PartnerCitySchema,
                       CountrySchema,
                       CitySchema,
@@ -362,7 +362,7 @@ def get_partner_directions_by(partner: partner_dependency,
 
 
 @partner_router.get('/no_cash_directions',
-                    response_model=list[DirectionSchema3])
+                    response_model=list[NoCashDirectionSchema])
 def get_partner_no_cash_directions(partner: partner_dependency):
     # print(len(connection.queries))
     partner_id = partner.get('partner_id')
