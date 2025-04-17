@@ -445,7 +445,6 @@ def get_exchange_with_direction_count(exchange: models.Manager[BaseExchange],
                 direction_count=Coalesce(Count('id'), Value(0))
             ).values('direction_count')
             return exchange.annotate(direction_count=direction_count_subquery)
-            pass
         case 'cash':
             direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
                 exchange_id=exchange_id,
@@ -454,7 +453,6 @@ def get_exchange_with_direction_count(exchange: models.Manager[BaseExchange],
                 direction_count=Coalesce(Count('id'), Value(0))
             ).values('direction_count')
             return exchange.annotate(direction_count=direction_count_subquery)
-            pass
         case 'both':
             no_cash_direction_count_subquery = no_cash_models.ExchangeDirection.objects.filter(
                 exchange_id=exchange_id,
@@ -463,11 +461,15 @@ def get_exchange_with_direction_count(exchange: models.Manager[BaseExchange],
                 direction_count=Coalesce(Count('id'), Value(0))
             ).values('direction_count')
 
-            # no_cash_exchange_name = no_cash_models.Exchange.objects.get(pk=exchange_id).name
             no_cash_exchange_name_subquery = no_cash_models.Exchange.objects.filter(pk=exchange_id).values('name')[:1]
-            print(no_cash_exchange_name_subquery)
-            cash_exchange_id = cash_models.Exchange.objects.get(name=Subquery(no_cash_exchange_name_subquery))
-
+            
+            try:
+                cash_exchange_id = cash_models.Exchange.objects.get(name=Subquery(no_cash_exchange_name_subquery))
+            except Exception as ex:
+                print(ex)
+                raise HTTPException(status_code=400,
+                                    detail='invalid id for "both" marker')
+            
             cash_direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
                 exchange_id=cash_exchange_id,
                 is_active=True,
@@ -477,7 +479,6 @@ def get_exchange_with_direction_count(exchange: models.Manager[BaseExchange],
             return exchange.annotate(no_cash_diretion_count=no_cash_direction_count_subquery,
                                      cash_diretion_count=cash_direction_count_subquery,
                                      direction_count=Coalesce(F('no_cash_diretion_count'), Value(0))+Coalesce(F('cash_diretion_count'), Value(0)))
-            pass
         case 'partner':
             city_direction_count_subquery = partner_models.Direction.objects.select_related(
                 'city',
