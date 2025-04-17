@@ -465,6 +465,7 @@ def get_exchange_with_direction_count(exchange: models.Manager[BaseExchange],
 
             # no_cash_exchange_name = no_cash_models.Exchange.objects.get(pk=exchange_id).name
             no_cash_exchange_name_subquery = no_cash_models.Exchange.objects.filter(pk=exchange_id).values('name')[:1]
+            print(no_cash_exchange_name_subquery)
             cash_exchange_id = cash_models.Exchange.objects.get(name=Subquery(no_cash_exchange_name_subquery))
 
             cash_direction_count_subquery = cash_models.ExchangeDirection.objects.filter(

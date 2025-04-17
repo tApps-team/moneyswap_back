@@ -173,12 +173,20 @@ class ExchangeAdmin(BaseExchangeAdmin):
         ReviewStacked,
         ExchangeLinkCountStacked,
         ]
+    
+    def get_formset_kwargs(self, request, obj, inline, prefix):
+        formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
+        
+        if isinstance(inline, ExchangeDirectionStacked) or \
+            isinstance(inline, ReviewStacked) or \
+                isinstance(inline, ExchangeLinkCountStacked):
+            queryset = formset_kwargs['queryset']
 
-    # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-    #     return super().get_queryset(request)\
-    #                     .prefetch_related('direction_black_list',
-    #                                       'direction_black_list__direction',
-    #                                       'direction_black_list__city')
+            ids = queryset.filter(exchange=obj).values_list('pk', flat=True)[:20]
+
+            formset_kwargs['queryset'] = queryset.filter(pk__in=ids)
+        return formset_kwargs
+
     
     def has_add_permission(self, request: HttpRequest) -> bool:
         return super().has_add_permission(request)

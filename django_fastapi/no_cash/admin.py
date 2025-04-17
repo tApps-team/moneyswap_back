@@ -63,9 +63,11 @@ class ReviewAdmin(BaseReviewAdmin):
 #Отображение отзывов на странице связанного обменника
 class ReviewStacked(BaseReviewStacked):
     model = Review
+    # raw_id_fields = ('guest', )
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('exchange')
+        return super().get_queryset(request).select_related('exchange',
+                                                            'guest')
 
 
 #Отображение готовых направлений на странице связанного обменника
@@ -89,8 +91,7 @@ class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
 
     # def get_queryset(self, request):
     #     return super().get_queryset(request).select_related('exchange',
-    #                                                         'user')\
-    #                                         .order_by('-count')
+    #                                                         'user')
 
 
 #Отображение обменников в админ панели
@@ -102,6 +103,19 @@ class ExchangeAdmin(BaseExchangeAdmin):
         ReviewStacked,
         ExchangeLinkCountStacked,
         ]
+    
+    def get_formset_kwargs(self, request, obj, inline, prefix):
+        formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
+        
+        if isinstance(inline, ExchangeDirectionStacked) or \
+            isinstance(inline, ReviewStacked) or \
+                isinstance(inline, ExchangeLinkCountStacked):
+            queryset = formset_kwargs['queryset']
+
+            ids = queryset.filter(exchange=obj).values_list('pk', flat=True)[:20]
+
+            formset_kwargs['queryset'] = queryset.filter(pk__in=ids)
+        return formset_kwargs
     
     # def link_count(self, obj):
     #     return obj.link_count

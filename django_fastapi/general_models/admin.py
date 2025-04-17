@@ -499,6 +499,7 @@ class BaseReviewStacked(admin.StackedInline):
     classes = [
         'collapse',
         ]
+    raw_id_fields = ('guest', )
 
 
 #Базовое отображение готовых направлений в админ панели
@@ -531,6 +532,7 @@ class BaseExchangeDirectionStacked(admin.StackedInline):
     classes = [
         'collapse',
         ]
+    # max_num = 20
     
     def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
         return False
