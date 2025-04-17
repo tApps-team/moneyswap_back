@@ -561,7 +561,12 @@ class BaseExchangeLinkCountStacked(admin.StackedInline):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('exchange',
-                                                            'user')\
+                                                            'user',
+                                                            'exchange_direction',
+                                                            'exchange_direction__exchange',
+                                                            'exchange_direction__direction',
+                                                            'exchange_direction__direction__valute_from',
+                                                            'exchange_direction__direction__valute_to')\
                                             .order_by('-count')
 
 #

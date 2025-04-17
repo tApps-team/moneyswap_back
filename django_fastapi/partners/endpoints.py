@@ -31,6 +31,7 @@ from .models import (CustomUser, PartnerCity,
                      Bankomat,
                      ExchangeLinkCount,
                      CountryExchangeLinkCount,
+                     NonCashExchangeLinkCount,
                      DirectionRate,
                      CountryDirectionRate,
                      NonCashDirection,
@@ -2586,6 +2587,7 @@ def delete_partner_direction(partner: partner_dependency,
 exchange_link_count_dict = {
     'city': ExchangeLinkCount,
     'country': CountryExchangeLinkCount,
+    'no_cash': NonCashExchangeLinkCount,
 }
 
 @partner_router.post('/increase_link_count')

@@ -550,6 +550,8 @@ class BaseExchangeLinkCount(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.exchange} - {self.count}'
+    # def __str__(self):
+    #     return f'{self.user}  - {self.count}'
     
 
 class BaseDirectionRate(models.Model):

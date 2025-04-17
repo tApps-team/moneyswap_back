@@ -416,6 +416,27 @@ class CountryExchangeLinkCount(BaseExchangeLinkCount):
         unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
 
 
+class NonCashExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_no_cash_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='partner_exchange_no_cash_counts')
+    exchange_direction = models.ForeignKey(NonCashDirection,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='no_cash_exchange_counts',
+                                           null=True,
+                                           default=None)
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке (безналичные)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (безналичные)'
+        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+
+
 class DirectionRate(BaseDirectionRate):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.CASCADE,

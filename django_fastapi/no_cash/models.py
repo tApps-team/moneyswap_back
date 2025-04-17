@@ -146,7 +146,7 @@ class ExchangeDirection(BaseExchangeDirection):
 
     def __str__(self):
         # return f'{self.exchange}:  {self.valute_from} -> {self.valute_to}'
-        return f'{self.exchange}:  {self.direction}'
+        return f'{self.exchange.name}:  {self.direction}'
     
 
 class ExchangeLinkCount(BaseExchangeLinkCount):

@@ -164,6 +164,17 @@ class ExchangeDirectionStacked(BaseExchangeDirectionStacked):
 class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
     model = ExchangeLinkCount
 
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange',
+                                                            'user',
+                                                            'exchange_direction',
+                                                            'exchange_direction__exchange',
+                                                            'exchange_direction__city',
+                                                            'exchange_direction__direction',
+                                                            'exchange_direction__direction__valute_from',
+                                                            'exchange_direction__direction__valute_to')\
+                                            .order_by('-count')
+
 
 #Отображение обменников в админ панели
 @admin.register(Exchange)
