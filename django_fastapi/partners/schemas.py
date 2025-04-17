@@ -264,8 +264,8 @@ class AddPartnerCityCountrySchema(BaseModel):
 
 
 class DeletePartnerDirectionSchema(BaseModel):
-    id: int
-    marker: Literal['country', 'city']
+    id: int = Field(default=None)
+    marker: Literal['country', 'city', 'no_cash']
     direction_id: int
 
 
@@ -341,6 +341,13 @@ class NewAddPartnerDirectionSchema(BaseModel):
     # is_active: bool
 
 
+class AddPartnerNoCashDirectionSchema(BaseModel):
+    valute_from: str
+    valute_to: str
+    is_active: bool
+    exchange_rates: list[PartnerExchangeRate]
+
+
 class EditedPartnerDirectionSchema(PartnerDirectionSchema):
     id: int
 #     city: str
@@ -375,6 +382,10 @@ class NewEditedPartnerDirectionSchema(BaseModel):
 class NewListEditedPartnerDirectionSchema(BaseModel):
     id: int
     marker: Literal['country', 'city']
+    directions: List[NewEditedPartnerDirectionSchema]
+
+
+class ListEditedPartnerNoCashDirectionSchema(BaseModel):
     directions: List[NewEditedPartnerDirectionSchema]
 
 

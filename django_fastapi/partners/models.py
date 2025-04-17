@@ -15,6 +15,8 @@ from general_models.models import (BaseExchange,
 
 from cash.models import Direction as CashDirection, City, Country
 
+from no_cash.models import Direction as NoCashDirection
+
 from .utils.models import get_limit_direction, is_positive_validator
 
 
@@ -274,6 +276,48 @@ class Direction(models.Model):
         return f'{self.city.exchange} {self.city} - {self.direction}'
 
 
+class NonCashDirection(models.Model):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='no_cash_directions')
+    direction = models.ForeignKey(NoCashDirection,
+                                  verbose_name='Направление',
+                                  on_delete=models.CASCADE,
+                                  related_name='partner_directions')
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=5,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=5,
+                                    null=True,
+                                    default=None)
+    time_update = models.DateTimeField('Последнее обновление',
+                                       auto_now_add=True,
+                                       help_text='Время указано по московскому часовому поясу. При не обновлении процентов или фикс. ставки в течении 3 дней, направление становится неактивным.')
+    is_active = models.BooleanField('Активно?', default=True)
+
+    class Meta:
+        verbose_name = 'Безналичное направление'
+        verbose_name_plural = 'Безналичные направления'
+        unique_together = (('exchange', 'direction'), )
+        ordering = ('exchange', 'direction')
+
+    def __str__(self):
+        return f'{self.exchange} - {self.direction}'
+
+
 class Review(BaseReview):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.CASCADE,
@@ -419,6 +463,31 @@ class CountryDirectionRate(BaseDirectionRate):
     class Meta:
         verbose_name = 'Объём направления (страны)'
         verbose_name_plural = 'Объёмы направлений (страны)'
+        unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
+
+
+class NonCashDirectionRate(BaseDirectionRate):
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_no_cash_rates')
+    exchange_direction = models.ForeignKey(NonCashDirection,
+                                           on_delete=models.CASCADE,
+                                           verbose_name='Готовое направление',
+                                           related_name='direction_rates')
+    
+    def clean(self):
+        direction_rate_count = NonCashDirectionRate.objects.filter(exchange_id=self.exchange_id,
+                                                            exchange_direction_id=self.exchange_direction_id)\
+                                                    .count()
+        if direction_rate_count >= 3:
+            raise ValidationError('Достигнут лимит записей по Объемам для партнера на выбранное направление (3 шт)')
+        
+        return super().clean()
+
+    class Meta:
+        verbose_name = 'Объём направления (безналичные)'
+        verbose_name_plural = 'Объёмы направлений (безналичные)'
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
     
 
