@@ -679,7 +679,8 @@ def get_exchange_list():
                                             'is_active',
                                             'exchange_marker',
                                             'partner_link')\
-                                    .filter(is_active=True)
+                                    .filter(is_active=True,
+                                            direction_count__gt=0)
 
         queries.append(exchange_query)
 
@@ -709,6 +710,8 @@ def get_exchange_list():
             exchange_dict[exchange_name] = exchange
 
     print(len(connection.queries))
+    print(connection.queries)
+
     # return sorted(exchange_list,
                 #   key=lambda el: el.get('name'))
     return sorted(exchange_dict.values(),

@@ -72,23 +72,23 @@ def parse_reviews(driver: WebDriver,
             else:
                 review = new_add_review_to_db(exchange_name, data, marker)
 ##
-                # comments = row.find_element(By.CLASS_NAME, 'review_comment_expand')
+                comments = row.find_element(By.CLASS_NAME, 'review_comment_expand')
 
                 # print(comments.is_displayed())
 
-                # if comments.is_displayed():
-                #     pass
-                #     # comments.click()
-                #     # comments = row.find_elements(By.CLASS_NAME, 'review_comment')
-                #     # for comment in comments:
-                #     #     try:
-                #     #         data = collect_data(comment, 'comment')
-                #     #     except ValueError:
-                #     #         continue
-                #     #     else:
-                #     #         add_comment_to_db(review, data, marker)
-                # else:
-                #     review = new_add_review_to_db(exchange_name, data, marker)
+                if comments.is_displayed():
+                    pass
+                    comments.click()
+                    comments = row.find_elements(By.CLASS_NAME, 'review_comment')
+                    for comment in comments:
+                        try:
+                            data = collect_data(comment, 'comment')
+                        except ValueError:
+                            continue
+                        else:
+                            add_comment_to_db(review, data, marker)
+                else:
+                    review = new_add_review_to_db(exchange_name, data, marker)
 
     except Exception as ex:
         print(ex)
