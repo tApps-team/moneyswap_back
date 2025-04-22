@@ -1093,7 +1093,9 @@ def get_reviews_by_exchange(exchange_id: int,
             review_model = partner_models.Review
 
     reviews = review_model.objects.select_related('guest')\
-                                    .annotate(comment_count=Count('admin_comments'))\
+                                    .annotate(admin_comment_count=Count('admin_comments'))\
+                                    .annotate(user_comment_count=Count('comments'))\
+                                    .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
                                     .filter(exchange_id=exchange_id,
                                             moderation=True)
                                     # .order_by('-time_create')
@@ -1244,21 +1246,45 @@ def get_comments_by_review(exchange_id: int,
     match exchange_marker:
         case 'no_cash':
             # review_model = no_cash_models.Review
-            comment_model = no_cash_models.AdminComment
+            user_comment_model = no_cash_models.Comment
+            admin_comment_model = no_cash_models.AdminComment
         case 'cash':
             # review_model = cash_models.Review
-            comment_model = cash_models.AdminComment
+            user_comment_model = cash_models.Comment
+            admin_comment_model = cash_models.AdminComment
         case 'partner':
             # review_model = partner_models.Review
-            comment_model = partner_models.AdminComment
+            user_comment_model = partner_models.Comment
+            admin_comment_model = partner_models.AdminComment
 
     # review = review_model.objects.filter(exchange_id=exchange_id,
     #                                      pk=review_id)
-    comments = comment_model.objects.select_related('review',
+    user_comments = user_comment_model.objects.select_related('review',
                                                     'review__exchange')\
+                                    .annotate(role=annotate_string_field('user'))\
                                     .filter(review_id=review_id,
                                             review__exchange_id=exchange_id)\
-                                    .order_by('time_create').all()
+                                    .values('id',
+                                            'time_create',
+                                            'text',
+                                            'username',
+                                            'role')\
+                                    # .order_by('time_create')
+    
+    admin_comments = admin_comment_model.objects.select_related('review',
+                                                    'review__exchange')\
+                                    .annotate(role=annotate_string_field('admin'))\
+                                    .annotate(username=annotate_string_field('admin'))\
+                                    .filter(review_id=review_id,
+                                            review__exchange_id=exchange_id)\
+                                    .values('id',
+                                            'time_create',
+                                            'text',
+                                            'username',
+                                            'role')\
+                                    # .order_by('time_create')
+    
+    comments = user_comments.union(admin_comments)
 
     if not comments:
         raise HTTPException(status_code=404)
@@ -1267,12 +1293,15 @@ def get_comments_by_review(exchange_id: int,
     # comments = review.first().admin_comments\
     #                             .order_by('time_create').all()
 
-    for comment in comments:
-        if isinstance(comment, BaseAdminComment):
-            comment.role = CommentRoleEnum.admin
-        date, time = comment.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-        comment.comment_date = date
-        comment.comment_time = time
+    for comment in sorted(comments, key=lambda el: el.get('time_create')):
+        # if isinstance(comment, BaseAdminComment):
+        #     comment.role = CommentRoleEnum.admin
+        date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
+        # comment.comment_date = date
+        # comment.comment_time = time
+        comment['comment_date'] = date
+        comment['comment_time'] = time
+
     #
     # print(len(connection.queries))
     return comments

@@ -134,7 +134,8 @@ class CommentSchema(BaseModel):
     comment_time: str
     text: str
     role: CommentRoleEnum
-    name: str | None = Field(default=None)
+    name: str | None = Field(alias='username',
+                             default=None)
 
 
 
