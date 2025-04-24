@@ -3,6 +3,8 @@ from typing import Any
 
 from django.contrib import admin
 from django.db.models.query import QuerySet
+from django.db.models import Count, Q, Sum, Value, Subquery, OuterRef
+from django.db.models.functions import Coalesce
 from django.http.request import HttpRequest
 from django.utils.safestring import mark_safe
 
@@ -25,6 +27,8 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseExchangeLinkCountAdmin,
                                   BaseExchangeLinkCountStacked)
 from general_models.tasks import parse_reviews_for_exchange
+
+import no_cash.models as no_cash_models
 
 from .models import (Country,
                      City,
@@ -184,6 +188,23 @@ class ExchangeAdmin(BaseExchangeAdmin):
         ReviewStacked,
         ExchangeLinkCountStacked,
         ]
+
+    def get_total_direction_count(self, obj):
+        print(obj.__dict__)
+        direction_count = obj.direction_count
+        try:
+            no_cash_exchange = no_cash_models.Exchange.objects.annotate(no_cash_direction_count=Count('directions',
+                                                                                                        filter=Q(directions__is_active=True)))\
+                                                                .get(name=obj.name)
+        except Exception as ex:
+            pass
+        else:
+            if no_cash_exchange and no_cash_exchange.no_cash_direction_count:
+                direction_count += no_cash_exchange.no_cash_direction_count
+
+        return direction_count
+    
+    get_total_direction_count.short_description = 'Кол-во активных направлений'
     
     def get_formset_kwargs(self, request, obj, inline, prefix):
         formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
@@ -197,7 +218,6 @@ class ExchangeAdmin(BaseExchangeAdmin):
 
             formset_kwargs['queryset'] = queryset.filter(pk__in=ids)
         return formset_kwargs
-
     
     def has_add_permission(self, request: HttpRequest) -> bool:
         return super().has_add_permission(request)
@@ -234,7 +254,20 @@ class ExchangeAdmin(BaseExchangeAdmin):
             print('NOT CHANGE!!!!')
             super().save_model(request, obj, form, change)
             # parse_reviews_for_exchange.delay(obj.en_name, 'cash')
-    
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        # direction_count_subquery = 
+        direction_count_subquery = ExchangeDirection.objects.filter(
+            exchange_id=OuterRef('id'),
+            is_active=True,
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Count('id'), Value(0))
+        ).values('total_count')
+
+        return queryset.annotate(direction_count=Subquery(direction_count_subquery))
+
 
 #Отображение направлений в админ панели
 @admin.register(Direction)

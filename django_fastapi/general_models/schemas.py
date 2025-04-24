@@ -90,6 +90,18 @@ class SpecialDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
     info: InfoSchema
 
 
+class PartnerExchangeRate(BaseModel):
+    min_count: int | None
+    max_count: int | None
+    in_count: float
+    out_count: float
+    rate_coefficient: float | None = Field(default=None)
+
+
+class SpecialPartnerNoCashDirectionSchema(SpecialDirectionMultiWithAmlModel):
+    exchange_rates: list[PartnerExchangeRate] | None
+
+
 class ReviewViewSchema(BaseModel):
     id: int
     username: str

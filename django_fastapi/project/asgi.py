@@ -25,7 +25,7 @@ from general_models.utils.http_exc import (CustomJSONException,
 
 #Связывает Django и FastAPI
 def get_application() -> FastAPI:
-    app = FastAPI(title='BestChangeTgBot API', debug=settings.DEBUG)
+    app = FastAPI(title='MoneySwap API', debug=settings.DEBUG)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

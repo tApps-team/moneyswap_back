@@ -21,7 +21,9 @@ from partners.models import (Direction,
                              QRValutePartner,
                              Bankomat,
                              DirectionRate,
-                             CountryDirectionRate)
+                             CountryDirectionRate,
+                             NonCashDirection,
+                             NonCashDirectionRate)
 
 from partners.schemas import (PartnerCityInfoSchema, PartnerCityInfoWithAmlSchema,
                               UpdatedTimeByPartnerCitySchema,
@@ -1005,6 +1007,90 @@ def test_get_partner_directions2_with_aml(valute_from: str,
                 result.append(direction)
 
     return result
+
+
+def get_no_cash_partner_directions(valute_from: str,
+                                   valute_to: str):
+    print(valute_from, valute_to)
+    review_counts = get_reviews_count_filters('exchange_direction')
+    
+    partner_prefetch = Prefetch('direction_rates',
+                                queryset=NonCashDirectionRate.objects.order_by('min_rate_limit'))
+    
+    directions = NonCashDirection.objects.select_related('exchange',
+                                                                 'direction',
+                                                                 'direction__valute_from',
+                                                                 'direction__valute_to')\
+                                                    .prefetch_related(partner_prefetch)\
+                                                    .annotate(positive_review_count=review_counts['positive'])\
+                                                    .annotate(neutral_review_count=review_counts['neutral'])\
+                                                    .annotate(negative_review_count=review_counts['negative'])\
+                                                    .filter(direction__valute_from=valute_from,
+                                                            direction__valute_to=valute_to,
+                                                            is_active=True,
+                                                            exchange__is_active=True)
+
+    direction_list = []
+    for direction in directions:
+
+        exchange_rates = direction.direction_rates.all()
+
+        _in_count = direction.in_count
+        _out_count = direction.out_count
+        _direction_min_amount = direction.min_amount
+        _direction_max_amount = direction.max_amount
+
+        addittional_exchange_rates = None
+
+        if exchange_rates:
+            exchange_rate_list = [(el.in_count,
+                                   el.out_count,
+                                   el.min_rate_limit,
+                                   el.max_rate_limit,
+                                   el.rate_coefficient) for el in exchange_rates]
+            exchange_rate_list.append((_in_count,
+                                       _out_count,
+                                       _direction_min_amount,
+                                       _direction_max_amount,
+                                       None))
+
+            sorted_exchange_rates = sorted(exchange_rate_list,
+                                           key=lambda el: (-el[1], el[0]))
+            
+            best_exchange_rate = sorted_exchange_rates[0]
+            _in_count, _out_count, _min_amount, _max_amount, _ = best_exchange_rate
+
+            addittional_exchange_rates = sorted_exchange_rates
+
+        print('after', _in_count, _out_count)
+
+        if addittional_exchange_rates:
+            direction.exchange_rates = [{'in_count': el[0],
+                                         'out_count': el[1],
+                                         'min_count': el[2],
+                                         'max_count': el[3],
+                                         'rate_coefficient': el[-1]} for el in addittional_exchange_rates]
+        else:
+            direction.exchange_rates = None
+
+        direction.exchange_marker = 'partner'
+        direction.valute_from = valute_from
+        direction.valute_to = valute_to
+        direction.min_amount = _direction_min_amount
+        direction.max_amount = _direction_max_amount
+        direction.in_count = _in_count
+        direction.out_count = _out_count
+        direction.params = None
+        direction.fromfee = None
+
+        # direction.info = PartnerCityInfoWithAmlSchema(
+        #     high_aml=direction.exchange.high_aml,
+        #     )
+        direction_list.append(direction)
+    
+    for d in direction_list:
+        print(d.__dict__)
+    return direction_list
 
 
 # def get_partner_directions_for_test(valute_from: str,

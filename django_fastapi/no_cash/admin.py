@@ -1,8 +1,12 @@
 from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
+from django.db.models import Count, Q, Sum, Value, Subquery, OuterRef
+from django.db.models.functions import Coalesce
 from django.http import HttpRequest
 from django.db.models import Sum, Count
+
+import cash.models as cash_models
 
 from no_cash.models import (Exchange,
                             Direction,
@@ -104,6 +108,23 @@ class ExchangeAdmin(BaseExchangeAdmin):
         ExchangeLinkCountStacked,
         ]
     
+    def get_total_direction_count(self, obj):
+        print(obj.__dict__)
+        direction_count = obj.direction_count
+        try:
+            cash_exchange = cash_models.Exchange.objects.annotate(cash_direction_count=Count('directions',
+                                                                                                        filter=Q(directions__is_active=True)))\
+                                                                .get(name=obj.name)
+        except Exception as ex:
+            pass
+        else:
+            if cash_exchange and cash_exchange.cash_direction_count:
+                direction_count += cash_exchange.cash_direction_count
+
+        return direction_count
+    
+    get_total_direction_count.short_description = 'Кол-во активных направлений'
+    
     def get_formset_kwargs(self, request, obj, inline, prefix):
         formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
         
@@ -155,6 +176,19 @@ class ExchangeAdmin(BaseExchangeAdmin):
             print('NOT CHANGE!!!!')
             super().save_model(request, obj, form, change)
             # parse_reviews_for_exchange.delay(obj.en_name, 'no_cash')
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        # direction_count_subquery = 
+        direction_count_subquery = ExchangeDirection.objects.filter(
+            exchange_id=OuterRef('id'),
+            is_active=True,
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Count('id'), Value(0))
+        ).values('total_count')
+
+        return queryset.annotate(direction_count=Subquery(direction_count_subquery))
 
 
 #Отображение направлений в админ панели

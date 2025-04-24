@@ -27,7 +27,7 @@ from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocati
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import Valute, en_type_valute_dict, BaseExchange
-from general_models.schemas import (SpecialDirectionMultiWithAmlModel, ValuteListSchema1,
+from general_models.schemas import (SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema, ValuteListSchema1,
                                     ValuteListSchema2,
                                     ValuteModel,
                                     EnValuteModel,
@@ -750,7 +750,8 @@ def test_get_schema_model_by_exchange_marker(exchange_marker: Literal['no_cash',
 def test_get_schema_model_by_exchange_marker_with_aml(exchange_marker: Literal['no_cash',
                                                                                'cash',
                                                                                'partner'],
-                                                    with_location: bool):
+                                                    with_location: bool,
+                                                    is_no_cash: bool = False):
     match exchange_marker:
         case 'no_cash':
             schema_model = SpecialDirectionMultiWithAmlModel
@@ -758,10 +759,14 @@ def test_get_schema_model_by_exchange_marker_with_aml(exchange_marker: Literal['
             schema_model = SpecialCashDirectionMultiWithAmlModel if not with_location\
                                                              else SpecialCashDirectionMultiWithLocationModel
         case 'partner':
-            # schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesModel if not with_location\
-            #                                                  else SpecialCashDirectionMultiPrtnerWithLocationModel
-            schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel if not with_location\
-                                                             else SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
+            if is_no_cash:
+                # pass
+                schema_model = SpecialPartnerNoCashDirectionSchema
+            else:
+                # schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesModel if not with_location\
+                #                                                  else SpecialCashDirectionMultiPrtnerWithLocationModel
+                schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel if not with_location\
+                                                                else SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
 
             # print(schema_model)
             # SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
@@ -870,7 +875,8 @@ def get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
                                         valute_from: str,
                                         valute_to: str,
                                         city: str = None,
-                                        with_location: bool = False):
+                                        with_location: bool = False,
+                                        is_no_cash: bool = False):
     '''
     Возвращает список готовых направлений с необходимыми данными
     '''
@@ -952,7 +958,8 @@ def get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
         round_valute_values(exchange_direction)
 
         schema_model = test_get_schema_model_by_exchange_marker_with_aml(exchange_direction['exchange_marker'],
-                                                                         with_location)
+                                                                         with_location,
+                                                                         is_no_cash=is_no_cash)
 
         # if exchange_direction['exchange_marker'] == 'partner':
         exchange_direction = schema_model(**exchange_direction)

@@ -8,7 +8,7 @@ from django.db import connection
 
 from django import forms
 from django.contrib import admin, messages
-from django.db.models import Sum, Value, OuterRef, Subquery
+from django.db.models import Sum, Value, OuterRef, Subquery, Count
 from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
@@ -563,6 +563,7 @@ class NonCashDirectionAdmin(admin.ModelAdmin):
         'is_active',
         'time_update',
         )
+    raw_id_fields = ('direction',)
 
     def exchange_name(self, obj):
         return obj.exchange.name
@@ -940,6 +941,9 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     # readonly_fields = (
     #     'is_available',
     #     )
+    exclude = (
+        'course_count',
+    )
     filter_horizontal = ()
 
     inlines = [
@@ -986,23 +990,52 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
         return obj.country_link_count
     
+    def get_total_direction_count(self, obj):
+        return obj.city_direction_count + obj.country_direction_count
+    
     link_count.short_description = 'Счетчик перехода по ссылке'
 
     country_link_count.short_description = 'Счетчик перехода по ссылке (страны)'
+
+    get_total_direction_count.short_description = 'Кол-во активных направлений'
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
                                                                               'тест',
                                                                               'СММ группа')).exists()):
-            readonly_fields = ('time_create', ) + readonly_fields
+            readonly_fields = ('time_create', 'get_total_direction_count', ) + readonly_fields
         else:
-            readonly_fields = ('partner_link', 'time_create',) + readonly_fields
+            readonly_fields = ('partner_link', 'time_create', 'get_total_direction_count',) + readonly_fields
 
         return readonly_fields + ('link_count', 'country_link_count', 'is_available')
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         # print(len(connection.queries))
+
+        city_direction_count_subquery = Direction.objects.select_related(
+            'city',
+            'city__exchange',
+        ).filter(
+            city__exchange__pk=OuterRef('id'),
+            is_active=True,
+        ).values('city__exchange__pk').annotate(
+            direction_count=Coalesce(Count('id'), Value(0))
+        ).values('direction_count')
+
+        country_direction_count_subquery = CountryDirection.objects.select_related(
+            'country',
+            'country__exchange',
+        ).filter(
+            country__exchange__pk=OuterRef('id'),
+            is_active=True,
+        ).values('country__exchange__pk').annotate(
+            direction_count=Coalesce(Count('id'), Value(0))
+        ).values('direction_count')
+
+        # return exchange_list.annotate(city_direction_count=city_direction_count_subquery,
+        #                             country_direction_count=country_direction_count_subquery,
+        #                             direction_count=Coalesce(F('city_direction_count'), Value(0))+Coalesce(F('country_direction_count'), Value(0)))
 
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
                                                                               'тест',
@@ -1048,7 +1081,9 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         # return queryset.annotate(link_count=Sum('exchange_counts__count'))\
         #                 .annotate(country_link_count=Sum('exchange_country_counts__count'))
         return queryset.annotate(link_count=Subquery(link_count_subquery),
-                                 country_link_count=Subquery(country_link_count_subquery))
+                                 country_link_count=Subquery(country_link_count_subquery),
+                                 city_direction_count=Coalesce(Subquery(city_direction_count_subquery), Value(0)),
+                                 country_direction_count=Coalesce(Subquery(country_direction_count_subquery), Value(0)))
                         # .annotate(link_count=ExpressionWrapper(F('count') + F('country_link_count'),
                         #                                        output_field=IntegerField()))
 
