@@ -1577,6 +1577,7 @@ def get_comments_by_review(exchange_id: int,
     #
     # comments = review.first().admin_comments\
     #                             .order_by('time_create').all()
+    comment_list = []
 
     for comment in sorted(comments, key=lambda el: el.get('time_create')):
         # if isinstance(comment, BaseAdminComment):
@@ -1587,9 +1588,10 @@ def get_comments_by_review(exchange_id: int,
         comment['comment_date'] = date
         comment['comment_time'] = time
 
+        comment_list.append(comment)
     #
     # print(len(connection.queries))
-    return comments
+    return comment_list
 
 
 # @common_router.get('/change_interval')
