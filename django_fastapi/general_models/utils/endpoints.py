@@ -163,7 +163,8 @@ def generate_top_exchanges_query_by_model(exchange_marker: str,
     top_exchanges = top_exchanges\
                         .annotate(link_count=Sum('exchange_counts__count'))\
                         .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-                        .filter(link_count__isnull=False)\
+                        .filter(is_active=True,
+                                link_count__isnull=False)\
                         .values('pk',
                                 'icon_url',
                                 'name',
