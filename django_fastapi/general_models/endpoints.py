@@ -1524,6 +1524,9 @@ def get_comments_by_review(exchange_id: int,
                            exchange_marker: str,
                            review_id: int):
     check_exchage_marker(exchange_marker)
+
+    if exchange_marker == 'both':
+        exchange_marker = 'no_cash'
     # print(len(connection.queries))
     match exchange_marker:
         case 'no_cash':

@@ -1478,9 +1478,9 @@ def increase_popular_count_direction(**kwargs):
 
 
 def check_exchage_marker(exchange_marker: str):
-    if exchange_marker not in {'no_cash', 'cash', 'partner'}:
+    if exchange_marker not in {'no_cash', 'cash', 'partner', 'both'}:
         raise HTTPException(status_code=400,
-                            detail='Параметр "exchange_marker" должен быть одним из следующих: no_cash, cash, partner')
+                            detail='Параметр "exchange_marker" должен быть одним из следующих: no_cash, cash, partner, both')
     
 
 def check_perms_for_adding_review(exchange_id: int,
