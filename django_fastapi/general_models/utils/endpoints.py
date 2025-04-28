@@ -1498,6 +1498,8 @@ def check_perms_for_adding_review(exchange_id: int,
             review_model = cash_models.Review
         case 'partner':
             review_model = partner_models.Review
+        case 'both':
+            review_model = no_cash_models.Review
 
     check_time = datetime.now() - time_delta
 
