@@ -188,7 +188,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
             total_count=Coalesce(Count('id'), Value(0))
         ).values('total_count')
 
-        return queryset.annotate(direction_count=Subquery(direction_count_subquery))
+        return queryset.annotate(direction_count=Coalesce(Subquery(direction_count_subquery), Value(0)))
 
 
 #Отображение направлений в админ панели

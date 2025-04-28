@@ -1080,8 +1080,8 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
         # return queryset.annotate(link_count=Sum('exchange_counts__count'))\
         #                 .annotate(country_link_count=Sum('exchange_country_counts__count'))
-        return queryset.annotate(link_count=Subquery(link_count_subquery),
-                                 country_link_count=Subquery(country_link_count_subquery),
+        return queryset.annotate(link_count=Coalesce(Subquery(link_count_subquery), Value(0)),
+                                 country_link_count=Coalesce(Subquery(country_link_count_subquery), Value(0)),
                                  city_direction_count=Coalesce(Subquery(city_direction_count_subquery), Value(0)),
                                  country_direction_count=Coalesce(Subquery(country_direction_count_subquery), Value(0)))
                         # .annotate(link_count=ExpressionWrapper(F('count') + F('country_link_count'),
