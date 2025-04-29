@@ -367,6 +367,9 @@ class BaseReview(BaseReviewComment):
         abstract = True
     
     def __str__(self):
+        if self.time_create is None:
+            self.time_create = datetime.now()
+            
         date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
         return f' отзыв {self.pk}, Обменник: {self.exchange}, Пользователь: {self.username}, Время создания: {date}'
 
@@ -377,6 +380,9 @@ class BaseComment(BaseReviewComment):
         abstract = True
 
     def __str__(self):
+        if self.time_create is None:
+            self.time_create = datetime.now()
+
         date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
         return f' комментарий {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange}, Пользователь: {self.username}, Время создания: {date}'
 
@@ -394,6 +400,9 @@ class BaseAdminComment(models.Model):
         abstract = True
 
     def __str__(self):
+        if self.time_create is None:
+            self.time_create = datetime.now()
+
         date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
         return f' комментарий администрации {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange}, Время создания: {date}'
 #
