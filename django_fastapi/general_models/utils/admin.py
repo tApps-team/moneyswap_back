@@ -1,4 +1,5 @@
 from typing import Any
+from datetime import datetime
 
 from django.contrib import admin
 admin.filters.SimpleListFilter
@@ -16,6 +17,10 @@ class ReviewAdminMixin:
             for instance in instances:
                 if hasattr(instance, 'moderation'):
                     instance.moderation = instance.status == 'Опубликован'
+                    
+                    if hasattr(instance, 'time_create'):
+                        instance.time_create = datetime.now() if instance.time_create is None else instance.time_create
+                    
                     instance.save()
             return super().save_formset(request, form, formset, change)
         
