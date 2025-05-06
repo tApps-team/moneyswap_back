@@ -1462,6 +1462,8 @@ def add_review_by_exchange(review: AddReviewSchema):
             review_model = cash_models.Review
         case 'partner':
             review_model = partner_models.Review
+        case 'both':
+            review_model = no_cash_models.Review
 
     new_review = {
         'exchange_id': review.exchange_id,
