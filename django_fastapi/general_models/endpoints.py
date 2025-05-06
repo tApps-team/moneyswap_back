@@ -1454,6 +1454,9 @@ def add_review_by_exchange(review: AddReviewSchema):
         raise HTTPException(status_code=423,
                             detail='Неотрицательный отзыв не требует номера транзакции')
     
+    if not Guest.objects.filter(tg_id=review.tg_id).exists():
+        raise HTTPException(status_code=404,
+                            detail='User don`t exist in db')
     
     match review.exchange_marker:
         case 'no_cash':
