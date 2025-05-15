@@ -282,7 +282,11 @@ def get_current_exchange_directions(request: Request,
         exchange_direction_list = test_no_cash_exchange_directions4(request, params)
     else:
         exchange_direction_list = test_cash_exchange_directions3(request, params)
-    
+
+    # for query in connection.queries:
+    #     print(query)
+    #     print('*' * 8)
+
     return exchange_direction_list
 
 

@@ -83,8 +83,8 @@ def parse_update_direction_by_city(dict_for_parse: dict,
             #     fromfee = None
                 
             d = {
-                'in_count': element.xpath('./in/text()')[0],
-                'out_count': element.xpath('./out/text()')[0],
+                'in_count': abs(element.xpath('./in/text()')[0]),
+                'out_count': abs(element.xpath('./out/text()')[0]),
                 'min_amount': min_amount[0],
                 'max_amount': max_amount[0],
                 'fromfee': fromfee,
@@ -399,8 +399,8 @@ def parse_create_direction_by_city(dict_for_parse: dict,
                     #     fromfee = fromfee if fromfee.isdigit() else None
 
                     d = {
-                        'in_count': element.xpath('./in/text()')[0],
-                        'out_count': element.xpath('./out/text()')[0],
+                        'in_count': abs(element.xpath('./in/text()')[0]),
+                        'out_count': abs(element.xpath('./out/text()')[0]),
                         'min_amount': min_amount[0],
                         'max_amount': max_amount[0],
                         'fromfee': fromfee,
