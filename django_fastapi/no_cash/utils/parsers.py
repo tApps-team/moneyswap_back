@@ -92,8 +92,8 @@ def parse_xml_to_dict(dict_for_parse: dict,
 
                         try:
                             d = {
-                                'in_count': abs(element.xpath('./in/text()')[0]),
-                                'out_count': abs(element.xpath('./out/text()')[0]),
+                                'in_count': element.xpath('./in/text()')[0],
+                                'out_count': element.xpath('./out/text()')[0],
                                 'min_amount': min_amount[0],
                                 'max_amount': max_amount[0],
                                 'is_active': True,
@@ -174,8 +174,8 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
 
                     try:
                         d = {
-                            'in_count': abs(element.xpath('./in/text()')[0]),
-                            'out_count': abs(element.xpath('./out/text()')[0]),
+                            'in_count': element.xpath('./in/text()')[0],
+                            'out_count': element.xpath('./out/text()')[0],
                             'min_amount': min_amount[0],
                             'max_amount': max_amount[0],
                             # 'fromfee': fromfee,
