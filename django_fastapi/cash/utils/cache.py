@@ -318,9 +318,11 @@ def get_or_set_cache_available_countries4(request: Request):
                                                 .prefetch_related('cash_directions',
                                                                 'partner_cities')\
                                                 .annotate(partner_direction_count=Count('partner_cities__partner_directions',
-                                                                                        filter=Q(partner_cities__partner_directions__is_active=True)))\
+                                                                                        filter=Q(partner_cities__partner_directions__is_active=True) \
+                                                                                            & Q(partner_cities__partner_directions__city__exchange__is_active=True)))\
                                                 .annotate(direction_count=Count('cash_directions',
-                                                                                filter=Q(cash_directions__is_active=True)))\
+                                                                                filter=Q(cash_directions__is_active=True) \
+                                                                                    & Q(cash_directions__exchange__is_active=True)))\
                                                 .filter(Q(direction_count__gt=0) \
                                                         | Q(partner_direction_count__gt=0) \
                                                             | Q(country__partner_countries__partner_directions__is_active=True))\
@@ -353,7 +355,8 @@ def get_or_set_cache_available_countries4(request: Request):
         countries = Country.objects.prefetch_related(prefetch_cities,
                                                     prefetch_countries)\
                                     .annotate(direction_count=Count('cities__cash_directions',
-                                                                    filter=Q(cities__cash_directions__is_active=True)))\
+                                                                    filter=Q(cities__cash_directions__is_active=True) \
+                                                                        & Q(cities__cash_directions__exchange__is_active=True)))\
                                     .annotate(partner_direction_count=Count('cities__partner_cities__partner_directions',
                                                                     filter=Q(cities__partner_cities__partner_directions__is_active=True)))\
                                     .annotate(country_direction_count=Count('partner_countries__partner_directions',
