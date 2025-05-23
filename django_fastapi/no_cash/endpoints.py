@@ -115,18 +115,39 @@ def no_cash_valutes_3(request: Request,
                                 .filter(is_active=True,
                                         exchange__is_active=True)
 
+    partner_queries = NonCashDirection.objects\
+                                        .select_related('direction',
+                                                        'direction__valute_from',
+                                                        'direction__valute_to',
+                                                        'exchange')\
+                                        .filter(is_active=True,
+                                                exchange__is_active=True,
+                                                exchange__isnull=False)
+
     if base == 'ALL':
-        # queries = queries.values_list('direction__valute_from').all()
-        queries = queries.order_by('direction__valute_from_id')\
-                            .distinct('direction__valute_from_id')\
-                            .values_list('direction__valute_from_id', flat=True)
+        queries = queries.values_list('direction__valute_from').all()
+        partner_queries = partner_queries\
+                                .values_list('direction__valute_from__code_name').all()
     else:
-        # queries = queries.filter(direction__valute_from=base)\
-        #                     .values_list('direction__valute_to').all()
-        queries = queries.filter(direction__valute_from_id=base)\
-                            .order_by('direction__valute_to_id')\
-                            .distinct('direction__valute_to_id')\
-                            .values_list('direction__valute_to_id', flat=True)
+        queries = queries.filter(direction__valute_from=base)\
+                                    .values_list('direction__valute_to').all()
+        partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
+                                        .values_list('direction__valute_to__code_name').all()
+
+    queries = queries.union(partner_queries)
+
+    # if base == 'ALL':
+    #     # queries = queries.values_list('direction__valute_from').all()
+    #     queries = queries.order_by('direction__valute_from_id')\
+    #                         .distinct('direction__valute_from_id')\
+    #                         .values_list('direction__valute_from_id', flat=True)
+    # else:
+    #     # queries = queries.filter(direction__valute_from=base)\
+    #     #                     .values_list('direction__valute_to').all()
+    #     queries = queries.filter(direction__valute_from_id=base)\
+    #                         .order_by('direction__valute_to_id')\
+    #                         .distinct('direction__valute_to_id')\
+    #                         .values_list('direction__valute_to_id', flat=True)
 
         
     if not queries:
