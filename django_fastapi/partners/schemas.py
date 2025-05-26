@@ -359,6 +359,8 @@ class NewAddPartnerDirectionSchema(BaseModel):
 class AddPartnerNoCashDirectionSchema(BaseModel):
     valute_from: str
     valute_to: str
+    min_amount: float | None = Field(default=None)
+    max_amount: float | None = Field(default=None)
     is_active: bool
     exchange_rates: list[PartnerExchangeRate]
 

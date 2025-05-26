@@ -385,7 +385,7 @@ def test_no_cash_exchange_directions4(request: Request,
     partner_directions = get_no_cash_partner_directions(valute_from,
                                                         valute_to)
     
-    print(partner_directions)
+    # print(partner_directions)
     
     queries = sorted(list(queries) + list(partner_directions),
                      key=lambda query: (-query.exchange.is_vip,

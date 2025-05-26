@@ -1754,6 +1754,8 @@ def add_partner_direction(partner: partner_dependency,
 
     valute_from = data.pop('valute_from')
     valute_to = data.pop('valute_to')
+    # __min_amount = data.pop('min_amount')
+    # __max_amount = data.pop('max_amount')
     exchange_rates = data.pop('exchange_rates')
         
     try:
@@ -1779,10 +1781,12 @@ def add_partner_direction(partner: partner_dependency,
 
         main_exchange_rate, additional_exchange_rates = exchange_rates[0], exchange_rates[1:]
 
-        convert_min_max_count(main_exchange_rate,
-                              marker='main')
+        # convert_min_max_count(main_exchange_rate,
+        #                       marker='main')
 
         main_exchange_rate.pop('rate_coefficient')
+        main_exchange_rate.pop('min_count')
+        main_exchange_rate.pop('max_count')
 
         data.update(main_exchange_rate)
 

@@ -1050,8 +1050,8 @@ def get_no_cash_partner_directions(valute_from: str,
                                    el.rate_coefficient) for el in exchange_rates]
             exchange_rate_list.append((_in_count,
                                        _out_count,
-                                       _direction_min_amount,
-                                       _direction_max_amount,
+                                       int(_direction_min_amount) if _direction_min_amount else None,
+                                       int(_direction_max_amount) if _direction_min_amount else None,
                                        None))
 
             sorted_exchange_rates = sorted(exchange_rate_list,
@@ -1076,8 +1076,8 @@ def get_no_cash_partner_directions(valute_from: str,
         direction.exchange_marker = 'partner'
         direction.valute_from = valute_from
         direction.valute_to = valute_to
-        direction.min_amount = _direction_min_amount
-        direction.max_amount = _direction_max_amount
+        direction.min_amount = str(_direction_min_amount) if _direction_min_amount else None
+        direction.max_amount = str(_direction_max_amount) if _direction_max_amount else None
         direction.in_count = _in_count
         direction.out_count = _out_count
         direction.params = None
