@@ -769,6 +769,9 @@ class ExchangeAdminAdmin(admin.ModelAdmin):
         'exchange_name',
         'exchange_marker',
     )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('user')
     # readonly_fields = (
     #     'moderation',
     # )
