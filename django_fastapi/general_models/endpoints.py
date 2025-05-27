@@ -1368,6 +1368,7 @@ def get_top_coins():
 def get_reviews_by_exchange(exchange_id: int,
                             exchange_marker: str,
                             page: int,
+                            review_id: int = None,
                             element_on_page: int = None,
                             grade_filter: int = None):
     if exchange_marker == 'both':     # !
@@ -1399,6 +1400,23 @@ def get_reviews_by_exchange(exchange_id: int,
                                     .filter(exchange_id=exchange_id,
                                             moderation=True)
                                     # .order_by('-time_create')
+    if review_id:
+        reviews = reviews.filter(pk=review_id)
+        
+        for review in reviews:
+            date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+            review.username = review.username if review.guest is None else review.guest.username
+            review.review_date = date
+            review.review_time = time
+            review_list.append(ReviewViewSchema(**review.__dict__))
+
+        return ReviewsByExchangeSchema(page=page,
+                                    pages=1,
+                                    exchange_id=exchange_id,
+                                    exchange_marker=exchange_marker,
+                                    element_on_page=len(review_list),
+                                    content=review_list)
+
     if grade_filter is not None:
         reviews = reviews.filter(grade=str(grade_filter))
 
@@ -1449,7 +1467,7 @@ def get_reviews_by_exchange(exchange_id: int,
 @review_router.post('/add_review_by_exchange')
 def add_review_by_exchange(review: AddReviewSchema):
     check_exchage_marker(review.exchange_marker)
-    
+
     check_perms_for_adding_review(exchange_id=review.exchange_id,
                                   exchange_marker=review.exchange_marker,
                                   tg_id=review.tg_id)

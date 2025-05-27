@@ -1,11 +1,16 @@
 from datetime import datetime
 
+from asgiref.sync import async_to_sync
+
 from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 
 from django_celery_beat.models import PeriodicTask
 
+from general_models.utils.endpoints import send_review_notifitation_to_exchange_admin
 from general_models.utils.base import get_actual_datetime
+
+from general_models.models import ExchangeAdmin
 
 from .models import Exchange, Direction, ExchangeDirection, Review, Comment, AdminComment
 from .periodic_tasks import (manage_periodic_task_for_create,
@@ -101,3 +106,22 @@ def change_time_create_for_comment(sender, instance, **kwargs):
 def change_time_create_for_comment(sender, instance, **kwargs):
     if instance.time_create is None:
         instance.time_create = datetime.now()
+
+
+@receiver(post_save, sender=Review)
+def create_tasks_for_exchange(sender, instance, created, **kwargs):
+    
+    if not created and instance.moderation == True:
+        exchange_marker = 'cash'
+
+        exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.exchange_id,
+                                                      exchange_marker=exchange_marker).first()
+        
+        if exchange_admin:
+            user_id = exchange_admin.user_id
+
+            async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
+                                                                      instance.pk,
+                                                                      exchange_marker)
+            # send notification to admin user in chat with bot
+            pass

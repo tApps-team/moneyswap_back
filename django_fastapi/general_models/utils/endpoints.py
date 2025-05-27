@@ -1562,3 +1562,14 @@ async def send_review_notifitation(review_id: int,
         async with session.get(_url,
                             timeout=timeout) as response:
             pass
+
+
+async def send_review_notifitation_to_exchange_admin(user_id: int,
+                                                     review_id: int,
+                                                     exchange_marker: str):
+    _url = f'https://api.moneyswap.online/send_notification_to_exchange_admin?user_id={user_id}&review_id={review_id}&marker={exchange_marker}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
