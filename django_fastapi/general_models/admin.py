@@ -28,7 +28,7 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 
 from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
-from .models import Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm
+from .models import ExchangeAdmin, ExchangeAdminOrder, Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm
 
 from no_cash import models as no_cash_models
 from cash import models as cash_models
@@ -734,16 +734,45 @@ class BaseExchangeLinkCountAdmin(admin.ModelAdmin):
     # def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
     #     return False
 
-# class ExchangeAdminOrderAdmin(admin.ModelAdmin):
-#     list_display = (
-#         'user_id',
-#         'exchange_name',
-#     )
-#     readonly_fields = (
-#         'moderation',
-#     )
-#     fields = (
-#         'user_id',
-#         'exchange_name',
-#     )
+@admin.register(ExchangeAdminOrder)
+class ExchangeAdminOrderAdmin(admin.ModelAdmin):
+    list_display = (
+        'user_id',
+        'exchange_name',
+        'moderation',
+        'time_create',
+    )
+    readonly_fields = (
+        'moderation',
+        'activate_link',
+    )
+    fields = (
+        'user_id',
+        'exchange_name',
+        'activate_link',
+    )
 
+    ordering = (
+        '-time_create',
+    )
+
+    def activate_link(self, obj):
+        return f'https://t.me/MoneySwap_robot?start=admin_activate'
+    
+    activate_link.short_description = 'Ссылка для активации'
+
+
+@admin.register(ExchangeAdmin)
+class ExchangeAdminAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'exchange_name',
+        'exchange_marker',
+    )
+    # readonly_fields = (
+    #     'moderation',
+    # )
+    # fields = (
+    #     'user_id',
+    #     'exchange_name',
+    # )

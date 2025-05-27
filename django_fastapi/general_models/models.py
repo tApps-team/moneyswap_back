@@ -590,34 +590,43 @@ class BaseDirectionRate(models.Model):
         abstract = True
 
 
-# class ExchangeAdminOrder(models.Model):
-#     # user = models.ForeignKey(Guest,
-#     #                          on_delete=models.CASCADE,
-#     #                          verbose_name='Пользователь')
-#     user_id = models.BigIntegerField('Tg id пользователя')
-#     exchange_name = models.CharField('Название обменника',
-#                                      max_length=255,
-#                                      help_text='Название должно совпадать с названием обменника из НАШЕЙ базы!')
-#     moderation = models.BooleanField('Модерация',
-#                                      default=False)
+class ExchangeAdminOrder(models.Model):
+    # user = models.ForeignKey(Guest,
+    #                          on_delete=models.CASCADE,
+    #                          verbose_name='Пользователь')
+    user_id = models.BigIntegerField('Tg id пользователя')
+    exchange_name = models.CharField('Название обменника',
+                                     max_length=255,
+                                     help_text='Название должно совпадать с названием обменника из НАШЕЙ базы!')
+    moderation = models.BooleanField('Модерация',
+                                     default=False)
+    time_create = models.DateTimeField('Время создания',
+                                    #    auto_created=True,
+                                       auto_now_add=True)
     
-#     class Meta:
-#         verbose_name = 'Заявка на подключение обменника к юзеру'
-#         verbose_name_plural = 'Заявки на подключения обменников к юзерам'
+    class Meta:
+        verbose_name = 'Заявка на подключение обменника к юзеру'
+        verbose_name_plural = 'Заявки на подключения обменников к юзерам'
+
+    def __str__(self):
+        return f'{self.user_id} {self.exchange_name}'
 
 
-# class ExchangeAdmin(models.Model):
-#     user = models.ForeignKey(Guest,
-#                              on_delete=models.CASCADE,
-#                              verbose_name='Пользователь',
-#                              related_name='liked_exchanges')
-#     exchange_marker = models.CharField('Маркер обменника',
-#                                        max_length=255)
-#     exchange_name = models.CharField('Название обменника',
-#                                      max_length=255)
-#     exchange_id = models.IntegerField('Id обменника')
+class ExchangeAdmin(models.Model):
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Пользователь',
+                             related_name='liked_exchanges')
+    exchange_marker = models.CharField('Маркер обменника',
+                                       max_length=255)
+    exchange_name = models.CharField('Название обменника',
+                                     max_length=255)
+    exchange_id = models.IntegerField('Id обменника')
     
-#     class Meta:
-#         unique_together = [('user', 'exchange_marker', 'exchange_id')]
-#         verbose_name = 'Подключенный обменник к юзеру'
-#         verbose_name_plural = 'Подключенные обменники к юзерам'
+    class Meta:
+        unique_together = [('user', 'exchange_marker', 'exchange_id')]
+        verbose_name = 'Подключенный обменник к юзеру'
+        verbose_name_plural = 'Подключенные обменники к юзерам'
+
+    def __str__(self):
+        return f'{self.user} {self.exchange_name} {self.exchange_marker}'
