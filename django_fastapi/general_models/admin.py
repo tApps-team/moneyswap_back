@@ -733,3 +733,17 @@ class BaseExchangeLinkCountAdmin(admin.ModelAdmin):
     
     # def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
     #     return False
+
+# class ExchangeAdminOrderAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'user_id',
+#         'exchange_name',
+#     )
+#     readonly_fields = (
+#         'moderation',
+#     )
+#     fields = (
+#         'user_id',
+#         'exchange_name',
+#     )
+

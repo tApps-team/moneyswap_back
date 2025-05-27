@@ -18,6 +18,7 @@ from no_cash.models import Direction as NoCashDirection
 from general_models.utils.endpoints import (get_valute_json_3,
                                             get_valute_json_4,
                                             try_generate_icon_url)
+from general_models.utils.tasks import make_valid_values_for_dict
 from general_models.schemas import MultipleName, MultipleName2
 from general_models.models import Valute, Guest
 
@@ -1671,6 +1672,8 @@ def add_partner_direction(partner: partner_dependency,
 
         data.update(main_exchange_rate)
 
+        make_valid_values_for_dict(data)
+
         try:
             if marker == 'city':
                 city = PartnerCity.objects.select_related('city')\
@@ -1730,6 +1733,8 @@ def add_partner_direction(partner: partner_dependency,
                                               marker='additional')
                         
                         exchange_rate_data.update(additional_exchange_rate)
+
+                        make_valid_values_for_dict(exchange_rate_data)
                         
                         new_exchangedirection_rate = sub_foreign_key_model(**exchange_rate_data)
 
@@ -1789,6 +1794,7 @@ def add_partner_direction(partner: partner_dependency,
         main_exchange_rate.pop('max_count')
 
         data.update(main_exchange_rate)
+        make_valid_values_for_dict(data)
 
         try:
             with transaction.atomic():
@@ -1827,6 +1833,8 @@ def add_partner_direction(partner: partner_dependency,
                         
                         exchange_rate_data.update(additional_exchange_rate)
                         
+                        make_valid_values_for_dict(exchange_rate_data)
+
                         new_exchangedirection_rate = NonCashDirectionRate(**exchange_rate_data)
 
                         bulk_create_list.append(new_exchangedirection_rate)

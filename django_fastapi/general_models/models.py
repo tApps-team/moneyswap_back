@@ -588,3 +588,36 @@ class BaseDirectionRate(models.Model):
         # verbose_name_plural = 'Счётчики перехода по ссылкам'
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
         abstract = True
+
+
+# class ExchangeAdminOrder(models.Model):
+#     # user = models.ForeignKey(Guest,
+#     #                          on_delete=models.CASCADE,
+#     #                          verbose_name='Пользователь')
+#     user_id = models.BigIntegerField('Tg id пользователя')
+#     exchange_name = models.CharField('Название обменника',
+#                                      max_length=255,
+#                                      help_text='Название должно совпадать с названием обменника из НАШЕЙ базы!')
+#     moderation = models.BooleanField('Модерация',
+#                                      default=False)
+    
+#     class Meta:
+#         verbose_name = 'Заявка на подключение обменника к юзеру'
+#         verbose_name_plural = 'Заявки на подключения обменников к юзерам'
+
+
+# class ExchangeAdmin(models.Model):
+#     user = models.ForeignKey(Guest,
+#                              on_delete=models.CASCADE,
+#                              verbose_name='Пользователь',
+#                              related_name='liked_exchanges')
+#     exchange_marker = models.CharField('Маркер обменника',
+#                                        max_length=255)
+#     exchange_name = models.CharField('Название обменника',
+#                                      max_length=255)
+#     exchange_id = models.IntegerField('Id обменника')
+    
+#     class Meta:
+#         unique_together = [('user', 'exchange_marker', 'exchange_id')]
+#         verbose_name = 'Подключенный обменник к юзеру'
+#         verbose_name_plural = 'Подключенные обменники к юзерам'
