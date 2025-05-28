@@ -1407,18 +1407,18 @@ def get_reviews_by_exchange(exchange_id: int,
 
         for review in reviews:
             date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-            # review.username = review.username if review.guest is None else review.guest.username
-            print(review.__dict__)
+            # review.username = review.username  review.guest is None else review.guest.username
+            # print(review.__dict__)
             if not review.username:
                 if review.guest:
                     if review.guest.username:
                         review.username = review.guest.username
                     elif review.guest.first_name:
                         review.username = review.guest.first_name
+                    else:
+                        review.username = 'Гость'
                 else:
                     review.username = 'Гость'
-            else:
-                review.username = 'Проверка'
                         
             review.review_date = date
             review.review_time = time
