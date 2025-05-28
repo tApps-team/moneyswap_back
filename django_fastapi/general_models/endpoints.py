@@ -1414,11 +1414,12 @@ def get_reviews_by_exchange(exchange_id: int,
                         review.username = review.guest.username
                     elif review.guest.first_name:
                         review.username = review.guest.first_name
-                    else:
-                        review.username = 'Гость'
+                else:
+                    review.username = 'Гость'
                         
             review.review_date = date
             review.review_time = time
+            print(review)
             review_list.append(ReviewViewSchema(**review.__dict__))
 
         return ReviewsByExchangeSchema(page=page,
