@@ -1518,6 +1518,41 @@ def check_perms_for_adding_review(exchange_id: int,
     return {'status': 'success'}
 
 
+def check_perms_for_adding_comment(review_id: int,
+                                   exchange_marker: str,
+                                   user_id: int):
+    time_delta = timedelta(minutes=5)
+
+    check_exchage_marker(exchange_marker)
+
+    match exchange_marker:
+        case 'no_cash':
+            comment_model = no_cash_models.Comment
+        case 'cash':
+            comment_model = cash_models.Comment
+        case 'partner':
+            comment_model = partner_models.Comment
+        case 'both':
+            comment_model = no_cash_models.Comment
+
+    check_time = datetime.now() - time_delta
+
+    comment = comment_model.objects.select_related('guest',
+                                                   'review')\
+                                    .filter(review_id=review_id,
+                                            guest_id=user_id,
+                                            time_create__gt=check_time)\
+                                    .first()
+
+    if comment:
+        next_time_comment = comment.time_create.astimezone() + time_delta
+        review_exception_json(status_code=423,
+                              param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
+
+    
+    return {'status': 'success'}
+
+
 def generate_valute_for_schema(valute: Valute):
     valute.icon = try_generate_icon_url(valute)
     
@@ -1557,6 +1592,16 @@ async def pust_to_send_bot(user_id: int,
 async def send_review_notifitation(review_id: int,
                                    marker: str):
     _url = f'https://api.moneyswap.online/send_to_tg_group_review?review_id={review_id}&marker={marker}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
+async def send_comment_notifitation(comment_id: int,
+                                    marker: str):
+    _url = f'https://api.moneyswap.online/send_to_tg_group_comment?comment_id={comment_id}&marker={marker}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,

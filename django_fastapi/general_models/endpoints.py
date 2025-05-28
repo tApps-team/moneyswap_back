@@ -52,11 +52,11 @@ from partners.utils.endpoints import generate_actual_course
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
-from .utils.endpoints import (check_exchage_marker,
+from .utils.endpoints import (check_exchage_marker, check_perms_for_adding_comment,
                               check_perms_for_adding_review,
                               get_exchange_with_direction_count,
                               get_exchange_with_direction_count_for_exchange_list,
-                              pust_to_send_bot,
+                              pust_to_send_bot, send_comment_notifitation,
                               try_generate_icon_url,
                               generate_valute_for_schema,
                               get_exchange_directions,
@@ -64,7 +64,7 @@ from .utils.endpoints import (check_exchage_marker,
                               generate_coin_for_schema,
                               send_review_notifitation)
 
-from .schemas import (PopularDirectionSchema, SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema,
+from .schemas import (AddCommentSchema, PopularDirectionSchema, SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema,
                       ValuteModel,
                       EnValuteModel,
                       SpecialDirectionMultiModel,
@@ -1404,10 +1404,19 @@ def get_reviews_by_exchange(exchange_id: int,
         reviews = reviews.filter(pk=review_id)
         
         review_list = []
-        
+
         for review in reviews:
             date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-            review.username = review.username if review.guest is None else review.guest.username
+            # review.username = review.username if review.guest is None else review.guest.username
+            if not review.username:
+                if review.guest:
+                    if review.guest.username:
+                        review.username = review.guest.username
+                    elif review.guest.first_name:
+                        review.username = review.guest.first_name
+                    else:
+                        review.username = 'Гость'
+                        
             review.review_date = date
             review.review_time = time
             review_list.append(ReviewViewSchema(**review.__dict__))
@@ -1636,6 +1645,56 @@ def get_comments_by_review(exchange_id: int,
     # print(len(connection.queries))
     return comment_list
 
+
+@review_router.post('/add_comment_by_review')
+def add_comment_by_comment(comment: AddCommentSchema):
+    check_exchage_marker(comment.exchange_marker)
+
+    check_perms_for_adding_comment(review_id=comment.review_id,
+                                  exchange_marker=comment.exchange_marker,
+                                  user_id=comment.tg_id)
+
+    if not Guest.objects.filter(tg_id=comment.tg_id).exists():
+        raise HTTPException(status_code=404,
+                            detail='User don`t exist in db')
+    
+    match comment.exchange_marker:
+        case 'no_cash':
+            comment_model = no_cash_models.Comment
+        case 'cash':
+            comment_model = cash_models.Comment
+        case 'partner':
+            comment_model = partner_models.Comment
+        case 'both':
+            comment_model = no_cash_models.Comment
+
+    new_comment = {
+        'review_id': comment.review_id,
+        'guest_id': comment.tg_id,
+        'grade': comment.grade,
+        'text': comment.text,
+    }
+
+    try:
+        new_comment_record = comment_model.objects.create(**new_comment)
+    except Exception:
+        raise HTTPException(status_code=400,
+                            detail='Переданы некорректные данные')
+    else:
+        # уведомление об отзыве в бота уведомлений
+        async_to_sync(send_comment_notifitation)(new_comment_record.pk,
+                                                comment.exchange_marker)
+
+        return {'status': 'success'}
+
+
+@review_router.get('/check_user_comment_permission')
+def check_user_review_permission(exchange_marker: str,
+                                 review_id: int,
+                                 tg_id: int):
+    return check_perms_for_adding_comment(review_id,
+                                         exchange_marker,
+                                         tg_id)
 
 # @common_router.get('/change_interval')
 # def change_interval_info_exchange_task(interval: int,

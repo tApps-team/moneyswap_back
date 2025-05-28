@@ -133,6 +133,13 @@ class AddReviewSchema(BaseModel):
     transaction_id: str | None
 
 
+class AddCommentSchema(BaseModel):
+    exchange_marker: str
+    review_id: int
+    tg_id: int
+    text: str
+    grade: int
+
 
 class CommentRoleEnum(str, Enum):
     admin = 'admin'
