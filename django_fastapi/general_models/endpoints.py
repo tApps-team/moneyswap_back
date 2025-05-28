@@ -1676,6 +1676,7 @@ def add_comment_by_comment(comment: AddCommentSchema):
         'guest_id': comment.tg_id,
         'grade': comment.grade,
         'text': comment.text,
+        'time_create': datetime.now(),
     }
 
     try:
