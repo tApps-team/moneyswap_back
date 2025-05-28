@@ -1403,6 +1403,8 @@ def get_reviews_by_exchange(exchange_id: int,
     if review_id:
         reviews = reviews.filter(pk=review_id)
         
+        review_list = []
+        
         for review in reviews:
             date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
             review.username = review.username if review.guest is None else review.guest.username
