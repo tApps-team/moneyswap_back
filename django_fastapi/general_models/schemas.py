@@ -104,7 +104,7 @@ class SpecialPartnerNoCashDirectionSchema(SpecialDirectionMultiWithAmlModel):
 
 class ReviewViewSchema(BaseModel):
     id: int
-    username: str
+    username: str | None = Field(default='Гость')
     review_date: str
     review_time: str
     grade: int
