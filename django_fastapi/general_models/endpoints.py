@@ -1417,6 +1417,8 @@ def get_reviews_by_exchange(exchange_id: int,
                         review.username = review.guest.first_name
                 else:
                     review.username = 'Гость'
+            else:
+                review.username = 'Проверка'
                         
             review.review_date = date
             review.review_time = time
