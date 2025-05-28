@@ -297,7 +297,7 @@ def round_valute_values(exchange_direction_dict: dict):
                                                          'Денежные переводы',
                                                          'ATM QR')))
 
-        tether_set = set(('USDTTRC20', 'USDTERC20', 'USDTBEP20'))
+        tether_set = set(('USDTTRC20', 'USDTERC20', 'USDTBEP20', 'USDCERC20', 'USDCTRC20'))
         if check_valutes:
             if set((valute_from, valute_to)).intersection(tether_set):
                 # 3 знака
