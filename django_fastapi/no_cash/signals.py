@@ -114,6 +114,7 @@ def create_tasks_for_exchange(sender, instance, created, **kwargs):
             user_id = exchange_admin.user_id
 
             async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
+                                                                      instance.exchange.id,
                                                                       instance.pk,
                                                                       exchange_marker)
             # send notification to admin user in chat with bot
