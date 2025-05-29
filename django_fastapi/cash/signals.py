@@ -128,32 +128,37 @@ def create_tasks_for_exchange(sender, instance, created, **kwargs):
             pass
 
 
-@receiver(post_save, sender=Comment)
-def create_tasks_for_exchange(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Comment)
+# def create_tasks_for_exchange(sender, instance, created, **kwargs):
 
-    print(instance)
+#     # print(instance)
 
-    print(instance.review)
+#     # print(instance.review)
 
-    print(instance.review.exchange_id)
+#     # print(instance.review.exchange_id)
 
-    print(instance.__dict__)
+#     # print(instance.__dict__)
     
-    if not created and instance.moderation == True:
-        exchange_marker = 'cash'
+#     if not created and instance.moderation == True:
+#         exchange_marker = 'cash'
 
-        # send notification review owner to new comment
-        # async_to_sync(send_comment_notifitation_to_owner)(user_id,
-        #                                                   instance.pk,
-        #                                                   exchange_marker)
+#         # send notification review owner to new comment
+#         # async_to_sync(send_comment_notifitation_to_owner)(user_id,
+#         #                                                   instance.pk,
+#         #                                                   exchange_marker)
 
-        exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.exchange_id,
-                                                      exchange_marker=exchange_marker).first()
+#         exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.review.exchange_id,
+#                                                       exchange_marker=exchange_marker).first()
         
-        if exchange_admin:
-            user_id = exchange_admin.user_id
+#         if exchange_admin:
+#             user_id = exchange_admin.user_id
 
-            # send notification to admin user in chat with bot
-            async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
-                                                                      instance.pk,
-                                                                      exchange_marker)
+#             # send notification to admin user in chat with bot
+#             async_to_sync(send_comment_notifitation_to_exchange_admin)(user_id,
+#                                                                        instance.pk,
+#                                                                        exchange_marker)
+            
+#             # send notification to review owner in chat with bot
+#         async_to_sync(send_comment_notifitation_to_review_owner)(instance.review.guest_id,
+#                                                                  instance.pk,
+#                                                                  exchange_marker)

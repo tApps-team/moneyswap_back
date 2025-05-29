@@ -1603,7 +1603,8 @@ def get_comments_by_review(exchange_id: int,
                                                     'review__exchange')\
                                     .annotate(role=annotate_string_field('user'))\
                                     .filter(review_id=review_id,
-                                            review__exchange_id=exchange_id)\
+                                            review__exchange_id=exchange_id,
+                                            moderation=True)\
                                     .values('id',
                                             'time_create',
                                             'text',

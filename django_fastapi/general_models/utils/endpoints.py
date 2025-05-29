@@ -26,7 +26,7 @@ from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocati
                           SpecialCashDirectionMultiPrtnerWithExchangeRatesModel)
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
-from general_models.models import Guest, Valute, en_type_valute_dict, BaseExchange
+from general_models.models import ExchangeAdmin, Guest, Valute, en_type_valute_dict, BaseExchange
 from general_models.schemas import (SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema, ValuteListSchema1,
                                     ValuteListSchema2,
                                     ValuteModel,
@@ -1532,29 +1532,61 @@ def check_perms_for_adding_comment(review_id: int,
     match exchange_marker:
         case 'no_cash':
             comment_model = no_cash_models.Comment
+            review_model = no_cash_models.Review
         case 'cash':
             comment_model = cash_models.Comment
+            review_model = cash_models.Review
         case 'partner':
             comment_model = partner_models.Comment
+            review_model = partner_models.Review
         case 'both':
             comment_model = no_cash_models.Comment
+            review_model = no_cash_models.Review
 
-    check_time = datetime.now() - time_delta
 
-    comment = comment_model.objects.select_related('guest',
-                                                   'review')\
-                                    .filter(review_id=review_id,
-                                            guest_id=user_id,
-                                            time_create__gt=check_time)\
-                                    .first()
+    review = review_model.objects.select_related('exchange')\
+                                    .filter(pk=review_id, guest_id=user_id)
+    
+    if review.exists() or ExchangeAdmin.objects.filter(user_id=user_id,
+                                                       exchange_marker=exchange_marker,
+                                                       exchange_id=review.first().exchange.pk):
+        check_time = datetime.now() - time_delta
 
-    if comment:
-        next_time_comment = comment.time_create.astimezone() + time_delta
-        review_exception_json(status_code=423,
-                              param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
+        comment = comment_model.objects.select_related('guest',
+                                                    'review')\
+                                        .filter(review_id=review_id,
+                                                guest_id=user_id,
+                                                time_create__gt=check_time)\
+                                        .order_by('-time_create')\
+                                        .first()
+
+        if comment:
+            next_time_comment = comment.time_create.astimezone() + time_delta
+            review_exception_json(status_code=423,
+                                param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
+
+        return {'status': 'success'}
+
+    else:
+        return HTTPException(status_code=404,
+                             detail='User not review owner or exchange admin')
+
+    # check_time = datetime.now() - time_delta
+
+    # comment = comment_model.objects.select_related('guest',
+    #                                                'review')\
+    #                                 .filter(review_id=review_id,
+    #                                         guest_id=user_id,
+    #                                         time_create__gt=check_time)\
+    #                                 .first()
+
+    # if comment:
+    #     next_time_comment = comment.time_create.astimezone() + time_delta
+    #     review_exception_json(status_code=423,
+    #                           param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
 
     
-    return {'status': 'success'}
+    # return {'status': 'success'}
 
 
 def generate_valute_for_schema(valute: Valute):
