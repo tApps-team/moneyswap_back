@@ -1545,9 +1545,13 @@ def check_perms_for_adding_comment(review_id: int,
 
 
     review = review_model.objects.select_related('exchange')\
-                                    .filter(pk=review_id, guest_id=user_id)
+                                    .filter(pk=review_id)
     
-    if review.exists() or ExchangeAdmin.objects.filter(user_id=user_id,
+    if not review.exists():
+        return HTTPException(status_code=400,
+                        detail='Review not found')
+    
+    if review.filter(guest_id=user_id).exists() or ExchangeAdmin.objects.filter(user_id=user_id,
                                                        exchange_marker=exchange_marker,
                                                        exchange_id=review.first().exchange.pk):
         check_time = datetime.now() - time_delta
