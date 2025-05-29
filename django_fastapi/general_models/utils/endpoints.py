@@ -1524,7 +1524,7 @@ def check_perms_for_adding_comment(review_id: int,
     time_delta = timedelta(minutes=5)
 
     if not Guest.objects.filter(tg_id=user_id).exists():
-        return HTTPException(status_code=404,
+        raise HTTPException(status_code=404,
                              detail='User don`t exists in DB')
     
     check_exchage_marker(exchange_marker)
@@ -1548,7 +1548,7 @@ def check_perms_for_adding_comment(review_id: int,
                                     .filter(pk=review_id)
     
     if not review.exists():
-        return HTTPException(status_code=400,
+        raise HTTPException(status_code=400,
                         detail='Review not found')
     
     if review.filter(guest_id=user_id).exists() or ExchangeAdmin.objects.filter(user_id=user_id,
@@ -1569,10 +1569,10 @@ def check_perms_for_adding_comment(review_id: int,
             review_exception_json(status_code=423,
                                 param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
 
-        return {'status': 'success'}
+        # return {'status': 'success'}
 
     else:
-        return HTTPException(status_code=404,
+        raise HTTPException(status_code=404,
                              detail='User not review owner or exchange admin')
 
     # check_time = datetime.now() - time_delta

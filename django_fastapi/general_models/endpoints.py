@@ -1658,9 +1658,9 @@ def add_comment_by_comment(comment: AddCommentSchema):
                                   exchange_marker=comment.exchange_marker,
                                   user_id=comment.tg_id)
 
-    if not Guest.objects.filter(tg_id=comment.tg_id).exists():
-        raise HTTPException(status_code=404,
-                            detail='User don`t exist in db')
+    # if not Guest.objects.filter(tg_id=comment.tg_id).exists():
+    #     raise HTTPException(status_code=404,
+    #                         detail='User don`t exist in db')
     
     match comment.exchange_marker:
         case 'no_cash':
