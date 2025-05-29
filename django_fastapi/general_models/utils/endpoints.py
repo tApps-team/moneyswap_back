@@ -26,7 +26,7 @@ from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocati
                           SpecialCashDirectionMultiPrtnerWithExchangeRatesModel)
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
-from general_models.models import Valute, en_type_valute_dict, BaseExchange
+from general_models.models import Guest, Valute, en_type_valute_dict, BaseExchange
 from general_models.schemas import (SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema, ValuteListSchema1,
                                     ValuteListSchema2,
                                     ValuteModel,
@@ -1523,6 +1523,10 @@ def check_perms_for_adding_comment(review_id: int,
                                    user_id: int):
     time_delta = timedelta(minutes=5)
 
+    if not Guest.objects.filter(tg_id=user_id).exists():
+        return HTTPException(status_code=404,
+                             detail='User don`t exists in DB')
+    
     check_exchage_marker(exchange_marker)
 
     match exchange_marker:

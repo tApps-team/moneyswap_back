@@ -59,3 +59,17 @@ def review_exception_json(status_code: int, param: str):
                         'message': 'Permission locked',
                         'details': "not access to send review, time to next review: {}".format(param),
                 })
+
+
+def comment_exception_json(status_code: int, param: str):
+        '''
+        Поднимает HTTP ошибку по переданному коду ошибки
+        '''
+
+        raise CustomJSONException(
+                status_code=status_code,
+                detail={
+                        'code': status_code,
+                        'message': 'Permission locked',
+                        'details': "not access to send comment, time to next comment: {}".format(param),
+                })
