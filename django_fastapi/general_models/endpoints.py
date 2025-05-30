@@ -1395,9 +1395,9 @@ def get_reviews_by_exchange(exchange_id: int,
 
     reviews = review_model.objects.select_related('guest')\
                                     .annotate(admin_comment_count=Count('admin_comments',
-                                                                        filter=Q(admin_comments__moderation=True)))\
+                                                                        filter=Q(moderation=True)))\
                                     .annotate(user_comment_count=Count('comments',
-                                                                       filter=Q(comments__moderation=True)))\
+                                                                       filter=Q(moderation=True)))\
                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
                                     .filter(exchange_id=exchange_id,
                                             moderation=True)
