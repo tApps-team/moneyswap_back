@@ -56,6 +56,7 @@ def add_en_name_for_exchange(sender, instance, **kwargs):
 #при создании обменника в БД
 @receiver(post_save, sender=Exchange)
 def create_tasks_for_exchange(sender, instance, created, **kwargs):
+    print('No cash exchange post save...')
     if created:
         print('NO CASH PERIODIC TASKS CREATING...')
         manage_periodic_task_for_create(instance.pk,
