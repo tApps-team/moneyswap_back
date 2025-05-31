@@ -48,6 +48,7 @@ def try_create_reverse_direction(sender, instance, **kwargs):
 #перед созданием в БД
 @receiver(pre_save, sender=Exchange)
 def add_en_name_for_exchange(sender, instance, **kwargs):
+    print('[pre_save]', instance.pk, instance.name)
     if instance.en_name is None:
         instance.en_name = instance.name
 
@@ -56,6 +57,7 @@ def add_en_name_for_exchange(sender, instance, **kwargs):
 #при создании обменника в БД
 @receiver(post_save, sender=Exchange)
 def create_tasks_for_exchange(sender, instance, created, **kwargs):
+    print('[post_save]', instance.pk, instance.name)
     print('No cash exchange post save...')
     if created:
         print('NO CASH PERIODIC TASKS CREATING...')
