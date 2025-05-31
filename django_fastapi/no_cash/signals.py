@@ -54,20 +54,20 @@ def add_en_name_for_exchange(sender, instance, **kwargs):
 
 #Сигнал для создания периодических задач
 #при создании обменника в БД
-# @receiver(post_save, sender=Exchange)
-# def create_tasks_for_exchange(sender, instance, created, **kwargs):
-#     print('No cash exchange post save...')
-#     if created:
-#         print('NO CASH PERIODIC TASKS CREATING...')
-#         manage_periodic_task_for_create(instance.pk,
-#                                         instance.name,
-#                                         instance.period_for_create)
-#         manage_periodic_task_for_update(instance.pk,
-#                                         instance.name,
-#                                         instance.period_for_update)
-#         manage_periodic_task_for_parse_black_list(instance.pk,
-#                                                   instance.name,
-#                                                   instance.period_for_parse_black_list)
+@receiver(post_save, sender=Exchange)
+def create_tasks_for_exchange(sender, instance, created, **kwargs):
+    print('No cash exchange post save...')
+    if created:
+        print('NO CASH PERIODIC TASKS CREATING...')
+        manage_periodic_task_for_create(instance.pk,
+                                        instance.name,
+                                        instance.period_for_create)
+        manage_periodic_task_for_update(instance.pk,
+                                        instance.name,
+                                        instance.period_for_update)
+        manage_periodic_task_for_parse_black_list(instance.pk,
+                                                  instance.name,
+                                                  instance.period_for_parse_black_list)
 
 
 #Сигнал для удаления периодических задач
