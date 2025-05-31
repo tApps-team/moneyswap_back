@@ -58,7 +58,7 @@ class ReviewAdmin(BaseReviewAdmin):
         CommentStacked,
         AdminCommentStacked,
         ]
-    
+        
     # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
     #     return super().get_queryset(request)\
     #                     .select_related('guest')
@@ -109,7 +109,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
         ]
     
     def get_total_direction_count(self, obj):
-        print(obj.__dict__)
+        # print(obj.__dict__)
         direction_count = obj.direction_count
         try:
             cash_exchange = cash_models.Exchange.objects.annotate(cash_direction_count=Count('directions',
@@ -174,7 +174,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
             obj.save(update_fields=update_fields)
         else:
             print('NOT CHANGE!!!!')
-            super().save_model(request, obj, form, change)
+            return super().save_model(request, obj, form, change)
             # parse_reviews_for_exchange.delay(obj.en_name, 'no_cash')
 
     def get_queryset(self, request):
