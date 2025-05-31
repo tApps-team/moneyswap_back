@@ -55,7 +55,8 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
-                    gunicorn -w 1 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    uvicorn project.asgi:app --host 0.0.0.0"
+                    # gunicorn -w 1 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
                     # python manage.py parse_reviews_selenium &&
                     # python manage.py add_time_create_for_exchanges &&
                     # python manage.py collectstatic --no-input &&
@@ -71,7 +72,6 @@ services:
                     # python manage.py createsuperuser --no-input &&
                     # python manage.py periodic_task_for_parse_cash_courses &&
                     # python manage.py recreate_backround_tasks &&
-                    # uvicorn project.asgi:app --host 0.0.0.0"
 
   nginx:
     build: ./nginx
