@@ -105,7 +105,7 @@ def change_time_create_for_comment(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=Review)
-def create_tasks_for_exchange(sender, instance, created, **kwargs):
+def send_notification_after_add_review(sender, instance, created, **kwargs):
     
     if not created and instance.moderation == True:
         exchange_marker = 'no_cash'

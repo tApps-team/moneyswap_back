@@ -55,11 +55,11 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
-                    uvicorn project.asgi:app --host 0.0.0.0"
-                    # gunicorn -w 2 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    gunicorn -w 2 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
+                    # python manage.py collectstatic --no-input &&
+                    # uvicorn project.asgi:app --host 0.0.0.0"
                     # python manage.py parse_reviews_selenium &&
                     # python manage.py add_time_create_for_exchanges &&
-                    # python manage.py collectstatic --no-input &&
                     # python manage.py create_moder_group &&
                     # python manage.py create_periodic_task_for_update_exchange_info &&
                     # python manage.py create_periodic_task_for_parse_actual_course &&
