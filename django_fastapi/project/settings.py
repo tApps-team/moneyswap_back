@@ -84,11 +84,11 @@ INSTALLED_APPS = [
     'django_admin_action_forms',
     'rangefilter',
 
-    "general_models.apps.ValutesConfig",
-    "no_cash.apps.NoCashConfig",
-    "cash.apps.CashConfig",
-    "partners.apps.PartnersConfig",
-    'seo_admin.apps.SeoAdminConfig'
+    "general_models",
+    "no_cash",
+    "cash",
+    "partners",
+    'seo_admin'
 ]
 
 MIDDLEWARE = [
