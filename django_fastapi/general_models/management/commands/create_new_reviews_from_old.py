@@ -46,7 +46,6 @@ class Command(BaseCommand):
                     except IntegrityError as ex:
                         new_review = NewBaseReview.objects.filter(exchange_name=review.exchange.name,
                                                                   username=review.username,
-                                                                  text=review.text,
                                                                   time_create=review.time_create).first()
                         print(ex)
                         pass

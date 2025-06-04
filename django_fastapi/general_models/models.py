@@ -392,7 +392,7 @@ class NewBaseReview(BaseReviewComment):
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
-        unique_together = (('exchange_name','username','time_create', 'text'), )
+        unique_together = (('exchange_name','username','time_create'), )
     
     def __str__(self):
         if self.time_create is None:
@@ -417,7 +417,7 @@ class NewBaseComment(BaseReviewComment):
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
-        # unique_together = (('review','username','time_create'), )
+        unique_together = (('review','username','time_create'), )
 
     def __str__(self):
         if self.time_create is None:
