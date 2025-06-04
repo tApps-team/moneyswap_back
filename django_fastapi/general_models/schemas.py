@@ -56,9 +56,9 @@ class SpecialDirectionModel(BaseModel):
 
 
 class ReviewCountSchema(BaseModel):
-    positive: int
-    neutral: int
-    negative: int
+    positive: int = Field(default=0)
+    neutral: int = Field(default=0)
+    negative: int = Field(default=0)
 
 
 class SpecialDirectionMultiModel(BaseModel):
@@ -124,6 +124,16 @@ class ReviewsByExchangeSchema(BaseModel):
     content: list[ReviewViewSchema]
 
 
+class NewReviewsByExchangeSchema(BaseModel):
+    pages: int
+    page: int
+    element_on_page: int
+    #
+    exchange_name: str
+    #
+    content: list[ReviewViewSchema]
+
+
 class AddReviewSchema(BaseModel):
     exchange_id: int
     exchange_marker: str
@@ -133,8 +143,23 @@ class AddReviewSchema(BaseModel):
     transaction_id: str | None
 
 
+class NewAddReviewSchema(BaseModel):
+    exchange_name: str
+    tg_id: int
+    text: str
+    grade: int
+    transaction_id: str | None
+
+
 class AddCommentSchema(BaseModel):
     exchange_marker: str
+    review_id: int
+    tg_id: int
+    text: str
+    grade: int
+
+
+class NewAddCommentSchema(BaseModel):
     review_id: int
     tg_id: int
     text: str

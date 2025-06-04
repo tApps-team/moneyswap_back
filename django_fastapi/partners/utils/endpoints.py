@@ -6,7 +6,7 @@ from django.db import connection, transaction
 
 from fastapi.exceptions import HTTPException
 
-from general_models.utils.endpoints import try_generate_icon_url, get_reviews_count_filters
+from general_models.utils.endpoints import new_get_reviews_count_filters, try_generate_icon_url, get_reviews_count_filters
 
 from general_models.schemas import MultipleName, MultipleName2
 
@@ -740,7 +740,8 @@ def test_get_partner_directions2_with_aml(valute_from: str,
     
     direction_name = valute_from + ' -> ' + valute_to
 
-    review_counts = get_reviews_count_filters('partner_direction')
+    # review_counts = get_reviews_count_filters('partner_direction')
+    review_counts = new_get_reviews_count_filters('partner_direction')
 
     direction_rate_prefetch = Prefetch('direction_rates',
                                        DirectionRate.objects.order_by('min_rate_limit'))
@@ -763,7 +764,9 @@ def test_get_partner_directions2_with_aml(valute_from: str,
                                     city__exchange__is_active=True,
                                     city__exchange__partner_link__isnull=False)
     
-    review_counts = get_reviews_count_filters('partner_country_direction')
+    # review_counts = get_reviews_count_filters('partner_country_direction')
+
+    review_counts = new_get_reviews_count_filters('partner_country_direction')
 
     country_direction_rate_prefetch = Prefetch('direction_rates',
                                        CountryDirectionRate.objects.order_by('min_rate_limit'))
@@ -1503,7 +1506,7 @@ def test_get_partner_directions3(valute_from: str,
 
     direction_name = valute_from + ' -> ' + valute_to
 
-    review_counts = get_reviews_count_filters('partner_direction')
+    review_counts = new_get_reviews_count_filters('partner_direction')
 
     direction_rate_prefetch = Prefetch('direction_rates',
                                        DirectionRate.objects.order_by('min_rate_limit'))
@@ -1526,7 +1529,7 @@ def test_get_partner_directions3(valute_from: str,
                                     city__exchange__is_active=True,
                                     city__exchange__partner_link__isnull=False)
     
-    review_counts = get_reviews_count_filters('partner_country_direction')
+    review_counts = new_get_reviews_count_filters('partner_country_direction')
 
     country_direction_rate_prefetch = Prefetch('direction_rates',
                                        CountryDirectionRate.objects.order_by('min_rate_limit'))

@@ -374,6 +374,83 @@ class BaseReview(BaseReviewComment):
         return f' отзыв {self.pk}, Обменник: {self.exchange}, Пользователь: {self.username}, Время создания: {date}'
 
 
+class NewBaseReview(BaseReviewComment):
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='reviews',
+                              on_delete=models.CASCADE)
+    exchange_name = models.CharField('Название обменника',
+                                     max_length=255)
+    transaction_id = models.CharField('Номер транзакции',
+                                      blank=True,
+                                      null=True,
+                                      default=None)
+    
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        unique_together = (('exchange_name','username','time_create', 'text'), )
+    
+    def __str__(self):
+        if self.time_create is None:
+            self.time_create = datetime.now()
+            
+        date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
+        return f'Отзыв {self.pk}, Обменник: {self.exchange_name}, Пользователь: {self.username}, Время создания: {date}'
+
+
+class NewBaseComment(BaseReviewComment):
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='comments',
+                              on_delete=models.CASCADE)
+    review = models.ForeignKey(NewBaseReview,
+                               on_delete=models.CASCADE,
+                               verbose_name='Отзыв',
+                               related_name='comments')
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        # unique_together = (('review','username','time_create'), )
+
+    def __str__(self):
+        if self.time_create is None:
+            self.time_create = datetime.now()
+
+        date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
+        return f' комментарий {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange_name}, Пользователь: {self.username}, Время создания: {date}'
+
+
+class NewBaseAdminComment(models.Model):
+    review = models.ForeignKey(NewBaseReview,
+                               on_delete=models.CASCADE,
+                               verbose_name='Отзыв',
+                               related_name='admin_comments')
+    text = models.TextField('Текст сообщения')
+    time_create = models.DateTimeField('Дата создания',
+                                       blank=True,
+                                       null=True,
+                                       default=None,
+                                       help_text='Если оставить поля пустыми, время установится автоматически по московскому часовому поясу')
+
+    class Meta:
+        verbose_name = 'Комментарий администрации'
+        verbose_name_plural = 'Комментарии администрации'
+
+    def __str__(self):
+        if self.time_create is None:
+            self.time_create = datetime.now()
+
+        date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
+        return f' комментарий администрации {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange_name}, Время создания: {date}'
+
+
 #Абстрактная модель комментария (для наследования)
 class BaseComment(BaseReviewComment):
     class Meta:
@@ -629,4 +706,4 @@ class ExchangeAdmin(models.Model):
         verbose_name_plural = 'Подключенные обменники к юзерам'
 
     def __str__(self):
-        return f'{self.user} {self.exchange_name} {self.exchange_marker}'
+        return f'{self.user} {self.exchange_name} {self.exchange_marker}'    

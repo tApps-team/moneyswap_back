@@ -26,7 +26,7 @@ from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocati
                           SpecialCashDirectionMultiPrtnerWithExchangeRatesModel)
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
-from general_models.models import ExchangeAdmin, Guest, Valute, en_type_valute_dict, BaseExchange
+from general_models.models import ExchangeAdmin, Guest, NewBaseComment, Valute, en_type_valute_dict, BaseExchange, NewBaseReview
 from general_models.schemas import (SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema, ValuteListSchema1,
                                     ValuteListSchema2,
                                     ValuteModel,
@@ -40,7 +40,7 @@ from general_models.schemas import (SpecialDirectionMultiWithAmlModel, SpecialPa
                                     SpecialDirectionMultiModel,
                                     InfoSchema)
 from general_models.utils.base import annotate_string_field
-from general_models.utils.http_exc import review_exception_json
+from general_models.utils.http_exc import comment_exception_json, review_exception_json
 
 
 round_valute_dict = {
@@ -140,6 +140,185 @@ def get_reviews_count_filters(marker: Literal['exchange',
         'neutral': neutral_review_count,
         'negative': negative_review_count,
     }
+
+
+def new_get_reviews_count_filters(marker: Literal['exchange',
+                                              'exchange_direction',
+                                              'partner_direction']):
+    # related_field_name = 'reviews'
+    # Coalesce(Sum('count'), Value(0))
+    match marker:
+        case 'exchange':
+            outref_name = 'name'
+            # positive_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('name'),
+            #     moderation=True,
+            #     grade='1',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+            # neutral_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('name'),
+            #     moderation=True,
+            #     grade='0',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+            # negative_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('name'),
+            #     moderation=True,
+            #     grade='-1',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+            # positive_review_count_filter = Q(reviews__moderation=True) \
+            #                             & Q(reviews__grade='1')
+            # neutral_review_count_filter = Q(reviews__moderation=True) \
+            #                                         & Q(reviews__grade='0')
+            # negative_review_count_filter = Q(reviews__moderation=True) \
+            #                                         & Q(reviews__grade='-1')
+        case 'partner_direction':
+            outref_name = 'city__exchange__name'
+            # related_field_name = 'city__exchange__' + related_field_name
+            
+            # positive_review_count_filter = Q(city__exchange__reviews__moderation=True) \
+            #                                         & Q(city__exchange__reviews__grade='1')
+            # neutral_review_count_filter = Q(city__exchange__reviews__moderation=True) \
+            #                                         & Q(city__exchange__reviews__grade='0')
+            # negative_review_count_filter = Q(city__exchange__reviews__moderation=True) \
+            #                                         & Q(city__exchange__reviews__grade='-1')
+            # positive_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('city__exchange__name'),
+            #     moderation=True,
+            #     grade='1',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+            # neutral_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('city__exchange__name'),
+            #     moderation=True,
+            #     grade='0',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+            # negative_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('city__exchange__name'),
+            #     moderation=True,
+            #     grade='-1',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+        case 'partner_country_direction':
+            outref_name = 'country__exchange__name'
+
+            # related_field_name = 'country__exchange__' + related_field_name
+            
+            # positive_review_count_filter = Q(country__exchange__reviews__moderation=True) \
+            #                                         & Q(country__exchange__reviews__grade='1')
+            # neutral_review_count_filter = Q(country__exchange__reviews__moderation=True) \
+            #                                         & Q(country__exchange__reviews__grade='0')
+            # negative_review_count_filter = Q(country__exchange__reviews__moderation=True) \
+            #                                         & Q(country__exchange__reviews__grade='-1')
+            # positive_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('country__exchange__name'),
+            #     moderation=True,
+            #     grade='1',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+            # neutral_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('country__exchange__name'),
+            #     moderation=True,
+            #     grade='0',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+            # negative_reviews_count_subquery = NewBaseReview.objects.filter(
+            #     exchange_name=OuterRef('country__exchange__name'),
+            #     moderation=True,
+            #     grade='-1',
+            # ).order_by().values('exchange_name').annotate(
+            #     count=Coalesce(Count('id'), Value(0))
+            # ).values('count')
+        case 'exchange_direction':
+            outref_name = 'exchange__name'
+        # case _:
+            # related_field_name = 'exchange__' + related_field_name
+
+            # positive_review_count_filter = Q(exchange__reviews__moderation=True) \
+            #                                         & Q(exchange__reviews__grade='1')
+            # neutral_review_count_filter = Q(exchange__reviews__moderation=True) \
+            #                                         & Q(exchange__reviews__grade='0')
+            # negative_review_count_filter = Q(exchange__reviews__moderation=True) \
+            #                                         & Q(exchange__reviews__grade='-1')
+    positive_reviews_count_subquery = NewBaseReview.objects.filter(
+        exchange_name=OuterRef(outref_name),
+        moderation=True,
+        grade='1',
+    ).values('exchange_name').annotate(
+        count=Count('id')
+    ).values('count')[:1]
+    neutral_reviews_count_subquery = NewBaseReview.objects.filter(
+        exchange_name=OuterRef(outref_name),
+        moderation=True,
+        grade='0',
+    ).values('exchange_name').annotate(
+        count=Count('id')
+    ).values('count')[:1]
+    negative_reviews_count_subquery = NewBaseReview.objects.filter(
+        exchange_name=OuterRef(outref_name),
+        moderation=True,
+        grade='-1',
+    ).values('exchange_name').annotate(
+        count=Count('id')
+    ).values('count')[:1]
+            
+    # positive_review_count = Count(related_field_name,
+    #                               filter=positive_review_count_filter,
+    #                               distinct=True)
+    # neutral_review_count = Count(related_field_name,
+    #                              filter=neutral_review_count_filter,
+    #                              distinct=True)
+    # negative_review_count = Count(related_field_name,
+    #                               filter=negative_review_count_filter,
+    #                               distinct=True)
+    positive_review_count = Subquery(positive_reviews_count_subquery, output_field=models.IntegerField())
+    neutral_review_count = Subquery(neutral_reviews_count_subquery, output_field=models.IntegerField())
+    negative_review_count = Subquery(negative_reviews_count_subquery, output_field=models.IntegerField())
+
+
+
+    return {
+        'positive': Coalesce(positive_review_count, Value(0)),
+        'neutral': Coalesce(neutral_review_count, Value(0)),
+        'negative': Coalesce(negative_review_count, Value(0)),
+    }
+
+
+        # no_cash_link_count_subquery = no_cash_models.ExchangeLinkCount.objects.filter(
+        #     user_id=OuterRef('tg_id')
+        # ).values('user_id').annotate(
+        #     total_count=Coalesce(Sum('count'), Value(0))
+        # ).values('total_count')
+
+        # cash_link_count_subquery = cash_models.ExchangeLinkCount.objects.filter(
+        #     user_id=OuterRef('tg_id')
+        # ).values('user_id').annotate(
+        #     total_count=Coalesce(Sum('count'), Value(0))
+        # ).values('total_count')
+
+        # partner_link_count_subquery = partner_models.ExchangeLinkCount.objects.filter(
+        #     user_id=OuterRef('tg_id')
+        # ).values('user_id').annotate(
+        #     total_count=Coalesce(Sum('count'), Value(0))
+        # ).values('total_count')
+
+        # partner_country_link_count_subquery = partner_models.CountryExchangeLinkCount.objects.filter(
+        #     user_id=OuterRef('tg_id')
+        # ).values('user_id').annotate(
+        #     total_count=Coalesce(Sum('count'), Value(0))
+        # ).values('total_count')
+
 
 
 def get_exchange_query_with_reviews_counts(exchange_marker: str,
@@ -1482,7 +1661,18 @@ def check_exchage_marker(exchange_marker: str):
     if exchange_marker not in {'no_cash', 'cash', 'partner', 'both'}:
         raise HTTPException(status_code=400,
                             detail='Параметр "exchange_marker" должен быть одним из следующих: no_cash, cash, partner, both')
-    
+
+
+def check_exchage_by_name(exchange_name: str):
+        for exchange_model in (no_cash_models.Exchange,
+                               cash_models.Exchange,
+                               partner_models.Exchange):
+            if exchange_model.objects.filter(name=exchange_name).exists():
+                return True
+        else:
+            raise HTTPException(status_code=400,
+                                detail='Обменник с таким названием не найден')
+
 
 def check_perms_for_adding_review(exchange_id: int,
                                   exchange_marker: str,
@@ -1505,6 +1695,40 @@ def check_perms_for_adding_review(exchange_id: int,
 
     review = review_model.objects.select_related('guest')\
                                     .filter(exchange_id=exchange_id,
+                                            guest_id=tg_id,
+                                            time_create__gt=check_time)\
+                                    .first()
+
+    if review:
+        next_time_review = review.time_create.astimezone() + time_delta
+        review_exception_json(status_code=423,
+                              param=next_time_review.strftime('%d.%m.%Y %H:%M'))
+
+    
+    return {'status': 'success'}
+
+
+
+def new_check_perms_for_adding_review(exchange_name: str,
+                                      tg_id: int):
+    time_delta = timedelta(days=1)
+
+    check_exchage_by_name(exchange_name)
+
+    # match exchange_marker:
+    #     case 'no_cash':
+    #         review_model = no_cash_models.Review
+    #     case 'cash':
+    #         review_model = cash_models.Review
+    #     case 'partner':
+    #         review_model = partner_models.Review
+    #     case 'both':
+    #         review_model = no_cash_models.Review
+
+    check_time = datetime.now() - time_delta
+
+    review = NewBaseReview.objects.select_related('guest')\
+                                    .filter(exchange_name=exchange_name,
                                             guest_id=tg_id,
                                             time_create__gt=check_time)\
                                     .first()
@@ -1593,6 +1817,64 @@ def check_perms_for_adding_comment(review_id: int,
     # return {'status': 'success'}
 
 
+def new_check_perms_for_adding_comment(review_id: int,
+                                       user_id: int):
+    time_delta = timedelta(minutes=5)
+
+    if not Guest.objects.filter(tg_id=user_id).exists():
+        raise HTTPException(status_code=404,
+                             detail='User don`t exists in DB')
+    
+    # check_exchage_marker(exchange_marker)
+
+    # match exchange_marker:
+    #     case 'no_cash':
+    #         comment_model = no_cash_models.Comment
+    #         review_model = no_cash_models.Review
+    #     case 'cash':
+    #         comment_model = cash_models.Comment
+    #         review_model = cash_models.Review
+    #     case 'partner':
+    #         comment_model = partner_models.Comment
+    #         review_model = partner_models.Review
+    #     case 'both':
+    #         comment_model = no_cash_models.Comment
+    #         review_model = no_cash_models.Review
+
+
+    review_query = NewBaseReview.objects.select_related('guest')\
+                                    .filter(pk=review_id)
+    review = review_query.first()
+    
+    if not review_query.exists():
+        raise HTTPException(status_code=400,
+                        detail='Review not found')
+    
+    if review_query.filter(guest_id=user_id).exists() or \
+        ExchangeAdmin.objects.filter(user_id=user_id,
+                                     exchange_name=review.exchange_name):
+        check_time = datetime.now() - time_delta
+
+        comment = NewBaseComment.objects.select_related('guest',
+                                                    'review')\
+                                        .filter(review_id=review_id,
+                                                guest_id=user_id,
+                                                time_create__gt=check_time)\
+                                        .order_by('-time_create')\
+                                        .first()
+
+        if comment:
+            next_time_comment = comment.time_create.astimezone() + time_delta
+            comment_exception_json(status_code=423,
+                                   param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
+
+        # return {'status': 'success'}
+
+    else:
+        raise HTTPException(status_code=404,
+                             detail='User not review owner or exchange admin')
+
+
 def generate_valute_for_schema(valute: Valute):
     valute.icon = try_generate_icon_url(valute)
     
@@ -1629,9 +1911,8 @@ async def pust_to_send_bot(user_id: int,
         pass
 
 
-async def send_review_notifitation(review_id: int,
-                                   marker: str):
-    _url = f'https://api.moneyswap.online/send_to_tg_group_review?review_id={review_id}&marker={marker}'
+async def send_review_notifitation(review_id: int):
+    _url = f'https://api.moneyswap.online/send_to_tg_group_review?review_id={review_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,
@@ -1639,9 +1920,8 @@ async def send_review_notifitation(review_id: int,
             pass
 
 
-async def send_comment_notifitation(comment_id: int,
-                                    marker: str):
-    _url = f'https://api.moneyswap.online/send_to_tg_group_comment?comment_id={comment_id}&marker={marker}'
+async def send_comment_notifitation(comment_id: int):
+    _url = f'https://api.moneyswap.online/send_to_tg_group_comment?comment_id={comment_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,
@@ -1650,10 +1930,28 @@ async def send_comment_notifitation(comment_id: int,
 
 
 async def send_review_notifitation_to_exchange_admin(user_id: int,
-                                                     exchange_id: int,
-                                                     review_id: int,
-                                                     exchange_marker: str):
-    _url = f'https://api.moneyswap.online/send_notification_to_exchange_admin?user_id={user_id}&exchange_id={exchange_id}&review_id={review_id}&marker={exchange_marker}'
+                                                     review_id: int):
+    _url = f'https://api.moneyswap.online/send_notification_to_exchange_admin?user_id={user_id}&review_id={review_id}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
+async def send_comment_notifitation_to_exchange_admin(user_id: int,
+                                                     comment_id: int):
+    _url = f'https://api.moneyswap.online/send_comment_notification_to_exchange_admin?user_id={user_id}&comment_id={comment_id}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
+async def send_comment_notifitation_to_review_owner(user_id: int,
+                                                    comment_id: int):
+    _url = f'https://api.moneyswap.online/send_comment_notification_to_review_owner?user_id={user_id}&comment_id={comment_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,

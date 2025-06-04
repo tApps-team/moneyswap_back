@@ -28,7 +28,7 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 
 from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
-from .models import ExchangeAdmin, ExchangeAdminOrder, Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm
+from .models import ExchangeAdmin, ExchangeAdminOrder, NewBaseComment, Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm, NewBaseReview
 
 from no_cash import models as no_cash_models
 from cash import models as cash_models
@@ -779,3 +779,53 @@ class ExchangeAdminAdmin(admin.ModelAdmin):
     #     'user_id',
     #     'exchange_name',
     # )
+
+@admin.register(NewBaseReview)
+class NewBaseReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'exchange_name',
+        'time_create',
+        'moderation',
+    )
+
+    list_filter = (
+        'exchange_name',
+        'guest',
+    )
+
+    ordering = (
+        '-time_create',
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('guest')
+    
+    
+@admin.register(NewBaseComment)
+class NewBaseCommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'exchange_name',
+        'time_create',
+        'moderation',
+    )
+
+    list_filter = (
+        'guest',
+    )
+
+    readonly_field = (
+        'exchange_name',
+    )
+
+    ordering = (
+        '-time_create',
+    )
+
+    def exchange_name(self, obj):
+        return obj.review.exchange_name
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('review',
+                                                            'guest')

@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from asgiref.sync import async_to_sync
+
 from django.contrib.auth.models import User, Group
 from django.contrib.admin.models import LogEntry
 from django.db.models.signals import post_save, pre_save
@@ -7,9 +9,10 @@ from django.dispatch import receiver
 
 from partners.models import CustomUser
 
-from .models import Valute, CustomOrder
+from .models import ExchangeAdmin, NewBaseComment, Valute, CustomOrder, NewBaseReview
 from .utils.base import get_actual_datetime
 from .utils.periodic_tasks import request_to_bot_swift_sepa
+from .utils.endpoints import send_comment_notifitation_to_exchange_admin, send_comment_notifitation_to_review_owner, send_review_notifitation_to_exchange_admin
 
 
 #Сигнал для автоматической установки английского названия
@@ -49,6 +52,57 @@ def premoderation_custom_order(sender, instance, **kwargs):
             instance.status = 'Завершен'
         # print(user_id)
 
+
+@receiver(post_save, sender=NewBaseReview)
+def send_notification_after_add_review(sender, instance, created, **kwargs):
+    
+    if not created and instance.moderation == True:
+        # exchange_marker = 'cash'
+
+        exchange_admin = ExchangeAdmin.objects.filter(exchange_name=instance.exchange_name)\
+                                                .first()
+        
+        if exchange_admin:
+            user_id = exchange_admin.user_id
+
+            async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
+                                                                      instance.pk)
+            # send notification to admin user in chat with bot
+            pass
+
+
+@receiver(post_save, sender=NewBaseComment)
+def send_notification_after_add_comment(sender, instance, created, **kwargs):
+
+    # print(instance)
+
+    # print(instance.review)
+
+    # print(instance.review.exchange_id)
+
+    # print(instance.__dict__)
+    
+    if not created and instance.moderation == True:
+        # exchange_marker = 'cash'
+
+        # send notification review owner to new comment
+        # async_to_sync(send_comment_notifitation_to_owner)(user_id,
+        #                                                   instance.pk,
+        #                                                   exchange_marker)
+
+        exchange_admin = ExchangeAdmin.objects.filter(exchange_name=instance.review.exchange_name)\
+                                                .first()
+        
+        if exchange_admin:
+            user_id = exchange_admin.user_id
+
+            # send notification to admin user in chat with bot
+            async_to_sync(send_comment_notifitation_to_exchange_admin)(user_id,
+                                                                       instance.pk)
+            
+            # send notification to review owner in chat with bot
+        async_to_sync(send_comment_notifitation_to_review_owner)(instance.review.guest_id,
+                                                                 instance.pk)
 
 #Сигнал для создания связующей модели (пользователь + наличный обменник)
 #при создании модели пользователя админ панели

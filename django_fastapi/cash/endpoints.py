@@ -11,7 +11,7 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             get_exchange_direction_list_with_location,
                                             get_valute_json,
                                             get_valute_json_2, get_valute_json_3,
-                                            increase_popular_count_direction,
+                                            increase_popular_count_direction, new_get_reviews_count_filters,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
                                             negative_review_count_filter, test_get_exchange_direction_list, test_get_exchange_direction_list_with_aml,
@@ -553,7 +553,8 @@ def test_cash_exchange_directions3(request: Request,
 
     city, valute_from, valute_to = (params[key] for key in params)
 
-    review_counts = get_reviews_count_filters('exchange_direction')
+    # review_counts = get_reviews_count_filters('exchange_direction')
+    review_counts = new_get_reviews_count_filters('exchange_direction')
 
     queries = ExchangeDirection.objects\
                                 .select_related('exchange',
@@ -683,7 +684,7 @@ def test_cash_exchange_directions_with_location2(request: Request,
                                            params: dict): 
     valute_from, valute_to = (params[key] for key in params)
 
-    review_counts = get_reviews_count_filters('exchange_direction')
+    review_counts = new_get_reviews_count_filters('exchange_direction')
 
     queries = ExchangeDirection.objects\
                                 .select_related('exchange',
