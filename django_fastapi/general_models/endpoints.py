@@ -1677,6 +1677,7 @@ def new_add_review_by_exchange(review: NewAddReviewSchema):
         'guest_id': review.tg_id,
         'grade': review.grade,
         'text': review.text,
+        'time_create': datetime.now(),
     }
 
     if review.transaction_id:
