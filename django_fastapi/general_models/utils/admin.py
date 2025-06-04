@@ -7,10 +7,10 @@ from general_models.models import BaseExchange, Guest
 
 
 class ReviewAdminMixin:
-        # def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
-        #     if not isinstance(obj, BaseExchange):
-        #         obj.moderation = obj.status == 'Опубликован'
-        #     return super().save_model(request, obj, form, change)
+        def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
+            if not isinstance(obj, BaseExchange):
+                obj.moderation = obj.status == 'Опубликован'
+            return super().save_model(request, obj, form, change)
         
         def save_formset(self, request: Any, form: Any, formset: Any, change: Any) -> None:
             instances = formset.save(commit=False)

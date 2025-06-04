@@ -781,7 +781,7 @@ class ExchangeAdminAdmin(admin.ModelAdmin):
     # )
 
 @admin.register(NewBaseReview)
-class NewBaseReviewAdmin(admin.ModelAdmin):
+class NewBaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
         'username',
         'exchange_name',
@@ -803,7 +803,7 @@ class NewBaseReviewAdmin(admin.ModelAdmin):
     
     
 @admin.register(NewBaseComment)
-class NewBaseCommentAdmin(admin.ModelAdmin):
+class NewBaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
         'username',
         'exchange_name',
