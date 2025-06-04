@@ -1930,8 +1930,10 @@ async def send_comment_notifitation(comment_id: int):
 
 
 async def send_review_notifitation_to_exchange_admin(user_id: int,
+                                                     exchange_id: int,
+                                                     exchange_marker: str,
                                                      review_id: int):
-    _url = f'https://api.moneyswap.online/send_notification_to_exchange_admin?user_id={user_id}&review_id={review_id}'
+    _url = f'https://api.moneyswap.online/send_notification_to_exchange_admin?user_id={user_id}&exchange_id={exchange_id}&exchange_marker={exchange_marker}&review_id={review_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,
@@ -1940,8 +1942,10 @@ async def send_review_notifitation_to_exchange_admin(user_id: int,
 
 
 async def send_comment_notifitation_to_exchange_admin(user_id: int,
-                                                     comment_id: int):
-    _url = f'https://api.moneyswap.online/send_comment_notification_to_exchange_admin?user_id={user_id}&comment_id={comment_id}'
+                                                      exchange_id: int,
+                                                      exchange_marker: str,
+                                                      review_id: int):
+    _url = f'https://api.moneyswap.online/send_comment_notification_to_exchange_admin?user_id={user_id}&exchange_id={exchange_id}&exchange_marker={exchange_marker}&review_id={review_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,
@@ -1950,8 +1954,10 @@ async def send_comment_notifitation_to_exchange_admin(user_id: int,
 
 
 async def send_comment_notifitation_to_review_owner(user_id: int,
-                                                    comment_id: int):
-    _url = f'https://api.moneyswap.online/send_comment_notification_to_review_owner?user_id={user_id}&comment_id={comment_id}'
+                                                    exchange_id: int,
+                                                    exchange_marker: str,
+                                                    review_id: int):
+    _url = f'https://api.moneyswap.online/send_comment_notification_to_review_owner?user_id={user_id}&exchange_id={exchange_id}&exchange_marker={exchange_marker}&review_id={review_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,

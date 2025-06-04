@@ -64,8 +64,12 @@ def send_notification_after_add_review(sender, instance, created, **kwargs):
         
         if exchange_admin:
             user_id = exchange_admin.user_id
+            exchange_id = exchange_admin.exchange_id
+            exchange_marker = exchange_admin.exchange_marker
 
             async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
+                                                                      exchange_id,
+                                                                      exchange_marker,
                                                                       instance.pk)
             # send notification to admin user in chat with bot
             pass
@@ -95,14 +99,20 @@ def send_notification_after_add_comment(sender, instance, created, **kwargs):
         
         if exchange_admin:
             user_id = exchange_admin.user_id
+            exchange_id = exchange_admin.exchange_id
+            exchange_marker = exchange_admin.exchange_marker
 
             # send notification to admin user in chat with bot
             async_to_sync(send_comment_notifitation_to_exchange_admin)(user_id,
-                                                                       instance.pk)
+                                                                       exchange_id,
+                                                                       exchange_marker,
+                                                                       instance.review_id)
             
             # send notification to review owner in chat with bot
         async_to_sync(send_comment_notifitation_to_review_owner)(instance.review.guest_id,
-                                                                 instance.pk)
+                                                                 exchange_id,
+                                                                 exchange_marker,
+                                                                 instance.review_id)
 
 #Сигнал для создания связующей модели (пользователь + наличный обменник)
 #при создании модели пользователя админ панели
