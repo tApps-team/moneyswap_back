@@ -2182,6 +2182,11 @@ def get_directions_for_sitemap():
 def new_get_directions_for_sitemap(page: int,
                                element_on_page: int = None):
     
+    if element_on_page is not None:
+        if element_on_page < 1:
+            raise HTTPException(status_code=400,
+                                detail='Параметр "element_on_page" должен быть положительным числом')
+    
     no_cash_directions = no_cash_models.ExchangeDirection.objects\
                                 .select_related('exchange',
                                                 'direction')\
