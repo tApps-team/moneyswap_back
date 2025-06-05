@@ -15,7 +15,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from fastapi import APIRouter, Request, Depends, HTTPException
 
 from .utils.periodic_tasks import get_or_create_schedule
-from general_models.models import (NewBaseAdminComment, NewBaseComment, NewBaseReview, Valute,
+from general_models.models import (ExchangeAdmin, NewBaseAdminComment, NewBaseComment, NewBaseReview, Valute,
                                    BaseAdminComment, 
                                    Guest,
                                    FeedbackForm,
@@ -28,7 +28,7 @@ from general_models.utils.endpoints import (positive_review_count_filter,
                                             generate_image_icon,
                                             # add_reviews_counts,
                                             generate_top_exchanges_query_by_model)
-from general_models.utils.base import annotate_string_field
+from general_models.utils.base import annotate_number_field, annotate_string_field
 
 import no_cash.models as no_cash_models
 from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3, test_no_cash_exchange_directions2, test_no_cash_exchange_directions3, test_no_cash_exchange_directions4
@@ -1850,8 +1850,16 @@ def new_get_comments_by_review(review_id: int):
 
     # review = review_model.objects.filter(exchange_id=exchange_id,
     #                                      pk=review_id)
-    user_comments = NewBaseComment.objects.select_related('review',
-                                                    'review__exchange')\
+    try:
+        review = NewBaseReview.objects.get(pk=review_id)
+
+        exchange_admin = ExchangeAdmin.objects.filter(exchange_name=review.exchange_name).first()
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404,
+                            detail='Review does not exist')
+    
+    user_comments = NewBaseComment.objects.select_related('review')\
                                     .annotate(role=annotate_string_field('user'))\
                                     .filter(review_id=review_id,
                                             moderation=True)\
@@ -1859,19 +1867,21 @@ def new_get_comments_by_review(review_id: int):
                                             'time_create',
                                             'text',
                                             'username',
-                                            'role')\
+                                            'role',
+                                            'guest_id')\
                                     # .order_by('time_create')
     
-    admin_comments = NewBaseAdminComment.objects.select_related('review',
-                                                    'review__exchange')\
+    admin_comments = NewBaseAdminComment.objects.select_related('review')\
+                                    .annotate(username=annotate_string_field('Администрация MoneySwap'))\
+                                    .annotate(guest_id=annotate_number_field(1))\
                                     .annotate(role=annotate_string_field('admin'))\
-                                    .annotate(username=annotate_string_field('admin'))\
                                     .filter(review_id=review_id)\
                                     .values('id',
                                             'time_create',
                                             'text',
                                             'username',
-                                            'role')\
+                                            'role',
+                                            'guest_id')\
                                     # .order_by('time_create')
     
     comments = user_comments.union(admin_comments)
@@ -1885,8 +1895,16 @@ def new_get_comments_by_review(review_id: int):
     comment_list = []
 
     for comment in sorted(comments, key=lambda el: el.get('time_create')):
-        # if isinstance(comment, BaseAdminComment):
-        #     comment.role = CommentRoleEnum.admin
+        # print(comment)
+        # if isinstance(comment, NewBaseComment):
+        if comment.get('role') == 'user' and comment['guest_id'] == exchange_admin.user_id:
+            # print('inside')
+            # print(comment['guest_id'])
+            # print(exchange_admin.user_id)
+            #  and comment.guest_id == exchange_admin.user_id
+            comment['role'] = CommentRoleEnum.exchenger
+            comment['username'] = f'Администратор {review.exchange_name}'
+
         date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
         # comment.comment_date = date
         # comment.comment_time = time

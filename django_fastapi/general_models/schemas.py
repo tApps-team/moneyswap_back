@@ -168,7 +168,7 @@ class NewAddCommentSchema(BaseModel):
 
 class CommentRoleEnum(str, Enum):
     admin = 'admin'
-    exchenger = 'exchenger'
+    exchenger = 'exchanger'
     user = 'user'
 
 

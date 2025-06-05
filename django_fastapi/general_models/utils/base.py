@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 from django_celery_beat.models import IntervalSchedule
 
-from django.db.models import CharField, Value
+from django.db.models import CharField, Value, IntegerField
 
 from general_models.models import PartnerTimeUpdate
 
@@ -42,3 +42,8 @@ def get_timedelta():
 def annotate_string_field(exchange_marker):
     return Value(exchange_marker,
                     output_field=CharField())
+
+
+def annotate_number_field(user_id: int):
+    return Value(user_id,
+                    output_field=IntegerField())
