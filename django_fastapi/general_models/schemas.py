@@ -323,3 +323,10 @@ class SiteMapDirectonSchema(BaseModel):
     valute_to: str
     exchange_marker: str
     city: str | None
+
+
+class NewSiteMapDirectonSchema(BaseModel):
+    page: int
+    pages: int
+    element_on_page: int | None = Field(default=None)
+    directions: list[SiteMapDirectonSchema]

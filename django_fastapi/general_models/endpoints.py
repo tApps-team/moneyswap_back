@@ -64,7 +64,7 @@ from .utils.endpoints import (check_exchage_by_name, check_exchage_marker, check
                               generate_coin_for_schema,
                               send_review_notifitation)
 
-from .schemas import (AddCommentSchema, NewAddCommentSchema, NewAddReviewSchema, NewReviewsByExchangeSchema, PopularDirectionSchema, SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema,
+from .schemas import (AddCommentSchema, NewAddCommentSchema, NewAddReviewSchema, NewReviewsByExchangeSchema, NewSiteMapDirectonSchema, PopularDirectionSchema, SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema,
                       ValuteModel,
                       EnValuteModel,
                       SpecialDirectionMultiModel,
@@ -2177,6 +2177,135 @@ def get_directions_for_sitemap():
     return result
 
 
+@test_router.get('/sitemap_directions',
+                   response_model=NewSiteMapDirectonSchema)
+def new_get_directions_for_sitemap(page: int,
+                               element_on_page: int = None):
+    
+    no_cash_directions = no_cash_models.ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction')\
+                                .annotate(exchange_marker=annotate_string_field('no_cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'exchange_marker',
+                                             'exchange__name')\
+                                .order_by('direction_id')\
+                                .distinct('direction_id')
+    
+    # print(no_cash_directions)
+
+    cash_directions = cash_models.ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction',
+                                                'city')\
+                                .annotate(exchange_marker=annotate_string_field('cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'exchange_marker',
+                                             'city__code_name')\
+                                .order_by('direction_id')\
+                                .distinct('direction_id',
+                                          'city_id')
+    # print(cash_directions)
+
+    partner_directions = partner_models.Direction.objects\
+                                .select_related('direction',
+                                                'city',
+                                                'city__city',
+                                                'city__exchange')\
+                                .annotate(exchange_marker=annotate_string_field('cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'exchange_marker',
+                                             'city__city__code_name')\
+                                .order_by('direction_id')\
+                                .distinct('direction_id',
+                                          'city__city_id')
+    
+    # print(partner_directions)
+
+    directions = no_cash_directions.union(cash_directions,
+                                          partner_directions)
+    
+    # print(len(list(directions)) == len(set(directions)))
+
+    result = []
+
+    pages = 1 if element_on_page is None else ceil(len(directions) / element_on_page)
+
+    # if element_on_page:
+    #     pages = ceil(len(directions) / element_on_page)
+
+
+    # # if element_on_page:
+    # #     pages = len(reviews) // element_on_page
+
+    # #     if len(reviews) % element_on_page != 0:
+    # #         pages += 1
+    
+
+    # # reviews = reviews.all() if grade_filter is None\
+    # #              else reviews.filter(grade=str(grade_filter)).all()
+
+    # # reviews = reviews.all()
+
+
+    if element_on_page:
+        offset = (page - 1) * element_on_page
+        limit = offset + element_on_page
+        directions = directions[offset:limit]
+
+    for direction in directions:
+        valute_from, valute_to, exchange_marker, city = direction
+
+        #
+        if exchange_marker == 'no_cash':
+            city = None
+        #
+
+        result.append(
+            {
+                'valute_from': valute_from,
+                'valute_to': valute_to,
+                'exchange_marker': exchange_marker,
+                'city': city,
+            }
+        )
+
+    # print(connection.queries)
+    # return result
+    return {
+        'page': page,
+        'pages': pages,
+        'element_on_page': element_on_page,
+        'directions': result,
+    }
+
+
+    # pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
+
+    # # if element_on_page:
+    # #     pages = ceil(len(reviews) / element_on_page)
+
+
+    # # if element_on_page:
+    # #     pages = len(reviews) // element_on_page
+
+    # #     if len(reviews) % element_on_page != 0:
+    # #         pages += 1
+    
+
+    # # reviews = reviews.all() if grade_filter is None\
+    # #              else reviews.filter(grade=str(grade_filter)).all()
+
+    # # reviews = reviews.all()
+
+
+    # if element_on_page:
+    #     offset = (page - 1) * element_on_page
+    #     limit = offset + element_on_page
+    #     reviews = reviews[offset:limit]
 
 # @common_router.get('/test_logentry')
 # def test_log_entry():
