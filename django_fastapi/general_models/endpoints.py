@@ -1521,14 +1521,14 @@ def new_get_reviews_by_exchange(exchange_name: str,
 
 
     reviews = NewBaseReview.objects.select_related('guest')\
-                                    .annotate(admin_comment_count=Count('admin_comments'))\
-                                    .annotate(user_comment_count=Count('comments',
-                                                                       filter=Q(moderation=True)))\
+                                    .annotate(admin_comment_count=Subquery(admin_comment_subquery))\
+                                    .annotate(user_comment_count=Subquery(user_comment_subquery))\
                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
                                     .filter(exchange_name=exchange_name,
                                             moderation=True)
-                                    # .annotate(admin_comment_count=Subquery(admin_comment_subquery))\
-                                    # .annotate(user_comment_count=Subquery(user_comment_subquery))\
+                                    # .annotate(admin_comment_count=Count('admin_comments'))\
+                                    # .annotate(user_comment_count=Count('comments',
+                                    #                                    filter=Q(moderation=True)))\
                                     # .order_by('-time_create')
     if review_id:
         reviews = reviews.filter(pk=review_id)
