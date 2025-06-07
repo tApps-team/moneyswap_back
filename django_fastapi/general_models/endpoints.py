@@ -1911,7 +1911,9 @@ def new_get_comments_by_review(review_id: int):
     for comment in sorted(comments, key=lambda el: el.get('time_create')):
         # print(comment)
         # if isinstance(comment, NewBaseComment):
-        if comment.get('role') == 'user' and str(comment.get('guest_id')) == str(exchange_admin.user_id):
+        if comment.get('role') == 'user' \
+            and exchange_admin \
+                and str(comment.get('guest_id')) == str(exchange_admin.user_id):
             # print('inside')
             # print(comment['guest_id'])
             # print(exchange_admin.user_id)
