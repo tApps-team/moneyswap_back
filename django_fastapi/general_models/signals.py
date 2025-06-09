@@ -9,7 +9,12 @@ from django.dispatch import receiver
 
 from partners.models import CustomUser
 
-from .models import ExchangeAdmin, NewBaseComment, Valute, CustomOrder, NewBaseReview
+from .models import (ExchangeAdmin,
+                     NewBaseComment,
+                     Valute,
+                     CustomOrder,
+                     NewBaseReview,
+                     NewBaseAdminComment)
 from .utils.base import get_actual_datetime
 from .utils.periodic_tasks import request_to_bot_swift_sepa
 from .utils.endpoints import send_comment_notifitation_to_exchange_admin, send_comment_notifitation_to_review_owner, send_review_notifitation_to_exchange_admin
@@ -51,6 +56,23 @@ def premoderation_custom_order(sender, instance, **kwargs):
         else:
             instance.status = 'Завершен'
         # print(user_id)
+
+@receiver(pre_save, sender=NewBaseReview)
+def change_time_create_for_review(sender, instance, **kwargs):
+    if instance.time_create is None:
+        instance.time_create = datetime.now()
+
+
+@receiver(pre_save, sender=NewBaseComment)
+def change_time_create_for_review(sender, instance, **kwargs):
+    if instance.time_create is None:
+        instance.time_create = datetime.now()
+
+
+@receiver(pre_save, sender=NewBaseAdminComment)
+def change_time_create_for_review(sender, instance, **kwargs):
+    if instance.time_create is None:
+        instance.time_create = datetime.now()
 
 
 @receiver(post_save, sender=NewBaseReview)

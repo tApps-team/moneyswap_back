@@ -28,7 +28,7 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 
 from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
-from .models import ExchangeAdmin, ExchangeAdminOrder, NewBaseComment, Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm, NewBaseReview
+from .models import ExchangeAdmin, ExchangeAdminOrder, NewBaseAdminComment, NewBaseComment, Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm, NewBaseReview
 
 from no_cash import models as no_cash_models
 from cash import models as cash_models
@@ -779,6 +779,20 @@ class ExchangeAdminAdmin(admin.ModelAdmin):
     #     'user_id',
     #     'exchange_name',
     # )
+class NewBaseAdminCommentStacked(admin.StackedInline):
+    model = NewBaseAdminComment
+    extra = 0
+    classes = [
+        'collapse',
+        ]
+    
+class NewBaseCommentStacked(admin.StackedInline):
+    model = NewBaseComment
+    extra = 0
+    classes = [
+        'collapse',
+        ]
+
 
 @admin.register(NewBaseReview)
 class NewBaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
@@ -797,6 +811,11 @@ class NewBaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
     ordering = (
         '-time_create',
     )
+
+    inlines = [
+        NewBaseAdminCommentStacked,
+        NewBaseCommentStacked,
+    ]
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('guest')

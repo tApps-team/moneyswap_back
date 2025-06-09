@@ -818,7 +818,7 @@ class PartnerCityAdmin(admin.ModelAdmin):
         return fields
 
 
-@admin.register(Comment)
+# @admin.register(Comment)
 class CommentAdmin(BaseCommentAdmin):
     
     def get_queryset(self, request):
@@ -864,7 +864,7 @@ class AdminCommentStacked(BaseAdminCommentStacked):
 
 
 #Отображение отзывов в админ панели
-@admin.register(Review)
+# @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
     inlines = [
         CommentStacked,
@@ -948,7 +948,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     inlines = [
         PartnerCityStacked,
-        ReviewStacked,
+        # ReviewStacked,
         # ExchangeLinkCountStacked,
         ]
 

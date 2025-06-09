@@ -1868,7 +1868,7 @@ def new_check_perms_for_adding_comment(review_id: int,
             comment_exception_json(status_code=423,
                                    param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
 
-        # return {'status': 'success'}
+        return {'status': 'success'}
 
     else:
         raise HTTPException(status_code=404,

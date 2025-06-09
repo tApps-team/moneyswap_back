@@ -140,6 +140,9 @@ class ExchangeDirection(BaseExchangeDirection):
                     'exchange',
                     'direction__valute_from',
                     'direction__valute_to']
+        indexes = [
+            models.Index(fields=['is_active', 'exchange']),
+        ]
         # indexes = [
         #     models.Index(fields=['direction__valute_from', 'direction__valute_to'])
         # ]

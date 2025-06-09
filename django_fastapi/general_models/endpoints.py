@@ -1363,19 +1363,128 @@ def get_top_coins():
 
 # Эндпоинт для получения списка отзывов
 # для определённого обменника
+# @review_router.get('/reviews_by_exchange',
+#                    response_model=ReviewsByExchangeSchema)
+# def get_reviews_by_exchange(exchange_id: int,
+#                             exchange_marker: str,
+#                             page: int,
+#                             review_id: int = None,
+#                             element_on_page: int = None,
+#                             grade_filter: int = None):
+#     if exchange_marker == 'both':     # !
+#         exchange_marker = 'no_cash'
+
+#     check_exchage_marker(exchange_marker)
+
+#     if page < 1:
+#         raise HTTPException(status_code=400,
+#                             detail='Параметр "page" должен быть положительным числом')
+    
+#     if element_on_page is not None:
+#         if element_on_page < 1:
+#             raise HTTPException(status_code=400,
+#                                 detail='Параметр "element_on_page" должен быть положительным числом')
+    
+#     match exchange_marker:
+#         case 'no_cash':
+#             review_model = no_cash_models.Review
+#         case 'cash':
+#             review_model = cash_models.Review
+#         case 'partner':
+#             review_model = partner_models.Review
+
+#     reviews = review_model.objects.select_related('guest')\
+#                                     .annotate(admin_comment_count=Count('admin_comments',
+#                                                                         filter=Q(moderation=True)))\
+#                                     .annotate(user_comment_count=Count('comments',
+#                                                                        filter=Q(moderation=True)))\
+#                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
+#                                     .filter(exchange_id=exchange_id,
+#                                             moderation=True)
+#                                     # .order_by('-time_create')
+#     if review_id:
+#         reviews = reviews.filter(pk=review_id)
+        
+#         review_list = []
+
+#         for review in reviews:
+#             date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+#             # review.username = review.username  review.guest is None else review.guest.username
+#             # print(review.__dict__)
+#             if not review.username:
+#                 if review.guest:
+#                     if review.guest.username:
+#                         review.username = review.guest.username
+#                     elif review.guest.first_name:
+#                         review.username = review.guest.first_name
+#                     else:
+#                         review.username = 'Гость'
+#                 else:
+#                     review.username = 'Гость'
+                        
+#             review.review_date = date
+#             review.review_time = time
+#             review_list.append(ReviewViewSchema(**review.__dict__))
+
+#         return ReviewsByExchangeSchema(page=page,
+#                                     pages=1,
+#                                     exchange_id=exchange_id,
+#                                     exchange_marker=exchange_marker,
+#                                     element_on_page=len(review_list),
+#                                     content=review_list)
+
+#     if grade_filter is not None:
+#         reviews = reviews.filter(grade=str(grade_filter))
+
+#     reviews = reviews.order_by('-time_create').all()
+    
+#     pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
+
+#     # if element_on_page:
+#     #     pages = ceil(len(reviews) / element_on_page)
+
+
+#     # if element_on_page:
+#     #     pages = len(reviews) // element_on_page
+
+#     #     if len(reviews) % element_on_page != 0:
+#     #         pages += 1
+    
+
+#     # reviews = reviews.all() if grade_filter is None\
+#     #              else reviews.filter(grade=str(grade_filter)).all()
+
+#     # reviews = reviews.all()
+
+
+#     if element_on_page:
+#         offset = (page - 1) * element_on_page
+#         limit = offset + element_on_page
+#         reviews = reviews[offset:limit]
+
+#     review_list = []
+#     for review in reviews:
+#         date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+#         review.username = review.username if review.guest is None else review.guest.username
+#         review.review_date = date
+#         review.review_time = time
+#         review_list.append(ReviewViewSchema(**review.__dict__))
+
+#     return ReviewsByExchangeSchema(page=page,
+#                                    pages=pages,
+#                                    exchange_id=exchange_id,
+#                                    exchange_marker=exchange_marker,
+#                                    element_on_page=len(review_list),
+#                                    content=review_list)
+
+
 @review_router.get('/reviews_by_exchange',
-                   response_model=ReviewsByExchangeSchema)
-def get_reviews_by_exchange(exchange_id: int,
-                            exchange_marker: str,
+                   response_model=NewReviewsByExchangeSchema)
+def new_get_reviews_by_exchange(exchange_name: str,
                             page: int,
                             review_id: int = None,
                             element_on_page: int = None,
                             grade_filter: int = None):
-    if exchange_marker == 'both':     # !
-        exchange_marker = 'no_cash'
-
-    check_exchage_marker(exchange_marker)
-
     if page < 1:
         raise HTTPException(status_code=400,
                             detail='Параметр "page" должен быть положительным числом')
@@ -1385,127 +1494,6 @@ def get_reviews_by_exchange(exchange_id: int,
             raise HTTPException(status_code=400,
                                 detail='Параметр "element_on_page" должен быть положительным числом')
     
-    match exchange_marker:
-        case 'no_cash':
-            review_model = no_cash_models.Review
-        case 'cash':
-            review_model = cash_models.Review
-        case 'partner':
-            review_model = partner_models.Review
-
-    reviews = review_model.objects.select_related('guest')\
-                                    .annotate(admin_comment_count=Count('admin_comments',
-                                                                        filter=Q(moderation=True)))\
-                                    .annotate(user_comment_count=Count('comments',
-                                                                       filter=Q(moderation=True)))\
-                                    .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
-                                    .filter(exchange_id=exchange_id,
-                                            moderation=True)
-                                    # .order_by('-time_create')
-    if review_id:
-        reviews = reviews.filter(pk=review_id)
-        
-        review_list = []
-
-        for review in reviews:
-            date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-            # review.username = review.username  review.guest is None else review.guest.username
-            # print(review.__dict__)
-            if not review.username:
-                if review.guest:
-                    if review.guest.username:
-                        review.username = review.guest.username
-                    elif review.guest.first_name:
-                        review.username = review.guest.first_name
-                    else:
-                        review.username = 'Гость'
-                else:
-                    review.username = 'Гость'
-                        
-            review.review_date = date
-            review.review_time = time
-            review_list.append(ReviewViewSchema(**review.__dict__))
-
-        return ReviewsByExchangeSchema(page=page,
-                                    pages=1,
-                                    exchange_id=exchange_id,
-                                    exchange_marker=exchange_marker,
-                                    element_on_page=len(review_list),
-                                    content=review_list)
-
-    if grade_filter is not None:
-        reviews = reviews.filter(grade=str(grade_filter))
-
-    reviews = reviews.order_by('-time_create').all()
-    
-    pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
-
-    # if element_on_page:
-    #     pages = ceil(len(reviews) / element_on_page)
-
-
-    # if element_on_page:
-    #     pages = len(reviews) // element_on_page
-
-    #     if len(reviews) % element_on_page != 0:
-    #         pages += 1
-    
-
-    # reviews = reviews.all() if grade_filter is None\
-    #              else reviews.filter(grade=str(grade_filter)).all()
-
-    # reviews = reviews.all()
-
-
-    if element_on_page:
-        offset = (page - 1) * element_on_page
-        limit = offset + element_on_page
-        reviews = reviews[offset:limit]
-
-    review_list = []
-    for review in reviews:
-        date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-        review.username = review.username if review.guest is None else review.guest.username
-        review.review_date = date
-        review.review_time = time
-        review_list.append(ReviewViewSchema(**review.__dict__))
-
-    return ReviewsByExchangeSchema(page=page,
-                                   pages=pages,
-                                   exchange_id=exchange_id,
-                                   exchange_marker=exchange_marker,
-                                   element_on_page=len(review_list),
-                                   content=review_list)
-
-
-@test_router.get('/reviews_by_exchange',
-                   response_model=NewReviewsByExchangeSchema)
-def new_get_reviews_by_exchange(exchange_name: str,
-                            page: int,
-                            review_id: int = None,
-                            element_on_page: int = None,
-                            grade_filter: int = None):
-    # if exchange_marker == 'both':     # !
-    #     exchange_marker = 'no_cash'
-
-    # # check_exchage_marker(exchange_marker)
-
-    # if page < 1:
-    #     raise HTTPException(status_code=400,
-    #                         detail='Параметр "page" должен быть положительным числом')
-    
-    if element_on_page is not None:
-        if element_on_page < 1:
-            raise HTTPException(status_code=400,
-                                detail='Параметр "element_on_page" должен быть положительным числом')
-    
-    # match exchange_marker:
-    #     case 'no_cash':
-    #         review_model = no_cash_models.Review
-    #     case 'cash':
-    #         review_model = cash_models.Review
-    #     case 'partner':
-    #         review_model = partner_models.Review
     user_comment_subquery = NewBaseComment.objects.filter(
         review_id=OuterRef('pk'),
         moderation=True,
@@ -1526,10 +1514,7 @@ def new_get_reviews_by_exchange(exchange_name: str,
                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
                                     .filter(exchange_name=exchange_name,
                                             moderation=True)
-                                    # .annotate(admin_comment_count=Count('admin_comments'))\
-                                    # .annotate(user_comment_count=Count('comments',
-                                    #                                    filter=Q(moderation=True)))\
-                                    # .order_by('-time_create')
+
     if review_id:
         reviews = reviews.filter(pk=review_id)
         
@@ -1537,9 +1522,8 @@ def new_get_reviews_by_exchange(exchange_name: str,
 
         for review in reviews:
             date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-            # review.username = review.username  review.guest is None else review.guest.username
-            # print(review.__dict__)
-            if not review.username:
+
+            if review.username is None:
                 if review.guest:
                     if review.guest.username:
                         review.username = review.guest.username
@@ -1567,22 +1551,108 @@ def new_get_reviews_by_exchange(exchange_name: str,
     
     pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
 
-    # if element_on_page:
-    #     pages = ceil(len(reviews) / element_on_page)
+    if element_on_page:
+        offset = (page - 1) * element_on_page
+        limit = offset + element_on_page
+        reviews = reviews[offset:limit]
+
+    review_list = []
+    for review in reviews:
+        date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+        if review.username is None:
+            if review.guest:
+                if review.guest.username:
+                    review.username = review.guest.username
+                elif review.guest.first_name:
+                    review.username = review.guest.first_name
+                else:
+                    review.username = 'Гость'
+            else:
+                review.username = 'Гость'
+
+        review.review_date = date
+        review.review_time = time
+        review_list.append(ReviewViewSchema(**review.__dict__))
+
+    return NewReviewsByExchangeSchema(page=page,
+                                   pages=pages,
+                                   exchange_name=exchange_name,
+                                   element_on_page=len(review_list),
+                                   content=review_list)
 
 
-    # if element_on_page:
-    #     pages = len(reviews) // element_on_page
-
-    #     if len(reviews) % element_on_page != 0:
-    #         pages += 1
+@test_router.get('/reviews_by_exchange',
+                   response_model=NewReviewsByExchangeSchema)
+def new_get_reviews_by_exchange(exchange_name: str,
+                            page: int,
+                            review_id: int = None,
+                            element_on_page: int = None,
+                            grade_filter: int = None):
+    if page < 1:
+        raise HTTPException(status_code=400,
+                            detail='Параметр "page" должен быть положительным числом')
     
+    if element_on_page is not None:
+        if element_on_page < 1:
+            raise HTTPException(status_code=400,
+                                detail='Параметр "element_on_page" должен быть положительным числом')
+    
+    user_comment_subquery = NewBaseComment.objects.filter(
+        review_id=OuterRef('pk'),
+        moderation=True,
+    ).values('review_id').annotate(
+        total_count=Coalesce(Count('id'), Value(0))
+    ).values('total_count')
 
-    # reviews = reviews.all() if grade_filter is None\
-    #              else reviews.filter(grade=str(grade_filter)).all()
+    admin_comment_subquery = NewBaseAdminComment.objects.filter(
+        review_id=OuterRef('pk'),
+    ).values('review_id').annotate(
+        total_count=Coalesce(Count('id'), Value(0))
+    ).values('total_count')
 
-    # reviews = reviews.all()
 
+    reviews = NewBaseReview.objects.select_related('guest')\
+                                    .annotate(admin_comment_count=Subquery(admin_comment_subquery))\
+                                    .annotate(user_comment_count=Subquery(user_comment_subquery))\
+                                    .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
+                                    .filter(exchange_name=exchange_name,
+                                            moderation=True)
+
+    if review_id:
+        reviews = reviews.filter(pk=review_id)
+        
+        review_list = []
+
+        for review in reviews:
+            date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+
+            if review.username is None:
+                if review.guest:
+                    if review.guest.username:
+                        review.username = review.guest.username
+                    elif review.guest.first_name:
+                        review.username = review.guest.first_name
+                    else:
+                        review.username = 'Гость'
+                else:
+                    review.username = 'Гость'
+                        
+            review.review_date = date
+            review.review_time = time
+            review_list.append(ReviewViewSchema(**review.__dict__))
+
+        return NewReviewsByExchangeSchema(page=page,
+                                    pages=1,
+                                    exchange_name=exchange_name,
+                                    element_on_page=len(review_list),
+                                    content=review_list)
+
+    if grade_filter is not None:
+        reviews = reviews.filter(grade=str(grade_filter))
+
+    reviews = reviews.order_by('-time_create').all()
+    
+    pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
 
     if element_on_page:
         offset = (page - 1) * element_on_page
@@ -1592,7 +1662,17 @@ def new_get_reviews_by_exchange(exchange_name: str,
     review_list = []
     for review in reviews:
         date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-        review.username = review.username if review.guest is None else review.guest.username
+        if review.username is None:
+            if review.guest:
+                if review.guest.username:
+                    review.username = review.guest.username
+                elif review.guest.first_name:
+                    review.username = review.guest.first_name
+                else:
+                    review.username = 'Гость'
+            else:
+                review.username = 'Гость'
+
         review.review_date = date
         review.review_time = time
         review_list.append(ReviewViewSchema(**review.__dict__))
@@ -1606,13 +1686,65 @@ def new_get_reviews_by_exchange(exchange_name: str,
 
 # Эндпоинт для добавления нового отзыва
 # для определённого обменника
-@review_router.post('/add_review_by_exchange')
-def add_review_by_exchange(review: AddReviewSchema):
-    check_exchage_marker(review.exchange_marker)
+# @review_router.post('/add_review_by_exchange')
+# def add_review_by_exchange(review: AddReviewSchema):
+#     check_exchage_marker(review.exchange_marker)
 
-    check_perms_for_adding_review(exchange_id=review.exchange_id,
-                                  exchange_marker=review.exchange_marker,
-                                  tg_id=review.tg_id)
+#     check_perms_for_adding_review(exchange_id=review.exchange_id,
+#                                   exchange_marker=review.exchange_marker,
+#                                   tg_id=review.tg_id)
+
+#     if review.grade != -1 and review.transaction_id is not None:
+#         raise HTTPException(status_code=423,
+#                             detail='Неотрицательный отзыв не требует номера транзакции')
+    
+#     if not Guest.objects.filter(tg_id=review.tg_id).exists():
+#         raise HTTPException(status_code=404,
+#                             detail='User don`t exist in db')
+    
+#     match review.exchange_marker:
+#         case 'no_cash':
+#             review_model = no_cash_models.Review
+#         case 'cash':
+#             review_model = cash_models.Review
+#         case 'partner':
+#             review_model = partner_models.Review
+#         case 'both':
+#             review_model = no_cash_models.Review
+
+#     new_review = {
+#         'exchange_id': review.exchange_id,
+#         'guest_id': review.tg_id,
+#         'grade': review.grade,
+#         'text': review.text,
+#     }
+
+#     if review.transaction_id:
+#         new_review.update({'transaction_id': review.transaction_id})
+
+#     try:
+#         # review_model.objects.create(
+#         #     exchange_id=review.exchange_id,
+#         #     guest_id=review.tg_id,
+#         #     grade=review.grade,
+#         #     text=review.text
+#         #     )
+#         new_review_record = review_model.objects.create(**new_review)
+#     except Exception:
+#         raise HTTPException(status_code=400,
+#                             detail='Переданы некорректные данные')
+#     else:
+#         # уведомление об отзыве в бота уведомлений
+#         # async_to_sync(send_review_notifitation)(new_review_record.pk,
+#         #                                         review.exchange_marker)
+
+#         return {'status': 'success'}
+@review_router.post('/add_review_by_exchange')
+def new_add_review_by_exchange(review: NewAddReviewSchema):
+    check_exchage_by_name(review.exchange_name)
+
+    new_check_perms_for_adding_review(exchange_name=review.exchange_name,
+                                      tg_id=review.tg_id)
 
     if review.grade != -1 and review.transaction_id is not None:
         raise HTTPException(status_code=423,
@@ -1621,42 +1753,26 @@ def add_review_by_exchange(review: AddReviewSchema):
     if not Guest.objects.filter(tg_id=review.tg_id).exists():
         raise HTTPException(status_code=404,
                             detail='User don`t exist in db')
-    
-    match review.exchange_marker:
-        case 'no_cash':
-            review_model = no_cash_models.Review
-        case 'cash':
-            review_model = cash_models.Review
-        case 'partner':
-            review_model = partner_models.Review
-        case 'both':
-            review_model = no_cash_models.Review
 
     new_review = {
-        'exchange_id': review.exchange_id,
+        'exchange_name': review.exchange_name,
         'guest_id': review.tg_id,
         'grade': review.grade,
         'text': review.text,
+        'time_create': datetime.now(),
     }
 
     if review.transaction_id:
         new_review.update({'transaction_id': review.transaction_id})
 
     try:
-        # review_model.objects.create(
-        #     exchange_id=review.exchange_id,
-        #     guest_id=review.tg_id,
-        #     grade=review.grade,
-        #     text=review.text
-        #     )
-        new_review_record = review_model.objects.create(**new_review)
+        new_review_record = NewBaseReview.objects.create(**new_review)
     except Exception:
         raise HTTPException(status_code=400,
                             detail='Переданы некорректные данные')
     else:
         # уведомление об отзыве в бота уведомлений
-        # async_to_sync(send_review_notifitation)(new_review_record.pk,
-        #                                         review.exchange_marker)
+        async_to_sync(send_review_notifitation)(new_review_record.pk)
 
         return {'status': 'success'}
     
@@ -1675,16 +1791,6 @@ def new_add_review_by_exchange(review: NewAddReviewSchema):
     if not Guest.objects.filter(tg_id=review.tg_id).exists():
         raise HTTPException(status_code=404,
                             detail='User don`t exist in db')
-    
-    # match review.exchange_marker:
-    #     case 'no_cash':
-    #         review_model = no_cash_models.Review
-    #     case 'cash':
-    #         review_model = cash_models.Review
-    #     case 'partner':
-    #         review_model = partner_models.Review
-    #     case 'both':
-    #         review_model = no_cash_models.Review
 
     new_review = {
         'exchange_name': review.exchange_name,
@@ -1698,12 +1804,6 @@ def new_add_review_by_exchange(review: NewAddReviewSchema):
         new_review.update({'transaction_id': review.transaction_id})
 
     try:
-        # review_model.objects.create(
-        #     exchange_id=review.exchange_id,
-        #     guest_id=review.tg_id,
-        #     grade=review.grade,
-        #     text=review.text
-        #     )
         new_review_record = NewBaseReview.objects.create(**new_review)
     except Exception:
         raise HTTPException(status_code=400,
@@ -1718,13 +1818,18 @@ def new_add_review_by_exchange(review: NewAddReviewSchema):
 # Эндпоинт для проверки пользователя,
 # может ли он добавить новый отзыв
 # для опеределённого обменника (один в день)
+# @review_router.get('/check_user_review_permission')
+# def check_user_review_permission(exchange_id: int,
+#                                  exchange_marker: str,
+#                                  tg_id: int):
+#     return check_perms_for_adding_review(exchange_id,
+#                                          exchange_marker,
+#                                          tg_id)
 @review_router.get('/check_user_review_permission')
-def check_user_review_permission(exchange_id: int,
-                                 exchange_marker: str,
+def check_user_review_permission(exchange_name: str,
                                  tg_id: int):
-    return check_perms_for_adding_review(exchange_id,
-                                         exchange_marker,
-                                         tg_id)
+    return new_check_perms_for_adding_review(exchange_name,
+                                             tg_id)
 
 
 @test_router.get('/check_user_review_permission')
@@ -1732,138 +1837,88 @@ def check_user_review_permission(exchange_name: str,
                                  tg_id: int):
     return new_check_perms_for_adding_review(exchange_name,
                                              tg_id)
-    # time_delta = timedelta(days=1)
 
-    # check_exchage_marker(exchange_marker)
 
-    # match exchange_marker:
-    #     case 'no_cash':
-    #         review_model = no_cash_models.Review
-    #     case 'cash':
-    #         review_model = cash_models.Review
-    #     case 'partner':
-    #         review_model = partner_models.Review
+# @review_router.get('/get_comments_by_review',
+#                    response_model=list[CommentSchema],
+#                    response_model_exclude_none=True)
+# def get_comments_by_review(exchange_id: int,
+#                            exchange_marker: str,
+#                            review_id: int):
+#     check_exchage_marker(exchange_marker)
 
-    # check_time = datetime.now() - time_delta
+#     if exchange_marker == 'both':
+#         exchange_marker = 'no_cash'
+#     # print(len(connection.queries))
+#     match exchange_marker:
+#         case 'no_cash':
+#             # review_model = no_cash_models.Review
+#             user_comment_model = no_cash_models.Comment
+#             admin_comment_model = no_cash_models.AdminComment
+#         case 'cash':
+#             # review_model = cash_models.Review
+#             user_comment_model = cash_models.Comment
+#             admin_comment_model = cash_models.AdminComment
+#         case 'partner':
+#             # review_model = partner_models.Review
+#             user_comment_model = partner_models.Comment
+#             admin_comment_model = partner_models.AdminComment
 
-    # review = review_model.objects.select_related('guest')\
-    #                                 .filter(exchange_id=exchange_id,
-    #                                         guest_id=tg_id,
-    #                                         time_create__gt=check_time)\
-    #                                 .first()
-
-    # if review:
-    #     next_time_review = review.time_create.astimezone() + time_delta
-    #     review_exception_json(status_code=423,
-    #                           param=next_time_review.strftime('%d.%m.%Y %H:%M'))
-
+#     # review = review_model.objects.filter(exchange_id=exchange_id,
+#     #                                      pk=review_id)
+#     user_comments = user_comment_model.objects.select_related('review',
+#                                                     'review__exchange')\
+#                                     .annotate(role=annotate_string_field('user'))\
+#                                     .filter(review_id=review_id,
+#                                             review__exchange_id=exchange_id,
+#                                             moderation=True)\
+#                                     .values('id',
+#                                             'time_create',
+#                                             'text',
+#                                             'username',
+#                                             'role')\
+#                                     # .order_by('time_create')
     
-    # return {'status': 'success'}
+#     admin_comments = admin_comment_model.objects.select_related('review',
+#                                                     'review__exchange')\
+#                                     .annotate(role=annotate_string_field('admin'))\
+#                                     .annotate(username=annotate_string_field('admin'))\
+#                                     .filter(review_id=review_id,
+#                                             review__exchange_id=exchange_id)\
+#                                     .values('id',
+#                                             'time_create',
+#                                             'text',
+#                                             'username',
+#                                             'role')\
+#                                     # .order_by('time_create')
+    
+#     comments = user_comments.union(admin_comments)
 
+#     if not comments:
+#         raise HTTPException(status_code=404)
+    
+#     #
+#     # comments = review.first().admin_comments\
+#     #                             .order_by('time_create').all()
+#     comment_list = []
 
+#     for comment in sorted(comments, key=lambda el: el.get('time_create')):
+#         # if isinstance(comment, BaseAdminComment):
+#         #     comment.role = CommentRoleEnum.admin
+#         date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
+#         # comment.comment_date = date
+#         # comment.comment_time = time
+#         comment['comment_date'] = date
+#         comment['comment_time'] = time
+
+#         comment_list.append(comment)
+#     #
+#     # print(len(connection.queries))
+#     return comment_list
 @review_router.get('/get_comments_by_review',
                    response_model=list[CommentSchema],
                    response_model_exclude_none=True)
-def get_comments_by_review(exchange_id: int,
-                           exchange_marker: str,
-                           review_id: int):
-    check_exchage_marker(exchange_marker)
-
-    if exchange_marker == 'both':
-        exchange_marker = 'no_cash'
-    # print(len(connection.queries))
-    match exchange_marker:
-        case 'no_cash':
-            # review_model = no_cash_models.Review
-            user_comment_model = no_cash_models.Comment
-            admin_comment_model = no_cash_models.AdminComment
-        case 'cash':
-            # review_model = cash_models.Review
-            user_comment_model = cash_models.Comment
-            admin_comment_model = cash_models.AdminComment
-        case 'partner':
-            # review_model = partner_models.Review
-            user_comment_model = partner_models.Comment
-            admin_comment_model = partner_models.AdminComment
-
-    # review = review_model.objects.filter(exchange_id=exchange_id,
-    #                                      pk=review_id)
-    user_comments = user_comment_model.objects.select_related('review',
-                                                    'review__exchange')\
-                                    .annotate(role=annotate_string_field('user'))\
-                                    .filter(review_id=review_id,
-                                            review__exchange_id=exchange_id,
-                                            moderation=True)\
-                                    .values('id',
-                                            'time_create',
-                                            'text',
-                                            'username',
-                                            'role')\
-                                    # .order_by('time_create')
-    
-    admin_comments = admin_comment_model.objects.select_related('review',
-                                                    'review__exchange')\
-                                    .annotate(role=annotate_string_field('admin'))\
-                                    .annotate(username=annotate_string_field('admin'))\
-                                    .filter(review_id=review_id,
-                                            review__exchange_id=exchange_id)\
-                                    .values('id',
-                                            'time_create',
-                                            'text',
-                                            'username',
-                                            'role')\
-                                    # .order_by('time_create')
-    
-    comments = user_comments.union(admin_comments)
-
-    if not comments:
-        raise HTTPException(status_code=404)
-    
-    #
-    # comments = review.first().admin_comments\
-    #                             .order_by('time_create').all()
-    comment_list = []
-
-    for comment in sorted(comments, key=lambda el: el.get('time_create')):
-        # if isinstance(comment, BaseAdminComment):
-        #     comment.role = CommentRoleEnum.admin
-        date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
-        # comment.comment_date = date
-        # comment.comment_time = time
-        comment['comment_date'] = date
-        comment['comment_time'] = time
-
-        comment_list.append(comment)
-    #
-    # print(len(connection.queries))
-    return comment_list
-
-
-@test_router.get('/get_comments_by_review',
-                   response_model=list[CommentSchema],
-                   response_model_exclude_none=True)
 def new_get_comments_by_review(review_id: int):
-    # check_exchage_marker(exchange_marker)
-
-    # if exchange_marker == 'both':
-    #     exchange_marker = 'no_cash'
-    # # print(len(connection.queries))
-    # match exchange_marker:
-    #     case 'no_cash':
-    #         # review_model = no_cash_models.Review
-    #         user_comment_model = no_cash_models.Comment
-    #         admin_comment_model = no_cash_models.AdminComment
-    #     case 'cash':
-    #         # review_model = cash_models.Review
-    #         user_comment_model = cash_models.Comment
-    #         admin_comment_model = cash_models.AdminComment
-    #     case 'partner':
-    #         # review_model = partner_models.Review
-    #         user_comment_model = partner_models.Comment
-    #         admin_comment_model = partner_models.AdminComment
-
-    # review = review_model.objects.filter(exchange_id=exchange_id,
-    #                                      pk=review_id)
     try:
         review = NewBaseReview.objects.get(pk=review_id)
 
@@ -1903,27 +1958,20 @@ def new_get_comments_by_review(review_id: int):
     if not comments:
         raise HTTPException(status_code=404)
     
-    #
-    # comments = review.first().admin_comments\
-    #                             .order_by('time_create').all()
     comment_list = []
 
     for comment in sorted(comments, key=lambda el: el.get('time_create')):
-        # print(comment)
-        # if isinstance(comment, NewBaseComment):
-        if comment.get('role') == 'user' \
-            and exchange_admin \
-                and str(comment.get('guest_id')) == str(exchange_admin.user_id):
-            # print('inside')
-            # print(comment['guest_id'])
-            # print(exchange_admin.user_id)
-            #  and comment.guest_id == exchange_admin.user_id
-            comment['role'] = CommentRoleEnum.exchenger
-            comment['username'] = f'Администратор {review.exchange_name}'
+
+        if comment.get('role') == 'user':
+            if exchange_admin and str(comment.get('guest_id')) == str(exchange_admin.user_id):
+
+                comment['role'] = CommentRoleEnum.exchenger
+                comment['username'] = f'Администратор {review.exchange_name}'
+            else:
+                if not comment.get('username'):
+                    comment['username'] = f'Гость'
 
         date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
-        # comment.comment_date = date
-        # comment.comment_time = time
         comment['comment_date'] = date
         comment['comment_time'] = time
 
@@ -1933,69 +1981,119 @@ def new_get_comments_by_review(review_id: int):
     return comment_list
 
 
-@review_router.post('/add_comment_by_review')
-def add_comment_by_comment(comment: AddCommentSchema):
-    check_exchage_marker(comment.exchange_marker)
-
-    check_perms_for_adding_comment(review_id=comment.review_id,
-                                  exchange_marker=comment.exchange_marker,
-                                  user_id=comment.tg_id)
-
-    # if not Guest.objects.filter(tg_id=comment.tg_id).exists():
-    #     raise HTTPException(status_code=404,
-    #                         detail='User don`t exist in db')
-    
-    match comment.exchange_marker:
-        case 'no_cash':
-            comment_model = no_cash_models.Comment
-        case 'cash':
-            comment_model = cash_models.Comment
-        case 'partner':
-            comment_model = partner_models.Comment
-        case 'both':
-            comment_model = no_cash_models.Comment
-
-    new_comment = {
-        'review_id': comment.review_id,
-        'guest_id': comment.tg_id,
-        'grade': comment.grade,
-        'text': comment.text,
-        'time_create': datetime.now(),
-    }
-
+@test_router.get('/get_comments_by_review',
+                   response_model=list[CommentSchema],
+                   response_model_exclude_none=True)
+def new_get_comments_by_review(review_id: int):
     try:
-        new_comment_record = comment_model.objects.create(**new_comment)
-    except Exception:
-        raise HTTPException(status_code=400,
-                            detail='Переданы некорректные данные')
-    else:
-        # уведомление об отзыве в бота уведомлений
-        # async_to_sync(send_comment_notifitation)(new_comment_record.pk,
-        #                                         comment.exchange_marker)
+        review = NewBaseReview.objects.get(pk=review_id)
 
-        return {'status': 'success'}
+        exchange_admin = ExchangeAdmin.objects.filter(exchange_name=review.exchange_name).first()
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404,
+                            detail='Review does not exist')
     
+    user_comments = NewBaseComment.objects.select_related('review')\
+                                    .annotate(role=annotate_string_field('user'))\
+                                    .filter(review_id=review_id,
+                                            moderation=True)\
+                                    .values('id',
+                                            'time_create',
+                                            'text',
+                                            'username',
+                                            'role',
+                                            'guest_id')\
+                                    # .order_by('time_create')
+    
+    admin_comments = NewBaseAdminComment.objects.select_related('review')\
+                                    .annotate(username=annotate_string_field('Администрация MoneySwap'))\
+                                    .annotate(guest_id=annotate_number_field(1))\
+                                    .annotate(role=annotate_string_field('admin'))\
+                                    .filter(review_id=review_id)\
+                                    .values('id',
+                                            'time_create',
+                                            'text',
+                                            'username',
+                                            'role',
+                                            'guest_id')\
+                                    # .order_by('time_create')
+    
+    comments = user_comments.union(admin_comments)
 
-@test_router.post('/add_comment_by_review')
+    if not comments:
+        raise HTTPException(status_code=404)
+    
+    comment_list = []
+
+    for comment in sorted(comments, key=lambda el: el.get('time_create')):
+
+        if comment.get('role') == 'user':
+            if exchange_admin and str(comment.get('guest_id')) == str(exchange_admin.user_id):
+
+                comment['role'] = CommentRoleEnum.exchenger
+                comment['username'] = f'Администратор {review.exchange_name}'
+            else:
+                if not comment.get('username'):
+                    comment['username'] = f'Гость'
+
+        date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
+        comment['comment_date'] = date
+        comment['comment_time'] = time
+
+        comment_list.append(comment)
+    #
+    # print(len(connection.queries))
+    return comment_list
+
+
+# @review_router.post('/add_comment_by_review')
+# def add_comment_by_comment(comment: AddCommentSchema):
+#     check_exchage_marker(comment.exchange_marker)
+
+#     check_perms_for_adding_comment(review_id=comment.review_id,
+#                                   exchange_marker=comment.exchange_marker,
+#                                   user_id=comment.tg_id)
+
+#     # if not Guest.objects.filter(tg_id=comment.tg_id).exists():
+#     #     raise HTTPException(status_code=404,
+#     #                         detail='User don`t exist in db')
+    
+#     match comment.exchange_marker:
+#         case 'no_cash':
+#             comment_model = no_cash_models.Comment
+#         case 'cash':
+#             comment_model = cash_models.Comment
+#         case 'partner':
+#             comment_model = partner_models.Comment
+#         case 'both':
+#             comment_model = no_cash_models.Comment
+
+#     new_comment = {
+#         'review_id': comment.review_id,
+#         'guest_id': comment.tg_id,
+#         'grade': comment.grade,
+#         'text': comment.text,
+#         'time_create': datetime.now(),
+#     }
+
+#     try:
+#         new_comment_record = comment_model.objects.create(**new_comment)
+#     except Exception:
+#         raise HTTPException(status_code=400,
+#                             detail='Переданы некорректные данные')
+#     else:
+#         # уведомление об отзыве в бота уведомлений
+#         # async_to_sync(send_comment_notifitation)(new_comment_record.pk,
+#         #                                         comment.exchange_marker)
+
+#         return {'status': 'success'}
+
+@review_router.post('/add_comment_by_review')
 def new_add_comment_by_comment(comment: NewAddCommentSchema):
-    # check_exchage_marker(comment.exchange_marker)
 
     new_check_perms_for_adding_comment(review_id=comment.review_id,
                                        user_id=comment.tg_id)
-
-    # if not Guest.objects.filter(tg_id=comment.tg_id).exists():
-    #     raise HTTPException(status_code=404,
-    #                         detail='User don`t exist in db')
-    
-    # match comment.exchange_marker:
-    #     case 'no_cash':
-    #         comment_model = no_cash_models.Comment
-    #     case 'cash':
-    #         comment_model = cash_models.Comment
-    #     case 'partner':
-    #         comment_model = partner_models.Comment
-    #     case 'both':
-    #         comment_model = no_cash_models.Comment
 
     new_comment = {
         'review_id': comment.review_id,
@@ -2017,13 +2115,44 @@ def new_add_comment_by_comment(comment: NewAddCommentSchema):
         return {'status': 'success'}
 
 
+@test_router.post('/add_comment_by_review')
+def new_add_comment_by_comment(comment: NewAddCommentSchema):
+
+    new_check_perms_for_adding_comment(review_id=comment.review_id,
+                                       user_id=comment.tg_id)
+
+    new_comment = {
+        'review_id': comment.review_id,
+        'guest_id': comment.tg_id,
+        'grade': comment.grade,
+        'text': comment.text,
+        'time_create': datetime.now(),
+    }
+
+    try:
+        new_comment_record = NewBaseComment.objects.create(**new_comment)
+    except Exception:
+        raise HTTPException(status_code=400,
+                            detail='Переданы некорректные данные')
+    else:
+        # уведомление об отзыве в бота уведомлений
+        async_to_sync(send_comment_notifitation)(new_comment_record.pk)
+
+        return {'status': 'success'}
+
+
+# @review_router.get('/check_user_comment_permission')
+# def check_user_review_permission(exchange_marker: str,
+#                                  review_id: int,
+#                                  tg_id: int):
+#     return check_perms_for_adding_comment(review_id,
+#                                          exchange_marker,
+#                                          tg_id)
 @review_router.get('/check_user_comment_permission')
-def check_user_review_permission(exchange_marker: str,
-                                 review_id: int,
-                                 tg_id: int):
-    return check_perms_for_adding_comment(review_id,
-                                         exchange_marker,
-                                         tg_id)
+def new_check_user_review_permission(review_id: int,
+                                     tg_id: int):
+    return new_check_perms_for_adding_comment(review_id,
+                                              tg_id)
 
 
 @test_router.get('/check_user_comment_permission')
@@ -2100,14 +2229,94 @@ def increase_link_count(data: ExchangeLinkCountSchema):
 
 
 
+# @common_router.get('/sitemap_directions',
+#                    response_model=list[SiteMapDirectonSchema])
+# def get_directions_for_sitemap():
+#     # print(len(connection.queries))
+#     #valute_from
+#     #valute_to
+#     #city | None
+#     #exchange_marker
+#     no_cash_directions = no_cash_models.ExchangeDirection.objects\
+#                                 .select_related('exchange',
+#                                                 'direction')\
+#                                 .annotate(exchange_marker=annotate_string_field('no_cash'))\
+#                                 .values_list('direction__valute_from',
+#                                              'direction__valute_to',
+#                                              'exchange_marker',
+#                                              'exchange__name')\
+#                                 .order_by('direction_id')\
+#                                 .distinct('direction_id')
+    
+#     # print(no_cash_directions)
+
+#     cash_directions = cash_models.ExchangeDirection.objects\
+#                                 .select_related('exchange',
+#                                                 'direction',
+#                                                 'city')\
+#                                 .annotate(exchange_marker=annotate_string_field('cash'))\
+#                                 .values_list('direction__valute_from',
+#                                              'direction__valute_to',
+#                                              'exchange_marker',
+#                                              'city__code_name')\
+#                                 .order_by('direction_id')\
+#                                 .distinct('direction_id',
+#                                           'city_id')
+#     # print(cash_directions)
+
+#     partner_directions = partner_models.Direction.objects\
+#                                 .select_related('direction',
+#                                                 'city',
+#                                                 'city__city',
+#                                                 'city__exchange')\
+#                                 .annotate(exchange_marker=annotate_string_field('cash'))\
+#                                 .values_list('direction__valute_from',
+#                                              'direction__valute_to',
+#                                              'exchange_marker',
+#                                              'city__city__code_name')\
+#                                 .order_by('direction_id')\
+#                                 .distinct('direction_id',
+#                                           'city__city_id')
+    
+#     # print(partner_directions)
+
+#     directions = no_cash_directions.union(cash_directions,
+#                                           partner_directions)
+    
+#     # print(len(list(directions)) == len(set(directions)))
+
+#     result = []
+
+#     for direction in directions:
+#         valute_from, valute_to, exchange_marker, city = direction
+
+#         #
+#         if exchange_marker == 'no_cash':
+#             city = None
+#         #
+
+#         result.append(
+#             {
+#                 'valute_from': valute_from,
+#                 'valute_to': valute_to,
+#                 'exchange_marker': exchange_marker,
+#                 'city': city,
+#             }
+#         )
+
+#     # print(connection.queries)
+#     return result
+
 @common_router.get('/sitemap_directions',
-                   response_model=list[SiteMapDirectonSchema])
-def get_directions_for_sitemap():
-    # print(len(connection.queries))
-    #valute_from
-    #valute_to
-    #city | None
-    #exchange_marker
+                   response_model=NewSiteMapDirectonSchema)
+def new_get_directions_for_sitemap(page: int,
+                               element_on_page: int = None):
+    
+    if element_on_page is not None:
+        if element_on_page < 1:
+            raise HTTPException(status_code=400,
+                                detail='Параметр "element_on_page" должен быть положительным числом')
+    
     no_cash_directions = no_cash_models.ExchangeDirection.objects\
                                 .select_related('exchange',
                                                 'direction')\
@@ -2118,8 +2327,6 @@ def get_directions_for_sitemap():
                                              'exchange__name')\
                                 .order_by('direction_id')\
                                 .distinct('direction_id')
-    
-    # print(no_cash_directions)
 
     cash_directions = cash_models.ExchangeDirection.objects\
                                 .select_related('exchange',
@@ -2133,7 +2340,6 @@ def get_directions_for_sitemap():
                                 .order_by('direction_id')\
                                 .distinct('direction_id',
                                           'city_id')
-    # print(cash_directions)
 
     partner_directions = partner_models.Direction.objects\
                                 .select_related('direction',
@@ -2148,23 +2354,24 @@ def get_directions_for_sitemap():
                                 .order_by('direction_id')\
                                 .distinct('direction_id',
                                           'city__city_id')
-    
-    # print(partner_directions)
 
     directions = no_cash_directions.union(cash_directions,
                                           partner_directions)
-    
-    # print(len(list(directions)) == len(set(directions)))
 
     result = []
+
+    pages = 1 if element_on_page is None else ceil(len(directions) / element_on_page)
+
+    if element_on_page:
+        offset = (page - 1) * element_on_page
+        limit = offset + element_on_page
+        directions = directions[offset:limit]
 
     for direction in directions:
         valute_from, valute_to, exchange_marker, city = direction
 
-        #
         if exchange_marker == 'no_cash':
             city = None
-        #
 
         result.append(
             {
@@ -2175,8 +2382,12 @@ def get_directions_for_sitemap():
             }
         )
 
-    # print(connection.queries)
-    return result
+    return {
+        'page': page,
+        'pages': pages,
+        'element_on_page': element_on_page,
+        'directions': result,
+    }
 
 
 @test_router.get('/sitemap_directions',
@@ -2199,8 +2410,6 @@ def new_get_directions_for_sitemap(page: int,
                                              'exchange__name')\
                                 .order_by('direction_id')\
                                 .distinct('direction_id')
-    
-    # print(no_cash_directions)
 
     cash_directions = cash_models.ExchangeDirection.objects\
                                 .select_related('exchange',
@@ -2214,7 +2423,6 @@ def new_get_directions_for_sitemap(page: int,
                                 .order_by('direction_id')\
                                 .distinct('direction_id',
                                           'city_id')
-    # print(cash_directions)
 
     partner_directions = partner_models.Direction.objects\
                                 .select_related('direction',
@@ -2229,34 +2437,13 @@ def new_get_directions_for_sitemap(page: int,
                                 .order_by('direction_id')\
                                 .distinct('direction_id',
                                           'city__city_id')
-    
-    # print(partner_directions)
 
     directions = no_cash_directions.union(cash_directions,
                                           partner_directions)
-    
-    # print(len(list(directions)) == len(set(directions)))
 
     result = []
 
     pages = 1 if element_on_page is None else ceil(len(directions) / element_on_page)
-
-    # if element_on_page:
-    #     pages = ceil(len(directions) / element_on_page)
-
-
-    # # if element_on_page:
-    # #     pages = len(reviews) // element_on_page
-
-    # #     if len(reviews) % element_on_page != 0:
-    # #         pages += 1
-    
-
-    # # reviews = reviews.all() if grade_filter is None\
-    # #              else reviews.filter(grade=str(grade_filter)).all()
-
-    # # reviews = reviews.all()
-
 
     if element_on_page:
         offset = (page - 1) * element_on_page
@@ -2266,10 +2453,8 @@ def new_get_directions_for_sitemap(page: int,
     for direction in directions:
         valute_from, valute_to, exchange_marker, city = direction
 
-        #
         if exchange_marker == 'no_cash':
             city = None
-        #
 
         result.append(
             {
@@ -2280,8 +2465,6 @@ def new_get_directions_for_sitemap(page: int,
             }
         )
 
-    # print(connection.queries)
-    # return result
     return {
         'page': page,
         'pages': pages,
@@ -2289,30 +2472,6 @@ def new_get_directions_for_sitemap(page: int,
         'directions': result,
     }
 
-
-    # pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
-
-    # # if element_on_page:
-    # #     pages = ceil(len(reviews) / element_on_page)
-
-
-    # # if element_on_page:
-    # #     pages = len(reviews) // element_on_page
-
-    # #     if len(reviews) % element_on_page != 0:
-    # #         pages += 1
-    
-
-    # # reviews = reviews.all() if grade_filter is None\
-    # #              else reviews.filter(grade=str(grade_filter)).all()
-
-    # # reviews = reviews.all()
-
-
-    # if element_on_page:
-    #     offset = (page - 1) * element_on_page
-    #     limit = offset + element_on_page
-    #     reviews = reviews[offset:limit]
 
 # @common_router.get('/test_logentry')
 # def test_log_entry():

@@ -1,10 +1,11 @@
 from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
-from django.db.models import Count, Q, Sum, Value, Subquery, OuterRef
+from django.db.models import Count, Q, Sum, Value, Subquery, OuterRef, Prefetch, F
 from django.db.models.functions import Coalesce
 from django.http import HttpRequest
 from django.db.models import Sum, Count
+from django.contrib.admin import SimpleListFilter
 
 import cash.models as cash_models
 
@@ -36,7 +37,7 @@ from general_models.tasks import parse_reviews_for_exchange
 
 
 #Отображение комментариев в админ панели
-@admin.register(Comment)
+# @admin.register(Comment)
 class CommentAdmin(BaseCommentAdmin):
     pass
 
@@ -52,7 +53,7 @@ class AdminCommentStacked(BaseAdminCommentStacked):
 
 
 #Отображение отзывов в админ панели
-@admin.register(Review)
+# @admin.register(Review)
 class ReviewAdmin(BaseReviewAdmin):
     inlines = [
         CommentStacked,
@@ -104,13 +105,14 @@ class ExchangeAdmin(BaseExchangeAdmin):
     # list_display = ('link_count', )
     inlines = [
         ExchangeDirectionStacked,
-        ReviewStacked,
+        # ReviewStacked,
         ExchangeLinkCountStacked,
         ]
     
     def get_total_direction_count(self, obj):
         # print(obj.__dict__)
         direction_count = obj.direction_count
+        # print(direction_count)
         try:
             cash_exchange = cash_models.Exchange.objects.annotate(cash_direction_count=Count('directions',
                                                                                                         filter=Q(directions__is_active=True)))\
@@ -181,15 +183,21 @@ class ExchangeAdmin(BaseExchangeAdmin):
         queryset = super().get_queryset(request)
 
         # direction_count_subquery = 
-        direction_count_subquery = ExchangeDirection.objects.filter(
-            exchange_id=OuterRef('id'),
-            is_active=True,
-        ).values('exchange_id').annotate(
-            total_count=Coalesce(Count('id'), Value(0))
-        ).values('total_count')
+        # direction_count_subquery = ExchangeDirection.objects.filter(
+        #     exchange_id=OuterRef('id'),
+        #     is_active=True,
+        # ).values('exchange_id').annotate(
+        #     total_count=Coalesce(Count('id'), Value(0))
+        # ).values('total_count')
+        queryset = queryset.annotate(direction_count=Count('directions',
+                                                       filter=Q(directions__is_active=True),
+                                                       distinct=True))
+        
+        # for w in queryset.get(name='1WM').directions.all():
+        #     print(w)
 
-        return queryset.annotate(direction_count=Coalesce(Subquery(direction_count_subquery), Value(0)))
-
+        return queryset
+        # return queryset.annotate(direction_count=Coalesce(Subquery(direction_count_subquery), Value(0)))
 
 #Отображение направлений в админ панели
 @admin.register(Direction)
@@ -233,6 +241,21 @@ class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     
 
 
+# class PopularDirectionFilter(SimpleListFilter):
+#     title = 'Направление'
+#     parameter_name = 'direction'
+
+#     def lookups(self, request, model_admin):
+#         directions = Direction.objects.select_related('valute_from', 'valute_to')
+#         return [
+#             (d.id, f'{d.valute_from} → {d.valute_to}') for d in directions
+#         ]
+
+#     def queryset(self, request, queryset):
+#         if self.value():
+#             return queryset.filter(directions__id=self.value())
+#         return queryset
+
 
 @admin.register(PopularDirection)
 class PopularDirectionAdmin(BasePopularDirectionAdmin):
@@ -242,6 +265,20 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
     filter_horizontal = (
         'directions',
     )
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        # Prefetch directions and their related valute_from and valute_to
+        return qs.prefetch_related(
+            Prefetch(
+                'directions',
+                queryset=Direction.objects.select_related('valute_from', 'valute_to')
+            )
+        )
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'directions':
+            # Оптимизируем queryset для виджета filter_horizontal
+            kwargs['queryset'] = Direction.objects.select_related('valute_from', 'valute_to')
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
 @admin.register(ExchangeLinkCount)

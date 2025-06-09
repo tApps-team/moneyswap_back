@@ -2,6 +2,7 @@ from typing import Iterable
 from datetime import datetime
 
 from django.db import models
+from django.forms import ValidationError
 
 # from partners.models import CustomUser
 
@@ -687,6 +688,16 @@ class ExchangeAdminOrder(models.Model):
 
     def __str__(self):
         return f'{self.user_id} {self.exchange_name}'
+    
+    def clean(self) -> None:
+        super().clean_fields()
+                
+        if ExchangeAdminOrder.objects.filter(exchange_name=self.exchange_name).exists():
+            raise ValidationError('Заявка на этот обменник уже существует. Если хотите привязать нового адимна к этому обменнику, сначала удалите старую заявку и убедитесь, что у обменника нет действующего привязанного админа (Раздел "Общее" [Подключенные обменники к юзерам])')
+
+        if ExchangeAdminOrder.objects.filter(user_id=self.user_id,
+                                             moderation=False).exists():
+            raise ValidationError('У пользователя есть неактивированная (непромодерированная) заявка. Дождитесь активации предыдущей заявки на стороне пользователя или удалите её в разделе "Общее" (Заявки на подключения обменников к юзерам) и создайте новую')
 
 
 class ExchangeAdmin(models.Model):

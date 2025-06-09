@@ -5,3 +5,4 @@ pgbouncer.ini
 venv/
 __pycache__/
 cache_holder/
+django_error.log

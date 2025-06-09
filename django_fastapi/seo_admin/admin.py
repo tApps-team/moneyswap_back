@@ -6,24 +6,26 @@ from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 
 from django_summernote.admin import SummernoteModelAdmin
+from django_summernote.models import Attachment
 
 from general_models.models import MassSendMessage, MassSendImage, MassSendVideo, MassSendFile
 from general_models.utils.endpoints import try_generate_icon_url, generate_image_icon
 
 from .models import SimplePage, FAQCategory, FAQPage
 
+admin.site.unregister(Attachment)
 
-@admin.register(SimplePage)
+# @admin.register(SimplePage)
 class SimplePageAdmin(SummernoteModelAdmin):
     summernote_fields = ('upper_content', 'lower_content', )
 
 
-@admin.register(FAQCategory)
+# @admin.register(FAQCategory)
 class FAQCategoryAdmin(admin.ModelAdmin):
     list_display = ('name', )
 
 
-@admin.register(FAQPage)
+# @admin.register(FAQPage)
 class FAQPageAdmin(SummernoteModelAdmin):
     list_display = ('question', )
     summernote_fields = ('answer', )
