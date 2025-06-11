@@ -3,6 +3,25 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles import views
+from django.contrib.admin.models import LogEntry
+from django.urls import path
+
+from general_models.admin import custom_admin_site  # путь к твоему классу
+
+from django.contrib import admin
+
+# custom_admin_site = CustomAdminSite()
+
+# class LogEntryAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'user',
+#     )
+
+# custom_admin_site.register(LogEntry, LogEntryAdmin)
+
+# urlpatterns = [
+#     path('admin22/', custom_admin_site.urls),
+# ]
 
 
 admin.site.site_header = 'Админ панель базы данных MoneySwap'
@@ -15,6 +34,7 @@ def trigger_error(request):
 urlpatterns = [
     path("admin/action-forms/", include("django_admin_action_forms.urls")),
     path("admin/", admin.site.urls),
+    path('admin22/', custom_admin_site.urls),
     path('sentry-debug/', trigger_error),
     path('summernote/', include('django_summernote.urls')),
     ]

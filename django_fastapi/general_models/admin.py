@@ -8,7 +8,7 @@ from django.contrib.auth.models import User, Group
 from django.db.models.query import QuerySet
 from django.utils.safestring import mark_safe
 from django.http.request import HttpRequest
-
+from django.contrib.admin import AdminSite
 from django.contrib.admin.models import LogEntry
 
 from django_celery_beat.models import (SolarSchedule,
@@ -47,11 +47,39 @@ admin.site.unregister(CrontabSchedule)
 # admin.site.unregister(Group)
 
 
-# @admin.register(LogEntry)
-# class LogEntryAdmin(admin.ModelAdmin):
-#     list_display = (
-#         'user',
-#     )
+class CustomAdminSite(AdminSite):
+    index_template = 'admin/custom_index.html'
+
+    site_header = 'Страница для ослеживания действий в админ панели'
+    
+
+custom_admin_site = CustomAdminSite(name='admin22')
+
+
+@admin.register(LogEntry, site=custom_admin_site)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'content_type',
+        'action_flag',
+        'action_time',
+    )
+    fields = (
+        'user',
+        'content_type',
+        'object_id',
+        'object_repr',
+        'action_flag',
+        'action_time',
+    )
+
+    def has_change_permission(self, request, obj = ...):
+        return False
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('user',
+                                                            'content_type')
+
 
 @admin.register(FeedbackForm)
 class FeedbackFormAdmin(admin.ModelAdmin):
