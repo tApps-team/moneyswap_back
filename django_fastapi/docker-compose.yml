@@ -55,9 +55,9 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
+                    python manage.py collectstatic --no-input &&
                     gunicorn -w 2 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000"
                     # python manage.py create_new_reviews_from_old &&
-                    # python manage.py collectstatic --no-input &&
                     # uvicorn project.asgi:app --host 0.0.0.0"
                     # python manage.py parse_reviews_selenium &&
                     # python manage.py add_time_create_for_exchanges &&
