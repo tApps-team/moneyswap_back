@@ -21,7 +21,7 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
 from partners.utils.endpoints import (get_partner_directions,
                                       get_partner_directions3,
                                       get_partner_directions_with_location,
-                                      get_partner_directions2, test_get_partner_directions2, test_get_partner_directions2_with_aml, test_get_partner_directions3)
+                                      get_partner_directions2, new_test_get_partner_directions2_with_aml, test_get_partner_directions2, test_get_partner_directions2_with_aml, test_get_partner_directions3)
 from partners.models import CountryDirection, Direction as PartnerDirection, PartnerCountry
 
 from .models import City, ExchangeDirection, Country
@@ -573,14 +573,16 @@ def test_cash_exchange_directions3(request: Request,
                                         exchange__is_active=True)\
                                 .all()
     
-    partner_directions = test_get_partner_directions2_with_aml(valute_from,
+    partner_directions = new_test_get_partner_directions2_with_aml(valute_from,
                                                 valute_to,
                                                 city)
     
+    # queries = sorted(list(queries) + list(partner_directions),
+    #                  key=lambda query: (-query.exchange.is_vip,
+    #                                     -query.out_count,
+    #                                     query.in_count))
     queries = sorted(list(queries) + list(partner_directions),
-                     key=lambda query: (-query.exchange.is_vip,
-                                        -query.out_count,
-                                        query.in_count))
+                     key=lambda query: (-query.exchange.is_vip,))
     
     if not queries:
         http_exception_json(status_code=404, param=request.url)

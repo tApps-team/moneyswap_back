@@ -1672,7 +1672,7 @@ def add_partner_direction(partner: partner_dependency,
 
         data.update(main_exchange_rate)
 
-        make_valid_values_for_dict(data)
+        # make_valid_values_for_dict(data)
 
         try:
             if marker == 'city':
@@ -1734,7 +1734,7 @@ def add_partner_direction(partner: partner_dependency,
                         
                         exchange_rate_data.update(additional_exchange_rate)
 
-                        make_valid_values_for_dict(exchange_rate_data)
+                        # make_valid_values_for_dict(exchange_rate_data)
                         
                         new_exchangedirection_rate = sub_foreign_key_model(**exchange_rate_data)
 
@@ -1794,7 +1794,7 @@ def add_partner_direction(partner: partner_dependency,
         main_exchange_rate.pop('max_count')
 
         data.update(main_exchange_rate)
-        make_valid_values_for_dict(data)
+        # make_valid_values_for_dict(data)
 
         try:
             with transaction.atomic():
@@ -1833,7 +1833,7 @@ def add_partner_direction(partner: partner_dependency,
                         
                         exchange_rate_data.update(additional_exchange_rate)
                         
-                        make_valid_values_for_dict(exchange_rate_data)
+                        # make_valid_values_for_dict(exchange_rate_data)
 
                         new_exchangedirection_rate = NonCashDirectionRate(**exchange_rate_data)
 

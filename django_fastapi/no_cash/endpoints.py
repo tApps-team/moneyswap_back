@@ -16,7 +16,7 @@ from general_models.utils.endpoints import (get_exchange_direction_list, get_exc
 
 from cash.endpoints import cash_exchange_directions_with_location, cash_exchange_directions_with_location2, test_cash_exchange_directions_with_location2
 
-from partners.utils.endpoints import get_no_cash_partner_directions
+from partners.utils.endpoints import get_no_cash_partner_directions, new_get_no_cash_partner_directions
 from partners.models import NonCashDirection, NonCashDirectionRate
 
 from .models import ExchangeDirection
@@ -382,15 +382,19 @@ def test_no_cash_exchange_directions4(request: Request,
     #                                                         is_active=True,
     #                                                         exchange__is_active=True)
 
-    partner_directions = get_no_cash_partner_directions(valute_from,
+    partner_directions = new_get_no_cash_partner_directions(valute_from,
                                                         valute_to)
     
     # print(partner_directions)
     
+    # queries = sorted(list(queries) + list(partner_directions),
+    #                  key=lambda query: (-query.exchange.is_vip,
+    #                                     -query.out_count,
+    #                                     query.in_count))
+    
     queries = sorted(list(queries) + list(partner_directions),
-                     key=lambda query: (-query.exchange.is_vip,
-                                        -query.out_count,
-                                        query.in_count))
+                     key=lambda query: (-query.exchange.is_vip,))
+
     
     if not queries:
         http_exception_json(status_code=404, param=request.url)

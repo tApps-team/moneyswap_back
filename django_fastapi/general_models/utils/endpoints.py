@@ -1150,7 +1150,16 @@ def get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
     # print(connection.queries)
     # for query in connection.queries:
     #     print(query)
-    return direction_list
+    # return direction_list
+    return sorted(direction_list,
+                     key=lambda el: (-el.is_vip,
+                                        -el.out_count,
+                                        el.in_count))
+    # queries = sorted(list(queries) + list(partner_directions),
+    #                  key=lambda query: (-query.exchange.is_vip,
+    #                                     -query.out_count,
+    #                                     query.in_count))
+
 
 
 def test_get_exchange_direction_list(queries: List[NoCashExDir | CashExDir],
