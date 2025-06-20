@@ -12,7 +12,7 @@ from general_models.utils.base import get_timedelta
 
 from cash.models import Direction
 
-from .models import Direction as PartnerDirection, CountryDirection
+from .models import Direction as PartnerDirection, CountryDirection, NonCashDirection
 
 
 @shared_task(name='parse_cash_courses',
@@ -65,5 +65,9 @@ def check_update_time_for_directions():
                         .update(is_active=False)
         
         CountryDirection.objects\
+                        .filter(time_update__lt=check_time)\
+                        .update(is_active=False)
+        
+        NonCashDirection.objects\
                         .filter(time_update__lt=check_time)\
                         .update(is_active=False)
