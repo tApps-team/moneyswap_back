@@ -208,7 +208,7 @@ class NewUTMSourceFilter(admin.filters.SimpleListFilter):
             
             if prefix_utm:
                 if not second_part_utm:
-                    queryset = queryset.filter(utm_source__startswith=utm_source,
+                    queryset = queryset.filter(utm_source__startswith=prefix_utm,
                                                 utm_source__isnull=False)
                 else:
                     queryset = queryset.filter(utm_source__startswith=prefix_utm,
