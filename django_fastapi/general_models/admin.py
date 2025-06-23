@@ -26,7 +26,7 @@ from rangefilter.filters import (
 
 from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on_active
 
-from .utils.admin import ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
+from .utils.admin import NewUTMSourceFilter, ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
 from .models import ExchangeAdmin, ExchangeAdminOrder, NewBaseAdminComment, NewBaseComment, Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm, NewBaseReview
 
@@ -224,7 +224,7 @@ class GuestAdmin(admin.ModelAdmin):
     list_filter = (
         CustomDateTimeFilter,
         ("time_create", DateRangeFilterBuilder()),
-        UTMSourceFilter,
+        NewUTMSourceFilter,
         # ('time_create', DateRangeQuickSelectListFilterBuilder()),
         # ("time_create", NumericRangeFilterBuilder()),
         # 'time_create',

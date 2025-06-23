@@ -163,10 +163,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# DEV
-# STATIC_URL = "/django/static/"
-# PROD
-STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
@@ -187,10 +183,19 @@ DJANGO_PREFIX = "/django"
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
-####SWITCH FOR DEV/PROD####
 
+####SWITCH FOR DEV/PROD#########
+
+# DEV
 # DEBUG = True
+# STATIC_URL = "/django/static/"
+
+# PROD
 DEBUG = False
+STATIC_URL = "/static/"
+
+#################################
+
 
 SITE_DOMAIN = 'api.moneyswap.online'
 # SITE_DOMAIN = '127.0.0.1:81'
