@@ -12,16 +12,16 @@ from config import (DB_USER,
                     PGBOUNCER_HOST)
 
 
-sentry_sdk.init(
-    dsn="https://092663a7578a856b241d61d8c326be00@o4506694926336000.ingest.sentry.io/4506739040190464",
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for performance monitoring.
-    traces_sample_rate=1.0,
-    # Set profiles_sample_rate to 1.0 to profile 100%
-    # of sampled transactions.
-    # We recommend adjusting this value in production.
-    profiles_sample_rate=1.0,
-)
+# sentry_sdk.init(
+#     dsn="https://092663a7578a856b241d61d8c326be00@o4506694926336000.ingest.sentry.io/4506739040190464",
+#     # Set traces_sample_rate to 1.0 to capture 100%
+#     # of transactions for performance monitoring.
+#     traces_sample_rate=1.0,
+#     # Set profiles_sample_rate to 1.0 to profile 100%
+#     # of sampled transactions.
+#     # We recommend adjusting this value in production.
+#     profiles_sample_rate=1.0,
+# )
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -163,10 +163,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# DEV
-# STATIC_URL = "/django/static/"
-# PROD
-STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
@@ -187,10 +183,17 @@ DJANGO_PREFIX = "/django"
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
-####SWITCH FOR DEV/PROD####
+####SWITCH FOR DEV/PROD#########
 
-# DEBUG = True
-DEBUG = False
+# DEV
+DEBUG = True
+STATIC_URL = "/django/static/"
+
+# PROD
+# DEBUG = False
+# STATIC_URL = "/static/"
+
+#################################
 
 SITE_DOMAIN = 'api.moneyswap.online'
 # SITE_DOMAIN = '127.0.0.1:81'
