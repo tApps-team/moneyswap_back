@@ -58,10 +58,8 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
         request_session = request.session
 
         # Получаем уникальные значения начала строки
-        # utm_source_start = request.GET.get('utm_source_start')
         print('lookup',request.GET)
         print('request session', request_session.__dict__)
-        # if not utm_source_start:
 
         if request_session.get('prefix_utm') and \
             request_session.get('second_part_utm'):
@@ -82,9 +80,6 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
 
             return sorted(set(unique_prefix))
 
-
-            # return [('_'.join(prefix.split('_')[:2]), '_'.join(prefix.split('_')[:2])) \
-            #         for prefix in set(prefixes) if prefix is not None]
         else:
             if utm_source[:2].isdigit():
                 prefix_utm = request_session.get('prefix_utm')
@@ -108,35 +103,24 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
                                  for prefix in set(prefixes) if prefix is not None]
                 
                 request.session['prefix_utm'] = utm_source
+
+                if not unique_prefix:
+                    return [('--', '--')]
                 
                 return sorted(set(unique_prefix))
 
-                # return [('_'.join(prefix.split('_')[2:]), '_'.join(prefix.split('_')[2:])) \
-                #         for prefix in set(prefixes) if prefix is not None]
             else:
-                # request.session['prefix_utm'] = None
                 return [('--', '--')]
-        # return [(prefix, prefix) for prefix in set(prefixes) if prefix is not None]
 
 
     def queryset(self, request, queryset):
         request_session = request.session
         
-        # if any(key for key in request.GET if key.startswith('time_create')):
-        #     request.GET['time_create__isnull'] = ['False']
-        # else:
-        #     try:
-        #         del request.GET['time_create__isnull']
-        #     except Exception as ex:
-        #         print(ex)
-        print(request.GET)
-        print('request session', request_session.__dict__)
-        # utm_source_start = request.GET.get('utm_source_start')
+        print('q',request.GET)
+        print('q','request session', request_session.__dict__)
+        print('q',self.value())
         utm_source = self.value()
-        # print(utm_source)
-        # print(22)
         if utm_source:
-        #     # if not utm_source_start:
             check_value = utm_source[:2].isdigit()
             
             if not check_value:
@@ -149,11 +133,88 @@ class UTMSourceFilter(admin.filters.SimpleListFilter):
                                             utm_source__endswith=utm_source,
                                             utm_source__isnull=False)
                     
-                    # request.session['prefix_utm'] = None
+        return queryset
 
-                # utm_source_start = utm_source_start[0]
-                # queryset = queryset.filter(utm_source__startswith=utm_source_start)
-        # print(queryset)
+
+class NewUTMSourceFilter(admin.filters.SimpleListFilter):
+    title = 'Кастомный UTM фильтр'
+    parameter_name = 'utm_source_start'
+
+    def lookups(self, request, model_admin):
+        request_session = request.session
+
+        # Получаем уникальные значения начала строки
+        print('lookup',request.GET)
+        print('request session', request_session.__dict__)
+
+        if request_session.get('prefix_utm') and \
+            request_session.get('second_part_utm'):
+            print('both active')
+
+        utm_source = self.value()
+        print(utm_source)
+        if not utm_source:
+            prefixes = Guest.objects.filter(utm_source__isnull=False)\
+                                    .values_list('utm_source', flat=True)\
+                                    .distinct()
+
+            unique_prefix =  [('_'.join(prefix.split('_')[:2]), '_'.join(prefix.split('_')[:2])) \
+                                for prefix in set(prefixes) if prefix is not None]
+            
+            request_session['prefix_utm'] = None
+            request_session['second_part_utm'] = None
+
+            return sorted(set(unique_prefix))
+
+        else:
+            prefix_utm = request_session.get('prefix_utm')
+
+            if not prefix_utm:
+                prefixes = Guest.objects.filter(utm_source__isnull=False,
+                                                utm_source__startswith=utm_source)\
+                                        .values_list('utm_source', flat=True)\
+                                        .distinct()
+
+                
+                request.session['prefix_utm'] = utm_source
+
+            else:
+                prefixes = Guest.objects.filter(utm_source__isnull=False,
+                                                utm_source__endswith=utm_source,
+                                                utm_source__startswith=prefix_utm)\
+                                        .values_list('utm_source', flat=True)\
+                                        .distinct()
+                request.session['second_part_utm'] = utm_source
+            
+            unique_prefix = [('_'.join(prefix.split('_')[2:]), '_'.join(prefix.split('_')[2:])) \
+                                for prefix in set(prefixes) if prefix is not None]
+            
+            if not unique_prefix:
+                return [('--', '--')]
+            
+            return sorted(set(unique_prefix))
+
+
+    def queryset(self, request, queryset):
+        request_session = request.session
+        
+        # print('q',request.GET)
+        # print('q','request session', request_session.__dict__)
+        # print('q',self.value())
+        utm_source = self.value()
+        if utm_source:
+            prefix_utm = request_session.get('prefix_utm')
+            second_part_utm = request_session.get('second_part_utm')
+            
+            if prefix_utm:
+                if not second_part_utm:
+                    queryset = queryset.filter(utm_source__startswith=utm_source,
+                                                utm_source__isnull=False)
+                else:
+                    queryset = queryset.filter(utm_source__startswith=prefix_utm,
+                                            utm_source__endswith=utm_source,
+                                            utm_source__isnull=False)
+                    
         return queryset
 
 
