@@ -161,6 +161,8 @@ class NewUTMSourceFilter(admin.filters.SimpleListFilter):
             unique_prefix =  [('_'.join(prefix.split('_')[:2]), '_'.join(prefix.split('_')[:2])) \
                                 for prefix in set(prefixes) if prefix is not None]
             
+            unique_prefix = [('Без UTM метки', 'Без UTM метки'), ] + unique_prefix
+            
             request_session['prefix_utm'] = None
             request_session['second_part_utm'] = None
 
@@ -207,6 +209,11 @@ class NewUTMSourceFilter(admin.filters.SimpleListFilter):
             second_part_utm = request_session.get('second_part_utm')
             
             if prefix_utm:
+                if prefix_utm == 'Без UTM метки':
+                    queryset = queryset.filter(utm_source__isnull=True)
+                    request.session['prefix_utm'] = None
+                    return queryset
+                
                 if not second_part_utm:
                     queryset = queryset.filter(utm_source__startswith=prefix_utm,
                                                 utm_source__isnull=False)
