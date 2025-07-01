@@ -11,3 +11,7 @@ RUN pip3 install --upgrade setuptools
 RUN pip3 install -r requirements.txt
 
 COPY . .
+
+RUN mkdir -p /app/logs && \
+    touch /app/logs/gunicorn-error.log && \
+    chmod -R 777 /app/logs
