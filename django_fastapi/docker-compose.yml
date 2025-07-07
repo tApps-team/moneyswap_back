@@ -55,13 +55,13 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
-                    uvicorn project.asgi:app \
-                    --host 0.0.0.0 \
-                    --port 8000 \
-                    --workers 4 \
-                    --timeout-keep-alive 60 \
-                    --loop uvloop"
                     # uvicorn project.asgi:app --host 0.0.0.0"
+                    # uvicorn project.asgi:app \
+                    # --host 0.0.0.0 \
+                    # --port 8000 \
+                    # --workers 4 \
+                    # --timeout-keep-alive 60 \
+                    # --loop uvloop"
                     # gunicorn -w 2 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000 --timeout 180 --error-logfile /app/logs/gunicorn-error.log"
                     # python manage.py collectstatic --no-input &&
                     # python manage.py create_new_reviews_from_old &&
