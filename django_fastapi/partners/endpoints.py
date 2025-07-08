@@ -603,18 +603,20 @@ def get_account_info(partner: partner_dependency):
         raise HTTPException(status_code=404)
     else:
         exchange_admin = ExchangeAdmin.objects.select_related('user')\
-                                                .filter(exchage_name=exchange.name,
+                                                .filter(exchange_name=exchange.name,
                                                         exchange_marker='partner')
         if exchange_admin.exists():
             exchange_admin = exchange_admin.first()
             user = exchange_admin.user
 
-            name = user.username | user.first_name | user.last_name | None
+            name = user.username or user.first_name or user.last_name or None
             
+            link = f'https://t.me/{user.username}' if user.username else None
+
             exchange.telegram = {
                 'id': user.tg_id,
                 'name': name,
-                'link': f'tg://user?id={user.tg_id}',
+                'link': link,
             }
         
         exchange.title = AccountTitleSchema(ru=exchange.name,
