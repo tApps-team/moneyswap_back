@@ -20,7 +20,7 @@ from general_models.utils.endpoints import (get_valute_json_3,
                                             try_generate_icon_url)
 from general_models.utils.tasks import make_valid_values_for_dict
 from general_models.schemas import MultipleName, MultipleName2
-from general_models.models import Valute, Guest
+from general_models.models import ExchangeAdmin, ExchangeAdminOrder, Valute, Guest
 
 from .models import (CustomUser, PartnerCity,
                      Direction,
@@ -61,7 +61,7 @@ from .schemas import (AddPartnerCountrySchema,
                       BankomatDetailSchema,
                       DeletePartnerDirectionSchema, DirectionSchema2, DirectionSchema3,
                       ListEditedPartnerDirectionSchema2,
-                      DeletePartnerCityCountrySchema, NoCashDirectionSchema,
+                      DeletePartnerCityCountrySchema, NewAccountInfoSchema, NoCashDirectionSchema,
                       PartnerCitySchema,
                       CountrySchema,
                       CitySchema,
@@ -591,6 +591,67 @@ def get_account_info(partner: partner_dependency):
         return exchange
 
 
+@test_partner_router.get('/account_info',
+                    response_model=NewAccountInfoSchema)
+def get_account_info(partner: partner_dependency):
+    partner_id = partner.get('partner_id')
+
+    try:
+        exchange = Exchange.objects.select_related('account')\
+                                    .get(account__pk=partner_id)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404)
+    else:
+        exchange_admin = ExchangeAdmin.objects.select_related('user')\
+                                                .filter(exchage_name=exchange.name,
+                                                        exchange_marker='partner')
+        if exchange_admin.exists():
+            exchange_admin = exchange_admin.first()
+            user = exchange_admin.user
+
+            name = user.username | user.first_name | user.last_name | None
+            
+            exchange.telegram = {
+                'id': user.tg_id,
+                'name': name,
+                'link': f'tg://user?id={user.tg_id}',
+            }
+        
+        exchange.title = AccountTitleSchema(ru=exchange.name,
+                                            en=exchange.en_name)
+        
+        return exchange
+
+
+@partner_router.post('/add_admin_exchange_order')
+def add_admin_exchange_order(partner: partner_dependency,
+                             tg_id: int):
+    partner_id = partner.get('partner_id')
+
+    try:
+        exchange = Exchange.objects.select_related('account')\
+                                    .get(account__pk=partner_id)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='Exchanger not found in DB')
+    else:
+        if ExchangeAdminOrder.objects.filter(exchange_name=exchange.name).exists():
+            raise HTTPException(status_code=423,
+                                detail='Order for this exchanger exists in DB yet')
+        try:
+            data = {
+                'user_id': tg_id,
+                'exchange_name': exchange.name,
+                'time_create': timezone.now(),
+
+            }
+            ExchangeAdminOrder.objects.create(**data)
+        except Exception as ex:
+            print(ex)
+            raise HTTPException(status_code=400,
+                                detail='Error with creating ExchangeAdminOrder')
+        else:
+            return 'https://t.me/MoneySwap_robot?start=partner_admin_activate'
 # @partner_router.post('/add_partner_city')
 # def add_partner_city(partner: partner_dependency,
 #                      city: AddPartnerCitySchema2):

@@ -203,6 +203,18 @@ class AccountInfoSchema(BaseModel):
     partner_link: str | None
 
 
+class TelegramInfoSchema(BaseModel):
+    id: int
+    name: str | None
+    link: str | None
+
+
+class NewAccountInfoSchema(BaseModel):
+    title: AccountTitleSchema
+    partner_link: str | None
+    telegram: TelegramInfoSchema | None
+
+
 class ActualCourseSchema(BaseModel):
     valute_from: str
     icon_valute_from: str
