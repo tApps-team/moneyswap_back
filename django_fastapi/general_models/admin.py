@@ -625,6 +625,12 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_editable = (
         'high_aml',
     )
+    list_filter = (
+        'name',
+    )
+    search_fields = (
+        'name',
+    )
     
     def link_count(self, obj):
         return obj.link_count

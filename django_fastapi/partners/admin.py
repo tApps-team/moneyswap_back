@@ -941,6 +941,12 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     # readonly_fields = (
     #     'is_available',
     #     )
+    list_filter = (
+        'name',
+    )
+    search_fields = (
+        'name',
+    )
     exclude = (
         'course_count',
     )
