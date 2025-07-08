@@ -64,13 +64,13 @@ def change_time_create_for_review(sender, instance, **kwargs):
 
 
 @receiver(pre_save, sender=NewBaseComment)
-def change_time_create_for_review(sender, instance, **kwargs):
+def change_time_create_for_comment(sender, instance, **kwargs):
     if instance.time_create is None:
         instance.time_create = datetime.now()
 
 
 @receiver(pre_save, sender=NewBaseAdminComment)
-def change_time_create_for_review(sender, instance, **kwargs):
+def change_time_create_for_admin_comment(sender, instance, **kwargs):
     if instance.time_create is None:
         instance.time_create = datetime.now()
 
