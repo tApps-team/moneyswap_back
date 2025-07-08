@@ -212,7 +212,7 @@ class TelegramInfoSchema(BaseModel):
 class NewAccountInfoSchema(BaseModel):
     title: AccountTitleSchema
     partner_link: str | None
-    telegram: TelegramInfoSchema | None
+    telegram: TelegramInfoSchema | None = Field(default=None)
 
 
 class ActualCourseSchema(BaseModel):
