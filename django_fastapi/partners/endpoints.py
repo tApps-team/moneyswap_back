@@ -654,6 +654,45 @@ def add_admin_exchange_order(partner: partner_dependency,
                                 detail='Error with creating ExchangeAdminOrder')
         else:
             return 'https://t.me/MoneySwap_robot?start=partner_admin_activate'
+        
+
+@partner_router.post('/edit_admin_exchange_order')
+def edit_admin_exchange_order(partner: partner_dependency,
+                             tg_id: int):
+    partner_id = partner.get('partner_id')
+
+    try:
+        exchange = Exchange.objects.select_related('account')\
+                                    .get(account__pk=partner_id)
+        exchange_admin_order_query = ExchangeAdminOrder.objects.filter(exchange_name=exchange.name)
+        exchange_admin_query = ExchangeAdmin.objects.filter(exchange_name=exchange.name)
+
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='Exchanger not found in DB')
+    else:
+        if not exchange_admin_order_query.exists() and \
+            not exchange_admin_query.exists():
+            raise HTTPException(status_code=423,
+                                detail='Order for this exchanger or ExchangeAdmin does not exist in DB')
+        try:
+            with transaction.atomic():
+                exchange_admin_query.delete()
+                exchange_admin_order_query.update(user_id=tg_id)
+            # data = {
+            #     'user_id': tg_id,
+            #     'exchange_name': exchange.name,
+            #     'time_create': timezone.now(),
+
+            # }
+            # ExchangeAdminOrder.objects.create(**data)
+        except Exception as ex:
+            print(ex)
+            raise HTTPException(status_code=400,
+                                detail='Error with editing ExchangeAdminOrder')
+        else:
+            return 'https://t.me/MoneySwap_robot?start=partner_admin_activate'
+
 # @partner_router.post('/add_partner_city')
 # def add_partner_city(partner: partner_dependency,
 #                      city: AddPartnerCitySchema2):
