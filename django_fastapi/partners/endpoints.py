@@ -757,15 +757,15 @@ def get_valid_active_direction_str(direction):
 
 @test_partner_router.get('/test_partner_notification')
 def test_direction():
-    print((len(connection.queries)))
+    # print((len(connection.queries)))
     partner_exchange_admins = ExchangeAdmin.objects.filter(exchange_marker='partner')\
                                                     .values_list('exchange_id', 'user_id')
     
-    # print(partner_exchange_admins)
+    # print('sql' ,partner_exchange_admins)
     
     partner_exchange_admin_dict = {el[0]: el[-1] for el in partner_exchange_admins}
 
-    # print(partner_exchange_admin_dict)
+    # print('dict',partner_exchange_admin_dict)
     prefetch_timedetla = timezone.now() - timedelta(days=2,
                                                     hours=12)
     
@@ -945,13 +945,18 @@ def test_direction():
         #     print(no_cash_unactive_directions_text, '\n')
 
 
-        user_id = partner_exchange_admin_dict.get(exchange.name)
+        user_id = partner_exchange_admin_dict.get(exchange.pk)
+
+        t = bool(user_id and user_id == 686339126)
+
+        # print(t)
 
         if user_id and user_id == 686339126:
+            # print('make request...')
             # запрос на API бота для отправки уведомления админу обменника ( user_id )
             async_to_sync(request_to_bot_exchange_admin_direction_notification)(user_id,
                                                                                 _text)
-    print((len(connection.queries)))
+    # print((len(connection.queries)))
 
 
 # @partner_router.post('/add_partner_city')

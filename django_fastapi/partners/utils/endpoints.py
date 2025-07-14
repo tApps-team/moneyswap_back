@@ -1,4 +1,5 @@
 import aiohttp
+import requests
 
 from collections import defaultdict
 from typing import Literal
@@ -75,19 +76,27 @@ async def request_to_bot_exchange_admin_direction_notification(user_id: int,
     # order_id = data.get('order_id')
     payload = {
         'user_id': user_id,
-        'text': _text
+        'text': _text,
     }
     # _url = f'https://api.moneyswap.online/exchange_admin_direction_notification?user_id={user_id}&text={_text}'
     _url = f'https://api.moneyswap.online/exchange_admin_direction_notification'
     timeout = aiohttp.ClientTimeout(total=5)
-    async with aiohttp.ClientSession() as session:
-        # async with session.get(_url,
-        #                        timeout=timeout) as response:
-        async with session.post(_url,
-                                data=payload,
-                               timeout=timeout) as response:
+    try:
+        # requests.post(url=_url,
+        #               json=payload,
+        #               timeout=10)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(_url,
+                                    json=payload,
+                                   timeout=timeout) as response:
+            # async with session.post(_url,
+            #                         json=payload) as response:
+                # print(response.status)
+                # print('done')
 
-            pass
+                pass
+    except Exception as ex:
+        print(ex)
 # def get_partner_directions(city: str,
 #                            valute_from: str,
 #                            valute_to: str):

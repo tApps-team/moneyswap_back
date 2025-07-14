@@ -23,6 +23,19 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
+####SWITCH FOR DEV/PROD#########
+
+# DEV
+# DEBUG = True
+# STATIC_URL = "/django/static/"
+
+# PROD
+DEBUG = False
+STATIC_URL = "/static/"
+
+#################################
+
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -182,19 +195,6 @@ FASTAPI_PREFIX = "/api"
 DJANGO_PREFIX = "/django"
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
-
-
-####SWITCH FOR DEV/PROD#########
-
-# DEV
-# DEBUG = True
-# STATIC_URL = "/django/static/"
-
-# PROD
-DEBUG = False
-STATIC_URL = "/static/"
-
-#################################
 
 
 SITE_DOMAIN = 'api.moneyswap.online'
