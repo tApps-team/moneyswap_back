@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Literal, Union
 
 from fastapi import APIRouter
@@ -10,6 +10,8 @@ from django.db.models import Q, Prefetch, F
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+
+from asgiref.sync import async_to_sync
 
 from cash.models import Country, City, Direction as CashDirection
 
@@ -50,7 +52,7 @@ from .utils.endpoints import (generate_partner_cities,
                               generate_valute_list,
                               generate_actual_course,
                               generate_valute_list2,
-                              generate_partner_cities2,
+                              generate_partner_cities2, request_to_bot_exchange_admin_direction_notification,
                               try_add_bankomats_to_valute,
                               get_partner_bankomats_by_valute,
                               convert_min_max_count)
@@ -89,6 +91,8 @@ from .schemas import (AddPartnerCountrySchema,
                       NewListEditedPartnerDirectionSchema,
                       AddPartnerNoCashDirectionSchema,
                       ListEditedPartnerNoCashDirectionSchema)
+
+from config import DEV_HANDLER_SECRET
 
 
 partner_router = APIRouter(prefix='/partner',
@@ -611,7 +615,7 @@ def get_account_info(partner: partner_dependency):
 
             name = user.username or user.first_name or user.last_name or None
             
-            link = f'https://t.me/{user.username}' if user.username else None
+            link = f'https://t.me/{user.username}' if user.username else f'tg://user?id={exchange_admin.user_id}'
 
             exchange.telegram = {
                 'id': user.tg_id,
@@ -694,6 +698,261 @@ def edit_admin_exchange_order(partner: partner_dependency,
                                 detail='Error with editing ExchangeAdminOrder')
         else:
             return 'https://t.me/MoneySwap_robot?start=partner_admin_activate'
+        
+
+
+@test_partner_router.get('/dev_handler')
+def test_direction(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    update_fields = [
+        'exchange_id',
+    ]
+    
+    for _marker, _model in (('city', Direction), ('country', CountryDirection)):
+        # if _marker == 'city':
+            # related_model = PartnerCity
+        # else:
+        #     related_model = PartnerCountry
+
+        # select_related_field = f'{_marker}__exchange'
+
+        update_list = []
+
+        for direction in _model.objects.select_related(_marker).all():
+            if _marker == 'city':
+                exchange_id = direction.city.exchange_id
+            else:
+                exchange_id = direction.country.exchange_id
+
+            direction.exchange_id = exchange_id
+
+            update_list.append(direction)
+        
+        with transaction.atomic():
+        # if dict_for_parse:
+            # for direction in dict_for_parse.values():
+                # direction.is_active = False
+                # update_list.append(direction)
+            # direction_ids = [el.pk for el in dict_for_parse.values()]
+            # ExchangeDirection.objects.filter(pk__in=direction_ids).update(is_active=False)
+            try:
+                _model.objects.bulk_update(update_list, update_fields)
+            except Exception as ex:
+                print('DEV BULK UPDATE ERROR', ex)
+
+
+
+def get_valid_active_direction_str(direction):
+    _timedelta = direction.time_update - (timezone.now() - timedelta(days=3))
+    total_seconds = int(_timedelta.total_seconds())
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+
+    formatted_time = f"{hours:02d} часов {minutes:02d} минут]"
+    return f'{direction} (активно✅, отключится через {formatted_time}🕚)'
+
+
+
+@test_partner_router.get('/test_partner_notification')
+def test_direction():
+    print((len(connection.queries)))
+    partner_exchange_admins = ExchangeAdmin.objects.filter(exchange_marker='partner')\
+                                                    .values_list('exchange_id', 'user_id')
+    
+    # print(partner_exchange_admins)
+    
+    partner_exchange_admin_dict = {el[0]: el[-1] for el in partner_exchange_admins}
+
+    # print(partner_exchange_admin_dict)
+    prefetch_timedetla = timezone.now() - timedelta(days=2,
+                                                    hours=12)
+    
+    prefetch_city_direction_query = Prefetch('city_directions',
+                                             queryset=Direction.objects.select_related('direction__valute_from',
+                                                                                       'direction__valute_to',
+                                                                                       'city__city',
+                                                                                       'city__exchange')\
+                                                                        .filter(Q(is_active=False) | \
+                                                                                Q(is_active=True,
+                                                                                  time_update__lte=prefetch_timedetla)))
+
+    prefetch_country_direction_query = Prefetch('country_directions',
+                                             queryset=CountryDirection.objects.select_related('direction__valute_from',
+                                                                                              'direction__valute_to',
+                                                                                              'country__country',
+                                                                                              'country__exchange')\
+                                                                        .filter(Q(is_active=False) | \
+                                                                                Q(is_active=True,
+                                                                                  time_update__lte=prefetch_timedetla)))
+
+    prefetch_noncash_direction_query = Prefetch('no_cash_directions',
+                                             queryset=NonCashDirection.objects.select_related('direction__valute_from',
+                                                                                              'direction__valute_to',
+                                                                                              'exchange')\
+                                                                        .filter(Q(is_active=False) | \
+                                                                                Q(is_active=True,
+                                                                                  time_update__lte=prefetch_timedetla)))
+
+    exchange_list = Exchange.objects.filter(pk__in=list(partner_exchange_admin_dict.keys())).prefetch_related(prefetch_city_direction_query,
+                                                                                                              prefetch_country_direction_query,
+                                                                                                              prefetch_noncash_direction_query)
+    # exchange_list = Exchange.objects.prefetch_related(prefetch_city_direction_query,
+    #                                                   prefetch_country_direction_query,
+    #                                                   prefetch_noncash_direction_query).all()
+
+    # exchange_list = Exchange.objects.prefetch_related(prefetch_noncash_direction_query).all()
+
+
+    for exchange in exchange_list:
+        print(exchange)
+
+        if exchange.name != 'test_ex':
+            continue
+
+        # без доп SQL запросов
+        city_direction_count = len(exchange.city_directions.all())
+        country_direction_count = len(exchange.country_directions.all())
+        no_cash_direction_count = len(exchange.no_cash_directions.all())
+
+        total_count = city_direction_count + country_direction_count \
+                        + no_cash_direction_count
+        
+        _text = f'🔔 <b>Уведомление об актуализации курсов направлений обменника <u>{exchange.name}</u></b> \n\n'
+        _text += f'Кол-во направлений, требующих внимания: {total_count}\n\nИз них: \n- направлений на уровне городов - {city_direction_count}\n- направлений на уровне стран - {country_direction_count}\n- безналичных направлений - {no_cash_direction_count}\n\n'
+        # print(f'Кол-во направлений, требующих наблюдений или обновлений: {total_count}')
+        # print('активные направления города', active_city_direction_count)
+        # print(f'Из них {city_direction_count} направлений на уровне городов, {country_direction_count} на уровне стран, {no_cash_direction_count} безналичных направлений')
+
+        if total_count == 0:
+            continue
+
+        default_slice = 5
+
+        city_active_list = []
+        city_unactive_list = []
+
+        for c in exchange.city_directions.all():
+            if c.is_active:
+                city_active_list.append(c)
+            else:
+                city_unactive_list.append(c)
+
+        # city_active_directions_text = '\n\n'.join(f'{direction} (активно✅, отключится через {direction.time_update - (timezone.now() - timedelta(days=3))}🕚)' for direction in city_active_list[:default_slice])
+        city_active_directions_text = '\n\n'.join(f'{get_valid_active_direction_str(direction)}' for direction in city_active_list[:default_slice])
+
+        if len(city_active_list[default_slice:]):
+            city_active_directions_text += f'\n <i>** <u>и еще {len(city_active_list[default_slice:])} активных направлений</u></i>'
+
+        city_unactive_directions_text = '\n\n'.join(f'{direction} (выключено❗️)' for direction in city_unactive_list[:default_slice])
+
+        if len(city_unactive_list[default_slice:]):
+            city_unactive_directions_text += f'\n <i>** <u>и еще {len(city_unactive_list[default_slice:])} неактивных направлений</u></i>'
+
+        country_active_list = []
+        country_unactive_list = []
+
+        for c in exchange.country_directions.all():
+            if c.is_active:
+                country_active_list.append(c)
+            else:
+                country_unactive_list.append(c)
+
+        # country_active_directions_text = '\n\n'.join(f'{direction} (активно✅, отключится через {direction.time_update - (timezone.now() - timedelta(days=3))}🕚)' for direction in country_active_list[:default_slice])
+        country_active_directions_text = '\n\n'.join(f'{get_valid_active_direction_str(direction)}' for direction in country_active_list[:default_slice])
+
+        if len(country_active_list[default_slice:]):
+            country_active_directions_text += f'\n <i>** <u>и еще {len(country_active_list[default_slice:])} активных направлений</u></i>'
+
+        country_unactive_directions_text = '\n\n'.join(f'{direction} (выключено❗️)' for direction in country_unactive_list[:default_slice])
+
+        if len(country_unactive_list[default_slice:]):
+            country_unactive_directions_text += f'\n <i>** <u>и еще {len(country_unactive_list[default_slice:])} неактивных направлений</u></i>'
+
+        no_cash_active_list = []
+        no_cash_unactive_list = []
+
+        for c in exchange.no_cash_directions.all():
+            if c.is_active:
+                no_cash_active_list.append(c)
+            else:
+                no_cash_unactive_list.append(c)
+
+        # no_cash_active_directions_text = '\n\n'.join(f'{str(direction).strip()} (активно✅, отключится через {direction.time_update - (timezone.now() - timedelta(days=3))}🕚)' for direction in no_cash_active_list[:default_slice])
+        no_cash_active_directions_text = '\n\n'.join(f'{get_valid_active_direction_str(direction)}' for direction in no_cash_active_list[:default_slice])
+
+        if len(country_active_list[default_slice:]):
+            no_cash_active_directions_text += f'\n <i>** <u>и еще {len(no_cash_active_list[default_slice:])} активных направлений</u></i>'
+
+        no_cash_unactive_directions_text = ' \n\n'.join(f'{str(direction).strip()} (выключено❗️)' for direction in no_cash_unactive_list[:default_slice])
+
+        if len(no_cash_unactive_list[default_slice:]):
+            no_cash_unactive_directions_text += f'\n <i>** <u>и еще {len(no_cash_unactive_list[default_slice:])} неактивных направлений</u></i>'
+
+        # print(_text)
+        # print('<u>Направления городов, требующие внимания:</u>')
+        # if city_active_directions_text:
+        #     print(city_active_directions_text, '\n')
+        # if city_unactive_directions_text:
+        #     print(city_unactive_directions_text, '\n')
+        # print('<u>Направления стран, требующие внимания:</u>')
+        # if country_active_directions_text:
+        #     print(country_active_directions_text, '\n')
+        # if country_unactive_directions_text:
+        #     print(country_unactive_directions_text, '\n')
+        # print('<u>Безналичные направления, требующие внимания:</u>')
+        # if no_cash_active_directions_text:
+        #     print( no_cash_active_directions_text, '\n')
+        # if no_cash_unactive_directions_text:
+        #     print(no_cash_unactive_directions_text, '\n')
+
+        # print('*' * 8)
+        _text += '\n\n<u>Направления городов, требующие внимания:</u>\n'
+        if city_active_directions_text:
+            _text += f'{city_active_directions_text}\n'
+        if city_unactive_directions_text:
+            _text += f'{city_unactive_directions_text}\n'
+
+        _text += '\n\n<u>Направления стран, требующие внимания:</u>\n'
+        
+        if country_active_directions_text:
+            _text += f'{country_active_directions_text}\n'
+        if country_unactive_directions_text:
+            _text += f'{country_unactive_directions_text}\n'
+
+        _text += '\n\nБезналичные направления, требующие внимания:\n'
+
+        if no_cash_active_directions_text:
+            _text += f'{no_cash_active_directions_text}\n'
+        if no_cash_unactive_directions_text:
+            _text += f'{no_cash_unactive_directions_text}\n'
+
+        # print('<u>Направления городов, требующие внимания:</u>')
+        # if city_active_directions_text:
+            # print(city_active_directions_text, '\n')
+        # if city_unactive_directions_text:
+        #     print(city_unactive_directions_text, '\n')
+        # print('<u>Направления стран, требующие внимания:</u>')
+        # if country_active_directions_text:
+        #     print(country_active_directions_text, '\n')
+        # if country_unactive_directions_text:
+            # print(country_unactive_directions_text, '\n')
+        # print('<u>Безналичные направления, требующие внимания:</u>')
+        # if no_cash_active_directions_text:
+        #     print( no_cash_active_directions_text, '\n')
+        # if no_cash_unactive_directions_text:
+        #     print(no_cash_unactive_directions_text, '\n')
+
+
+        user_id = partner_exchange_admin_dict.get(exchange.name)
+
+        if user_id and user_id == 686339126:
+            # запрос на API бота для отправки уведомления админу обменника ( user_id )
+            async_to_sync(request_to_bot_exchange_admin_direction_notification)(user_id,
+                                                                                _text)
+    print((len(connection.queries)))
+
 
 # @partner_router.post('/add_partner_city')
 # def add_partner_city(partner: partner_dependency,
@@ -1734,15 +1993,22 @@ def add_partner_direction(partner: partner_dependency,
     direction_model = CountryDirection if marker == 'country' else Direction
 
 
+    # check_partner = foreign_key_model.objects.select_related('exchange',
+    #                                                          'exchange__account')\
+    #                                         .filter(pk=_id,
+    #                                                 exchange__account__pk=partner_id)\
+                                            # .exists()
     check_partner = foreign_key_model.objects.select_related('exchange',
                                                              'exchange__account')\
                                             .filter(pk=_id,
                                                     exchange__account__pk=partner_id)\
-                                            .exists()
-    
+                                            # .exists()
+
+
     # print(check_partner)
     
-    if not check_partner:
+    # if not check_partner:
+    if not check_partner.exists():
         raise HTTPException(status_code=404)
         
     try:
@@ -1757,6 +2023,7 @@ def add_partner_direction(partner: partner_dependency,
     else:
         data[foreign_key_name] = _id
         data['direction'] = direction
+        data['exchange_id'] = check_partner.first().exchange_id
 
         if len(exchange_rates) > 4:
             raise HTTPException(status_code=400,

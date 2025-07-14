@@ -1,3 +1,5 @@
+import aiohttp
+
 from collections import defaultdict
 from typing import Literal
 
@@ -67,6 +69,17 @@ def get_partner_in_out_count(actual_course: float | None):
     )
 
 
+async def request_to_bot_exchange_admin_direction_notification(user_id: int,
+                                                               _text: str):
+    # user_id = data.get('user_id')
+    # order_id = data.get('order_id')
+    
+    _url = f'https://api.moneyswap.online/exchange_admin_direction_notification?user_id={user_id}&text={_text}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                               timeout=timeout) as response:
+            pass
 # def get_partner_directions(city: str,
 #                            valute_from: str,
 #                            valute_to: str):

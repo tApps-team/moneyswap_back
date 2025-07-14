@@ -189,6 +189,14 @@ class PartnerCity(models.Model):
 class CountryDirection(models.Model):
     limit_direction = get_limit_direction()
 
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='country_directions',
+                                 blank=True,
+                                 null=True,
+                                 default=None)
+
     country = models.ForeignKey(PartnerCountry,
                              on_delete=models.CASCADE,
                              verbose_name='Страна',
@@ -233,6 +241,15 @@ class CountryDirection(models.Model):
 
 class Direction(models.Model):
     limit_direction = get_limit_direction()
+
+    exchange = models.ForeignKey(Exchange,
+                                 on_delete=models.CASCADE,
+                                 verbose_name='Обменник',
+                                 related_name='city_directions',
+                                 blank=True,
+                                 null=True,
+                                 default=None)
+
 
     city = models.ForeignKey(PartnerCity,
                              on_delete=models.CASCADE,
