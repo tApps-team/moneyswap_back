@@ -218,10 +218,24 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 SUMMERNOTE_THEME = 'bs4'
 
+# SUMMERNOTE_CONFIG = {
+#     'toolbar': [
+#         ['style', ['bold', 'italic', 'underline', 'clear']],
+#         ['font', ['strikethrough']],
+#         ['insert', ['link']],
+#     ]
+# }
+
+
 SUMMERNOTE_CONFIG = {
-    'toolbar': [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['font', ['strikethrough']],
-        ['insert', ['link']],
-    ]
+    'summernote': {
+        'toolbar': [
+            ['style', ['bold', 'italic', 'underline']],
+            ['para', ['paragraph']],
+            ['insert', ['link']],
+            ['view', ['codeview']],
+        ],
+        'styleTags': [],
+    },
+    'css': (),  # Убрать лишние стили
 }
