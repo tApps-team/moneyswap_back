@@ -599,7 +599,8 @@ def get_exchange(exchange_id: int,
         raise HTTPException(status_code=400)
     
 
-    exchange = exchange_model.objects.filter(pk=exchange_id)
+    exchange = exchange_model.objects.filter(pk=exchange_id,
+                                             is_active=True)
 
     if not exchange.exists():
         raise HTTPException(status_code=400)
