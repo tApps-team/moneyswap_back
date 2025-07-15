@@ -96,7 +96,7 @@ def exchange_admin_notifications():
                                                     hours=12)
     
     prefetch_city_direction_query = Prefetch('city_directions',
-                                             queryset=Direction.objects.select_related('direction__valute_from',
+                                             queryset=PartnerDirection.objects.select_related('direction__valute_from',
                                                                                        'direction__valute_to',
                                                                                        'city__city',
                                                                                        'city__exchange')\
