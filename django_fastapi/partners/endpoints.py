@@ -706,41 +706,58 @@ def test_direction(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
     
-    update_fields = [
-        'exchange_id',
-    ]
+    from django_celery_beat.models import PeriodicTask
+
+    try:
+        # task = PeriodicTask.objects.get(name='check_update_time_for_directions_task')
+        task = PeriodicTask.objects.get(name='exchange_admin_notifications_task')
+        task.enabled = False
+        task.save()
+    except Exception as ex:
+        print(ex)
+    # else:
+        # amount = fields_to_update['amount']
+        # unit_time = fields_to_update['unit_time']
+        # schedule = get_or_create_schedule(amount,
+        #                                   UNIT_TIME_CHOICES[unit_time])
+        # task.interval = schedule
+        # task.save()
     
-    for _marker, _model in (('city', Direction), ('country', CountryDirection)):
-        # if _marker == 'city':
-            # related_model = PartnerCity
-        # else:
-        #     related_model = PartnerCountry
+    # update_fields = [
+    #     'exchange_id',
+    # ]
+    
+    # for _marker, _model in (('city', Direction), ('country', CountryDirection)):
+    #     # if _marker == 'city':
+    #         # related_model = PartnerCity
+    #     # else:
+    #     #     related_model = PartnerCountry
 
-        # select_related_field = f'{_marker}__exchange'
+    #     # select_related_field = f'{_marker}__exchange'
 
-        update_list = []
+    #     update_list = []
 
-        for direction in _model.objects.select_related(_marker).all():
-            if _marker == 'city':
-                exchange_id = direction.city.exchange_id
-            else:
-                exchange_id = direction.country.exchange_id
+    #     for direction in _model.objects.select_related(_marker).all():
+    #         if _marker == 'city':
+    #             exchange_id = direction.city.exchange_id
+    #         else:
+    #             exchange_id = direction.country.exchange_id
 
-            direction.exchange_id = exchange_id
+    #         direction.exchange_id = exchange_id
 
-            update_list.append(direction)
+    #         update_list.append(direction)
         
-        with transaction.atomic():
-        # if dict_for_parse:
-            # for direction in dict_for_parse.values():
-                # direction.is_active = False
-                # update_list.append(direction)
-            # direction_ids = [el.pk for el in dict_for_parse.values()]
-            # ExchangeDirection.objects.filter(pk__in=direction_ids).update(is_active=False)
-            try:
-                _model.objects.bulk_update(update_list, update_fields)
-            except Exception as ex:
-                print('DEV BULK UPDATE ERROR', ex)
+    #     with transaction.atomic():
+    #     # if dict_for_parse:
+    #         # for direction in dict_for_parse.values():
+    #             # direction.is_active = False
+    #             # update_list.append(direction)
+    #         # direction_ids = [el.pk for el in dict_for_parse.values()]
+    #         # ExchangeDirection.objects.filter(pk__in=direction_ids).update(is_active=False)
+    #         try:
+    #             _model.objects.bulk_update(update_list, update_fields)
+    #         except Exception as ex:
+    #             print('DEV BULK UPDATE ERROR', ex)
 
 
 
