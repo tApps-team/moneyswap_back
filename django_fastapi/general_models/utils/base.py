@@ -4,6 +4,8 @@ from django_celery_beat.models import IntervalSchedule
 
 from django.db.models import CharField, Value, IntegerField
 
+from django.utils import timezone
+
 from general_models.models import PartnerTimeUpdate
 
 
@@ -47,3 +49,13 @@ def annotate_string_field(exchange_marker):
 def annotate_number_field(user_id: int):
     return Value(user_id,
                     output_field=IntegerField())
+
+
+def get_valid_active_direction_str(direction):
+    _timedelta = direction.time_update - (timezone.now() - timedelta(days=3))
+    total_seconds = int(_timedelta.total_seconds())
+    hours = total_seconds // 3600
+    minutes = (total_seconds % 3600) // 60
+
+    formatted_time = f"{hours:02d} часов {minutes:02d} минут]"
+    return f'{direction} (активно✅, отключится через {formatted_time}🕚)'

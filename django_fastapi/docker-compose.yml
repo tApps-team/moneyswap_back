@@ -55,6 +55,7 @@ services:
       - media:/app/media
     command: sh -c "python manage.py makemigrations &&
                     python manage.py migrate &&
+                    python manage.py periodic_task_exchange_admin_notifications &&
                     gunicorn -w 2 -k uvicorn.workers.UvicornWorker project.asgi:app --bind 0.0.0.0:8000 --timeout 180 --error-logfile /app/logs/gunicorn-error.log"
                     # uvicorn project.asgi:app --host 0.0.0.0"
                     # uvicorn project.asgi:app \
