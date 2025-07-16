@@ -633,6 +633,30 @@ def get_account_info(partner: partner_dependency):
         return exchange
 
 
+@test_partner_router.get('/switch_notification_activity',
+                    response_model=NewAccountInfoSchema)
+def switch_notification_activity(partner: partner_dependency):
+    partner_id = partner.get('partner_id')
+
+    try:
+        exchange = Exchange.objects.select_related('account')\
+                                    .get(account__pk=partner_id)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='Exchange not found')
+    else:
+        try:
+            exchange_admin = ExchangeAdmin.objects.select_related('user')\
+                                                    .get(exchange_name=exchange.name,
+                                                            exchange_marker='partner')
+        except ObjectDoesNotExist:
+            raise HTTPException(status_code=404,
+                                detail=f'ExchangeAdmin for Exchange {exchange.name} not found')
+        else:
+            exchange_admin.notification = not exchange_admin.notification
+            exchange_admin.save()
+
+
 @partner_router.post('/add_admin_exchange_order')
 def add_admin_exchange_order(partner: partner_dependency,
                              tg_id: int):
@@ -702,6 +726,45 @@ def edit_admin_exchange_order(partner: partner_dependency,
                                 detail='Error with editing ExchangeAdminOrder')
         else:
             return 'https://t.me/MoneySwap_robot?start=partner_admin_activate'
+        
+
+@partner_router.delete('/delete_admin_exchange_order')
+def edit_admin_exchange_order(partner: partner_dependency):
+    partner_id = partner.get('partner_id')
+
+    try:
+        exchange = Exchange.objects.select_related('account')\
+                                    .get(account__pk=partner_id)
+        exchange_admin_order_query = ExchangeAdminOrder.objects.filter(exchange_name=exchange.name,
+                                                                       moderation=True)
+        exchange_admin_query = ExchangeAdmin.objects.filter(exchange_name=exchange.name)
+
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='Exchanger not found in DB')
+    else:
+        if not exchange_admin_order_query.exists() and \
+            not exchange_admin_query.exists():
+            raise HTTPException(status_code=423,
+                                detail='Order for this exchanger or ExchangeAdmin does not exist in DB')
+        try:
+            with transaction.atomic():
+                exchange_admin_query.delete()
+                exchange_admin_order_query.delete()
+            # data = {
+            #     'user_id': tg_id,
+            #     'exchange_name': exchange.name,
+            #     'time_create': timezone.now(),
+
+            # }
+            # ExchangeAdminOrder.objects.create(**data)
+        except Exception as ex:
+            print(ex)
+            raise HTTPException(status_code=400,
+                                detail='Error with delete ExchangeAdminOrder and ExchangeAdmin records')
+        else:
+            return {'status': 'success',
+                    'detail': 'ExchangeAdmin and ExchangeAdminOrder deleted successfully'}
         
 
 
