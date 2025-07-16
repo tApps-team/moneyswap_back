@@ -710,6 +710,7 @@ class ExchangeAdmin(models.Model):
     exchange_name = models.CharField('Название обменника',
                                      max_length=255)
     exchange_id = models.IntegerField('Id обменника')
+    notification = models.BooleanField('Уведомления включены?', default=True)
     
     class Meta:
         unique_together = [('user', 'exchange_marker', 'exchange_id')]

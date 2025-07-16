@@ -84,7 +84,8 @@ def check_update_time_for_directions():
 
 @shared_task(name='exchange_admin_notifications')
 def exchange_admin_notifications():
-    partner_exchange_admins = ExchangeAdmin.objects.filter(exchange_marker='partner')\
+    partner_exchange_admins = ExchangeAdmin.objects.filter(exchange_marker='partner',
+                                                           notification=True)\
                                                     .values_list('exchange_id', 'user_id')
     
     # print('sql' ,partner_exchange_admins)
@@ -273,7 +274,7 @@ def exchange_admin_notifications():
 
         user_id = partner_exchange_admin_dict.get(exchange.pk)
 
-        t = bool(user_id and user_id == 686339126)
+        # t = bool(user_id and user_id == 686339126)
 
         # print(t)
 
@@ -282,6 +283,7 @@ def exchange_admin_notifications():
             # запрос на API бота для отправки уведомления админу обменника ( user_id )
             async_to_sync(request_to_bot_exchange_admin_direction_notification)(user_id,
                                                                                 _text)
+            sleep(0.3)
 
     pass
     # time_delta = get_timedelta()

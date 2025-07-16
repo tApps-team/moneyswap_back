@@ -621,6 +621,7 @@ def get_account_info(partner: partner_dependency):
                 'id': user.tg_id,
                 'name': name,
                 'link': link,
+                'notification': exchange_admin.notification,
             }
         
         exchange.title = AccountTitleSchema(ru=exchange.name,
@@ -711,7 +712,7 @@ def test_direction(secret: str):
     try:
         # task = PeriodicTask.objects.get(name='check_update_time_for_directions_task')
         task = PeriodicTask.objects.get(name='exchange_admin_notifications_task')
-        task.enabled = False
+        task.enabled = True
         task.save()
     except Exception as ex:
         print(ex)

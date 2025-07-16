@@ -207,6 +207,7 @@ class TelegramInfoSchema(BaseModel):
     id: int
     name: str | None
     link: str | None
+    notification: bool
 
 
 class NewAccountInfoSchema(BaseModel):
