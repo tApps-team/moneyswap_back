@@ -135,8 +135,8 @@ def exchange_admin_notifications():
     for exchange in exchange_list:
         print(exchange)
 
-        if exchange.name != 'test_ex':
-            continue
+        # if exchange.name != 'test_ex':
+        #     continue
 
         # без доп SQL запросов
         city_direction_count = len(exchange.city_directions.all())
@@ -278,7 +278,7 @@ def exchange_admin_notifications():
 
         # print(t)
 
-        if user_id and user_id == 686339126:
+        if user_id:
             # print('make request...')
             # запрос на API бота для отправки уведомления админу обменника ( user_id )
             async_to_sync(request_to_bot_exchange_admin_direction_notification)(user_id,

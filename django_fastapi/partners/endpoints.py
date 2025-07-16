@@ -11,6 +11,8 @@ from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
+from django_celery_beat.models import IntervalSchedule
+
 from asgiref.sync import async_to_sync
 
 from cash.models import Country, City, Direction as CashDirection
@@ -21,6 +23,7 @@ from general_models.utils.endpoints import (get_valute_json_3,
                                             get_valute_json_4,
                                             try_generate_icon_url)
 from general_models.utils.tasks import make_valid_values_for_dict
+from general_models.utils.periodic_tasks import get_or_create_schedule
 from general_models.schemas import MultipleName, MultipleName2
 from general_models.models import ExchangeAdmin, ExchangeAdminOrder, Valute, Guest
 
@@ -712,7 +715,8 @@ def test_direction(secret: str):
     try:
         # task = PeriodicTask.objects.get(name='check_update_time_for_directions_task')
         task = PeriodicTask.objects.get(name='exchange_admin_notifications_task')
-        task.enabled = True
+        interval = get_or_create_schedule(12, IntervalSchedule.HOURS)
+        task.interval = interval
         task.save()
     except Exception as ex:
         print(ex)
