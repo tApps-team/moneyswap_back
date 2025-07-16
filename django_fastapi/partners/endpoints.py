@@ -633,8 +633,7 @@ def get_account_info(partner: partner_dependency):
         return exchange
 
 
-@test_partner_router.get('/switch_notification_activity',
-                    response_model=NewAccountInfoSchema)
+@test_partner_router.get('/switch_notification_activity')
 def switch_notification_activity(partner: partner_dependency):
     partner_id = partner.get('partner_id')
 
