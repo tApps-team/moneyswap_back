@@ -869,6 +869,9 @@ def get_valid_partner_link(partner_link: str | None):
                 partner_link += '?'
             else:
                 partner_link += '/?'
+    
+    if partner_link.find('?') == -1:
+        partner_link += '?'
                     
     return partner_link
 
