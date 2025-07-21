@@ -716,7 +716,7 @@ def edit_admin_exchange_order(partner: partner_dependency,
                                 detail='Order for this exchanger or ExchangeAdmin does not exist in DB')
         try:
             with transaction.atomic():
-                exchange_admin_query.delete()
+                # exchange_admin_query.delete()
                 exchange_admin_order_query.update(user_id=tg_id,
                                                   moderation=False)
             # data = {
