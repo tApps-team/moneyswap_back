@@ -741,8 +741,7 @@ def edit_admin_exchange_order(partner: partner_dependency):
     try:
         exchange = Exchange.objects.select_related('account')\
                                     .get(account__pk=partner_id)
-        exchange_admin_order_query = ExchangeAdminOrder.objects.filter(exchange_name=exchange.name,
-                                                                       moderation=True)
+        exchange_admin_order_query = ExchangeAdminOrder.objects.filter(exchange_name=exchange.name)
         exchange_admin_query = ExchangeAdmin.objects.filter(exchange_name=exchange.name)
 
     except ObjectDoesNotExist:
