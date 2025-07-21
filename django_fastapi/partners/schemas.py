@@ -214,6 +214,7 @@ class NewAccountInfoSchema(BaseModel):
     title: AccountTitleSchema
     partner_link: str | None
     telegram: TelegramInfoSchema | None = Field(default=None)
+    has_exchange_admin_order: bool
 
 
 class ActualCourseSchema(BaseModel):

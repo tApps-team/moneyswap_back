@@ -612,6 +612,8 @@ def get_account_info(partner: partner_dependency):
         exchange_admin = ExchangeAdmin.objects.select_related('user')\
                                                 .filter(exchange_name=exchange.name,
                                                         exchange_marker='partner')
+        exchange_admin_order = ExchangeAdminOrder.objects.filter(exchange_name=exchange.name)
+        
         if exchange_admin.exists():
             exchange_admin = exchange_admin.first()
             user = exchange_admin.user
@@ -626,6 +628,12 @@ def get_account_info(partner: partner_dependency):
                 'link': link,
                 'notification': exchange_admin.notification,
             }
+
+            # if exchange_admin_order.exists():
+                # exchange_admin_order = exchange_admin_order.first()
+            exchange.has_exchange_admin_order = exchange_admin_order.exists()
+
+
         
         exchange.title = AccountTitleSchema(ru=exchange.name,
                                             en=exchange.en_name)
