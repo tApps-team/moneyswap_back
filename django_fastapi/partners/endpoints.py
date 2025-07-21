@@ -631,9 +631,7 @@ def get_account_info(partner: partner_dependency):
 
             # if exchange_admin_order.exists():
                 # exchange_admin_order = exchange_admin_order.first()
-            exchange.has_exchange_admin_order = exchange_admin_order.exists()
-
-
+        exchange.has_exchange_admin_order = exchange_admin_order.exists()
         
         exchange.title = AccountTitleSchema(ru=exchange.name,
                                             en=exchange.en_name)
