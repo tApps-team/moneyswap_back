@@ -633,14 +633,20 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     )
     
     def link_count(self, obj):
-        return obj.link_count
+        exchange_link_count = obj.exchange_counts.all()
+
+        _sum = sum([link.count for link in exchange_link_count])
+        # print(obj.link_count)
+        return _sum
     
     link_count.short_description = 'Счетчик перехода по ссылке'
 
     def get_queryset(self, request: HttpRequest) -> QuerySet:
         queryset = super().get_queryset(request)
-        return queryset.annotate(link_count=Sum('exchange_counts__count'))
-    
+        # return queryset.annotate(link_count=Sum('exchange_counts__count'))
+        return queryset.prefetch_related('exchange_counts')
+
+
     def get_icon(self, obj):
         if obj.icon_url:
             icon_url = try_generate_icon_url(obj)

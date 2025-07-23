@@ -4,6 +4,7 @@ from asgiref.sync import async_to_sync
 
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
@@ -12,7 +13,7 @@ from general_models.utils.base import get_actual_datetime, UNIT_TIME_CHOICES
 from general_models.utils.periodic_tasks import get_or_create_schedule
 from general_models.models import ExchangeAdmin, PartnerTimeUpdate
 
-from .models import Direction, Exchange, Review, Comment, AdminComment
+from .models import Direction, Exchange, Review, Comment, AdminComment, PartnerCountry, PartnerCity
 
 
 # Сигнал для создания периодической задачи, которая проверяет
@@ -99,6 +100,15 @@ def send_notification_after_add_review(sender, instance, created, **kwargs):
             # send notification to admin user in chat with bot
             pass
 
+
+@receiver(pre_save, sender=PartnerCountry)
+def auto_time_update_for_partner_country(sender, instance, **kwargs):
+    instance.time_update = timezone.now()
+
+
+@receiver(pre_save, sender=PartnerCity)
+def auto_time_update_for_partner_country(sender, instance, **kwargs):
+    instance.time_update = timezone.now()
 
 # @receiver(post_save, sender=Comment)
 # def create_tasks_for_exchange(sender, instance, created, **kwargs):

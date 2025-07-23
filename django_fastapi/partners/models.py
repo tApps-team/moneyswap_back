@@ -111,6 +111,7 @@ class PartnerCountry(models.Model):
                                        default=None)
     time_update = models.DateTimeField('Время последнего обновления',
                                        null=True,
+                                       blank=True,
                                        default=None)
     max_amount = models.FloatField('Максимальное количество',
                                    blank=True,
@@ -120,6 +121,10 @@ class PartnerCountry(models.Model):
                                    blank=True,
                                    null=True,
                                    default=None)
+    exclude_cities = models.ManyToManyField(City,
+                                            verbose_name='Исключить города из выдачи',
+                                            blank=True,
+                                            null=True)
     
     class Meta:
         verbose_name = 'Партнёрская страна'
@@ -164,6 +169,7 @@ class PartnerCity(models.Model):
                                        default=None)
     time_update = models.DateTimeField('Время последнего обновления',
                                        null=True,
+                                       blank=True,
                                        default=None)
     max_amount = models.FloatField('Максимальное количество',
                                    blank=True,

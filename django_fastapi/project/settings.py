@@ -24,14 +24,14 @@ sentry_sdk.init(
 )
 
 ####SWITCH FOR DEV/PROD#########
+# PROD
+DEBUG = False
+STATIC_URL = "/static/"
 
 # DEV
 # DEBUG = True
 # STATIC_URL = "/django/static/"
 
-# PROD
-DEBUG = False
-STATIC_URL = "/static/"
 
 #################################
 

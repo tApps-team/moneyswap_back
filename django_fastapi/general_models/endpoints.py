@@ -34,7 +34,7 @@ import no_cash.models as no_cash_models
 from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3, test_no_cash_exchange_directions2, test_no_cash_exchange_directions3, test_no_cash_exchange_directions4
 
 import cash.models as cash_models
-from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3, test_cash_exchange_directions2, test_cash_exchange_directions3
+from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3, test_cash_exchange_directions2, test_cash_exchange_directions22, test_cash_exchange_directions3
 from cash.schemas import (SpecialCashDirectionMultiModel,
                           CityModel, SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel, SpecialCashDirectionMultiWithAmlModel,
                           SpecialCashDirectionMultiWithLocationModel,
@@ -282,6 +282,34 @@ def get_current_exchange_directions(request: Request,
         exchange_direction_list = test_no_cash_exchange_directions4(request, params)
     else:
         exchange_direction_list = test_cash_exchange_directions3(request, params)
+
+    # for query in connection.queries:
+    #     print(query)
+    #     print('*' * 8)
+
+    return exchange_direction_list
+
+
+new_test_union_directions_response_models2 = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                                         SpecialCashDirectionMultiPrtnerWithLocationModel,
+                                         SpecialCashDirectionMultiWithLocationModel,
+                                         SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                                         SpecialCashDirectionMultiPrtnerModel,
+                                         SpecialCashDirectionMultiWithAmlModel,
+                                         SpecialPartnerNoCashDirectionSchema,
+                                         SpecialDirectionMultiWithAmlModel]
+
+
+@test_router.get('/directions',
+                   response_model=list[new_test_union_directions_response_models2],
+                   response_model_by_alias=False)
+def get_current_exchange_directions2(request: Request,
+                                    query: SpecificDirectionsQuery = Depends()):
+    params = query.params()
+    if not params['city']:
+        exchange_direction_list = test_no_cash_exchange_directions4(request, params)
+    else:
+        exchange_direction_list = test_cash_exchange_directions22(request, params)
 
     # for query in connection.queries:
     #     print(query)

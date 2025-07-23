@@ -431,3 +431,19 @@ class ExchangeLinkCountSchema(BaseModel):
     exchange_id: int
     direction_marker: str
     exchange_direction_id: int
+
+
+class EditExcludedCitySchema(BaseModel):
+    country_id: int
+    active_pks: list[int]
+    unactive_pks: list[int]
+
+
+class ExcludedCitySchema(BaseModel):
+    id: int
+    name: str
+
+class ExcludedCitiesByPartnerCountry(BaseModel):
+    country_id: int
+    active_cities: list[ExcludedCitySchema]
+    unactive_cities: list[ExcludedCitySchema]

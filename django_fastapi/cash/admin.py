@@ -192,9 +192,11 @@ class ExchangeAdmin(BaseExchangeAdmin):
     def get_total_direction_count(self, obj):
         # print(obj.__dict__)
         direction_count = obj.direction_count
+        # print(direction_count)
         try:
             no_cash_exchange = no_cash_models.Exchange.objects.annotate(no_cash_direction_count=Count('directions',
-                                                                                                        filter=Q(directions__is_active=True)))\
+                                                                                                        filter=Q(directions__is_active=True),
+                                                                                                        distinct=True))\
                                                                 .get(name=obj.name)
         except Exception as ex:
             pass

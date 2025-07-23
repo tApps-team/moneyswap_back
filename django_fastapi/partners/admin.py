@@ -12,6 +12,7 @@ from django.db.models import Sum, Value, OuterRef, Subquery, Count
 from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
+from django.core.exceptions import ObjectDoesNotExist
 
 from general_models.admin import (BaseCommentAdmin,
                                   BaseCommentStacked,
@@ -25,6 +26,8 @@ from general_models.utils.admin import ReviewAdminMixin
 from partners.utils.endpoints import get_course_count
 
 from no_cash.models import Direction as NoCashDirection
+
+from cash.models import City
 
 from .models import (CountryExchangeLinkCount, Exchange,
                      Direction,
@@ -377,17 +380,47 @@ class PartnerCountryAdmin(admin.ModelAdmin):
             },
         ),
         (
-            None,
+            "Рабочие дни",
             {
+                "classes": ["wide"],
                 "fields": [
                     "working_days",
                            ],
             },
         ),
+        (
+            "Города на исключение из выдачи страны",
+            {
+                "classes": ["wide"],
+                "fields": [
+                    "exclude_cities",
+                           ],
+            },
+        ),
+
     ]
     filter_horizontal = (
         'working_days',
+        'exclude_cities',
         )
+    
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+
+        if db_field.name == "exclude_cities":
+
+            obj_id = request.resolver_match.kwargs.get('object_id')
+
+            if obj_id:
+                try:
+                    partner_country = PartnerCountry.objects.get(pk=obj_id)
+                except Exception as ex:
+                    print(ex)
+                    pass
+                else:
+                    kwargs["queryset"] = City.objects.filter(is_parse=True,
+                                                             country_id=partner_country.country_id)
+
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
 @admin.register(CountryDirection)

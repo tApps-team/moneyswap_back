@@ -64,7 +64,7 @@ from .schemas import (AddPartnerCountrySchema,
                       AddPartnerDirectionSchema3,
                       AddBankomatSchema,
                       BankomatDetailSchema,
-                      DeletePartnerDirectionSchema, DirectionSchema2, DirectionSchema3,
+                      DeletePartnerDirectionSchema, DirectionSchema2, DirectionSchema3, EditExcludedCitySchema, ExcludedCitiesByPartnerCountry,
                       ListEditedPartnerDirectionSchema2,
                       DeletePartnerCityCountrySchema, NewAccountInfoSchema, NoCashDirectionSchema,
                       PartnerCitySchema,
@@ -166,6 +166,128 @@ def get_partner_countries(partner: partner_dependency):
                                         .all()
     
     return generate_partner_countries(partner_counrties)
+
+
+# @partner_router.get('/excuded_cities_by_partner_country',
+#                     response_model=list[PartnerCountrySchema3],
+#                     response_model_by_alias=False)
+@partner_router.get('/cities_for_exclude_by_partner_country',
+                    response_model=ExcludedCitiesByPartnerCountry)
+def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
+                                              country_id: int):
+    print(len(connection.queries))
+    partner_id = partner.get('partner_id')
+
+    prefect_cities_query = Prefetch('country__cities',
+                                    queryset=City.objects.filter(is_parse=True).order_by('name'))
+    
+    prefetch_excluded_cities_query = Prefetch('exclude_cities',
+                                              queryset=City.objects.filter(is_parse=True).order_by('name'))
+
+    try:
+        partner_country = PartnerCountry.objects.select_related('exchange',
+                                                                'exchange__account',
+                                                                'country')\
+                                                .prefetch_related(prefect_cities_query,
+                                                                prefetch_excluded_cities_query)\
+                                            .get(exchange__account__pk=partner_id,
+                                                    pk=country_id)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='PartnerCountry not found in DB')
+    # print(partner_country.__dict__)
+
+    country = partner_country.country
+
+    # print(country.__dict__)
+
+
+    cities = country.cities.all()
+
+    exclude_cities = partner_country.exclude_cities.all()
+
+    exclude_cities_set = set(exclude_cities)
+
+    # print(cities)
+
+    # print(exclude_cities)
+
+    # for query in connection.queries:
+    #     print(query)
+    #     print('*' * 8)
+
+    # print(len(connection.queries))
+
+    active_cities = [city for city in cities if city not in set(exclude_cities)]
+
+    active_response = []
+
+    for city in cities:
+        if city not in exclude_cities_set:
+            data = {
+                'id': city.pk,
+                'name': city.name,
+            }
+            active_response.append(data)
+
+    unactive_response = []
+
+    for city in exclude_cities:
+            data = {
+                'id': city.pk,
+                'name': city.name,
+            }
+            unactive_response.append(data)
+
+    response = {
+        'country_id': country_id,
+        'active_cities': active_response,
+        'unactive_cities': unactive_response,
+    }
+
+    print('RESPONSE', response)
+    return response
+    # return generate_partner_countries(partner_counrties)
+
+
+@partner_router.patch('/edit_excluded_cities_by_partner_country')
+def edit_excluded_cities_by_partner_country(partner: partner_dependency,
+                                            data: EditExcludedCitySchema):
+    print(len(connection.queries))
+    partner_id = partner.get('partner_id')
+
+    unactive_city_pks = data.unactive_pks
+    active_city_pks = data.active_pks
+    country_id = data.country_id
+
+    # prefect_cities_query = Prefetch('country__cities',
+    #                                 queryset=City.objects.filter(is_parse=True).order_by('name'))
+    
+    # prefetch_excluded_cities_query = Prefetch('exclude_cities',
+    #                                           queryset=City.objects.filter(is_parse=True).order_by('name'))
+
+    try:
+        partner_country = PartnerCountry.objects.select_related('exchange',
+                                                                'exchange__account',
+                                                                'country')\
+                                                .prefetch_related('exclude_cities')\
+                                            .get(exchange__account__pk=partner_id,
+                                                    pk=country_id)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='PartnerCountry not found in DB')
+    else:
+        try:
+            with transaction.atomic():
+                partner_country.exclude_cities.remove(*active_city_pks)
+                partner_country.exclude_cities.add(*unactive_city_pks)
+        except Exception as ex:
+            print(ex)
+            raise HTTPException(status_code=400,
+                                detail='Error with try save related records (Exclude City) to DB')
+        else:
+            return {'status': 'success'}
+
 
 
 @partner_router.get('/countries',
