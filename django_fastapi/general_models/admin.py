@@ -604,7 +604,8 @@ class BaseExchangeLinkCountStacked(admin.StackedInline):
 class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
         'name',
-        'xml_url',
+        # 'xml_url',
+        'link_count',
         'is_active',
         'time_create',
         'high_aml',
