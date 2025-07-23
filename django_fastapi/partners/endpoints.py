@@ -175,7 +175,7 @@ def get_partner_countries(partner: partner_dependency):
                     response_model=ExcludedCitiesByPartnerCountry)
 def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
                                               country_id: int):
-    print(len(connection.queries))
+    # print(len(connection.queries))
     partner_id = partner.get('partner_id')
 
     prefect_cities_query = Prefetch('country__cities',
@@ -218,7 +218,7 @@ def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
 
     # print(len(connection.queries))
 
-    active_cities = [city for city in cities if city not in set(exclude_cities)]
+    # active_cities = [city for city in cities if city not in set(exclude_cities)]
 
     active_response = []
 
@@ -245,7 +245,7 @@ def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
         'unactive_cities': unactive_response,
     }
 
-    print('RESPONSE', response)
+    # print('RESPONSE', response)
     return response
     # return generate_partner_countries(partner_counrties)
 
@@ -253,7 +253,7 @@ def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
 @partner_router.patch('/edit_excluded_cities_by_partner_country')
 def edit_excluded_cities_by_partner_country(partner: partner_dependency,
                                             data: EditExcludedCitySchema):
-    print(len(connection.queries))
+    # print(len(connection.queries))
     partner_id = partner.get('partner_id')
 
     unactive_city_pks = data.unactive_pks
