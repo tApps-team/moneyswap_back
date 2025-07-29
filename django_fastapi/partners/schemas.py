@@ -441,7 +441,8 @@ class EditExcludedCitySchema(BaseModel):
 
 class ExcludedCitySchema(BaseModel):
     id: int
-    name: str
+    name: MultipleName
+    code_name: str
 
 class ExcludedCitiesByPartnerCountry(BaseModel):
     country_id: int
