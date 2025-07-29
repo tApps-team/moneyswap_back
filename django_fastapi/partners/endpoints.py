@@ -172,7 +172,8 @@ def get_partner_countries(partner: partner_dependency):
 #                     response_model=list[PartnerCountrySchema3],
 #                     response_model_by_alias=False)
 @partner_router.get('/cities_for_exclude_by_partner_country',
-                    response_model=ExcludedCitiesByPartnerCountry)
+                    response_model=ExcludedCitiesByPartnerCountry,
+                    response_model_by_alias=False)
 def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
                                               country_id: int):
     # print(len(connection.queries))
