@@ -148,7 +148,7 @@ DATABASES = {
         "HOST": PGBOUNCER_HOST,
         # "HOST": DB_HOST,
         "PORT": DB_PORT,
-        "CONN_MAX_AGE": 60,
+        "CONN_MAX_AGE": 0,
     }
 }
 
