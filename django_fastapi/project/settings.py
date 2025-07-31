@@ -149,6 +149,7 @@ DATABASES = {
         # "HOST": DB_HOST,
         "PORT": DB_PORT,
         "CONN_MAX_AGE": 0,
+        'DISABLE_SERVER_SIDE_CURSORS': True,
     }
 }
 
