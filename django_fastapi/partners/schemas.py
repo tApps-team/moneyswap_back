@@ -446,5 +446,5 @@ class ExcludedCitySchema(BaseModel):
 
 class ExcludedCitiesByPartnerCountry(BaseModel):
     country_id: int
-    active_cities: list[ExcludedCitySchema]
-    unactive_cities: list[ExcludedCitySchema]
+    active_pks: list[ExcludedCitySchema]
+    unactive_pks: list[ExcludedCitySchema]

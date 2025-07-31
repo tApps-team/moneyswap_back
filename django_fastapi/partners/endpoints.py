@@ -249,8 +249,8 @@ def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
 
     response = {
         'country_id': country_id,
-        'active_cities': active_response,
-        'unactive_cities': unactive_response,
+        'active_pks': active_response,
+        'unactive_pks': unactive_response,
     }
 
     # print('RESPONSE', response)
@@ -1412,17 +1412,18 @@ def add_partner_city_country(partner: partner_dependency,
                 .add(*WorkingDay.objects.filter(code_name__in=working_days_set))
             
             # name = new_obj.city.name if marker == 'city' else new_obj.country.name
-            if marker == 'city':
-                name = new_obj.city.name
-                _text = 'город'
-                suffix = ''
-            else:
-                name = new_obj.country.name
-                _text = 'страна'
-                suffix = 'а'
+            # if marker == 'city':
+            #     name = new_obj.city.name
+            #     _text = 'город'
+            #     suffix = ''
+            # else:
+            #     name = new_obj.country.name
+            #     _text = 'страна'
+            #     suffix = 'а'
             # print(len(connection.queries))
-            return {'status': 'success',
-                    'details': f'Партнёрский {_text} {name} добавлен{suffix}'}
+            # return {'status': 'success',
+            #         'details': f'Партнёрский {_text} {name} добавлен{suffix}'}
+            return {'location_id': new_obj.pk}
         
 
 # @test_partner_router.patch('/edit_partner_city_country')
