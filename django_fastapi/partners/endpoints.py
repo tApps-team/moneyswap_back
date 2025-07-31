@@ -291,6 +291,7 @@ def edit_excluded_cities_by_partner_country(partner: partner_dependency,
             with transaction.atomic():
                 partner_country.exclude_cities.remove(*active_city_pks)
                 partner_country.exclude_cities.add(*unactive_city_pks)
+                
         except Exception as ex:
             print(ex)
             raise HTTPException(status_code=400,
