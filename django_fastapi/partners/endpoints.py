@@ -243,7 +243,9 @@ def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
     for city in exclude_cities:
             data = {
                 'id': city.pk,
-                'name': city.name,
+                'name': MultipleName(name=city.name,
+                                     en_name=city.en_name),
+                'code_name': city.code_name,
             }
             unactive_response.append(data)
 
