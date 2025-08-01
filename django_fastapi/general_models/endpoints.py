@@ -272,22 +272,22 @@ new_test_union_directions_response_models = Union[SpecialCashDirectionMultiPrtne
 #     return exchange_direction_list
 
 
-@common_router.get('/directions',
-                   response_model=list[new_test_union_directions_response_models],
-                   response_model_by_alias=False)
-def get_current_exchange_directions(request: Request,
-                                    query: SpecificDirectionsQuery = Depends()):
-    params = query.params()
-    if not params['city']:
-        exchange_direction_list = test_no_cash_exchange_directions4(request, params)
-    else:
-        exchange_direction_list = test_cash_exchange_directions3(request, params)
+# @common_router.get('/directions',
+#                    response_model=list[new_test_union_directions_response_models],
+#                    response_model_by_alias=False)
+# def get_current_exchange_directions(request: Request,
+#                                     query: SpecificDirectionsQuery = Depends()):
+#     params = query.params()
+#     if not params['city']:
+#         exchange_direction_list = test_no_cash_exchange_directions4(request, params)
+#     else:
+#         exchange_direction_list = test_cash_exchange_directions3(request, params)
 
-    # for query in connection.queries:
-    #     print(query)
-    #     print('*' * 8)
+#     # for query in connection.queries:
+#     #     print(query)
+#     #     print('*' * 8)
 
-    return exchange_direction_list
+#     return exchange_direction_list
 
 
 new_test_union_directions_response_models2 = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
@@ -300,7 +300,7 @@ new_test_union_directions_response_models2 = Union[SpecialCashDirectionMultiPrtn
                                          SpecialDirectionMultiWithAmlModel]
 
 
-@test_router.get('/directions',
+@common_router.get('/directions',
                    response_model=list[new_test_union_directions_response_models2],
                    response_model_by_alias=False)
 def get_current_exchange_directions2(request: Request,
