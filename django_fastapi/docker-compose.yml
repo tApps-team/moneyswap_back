@@ -221,7 +221,7 @@ services:
     env_file:
       - ./.env
     cpus: '2.0'
-    mem_limit: 8g
+    mem_limit: 10g
     shm_size: '1g'
     volumes:
       - postgres-data:/var/lib/postgresql/data
