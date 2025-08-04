@@ -128,7 +128,6 @@ def get_available_countries3(countries):
             )
         available_counrties.append(_country_dict)
         
-    # print(connection.queries)
     # for query in connection.queries:
     #     print(query)
         # available_counrties.append(RuEnCountryModel.model_construct(**country.__dict__))

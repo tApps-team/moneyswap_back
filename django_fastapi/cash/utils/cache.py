@@ -1,15 +1,15 @@
 from django.core.cache import cache
-
-from django.db.models import Count, Q, Prefetch
+from django.db import connection
+from django.db.models import Count, Q, Prefetch, Exists, OuterRef
 
 from fastapi import Request
 
 from .endpoints import get_available_countries3
 from general_models.utils.http_exc import http_exception_json
 
-from cash.models import Direction, City, Country
+from cash.models import Direction, City, Country, ExchangeDirection
 
-from partners.models import PartnerCountry
+from partners.models import PartnerCountry, Direction as PartnerDirection, CountryDirection
 
 
 def generate_all_cash_directions(cash_directions,
@@ -313,6 +313,7 @@ def get_or_set_cache_available_countries3(request: Request):
 
 def get_or_set_cache_available_countries4(request: Request):
     if not (available_countries := cache.get('available_countries2', False)):
+        # print(len(connection.queries))
         prefetch_cities_queryset =  City.objects.order_by('name')\
                                                 .select_related('country')\
                                                 .prefetch_related('cash_directions',
@@ -387,6 +388,287 @@ def get_or_set_cache_available_countries4(request: Request):
             http_exception_json(status_code=404, param=request.url)
 
         available_countries = get_available_countries3(countries)
+        # cache.set('available_countries2', available_countries, 180)
+    
+    return available_countries
+
+
+
+def get_or_set_cache_available_countries2(request: Request):
+    if not (available_countries := cache.get('available_countries2', False)):
+        prefetch_cities_queryset =  City.objects.order_by('name')\
+                                                .select_related('country')\
+                                                .prefetch_related('cash_directions',
+                                                                'partner_cities')\
+                                                .annotate(partner_direction_count=Count('partner_cities',
+                                                                                        filter=Q(partner_cities__partner_directions__is_active=True)))\
+                                                .annotate(direction_count=Count('cash_directions',
+                                                                                filter=Q(cash_directions__is_active=True)))\
+                                                .filter(Q(direction_count__gt=0) \
+                                                        | Q(partner_direction_count__gt=0) \
+                                                            | Q(country__partner_countries__partner_directions__isnull=False))\
+                                                .distinct()
+
+
+        prefetch_counries_queryset =  PartnerCountry.objects.prefetch_related('partner_directions')\
+                                                .annotate(partner_direction_count=Count('partner_directions',
+                                                                                        filter=Q(partner_directions__is_active=True)))\
+                                                .filter(Q(partner_direction_count__gt=0))
+        # prefetch_cities = Prefetch('cities', City.objects.order_by('name')\
+        #                                                     .prefetch_related('cash_directions')\
+        #                                                     .annotate(partner_direction_count=Count('partner_cities',
+        #                                                                                             filter=Q(partner_cities__partner_directions__is_active=True)))\
+        #                                                     .annotate(direction_count=Count('cash_directions'))\
+        #                                                     .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0)))
+        prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
+        prefetch_countries = Prefetch('partner_countries', prefetch_counries_queryset)
+
+        # countries = Country.objects.prefetch_related(prefetch_cities,
+        #                                             prefetch_countries)\
+        #                             .annotate(direction_count=Count('cities__cash_directions',
+        #                                                             filter=Q(cities__cash_directions__is_active=True)))\
+        #                             .annotate(country_direction_count=Count('partner_countries__partner_directions',
+        #                                                                     filter=Q(partner_countries__partner_directions__is_active=True)))\
+        #                             .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0))\
+        #                             .order_by('name')\
+        #                             .all()
+        
+        countries = Country.objects.prefetch_related(prefetch_cities,
+                                                    prefetch_countries)\
+                                    .annotate(direction_count=Count('cities__cash_directions',
+                                                                    filter=Q(cities__cash_directions__is_active=True)))\
+                                    .annotate(partner_direction_count=Count('cities__partner_cities__partner_directions',
+                                                                    filter=Q(cities__partner_cities__partner_directions__is_active=True)))\
+                                    .annotate(country_direction_count=Count('partner_countries__partner_directions',
+                                                                            filter=Q(partner_countries__partner_directions__is_active=True)))\
+                                    .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0) | Q(partner_direction_count__gt=0))\
+                                    .order_by('name')\
+                                    .all()
+
+
+        if not countries:
+            http_exception_json(status_code=404, param=request.url)
+
+        available_countries = get_available_countries3(countries)
         cache.set('available_countries2', available_countries, 180)
+    
+    return available_countries
+
+
+def get_or_set_cache_available_countries3(request: Request):
+    if not (available_countries := cache.get('available_countries', False)):
+        prefetch_cities_queryset =  City.objects.order_by('name')\
+                                                .select_related('country')\
+                                                .prefetch_related('cash_directions',
+                                                                'partner_cities')\
+                                                .annotate(partner_direction_count=Count('partner_cities__partner_directions',
+                                                                                        filter=Q(partner_cities__partner_directions__is_active=True)))\
+                                                .annotate(direction_count=Count('cash_directions',
+                                                                                filter=Q(cash_directions__is_active=True)))\
+                                                .filter(Q(direction_count__gt=0) \
+                                                        | Q(partner_direction_count__gt=0) \
+                                                            | Q(country__partner_countries__partner_directions__is_active=True))\
+                                                .distinct()
+
+
+        prefetch_counries_queryset =  PartnerCountry.objects.prefetch_related('partner_directions')\
+                                                .annotate(partner_direction_count=Count('partner_directions',
+                                                                                        filter=Q(partner_directions__is_active=True)))\
+                                                .filter(Q(partner_direction_count__gt=0))
+        # prefetch_cities = Prefetch('cities', City.objects.order_by('name')\
+        #                                                     .prefetch_related('cash_directions')\
+        #                                                     .annotate(partner_direction_count=Count('partner_cities',
+        #                                                                                             filter=Q(partner_cities__partner_directions__is_active=True)))\
+        #                                                     .annotate(direction_count=Count('cash_directions'))\
+        #                                                     .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0)))
+        prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
+        prefetch_countries = Prefetch('partner_countries', prefetch_counries_queryset)
+
+        # countries = Country.objects.prefetch_related(prefetch_cities,
+        #                                             prefetch_countries)\
+        #                             .annotate(direction_count=Count('cities__cash_directions',
+        #                                                             filter=Q(cities__cash_directions__is_active=True)))\
+        #                             .annotate(country_direction_count=Count('partner_countries__partner_directions',
+        #                                                                     filter=Q(partner_countries__partner_directions__is_active=True)))\
+        #                             .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0))\
+        #                             .order_by('name')\
+        #                             .all()
+        
+        countries = Country.objects.prefetch_related(prefetch_cities,
+                                                    prefetch_countries)\
+                                    .annotate(direction_count=Count('cities__cash_directions',
+                                                                    filter=Q(cities__cash_directions__is_active=True)))\
+                                    .annotate(partner_direction_count=Count('cities__partner_cities__partner_directions',
+                                                                    filter=Q(cities__partner_cities__partner_directions__is_active=True)))\
+                                    .annotate(country_direction_count=Count('partner_countries__partner_directions',
+                                                                filter=Q(partner_countries__partner_directions__is_active=True)))\
+                                    .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0) | Q(partner_direction_count__gt=0))\
+                                    .order_by('name')\
+                                    .all()
+        # country_direction_count =  Country.objects.prefetch_related(prefetch_cities,
+        #                                             prefetch_countries)\
+        #                                         .annotate(country_direction_count=Count('partner_countries__partner_directions',
+        #                                                                     filter=Q(partner_countries__partner_directions__is_active=True)))\
+        #                             .filter(Q(country_direction_count=0))\
+        #                             .order_by('name')\
+        #                             .values('name', 'country_direction_count')\
+        #                             .all()
+        
+        # print(country_direction_count)
+
+        # _country_direction_count_dict = {el['name']: el['country_direction_count'] for el in country_direction_count}
+        
+        # for country in countries:
+        #     if country.name in _country_direction_count_dict:
+        #         country.country_direction_count = _country_direction_count_dict[country.name]
+
+        # countries = [el for el in countries if (el.direction_count > 0 or el.partner_direction_count > 0 or el.country_direction_count > 0)]
+
+        if not countries:
+            http_exception_json(status_code=404, param=request.url)
+
+        available_countries = get_available_countries3(countries)
+        cache.set('available_countries', available_countries, 180)
+    
+    return available_countries
+
+
+
+def get_or_set_cache_available_countries5(request: Request):
+    # if not (available_countries := cache.get('available_countries2', False)):
+    # print(len(connection.queries))
+
+    cash_direction_exists = ExchangeDirection.objects.filter(
+        city=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    partner_direction_exists = PartnerDirection.objects.filter(
+        city__city=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    country_direction_exists = CountryDirection.objects.filter(
+        country__country=OuterRef('country_id'),
+        is_active=True,
+        exchange__is_active=True
+    )
+
+    prefetch_cities_queryset =  City.objects.order_by('name')\
+                                            .select_related('country')\
+                                            .annotate(has_cash_directions=Exists(cash_direction_exists))\
+                                            .annotate(has_partner_directions=Exists(partner_direction_exists))\
+                                            .annotate(has_country_directions=Exists(country_direction_exists))\
+                                            .filter(Q(has_cash_directions=True) | Q(has_partner_directions=True) | Q(has_country_directions=True))\
+
+    # prefetch_cities_queryset =  City.objects.order_by('name')\
+    #                                         .select_related('country')\
+    #                                         .prefetch_related('cash_directions',
+    #                                                         'partner_cities')\
+    #                                         .annotate(partner_direction_count=Count('partner_cities__partner_directions',
+    #                                                                                 filter=Q(partner_cities__partner_directions__is_active=True)))\
+    #                                         .annotate(direction_count=Count('cash_directions',
+    #                                                                         filter=Q(cash_directions__is_active=True)))\
+    #                                         .filter(Q(direction_count__gt=0) \
+    #                                                 | Q(partner_direction_count__gt=0) \
+    #                                                     | Q(country__partner_countries__partner_directions__is_active=True))\
+    #                                         .distinct()
+                                            # .distinct()
+                                            # .filter(Q(direction_count__gt=0) \
+                                            #         | Q(partner_direction_count__gt=0) \
+                                            #             | Q(country__partner_countries__partner_directions__is_active=True))\
+                                            # .prefetch_related('cash_directions',
+                                            #                 'partner_cities')\
+                                            # .annotate(partner_direction_count=Count('partner_cities__partner_directions',
+                                            #                                         filter=Q(partner_cities__partner_directions__is_active=True) \
+                                            #                                             & Q(partner_cities__partner_directions__city__exchange__is_active=True)))\
+                                            # .annotate(direction_count=Count('cash_directions',
+                                            #                                 filter=Q(cash_directions__is_active=True) \
+                                            #                                     & Q(cash_directions__exchange__is_active=True)))\
+
+
+    # prefetch_counries_queryset =  PartnerCountry.objects.prefetch_related('partner_directions')\
+    #                                         .annotate(partner_direction_count=Count('partner_directions',
+    #                                                                                 filter=Q(partner_directions__is_active=True)))\
+    #                                         .filter(Q(partner_direction_count__gt=0))
+    # prefetch_cities = Prefetch('cities', City.objects.order_by('name')\
+    #                                                     .prefetch_related('cash_directions')\
+    #                                                     .annotate(partner_direction_count=Count('partner_cities',
+    #                                                                                             filter=Q(partner_cities__partner_directions__is_active=True)))\
+    #                                                     .annotate(direction_count=Count('cash_directions'))\
+    #                                                     .filter(Q(direction_count__gt=0) | Q(partner_direction_count__gt=0)))
+    prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
+    # prefetch_countries = Prefetch('partner_countries', prefetch_counries_queryset)
+
+    # countries = Country.objects.prefetch_related(prefetch_cities,
+    #                                             prefetch_countries)\
+    #                             .annotate(direction_count=Count('cities__cash_directions',
+    #                                                             filter=Q(cities__cash_directions__is_active=True)))\
+    #                             .annotate(country_direction_count=Count('partner_countries__partner_directions',
+    #                                                                     filter=Q(partner_countries__partner_directions__is_active=True)))\
+    #                             .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0))\
+    #                             .order_by('name')\
+    #                             .all()
+
+    cash_direction_exists = ExchangeDirection.objects.filter(
+        city__country=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    partner_direction_exists = PartnerDirection.objects.filter(
+        city__city__country=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    country_direction_exists = CountryDirection.objects.filter(
+        country__country=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+
+    # countries = Country.objects.annotate(
+    #     has_cash_directions=Exists(cash_direction_exists)
+    # )
+    
+    countries = Country.objects\
+                                .prefetch_related(prefetch_cities)\
+                                .annotate(has_cash_directions=Exists(cash_direction_exists))\
+                                .annotate(has_partner_directions=Exists(partner_direction_exists))\
+                                .annotate(has_country_directions=Exists(country_direction_exists))\
+                                .filter(Q(has_cash_directions=True) | Q(has_partner_directions=True) | Q(has_country_directions=True))\
+                                .order_by('-is_popular', 'name')\
+                                .all()
+                                # .filter(Q(direction_count__gt=0) | Q(country_direction_count__gt=0) | Q(partner_direction_count__gt=0))\
+                                # .annotate(partner_direction_count=Count('cities__partner_cities__partner_directions',
+                                #                                 filter=Q(cities__partner_cities__partner_directions__is_active=True)))\
+                                # .annotate(country_direction_count=Count('partner_countries__partner_directions',
+                                #                             filter=Q(partner_countries__partner_directions__is_active=True)))\
+                                # .annotate(direction_count=Count('cities__cash_directions',
+                                #                                 filter=Q(cities__cash_directions__is_active=True) \
+                                #                                     & Q(cities__cash_directions__exchange__is_active=True)))\
+    # country_direction_count =  Country.objects.prefetch_related(prefetch_cities,
+    #                                             prefetch_countries)\
+    #                                         .annotate(country_direction_count=Count('partner_countries__partner_directions',
+    #                                                                     filter=Q(partner_countries__partner_directions__is_active=True)))\
+    #                             .filter(Q(country_direction_count=0))\
+    #                             .order_by('name')\
+    #                             .values('name', 'country_direction_count')\
+    #                             .all()
+    
+    # print(country_direction_count)
+
+    # _country_direction_count_dict = {el['name']: el['country_direction_count'] for el in country_direction_count}
+    
+    # for country in countries:
+    #     if country.name in _country_direction_count_dict:
+    #         country.country_direction_count = _country_direction_count_dict[country.name]
+
+    # countries = [el for el in countries if (el.direction_count > 0 or el.partner_direction_count > 0 or el.country_direction_count > 0)]
+
+    if not countries:
+        http_exception_json(status_code=404, param=request.url)
+
+    available_countries = get_available_countries3(countries)
+        # cache.set('available_countries2', available_countries, 180)
     
     return available_countries

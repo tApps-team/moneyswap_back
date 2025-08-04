@@ -32,7 +32,7 @@ from .schemas import (MultipleName,
 from .utils.endpoints import (get_available_countries,
                               get_available_countries2,
                               get_available_countries3)
-from .utils.cache import get_or_set_cache_available_countries, get_or_set_cache_available_countries2, get_or_set_cache_available_countries3, get_or_set_cache_available_countries4
+from .utils.cache import get_or_set_cache_available_countries, get_or_set_cache_available_countries2, get_or_set_cache_available_countries3, get_or_set_cache_available_countries4, get_or_set_cache_available_countries5
 
 cash_router = APIRouter(prefix='/cash',
                         tags=['Наличные'])
@@ -176,6 +176,16 @@ def get_available_coutries2(request: Request):
 def get_available_coutries2(request: Request):
 
     countries = get_or_set_cache_available_countries4(request)
+
+    return countries
+
+
+@cash_router.get('/countries3',
+                 response_model=List[RuEnCountryModel1],
+                 response_model_by_alias=False)
+def get_available_coutries3(request: Request):
+
+    countries = get_or_set_cache_available_countries5(request)
 
     return countries
 
