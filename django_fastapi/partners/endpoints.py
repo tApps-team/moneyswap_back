@@ -1407,7 +1407,7 @@ def add_partner_city_country(partner: partner_dependency,
             # new_partner_city = PartnerCity.objects.create(**data)
             new_obj = _model.objects.create(**_data)
             if marker == 'city':
-                make_city_active(new_obj)
+                make_city_active(new_obj.city)
         except IntegrityError:
             raise HTTPException(status_code=423, # ?
                                 detail='Такой город уже существует')

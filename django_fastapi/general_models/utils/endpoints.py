@@ -756,6 +756,108 @@ def get_exchange_with_direction_count_for_exchange_list(exchange_list: models.Ma
                                      direction_count=Coalesce(F('city_direction_count'), Value(0))+Coalesce(F('country_direction_count'), Value(0)))
 
 
+def get_exchange_dircetions_dict_tuple():
+    # print(len(connection.queries))
+    result_dict = {
+        'no_cash': {},
+        'cash': {},
+        'partner': {},
+    }
+
+    # review_counts = (
+    #     NewBaseReview.objects
+    #     .filter(moderation=True)
+    #     .values('exchange_name')
+    #     .annotate(
+    #         positive_count=Count('id', filter=Q(grade='1')),
+    #         neutral_count=Count('id', filter=Q(grade='0')),
+    #         negative_count=Count('id', filter=Q(grade='-1')),
+    #     )
+    # )
+
+    # review_map = {r['exchange_name']: r for r in review_counts}
+
+    no_cash_exchange_directions = no_cash_models.ExchangeDirection.objects.select_related('exchange')\
+                                                                            .filter(is_active=True,
+                                                                                    exchange__is_active=True)\
+                                                                            .values('exchange_id')\
+                                                                            .annotate(total=Count('id'))\
+
+    cash_exchange_directions = cash_models.ExchangeDirection.objects.select_related('exchange')\
+                                                                            .filter(is_active=True,
+                                                                                    exchange__is_active=True)\
+                                                                            .values('exchange_id')\
+                                                                            .annotate(total=Count('id'))\
+
+    partner_exchange_directions = partner_models.Direction.objects.select_related('city__exchange')\
+                                                                            .filter(is_active=True,
+                                                                                    city__exchange__is_active=True)\
+                                                                            .values('city__exchange_id')\
+                                                                            .annotate(total=Count('id'))\
+
+    country_exchange_directions = partner_models.CountryDirection.objects.select_related('country__exchange')\
+                                                                            .filter(is_active=True,
+                                                                                    country__exchange__is_active=True)\
+                                                                            .values('country__exchange_id')\
+                                                                            .annotate(total=Count('id'))\
+    
+    # print(no_cash_exchange_directions.all())
+    # print(cash_exchange_directions.all())
+    # print(partner_exchange_directions.all())
+    # print(country_exchange_directions.all())
+    result_dict['no_cash'] = {el['exchange_id']: el['total'] for el in no_cash_exchange_directions}
+    result_dict['cash'] = {el['exchange_id']: el['total'] for el in cash_exchange_directions}
+    # result_dict['partner_directions'] = {el['city__exchange_id']: el['total'] for el in partner_exchange_directions}
+    # result_dict['country_directions'] = {el['country__exchange_id']: el['total'] for el in country_exchange_directions}
+    _partner_directions = {el['city__exchange_id']: el['total'] for el in partner_exchange_directions}
+    _country_directions = {el['country__exchange_id']: el['total'] for el in country_exchange_directions}
+
+    for exchange_id in _country_directions:
+        _partner_directions[exchange_id] = _partner_directions.get(exchange_id, 0) + _country_directions[exchange_id]
+
+    result_dict['partner'] = _partner_directions
+
+    print(len(result_dict['no_cash']))
+    print(len(result_dict['cash']))
+    print(len(result_dict['partner']))
+
+    return result_dict
+
+
+
+    # direction_count_subquery = no_cash_models.ExchangeDirection.objects.filter(
+    #     exchange_id=OuterRef('id'),
+    #     is_active=True,
+    # ).values('exchange_id').annotate(
+    #     direction_count=Coalesce(Count('id'), Value(0))
+    # ).values('direction_count')
+    # direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
+    #     exchange_id=OuterRef('id'),
+    #     is_active=True,
+    # ).values('exchange_id').annotate(
+    #     direction_count=Coalesce(Count('id'), Value(0))
+    # ).values('direction_count')
+    # city_direction_count_subquery = partner_models.Direction.objects.select_related(
+    #     'city',
+    #     'city__exchange',
+    # ).filter(
+    #     city__exchange__pk=OuterRef('id'),
+    #     is_active=True,
+    # ).values('city__exchange__pk').annotate(
+    #     direction_count=Coalesce(Count('id'), Value(0))
+    # ).values('direction_count')
+
+    # country_direction_count_subquery = partner_models.CountryDirection.objects.select_related(
+    #     'country',
+    #     'country__exchange',
+    # ).filter(
+    #     country__exchange__pk=OuterRef('id'),
+    #     is_active=True,
+    # ).values('country__exchange__pk').annotate(
+    #     direction_count=Coalesce(Count('id'), Value(0))
+    # ).values('direction_count')
+
+
 def add_location_to_exchange_direction(exchange_direction: dict[str, Any],
                                        query):
     

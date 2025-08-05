@@ -53,7 +53,7 @@ from partners.utils.endpoints import generate_actual_course
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
 from .utils.endpoints import (check_exchage_by_name, check_exchage_marker, check_perms_for_adding_comment,
-                              check_perms_for_adding_review,
+                              check_perms_for_adding_review, get_exchange_dircetions_dict_tuple,
                               get_exchange_with_direction_count,
                               get_exchange_with_direction_count_for_exchange_list, new_check_perms_for_adding_comment, new_check_perms_for_adding_review, new_get_reviews_count_filters,
                               pust_to_send_bot, send_comment_notifitation,
@@ -724,7 +724,8 @@ def get_exchange_list():
 
         exchange_query = get_exchange_with_direction_count_for_exchange_list(exchange_list=exchange_query,
                                                                              exchange_marker=exchange_marker)
-        exchange_query = exchange_query.values('pk',
+        exchange_query = exchange_query.order_by()\
+                                        .values('pk',
                                             'name',
                                             'reserve_amount',
                                             'direction_count',
@@ -739,8 +740,8 @@ def get_exchange_list():
 
         queries.append(exchange_query)
 
-    exchange_list = queries[0].union(queries[1])\
-                                .union(queries[2])
+    exchange_list = queries[0].union(queries[1], all=True)\
+                                .union(queries[2], all=True)
     
     exchange_dict = {}
     exchange_name_set = set()
@@ -765,8 +766,135 @@ def get_exchange_list():
             exchange_dict[exchange_name] = exchange
 
     # print(len(connection.queries))
-    # print(connection.queries)
+    # print(connection.queries[-1]['sql'])
 
+    # print(len(exchange_dict))
+
+
+    # return sorted(exchange_list,
+                #   key=lambda el: el.get('name'))
+    return sorted(exchange_dict.values(),
+                  key=lambda el: el.get('name'))
+
+
+
+# @test_router.get('/exchange_list',
+#                    response_model=list[CommonExchangeSchema],
+#                    response_model_by_alias=False)
+def get_exchange_list2():
+    print(len(connection.queries))
+
+    # review_counts = new_get_reviews_count_filters(marker='exchange')
+
+    review_counts = (
+        NewBaseReview.objects
+        .filter(moderation=True)
+        .values('exchange_name')
+        .annotate(
+            positive_count=Count('id', filter=Q(grade='1')),
+            neutral_count=Count('id', filter=Q(grade='0')),
+            negative_count=Count('id', filter=Q(grade='-1')),
+        )
+    )
+
+    review_map = {r['exchange_name']: r for r in review_counts}
+
+    result = get_exchange_dircetions_dict_tuple()
+
+    print('result',result)
+    
+    queries = []
+
+    for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
+                                            ('cash', cash_models.Exchange),
+                                            ('partner', partner_models.Exchange)):
+        # review_counts = new_get_reviews_count_filters(exchange_marker)
+
+        exchange_query = exchange_model.objects\
+                                    .annotate(exchange_marker=annotate_string_field(exchange_marker))\
+                                    # .annotate(positive_review_count=review_counts['positive'])\
+                                    # .annotate(neutral_review_count=review_counts['neutral'])\
+                                    # .annotate(negative_review_count=review_counts['negative'])\
+                                    # .values('pk',
+                                    #         'name',
+                                    #         'reserve_amount',
+                                    #         'course_count',
+                                    #         'positive_review_count',
+                                    #         'neutral_review_count',
+                                    #         'negative_review_count',
+                                    #         'is_active',
+                                    #         'exchange_marker',
+                                    #         'partner_link')\
+                                    # .filter(is_active=True)
+                                    # .all()
+
+        # exchange_query = get_exchange_with_direction_count_for_exchange_list(exchange_list=exchange_query,
+        #                                                                      exchange_marker=exchange_marker)
+        exchange_query = exchange_query.values('pk',
+                                            'name',
+                                            'reserve_amount',
+                                            # 'direction_count',
+                                            # 'positive_review_count',
+                                            # 'neutral_review_count',
+                                            # 'negative_review_count',
+                                            'is_active',
+                                            'exchange_marker',
+                                            'partner_link')\
+                                    .filter(is_active=True)\
+                                    .order_by()
+
+        queries.append(exchange_query)
+
+    exchange_list = queries[0].union(queries[1], all=True)\
+                                .union(queries[2], all=True)
+    
+    exchange_dict = {}
+    exchange_name_set = set()
+
+    for exchange in exchange_list:
+        exchange_name = exchange.get('name').lower()   # lower() для name !
+
+        if exchange_name in exchange_name_set:
+            exchange_marker = exchange['exchange_marker']
+            try:
+                exchange['direction_count'] = result[exchange_marker][exchange['pk']]
+            except KeyError as ex:
+                print('1error',ex)
+                exchange['direction_count'] = 0
+            
+            exchange_dict[exchange_name]['exchange_marker'] = 'both'
+
+            exchange_dict[exchange_name]['direction_count'] += exchange.get('direction_count', 0)
+
+            if exchange_marker == 'no_cash':
+                exchange_dict[exchange_name]['pk'] = exchange['pk'] # id no_cash обменников
+        else:
+
+            # exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
+            #                                         neutral=exchange['neutral_review_count'],
+            #                                         negative=exchange['negative_review_count'])
+            try:
+                exchange['reviews'] = ReviewCountSchema(positive=review_map[exchange.get('name')]['positive_count'],
+                                                        neutral=review_map[exchange.get('name')]['neutral_count'],
+                                                        negative=review_map[exchange.get('name')]['negative_count'])
+            except KeyError:
+                exchange['reviews'] = ReviewCountSchema(positive=0,
+                                                        neutral=0,
+                                                        negative=0)
+            try:
+                exchange['direction_count'] = result[exchange_marker][exchange['pk']]
+                exchange_dict[exchange_name] = exchange
+                exchange_name_set.add(exchange_name)
+            except KeyError as ex:
+                print('2error',ex, exchange_marker)
+                exchange['direction_count'] = 0
+
+
+
+    print(len(connection.queries))
+    print(connection.queries[-1]['sql'])
+
+    print(len(exchange_dict))
     # return sorted(exchange_list,
                 #   key=lambda el: el.get('name'))
     return sorted(exchange_dict.values(),
