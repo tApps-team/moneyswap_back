@@ -170,17 +170,17 @@ def get_available_coutries2(request: Request):
 
 
 
+# @cash_router.get('/countries2',
+#                  response_model=List[RuEnCountryModel1],
+#                  response_model_by_alias=False)
+# def get_available_coutries2(request: Request):
+
+#     countries = get_or_set_cache_available_countries4(request)
+
+#     return countries
+
+
 @cash_router.get('/countries2',
-                 response_model=List[RuEnCountryModel1],
-                 response_model_by_alias=False)
-def get_available_coutries2(request: Request):
-
-    countries = get_or_set_cache_available_countries4(request)
-
-    return countries
-
-
-@cash_router.get('/countries3',
                  response_model=List[RuEnCountryModel1],
                  response_model_by_alias=False)
 def get_available_coutries3(request: Request):
