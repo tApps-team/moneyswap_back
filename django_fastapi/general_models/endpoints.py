@@ -1040,25 +1040,31 @@ def get_all_directions_by_exchange(exchange_id: int,
     if exchange_marker == 'both':
         try:
             no_cash_exchange_directions = exchange_directions_queryset\
-                                            .select_related('direction',
+                                            .select_related('exchange',
+                                                            'direction',
                                                             'direction__valute_from',
                                                             'direction__valute_to')\
                                             .annotate(pair_count=Count('direction__exchange_directions',
                                                                     filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
                                                                                 direction__exchange_directions__is_active=True,
                                                                                 direction__exchange_directions__exchange__is_active=True)),
-                                                    marker=annotate_string_field('no_cash'))
+                                                    marker=annotate_string_field('no_cash'))\
+                                            .filter(exchange__is_active=True,
+                                                    is_active=True)
             
             cash_exchange_directions_queryset = cash_models.Exchange.objects.get(name=exchange.first().name).directions
             cash_exchange_directions = cash_exchange_directions_queryset\
-                                            .select_related('direction',
+                                            .select_related('exchange',
+                                                            'direction',
                                                             'direction__valute_from',
                                                             'direction__valute_to')\
                                             .annotate(pair_count=Count('direction__exchange_directions',
                                                                     filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
                                                                                 direction__exchange_directions__is_active=True,
                                                                                 direction__exchange_directions__exchange__is_active=True)),
-                                                    marker=annotate_string_field('cash'))
+                                                    marker=annotate_string_field('cash'))\
+                                            .filter(exchange__is_active=True,
+                                                    is_active=True)
 
             no_cash_prefetch_queryset = Prefetch('direction__partner_directions',
                                         partner_models.NonCashDirection.objects.filter(is_active=True,
