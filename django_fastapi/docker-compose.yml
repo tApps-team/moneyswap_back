@@ -222,12 +222,12 @@ services:
       - ./.env
     cpus: '2.0'
     mem_limit: 10g
-    shm_size: '2g'
+    shm_size: '4g'
     volumes:
       - postgres-data:/var/lib/postgresql/data
     # command: postgres -c max_connections=200 -c shared_buffers=2GB
     # command: postgres -c max_connections=100 -c shared_buffers=2GB -c work_mem=16MB -c maintenance_work_mem=512MB -c effective_cache_size=6GB
-    command: postgres -c max_connections=80 -c shared_buffers=2GB -c work_mem=2MB -c maintenance_work_mem=128MB -c effective_cache_size=10GB
+    command: postgres -c max_connections=80 -c shared_buffers=3GB -c work_mem=2MB -c maintenance_work_mem=128MB -c effective_cache_size=7`GB
     logging:
       driver: "json-file"
       options:
