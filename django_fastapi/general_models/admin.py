@@ -607,6 +607,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         # 'xml_url',
         'link_count',
         'is_active',
+        'active_status',
         'time_create',
         'high_aml',
         )
@@ -621,6 +622,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'time_create',
         'get_icon',
         'link_count',
+        'time_disable',
         )
     
     list_editable = (
@@ -663,12 +665,15 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                            "xml_url",
                            "partner_link",
                            "is_active",
+                           'active_status',
+                           'timeout',
                            "is_vip",
                            'high_aml',
                            "get_total_direction_count",
                            "reserve_amount",
                            "age",
                            'time_create',
+                           'time_disable',
                            "country",
                            ("period_for_create", "period_for_update", "period_for_parse_black_list"),
                            'icon_url',

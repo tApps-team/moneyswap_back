@@ -357,6 +357,34 @@ def generate_top_exchanges_query_by_model(exchange_marker: str,
     return top_exchanges
 
 
+def new_generate_top_exchanges_query_by_model(exchange_marker: str,
+                                          review_counts: dict[str, Count] = None):
+    # top_exchanges = get_exchange_query_with_reviews_counts(exchange_marker,
+    #                                                        review_counts=review_counts)
+
+    exchange_model: BaseExchange = EXCHANGE_MARKER_DICT.get(exchange_marker)
+
+    top_exchanges = exchange_model.objects
+    
+    top_exchanges = top_exchanges\
+                        .annotate(link_count=Sum('exchange_counts__count'))\
+                        .annotate(exchange_marker=annotate_string_field(exchange_marker))\
+                        .filter(is_active=True,
+                                link_count__isnull=False)\
+                        .values('pk',
+                                'icon_url',
+                                'name',
+                                # 'positive_review_count',
+                                # 'neutral_review_count',
+                                # 'negative_review_count',
+                                'link_count',
+                                'exchange_marker')
+    # print(top_exchanges)
+    # print('*' * 8)
+    return top_exchanges
+
+
+
 positive_review_count_filter = Q(exchange__reviews__moderation=True) \
                                         & Q(exchange__reviews__grade='1')
 neutral_review_count_filter = Q(exchange__reviews__moderation=True) \
@@ -817,9 +845,9 @@ def get_exchange_dircetions_dict_tuple():
 
     result_dict['partner'] = _partner_directions
 
-    print(len(result_dict['no_cash']))
-    print(len(result_dict['cash']))
-    print(len(result_dict['partner']))
+    # print(len(result_dict['no_cash']))
+    # print(len(result_dict['cash']))
+    # print(len(result_dict['partner']))
 
     return result_dict
 

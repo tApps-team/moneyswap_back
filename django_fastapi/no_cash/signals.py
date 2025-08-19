@@ -52,13 +52,24 @@ def add_en_name_for_exchange(sender, instance, **kwargs):
     if instance.en_name is None:
         instance.en_name = instance.name
 
+    # print(instance.__dict__)
+
+    # print(instance.active_status in ('disabled', 'sсam'))
+
+    # if instance.active_status in ('disabled', 'sсam'):
+    #     print('here')
+    #     instance.is_active = False
+
+
+
 
 #Сигнал для создания периодических задач
 #при создании обменника в БД
 @receiver(post_save, sender=Exchange)
 def create_tasks_for_exchange(sender, instance, created, **kwargs):
-    print('[post_save]', instance.pk, instance.name)
-    print('No cash exchange post save...')
+    # print('[post_save]', instance.pk, instance.name)
+    # print(instance.__dict__)
+    # print('No cash exchange post save...')
     if created:
         print('NO CASH PERIODIC TASKS CREATING...')
         manage_periodic_task_for_create(instance.pk,

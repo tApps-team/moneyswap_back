@@ -565,11 +565,22 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                         for inner_key in inner_dict:
                             if value := inner_dict.get(inner_key):
                                 city_id, direction_id = value
-                                black_list_direction, _ = BlackListElement\
-                                                        .objects\
-                                                        .get_or_create(city_id=city_id,
-                                                                       direction_id=direction_id)
+                                # black_list_direction, _ = BlackListElement\
+                                #                         .objects\
+                                #                         .get_or_create(city_id=city_id,
+                                #                                        direction_id=direction_id)
+                                black_list_element_query = BlackListElement.objects.filter(city_id=city_id,
+                                                                                        direction_id=direction_id)
+
+                                if black_list_element_query.exists():
+                                    black_list_direction = black_list_element_query.first()
+                                else:
+                                    black_list_direction = BlackListElement\
+                                                            .objects\
+                                                            .create(city_id=city_id,
+                                                                    direction_id=direction_id)
                                 black_list.append(black_list_direction)
+                                
                 exchange.direction_black_list.add(*black_list)
                 # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
         except Exception as ex:

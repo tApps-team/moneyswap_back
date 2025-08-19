@@ -8,3 +8,7 @@ class TechServiceWork(Exception):
 
 class RobotCheckError(Exception):
     pass
+
+
+class TimeoutError(Exception):
+    pass

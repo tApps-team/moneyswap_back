@@ -2588,7 +2588,7 @@ def test_get_partner_directions3(valute_from: str,
                             'rate_coefficient': el[-1],
                             }
                         )
-                    direction.exchange_rates = exchange_rate_list
+                    new_direction.exchange_rates = exchange_rate_list
 
                 # if addittional_exchange_rates:
                 #     new_direction.exchange_rates = [{'in_count': el[0],
@@ -2602,7 +2602,7 @@ def test_get_partner_directions3(valute_from: str,
                 new_direction.exchange = direction.country.exchange
                 new_direction.exchange_marker = 'partner'
                 new_direction.direction_marker = 'country'
-                new_direction.__setattr__('direction_marker', 'country')
+                # new_direction.__setattr__('direction_marker', 'country')
                 new_direction.valute_from = valute_from
                 new_direction.valute_to = valute_to
                 new_direction.min_amount = min_amount
@@ -2646,6 +2646,7 @@ def test_get_partner_directions3(valute_from: str,
                     weekends=weekends,
                     bankomats=bankomats,
                     )
+                                
                 country_directions_with_city.append(new_direction)
 
     check_set = set()

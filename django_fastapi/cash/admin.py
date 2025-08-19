@@ -7,6 +7,7 @@ from django.db.models import Count, Q, Sum, Value, Subquery, OuterRef, Prefetch
 from django.db.models.functions import Coalesce
 from django.http.request import HttpRequest
 from django.utils.safestring import mark_safe
+from django.utils import timezone
 
 from general_models.utils.endpoints import try_generate_icon_url
 
@@ -249,6 +250,18 @@ class ExchangeAdmin(BaseExchangeAdmin):
                             manage_periodic_task_for_parse_black_list(obj.pk,
                                                                       obj.name,
                                                                       value)
+                        case 'active_status':
+                            if value in ('disabled', 'scam'):
+                                obj.is_active = False
+                                update_fields.append('is_active')
+                            
+                            if value == 'disabled':
+                                obj.time_disable = timezone.now()
+                            else:
+                                obj.time_disable = None
+
+                            update_fields.append('time_disable')
+                                
                     update_fields.append(key)
 
             obj.save(update_fields=update_fields)

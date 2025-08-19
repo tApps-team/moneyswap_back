@@ -783,3 +783,44 @@ def test_cash_exchange_directions_with_location2(request: Request,
                                        valute_from,
                                        valute_to,
                                        with_location=True)
+
+
+def new_test_cash_exchange_directions_with_location(request: Request,
+                                                    params: dict): 
+    valute_from, valute_to = (params[key] for key in params)
+
+    review_counts = new_get_reviews_count_filters('exchange_direction')
+
+    queries = ExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'city',
+                                                'city__country',
+                                                'direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to')\
+                                .annotate(positive_review_count=review_counts['positive'])\
+                                .annotate(neutral_review_count=review_counts['neutral'])\
+                                .annotate(negative_review_count=review_counts['negative'])\
+                                .filter(direction__valute_from=valute_from,
+                                        direction__valute_to=valute_to,
+                                        is_active=True,
+                                        exchange__is_active=True)\
+                                .all()
+    
+    partner_directions = test_get_partner_directions3(valute_from,
+                                                valute_to)
+    
+    # print(partner_directions)
+    
+    queries = sorted(list(queries) + list(partner_directions),
+                     key=lambda query: (-query.exchange.is_vip,
+                                        -query.out_count,
+                                        query.in_count))
+    
+    if not queries:
+        http_exception_json(status_code=404, param=request.url)
+
+    return test_get_exchange_direction_list(queries,
+                                       valute_from,
+                                       valute_to,
+                                       with_location=True)

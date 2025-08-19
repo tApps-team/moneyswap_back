@@ -7,6 +7,8 @@ from django.http import HttpRequest
 from django.db.models import Sum, Count
 from django.contrib.admin import SimpleListFilter
 
+from django.utils import timezone
+
 import cash.models as cash_models
 
 from no_cash.models import (Exchange,
@@ -172,6 +174,18 @@ class ExchangeAdmin(BaseExchangeAdmin):
                             manage_periodic_task_for_parse_black_list(obj.pk,
                                                                       obj.name,
                                                                       value)
+                        case 'active_status':
+                            if value in ('disabled', 'scam'):
+                                obj.is_active = False
+                                update_fields.append('is_active')
+
+                            if value == 'disabled':
+                                obj.time_disable = timezone.now()
+                            else:
+                                obj.time_disable = None
+
+                            update_fields.append('time_disable')
+                                
                     update_fields.append(key)
             obj.save(update_fields=update_fields)
         else:

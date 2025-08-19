@@ -29,11 +29,12 @@ def add_en_name_to_valute_obj(sender, instance, **kwargs):
 
 
 #Сигнал для создания корректного пользователя админ панели
-@receiver(pre_save, sender=User)
-def add_fields_for_user(sender, instance, **kwargs):
-    if not instance.is_superuser:
+@receiver(post_save, sender=User)
+def add_fields_for_user(sender, instance, created, **kwargs):
+    if created:
         instance.is_active = True
         instance.is_staff = True
+        instance.save(update_fields=['is_active', 'is_staff'])
 
 
 @receiver(pre_save, sender=CustomOrder)

@@ -54,6 +54,9 @@ from .models import Exchange, ExchangeDirection, Direction
 def create_no_cash_directions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
+
+        if exchange.active_status in ('disabled', 'scam', ):
+            return
         
         all_no_cash_directions = get_or_set_no_cash_directions_cache()
         
@@ -74,6 +77,10 @@ def create_no_cash_directions_for_exchange(exchange_id: int):
                                                 exchange,
                                                 direction_dict,
                                                 xml_file)
+        #     else:
+        #         print(f'1не зашел в блок try_xml_file {exchange.name}')
+        # else:
+        #     print(f'2не зашел в блок try_xml_file {exchange.name}')
     except Exception as ex:
         print(ex)
 
@@ -117,6 +124,9 @@ def update_no_cash_diretions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
 
+        if exchange.active_status in ('disabled', 'scam', ):
+            return
+
         # xml_file = try_get_xml_file(exchange)
 
         # if xml_file is not None and exchange.is_active:
@@ -141,6 +151,8 @@ def update_no_cash_diretions_for_exchange(exchange_id: int):
                                     exchange,
                                     direction_list,
                                     xml_file)
+        else:
+            print(f'не зашел в блок try_xml_file {exchange.name}')
     except Exception as ex:
         print(ex)
 
@@ -194,6 +206,9 @@ def try_update_direction(dict_for_parse: dict):
 def try_create_no_cash_directions_from_black_list(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
+
+        if exchange.active_status in ('disabled', 'scam', ):
+            return
         
         black_list_directions = exchange.direction_black_list\
                                         .select_related('valute_from',

@@ -13,6 +13,7 @@ from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
 
 from general_models.admin import (BaseCommentAdmin,
                                   BaseCommentStacked,
@@ -964,7 +965,9 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'en_name',
         'account',
         'is_available',
+        'active_status',
         'time_create',
+        'time_disable',
         'high_aml',
         )
     list_editable = (
@@ -982,6 +985,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     )
     exclude = (
         'course_count',
+        'is_active',
     )
     filter_horizontal = ()
 
@@ -1047,7 +1051,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         else:
             readonly_fields = ('partner_link', 'time_create', 'get_total_direction_count',) + readonly_fields
 
-        return readonly_fields + ('link_count', 'country_link_count', 'is_available')
+        return readonly_fields + ('link_count', 'country_link_count', 'is_available', 'time_disable')
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         # print(len(connection.queries))
@@ -1189,6 +1193,17 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
                                                                               'тест',
                                                                               'СММ группа')).exists()):
+            if obj.active_status in ('disabled', 'scam'):
+                obj.is_active = False
+
+            elif obj.active_status == 'active':
+                obj.is_active = True
+
+            if obj.active_status == 'disabled':
+                obj.time_disable = timezone.now()
+            else:
+                obj.time_disable = None
+
             return super().save_model(request, obj, form, change)
         else:
             if not change:

@@ -6,7 +6,7 @@ from django.forms import ValidationError
 
 # from partners.models import CustomUser
 
-from .utils.model_validators import is_positive_validate
+from .utils.model_validators import custom_timeout_validate, is_positive_validate
 
 
 en_type_valute_dict = {
@@ -488,6 +488,28 @@ class BaseAdminComment(models.Model):
 
 #Абстрактная модель обменника (для наследования)
 class BaseExchange(models.Model):
+    # active_status_choice = [
+    #     ('active', 'Активный'),
+    #     ('unactive', 'Неактивный'),
+    #     ('disabled', 'Отключен'),
+    #     ('scam', 'Скам'),
+    #     ('timeout error', 'Ошибка по таймауту'),
+    #     ('robot check error', 'Ошибка проверки на робота'),
+    # ]
+
+    active_status_choice = [
+        ('Cостояния для изменения', [
+            ('active', 'Активный'),
+            ('disabled', 'Отключен'),
+            ('scam', 'Скам'),
+        ]),
+        ('Служебные состояния', [
+            ('unactive', 'Неактивный'),
+            ('timeout error', 'Ошибка по таймауту'),
+            ('robot check error', 'Ошибка проверки на робота'),
+        ])
+    ]
+
     name = models.CharField('Название обменника(ru)',
                             max_length=20,
                             unique=True)
@@ -503,6 +525,12 @@ class BaseExchange(models.Model):
                                     null=True,
                                     default=None)
     is_active = models.BooleanField('Статус обменника', default=True)
+    #
+    active_status = models.CharField('Новый статус обменника',
+                                     max_length=255,
+                                     choices=active_status_choice,
+                                     default='active')
+    #
     #
     is_vip = models.BooleanField('VIP',
                                  default=False)
@@ -526,6 +554,9 @@ class BaseExchange(models.Model):
                                        blank=True,
                                        null=True,
                                        auto_now_add=True)
+    time_disable = models.DateTimeField('Время отключения',
+                                       blank=True,
+                                       null=True)
     country = models.CharField('Страна',
                                max_length=255,
                                blank=True,
@@ -566,6 +597,12 @@ class ParseExchange(BaseExchange):
                                                       default=24,
                                                       help_text='Рекомендуемое значение - 24 часа.\nЗначение - положительное целое число.При установлении в 0, останавливает задачу периодического парсинга чёрного списка',
                                                       validators=[is_positive_validate])
+    timeout = models.IntegerField('Кастомный таймаут',
+                                  null=True,
+                                  blank=True,
+                                  default=None,
+                                  help_text='Значение должно быть больше 0 и не больше 15',
+                                  validators=[custom_timeout_validate])
     
     class Meta:
         abstract = True
@@ -576,6 +613,7 @@ class ParseExchange(BaseExchange):
             models.Index(fields=['name']),
             models.Index(fields=['en_name']),
         ]
+
 
 #Абстрактная модель направления (для наследования)
 class BaseDirection(models.Model):

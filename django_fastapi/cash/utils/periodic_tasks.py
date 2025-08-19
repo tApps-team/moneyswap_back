@@ -77,13 +77,21 @@ def run_cash_background_tasks(task: Proxy,
                     with transaction.atomic():
                         for key in direction_dict[city]:
                             city_id , direction_id = direction_dict[city][key]
-                            black_list_element, _ = BlackListElement\
-                                                    .objects\
-                                                    .get_or_create(city_id=city_id,
-                                                                   direction_id=direction_id)
-                            black_list.append(black_list_element)
+                            # black_list_element, _ = BlackListElement\
+                            #                         .objects\
+                            #                         .get_or_create(city_id=city_id,
+                            #                                        direction_id=direction_id)
+                            black_list_element_query = BlackListElement.objects.filter(city_id=city_id,
+                                                                                       direction_id=direction_id)
 
-                            
+                            if black_list_element_query.exists():
+                                black_list_element = black_list_element_query.first()
+                            else:
+                                black_list_element = BlackListElement\
+                                                        .objects\
+                                                        .create(city_id=city_id,
+                                                                direction_id=direction_id)
+                            black_list.append(black_list_element)
 
                         exchange.direction_black_list.add(*black_list)
 
