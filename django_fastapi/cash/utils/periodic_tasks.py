@@ -77,20 +77,20 @@ def run_cash_background_tasks(task: Proxy,
                     with transaction.atomic():
                         for key in direction_dict[city]:
                             city_id , direction_id = direction_dict[city][key]
-                            # black_list_element, _ = BlackListElement\
-                            #                         .objects\
-                            #                         .get_or_create(city_id=city_id,
-                            #                                        direction_id=direction_id)
-                            black_list_element_query = BlackListElement.objects.filter(city_id=city_id,
-                                                                                       direction_id=direction_id)
+                            black_list_element, _ = BlackListElement\
+                                                    .objects\
+                                                    .get_or_create(city_id=city_id,
+                                                                   direction_id=direction_id)
+                            # black_list_element_query = BlackListElement.objects.filter(city_id=city_id,
+                            #                                                            direction_id=direction_id)
 
-                            if black_list_element_query.exists():
-                                black_list_element = black_list_element_query.first()
-                            else:
-                                black_list_element = BlackListElement\
-                                                        .objects\
-                                                        .create(city_id=city_id,
-                                                                direction_id=direction_id)
+                            # if black_list_element_query.exists():
+                            #     black_list_element = black_list_element_query.first()
+                            # else:
+                            #     black_list_element = BlackListElement\
+                            #                             .objects\
+                            #                             .create(city_id=city_id,
+                            #                                     direction_id=direction_id)
                             black_list.append(black_list_element)
 
                         exchange.direction_black_list.add(*black_list)
@@ -108,6 +108,83 @@ def run_cash_background_tasks(task: Proxy,
                         xml_file,
                         exchange,
                         black_list_parse)
+    
+
+
+# def run_cash_background_tasks(task: Proxy,
+#                               exchange: CashExchange,
+#                               direction_dict: dict,
+#                               xml_file: str,
+#                               black_list_parse=False):
+#     '''
+#     Запуск фоновых задач для создания
+#     наличных готовых направлений
+#     '''
+
+#     # if exchange.name == 'test':
+#     #     print('direct22',direction_dict)
+
+#     for city in direction_dict:
+#         try:
+#             if not check_city_in_xml_file(city, xml_file):
+#                 if not black_list_parse:
+#                     with transaction.atomic():
+#                         # собираем все пары
+#                         pairs = [
+#                             (city_id, direction_id)
+#                             for key in direction_dict[city]
+#                             for city_id, direction_id in [direction_dict[city][key]]
+#                         ]
+
+#                         # достаём уже существующие blacklistelement
+#                         existing = set(
+#                             BlackListElement.objects.filter(
+#                                 city_id__in=[c for c, _ in pairs],
+#                                 direction_id__in=[d for _, d in pairs],
+#                             ).values_list("city_id", "direction_id")
+#                         )
+
+#                         # создаём недостающие
+#                         to_create = [
+#                             BlackListElement(city_id=cid, direction_id=did)
+#                             for cid, did in pairs
+#                             if (cid, did) not in existing
+#                         ]
+#                         BlackListElement.objects.bulk_create(to_create, ignore_conflicts=True)
+
+#                         # теперь получаем все blacklistelement.id для этих пар
+#                         black_ids = list(
+#                             BlackListElement.objects.filter(
+#                                 city_id__in=[c for c, _ in pairs],
+#                                 direction_id__in=[d for _, d in pairs],
+#                             ).values_list("id", flat=True)
+#                         )
+
+#                         # создаём связи exchange <-> blacklistelement
+#                         link_objs = [
+#                             ExchangeDirectionBlackList(
+#                                 exchange_id=exchange.id,
+#                                 blacklistelement_id=bid
+#                             )
+#                             for bid in black_ids
+#                         ]
+#                         ExchangeDirectionBlackList.objects.bulk_create(
+#                             link_objs, ignore_conflicts=True
+#                         )
+
+#                     direction_dict[city] = None
+
+#         except Exception as ex:
+#             print(ex)
+#             continue
+
+#     # if exchange.name == 'test':
+#     #     print('direct22',direction_dict)
+
+#     parse_xml_to_dict_2(direction_dict,
+#                         xml_file,
+#                         exchange,
+#                         black_list_parse)
     
 
         # except Exception as ex:
