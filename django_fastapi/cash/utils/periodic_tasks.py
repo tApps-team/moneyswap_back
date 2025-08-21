@@ -4,7 +4,7 @@ from django.db import transaction
 
 from cash.models import Exchange as CashExchange, BlackListElement, Direction, City
 
-from .parsers import check_city_in_xml_file, parse_xml_to_dict, parse_xml_to_dict_2
+from .parsers import check_city_in_xml_file, new_parse_xml_to_dict_2, parse_xml_to_dict, parse_xml_to_dict_2
 
 
 # def run_cash_background_tasks(task: Proxy,
@@ -108,6 +108,70 @@ def run_cash_background_tasks(task: Proxy,
                         xml_file,
                         exchange,
                         black_list_parse)
+    
+
+def new_run_cash_background_tasks(exchange: CashExchange,
+                                  direction_dict: dict,
+                                  xml_file: str,
+                                  black_list_parse=False):
+    '''
+    Запуск фоновых задач для создания
+    наличных готовых направлений
+    '''
+    # print('new')
+    black_list_count = 0
+    # start_check_cities_time = time()
+    # for city in direction_dict:
+    #     try:
+    #         if not check_city_in_xml_file(city, xml_file):
+    #             # print(f'Нет города {city} в {exchange.name}')
+    #             if not black_list_parse:
+    #                 _count = len(direction_dict[city].values())
+    #                 black_list_count += _count
+    #                 # pass
+    #                 # black_list = []
+    #                 # with transaction.atomic():
+    #                 #     for key in direction_dict[city]:
+    #                         # city_id , direction_id = direction_dict[city][key]
+    #                         # black_list_element, _ = BlackListElement\
+    #                         #                         .objects\
+    #                         #                         .get_or_create(city_id=city_id,
+    #                         #                                        direction_id=direction_id)
+    #                         # black_list_element_exchange = ExchangeDirectionBlackList(exchange=exchange, blacklistelement=black_list_element)
+    #                         # black_list_element_query = BlackListElement.objects.filter(city_id=city_id,
+    #                         #                                                            direction_id=direction_id)
+
+    #                         # if black_list_element_query.exists():
+    #                         #     black_list_element = black_list_element_query.first()
+    #                         # else:
+    #                         #     black_list_element = BlackListElement\
+    #                         #                             .objects\
+    #                         #                             .create(city_id=city_id,
+    #                         #                                     direction_id=direction_id)
+    #                         # black_list.append(black_list_element_exchange)
+
+    #                     # exchange.direction_black_list.add(*black_list)
+    #                     # ExchangeDirectionBlackList.objects.bulk_create(black_list,
+    #                     #                                                ignore_conflicts=True,
+    #                     #                                                batch_size=5000)
+    #                     # print('ok')
+
+    #             direction_dict[city] = None
+
+    #     except Exception as ex:
+    #         print(ex)
+    #         continue
+
+    # print('проверка городов на наличие', time() - start_check_cities_time)
+
+    # if exchange.name == 'test':
+    #     print('direct22',direction_dict)
+
+    new_parse_xml_to_dict_2(direction_dict,
+                        xml_file,
+                        exchange,
+                        black_list_parse,
+                        black_list_count)
     
 
 

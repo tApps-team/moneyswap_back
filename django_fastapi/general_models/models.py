@@ -652,6 +652,10 @@ class BaseExchangeDirection(models.Model):
     min_amount = models.CharField('Минимальное количество', max_length=50)
     max_amount = models.CharField('Максимальное количество', max_length=50)
     is_active = models.BooleanField('Активно?', default=True)
+    time_action = models.DateTimeField('Время изменения',
+                                       default=None,
+                                       null=True,
+                                       blank=True)
 
     class Meta:
         abstract = True

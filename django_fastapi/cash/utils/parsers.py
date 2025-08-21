@@ -8,6 +8,8 @@ from lxml import etree
 from celery.local import Proxy
 
 from django.db import transaction
+from django.db.models import Q
+from django.utils import timezone
 
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
@@ -587,6 +589,122 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
             print('CREATE OR BLACK LIST ERROR')
             print(ex)
         
+
+def new_parse_xml_to_dict_2(dict_for_parse: dict,
+                      xml_file: str,
+                      exchange: Exchange,
+                      black_list_parse: bool,
+                      black_list_count: int):
+    # start_read_time = time()
+    xml_file = xml_file.encode()
+    # print('время чтения xml', time() - start_read_time)
+
+    bulk_create_list = []
+
+    # if black_list_parse:
+    #     city_id_list = []
+    #     direction_id_list = []
+    # else:
+    #     city_id_list = None
+    #     direction_id_list = None
+    # start_parse_time = time()
+
+    time_action = timezone.now()
+
+    for event, element in etree.iterparse(BytesIO(xml_file), events=('end',), tag='item'):
+        if any(v for v in dict_for_parse.values()):
+            try:
+                city = element.xpath('./city/text()')
+                
+                if city:
+                    city = city[0].upper()
+
+                    if city.find(',') == -1:
+                        new_parse_create_direction_by_city(dict_for_parse,
+                                                        element,
+                                                        city,
+                                                        black_list_parse,
+                                                        exchange,
+                                                        bulk_create_list,
+                                                        black_list_count,
+                                                        time_action)
+                    else:
+                        cities = [c.strip() for c in city.split(',')]
+                        
+                        for city in cities:
+                            new_parse_create_direction_by_city(dict_for_parse,
+                                                            element,
+                                                            city,
+                                                            black_list_parse,
+                                                            exchange,
+                                                            bulk_create_list,
+                                                            black_list_count,
+                                                            time_action)              
+            except Exception as ex:
+                # print('ошибка парсинга направления', ex)
+                continue
+            finally:
+                element.clear()
+    
+    # print('время парсинга xml', time() - start_parse_time)
+    
+    with transaction.atomic():
+        try:
+            # if black_list_parse:
+            #         exchange.direction_black_list.remove(
+            #                 *exchange.direction_black_list.filter(city_id__in=city_id_list,
+            #                                                     direction_id__in=direction_id_list)
+            #             )
+            #         ExchangeDirection.objects.bulk_create(bulk_create_list)
+                    
+            # else:
+            # start_time = time()
+            update_fields = [
+                'in_count',
+                'out_count',
+                'min_amount',
+                'max_amount',
+                'fromfee',
+                'params',
+                'is_active',
+                'time_action',
+            ]
+            unique_fields = [
+                'exchange_id',
+                'direction_id',
+                'city_id',
+            ]
+            ExchangeDirection.objects.bulk_create(bulk_create_list,
+                                                  update_conflicts=True,
+                                                  update_fields=update_fields,
+                                                  unique_fields=unique_fields)
+            
+            ExchangeDirection.objects.filter(Q(exchange_id=exchange.pk) \
+                                             & ~Q(time_action=time_action))\
+                                        .update(is_active=False)
+
+            
+            # print('время добавления bulk create', time() - start_time)
+
+            # start_black_list_count_time = time()
+            # for city in dict_for_parse:
+            #     if inner_dict := dict_for_parse.get(city):
+            #         _count = len(inner_dict.values())
+            #         black_list_count += _count
+
+            # print('кол-во ненайденных направлений', black_list_count)
+            # exchange.black_list_element_count = black_list_count
+            # print("Перед сохранением:", black_list_count, exchange.black_list_element_count)
+            # exchange.save()
+            # exchange.refresh_from_db()
+            # print("После сохранения в базе:", exchange.black_list_element_count)
+            # exchange.direction_black_list.add(*black_list)
+                # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
+            # print('обновление обменника в бд', time() - start_black_list_count_time)
+        except Exception as ex:
+            print('CREATE OR BLACK LIST ERROR')
+            print(ex)
+
 
 def check_city_in_xml_file(city: str, xml_file: str):
     '''

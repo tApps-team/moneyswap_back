@@ -8,7 +8,7 @@ from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.periodic_tasks import try_get_xml_file
 
 from .utils.parsers import cash_parse_xml
-from .utils.periodic_tasks import run_cash_background_tasks, run_update_tasks
+from .utils.periodic_tasks import new_run_cash_background_tasks, run_cash_background_tasks, run_update_tasks
 from .utils.tasks import (get_cash_direction_set_for_creating,
                           generate_direction_dict,
                           generate_direction_dict_2)
@@ -54,37 +54,91 @@ from .models import Exchange, ExchangeDirection, BlackListElement, Direction, Ci
 
 
 #PERIODIC CREATE
+# @shared_task(base=QueueOnce,
+#              once={'graceful': True},
+#              name='create_cash_directions_for_exchange')
+# def create_cash_directions_for_exchange(exchange_id: int):
+#     try:
+#         exchange = Exchange.objects.get(pk=exchange_id)
+
+#         if exchange.active_status in ('disabled', 'scam', ):
+#             return
+#         # print(exchange)
+
+#         all_cash_directions = get_or_set_cash_directions_cache()
+
+#         # if exchange.name == 'CoinPoint':
+#         #     print('direct22',all_cash_directions)
+
+#         if all_cash_directions:
+#             direction_list = get_cash_direction_set_for_creating(all_cash_directions,
+#                                                                  exchange)
+
+#             # print(len(direction_list))
+#             if direction_list:
+#                 print(f'request to exchanger {exchange.name}')
+#                 xml_file = try_get_xml_file(exchange)
+                
+#                 if xml_file is not None and exchange.is_active:
+#                     direction_dict = generate_direction_dict_2(direction_list)
+#                     run_cash_background_tasks(create_direction,
+#                                             exchange,
+#                                             direction_dict,
+#                                             xml_file)
+#         #     else:
+#         #         print(f'1не зашел в блок try_xml_file {exchange.name}')
+#         # else:
+#         #     print(f'2не зашел в блок try_xml_file {exchange.name}')
+
+#     except Exception as ex:
+#         print(ex)
+
+#new (одна задача на добавление и обновление направлений)
 @shared_task(base=QueueOnce,
              once={'graceful': True},
              name='create_cash_directions_for_exchange')
 def create_cash_directions_for_exchange(exchange_id: int):
     try:
+        # start_get_exchange_time = time()
         exchange = Exchange.objects.get(pk=exchange_id)
+        # print('получение обменника из бд', time() - start_get_exchange_time)
 
         if exchange.active_status in ('disabled', 'scam', ):
             return
         # print(exchange)
-
+        # cache_start_time = time()
+        # print('start')
         all_cash_directions = get_or_set_cash_directions_cache()
-
+        # print('all direction count***',all_cash_directions[0])
+        # print('get cache', time() - cache_start_time)
         # if exchange.name == 'CoinPoint':
         #     print('direct22',all_cash_directions)
 
         if all_cash_directions:
-            direction_list = get_cash_direction_set_for_creating(all_cash_directions,
-                                                                 exchange)
+            # direction_list = get_cash_direction_set_for_creating(all_cash_directions,
+            #                                                      exchange)
+            # start_check_time = time()
+            # if new_check_direction_count(all_cash_directions[0],
+            #                              exchange):
+                # print('проверка направлений check', time() - start_check_time)
+            # print('get directin for create', time() - start_time)
 
             # print(len(direction_list))
-            if direction_list:
-                print(f'request to exchanger {exchange.name}')
+            # if direction_list:
+                # print(f'request to exchanger {exchange.name}')
+                # start_time = time()
                 xml_file = try_get_xml_file(exchange)
-                
+                # print('время получения xml', time() - start_time)
+            # print('get xml file', time() - start_time)
+            
                 if xml_file is not None and exchange.is_active:
-                    direction_dict = generate_direction_dict_2(direction_list)
-                    run_cash_background_tasks(create_direction,
-                                            exchange,
-                                            direction_dict,
-                                            xml_file)
+                    # start_generate_time = time()
+                    direction_dict = generate_direction_dict_2(all_cash_directions[-1])
+                    # print('время генерации словаря направлений', time() - start_generate_time)
+                    
+                    new_run_cash_background_tasks(exchange,
+                                                  direction_dict,
+                                                  xml_file)
         #     else:
         #         print(f'1не зашел в блок try_xml_file {exchange.name}')
         # else:
