@@ -112,14 +112,13 @@ def run_cash_background_tasks(task: Proxy,
 
 def new_run_cash_background_tasks(exchange: CashExchange,
                                   direction_dict: dict,
-                                  xml_file: str,
-                                  black_list_parse=False):
+                                  xml_file: str):
     '''
     Запуск фоновых задач для создания
     наличных готовых направлений
     '''
     # print('new')
-    black_list_count = 0
+    # black_list_count = 0
     # start_check_cities_time = time()
     # for city in direction_dict:
     #     try:
@@ -168,10 +167,8 @@ def new_run_cash_background_tasks(exchange: CashExchange,
     #     print('direct22',direction_dict)
 
     new_parse_xml_to_dict_2(direction_dict,
-                        xml_file,
-                        exchange,
-                        black_list_parse,
-                        black_list_count)
+                            xml_file,
+                            exchange)
     
 
 

@@ -61,13 +61,13 @@ def try_get_xml_file(exchange: BaseExchange) -> str | None:
         exchange.save()
         # print(exchange.__dict__)
     else:
-        if exchange.period_for_update != 0:
+        # if exchange.period_for_update != 0:
             # if exchange.is_active != is_active:
-            exchange.is_active = is_active
-            exchange.active_status = 'active'
-        else:
-            exchange.is_active = False
-            exchange.active_status = 'unactive'
+        exchange.is_active = is_active
+        exchange.active_status = 'active'
+        # else:
+        #     exchange.is_active = False
+        #     exchange.active_status = 'unactive'
 
         exchange.save()
             # print(exchange.__dict__)

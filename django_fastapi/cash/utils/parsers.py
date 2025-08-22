@@ -432,6 +432,67 @@ def parse_create_direction_by_city(dict_for_parse: dict,
                         print(ex)
 
 
+def new_parse_create_direction_by_city(dict_for_parse: dict,
+                                    element: Element,
+                                    city: str,
+                                    exchange: Exchange,
+                                    bulk_create_list: list,
+                                    time_action: timezone):
+    valute_from = element.xpath('./from/text()')
+    valute_to = element.xpath('./to/text()')
+    
+    if all(el for el in (valute_from, valute_to)):
+        inner_key = f'{valute_from[0]} {valute_to[0]}'
+        
+        if dict_for_parse.get(city, None) is not None:
+            if dict_for_parse[city].get(inner_key):
+                city_id, direction_id = dict_for_parse[city].get(inner_key)
+
+                fromfee = element.xpath('./fromfee/text()')
+                param = element.xpath('./param/text()')
+
+                fromfee = None if not fromfee else fromfee[0]
+                if fromfee:
+                    fromfee: str
+                    if fromfee.endswith('%'):
+                        fromfee = float(fromfee[:-1].strip())
+
+                param = None if not param else param[0]
+
+                if not (min_amount := element.xpath('./minamount/text()')):
+                    min_amount = element.xpath('./minAmount/text()')
+
+                if not (max_amount := element.xpath('./maxamount/text()')):
+                    max_amount = element.xpath('./maxAmount/text()')
+
+                try:
+                    d = {
+                        'in_count': element.xpath('./in/text()')[0],
+                        'out_count': element.xpath('./out/text()')[0],
+                        'min_amount': min_amount[0],
+                        'max_amount': max_amount[0],
+                        'fromfee': fromfee,
+                        'params': param,
+                        'is_active': True,
+                        'city_id': city_id,
+                        'direction_id': direction_id,
+                        'exchange_id': exchange.id,
+                        'time_action': time_action,
+                    }
+                
+                    make_valid_values_for_dict(d)
+                except Exception as ex:
+                    print(ex)
+                    pass
+                else:
+                    try:
+                        bulk_create_list.append(ExchangeDirection(**d))
+                        
+                        dict_for_parse[city].pop(inner_key)
+
+                    except Exception as ex:
+                        # print('тут ошибка 2')
+                        print(ex)
 
 
 def parse_xml_to_dict_2(dict_for_parse: dict,
@@ -591,23 +652,11 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
         
 
 def new_parse_xml_to_dict_2(dict_for_parse: dict,
-                      xml_file: str,
-                      exchange: Exchange,
-                      black_list_parse: bool,
-                      black_list_count: int):
-    # start_read_time = time()
+                            xml_file: str,
+                            exchange: Exchange):
     xml_file = xml_file.encode()
-    # print('время чтения xml', time() - start_read_time)
 
     bulk_create_list = []
-
-    # if black_list_parse:
-    #     city_id_list = []
-    #     direction_id_list = []
-    # else:
-    #     city_id_list = None
-    #     direction_id_list = None
-    # start_parse_time = time()
 
     time_action = timezone.now()
 
@@ -621,25 +670,21 @@ def new_parse_xml_to_dict_2(dict_for_parse: dict,
 
                     if city.find(',') == -1:
                         new_parse_create_direction_by_city(dict_for_parse,
-                                                        element,
-                                                        city,
-                                                        black_list_parse,
-                                                        exchange,
-                                                        bulk_create_list,
-                                                        black_list_count,
-                                                        time_action)
+                                                           element,
+                                                           city,
+                                                           exchange,
+                                                           bulk_create_list,
+                                                           time_action)
                     else:
                         cities = [c.strip() for c in city.split(',')]
                         
                         for city in cities:
                             new_parse_create_direction_by_city(dict_for_parse,
-                                                            element,
-                                                            city,
-                                                            black_list_parse,
-                                                            exchange,
-                                                            bulk_create_list,
-                                                            black_list_count,
-                                                            time_action)              
+                                                               element,
+                                                               city,
+                                                               exchange,
+                                                               bulk_create_list,
+                                                               time_action)            
             except Exception as ex:
                 # print('ошибка парсинга направления', ex)
                 continue
@@ -650,15 +695,6 @@ def new_parse_xml_to_dict_2(dict_for_parse: dict,
     
     with transaction.atomic():
         try:
-            # if black_list_parse:
-            #         exchange.direction_black_list.remove(
-            #                 *exchange.direction_black_list.filter(city_id__in=city_id_list,
-            #                                                     direction_id__in=direction_id_list)
-            #             )
-            #         ExchangeDirection.objects.bulk_create(bulk_create_list)
-                    
-            # else:
-            # start_time = time()
             update_fields = [
                 'in_count',
                 'out_count',
@@ -683,24 +719,6 @@ def new_parse_xml_to_dict_2(dict_for_parse: dict,
                                              & ~Q(time_action=time_action))\
                                         .update(is_active=False)
 
-            
-            # print('время добавления bulk create', time() - start_time)
-
-            # start_black_list_count_time = time()
-            # for city in dict_for_parse:
-            #     if inner_dict := dict_for_parse.get(city):
-            #         _count = len(inner_dict.values())
-            #         black_list_count += _count
-
-            # print('кол-во ненайденных направлений', black_list_count)
-            # exchange.black_list_element_count = black_list_count
-            # print("Перед сохранением:", black_list_count, exchange.black_list_element_count)
-            # exchange.save()
-            # exchange.refresh_from_db()
-            # print("После сохранения в базе:", exchange.black_list_element_count)
-            # exchange.direction_black_list.add(*black_list)
-                # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
-            # print('обновление обменника в бд', time() - start_black_list_count_time)
         except Exception as ex:
             print('CREATE OR BLACK LIST ERROR')
             print(ex)
