@@ -48,7 +48,7 @@ def try_create_reverse_direction(sender, instance, **kwargs):
 #перед созданием в БД
 @receiver(pre_save, sender=Exchange)
 def add_en_name_for_exchange(sender, instance, **kwargs):
-    print('[pre_save]', instance.pk, instance.name)
+    # print('[pre_save]', instance.pk, instance.name)
     if instance.en_name is None:
         instance.en_name = instance.name
 
@@ -75,12 +75,12 @@ def create_tasks_for_exchange(sender, instance, created, **kwargs):
         manage_periodic_task_for_create(instance.pk,
                                         instance.name,
                                         instance.period_for_create)
-        manage_periodic_task_for_update(instance.pk,
-                                        instance.name,
-                                        instance.period_for_update)
-        manage_periodic_task_for_parse_black_list(instance.pk,
-                                                  instance.name,
-                                                  instance.period_for_parse_black_list)
+        # manage_periodic_task_for_update(instance.pk,
+        #                                 instance.name,
+        #                                 instance.period_for_update)
+        # manage_periodic_task_for_parse_black_list(instance.pk,
+        #                                           instance.name,
+        #                                           instance.period_for_parse_black_list)
 
 
 #Сигнал для удаления периодических задач

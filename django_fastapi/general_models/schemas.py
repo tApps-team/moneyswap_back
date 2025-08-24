@@ -247,9 +247,47 @@ class CommonExchangeSchema(BaseModel):
     reviews: ReviewCountSchema
 
 
+class NewCommonExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
+    # exchangerName: str = Field(alias='name')
+    exchangerName: MultipleName = Field(alias='multiple_name')
+    exchange_marker: str
+    workStatus: str = Field(alias='active_status')
+    reserves: str | None = Field(alias='reserve_amount')
+    courses: int | None = Field(alias='direction_count')
+    url: str | None = Field(alias='partner_link')
+    reviews: ReviewCountSchema
+
+
+class BlackListExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
+    # exchangerName: str = Field(alias='name')
+    exchangerName: MultipleName = Field(alias='multiple_name')
+    exchange_marker: str
+    # workStatus: str = Field(alias='active_status')
+    # reserves: str | None = Field(alias='reserve_amount')
+    # courses: int | None = Field(alias='direction_count')
+    url: str | None
+    # reviews: ReviewCountSchema
+
+
+class DetailBlackListExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
+    # exchangerName: str = Field(alias='name')
+    exchangerName: MultipleName = Field(alias='multiple_name')
+    iconUrl: str | None = Field(alias='icon',
+                                default=None)
+    exchange_marker: str
+    # workStatus: str = Field(alias='active_status')
+    # reserves: str | None = Field(alias='reserve_amount')
+    # courses: int | None = Field(alias='direction_count')
+    url: str | None
+    # reviews: ReviewCountSchema
+
 
 class DetailExchangeSchema(BaseModel):
     name: str
+    # exchangerName: MultipleName = Field(alias='multiple_name')
     iconUrl: str | None = Field(alias='icon',
                                 default=None)
     url: str = Field(alias='partner_link')
@@ -264,6 +302,29 @@ class DetailExchangeSchema(BaseModel):
     open: str | None = Field(alias='age',
                              default=None)
     openOnMoneySwap: datetime | None = Field(alias='time_create',
+                                        default=None)
+    closedOnMoneySwap: datetime | None = Field(alias='time_disable',
+                                        default=None)
+    
+
+class NewDetailExchangeSchema(BaseModel):
+    exchangerName: MultipleName = Field(alias='multiple_name')
+    iconUrl: str | None = Field(alias='icon',
+                                default=None)
+    url: str = Field(alias='partner_link')
+    high_aml: bool
+    workStatus: str = Field(alias='active_status')
+    reviews: ReviewCountSchema = Field(alias='review_set')
+    country: str | None
+    amountReserves: str | None = Field(alias='reserve_amount',
+                                       default=None)
+    exchangeRates: int | None = Field(alias='course_count',
+                                      default=None)
+    open: str | None = Field(alias='age',
+                             default=None)
+    openOnMoneySwap: datetime | None = Field(alias='time_create',
+                                        default=None)
+    closedOnMoneySwap: datetime | None = Field(alias='time_disable',
                                         default=None)
 
 

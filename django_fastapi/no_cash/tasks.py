@@ -5,12 +5,14 @@ from celery_once import QueueOnce
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.periodic_tasks import try_get_xml_file
 
-from .utils.periodic_tasks import run_no_cash_background_tasks, run_update_tasks
+from .utils.periodic_tasks import new_run_no_cash_background_tasks, run_no_cash_background_tasks, run_update_tasks
 from .utils.parsers import no_cash_parse_xml
 from .utils.tasks import get_no_cash_direction_set_for_creating, generate_direction_dict
 from .utils.cache import get_or_set_no_cash_directions_cache
 
 from .models import Exchange, ExchangeDirection, Direction
+
+from time import time
 
 
 # #PERIODIC CREATE
@@ -48,6 +50,45 @@ from .models import Exchange, ExchangeDirection, Direction
 #         print(ex)
 
 #PERIODIC CREATE
+# @shared_task(base=QueueOnce,
+#              once={'graceful': True},
+#              name='create_no_cash_directions_for_exchange')
+# def create_no_cash_directions_for_exchange(exchange_id: int):
+#     try:
+#         exchange = Exchange.objects.get(pk=exchange_id)
+
+#         if exchange.active_status in ('disabled', 'scam', ):
+#             return
+        
+#         all_no_cash_directions = get_or_set_no_cash_directions_cache()
+        
+#         if all_no_cash_directions:
+#             direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+#                                                                     exchange)
+                    
+#             if direction_list:
+#                 xml_file = try_get_xml_file(exchange)
+
+#                 if xml_file is not None and exchange.is_active:
+#                     #
+#                     # if exchange.name == 'Bixter':
+#                     #     print('Bixter', xml_file)
+#                     #
+#                     direction_dict = generate_direction_dict(direction_list)
+#                     run_no_cash_background_tasks(create_direction,
+#                                                 exchange,
+#                                                 direction_dict,
+#                                                 xml_file)
+#         #     else:
+#         #         print(f'1не зашел в блок try_xml_file {exchange.name}')
+#         # else:
+#         #     print(f'2не зашел в блок try_xml_file {exchange.name}')
+#     except Exception as ex:
+#         print(ex)
+
+
+# new
+#PERIODIC CREATE
 @shared_task(base=QueueOnce,
              once={'graceful': True},
              name='create_no_cash_directions_for_exchange')
@@ -61,22 +102,24 @@ def create_no_cash_directions_for_exchange(exchange_id: int):
         all_no_cash_directions = get_or_set_no_cash_directions_cache()
         
         if all_no_cash_directions:
-            direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
-                                                                    exchange)
+            # direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+            #                                                         exchange)
                     
-            if direction_list:
+            # if direction_list:
+                print(f'no cash {exchange.name}')
+                start_time = time()
                 xml_file = try_get_xml_file(exchange)
+                print(f'безнал время на получения xml файла {time() - start_time} sec')
 
                 if xml_file is not None and exchange.is_active:
                     #
                     # if exchange.name == 'Bixter':
                     #     print('Bixter', xml_file)
                     #
-                    direction_dict = generate_direction_dict(direction_list)
-                    run_no_cash_background_tasks(create_direction,
-                                                exchange,
-                                                direction_dict,
-                                                xml_file)
+                    direction_dict = generate_direction_dict(all_no_cash_directions)
+                    new_run_no_cash_background_tasks(exchange,
+                                                     direction_dict,
+                                                     xml_file)
         #     else:
         #         print(f'1не зашел в блок try_xml_file {exchange.name}')
         # else:

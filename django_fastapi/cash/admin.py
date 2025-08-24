@@ -242,14 +242,14 @@ class ExchangeAdmin(BaseExchangeAdmin):
                             manage_periodic_task_for_create(obj.pk,
                                                             obj.name,
                                                             value)
-                        case 'period_for_update':
-                            manage_periodic_task_for_update(obj.pk,
-                                                            obj.name,
-                                                            value)
-                        case 'period_for_parse_black_list':
-                            manage_periodic_task_for_parse_black_list(obj.pk,
-                                                                      obj.name,
-                                                                      value)
+                        # case 'period_for_update':
+                        #     manage_periodic_task_for_update(obj.pk,
+                        #                                     obj.name,
+                        #                                     value)
+                        # case 'period_for_parse_black_list':
+                        #     manage_periodic_task_for_parse_black_list(obj.pk,
+                        #                                               obj.name,
+                        #                                               value)
                         case 'active_status':
                             if value in ('disabled', 'scam'):
                                 obj.is_active = False

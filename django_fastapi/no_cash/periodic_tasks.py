@@ -2,6 +2,8 @@ import json
 
 from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
+from django.utils import timezone
+
 from general_models.utils.periodic_tasks import get_or_create_schedule
 
 from .models import Exchange
@@ -34,7 +36,13 @@ def manage_periodic_task_for_create(exchange_pk: int,
         if interval == 0:
             #остановить задачу периодических созданий готовых направлений в БД
             task.enabled = False
+             #сделать обменник неактивным из-за неактуальных данных
+            Exchange.objects.filter(name=exchange_name).update(is_active=False,
+                                                               active_status='disabled',
+                                                               time_disable=timezone.now())
         else:
+            Exchange.objects.filter(name=exchange_name).update(active_status='active')
+
             task.enabled = True
             schedule = get_or_create_schedule(interval, IntervalSchedule.SECONDS)
             task.interval = schedule

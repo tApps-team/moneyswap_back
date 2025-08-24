@@ -112,7 +112,7 @@ def create_cash_directions_for_exchange(exchange_id: int):
             # print(f'request to exchanger {exchange.name}')
             start_time = time()
             xml_file = try_get_xml_file(exchange)
-            print('время получения xml', time() - start_time)
+            print(f'наличные время получения xml {time() - start_time} sec')
             # print('get xml file', time() - start_time)
         
             if xml_file is not None and exchange.is_active:

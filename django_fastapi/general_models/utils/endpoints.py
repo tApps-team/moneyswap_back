@@ -1,4 +1,5 @@
 import re
+from urllib.parse import urlparse
 from typing import Any, List, Literal
 from collections import defaultdict
 from datetime import timedelta, datetime
@@ -59,6 +60,14 @@ EXCHANGE_MARKER_DICT = {
     'partner': partner_models.Exchange,
 }   
 
+
+
+def get_base_url(url: str | None) -> str:
+    if url is None:
+        return url
+    
+    parsed = urlparse(url)
+    return f"{parsed.scheme}://{parsed.netloc}"
 
 # def get_reviews_count_filters(marker: str = None):
 #     match marker:
@@ -616,7 +625,8 @@ def generate_coin_for_schema(direction: CashDirection,
 
 def get_exchange(exchange_id: int,
                  exchange_marker: str,
-                 review_counts: dict[str, Count] = None):
+                 review_counts: dict[str, Count] = None,
+                 black_list_exchange: bool = False):
     # print(len(connection.queries))
     if exchange_marker == 'both':     # !
         exchange_marker = 'no_cash'
@@ -627,8 +637,13 @@ def get_exchange(exchange_id: int,
         raise HTTPException(status_code=400)
     
 
-    exchange = exchange_model.objects.filter(pk=exchange_id,
-                                             is_active=True)
+    # exchange = exchange_model.objects.filter(pk=exchange_id,
+    #                                          is_active=True)
+    exchange = exchange_model.objects.filter(pk=exchange_id)
+
+    if not black_list_exchange:
+        exchange = exchange.filter(is_active=True)
+
 
     if not exchange.exists():
         raise HTTPException(status_code=400)

@@ -7,6 +7,8 @@ from lxml import etree
 from celery.local import Proxy
 
 from django.db import transaction
+from django.db.models import Q
+from django.utils import timezone
 
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
@@ -230,6 +232,100 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
     except Exception as ex:
         print(ex)
 
+
+
+def new_parse_xml_to_dict_2(dict_for_parse: dict,
+                            xml_file: str,
+                            exchange: Exchange):
+    xml_file = xml_file.encode()
+
+    bulk_create_list = []
+
+    time_action = timezone.now()
+
+    for event, element in etree.iterparse(BytesIO(xml_file), tag='item'):
+        try:
+            valute_from = element.xpath('./from/text()')
+            valute_to = element.xpath('./to/text()')
+            
+            if all(el for el in (valute_from, valute_to)):
+                key = f'{valute_from[0]} {valute_to[0]}'
+                
+                if dict_for_parse.get(key):
+                    direction_id = dict_for_parse.pop(key)
+
+                    fromfee = element.xpath('./fromfee/text()')
+                    param = element.xpath('./param/text()')
+
+                    fromfee = None if not fromfee else fromfee[0]
+                    param = None if not param else param[0]
+
+                    if not (min_amount := element.xpath('./minamount/text()')):
+                        min_amount = element.xpath('./minAmount/text()')
+
+                    if not (max_amount := element.xpath('./maxamount/text()')):
+                        max_amount = element.xpath('./maxAmount/text()')
+
+                    try:
+                        d = {
+                            'in_count': element.xpath('./in/text()')[0],
+                            'out_count': element.xpath('./out/text()')[0],
+                            'min_amount': min_amount[0],
+                            'max_amount': max_amount[0],
+                            # 'fromfee': fromfee,
+                            # 'params': param,
+                            'is_active': True,
+                            'direction_id': direction_id,
+                            'exchange_id': exchange.id,
+                            'time_action': time_action,
+                        }
+                    
+                        make_valid_values_for_dict(d)
+                    except Exception as ex:
+                        # print(ex)
+                        continue
+
+                    else:
+                        try:
+                            bulk_create_list.append(ExchangeDirection(**d))
+
+                        except Exception as ex:
+                            print(ex)
+                            continue
+
+        except Exception as ex:
+            continue
+        finally:
+            element.clear()
+
+    with transaction.atomic():
+        try:
+            update_fields = [
+                'in_count',
+                'out_count',
+                'min_amount',
+                'max_amount',
+                # 'fromfee',
+                # 'params',
+                'is_active',
+                'time_action',
+            ]
+            unique_fields = [
+                'exchange_id',
+                'direction_id',
+            ]
+
+            ExchangeDirection.objects.bulk_create(bulk_create_list,
+                                                  update_conflicts=True,
+                                                  update_fields=update_fields,
+                                                  unique_fields=unique_fields)
+            
+            ExchangeDirection.objects.filter(Q(exchange_id=exchange.pk) \
+                                             & ~Q(time_action=time_action))\
+                                        .update(is_active=False)
+
+        except Exception as ex:
+            print(ex)
 
 # def parse_xml_to_dict_2(dict_for_parse: dict,
 #                       xml_file: str,

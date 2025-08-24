@@ -2,7 +2,7 @@ from no_cash.models import Exchange as NoCashExchange
 
 from celery.local import Proxy
 
-from .parsers import parse_xml_to_dict, parse_xml_to_dict_2
+from .parsers import new_parse_xml_to_dict_2, parse_xml_to_dict, parse_xml_to_dict_2
 
 
 # def run_no_cash_background_tasks(task: Proxy,
@@ -72,6 +72,14 @@ def run_no_cash_background_tasks(task: Proxy,
     #         print(ex)
     #         continue
 
+
+
+def new_run_no_cash_background_tasks(exchange: NoCashExchange,
+                                     direction_dict: dict,
+                                     xml_file: str):
+    new_parse_xml_to_dict_2(direction_dict,
+                            xml_file,
+                            exchange)
 
 
 def run_update_tasks(task: Proxy,
