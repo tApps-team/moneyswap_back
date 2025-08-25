@@ -175,7 +175,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
                                                                       obj.name,
                                                                       value)
                         case 'active_status':
-                            if value in ('disabled', 'scam'):
+                            if value in ('disabled', 'scam', 'skip'):
                                 obj.is_active = False
                                 update_fields.append('is_active')
 

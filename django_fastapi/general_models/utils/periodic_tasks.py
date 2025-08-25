@@ -50,14 +50,14 @@ def try_get_xml_file(exchange: BaseExchange) -> str | None:
     except TechServiceWork as ex:
         print(ex)
         exchange.is_active = False
-        exchange.active_status = 'unactive'
+        exchange.active_status = 'inactive'
         exchange.save()
         # print(exchange.__dict__)
     except Exception as ex:
         print(f'CHECK ACTIVE EXCEPTION!!! {exchange.name}', ex)
         # if exchange.is_active:
         exchange.is_active = False
-        exchange.active_status = 'unactive'
+        exchange.active_status = 'inactive'
         exchange.save()
         # print(exchange.__dict__)
     else:

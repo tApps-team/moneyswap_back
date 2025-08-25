@@ -96,7 +96,7 @@ def create_no_cash_directions_for_exchange(exchange_id: int):
     try:
         exchange = Exchange.objects.get(pk=exchange_id)
 
-        if exchange.active_status in ('disabled', 'scam', ):
+        if exchange.active_status in ('disabled', 'scam', 'skip'):
             return
         
         all_no_cash_directions = get_or_set_no_cash_directions_cache()

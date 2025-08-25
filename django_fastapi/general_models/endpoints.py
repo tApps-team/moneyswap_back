@@ -922,14 +922,25 @@ def new_get_exchange_list():
 
     # review_counts = new_get_reviews_count_filters(marker='exchange')
 
+    # review_counts = (
+    #     NewBaseReview.objects
+    #     .filter(moderation=True)
+    #     .values('exchange_name')
+    #     .annotate(
+    #         positive_count=Count('id', filter=Q(grade='1')),
+    #         neutral_count=Count('id', filter=Q(grade='0')),
+    #         negative_count=Count('id', filter=Q(grade='-1')),
+    #     )
+    # )
+
     review_counts = (
         NewBaseReview.objects
         .filter(moderation=True)
         .values('exchange_name')
         .annotate(
-            positive_count=Count('id', filter=Q(grade='1')),
-            neutral_count=Count('id', filter=Q(grade='0')),
-            negative_count=Count('id', filter=Q(grade='-1')),
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
         )
     )
 
@@ -980,8 +991,8 @@ def new_get_exchange_list():
                                             'active_status',
                                             'exchange_marker',
                                             'partner_link')\
+                                    .filter(is_active=True)\
                                     .order_by()
-                                    # .filter(is_active=True)\
 
         queries.append(exchange_query)
 

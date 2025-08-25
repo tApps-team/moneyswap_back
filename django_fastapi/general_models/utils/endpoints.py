@@ -643,6 +643,8 @@ def get_exchange(exchange_id: int,
 
     if not black_list_exchange:
         exchange = exchange.filter(is_active=True)
+    else:
+        exchange = exchange.filter(active_status='scam')
 
 
     if not exchange.exists():
