@@ -1193,7 +1193,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
                                                                               'тест',
                                                                               'СММ группа')).exists()):
-            if obj.active_status in ('disabled', 'scam'):
+            if obj.active_status in ('disabled', 'scam', 'skip'):
                 obj.is_active = False
 
             elif obj.active_status == 'active':
