@@ -1327,29 +1327,78 @@ def get_exchange_detail_info(exchange_id: int,
     return exchange
 
 
+# @test_router.get('/exchange_detail',
+#                    response_model=NewDetailExchangeSchema,
+#                    response_model_by_alias=False)
+# def get_exchange_detail_info(exchange_id: int,
+#                              exchange_marker: str):
+#     # is_both = None
+#     # if exchange_marker == 'both':
+#     #     exchange_marker = 'no_cash'
+#     #     is_both = True
+
+#     review_counts = new_get_reviews_count_filters(marker='exchange')
+
+#     exchange = get_exchange(exchange_id,
+#                             exchange_marker,
+#                             review_counts=review_counts)
+#     exchange = get_exchange_with_direction_count(exchange,
+#                                                  exchange_id,
+#                                                  exchange_marker)
+#     exchange = exchange.first()
+
+#     exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
+#                                             neutral=exchange.neutral_review_count,
+#                                             negative=exchange.negative_review_count)
+#     exchange.icon = try_generate_icon_url(exchange)
+
+#     exchange.multiple_name = MultipleName(name=exchange.name,
+#                                           en_name=exchange.en_name)
+    
+#     # if exchange.course_count is None or not exchange.course_count.isdigit():
+#     #     exchange.course_count = None
+#     # else:
+#     #     exchange.course_count = int(exchange.course_count)
+#     # print(exchange.direction_count)
+#     # print(exchange.city_direction_count)
+#     # print(exchange.country_direction_count)
+#     exchange.course_count = exchange.direction_count
+    
+#     return exchange
+
+
 @test_router.get('/exchange_detail',
                    response_model=NewDetailExchangeSchema,
                    response_model_by_alias=False)
 def get_exchange_detail_info(exchange_id: int,
                              exchange_marker: str):
-    # is_both = None
-    # if exchange_marker == 'both':
-    #     exchange_marker = 'no_cash'
-    #     is_both = True
-
-    review_counts = new_get_reviews_count_filters(marker='exchange')
 
     exchange = get_exchange(exchange_id,
-                            exchange_marker,
-                            review_counts=review_counts)
+                            exchange_marker)
     exchange = get_exchange_with_direction_count(exchange,
                                                  exchange_id,
                                                  exchange_marker)
     exchange = exchange.first()
 
-    exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
-                                            neutral=exchange.neutral_review_count,
-                                            negative=exchange.negative_review_count)
+    review_counts = (
+        NewBaseReview.objects
+        .filter(moderation=True,
+                exchange_name=exchange.name)
+        .values('exchange_name')
+        .annotate(
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
+        )
+    )
+
+    review_map = {r['exchange_name']: r for r in review_counts}
+
+    print(review_map)
+
+    exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
+                                            neutral=review_map[exchange.name]['neutral_count'],
+                                            negative=review_map[exchange.name]['negative_count'])
     exchange.icon = try_generate_icon_url(exchange)
 
     exchange.multiple_name = MultipleName(name=exchange.name,
