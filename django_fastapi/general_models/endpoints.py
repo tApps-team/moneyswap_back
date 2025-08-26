@@ -23,6 +23,7 @@ from general_models.models import (ExchangeAdmin, NewBaseAdminComment, NewBaseCo
 from general_models.utils.endpoints import (positive_review_count_filter,
                                             neutral_review_count_filter,
                                             negative_review_count_filter,
+                                            availabale_active_status_list,
                                             get_reviews_count_filters,
                                             get_exchange,
                                             generate_image_icon,
@@ -991,7 +992,7 @@ def new_get_exchange_list():
                                             'active_status',
                                             'exchange_marker',
                                             'partner_link')\
-                                    .filter(~Q(active_status__in=('scam', 'skip')))\
+                                    .filter(active_status__in=availabale_active_status_list)\
                                     .order_by()
                                     # .filter(is_active=True)\
 

@@ -43,6 +43,12 @@ from general_models.schemas import (SpecialDirectionMultiWithAmlModel, SpecialPa
 from general_models.utils.base import annotate_string_field
 from general_models.utils.http_exc import comment_exception_json, review_exception_json
 
+availabale_active_status_list = [
+    'active',
+    'inactive',
+    'disabled',
+]
+
 
 round_valute_dict = {
     'BTC': 5,
@@ -643,7 +649,7 @@ def get_exchange(exchange_id: int,
 
     if not black_list_exchange:
         # exchange = exchange.filter(is_active=True)
-        exchange = exchange.filter(~Q(active_status__in=('scam', 'skip')))
+        exchange = exchange.filter(active_status__in=availabale_active_status_list)
     else:
         exchange = exchange.filter(active_status='scam')
 
