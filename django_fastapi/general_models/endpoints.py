@@ -1548,11 +1548,18 @@ def get_exchange_detail_info(exchange_id: int,
 
     review_map = {r['exchange_name']: r for r in review_counts}
 
-    print(review_map)
-
-    exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
-                                            neutral=review_map[exchange.name]['neutral_count'],
-                                            negative=review_map[exchange.name]['negative_count'])
+    # print(review_map)
+    try:
+        exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
+                                                neutral=review_map[exchange.name]['neutral_count'],
+                                                negative=review_map[exchange.name]['negative_count'])
+    except KeyError:
+        exchange.review_set = ReviewCountSchema(positive=0,
+                                                neutral=0,
+                                                negative=0)
+    # exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
+    #                                         neutral=review_map[exchange.name]['neutral_count'],
+    #                                         negative=review_map[exchange.name]['negative_count'])
     exchange.icon = try_generate_icon_url(exchange)
 
     exchange.multiple_name = MultipleName(name=exchange.name,
@@ -1598,11 +1605,18 @@ def get_exchange_detail_info(exchange_id: int,
 
     review_map = {r['exchange_name']: r for r in review_counts}
 
-    print(review_map)
-
-    exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
-                                            neutral=review_map[exchange.name]['neutral_count'],
-                                            negative=review_map[exchange.name]['negative_count'])
+    # print(review_map)
+    try:
+        exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
+                                                neutral=review_map[exchange.name]['neutral_count'],
+                                                negative=review_map[exchange.name]['negative_count'])
+    except KeyError:
+        exchange.review_set = ReviewCountSchema(positive=0,
+                                                neutral=0,
+                                                negative=0)
+    # exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
+    #                                         neutral=review_map[exchange.name]['neutral_count'],
+    #                                         negative=review_map[exchange.name]['negative_count'])
     exchange.icon = try_generate_icon_url(exchange)
 
     exchange.multiple_name = MultipleName(name=exchange.name,
