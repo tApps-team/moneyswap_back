@@ -1435,51 +1435,51 @@ def get_black_exchange_list():
 #     return exchange
 
 
-# @common_router.get('/exchange_blacklist_detail',
-#                    response_model=DetailBlackListExchangeSchema,
-#                    response_model_by_alias=False)
-# def get_exchange_detail_info(exchange_id: int,
-#                              exchange_marker: str):
-#     # is_both = None
-#     # if exchange_marker == 'both':
-#     #     exchange_marker = 'no_cash'
-#     #     is_both = True
+@common_router.get('/exchange_blacklist_detail',
+                   response_model=DetailBlackListExchangeSchema,
+                   response_model_by_alias=False)
+def get_exchange_detail_info(exchange_id: int,
+                             exchange_marker: str):
+    # is_both = None
+    # if exchange_marker == 'both':
+    #     exchange_marker = 'no_cash'
+    #     is_both = True
 
-#     # review_counts = new_get_reviews_count_filters(marker='exchange')
+    # review_counts = new_get_reviews_count_filters(marker='exchange')
 
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker,
-#                             black_list_exchange=True)
-#     # exchange = get_exchange_with_direction_count(exchange,
-#     #                                              exchange_id,
-#     #                                              exchange_marker)
-#     exchange = exchange.first()
+    exchange = get_exchange(exchange_id,
+                            exchange_marker,
+                            black_list_exchange=True)
+    # exchange = get_exchange_with_direction_count(exchange,
+    #                                              exchange_id,
+    #                                              exchange_marker)
+    exchange = exchange.first()
 
-#     if exchange_marker != 'partner':
-#         exchange.url = get_base_url(exchange.partner_link)
-#     else:
-#         exchange.url = exchange.partner_link
+    if exchange_marker != 'partner':
+        exchange.url = get_base_url(exchange.partner_link)
+    else:
+        exchange.url = exchange.partner_link
 
-#     # exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
-#     #                                         neutral=exchange.neutral_review_count,
-#     #                                         negative=exchange.negative_review_count)
-#     exchange.icon = try_generate_icon_url(exchange)
+    # exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
+    #                                         neutral=exchange.neutral_review_count,
+    #                                         negative=exchange.negative_review_count)
+    exchange.icon = try_generate_icon_url(exchange)
 
-#     exchange.multiple_name = MultipleName(name=exchange.name,
-#                                           en_name=exchange.en_name)
+    exchange.multiple_name = MultipleName(name=exchange.name,
+                                          en_name=exchange.en_name)
     
-#     exchange.exchange_marker = exchange_marker
+    exchange.exchange_marker = exchange_marker
     
-#     # if exchange.course_count is None or not exchange.course_count.isdigit():
-#     #     exchange.course_count = None
-#     # else:
-#     #     exchange.course_count = int(exchange.course_count)
-#     # print(exchange.direction_count)
-#     # print(exchange.city_direction_count)
-#     # print(exchange.country_direction_count)
-#     # exchange.course_count = exchange.direction_count
+    # if exchange.course_count is None or not exchange.course_count.isdigit():
+    #     exchange.course_count = None
+    # else:
+    #     exchange.course_count = int(exchange.course_count)
+    # print(exchange.direction_count)
+    # print(exchange.city_direction_count)
+    # print(exchange.country_direction_count)
+    # exchange.course_count = exchange.direction_count
     
-#     return exchange
+    return exchange
 
 
 # @test_router.get('/exchange_detail',
