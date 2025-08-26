@@ -991,8 +991,9 @@ def new_get_exchange_list():
                                             'active_status',
                                             'exchange_marker',
                                             'partner_link')\
-                                    .filter(is_active=True)\
+                                    .filter(~Q(active_status__in=('scam', 'skip')))\
                                     .order_by()
+                                    # .filter(is_active=True)\
 
         queries.append(exchange_query)
 
@@ -2313,6 +2314,7 @@ def new_get_reviews_by_exchange(exchange_name: str,
     user_comment_subquery = NewBaseComment.objects.filter(
         review_id=OuterRef('pk'),
         moderation=True,
+        review_from='moneyswap',
     ).values('review_id').annotate(
         total_count=Coalesce(Count('id'), Value(0))
     ).values('total_count')
@@ -2329,6 +2331,7 @@ def new_get_reviews_by_exchange(exchange_name: str,
                                     .annotate(user_comment_count=Subquery(user_comment_subquery))\
                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
                                     .filter(exchange_name=exchange_name,
+                                            review_from='moneyswap',
                                             moderation=True)
 
     if review_id:
@@ -2747,6 +2750,7 @@ def new_get_comments_by_review(review_id: int):
     user_comments = NewBaseComment.objects.select_related('review')\
                                     .annotate(role=annotate_string_field('user'))\
                                     .filter(review_id=review_id,
+                                            review_from='moneyswap',
                                             moderation=True)\
                                     .values('id',
                                             'time_create',

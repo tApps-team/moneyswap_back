@@ -642,7 +642,8 @@ def get_exchange(exchange_id: int,
     exchange = exchange_model.objects.filter(pk=exchange_id)
 
     if not black_list_exchange:
-        exchange = exchange.filter(is_active=True)
+        # exchange = exchange.filter(is_active=True)
+        exchange = exchange.filter(~Q(active_status__in=('scam', 'skip')))
     else:
         exchange = exchange.filter(active_status='scam')
 
