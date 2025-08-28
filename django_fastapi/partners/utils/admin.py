@@ -17,7 +17,7 @@ def update_field_time_update(obj: Direction, update_fields: set):
      obj.time_update = datetime.now()
      update_fields.add('time_update')
      
-     if not obj.is_active:
+     if not obj.is_active and 'is_active' not in update_fields:
           obj.is_active = True
           update_fields.add('is_active')
 

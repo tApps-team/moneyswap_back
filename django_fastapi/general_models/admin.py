@@ -837,12 +837,23 @@ class NewBaseAdminCommentStacked(admin.StackedInline):
         'collapse',
         ]
     
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('review')
+    
 class NewBaseCommentStacked(admin.StackedInline):
     model = NewBaseComment
     extra = 0
     classes = [
         'collapse',
         ]
+    raw_id_fields = (
+        'guest',
+
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('review',
+                                                            'guest')
 
 
 @admin.register(NewBaseReview)
@@ -856,6 +867,10 @@ class NewBaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     list_filter = (
         'exchange_name',
+        # 'guest',
+    )
+
+    raw_id_fields = (
         'guest',
     )
 

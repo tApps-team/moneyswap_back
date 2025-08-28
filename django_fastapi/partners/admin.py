@@ -1,6 +1,7 @@
 from collections.abc import Callable, Sequence
 from datetime import datetime
 from typing import Any
+from decimal import Decimal
 
 from django_admin_action_forms import action_with_form, AdminActionForm
 
@@ -174,7 +175,9 @@ class DirectionAdmin(admin.ModelAdmin):
          js = ('parnters/js/test.js', )
 
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
+        print('from save_model...')
         if change:
+            # print(connection.queries)
             update_fields = set()
             if not form.cleaned_data.get('id'):
                 for key, value in form.cleaned_data.items():
@@ -190,8 +193,59 @@ class DirectionAdmin(admin.ModelAdmin):
                 if update_fields:
                     update_field_time_update(obj, update_fields)
                     obj.save(update_fields=update_fields)
+            # for query in connection.queries:
+            #     print(query)
+            #     print('*' * 8)
+            # print(len(connection.queries))
+
         else:
             return super().save_model(request, obj, form, change)
+
+
+    # Перехватываю list_editable для оптимизации SELECT запросов в один
+    def changelist_view(self, request, extra_context=None):
+        # print('from changelist view..')
+        if request.method == 'POST' and '_save' in request.POST:
+            obj_count = int(request.POST['form-TOTAL_FORMS'])
+            pks = [int(request.POST[f'form-{i}-id']) for i in range(obj_count)]
+            objs = list(Direction.objects.filter(pk__in=pks))  # один SELECT
+            obj_dict = {o.pk: o for o in objs}
+
+            time_update = timezone.now()
+            update_objs = []
+
+            for i in range(obj_count):
+                obj_pk = int(request.POST[f'form-{i}-id'])
+                in_count = Decimal(request.POST[f'form-{i}-in_count'])
+                out_count = Decimal(request.POST[f'form-{i}-out_count'])
+                obj = obj_dict[obj_pk]
+                
+                if obj.in_count != in_count or obj.out_count != out_count:
+                    obj.in_count = in_count
+                    obj.out_count = out_count
+                    obj.time_update = time_update
+                    obj.is_active = True
+                    update_objs.append(obj)
+
+            if update_objs:
+                update_fields = [
+                    'in_count',
+                    'out_count',
+                    'time_update',
+                    'is_active',
+                ]
+                Direction.objects.bulk_update(update_objs,
+                                              fields=update_fields)
+                # self.message_user(request, f"{len(update_objs)} записей успешно обновлено!", messages.SUCCESS)
+                self.message_user(request, f'Выбранные направления успешно обновлены!({len(update_objs)} шт)', messages.SUCCESS)
+
+            # for query in connection.queries:
+            #     print(query)
+            #     print('*' * 8)
+            return super().changelist_view(request, extra_context)
+
+        return super().changelist_view(request, extra_context)
+
     
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         field = super().formfield_for_foreignkey(db_field, request, **kwargs)
@@ -208,12 +262,6 @@ class DirectionAdmin(admin.ModelAdmin):
                 field.queryset = field.queryset.filter(exchange=account.exchange)\
                                                 .select_related('city')
         return field
-        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
-        #     if db_field.name == 'city':
-        #         account = get_or_set_user_account_cache(request.user)
-        #         field.queryset = field.queryset.filter(exchange=account.exchange)\
-        #                                         .select_related('city')
-        # return field
 
     def exchange_name(self, obj=None):
         return obj.city.exchange
@@ -231,7 +279,6 @@ class DirectionAdmin(admin.ModelAdmin):
     saved_partner_course.short_description = 'Сохранённый курс'
 
     def has_add_permission(self, request: HttpRequest) -> bool:
-        # print(request.user.groups.all())
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
                                                                               'тест',
                                                                               'СММ группа')).exists()):
@@ -242,11 +289,6 @@ class DirectionAdmin(admin.ModelAdmin):
             if account.exchange:
                 return super().has_add_permission(request)
         
-    
-    # def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
-    #     if request.user.is_superuser:
-    #         return False
-    #     return super().has_change_permission(request, obj)
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         queryset = super().get_queryset(request)\
@@ -266,12 +308,6 @@ class DirectionAdmin(admin.ModelAdmin):
             queryset = queryset.filter(city__exchange=account.exchange)
 
         return queryset
-
-        # if not request.user.is_superuser or (not 'Модераторы' in request.user.groups.all()):
-        #     account = get_or_set_user_account_cache(request.user)
-        #     queryset = queryset.filter(city__exchange=account.exchange)
-            
-        # return queryset
 
     @action_with_form(
         ChangeOrderStatusActionForm,
@@ -294,11 +330,6 @@ class DirectionAdmin(admin.ModelAdmin):
                         time_update=time_update)
         messages.success(request,
                          f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
-    # def get_actions(self, request: HttpRequest):
-    #     actions = super().get_actions(request)
-    #     if request.user.is_superuser:
-    #         del actions['get_directions_active']
-    #     return actions
 
 
 @admin.register(WorkingDay)
@@ -473,8 +504,9 @@ class CountryDirectionAdmin(admin.ModelAdmin):
             if not form.cleaned_data.get('id'):
                 for key, value in form.cleaned_data.items():
                     if value != form.initial[key]:
-                        update_field_time_update(obj, update_fields)
                         update_fields.add(key)
+    
+                update_field_time_update(obj, update_fields)
                 obj.save(update_fields=update_fields)
             else:
                 for key in ('in_count', 'out_count'):
@@ -486,6 +518,49 @@ class CountryDirectionAdmin(admin.ModelAdmin):
                     obj.save(update_fields=update_fields)
         else:
             return super().save_model(request, obj, form, change)
+        
+    # Перехватываю list_editable для оптимизации SELECT запросов в один
+    def changelist_view(self, request, extra_context=None):
+        # print('from changelist view..')
+        if request.method == 'POST' and '_save' in request.POST:
+            obj_count = int(request.POST['form-TOTAL_FORMS'])
+            pks = [int(request.POST[f'form-{i}-id']) for i in range(obj_count)]
+            objs = list(CountryDirection.objects.filter(pk__in=pks))  # один SELECT
+            obj_dict = {o.pk: o for o in objs}
+
+            time_update = timezone.now()
+            update_objs = []
+
+            for i in range(obj_count):
+                obj_pk = int(request.POST[f'form-{i}-id'])
+                in_count = Decimal(request.POST[f'form-{i}-in_count'])
+                out_count = Decimal(request.POST[f'form-{i}-out_count'])
+                obj = obj_dict[obj_pk]
+                
+                if obj.in_count != in_count or obj.out_count != out_count:
+                    obj.in_count = in_count
+                    obj.out_count = out_count
+                    obj.time_update = time_update
+                    obj.is_active = True
+                    update_objs.append(obj)
+
+            if update_objs:
+                update_fields = [
+                    'in_count',
+                    'out_count',
+                    'time_update',
+                    'is_active',
+                ]
+                CountryDirection.objects.bulk_update(update_objs,
+                                              fields=update_fields)
+                # self.message_user(request, f"{len(update_objs)} записей успешно обновлено!", messages.SUCCESS)
+                self.message_user(request, f'Выбранные направления страны успешно обновлены!({len(update_objs)} шт)', messages.SUCCESS)
+            # for query in connection.queries:
+            #     print(query)
+            #     print('*' * 8)
+            return super().changelist_view(request, extra_context)
+
+        return super().changelist_view(request, extra_context)
         
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         queryset = super().get_queryset(request)\
