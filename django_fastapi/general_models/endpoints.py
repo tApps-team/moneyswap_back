@@ -1170,11 +1170,13 @@ def new_get_exchange_list():
                     exchange['direction_count'] = result[exchange_marker][exchange['pk']]
                     if exchange['direction_count'] == 0 and exchange['active_status'] == 'active':
                         exchange['active_status'] = 'inactive'
+                        exchange['is_active'] = False
             except KeyError as ex:
                 # print('1error',ex)
                 exchange['direction_count'] = 0
                 if exchange['active_status'] == 'active':
                     exchange['active_status'] = 'inactive'
+                    exchange['is_active'] = False
             
             exchange_dict[exchange_name]['exchange_marker'] = 'both'
 
@@ -1207,6 +1209,7 @@ def new_get_exchange_list():
 
                     if exchange['direction_count'] == 0 and exchange['active_status'] == 'active':
                         exchange['active_status'] = 'inactive'
+                        exchange['is_active'] = False
                 # exchange_dict[exchange_name] = exchange
                 # exchange_name_set.add(exchange_name)
             except KeyError as ex:
@@ -1215,6 +1218,7 @@ def new_get_exchange_list():
                 
                 if exchange['active_status'] == 'active':
                     exchange['active_status'] = 'inactive'
+                    exchange['is_active'] = False
             
             exchange_dict[exchange_name] = exchange
             exchange_name_set.add(exchange_name)
@@ -1337,11 +1341,13 @@ def new_get_exchange_list():
                     exchange['direction_count'] = result[exchange_marker][exchange['pk']]
                     if exchange['direction_count'] == 0 and exchange['active_status'] == 'active':
                         exchange['active_status'] = 'inactive'
+                        exchange['is_active'] = False
             except KeyError as ex:
                 # print('1error',ex)
                 exchange['direction_count'] = 0
                 if exchange['active_status'] == 'active':
                     exchange['active_status'] = 'inactive'
+                    exchange['is_active'] = False
             
             exchange_dict[exchange_name]['exchange_marker'] = 'both'
 
@@ -1374,6 +1380,7 @@ def new_get_exchange_list():
 
                     if exchange['direction_count'] == 0 and exchange['active_status'] == 'active':
                         exchange['active_status'] = 'inactive'
+                        exchange['is_active'] = False
                 # exchange_dict[exchange_name] = exchange
                 # exchange_name_set.add(exchange_name)
             except KeyError as ex:
@@ -1382,6 +1389,7 @@ def new_get_exchange_list():
                 
                 if exchange['active_status'] == 'active':
                     exchange['active_status'] = 'inactive'
+                    exchange['is_active'] = False
             
             exchange_dict[exchange_name] = exchange
             exchange_name_set.add(exchange_name)
@@ -1702,6 +1710,62 @@ def get_exchange_detail_info(exchange_id: int,
     
 #     return exchange
 
+# @common_router.get('/exchange_detail',
+#                    response_model=NewDetailExchangeSchema,
+#                    response_model_by_alias=False)
+# def get_exchange_detail_info(exchange_id: int,
+#                              exchange_marker: str):
+
+#     exchange = get_exchange(exchange_id,
+#                             exchange_marker)
+#     exchange = get_exchange_with_direction_count(exchange,
+#                                                  exchange_id,
+#                                                  exchange_marker)
+#     exchange = exchange.first()
+
+#     review_counts = (
+#         NewBaseReview.objects
+#         .filter(moderation=True,
+#                 exchange_name=exchange.name)
+#         .values('exchange_name')
+#         .annotate(
+#             positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
+#             neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
+#             negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
+#         )
+#     )
+
+#     review_map = {r['exchange_name']: r for r in review_counts}
+
+#     # print(review_map)
+#     try:
+#         exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
+#                                                 neutral=review_map[exchange.name]['neutral_count'],
+#                                                 negative=review_map[exchange.name]['negative_count'])
+#     except KeyError:
+#         exchange.review_set = ReviewCountSchema(positive=0,
+#                                                 neutral=0,
+#                                                 negative=0)
+#     # exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
+#     #                                         neutral=review_map[exchange.name]['neutral_count'],
+#     #                                         negative=review_map[exchange.name]['negative_count'])
+#     exchange.icon = try_generate_icon_url(exchange)
+
+#     exchange.multiple_name = MultipleName(name=exchange.name,
+#                                           en_name=exchange.en_name)
+    
+#     # if exchange.course_count is None or not exchange.course_count.isdigit():
+#     #     exchange.course_count = None
+#     # else:
+#     #     exchange.course_count = int(exchange.course_count)
+#     # print(exchange.direction_count)
+#     # print(exchange.city_direction_count)
+#     # print(exchange.country_direction_count)
+#     exchange.course_count = exchange.direction_count
+    
+#     return exchange
+
+
 @common_router.get('/exchange_detail',
                    response_model=NewDetailExchangeSchema,
                    response_model_by_alias=False)
@@ -1754,9 +1818,14 @@ def get_exchange_detail_info(exchange_id: int,
     # print(exchange.city_direction_count)
     # print(exchange.country_direction_count)
     exchange.course_count = exchange.direction_count
+
+    if exchange.course_count == 0 and exchange.active_status == 'active':
+        exchange.active_status = 'inactive'
+
+    elif exchange.active_status != 'active':
+        exchange.course_count = 0
     
     return exchange
-
 
 
 @test_router.get('/exchange_detail',
@@ -1811,6 +1880,12 @@ def get_exchange_detail_info(exchange_id: int,
     # print(exchange.city_direction_count)
     # print(exchange.country_direction_count)
     exchange.course_count = exchange.direction_count
+
+    if exchange.course_count == 0 and exchange.active_status == 'active':
+        exchange.active_status = 'inactive'
+
+    elif exchange.active_status != 'active':
+        exchange.course_count = 0
     
     return exchange
 
