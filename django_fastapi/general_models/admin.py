@@ -622,7 +622,7 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'time_create',
         'get_icon',
         'link_count',
-        'time_disable',
+        # 'time_disable',
         )
     
     list_editable = (

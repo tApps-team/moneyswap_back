@@ -512,10 +512,10 @@ class BaseExchange(models.Model):
     ]
 
     name = models.CharField('Название обменника(ru)',
-                            max_length=20,
+                            max_length=255,
                             unique=True)
     en_name = models.CharField('Название обменника(en)',
-                               max_length=20,
+                               max_length=255,
                                unique=True,
                                blank=True,
                                null=True,
