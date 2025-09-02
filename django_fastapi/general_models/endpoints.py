@@ -1644,7 +1644,12 @@ def get_exchange_detail_info(exchange_id: int,
     #                                              exchange_marker)
     exchange = exchange.first()
 
-    if exchange_marker != 'partner':
+    # if exchange_marker != 'partner':
+    #     exchange.url = get_base_url(exchange.partner_link)
+    # else:
+    #     exchange.url = exchange.partner_link
+
+    if exchange_marker != 'partner' and not exchange.partner_link.startswith('https://t.me'):
         exchange.url = get_base_url(exchange.partner_link)
     else:
         exchange.url = exchange.partner_link
