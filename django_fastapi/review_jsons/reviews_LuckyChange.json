@@ -1,0 +1,334 @@
+{
+    "LuckyChange": [
+        {
+            "username": "Алексей",
+            "text": "Обмен прошёл молниеносно! Сразу пришли все реквизиты и подробные инструкции, оплатил через банк без проблем. Курс тоже отличный, приятно удивлён!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:13:50"
+        },
+        {
+            "username": "Илья",
+            "text": "Превосходная работа обменника! Все очень быстро, без нареканий. Желаю вам дальнейшего процветания.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:44:18"
+        },
+        {
+            "username": "Максим",
+            "text": "Все отлично, как всегда. Быстро и без ошибок. Большое спасибо администратору!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:48:09"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Замечательная работа обменника, как всегда всё на высоком уровне!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:17:36"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все прошло быстро и удобно, курс хороший, без проблем с платежами.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:15:40"
+        },
+        {
+            "username": "Наталья",
+            "text": "Очень оперативно справились с обменом, осталась довольна!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:32:49"
+        },
+        {
+            "username": "Егор",
+            "text": "Обмен на большую сумму прошёл без нареканий, поддержка всегда на связи, рекомендую!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:50:40"
+        },
+        {
+            "username": "Артём",
+            "text": "Сделали все моментально, супер сервис.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:44:36"
+        },
+        {
+            "username": "Олег",
+            "text": "Раньше обменивал в другом месте, но курс там упал. Здесь всё на месте и курс отличный!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:12:46"
+        },
+        {
+            "username": "Марина",
+            "text": "Быстро и без проблем, меняюсь здесь не первый раз.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:08:56"
+        },
+        {
+            "username": "Руслан",
+            "text": "Обмен прошёл успешно, все условия соблюдены, благодарю!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:30:28"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Деньги пришли очень быстро, буквально в течение получаса. Отлично!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:49:48"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отличная работа обменника. Поддержка чутко реагирует на вопросы и всё доходчиво объясняет.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:52:24"
+        },
+        {
+            "username": "Никита",
+            "text": "Все прошло без проблем, обмен выполнен идеально, спасибо!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:40:22"
+        },
+        {
+            "username": "Вадим",
+            "text": "Доволен скоростью и качеством обмена, поддержка работает чётко и понятно.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:21:37"
+        },
+        {
+            "username": "Данил",
+            "text": "Без задержек и заминок, деньги пришли полностью и сразу.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:07:16"
+        },
+        {
+            "username": "Рустам",
+            "text": "Часть перевода пришла быстро, а крупная немного задержалась. В целом всё завершилось, но нервов добавило.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-02T09:38:38"
+        },
+        {
+            "username": "Вадим",
+            "text": "Все прошло очень быстро, всем рекомендую.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T08:28:14"
+        },
+        {
+            "username": "Мария",
+            "text": "Обменник удобный, средства пришли оперативно, всем довольна.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:20:42"
+        },
+        {
+            "username": "Ирина",
+            "text": "Быстро, реквизиты корректные, курс хороший.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T23:08:48"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень удобный обменник, быстро и без ошибок, реквизиты корректные.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:26:50"
+        },
+        {
+            "username": "Семен",
+            "text": "Небольшая заминка с подтверждением, но оператор быстро написал и все объяснил, результат совпал с расчетом.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:32:06"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличный обменник, все быстро и просто.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:00:54"
+        },
+        {
+            "username": "Ольга",
+            "text": "Всегда обращаюсь сюда для обмена, никогда не подводили, всё отлично.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:42:55"
+        },
+        {
+            "username": "Павел",
+            "text": "Продолжайте в том же духе, очень доволен сервисом, честные условия и отличная поддержка.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:08:24"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все очень оперативно, ребята реально шустрые, спасибо!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:11:35"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Сотрудники идут навстречу, переводят деньги в 1-2 транша, и всё быстрее, чем у других обменников. Отлично!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:01:05"
+        },
+        {
+            "username": "Евгений",
+            "text": "Быстро, удобно, все четко.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:05:26"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обмен делал не один раз, все операции проходят без заминок. Сервис на уровне!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:53:12"
+        },
+        {
+            "username": "Андрей",
+            "text": "Отличный обменник, всё быстро и качественно. Спасибо за вашу работу.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:11:14"
+        },
+        {
+            "username": "Светлана",
+            "text": "Обмен прошёл очень быстро и удобно, ваш сервис очень удобный.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T02:20:05"
+        },
+        {
+            "username": "Виталий",
+            "text": "Рад, что нашёл этот обменник! Всё прошло идеально, ни одной задержки, спасибо!",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T19:14:39"
+        },
+        {
+            "username": "Иван",
+            "text": "Прозрачно, быстро, выгодно и без сложностей с реквизитами.",
+            "exchange_name": "LuckyChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:41:06"
+        }
+    ]
+}

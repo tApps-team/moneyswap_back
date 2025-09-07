@@ -1,0 +1,424 @@
+{
+    "CoinsBlack": [
+        {
+            "username": "Игорь",
+            "text": "Очень доволен сервисом. Поддержка отвечает быстро и вежливо.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:11:12"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Пользуюсь обменником уже давно, всегда все проходит гладко. Обменял СБП на Volet (USD) и Visa в Европе без проблем.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:09:47"
+        },
+        {
+            "username": "Виктория Т.",
+            "text": "Очень удобная платформа, работает быстро и без ошибок. Советую.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T10:17:33"
+        },
+        {
+            "username": "Наталья",
+            "text": "Приятно пользоваться сервисом! Все быстро, понятно и без сбоев. Поддержка всегда на связи.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T07:31:17"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Служба поддержки отзывчивая, перевод выполнен полностью, все вопросы решаются оперативно.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T16:58:36"
+        },
+        {
+            "username": "Максим",
+            "text": "Отличный обменник! Никогда не подводили, все быстро и честно.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T14:17:32"
+        },
+        {
+            "username": "Алина",
+            "text": "Сервис на высоте! Всё четко и быстро, индивидуальный подход. Благодарю!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T13:54:16"
+        },
+        {
+            "username": "Илья",
+            "text": "Лучший обменник, поддержка супер, всегда помогут. Всем рекомендую.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:50:36"
+        },
+        {
+            "username": "Никита",
+            "text": "Все прошло идеально, никаких задержек.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T09:46:38"
+        },
+        {
+            "username": "Сергей",
+            "text": "Платеж через Payoneer прошел успешно, спасибо!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T11:58:46"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Отличная платформа, все работает быстро и слаженно. Очень довольна.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T19:34:22"
+        },
+        {
+            "username": "Марина",
+            "text": "Один из самых удобных обменников! Все четко, без сбоев, поддержка всегда на связи. Рекомендую.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T16:42:04"
+        },
+        {
+            "username": "Александр",
+            "text": "Сработали быстро и качественно, спасибо за внимание к клиенту.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T19:22:23"
+        },
+        {
+            "username": "Денис",
+            "text": "Очень удобная платформа, вывод средств работает быстро, даже с маленькой суммы.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T17:58:25"
+        },
+        {
+            "username": "Владислав",
+            "text": "Хороший сервис, поддержка на связи, обмен прошёл без проблем, менял с Mastercard на крипту.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T17:24:41"
+        },
+        {
+            "username": "Борис",
+            "text": "Все быстро и без заминок, как всегда. Советую всем.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T12:41:32"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все отлично, как всегда. Поддержка помогла моментально, рекомендую.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T04:40:35"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошел быстро и качественно. Благодарю за сервис!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T13:15:33"
+        },
+        {
+            "username": "Евгений",
+            "text": "Менял PAYEER USD на рубли в офисе — все прошло быстро и без проблем. Спасибо.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T09:09:25"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен ETH прошел мгновенно, оператор был на связи и помог во всем.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T16:36:49"
+        },
+        {
+            "username": "Александр",
+            "text": "Перевод с Тинькова на USDT прошел отлично. Поддержка работает оперативно. Спасибо!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T15:21:56"
+        },
+        {
+            "username": "Светлана",
+            "text": "Перевод с Payoneer на карту МИР занял чуть больше 3 часов, все прошло без нареканий.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T15:09:54"
+        },
+        {
+            "username": "Николай",
+            "text": "Сервис CoinsBlack работает без сбоев, поддержка отзывчивая. Очень рекомендую!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T07:00:55"
+        },
+        {
+            "username": "Артем",
+            "text": "Все идеально! Ответили быстро, выплата пришла в полном объеме, без проблем.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T20:35:11"
+        },
+        {
+            "username": "Олег",
+            "text": "Пользуюсь этим обменником несколько лет, всегда без проблем. Рекомендую.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T11:03:50"
+        },
+        {
+            "username": "Борис",
+            "text": "Все работает стабильно и быстро, обмен прошел без задержек.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T07:47:01"
+        },
+        {
+            "username": "Вадим",
+            "text": "Перевод через Payoneer на российский банк прошел успешно. Спасибо!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T08:04:22"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все четко, быстро и надежно. Пользуюсь давно, всегда доволен. Рекомендую.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T18:03:51"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сайт не соответствует действительности, пункт в Севастополе не работает.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-07T10:44:15"
+        },
+        {
+            "username": "Цезарь",
+            "text": "Все прошло мгновенно! ЮMoney на Tether за 15 минут. Очень доволен.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T10:58:31"
+        },
+        {
+            "username": "Лена",
+            "text": "Обмен быстрый, оператор всегда на связи. Много лет пользуюсь и рекомендую.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T10:47:06"
+        },
+        {
+            "username": "Елизавета",
+            "text": "Очень нравится этот обменник. Все четко, поддержка всегда подскажет. Благодарю!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T17:47:59"
+        },
+        {
+            "username": "Никита",
+            "text": "Создал заявку, оплатил, но деньги не пришли. Просьба предоставить доказательства проверки токена. Надеюсь на помощь администрации.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-05T11:51:38"
+        },
+        {
+            "username": "Марина",
+            "text": "Все четко, поддержка работает быстро, проблем не возникло.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T09:21:39"
+        },
+        {
+            "username": "Виктор",
+            "text": "Как всегда — обмен прошел успешно! Спасибо за внимание и терпение!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T12:05:14"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все прошло очень быстро и без ошибок.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T09:24:52"
+        },
+        {
+            "username": "Елена",
+            "text": "Пользуюсь этим обменником несколько лет, всегда помогают оперативно.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-03T15:36:44"
+        },
+        {
+            "username": "Александр",
+            "text": "Совершал обмен по редкому направлению. Все пришло быстро, без проблем. Спасибо сервису!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-03T15:01:53"
+        },
+        {
+            "username": "Мария",
+            "text": "Много раз пользовалась этим обменником, всегда четко. Сегодня также без нареканий.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T15:37:07"
+        },
+        {
+            "username": "Олег",
+            "text": "Обмен прошел без проблем и задержек, все быстро. Спасибо!",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T08:51:56"
+        },
+        {
+            "username": "Эдуард",
+            "text": "Все отлично! Рекомендую всем. Курс хороший, обмен быстрый, поддержка на высоте.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T17:01:46"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все прошло нормально, обмен завершен без задержек.",
+            "exchange_name": "CoinsBlack",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T16:18:17"
+        }
+    ]
+}

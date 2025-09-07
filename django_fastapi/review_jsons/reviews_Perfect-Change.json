@@ -1,0 +1,504 @@
+{
+    "Perfect-Change": [
+        {
+            "username": "Сергей",
+            "text": "Все сделали оперативно и удобно, доволен сотрудничеством.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:05:42"
+        },
+        {
+            "username": "Алексей",
+            "text": "Перевод прошел мгновенно, средства пришли одной суммой. Комиссия чуть выше, но сервис впечатлил.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:13:56"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Поддержка на высоте, ответы моментальные, сервис удобный и надежный.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:11:21"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен прошёл гладко, деньги пришли мгновенно. Спасибо за оперативность.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:57:31"
+        },
+        {
+            "username": "Егор",
+            "text": "Меняю здесь уже не первый раз, всегда надежно и стабильно.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:37:23"
+        },
+        {
+            "username": "Виктор",
+            "text": "Деньги перевели за пару минут, курс выгодный, команда работает четко.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T19:35:13"
+        },
+        {
+            "username": "Роман",
+            "text": "Верификация прошла моментально, обмен мгновенный. Рекомендую.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T17:39:16"
+        },
+        {
+            "username": "Саша",
+            "text": "Надежный обменник, пользуюсь годами, всегда без проблем.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T14:51:30"
+        },
+        {
+            "username": "Максим",
+            "text": "Все прошло быстро, курс устроил, доволен сервисом.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:35:54"
+        },
+        {
+            "username": "Игорь",
+            "text": "Удобно и просто, деньги поступили моментально, без задержек.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T09:29:30"
+        },
+        {
+            "username": "Олег",
+            "text": "Мгновенный обмен, все прошло без задержек. Рекомендую.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:53:38"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Все работает оперативно, курсы нормальные, буду использовать еще.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T10:21:19"
+        },
+        {
+            "username": "Руслан",
+            "text": "Отличный сервис, перевели быстро и прозрачно, доверяю полностью.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:47:59"
+        },
+        {
+            "username": "Семен",
+            "text": "Надежный обменник, работает быстро и стабильно, пользуюсь постоянно.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:58:02"
+        },
+        {
+            "username": "Владислав",
+            "text": "Отличный сервис. Всегда на связи, помогают по всем вопросам. Деньги приходят моментально.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T13:34:47"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Сделала еще один обмен. Все прошло быстро, сервис отличный.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T11:52:36"
+        },
+        {
+            "username": "Павел",
+            "text": "Быстро и выгодно. Отличная работа, как всегда на высоте.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T12:38:09"
+        },
+        {
+            "username": "Даниил",
+            "text": "Обмен прошёл быстро, проблем с переводом не было. Спасибо!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T08:56:20"
+        },
+        {
+            "username": "Владимир",
+            "text": "Очень удобный и быстрый обмен, все прошло без проблем.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T16:40:23"
+        },
+        {
+            "username": "Сергей",
+            "text": "Благодарю за мгновенный перевод, особенно за то, что перевели одной суммой.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T17:43:45"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Все прошло очень быстро. Отличный сервис для обмена крипты без проблем.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T14:17:55"
+        },
+        {
+            "username": "Илья",
+            "text": "Обмен прошел быстро и без заминок, курс хороший.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T17:49:11"
+        },
+        {
+            "username": "Николай",
+            "text": "Быстро и удобно. Курс устраивает. Все отлично, спасибо!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T14:19:44"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Поддержка сработала моментально, обмен прошел без проблем. Очень доволен.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T07:34:17"
+        },
+        {
+            "username": "Марина",
+            "text": "Все обмены проходят быстро и удобно, без лишних вопросов.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T17:54:10"
+        },
+        {
+            "username": "Андрей",
+            "text": "Сервис работает быстро и удобно. Все условия соответствуют ожиданиям.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T07:47:36"
+        },
+        {
+            "username": "Владислав",
+            "text": "Работает честно и быстро, сервис отличный по сравнению с другими.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T15:15:28"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Все прошло быстро, сервис работает хорошо, рекомендую.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T07:52:25"
+        },
+        {
+            "username": "Евгений",
+            "text": "Очень удобно, быстро и безопасно. Деньги пришли за 5 минут, сервис надежный.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T09:49:11"
+        },
+        {
+            "username": "Виктория",
+            "text": "Спасибо за быстрый и понятный обмен! Сотрудники помогли на каждом шаге, буду обращаться снова.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T14:00:18"
+        },
+        {
+            "username": "Александр",
+            "text": "Отличный обменник, переводы быстрые, курс выгодный. Рекомендую всем!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T09:19:45"
+        },
+        {
+            "username": "Михаил",
+            "text": "Все работает идеально. Выплаты мгновенные, скорость приятно удивила.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T13:24:48"
+        },
+        {
+            "username": "Илья",
+            "text": "Выплаты происходят быстро, сервис отличный. Спасибо!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T09:44:44"
+        },
+        {
+            "username": "Елена",
+            "text": "Очень удобный сайт, обмен проходит моментально. Рекомендую всем.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T08:57:49"
+        },
+        {
+            "username": "Сергей",
+            "text": "Всегда быстро и четко. Отличный сервис, проверено не раз.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T15:49:40"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошел мгновенно, все суммы одной транзакцией. Очень удобно.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T15:26:38"
+        },
+        {
+            "username": "Владимир",
+            "text": "Надежный обменник, деньги пришли за пару минут. Рекомендую.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T13:07:37"
+        },
+        {
+            "username": "Григорий",
+            "text": "Очень быстрый обмен, всем советую, переводы моментальные.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T09:31:57"
+        },
+        {
+            "username": "Марина",
+            "text": "Провела обмен, все прошло идеально. Поддержка решает все вопросы быстро.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T09:42:12"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен занял всего 5 минут. Сайт удобный, все понятно.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-27T10:59:58"
+        },
+        {
+            "username": "Ольга",
+            "text": "Спасибо! Обмен прошел быстро, добавила сайт в избранное.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-26T10:50:44"
+        },
+        {
+            "username": "Александр",
+            "text": "Вывод крупной суммы прошел быстро, деньги поступили моментально. Отличный сервис!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-23T15:41:50"
+        },
+        {
+            "username": "Игорь",
+            "text": "Перевод BTC на Сбербанк прошел без задержек. Очень удобный обменник.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T09:41:35"
+        },
+        {
+            "username": "Алексей",
+            "text": "Деньги пришли быстро, обмен работает отлично. Спасибо за сервис.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T15:14:54"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обмен прошел быстро, интерфейс удобный, сервис надежный.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T11:02:49"
+        },
+        {
+            "username": "Юлия",
+            "text": "Сервис действительно отличный, все честно, без скрытых комиссий.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-20T16:00:49"
+        },
+        {
+            "username": "Илья",
+            "text": "Обмен прошел быстро, деньги поступили моментально. Все отлично.",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-19T17:23:09"
+        },
+        {
+            "username": "Лев",
+            "text": "Перевод на карту прошел за пару минут, работа на высшем уровне!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T13:34:56"
+        },
+        {
+            "username": "Азат",
+            "text": "Все прошло быстро и удобно, обмен отличный, спасибо!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T15:04:22"
+        },
+        {
+            "username": "Алексей",
+            "text": "Очередной обмен прошел гладко. Отличный и быстрый сервис, спасибо!",
+            "exchange_name": "Perfect-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T09:34:24"
+        }
+    ]
+}

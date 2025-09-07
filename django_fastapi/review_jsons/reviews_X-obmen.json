@@ -1,0 +1,404 @@
+{
+    "X-obmen": [
+        {
+            "username": "Надежда",
+            "text": "Пользуюсь этим сервисом уже несколько раз, всё проходит быстро и без проблем. Очень удобный обмен!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:18:08"
+        },
+        {
+            "username": "Алина",
+            "text": "Все четко и удобно. Поддержка работает быстро, обязательно вернусь еще.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:20:59"
+        },
+        {
+            "username": "Ева",
+            "text": "Обмениваю деньги здесь уже не первый раз, всегда все аккуратно и по хорошему курсу. Спасибо за профессионализм и доброжелательность операторов.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T17:26:17"
+        },
+        {
+            "username": "Игорь",
+            "text": "Менял гривны на СБП, сервис сработал очень быстро. Верификация проста, поддержка всегда помогает, курс отличный. Рекомендую!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T18:50:43"
+        },
+        {
+            "username": "Никита",
+            "text": "Пробовал обменник впервые, немного волновался, но перевод сделали за 15 минут. Отличный сервис!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T13:24:16"
+        },
+        {
+            "username": "Марина",
+            "text": "Очень удобный обменник. Несколько раз пользовалась, всё быстро и без проблем. Советую.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T02:49:56"
+        },
+        {
+            "username": "Виктория",
+            "text": "Все прошло быстро и просто.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T19:55:02"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все супер, как и ожидал!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T19:01:58"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен прошел быстро и качественно. Рекомендую.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T17:11:30"
+        },
+        {
+            "username": "Артем",
+            "text": "Обмен хороший, но скорость немного ниже ожиданий. В остальном всё ок.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T18:16:22"
+        },
+        {
+            "username": "Данила",
+            "text": "Перевод прошел быстро и выгодно. Благодарю за удобство.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-20T19:28:17"
+        },
+        {
+            "username": "София",
+            "text": "Все прошло оперативно, перевод был почти мгновенный. Очень удобно, спасибо!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-19T09:12:27"
+        },
+        {
+            "username": "Оксана",
+            "text": "Спасибо за удобный сервис. Все просто и быстро.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-19T08:19:31"
+        },
+        {
+            "username": "Константин",
+            "text": "Очень хороший сервис, обмен прошёл мгновенно, оператор помог с верификацией, всем доволен.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-02T13:27:10"
+        },
+        {
+            "username": "Андрей",
+            "text": "Меняю здесь не первый раз, поддержка на уровне, перевод занимает буквально пару минут.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-01T16:24:27"
+        },
+        {
+            "username": "Виктор",
+            "text": "Спасибо! Все быстро и оперативно, рекомендую сервис.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-23T17:12:41"
+        },
+        {
+            "username": "Люба",
+            "text": "Отлично, работают чётко и быстро. Рекомендую!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-21T09:38:01"
+        },
+        {
+            "username": "Максим",
+            "text": "Все супер, обмен прошёл без проблем. Советую всем.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-21T08:42:25"
+        },
+        {
+            "username": "Станислав",
+            "text": "Приятно пользоваться сервисом, все работает отлично.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-20T16:58:48"
+        },
+        {
+            "username": "Илья",
+            "text": "Все прошло быстро и без проблем.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-20T14:42:34"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен удобный и простой, интерфейс понятный, все быстро.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-20T13:23:09"
+        },
+        {
+            "username": "Наталья",
+            "text": "Хороший курс и быстрый перевод, всем довольна.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-18T12:47:44"
+        },
+        {
+            "username": "Григорий",
+            "text": "Отличный обменник, все прозрачно и удобно.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-17T10:12:21"
+        },
+        {
+            "username": "Людмила",
+            "text": "Очень рада, что нашла этот сервис. Все прошло быстро, спасибо команде.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-16T11:15:46"
+        },
+        {
+            "username": "Артур",
+            "text": "Отличный обменник, техподдержка всегда отзывчивая.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-16T10:57:46"
+        },
+        {
+            "username": "Владислав",
+            "text": "Сервис хороший, обмен прошел легко и быстро.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-15T17:09:29"
+        },
+        {
+            "username": "Лана",
+            "text": "Прекрасный обменник, пользуюсь давно и всем советую.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-14T08:58:42"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник удобный и понятный. Оператор помог оперативно, рекомендую.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-11T10:10:48"
+        },
+        {
+            "username": "Иван",
+            "text": "Хороший обменник, всегда надежно. Подход профессиональный.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-09T12:54:19"
+        },
+        {
+            "username": "Родион",
+            "text": "Перевод сделали быстро, поддержка очень удобная и отзывчивая.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-09T11:51:07"
+        },
+        {
+            "username": "Людмила",
+            "text": "Немного задержка, но перевод пришел по хорошему курсу. Спасибо оператору за помощь.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-09T08:35:54"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Отлично, без лишних заморочек. Все сделано четко и быстро.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-07T20:12:17"
+        },
+        {
+            "username": "Олег",
+            "text": "Все выполнено отлично, работа обменника на высоте.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-07T17:49:01"
+        },
+        {
+            "username": "Павел",
+            "text": "Все работает исправно, рекомендую всем.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-06T18:59:21"
+        },
+        {
+            "username": "Александр",
+            "text": "Очень хороший обменник, быстро и четко. Рекомендую.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-03T06:25:02"
+        },
+        {
+            "username": "Владислав",
+            "text": "Пользуюсь этим обменником давно. Все быстро и удобно!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-02T19:00:38"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все прошло отлично, операция заняла всего несколько минут.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-02T06:56:40"
+        },
+        {
+            "username": "Алексей",
+            "text": "Сервис пользуюсь давно, все работает качественно и быстро, есть поддержка в телеграме, рекомендую.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-31T10:03:56"
+        },
+        {
+            "username": "Олег",
+            "text": "Пробовал впервые, все прошло быстро и без проблем. Поддержка отзывчивая, отвечает моментально.",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-29T12:46:59"
+        },
+        {
+            "username": "Денис",
+            "text": "Обменником пользуюсь не первый раз, сделали обмен за 30 минут. Спасибо!",
+            "exchange_name": "X-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-29T10:35:05"
+        }
+    ]
+}

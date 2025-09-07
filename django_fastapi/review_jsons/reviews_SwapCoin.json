@@ -1,0 +1,464 @@
+{
+    "SwapCoin": [
+        {
+            "username": "Дмитрий",
+            "text": "Надежный обменник, пользуюсь не первый раз. Поддержка отличная, рекомендую!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:35:55"
+        },
+        {
+            "username": "Сергей",
+            "text": "Просто супер! Выводили 500 USDT, попросили разбить на 4 платежа, сделали одним. Полностью доволен!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T07:47:16"
+        },
+        {
+            "username": "Алексей",
+            "text": "Заявка прошла без задержек.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T19:04:25"
+        },
+        {
+            "username": "Марина",
+            "text": "Обмен прошел очень быстро. Подтверждение оплаты отправила и средства уже на счету. Поддержка супер, спасибо!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T18:56:57"
+        },
+        {
+            "username": "Владимир",
+            "text": "Слишком много проверок, требуют фото карты и задерживают обмен. Не советую терять время.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-03T07:11:00"
+        },
+        {
+            "username": "Илья",
+            "text": "Отличный обменник, пользуюсь уже давно. Никогда не было проблем. Рекомендую!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-25T13:15:06"
+        },
+        {
+            "username": "Ольга",
+            "text": "Быстро и удобно. Поддержка помогла, обмен прошел без проблем.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-24T15:50:00"
+        },
+        {
+            "username": "Никита",
+            "text": "Все прошло четко и быстро.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-18T04:46:02"
+        },
+        {
+            "username": "Даниил",
+            "text": "Все сделали быстро и без проблем, рекомендую.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-17T20:53:07"
+        },
+        {
+            "username": "Андрей",
+            "text": "Заявка обработана оперативно, в течение пары часов.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T20:28:52"
+        },
+        {
+            "username": "Алина",
+            "text": "Большое спасибо команде обменника! По моей ошибке перевела деньги не на тот счет, все быстро исправили и сделали обмен.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T02:16:52"
+        },
+        {
+            "username": "Марк",
+            "text": "Один из немногих обменников, который обработал запрос быстро и без ошибок. Меньше получаса от заявки до завершения.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-09T22:05:37"
+        },
+        {
+            "username": "Семен",
+            "text": "Сделал несколько крупных переводов, все прошло легко и быстро. Работа поддержки на уровне.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-09T12:55:47"
+        },
+        {
+            "username": "Игорь",
+            "text": "Отличный сервис, быстро и четко! Рекомендую.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-07T06:57:48"
+        },
+        {
+            "username": "Вадим",
+            "text": "Очень отзывчивая поддержка. По моей ошибке перевел в другую валюту, все исправили моментально.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-04T11:50:48"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Сервис отличный! Платеж прошел мгновенно, очень рекомендую.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-04T05:53:17"
+        },
+        {
+            "username": "Марина",
+            "text": "Идеальный обмен! 500 у.е. вывела строго в два платежа, все прошло гладко.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-03T11:51:27"
+        },
+        {
+            "username": "Виктория",
+            "text": "Очень быстро и надежно! Однозначно рекомендую.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-01T16:20:31"
+        },
+        {
+            "username": "Павел",
+            "text": "Быстро, понятно и с низкой комиссией.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-11T09:37:16"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен сделали оперативно, курс выгодный.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-10T14:43:47"
+        },
+        {
+            "username": "Александр",
+            "text": "Благодарю за быстрый обмен! Т-Банк > USDT прошло без проблем.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-09T06:18:39"
+        },
+        {
+            "username": "Виктория",
+            "text": "Очень быстро, спасибо!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-07T07:02:39"
+        },
+        {
+            "username": "Наталья",
+            "text": "Пользуюсь второй раз. Сумму разделили на три перевода, все прошло четко и быстро. Спасибо!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-06T12:28:04"
+        },
+        {
+            "username": "Аделина",
+            "text": "Третий обмен, рубли на USDT. Через Т-Банк прошло очень быстро, около 15-20 минут. Поддержка отличная, курс хороший.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-05T09:21:11"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сервис с ограничениями, только СПБ карты. Вводит в заблуждение и теряешь время.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-05-31T18:23:27"
+        },
+        {
+            "username": "Тимур",
+            "text": "Обмен прошел быстро, допустил ошибку, но ребята помогли исправить. Доволен сервисом.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-30T19:34:19"
+        },
+        {
+            "username": "Алиса",
+            "text": "Очень быстро и без лишних слов! Молодцы!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-30T18:32:05"
+        },
+        {
+            "username": "Людмила",
+            "text": "Обмен прошел успешно, все четко.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-23T16:56:51"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все прошло быстро и без проблем. Курс хороший.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-21T17:03:08"
+        },
+        {
+            "username": "Аделаида",
+            "text": "Хороший обменник, меняла рубли на USDT второй раз. Ответы приходят быстро, все прошло гладко.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-19T18:45:46"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень быстрый обмен, все прошло без задержек.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-19T12:42:54"
+        },
+        {
+            "username": "Саид",
+            "text": "Отличный сервис! Скорость обмена приятно удивила. Рекомендую.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-17T04:41:56"
+        },
+        {
+            "username": "Даниил",
+            "text": "Часто пользуюсь обменником, всегда быстро и надежно. Рекомендую!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-12T12:53:09"
+        },
+        {
+            "username": "Владимир",
+            "text": "Юзаю обменники часто, обычно все четко. Этот обменник иногда задерживает средства и не всегда возвращает деньги вовремя. Будьте осторожны.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-05-11T14:52:18"
+        },
+        {
+            "username": "Константин",
+            "text": "Обмен со СБП на USDT прошел успешно. Верификация немного напрягла, но в целом все быстро и удобно.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-09T11:24:30"
+        },
+        {
+            "username": "Ирина",
+            "text": "Третий раз пользуюсь, все чётко и быстро. Буду еще. Спасибо!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-08T05:38:28"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен со Сбера невозможен, дают карты, которые блокирует банк. Сервис проблему не решает.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-05-05T11:23:18"
+        },
+        {
+            "username": "Николай",
+            "text": "Обменник реально хороший. Поддержка на уровне, пользуюсь не первый раз, доволен.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-01T07:35:02"
+        },
+        {
+            "username": "Александра",
+            "text": "Мне понравился сервис.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-28T15:12:37"
+        },
+        {
+            "username": "Сергей",
+            "text": "Курс на сайте не совпадает с фактическим на бестчендже, из-за этого выплаты ориентируются не точно.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-04-26T06:29:03"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошёл честно и быстро, всем доволен.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-21T23:19:16"
+        },
+        {
+            "username": "Сергей",
+            "text": "Благодарю за обмен, заняло около 20 минут, поддержка помогла. Все отлично.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-20T02:45:44"
+        },
+        {
+            "username": "Максим",
+            "text": "Самый оперативный и чёткий сервис за последнее время, поддержка грамотная. Обязательно вернусь!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-18T17:53:42"
+        },
+        {
+            "username": "Александра",
+            "text": "Быстрый обмен, хороший курс, никаких проблем. Спасибо!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-17T08:29:54"
+        },
+        {
+            "username": "Виктор",
+            "text": "Все прошло точно и оперативно, поддержка на связи.",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-15T13:50:11"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Очень быстрый обменник, моментальный вывод BTC. Оператор Даниил запоминает пожелания, всем советую!",
+            "exchange_name": "SwapCoin",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-15T11:14:39"
+        }
+    ]
+}

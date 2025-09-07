@@ -1,0 +1,504 @@
+{
+    "Epichange": [
+        {
+            "username": "Григорий",
+            "text": "Монеты пришли практически моментально, всё чётко. Спасибо, желаю сервису только роста!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:14:43"
+        },
+        {
+            "username": "Андрей",
+            "text": "Очень понравилось, SOL прилетел быстрее, чем ожидал. Классный сервис!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T04:54:58"
+        },
+        {
+            "username": "Искандер",
+            "text": "Кому нужно обменять крипту без лишних сложностей — смело сюда. Всё работает надёжно и без сбоев.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:23:35"
+        },
+        {
+            "username": "Маргарита",
+            "text": "Просто отличный обменник! Пользуюсь постоянно, всё всегда быстро и без ошибок. Рекомендую всем!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:15:58"
+        },
+        {
+            "username": "Антон",
+            "text": "Сервис забрал деньги, но на TRX средства не поступили. Все подтверждения и скрины есть. Прошу разобраться.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-30T11:57:54"
+        },
+        {
+            "username": "Руслан",
+            "text": "Не делайте обмен без верификации. Деньги приняли, а потом начали требовать документы, о чём заранее не предупреждали!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-30T11:14:51"
+        },
+        {
+            "username": "Денис",
+            "text": "Всё прошло мгновенно, как всегда отлично!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T16:04:34"
+        },
+        {
+            "username": "Станислав",
+            "text": "Заявку обработали быстро, удобно, что можно менять и небольшие суммы. Отличный сервис.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:44:02"
+        },
+        {
+            "username": "Артемий",
+            "text": "Отличный сервис, действительно задаёт планку качества среди обменников.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:25:52"
+        },
+        {
+            "username": "Владимир",
+            "text": "Благодарю за быстрый и успешный обмен, всё сработало чётко.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:15:03"
+        },
+        {
+            "username": "Ярослав",
+            "text": "Хороший сервис, переводы проходят быстро. Претензий нет.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T06:40:55"
+        },
+        {
+            "username": "Аркадий",
+            "text": "Очередной раз пользуюсь этим обменником — всё снова моментально! Уже начинаю привыкать к такому уровню сервиса :)",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:34:39"
+        },
+        {
+            "username": "Мирлан",
+            "text": "Сделка закрылась успешно, никаких проблем не возникло.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:36:24"
+        },
+        {
+            "username": "Виталий",
+            "text": "Сервис нормальный, всё перевёлось без лишних нервов и задержек.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:29:22"
+        },
+        {
+            "username": "Женис",
+            "text": "Обмен прошёл удачно! Был сбой — система не увидела перевод, но техподдержка всё быстро проверила и деньги поступили. Благодарю.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T18:57:45"
+        },
+        {
+            "username": "Фарид",
+            "text": "Процесс занял около 10 минут. Единственный минус — курс не фиксируется, это не очень удобно.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:29:06"
+        },
+        {
+            "username": "Егор",
+            "text": "Отличный обменник, всё прошло без проблем, доволен на все сто!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:06:07"
+        },
+        {
+            "username": "Den",
+            "text": "Удобный обменник: минимальная сумма небольшая, работает стабильно, заявки выполняются быстро.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T04:35:08"
+        },
+        {
+            "username": "Петр",
+            "text": "Меняю здесь регулярно. Всегда чётко и без проблем!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T22:20:24"
+        },
+        {
+            "username": "Expert",
+            "text": "Очень быстрый обмен USDT на TRX. Работают профессионально. Рекомендую.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T11:14:41"
+        },
+        {
+            "username": "Никита",
+            "text": "Заявку обработали очень быстро. Рекомендую этот обменник.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T06:25:34"
+        },
+        {
+            "username": "Тимур",
+            "text": "Обменник на высоте, переводы проходят моментально.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T15:15:46"
+        },
+        {
+            "username": "Ильяс",
+            "text": "Положительный опыт обмена. Всегда помогают, если что-то нужно.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:11:48"
+        },
+        {
+            "username": "Вадим",
+            "text": "Ребята работают быстро и четко, обмен проходит без заминок.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T02:50:24"
+        },
+        {
+            "username": "Александр",
+            "text": "Прекрасный обменник! Надежно и стабильно. Десять из десяти.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T14:46:36"
+        },
+        {
+            "username": "Родион",
+            "text": "Всё прошло гладко, транзакция завершена успешно.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T11:53:14"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Деньги не пришли, возврата нет. Поддержка почти не отвечает, очень неудобно. Верификация требовалась неожиданно.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-22T17:52:53"
+        },
+        {
+            "username": "Даниил",
+            "text": "Обмен проходит быстро и без лишней волокиты. Очень доволен сервисом.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T10:49:02"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Хорошая команда, курс адекватный, обмен быстрый, рекомендую всем.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:50:24"
+        },
+        {
+            "username": "Константин",
+            "text": "Один из лучших обменных сервисов, надёжно и удобно. Молодцы!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T07:11:03"
+        },
+        {
+            "username": "Марсель",
+            "text": "Пользуюсь не впервые. Всё удобно и быстро, доволен сервисом.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T16:56:19"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Обмен прошёл очень быстро, без каких-либо проблем. Советую!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T15:22:02"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Моментальный обмен, сервис на высоте. Отличная работа команды!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T05:56:40"
+        },
+        {
+            "username": "Владислав",
+            "text": "Платформа удобная, понятная и безопасная для обмена.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T07:01:39"
+        },
+        {
+            "username": "Лев",
+            "text": "Обменник для тех, кто ценит время. Всё работает чётко и без задержек.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:19:14"
+        },
+        {
+            "username": "Игорь",
+            "text": "Хороший сервис, работает и с малыми суммами, обмен занимает всего пару минут. Рекомендую.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T04:34:30"
+        },
+        {
+            "username": "Николай",
+            "text": "Меняю здесь давно, обычно без проблем. Сегодня пришлось немного подождать, но в итоге всё получилось.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T07:55:06"
+        },
+        {
+            "username": "Леонид",
+            "text": "Сервис простой и честный, разобрался быстро, обмен прошёл нормально.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T15:57:02"
+        },
+        {
+            "username": "Владимир",
+            "text": "Пользуюсь постоянно, всегда всё без задержек и проблем.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T13:41:00"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен руб на USDT. Ошибка при создании заявки, поддержку отписали, но деньги так и не поступили. Очень неудобно, не рекомендую.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-17T12:08:05"
+        },
+        {
+            "username": "Степан",
+            "text": "Обменник работает стабильно, без сбоев. Доволен результатом.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T05:40:04"
+        },
+        {
+            "username": "Ринат",
+            "text": "Перед обменом требуют много данных по карте, комиссия выше, чем хотелось бы. Лучше искать другой обменник.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-15T20:16:49"
+        },
+        {
+            "username": "Олег",
+            "text": "Простой и надёжный обменник. Отправил и получил деньги без проблем.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T17:59:54"
+        },
+        {
+            "username": "Даниэль",
+            "text": "Обмен SOL на LTC занял всего несколько минут. Отлично.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T07:05:25"
+        },
+        {
+            "username": "Павел",
+            "text": "Платформа замечательная. Если возникают проблемы, помогают их решить и перевод завершить успешно. Рекомендую.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T09:04:01"
+        },
+        {
+            "username": "Сергей",
+            "text": "Впервые обменял TRX на LTC, всё прошло гладко. Спасибо сервису.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T22:30:41"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен цифровой валюты на рубли занял около 10 минут, быстро и удобно. Команде спасибо!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T08:26:49"
+        },
+        {
+            "username": "Макар",
+            "text": "Лучший обменник, пользуюсь часто. Рекомендую всем.",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T05:09:34"
+        },
+        {
+            "username": "Роман",
+            "text": "Первый обмен прошёл легко и быстро!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T03:56:41"
+        },
+        {
+            "username": "Павел",
+            "text": "Отличный обменник, ребята молодцы. Теперь только сюда буду обращаться!",
+            "exchange_name": "Epichange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T16:45:41"
+        }
+    ]
+}

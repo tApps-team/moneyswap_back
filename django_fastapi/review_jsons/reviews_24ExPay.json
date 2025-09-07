@@ -1,0 +1,504 @@
+{
+   "24ExPay":[
+      {
+         "username":"Денис",
+         "text":"Отличный сервис! Пользуюсь не впервые, всё выполняют быстро и без проблем. Офис удобный, персонал внимательный. Рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-08-31T17:30:09"
+      },
+      {
+         "username":"Михаил",
+         "text":"Хорошая работа обменника, доволен обслуживанием.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-08-01T15:22:10"
+      },
+      {
+         "username":"Сергей",
+         "text":"Менял USDT на наличные быстро и без заминок. Персонал всегда на связи и помогает моментально.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-07-29T16:45:06"
+      },
+      {
+         "username":"Роман",
+         "text":"Менял наличные на USDT — все прошло гладко и быстро.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-07-04T10:01:54"
+      },
+      {
+         "username":"Александр",
+         "text":"Хороший обменник, пошли навстречу и снизили минимальную сумму обмена.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-06-15T12:31:06"
+      },
+      {
+         "username":"Никита",
+         "text":"Все прошло быстро, обменял рубли на USDT без проблем. Девушка-менеджер очень помогла. Возрастные ограничения отсутствуют — большой плюс.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-05-17T17:22:58"
+      },
+      {
+         "username":"Екатерина",
+         "text":"Очень приятный офис и компетентные менеджеры. Ответы быстрые, все четко и удобно. Обмен проходит без задержек, рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-05-17T12:40:28"
+      },
+      {
+         "username":"Вадим",
+         "text":"Все прошло отлично, пошли навстречу с особой сделкой. Планирую вернуться!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-04-14T11:36:06"
+      },
+      {
+         "username":"Ольга",
+         "text":"Все прошло идеально! Отличная работа команды.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-04-13T19:12:41"
+      },
+      {
+         "username":"Вячеслав",
+         "text":"Обменял USDT на наличные в Казани, быстро, деньги пришли сразу, курс справедливый, без скрытых комиссий. Рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-04-12T15:11:29"
+      },
+      {
+         "username":"Павел",
+         "text":"Менял наличные на тезер, все четко и быстро. Атмосфера приятная, обязательно обращусь снова.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-04-10T15:14:42"
+      },
+      {
+         "username":"Денис",
+         "text":"Всё понравилось. Работа выполнена на 5+, быстро и удобно.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-04-07T14:22:59"
+      },
+      {
+         "username":"Лидия",
+         "text":"Очень удобный обменник, все быстро и надежно. Офис современный, персонал внимательный.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-04-02T18:36:54"
+      },
+      {
+         "username":"Ирина",
+         "text":"Заявку обработали быстро, всегда были на связи. Планирую пользоваться сервисом снова.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-26T13:22:01"
+      },
+      {
+         "username":"Егор",
+         "text":"Удобно и быстро, обмен прошел без проблем.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-25T14:30:00"
+      },
+      {
+         "username":"Дмитрий",
+         "text":"Обменял USDT на рубли, все прошло быстро, курс хороший, менеджеры приветливые. Уже не первый раз пользуюсь, рекомендую!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-17T14:20:32"
+      },
+      {
+         "username":"Станислав",
+         "text":"Обмен руб на эфир прошёл гладко. Офис удобный, менеджер работал четко. Плюс вкусный кофе!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-12T13:14:28"
+      },
+      {
+         "username":"Михаил",
+         "text":"Обмен USDT на рубли прошел быстро, менеджеры внимательные. Работой доволен, рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-11T14:55:55"
+      },
+      {
+         "username":"Артем",
+         "text":"Спасибо за консультацию и быстрый обмен. Рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-10T10:36:28"
+      },
+      {
+         "username":"Григорий",
+         "text":"Офис удобно расположен, инструкции понятные. Обмен USDT на рубли занял минут 20, остальное время ушло на заполнение бумаг. Всё прошло быстро и удобно.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-05T07:45:47"
+      },
+      {
+         "username":"Аделина",
+         "text":"Вывела USDT в наличные впервые, волновалась, но всё прошло отлично. Обязательно вернусь снова.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-03-02T09:59:56"
+      },
+      {
+         "username":"Владимир",
+         "text":"Всё прошло замечательно. Встретили, объяснили, сделка состоялась. Отличный офис и приватные комнаты. Настоятельно рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-02-26T16:10:02"
+      },
+      {
+         "username":"Артем",
+         "text":"Быстро и удобно обменял на наличные. Офис безопасный, коллектив приветливый. Всё на высоте.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-02-01T12:13:58"
+      },
+      {
+         "username":"Илья",
+         "text":"Отличный обменник, вежливые сотрудники, комфортное помещение и быстрый обмен.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-01-25T14:32:16"
+      },
+      {
+         "username":"Евгений",
+         "text":"Быстро, надежно и профессионально. Отличный обменник.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2025-01-14T05:32:59"
+      },
+      {
+         "username":"Александр",
+         "text":"Менял доллары на USDT, прошло без проблем. Отличная работа, рекомендую!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-12-13T16:25:09"
+      },
+      {
+         "username":"Игорь",
+         "text":"Надежный обменник, хорошие курсы, быстрые сделки. Персонал внимательный, спасибо.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-11-21T07:18:38"
+      },
+      {
+         "username":"Денис",
+         "text":"Надежная команда, с которой сотрудничаю не первый год. Всё четко и быстро, советую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-11-15T08:57:43"
+      },
+      {
+         "username":"Николай",
+         "text":"Быстрый обмен, лояльные менеджеры, хороший курс. Меняюсь здесь не первый раз, рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-11-14T16:03:47"
+      },
+      {
+         "username":"Даниил",
+         "text":"Отличный обменник, сервис на высоте. Рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-11-14T15:44:16"
+      },
+      {
+         "username":"Марк",
+         "text":"Менял RUB на USDT, доволен скоростью и обслуживанием. Офис стильный и уютный. Обращусь снова.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-11-03T13:17:06"
+      },
+      {
+         "username":"Кирилл",
+         "text":"Спасибо команде! Всё быстро, четко и без проблем. Рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-10-28T12:24:14"
+      },
+      {
+         "username":"Юрий",
+         "text":"Приятный офис, лояльные менеджеры, быстрые и безопасные сделки. Советую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-10-25T10:06:21"
+      },
+      {
+         "username":"Маргарита",
+         "text":"Уютный офис, приятный менеджер, обмен прошёл быстро и удобно. Спасибо!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-09-14T12:00:42"
+      },
+      {
+         "username":"Александр",
+         "text":"Впервые обращался в этот обменник. Обмен наличных на USDT занял пару минут, оператор помог найти офис. Буду обращаться снова.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-07-27T08:43:30"
+      },
+      {
+         "username":"Мадина",
+         "text":"Повторно обменяла USDT, всё прошло на высшем уровне, быстро и удобно. Буду пользоваться и дальше. Большое спасибо!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-07-19T17:57:53"
+      },
+      {
+         "username":"Максим",
+         "text":"Менял наличные дважды за неделю, всё быстро и без проблем. Большое спасибо, рекомендую!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-07-07T12:53:07"
+      },
+      {
+         "username":"Константин",
+         "text":"Сервис выполнен качественно, спасибо команде и поддержке обменника. Отличная услуга.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-07-05T12:59:56"
+      },
+      {
+         "username":"Лекс",
+         "text":"Все прошло быстро и четко. Саппорт отзывчивый, помог решить все вопросы. Рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-06-19T20:45:54"
+      },
+      {
+         "username":"Мадина",
+         "text":"Отлично! Всё удобно, просто и быстро. Обмен на карту прошёл без проблем. Спасибо за лучшие условия!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-06-19T11:05:28"
+      },
+      {
+         "username":"Олег",
+         "text":"Всё отлично! Рекомендую этот обменник всем.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-06-17T13:30:08"
+      },
+      {
+         "username":"Сергей",
+         "text":"Топовый обменник, благодарю за быстрый и удобный обмен.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-06-01T16:26:59"
+      },
+      {
+         "username":"Андрей",
+         "text":"Впервые обменял USDT на Сбер, деньги пришли мгновенно. Всё супер.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-06-01T14:51:43"
+      },
+      {
+         "username":"Елена",
+         "text":"Отличный обменник, деньги пришли на Сбер за 5 минут, курс приятный, доволен.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-05-30T14:13:28"
+      },
+      {
+         "username":"Вячеслав",
+         "text":"Обмен TRC20 на Сбер прошёл быстро и четко. Спасибо!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-05-28T15:47:16"
+      },
+      {
+         "username":"Эльвин",
+         "text":"Очень быстро, обмен прошёл без проблем. Девушке, которая помогала, большое спасибо!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-05-22T13:17:53"
+      },
+      {
+         "username":"Павел",
+         "text":"Менял наличные в офисе — удобно и оперативно, деньги зачислили на месте, остался доволен.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-05-14T10:58:57"
+      },
+      {
+         "username":"Марина",
+         "text":"Надежный обменник, сотрудники клиентоориентированные, отвечают быстро.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-05-10T12:40:23"
+      },
+      {
+         "username":"Константин",
+         "text":"Всё прошло очень быстро и четко, офис и сотрудники приятные. Рекомендую.",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-05-03T10:40:59"
+      },
+      {
+         "username":"Татьяна",
+         "text":"Спасибо, деньги пришли очень быстро, работа отличная!",
+         "exchange_name":"24ExPay",
+         "status":"Опубликован",
+         "review_from":"ai",
+         "moderation":true,
+         "grade":1,
+         "date":"2024-04-25T17:51:37"
+      }
+   ]
+}

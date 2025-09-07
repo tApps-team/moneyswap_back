@@ -1,0 +1,374 @@
+{
+    "PrimeExchange": [
+        {
+            "username": "Максим",
+            "text": "Все прошло очень быстро и без лишних хлопот!",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:16:11"
+        },
+        {
+            "username": "Игорь",
+            "text": "Отличный обмен, спокойно и без проблем, рекомендую.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:22:41"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Очень удобный обменник, проблем с операциями нет.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T03:02:40"
+        },
+        {
+            "username": "Павел",
+            "text": "Комиссия нормальная, скорость отличная, поддержка всегда на связи.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:18:50"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Спасибо, обмен прошел мгновенно.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:38:54"
+        },
+        {
+            "username": "Мария",
+            "text": "Опять убедилась, что это лучший обменник. Зачисление очень быстрое, поддержка онлайн.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:59:43"
+        },
+        {
+            "username": "Сергей",
+            "text": "Доволен сервисом. Курс хороший, поддержка отличная, акции радуют.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T10:03:36"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Очень четко работает обменник, минута в минуту зачисление. Рекомендую!",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T21:22:26"
+        },
+        {
+            "username": "Михаил",
+            "text": "Прекрасный обменник, удивляюсь стабильности и скорости.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:22:30"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник реально впечатляет, рекомендую сотрудничать.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T18:02:10"
+        },
+        {
+            "username": "Ирина",
+            "text": "Очень удобный обменник, пользуюсь постоянно. Все быстро и надежно.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T09:54:27"
+        },
+        {
+            "username": "Олег",
+            "text": "Превосходный обменник, без проблем и быстрый.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T03:37:48"
+        },
+        {
+            "username": "Никита",
+            "text": "Отличный сервис, только жалко, что ночью недоступен.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T19:21:30"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Всегда советую этот обменник своим друзьям, просто супер!",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T09:09:07"
+        },
+        {
+            "username": "Алексей",
+            "text": "Лучший в своем деле, только здесь надежно и быстро.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T18:14:42"
+        },
+        {
+            "username": "Семен",
+            "text": "Наверное, лучший обменник. Комиссия справедливая, скорость отличная, поддержка всегда на связи.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T15:53:08"
+        },
+        {
+            "username": "Виктор",
+            "text": "Как обычно, все идеально!",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T01:23:02"
+        },
+        {
+            "username": "Николай",
+            "text": "Очень хороший обменник, жаль только, что ночью не работает.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T20:23:33"
+        },
+        {
+            "username": "Ольга",
+            "text": "Все отлично, без задержек и проблем.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T14:50:53"
+        },
+        {
+            "username": "Евгения",
+            "text": "Отличный сервис, рекомендую. Все быстро и удобно.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T10:20:46"
+        },
+        {
+            "username": "Игорь",
+            "text": "Надежный обменник, лучшее решение для быстрых операций.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T16:04:14"
+        },
+        {
+            "username": "Анонимус",
+            "text": "Поддержка отзывчивая, обмен проходит быстро, курс приятный, реквизиты всегда рабочие.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T05:27:10"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен прошел идеально, скорость впечатляет, все четко и без задержек.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T14:43:20"
+        },
+        {
+            "username": "Александр",
+            "text": "Очень доволен ребятами, буду менять еще!",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T21:11:52"
+        },
+        {
+            "username": "Владислав",
+            "text": "Всегда пользуюсь этим обменником, надежно и быстро!",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T15:19:18"
+        },
+        {
+            "username": "Людмила",
+            "text": "Сервис на высоте, все отлично и быстро.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T14:47:44"
+        },
+        {
+            "username": "Константин",
+            "text": "Меняю регулярно, курс нормальный, реквизиты всегда в порядке.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T13:59:11"
+        },
+        {
+            "username": "Алексей",
+            "text": "С этим обменником работаю давно, акции и бонусы радуют.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T08:46:45"
+        },
+        {
+            "username": "Денис",
+            "text": "Пользуюсь почти год, реквизиты всегда в наличии, курс нормальный.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T04:58:01"
+        },
+        {
+            "username": "Лилия",
+            "text": "Покупала лайткоин, очень быстро и без комиссий.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T14:50:26"
+        },
+        {
+            "username": "Сергей",
+            "text": "Лучший обменник в интернете, всегда надежно.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T14:31:16"
+        },
+        {
+            "username": "Виктор",
+            "text": "Курс хороший, крипта чистая, все что нужно для обмена.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T10:48:50"
+        },
+        {
+            "username": "Валерия",
+            "text": "Давно работаю с ними, обмен всегда четкий и быстрый.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T17:54:04"
+        },
+        {
+            "username": "Андрей",
+            "text": "Рекомендую всем этот обменник! Быстро, удобно и недорого.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T16:46:00"
+        },
+        {
+            "username": "Виктория",
+            "text": "Поменяли быстро, биткоин пришел через 10 минут, все идеально.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T13:22:04"
+        },
+        {
+            "username": "Николай",
+            "text": "Только этот обменник! Проверенный временем и делами, всегда надежно.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T13:13:55"
+        },
+        {
+            "username": "Елена",
+            "text": "Сервис на высоте, обменник надежный и быстрый.",
+            "exchange_name": "PrimeExchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T01:20:16"
+        }
+    ]
+}

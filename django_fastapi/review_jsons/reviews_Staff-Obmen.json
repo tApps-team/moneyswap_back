@@ -1,0 +1,344 @@
+{
+    "Staff-Obmen": [
+        {
+            "username": "Марина",
+            "text": "Очень довольна скоростью обмена!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:23:39"
+        },
+        {
+            "username": "Алина",
+            "text": "Получила средства моментально, всё прошло гладко.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:27:50"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Хочу поблагодарить менеджера Александра за быструю и профессиональную помощь.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:08:08"
+        },
+        {
+            "username": "Никита",
+            "text": "Сделка прошла успешно, как всегда. Отличная работа команды, рекомендую!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:22:40"
+        },
+        {
+            "username": "Светлана",
+            "text": "Средства получила мгновенно, всё легко и удобно.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T07:35:43"
+        },
+        {
+            "username": "Ольга",
+            "text": "Пользуюсь этим сервисом уже несколько лет, всегда без проблем. Большое спасибо!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:36:06"
+        },
+        {
+            "username": "Надежда",
+            "text": "Как всегда средства пришли быстро и без ошибок.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:52:31"
+        },
+        {
+            "username": "Игорь",
+            "text": "Техподдержка на высоте! Очень вежливые и внимательные специалисты.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T18:17:35"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сервис отличный, все быстро и просто.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T07:31:11"
+        },
+        {
+            "username": "Людмила",
+            "text": "Благодарю! Средства поступили быстро и без проблем.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T11:22:00"
+        },
+        {
+            "username": "Константин",
+            "text": "Обмен прошёл быстро и без проблем. Буду пользоваться снова.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-16T15:17:23"
+        },
+        {
+            "username": "Дарья",
+            "text": "Отлично! Деньги на счёт пришли всего через несколько минут.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T09:43:08"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл быстро, курс выгодный, поддержка отличная. Спасибо!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T14:05:54"
+        },
+        {
+            "username": "Анна",
+            "text": "Очень порадовал сервис! Минимальная сумма удобная, обмен мгновенный, всё супер!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T08:21:43"
+        },
+        {
+            "username": "Владислав",
+            "text": "Пользуюсь этим обменником уже несколько лет, всегда на высшем уровне, профессиональная поддержка.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T16:44:37"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл в течение двадцати минут, всё отлично.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T12:25:49"
+        },
+        {
+            "username": "Михаил",
+            "text": "Сделка выполнена быстро и без проблем.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T09:03:28"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Отличный обменник! Поддержка отвечает моментально, перевод пришёл быстро. Рекомендую.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T07:40:43"
+        },
+        {
+            "username": "Наталья",
+            "text": "Средства получила быстро и надёжно, всем советую этот сервис.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T18:09:02"
+        },
+        {
+            "username": "Александр",
+            "text": "Консультант очень помог. Деньги поступили в считанные минуты, отличная поддержка!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T12:34:37"
+        },
+        {
+            "username": "Ксения",
+            "text": "Как всегда, средства поступили быстро и без проблем.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T08:58:04"
+        },
+        {
+            "username": "Илья",
+            "text": "Обмен прошёл за полчаса, всё оперативно, спасибо!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T12:34:07"
+        },
+        {
+            "username": "Марина",
+            "text": "Отличный ресурс! Быстро, удобно, поддержка всегда на связи. Рекомендую.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T07:46:56"
+        },
+        {
+            "username": "Сергей",
+            "text": "Хороший обменник! Всегда получаю отличный результат. Всем советую.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T20:08:41"
+        },
+        {
+            "username": "Ольга",
+            "text": "Супер сервис! Очень быстро всё прошло. Благодарю!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T12:48:48"
+        },
+        {
+            "username": "Артём",
+            "text": "Лучший обменник! Пользуюсь давно, консультанты всегда доброжелательные и помогают.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T18:45:57"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен прошёл без заминок, всё четко и надежно, как обычно.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T14:38:33"
+        },
+        {
+            "username": "Николай",
+            "text": "Менеджеры настоящие профессионалы! Все вопросы решились быстро, деньги пришли мгновенно. Большое спасибо!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T13:51:47"
+        },
+        {
+            "username": "Людмила",
+            "text": "Благодарю менеджера Владимира и всю команду за качественную работу!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T15:28:25"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошёл молниеносно, очень доволен сервисом!",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T12:36:20"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмениваю у них постоянно! Всегда быстро, чётко и надёжно. Рекомендую.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T15:48:48"
+        },
+        {
+            "username": "Михаил",
+            "text": "Всё прошло как обычно: быстро, удобно и без проблем.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T13:52:34"
+        },
+        {
+            "username": "Алена",
+            "text": "Средства поступили быстро и надежно, всем рекомендую сервис.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T10:40:42"
+        },
+        {
+            "username": "Виктория",
+            "text": "Получила деньги мгновенно, обмен прошёл без проблем, очень удобно.",
+            "exchange_name": "Staff-Obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T08:48:05"
+        }
+    ]
+}

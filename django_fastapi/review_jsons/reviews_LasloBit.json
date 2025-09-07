@@ -1,0 +1,504 @@
+{
+    "LasloBit": [
+        {
+            "username": "Оля",
+            "text": "Обмен прошел очень быстро, курс хороший. Рекомендую!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:31:33"
+        },
+        {
+            "username": "Игорь",
+            "text": "Моментальный обмен, стабильно и удобно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:06:32"
+        },
+        {
+            "username": "Наталья",
+            "text": "Очень быстрый обмен! Спасибо. Заявка ID 737247.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:11:11"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Всё прошло оперативно, благодарю за работу.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:40:04"
+        },
+        {
+            "username": "Сергей",
+            "text": "Трон на ЮMoney обменялся мгновенно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T04:55:40"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошел отлично, очень быстро!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:24:26"
+        },
+        {
+            "username": "Иван",
+            "text": "Сделали обмен быстро и удобно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:37:41"
+        },
+        {
+            "username": "Макс",
+            "text": "Как всегда — быстро и без проблем.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T07:52:47"
+        },
+        {
+            "username": "Лена",
+            "text": "Благодарю за оперативный обмен! Всё просто и удобно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:13:44"
+        },
+        {
+            "username": "Ирина",
+            "text": "Обмен прошел мгновенно, спасибо!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T08:13:32"
+        },
+        {
+            "username": "Никита",
+            "text": "Как обычно — всё быстро и удобно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T20:16:33"
+        },
+        {
+            "username": "Марина",
+            "text": "Очень быстрый и лёгкий обмен! Рекомендую этот сервис.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:24:10"
+        },
+        {
+            "username": "Артём",
+            "text": "Отлично! Быстрый обмен, всё прошло гладко.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T07:01:27"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен завершён быстро.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:17:20"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень доволен работой обменника. Всё мгновенно и удобно, молодцы!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:12:56"
+        },
+        {
+            "username": "Денис",
+            "text": "Как всегда быстро, спасибо!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:32:12"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошел быстро и по хорошему курсу. Благодарю!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:17:49"
+        },
+        {
+            "username": "Михаил",
+            "text": "Спасибо за оперативный обмен! Всё отлично.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T08:17:08"
+        },
+        {
+            "username": "Ольга",
+            "text": "Быстрый и удобный обмен, очень довольна.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T07:28:45"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен прошел быстро, Utopia USD на USDT за несколько секунд.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T21:40:54"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Менял LTC на СБП, очень оперативно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T19:58:11"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен прошел без задержек.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T19:55:20"
+        },
+        {
+            "username": "Игорь",
+            "text": "Трон на ЮMoney обменялся мгновенно!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:14:29"
+        },
+        {
+            "username": "Максим",
+            "text": "Обмен прошел быстро, курс устроил.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:00:26"
+        },
+        {
+            "username": "Людмила",
+            "text": "Все быстро и удобно, обмен прошел без проблем.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:08:44"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошел успешно, сервис на высоте.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T10:13:53"
+        },
+        {
+            "username": "Оксана",
+            "text": "Очень быстрый обмен, курс выгодный. Рекомендую!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T06:04:08"
+        },
+        {
+            "username": "Александр",
+            "text": "Лучший обменник! Всегда ставлю только положительные оценки.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T02:27:52"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмен прошел быстро и удобно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T00:02:08"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен выполнен мгновенно, всё прошло гладко!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T20:41:01"
+        },
+        {
+            "username": "Эдуард",
+            "text": "Часто пользуюсь, все обмены проходят быстро, без лишних проверок.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:36:37"
+        },
+        {
+            "username": "Владислав",
+            "text": "Выплатили всю сумму полностью, спасибо!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T15:38:54"
+        },
+        {
+            "username": "Максим",
+            "text": "Надежный обменник, все быстро и без проблем.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T10:37:35"
+        },
+        {
+            "username": "Егор",
+            "text": "Обмен успешно завершён! Рекомендую.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T09:33:30"
+        },
+        {
+            "username": "Анна",
+            "text": "Все прошло быстро и качественно. Спасибо!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T08:32:45"
+        },
+        {
+            "username": "Виктория",
+            "text": "Быстро и удобно, сайт отличный. Очень довольна сервисом.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T22:14:32"
+        },
+        {
+            "username": "Павел",
+            "text": "Снова порадовала скорость и надежность. Спасибо за сервис!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T17:15:10"
+        },
+        {
+            "username": "Игорь",
+            "text": "Эфириум на ЮMoney обменялся мгновенно!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T12:47:50"
+        },
+        {
+            "username": "Владислав",
+            "text": "Выплата получена, все отлично.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T11:53:20"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отличный обмен, все прошло быстро!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T08:27:49"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен прошел быстро, спасибо!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T06:53:41"
+        },
+        {
+            "username": "Марина",
+            "text": "Все быстро и качественно, курс обмена выгодный.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T20:04:02"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен LTC на СБП прошел мгновенно.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T19:15:46"
+        },
+        {
+            "username": "Сами",
+            "text": "Лучший обменник, очень доволен.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T19:15:35"
+        },
+        {
+            "username": "Владислав",
+            "text": "Все прошло быстро, качественно и удобно!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T13:57:03"
+        },
+        {
+            "username": "Олеся",
+            "text": "Обмен прошел быстро, надежно. Рекомендую!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T12:28:06"
+        },
+        {
+            "username": "Игорь",
+            "text": "ETH на ЮMoney обменялся моментально!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:18:20"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Спасибо, всё прошло очень быстро! Рекомендую.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T05:22:12"
+        },
+        {
+            "username": "Александр",
+            "text": "Обмен прошел удивительно быстро. Большое спасибо.",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T16:40:57"
+        },
+        {
+            "username": "Софья",
+            "text": "Быстрый обмен, курс отличный, всем довольна!",
+            "exchange_name": "LasloBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T16:13:35"
+        }
+    ]
+}

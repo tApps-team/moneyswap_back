@@ -1,0 +1,474 @@
+{
+    "ExchangeMafia": [
+        {
+            "username": "Алиса",
+            "text": "Все поменяли моментально, благодарю.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:09:56"
+        },
+        {
+            "username": "Михаэль",
+            "text": "Обмен прошел быстро, пользуюсь этим обменником регулярно. Спасибо!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T18:45:42"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Оператор отвечал оперативно до создания заявки. Но после отправки номера заявки в чат никто не выходил на связь, через три часа заявку отменили. Не рекомендую, если не хотите тратить время.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-29T15:49:22"
+        },
+        {
+            "username": "Иван",
+            "text": "Обменник отличный. Обмен проходит быстро, поддержка всегда на связи и вежлива. Рекомендую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T14:05:37"
+        },
+        {
+            "username": "Макс",
+            "text": "Обменял Wise-TRC20. Немного подождал, но всё прошло гладко. Хороший обменник, советую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T13:45:13"
+        },
+        {
+            "username": "Павел",
+            "text": "Отправил заявку и написал в чат, но оператор молчит уже полчаса.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-08T12:50:13"
+        },
+        {
+            "username": "Марина",
+            "text": "Очень быстрый обмен, деньги пришли на карту за 10 минут (usdt на revolut euro). Обмениваю не впервые, всегда без проблем. Отлично!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T17:28:22"
+        },
+        {
+            "username": "Олександр",
+            "text": "Лучший обменник, с которым работал! Заявки обрабатываются мгновенно, поддержка супер. Советую!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T10:39:37"
+        },
+        {
+            "username": "Владислав",
+            "text": "Оплатили быстро, всегда предоставляют квитанцию. Буду менять тут регулярно.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-16T11:01:22"
+        },
+        {
+            "username": "Сергей",
+            "text": "Менял USDT на Revolut евро, быстро и удобно, поддержка на связи. Планирую пользоваться дальше.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-05T20:11:21"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Скорость работы оставляет желать лучшего, оператор отвечает медленно. Заявка оплачена почти час назад, саппорт на сайте молчит, в Telegram ответы странные. Другие обменники работали быстрее. Проблема, похоже, системная.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-04-30T16:51:16"
+        },
+        {
+            "username": "Константин",
+            "text": "Меняю регулярно, всегда чётко, курс хороший. Рекомендую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-23T07:23:13"
+        },
+        {
+            "username": "Артём",
+            "text": "Создал заявку, но долго ждал связь с оператором. Чат поддержки почти не отвечает, пришлось ждать возврата средств. Очень медленно.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-04-18T05:52:11"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обмен прошёл вовремя. Немного заморочек с заполнением заявки, но в целом всё отлично. Спасибо обменнику!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-31T15:47:18"
+        },
+        {
+            "username": "Людмила",
+            "text": "Все сделали быстро и без задержек. Обмен 550 Skrill USD на Tether TRC20 USDT прошёл отлично. Рекомендую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-20T10:58:13"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен прошёл без проблем, рекомендую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-17T12:50:26"
+        },
+        {
+            "username": "Арина",
+            "text": "Меняла Skrill на USDT. Все прошло гладко, благодарю! Обязательно буду пользоваться снова.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-04T11:29:49"
+        },
+        {
+            "username": "Валерия",
+            "text": "Обмен супер, без проблем. Обменник рекомендую, буду обращаться ещё.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-24T16:43:33"
+        },
+        {
+            "username": "Роман",
+            "text": "Создал заявку монобанк-тезер, спросил про верификацию, блокировка без объяснений. Очень неприятный опыт.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-02-22T17:47:13"
+        },
+        {
+            "username": "София",
+            "text": "Обмен очень быстрый. Меняю не первый раз, все отлично. Обменник рекомендую!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-13T15:13:49"
+        },
+        {
+            "username": "Евгения",
+            "text": "Обмен монобанк на USDT прошёл отлично, без верификаций.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-10T16:35:04"
+        },
+        {
+            "username": "Наталья",
+            "text": "Обмен прошёл успешно, всё быстро и по хорошему курсу. Советую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-10T15:13:24"
+        },
+        {
+            "username": "Александр",
+            "text": "Поменял гривны на USDT. Всё прозрачно и быстро (около 15 минут). Буду обращаться ещё.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-04T15:00:10"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обменник отличный, реквизиты выдаются быстро через чат, всё работает без задержек.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-04T13:41:36"
+        },
+        {
+            "username": "Максим",
+            "text": "Ждал обмена уже почти сутки, но связи с оператором почти нет. Очень медленный сервис, хочу вернуть средства.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-01-31T07:40:10"
+        },
+        {
+            "username": "Денис",
+            "text": "Менял 2.6k$ с USDT на карту в $, обмен завершен быстрее суток. Советую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-01-30T07:41:38"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен крипто на Revolut. Уже сутки жду зачисления, заявка закрыта, а оператор не отвечает. Ответили только: \"Не знаю\".",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-01-26T11:04:27"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Сделал обмен Skrill USD на Tether TRC20 USDT. Всё быстро и без проблем. Рекомендую.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-01-22T10:45:13"
+        },
+        {
+            "username": "Данила",
+            "text": "Очень доволен сервисом, обмен проходит быстро. Буду пользоваться ещё.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-01-12T12:31:50"
+        },
+        {
+            "username": "Станислав",
+            "text": "Ордер на перевод USDT => USD. Деньги частично вернули только через 40 минут, остальное заблокировано. Очень разочарован.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2024-12-10T16:11:22"
+        },
+        {
+            "username": "Иван",
+            "text": "Обмен Wise-TRC20 сделали очень быстро, спасибо ребятам!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-03T16:15:17"
+        },
+        {
+            "username": "Егор",
+            "text": "Обмен по направлению SEPA евро в USDT TRC20. Поддержка попросила прислать подтверждение перевода, после чего оплата поступила почти сразу.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-03T09:42:34"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен USDT на доллары. Полтора часа ожидания, потом письмо \"заявка выполнена\", но деньги не пришли. Поддержка пишет непонятные ответы. Очень разочарован.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2024-11-29T12:56:46"
+        },
+        {
+            "username": "Александр",
+            "text": "Всё прошло быстро и удобно, доволен сервисом.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-26T14:37:37"
+        },
+        {
+            "username": "Кира",
+            "text": "Отличный обменник, курсы хорошие. Это был мой первый обмен, но точно не последний.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-22T10:41:11"
+        },
+        {
+            "username": "Елена",
+            "text": "Обмен прошёл быстро, рекомендую!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-13T13:17:44"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обменник держит слово, сервис на уровне. Респект!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-12T06:49:48"
+        },
+        {
+            "username": "Тимур",
+            "text": "Быстро связались и обмен сделали моментально. Молодцы!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-11T10:56:07"
+        },
+        {
+            "username": "Илья",
+            "text": "Все прошло отлично, помогли без проблем.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-08T13:22:39"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Меняла впервые, обмен прошёл быстро, поддержка отвечает моментально.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-06T12:47:06"
+        },
+        {
+            "username": "Богдан",
+            "text": "Сначала сомневался, мало отзывов, но решил попробовать. Курс хороший, обмен прошёл очень быстро, поддержка оперативная. Рекомендую!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-31T16:22:11"
+        },
+        {
+            "username": "Алиса",
+            "text": "Обмен прошёл быстро, поддержка всегда на высоте.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-30T11:41:38"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен сделали очень быстро, поддержка отличная. Рекомендую всем!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-29T14:47:44"
+        },
+        {
+            "username": "Максим",
+            "text": "Менял первый раз, всё прошло быстро, курс приемлемый. Добавил сайт в закладки.",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-29T13:39:50"
+        },
+        {
+            "username": "Ростислав",
+            "text": "Третий раз меняю тут, всё так же отлично. Курс и скорость на высоте. Рекомендую!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-29T09:18:12"
+        },
+        {
+            "username": "Вадим",
+            "text": "Повторно обменяюсь, всё отлично. Деньги пришли в течение часа, поддержка на связи, курс хороший. Советую!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-28T10:25:54"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Первый раз пользуюсь, ребята дружелюбные и профессиональные. Обмен выполнен за пару минут, никаких лишних вопросов, анонимно и без верификаций. Отличный сервис!",
+            "exchange_name": "ExchangeMafia",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-25T11:12:22"
+        }
+    ]
+}

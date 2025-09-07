@@ -1,0 +1,444 @@
+{
+    "CoinCat": [
+        {
+            "username": "Игорь",
+            "text": "Пользуюсь сервисом давно, всегда быстро и поддержка отзывчивая.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:56:52"
+        },
+        {
+            "username": "Марина",
+            "text": "Приятный обменник, служба поддержки всегда помогает, пользуюсь уже долго.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:01:31"
+        },
+        {
+            "username": "Наталья Петровна",
+            "text": "Большое спасибо, перевод пришёл очень быстро, как всегда.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T16:23:44"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все прошло отлично, без проблем.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T04:30:28"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень удобный обмен, пользуюсь уже давно и доволен сервисом.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:22:28"
+        },
+        {
+            "username": "Алена",
+            "text": "Сервис отличный! Всё просто и быстро работает.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T14:36:01"
+        },
+        {
+            "username": "Ирина",
+            "text": "Сделали всё очень быстро! Благодарю!",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T20:40:24"
+        },
+        {
+            "username": "Кекс",
+            "text": "Надёжный сервис, все без задержек. Рекомендую.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T10:17:45"
+        },
+        {
+            "username": "Михаил",
+            "text": "Всё прошло отлично, без проблем.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T08:22:57"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Как всегда, сервис на высоте — быстро и удобно.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T04:04:37"
+        },
+        {
+            "username": "Виталий",
+            "text": "Пользуюсь давно, всегда всё чётко и без задержек.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:16:14"
+        },
+        {
+            "username": "Илья",
+            "text": "Быстро и удобно, обменник отличный!",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T01:27:22"
+        },
+        {
+            "username": "Николай",
+            "text": "Спасибо за обмен, всё прошло супер!",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T11:40:42"
+        },
+        {
+            "username": "Ольга",
+            "text": "Благодарю, обмен прошёл идеально.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T09:50:55"
+        },
+        {
+            "username": "Али",
+            "text": "Спасибо, обмен прошёл очень быстро.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T20:35:44"
+        },
+        {
+            "username": "Роман",
+            "text": "Отличный обменник, всё супер! Всё доходит быстро.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T14:33:41"
+        },
+        {
+            "username": "Людмила",
+            "text": "Спасибо, поддержка помогла быстро разобраться. Всё отлично!",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T10:38:44"
+        },
+        {
+            "username": "Оскар",
+            "text": "Обмен прошёл гладко, как обычно, сервис на высоте.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T13:00:01"
+        },
+        {
+            "username": "Лев",
+            "text": "Сервис работает быстро и точно. Респект команде!",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T18:27:20"
+        },
+        {
+            "username": "Павел",
+            "text": "Все отлично, как всегда без проблем.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T19:17:04"
+        },
+        {
+            "username": "Константин",
+            "text": "Сервис на высоте, всё проходит быстро и удобно.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T13:56:21"
+        },
+        {
+            "username": "Филипп",
+            "text": "Всё прошло гладко, как всегда.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T13:55:35"
+        },
+        {
+            "username": "Станислав",
+            "text": "Проблему решили быстро, сервис работает на высшем уровне.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T13:58:35"
+        },
+        {
+            "username": "Евгений",
+            "text": "Надежно и оперативно, как всегда.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T07:57:34"
+        },
+        {
+            "username": "Георгий",
+            "text": "Приятный сервис, быстро и чётко выполняют обмен.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T07:23:59"
+        },
+        {
+            "username": "Катя",
+            "text": "Все прошло очень быстро, молодцы!",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T19:13:30"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл быстро и качественно, как всегда.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T15:22:32"
+        },
+        {
+            "username": "Алексей",
+            "text": "Очень полезный сервис, пользуюсь уже несколько лет и доволен.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T10:43:14"
+        },
+        {
+            "username": "Ольга",
+            "text": "Сервис быстрый и надёжный. Если возникают проблемы, поддержка оперативно помогает.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T12:49:36"
+        },
+        {
+            "username": "Артём",
+            "text": "Сервис работает быстро и стабильно, пользуюсь уже несколько лет.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T09:18:06"
+        },
+        {
+            "username": "София",
+            "text": "Надёжно и быстро, поддержка всегда помогает.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T12:55:12"
+        },
+        {
+            "username": "Михаил",
+            "text": "Сервис на высоте, работает в любой день без сбоев.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T07:51:18"
+        },
+        {
+            "username": "Евгений",
+            "text": "Все операции проходят без проблем.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T00:02:52"
+        },
+        {
+            "username": "Иван",
+            "text": "Сервис всегда работает стабильно, перевод доходит до адресата.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T11:50:47"
+        },
+        {
+            "username": "Лариса",
+            "text": "Надёжный обменник, всё проходит быстро и по хорошему курсу.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T11:10:31"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник добросовестный, всё работает отлично. Так держать!",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T08:16:39"
+        },
+        {
+            "username": "Денис",
+            "text": "Оперативный обмен, поддержка очень отзывчивая. Заявку провели быстро.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T07:51:53"
+        },
+        {
+            "username": "Наталья",
+            "text": "Быстрый и надёжный обменник, пользуемся регулярно. Рекомендую.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T11:44:39"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Совершал обмен несколько раз, всё прошло отлично.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-03T15:08:48"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Отличный обменник, всё стабильно и быстро, как всегда.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T13:18:39"
+        },
+        {
+            "username": "Владислав",
+            "text": "Очень быстрый обмен, надежно, всё прошло гладко.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T06:58:14"
+        },
+        {
+            "username": "Артем",
+            "text": "Сервис работает без сбоев, всё отлично. Рекомендую.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T12:04:09"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен прошёл быстро и надёжно, сервис отличный.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T06:41:51"
+        },
+        {
+            "username": "Даниил",
+            "text": "Лучший обменник, пользуюсь уже несколько лет, всё стабильно работает.",
+            "exchange_name": "CoinCat",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T11:16:19"
+        }
+    ]
+}

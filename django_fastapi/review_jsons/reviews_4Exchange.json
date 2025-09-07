@@ -1,0 +1,384 @@
+{
+  "4Exchange": [
+    {
+      "username": "Виктория",
+      "text": "Давно не пользовалась сервисом, обмен прошёл гладко, деньги поступили быстро, курс адекватный, спасибо!",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-02T12:13:22"
+    },
+    {
+      "username": "Артём",
+      "text": "Пользуюсь давно, все операции проходят без задержек, выплаты моментальные, поддержка оперативная. Курс нормальный, рекомендую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-01T17:26:15"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Обмен не понравился, комиссия списана слишком высокая, сервис не рекомендую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-25T06:51:15"
+    },
+    {
+      "username": "Алексей",
+      "text": "Обмен прошёл без проблем, биткоины конвертировались быстро, поддержка отвечала вовремя. Сервис хороший.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-14T13:42:29"
+    },
+    {
+      "username": "Николай",
+      "text": "Сделка прошла нормально, немного дольше обычного, но курс приятный, ребята честные, советую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-14T11:16:28"
+    },
+    {
+      "username": "Елена",
+      "text": "При переводе возникли вычеты, непонятно за что. Сумма на сайте не совпала с фактической. Будьте внимательны.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-12T14:28:38"
+    },
+    {
+      "username": "Светлана",
+      "text": "Обменник на высоте, быстро и качественно, поддержка отзывчивая. Рекомендую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-11T12:47:47"
+    },
+    {
+      "username": "Евгений",
+      "text": "Обмен прошёл идеально, сделали несколько переводов, оператор отвечал быстро, всё отлично.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-08T12:18:49"
+    },
+    {
+      "username": "Роман",
+      "text": "Вернулся после перерыва, обмен прошёл быстро, персонал дружелюбный, курс нормальный, сервис радует.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-07T05:24:29"
+    },
+    {
+      "username": "Дарья",
+      "text": "Персонал внимательный, исправили ошибку в данных до обмена, проверили всё, очень довольна.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-07T01:13:40"
+    },
+    {
+      "username": "Константин",
+      "text": "AML проверка показала высокий риск, но все условия соблюдены, жду обмена. Сервис информативный и прозрачный.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-07-25T14:05:26"
+    },
+    {
+      "username": "Полина",
+      "text": "Регулярно пользуюсь обменником, деньги приходят быстро, поддержка отзывчивая, довольна сервисом.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-22T11:14:28"
+    },
+    {
+      "username": "Наталья",
+      "text": "Обмен прошёл идеально, всё чётко и быстро. Поддержка на высоте, рекомендую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-08T10:26:47"
+    },
+    {
+      "username": "Руслан",
+      "text": "Сервис прозрачный, комиссии нет, деньги пришли вовремя, поддержка на связи. Отлично.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-30T13:01:39"
+    },
+    {
+      "username": "Артем",
+      "text": "Обмен прошёл быстро, курс нормальный, сервис надежный, доволен.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-29T17:31:44"
+    },
+    {
+      "username": "Ольга",
+      "text": "Впечатления от обмена положительные, сервис качественный и стабильный, обязательно вернусь.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-28T10:27:04"
+    },
+    {
+      "username": "Денис",
+      "text": "Первая сделка прошла отлично, сервис понравился, обслуживание на высоком уровне.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-25T08:55:12"
+    },
+    {
+      "username": "Марина",
+      "text": "Деньги пришли быстро, обмен честный, сервис заслуживает доверия.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-24T14:16:45"
+    },
+    {
+      "username": "Владимир",
+      "text": "Выплата мгновенная, поддержка всегда на связи, обменник надежный, буду пользоваться снова.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-23T09:27:41"
+    },
+    {
+      "username": "Андрей",
+      "text": "Спасибо за быстрый и качественный обмен, ваш сервис всегда выручает.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-21T15:10:46"
+    },
+    {
+      "username": "София",
+      "text": "Первый обмен прошёл без проблем, быстро и удобно, приятно работать с этим сервисом.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-20T13:35:54"
+    },
+    {
+      "username": "Семен",
+      "text": "Выручили, обмен прошёл чётко и безопасно, сервис рекомендую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-19T17:23:59"
+    },
+    {
+      "username": "Наталия",
+      "text": "Обмен прошёл отлично: скорость, курс, поддержка и интерфейс — всё на высшем уровне.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-18T09:05:01"
+    },
+    {
+      "username": "Илья",
+      "text": "Средства поступили мгновенно, всё прошло без проблем, сервис на высоте.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-16T18:14:22"
+    },
+    {
+      "username": "Матвей",
+      "text": "Деньги пришли тремя переводами, без лишних проверок, сервис надежный.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-15T13:13:07"
+    },
+    {
+      "username": "Никита",
+      "text": "Средства зашли без проблем, обменник работает стабильно, спасибо.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-14T16:37:47"
+    },
+    {
+      "username": "Анастасия",
+      "text": "Первый раз меняла деньги, немного волновалась, всё прошло идеально, деньги на карте, настроение отличное.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-13T10:16:52"
+    },
+    {
+      "username": "Сергей",
+      "text": "Деньги поступили быстро на карту, обмен прошёл без проблем, сервис рекомендую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-12T17:18:05"
+    },
+    {
+      "username": "Анна",
+      "text": "Пользуюсь сервисом много лет, обмен проходит быстро, поддержка отзывчивая, сервис надежный.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-11T11:01:30"
+    },
+    {
+      "username": "Павел",
+      "text": "Деньги пришли быстро, приятно иметь дело с этим обменником.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-10T14:27:57"
+    },
+    {
+      "username": "Ирина",
+      "text": "Сайт отличный, обмен всегда проходит гладко. Перед операциями проверяйте детали с поддержкой, рекомендую.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-09T11:06:31"
+    },
+    {
+      "username": "Виктор",
+      "text": "Надёжный обменник, пользуюсь не первый раз. Курс хороший, переводы быстрые, всё отлично.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-08T12:27:15"
+    },
+    {
+      "username": "Алена",
+      "text": "Обмен оставил только положительные впечатления, заявка выполнена быстро, поддержка профессиональная и вежливая.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-07T18:09:58"
+    },
+    {
+      "username": "Тимофей",
+      "text": "Перепробовал много обменников, этот самый надёжный и быстрый, операции проходят без проблем.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-06T09:12:44"
+    },
+    {
+      "username": "Константин",
+      "text": "Благодарю команду за честность, поддержка всегда на связи, обмен прошёл отлично.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-04T14:53:40"
+    },
+    {
+      "username": "Лилия",
+      "text": "Первый обмен прошёл отлично, немного переживала, но всё прошло гладко, сервис на высоте.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-03T13:08:44"
+    },
+    {
+      "username": "Игорь",
+      "text": "Меняю здесь время от времени, проблем не возникало, всегда помогут и подскажут.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-02T17:22:08"
+    },
+    {
+      "username": "Михаил",
+      "text": "Курс хороший, выплаты быстрые, поддержка на уровне, обменник отличный.",
+      "exchange_name": "4Exchange",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-01T08:54:31"
+    }
+  ]
+}

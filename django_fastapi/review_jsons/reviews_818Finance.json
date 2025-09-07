@@ -1,0 +1,434 @@
+{
+    "818Finance": [
+        {
+            "username": "Алексей",
+            "text": "Обмен прошёл без проблем, всё чётко и удобно. Советую!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:20:03"
+        },
+        {
+            "username": "Степан",
+            "text": "Деньги пришли моментально! Сайт понятный, поддержка всегда на связи. Благодарю, буду пользоваться ещё.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:18:37"
+        },
+        {
+            "username": "Юрий",
+            "text": "Выводил крипту на WISE в евро, перевод занял считанные минуты. Отличный сервис!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T10:16:47"
+        },
+        {
+            "username": "Георгий",
+            "text": "Сделал вывод на карту в евро — всё прошло быстро и просто. Спасибо за удобство!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T08:44:07"
+        },
+        {
+            "username": "Вадим",
+            "text": "При создании заявки не было информации про ограничения. В итоге добавили новый пункт уже после, а мне пришлось платить лишние 5% комиссии. Несправедливо!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-28T13:04:22"
+        },
+        {
+            "username": "Антон",
+            "text": "Очень понравился сервис: всё сделали быстро, интерфейс удобный. Приятно работать, спасибо!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T09:05:01"
+        },
+        {
+            "username": "Алина",
+            "text": "Оперативно и надёжно! Спасибо за быстрый обмен, буду обращаться снова.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T09:10:14"
+        },
+        {
+            "username": "Єгор",
+            "text": "Обмін пройшов чудово. Окреме спасибі оператору Ірині за допомогу та терпіння. Гроші прийшли за кілька хвилин.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-20T11:36:47"
+        },
+        {
+            "username": "Саша",
+            "text": "Хороший курс и быстрая поддержка! Всё прошло гладко и без задержек.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-19T08:04:47"
+        },
+        {
+            "username": "Константин",
+            "text": "Оценка 10/10! Всё сделали за считанные минуты, очень удобно. Рекомендую!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-11T17:10:50"
+        },
+        {
+            "username": "Макар",
+            "text": "Работа сервиса на высоте! Быстрая заявка, деньги уже на карте.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-28T12:13:47"
+        },
+        {
+            "username": "Даниил",
+            "text": "Поменял USDT на гривны, заняло 8 минут. Всё как всегда отлично!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-26T13:37:33"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Очень негативный опыт. Указали один адрес, а потом обвинили, что я перевела не туда. Поддержка отказалась помогать. Жду реакции bestchange.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-04T15:38:46"
+        },
+        {
+            "username": "Рустам",
+            "text": "Классный сервис, работает быстро и чётко. Рекомендую всем!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-04T13:05:46"
+        },
+        {
+            "username": "Олег",
+            "text": "Проверенный обменник, деньги приходят очень быстро. Всё супер!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-30T17:02:45"
+        },
+        {
+            "username": "Марат",
+            "text": "Даже несмотря на небольшое количество отзывов, обменник отличный. Всё быстро, низкий порог и хороший курс. Вернусь ещё.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-27T10:45:38"
+        },
+        {
+            "username": "Станислав",
+            "text": "Постоянно пользуюсь этим обменником. Надежно и быстро, всегда рекомендую друзьям.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-25T10:21:11"
+        },
+        {
+            "username": "Николай",
+            "text": "Перевод занял пару минут, всё прошло отлично. Благодарю за работу!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-10T15:26:20"
+        },
+        {
+            "username": "Людмила",
+            "text": "Обмен USDT на гривны прошёл мгновенно. Поддержка ответила сразу. Всё очень удобно, рекомендую!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-06T23:42:08"
+        },
+        {
+            "username": "Илья",
+            "text": "Впервые воспользовался сервисом. Приятно удивила скорость и низкая комиссия. Спасибо!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-06T14:16:18"
+        },
+        {
+            "username": "Светлана",
+            "text": "Обменяла USDT на карту моно, всё прошло отлично. Благодарю за удобство.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-19T06:39:25"
+        },
+        {
+            "username": "Артур",
+            "text": "Попал в неприятную ситуацию — указал не ту валюту в заявке. При возврате средств обменник начал требовать кучу ненужных данных. Очень сомнительная практика.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-04-18T13:53:48"
+        },
+        {
+            "username": "Григорий",
+            "text": "Пробовал сервис впервые. Деньги поступили быстрее обещанного времени. Обязательно воспользуюсь снова.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-17T06:33:32"
+        },
+        {
+            "username": "Валентин",
+            "text": "Сервис действительно высокого уровня. Всё чётко, быстро и удобно. Рекомендую.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-12T14:44:59"
+        },
+        {
+            "username": "Олексій",
+            "text": "Виводив USDT через Solana, все спрацювало чітко й швидко.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-12T14:13:35"
+        },
+        {
+            "username": "Андрей",
+            "text": "Отличный обменник для тех, кто ценит скорость. Поддержка отличная. Советую!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-10T11:19:36"
+        },
+        {
+            "username": "Елена",
+            "text": "Меняла через TRC20 на карту. Всё быстро, без лишних вопросов, достаточно было только номера карты. Отличный сервис!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-08T12:07:49"
+        },
+        {
+            "username": "Артур",
+            "text": "С утра оформил заявку, через несколько минут деньги уже были на карте. Всё супер!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-07T06:26:15"
+        },
+        {
+            "username": "Иван",
+            "text": "Очень быстрый обменник, а поддержка ещё и вежливая. Рекомендую к использованию!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-01T07:28:54"
+        },
+        {
+            "username": "Семен",
+            "text": "Сайт понравился, интерфейс приятный. Курс выгодный, деньги получил на карту быстро.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-31T16:34:44"
+        },
+        {
+            "username": "Лев",
+            "text": "Заявку обработали быстро, всё прошло отлично. Буду пользоваться снова.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-31T13:02:36"
+        },
+        {
+            "username": "Ярослав",
+            "text": "Супер сервис! Постоянно пользуюсь именно этим обменником.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-30T16:52:22"
+        },
+        {
+            "username": "Давид",
+            "text": "Обмен прошёл быстро, деньги пришли полностью. Поддержка ответила сразу, приятно!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-27T16:28:01"
+        },
+        {
+            "username": "Марко",
+            "text": "Обмін пройшов швидко та зручно. Тільки позитивні враження від сервісу!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-27T14:02:45"
+        },
+        {
+            "username": "Виктория",
+            "text": "Курс выгодный, заявка прошла без задержек. Оставляю положительный отзыв.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-27T10:15:20"
+        },
+        {
+            "username": "CryptoMan",
+            "text": "Отличный курс и скорость перевода. Рад сотрудничать с этим сервисом!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-27T08:33:45"
+        },
+        {
+            "username": "Mateo",
+            "text": "Служба поддержки отработала отлично, помогли с вопросами. Спасибо за обмен!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-26T16:24:33"
+        },
+        {
+            "username": "Артем",
+            "text": "Даже новичку легко разобраться, интерфейс понятный и удобный.",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-26T14:50:59"
+        },
+        {
+            "username": "Роман",
+            "text": "Заявку выполнили быстрее, чем ожидал. Теперь только здесь буду обменивать!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-24T09:06:36"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл быстро и без проблем. Спасибо за отличную работу!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-23T08:18:35"
+        },
+        {
+            "username": "Александр",
+            "text": "Надёжный обменник, всё в срок. Советую!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-21T14:56:18"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Как всегда быстро и удобно. Спасибо за сервис, рекомендую!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-19T15:43:01"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень доволен работой обменника. Всё сделали за пару минут!",
+            "exchange_name": "818Finance",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-17T12:11:49"
+        }
+    ]
+}

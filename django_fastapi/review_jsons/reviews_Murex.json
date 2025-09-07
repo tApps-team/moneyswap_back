@@ -1,0 +1,414 @@
+{
+    "Murex": [
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошел очень быстро, поддержка помогла моментально. Рекомендую!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T16:48:15"
+        },
+        {
+            "username": "Игорь",
+            "text": "Поддержка ответила мгновенно, обмен занял пару минут. Благодарю!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T07:00:36"
+        },
+        {
+            "username": "Владислав",
+            "text": "Отличный обмен, реквизиты пришли быстро, все прошло гладко и удобно.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T09:40:33"
+        },
+        {
+            "username": "Максим",
+            "text": "Впервые пробовал, немного переживал, но всё прошло идеально.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T09:00:37"
+        },
+        {
+            "username": "Артём",
+            "text": "Обмен сделали за пару минут, очень быстро и удобно.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-23T19:42:20"
+        },
+        {
+            "username": "Никита",
+            "text": "Деньги пришли мгновенно, отличный сервис! Рад что воспользовался.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T21:08:40"
+        },
+        {
+            "username": "Алексей",
+            "text": "Быстрый обмен даже в выходной день, реквизиты выдали без проблем. Обязательно вернусь!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-20T08:42:17"
+        },
+        {
+            "username": "Роман",
+            "text": "Отличный обмен, реквизиты всегда под рукой и всё проходит очень быстро. Советую!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-17T06:43:29"
+        },
+        {
+            "username": "Станислав",
+            "text": "Первый платеж прошёл без проблем, поддержка помогла с вторым. Очень приятный сервис.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T08:08:59"
+        },
+        {
+            "username": "Эльдар",
+            "text": "Очень хороший обменник! Ответы поддержки мгновенные, обмен прошел моментально. Обязательно вернусь.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T07:31:38"
+        },
+        {
+            "username": "Марина",
+            "text": "Быстро обменяла рубли на USDT, поддержка помогла без задержек. Вернусь еще!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T21:52:29"
+        },
+        {
+            "username": "Кира",
+            "text": "Сервис оставил смешанные впечатления. Дважды выдавали реквизиты, платежи не прошли. Потратил время зря.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-15T21:41:46"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обмен прошёл быстро и безопасно, полностью доволен сервисом!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T18:11:10"
+        },
+        {
+            "username": "Михаил",
+            "text": "Очень удобный обмен, реквизиты выдают мгновенно, все платежи проходят без задержек. Отличный сервис!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T18:32:08"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен прошёл очень быстро, приятно удивлена скоростью работы сервиса.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-12T21:27:24"
+        },
+        {
+            "username": "Денис",
+            "text": "Как всегда всё на высоком уровне, доволен скоростью и качеством обмена.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-09T14:13:37"
+        },
+        {
+            "username": "Илья",
+            "text": "Сайт удобный, обмен быстрый и выгодный. Рекомендую всем!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-06T09:32:00"
+        },
+        {
+            "username": "Николай",
+            "text": "Очень оперативно, приятный курс. Благодарю за обмен!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T14:57:35"
+        },
+        {
+            "username": "Александр",
+            "text": "Быстро обменял рубли на USDT, без задержек и проблем.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-28T14:49:02"
+        },
+        {
+            "username": "Денис",
+            "text": "Поддержка отлично работает, обмен прошёл гладко, рекомендую!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-28T14:02:32"
+        },
+        {
+            "username": "Григорий",
+            "text": "Мгновенный обмен, никаких проблем. Очень доволен скоростью!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-28T12:55:25"
+        },
+        {
+            "username": "Олег",
+            "text": "Возникла спорная ситуация с платежом, надеюсь на разбирательство, деньги пока не пришли.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-26T17:08:23"
+        },
+        {
+            "username": "Евгений",
+            "text": "Отличный сайт, поддержка супер! Все проблемы решаются моментально. Настоящий топ сервис!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-27T12:40:32"
+        },
+        {
+            "username": "Леонид",
+            "text": "Все прошло очень гладко и быстро, я доволен результатом. Рекомендую сервис!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-20T09:43:00"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сделал ошибку при переводе, поддержка помогла всё исправить за 10 минут. Отличный сервис!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-19T16:32:00"
+        },
+        {
+            "username": "Ирина",
+            "text": "Лучший обменник! Поддержка всегда на связи и реально помогает. Реквизиты приходят быстро, курс хороший.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-18T08:32:20"
+        },
+        {
+            "username": "Владислав",
+            "text": "Поддержка на высшем уровне, обмен прошёл мгновенно. Очень доволен сервисом.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-09T21:17:57"
+        },
+        {
+            "username": "Артем",
+            "text": "Все понравилось, быстрый обмен и отзывчивая поддержка, рекомендую всем!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-05T21:28:35"
+        },
+        {
+            "username": "Михаил",
+            "text": "Сервис обманул, удерживают средства. Все действия поддержки оставляют желать лучшего. Требую помощи в возврате денег.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-05T12:57:12"
+        },
+        {
+            "username": "Иван",
+            "text": "Быстрый обмен, качественный сервис, всем друзьям советую.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-05T14:09:59"
+        },
+        {
+            "username": "Надежда",
+            "text": "Сервис не понравился, реквизиты выдают через чат как попало, поддержка грубая. Не рекомендую!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-05T13:17:20"
+        },
+        {
+            "username": "Сергей",
+            "text": "Моментальный ответ поддержки, обмен прошёл без проблем. Обращусь ещё раз.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-05T13:22:47"
+        },
+        {
+            "username": "Виктория",
+            "text": "Все прошло отлично, деньги обменяли за 15 минут, реквизиты предоставили быстро.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-02T10:38:45"
+        },
+        {
+            "username": "Анна",
+            "text": "Первый раз обменивала USDT на рубли здесь. Очень понравилась скорость и удобство сервиса, деньги пришли через 8 минут.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-15T11:55:52"
+        },
+        {
+            "username": "Лариса",
+            "text": "Сервис отличный, обмен прошёл очень быстро, оператор всегда на связи. Рекомендую!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-13T18:53:17"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все прошло оперативно, оператор быстро решил возникшую проблему. Отличный сервис!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-11T21:19:18"
+        },
+        {
+            "username": "Александр",
+            "text": "Менял небольшие суммы, все прошло очень быстро и удобно. Сервис надежный.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-03T05:57:25"
+        },
+        {
+            "username": "Игорь",
+            "text": "Деньги пришли мгновенно, обмен прошёл без задержек. Очень доволен!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-30T16:24:33"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Заявку выплатили очень быстро, все прошло отлично. Спасибо!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-24T14:21:16"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Никогда не обменивал так быстро! Заняло всего 7 минут, курс отличный. Буду пользоваться еще.",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-20T18:18:02"
+        },
+        {
+            "username": "Станислав",
+            "text": "Очень быстрый обмен, деньги уже на счету, пока успел оплатить. Рекомендую сервис!",
+            "exchange_name": "Murex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-16T11:41:31"
+        }
+    ]
+}

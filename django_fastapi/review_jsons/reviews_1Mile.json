@@ -1,0 +1,504 @@
+{
+    "1Mile": [
+        {
+            "username": "Александр",
+            "text": "21 июля средства заморозили за якобы «дробление». Прошел верификацию, но сервис потребовал видео, что поставило под угрозу мою безопасность. В итоге средства вернули без видео, но часть обменников отказывается вернуть мои деньги.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-21T12:17:31"
+        },
+        {
+            "username": "Илья",
+            "text": "Транзакцию заморозили по AML, хотя все документы предоставил. Поддержка реагирует медленно и неохотно. Пока что опыт использования обменника оставил негативные впечатления.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-19T02:38:40"
+        },
+        {
+            "username": "Михаил",
+            "text": "Отправил деньги, на сайте появилась ошибка выплаты. Обещали возврат за 72 часа, но ждать приходится слишком долго. Прошу решить проблему как можно `ыстрее.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-25T08:00:39"
+        },
+        {
+            "username": "Даниил",
+            "text": "Деньги не поступили — ошибка выплаты. Что делать?",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-11T06:31:33"
+        },
+        {
+            "username": "Марина",
+            "text": "Рекомендую! Всё прошло быстро и без проблем.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-07T12:00:32"
+        },
+        {
+            "username": "Владимир",
+            "text": "Очень неудовлетворён сервисом. AML проверка превратилась в мучение: ответы поддержки отсутствуют, замороженные средства не подтверждаются. В общем, отвратительно.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-05-23T09:01:51"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Обмен прошёл отлично. Рекомендую этот сервис.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-12T14:07:47"
+        },
+        {
+            "username": "Джеймс",
+            "text": "С этим обменником работаю давно — всегда всё стабильно и предсказуемо.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-28T16:04:05"
+        },
+        {
+            "username": "Уильям",
+            "text": "Деньги пришли без проблем, курс был хорошим. Отличный обмен.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-28T14:07:53"
+        },
+        {
+            "username": "Джошуа",
+            "text": "Отличный обменник: быстро, честно и по делу. Буду пользоваться снова.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-28T11:49:30"
+        },
+        {
+            "username": "Елисей",
+            "text": "Обмен прошёл идеально, деньги пришли вовремя, условия соблюдены. Благодарю.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-28T09:48:52"
+        },
+        {
+            "username": "Андрей",
+            "text": "Деньги пришли без задержек, интерфейс понятный. Очень доволен.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-28T08:18:00"
+        },
+        {
+            "username": "Руслан",
+            "text": "Попробовал обмен впервые — всё прошло гладко. Деньги пришли, курс соответствовал заявке.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-27T15:16:25"
+        },
+        {
+            "username": "Захар",
+            "text": "Немного долго, но в целом обмен прошёл отлично, деньги пришли полностью.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-27T13:24:17"
+        },
+        {
+            "username": "Томас",
+            "text": "Первый обмен прошёл на отлично. Всё быстро и чётко, буду использовать снова.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-27T11:21:07"
+        },
+        {
+            "username": "Тихон",
+            "text": "Отличный обменник: быстрая обработка, вежливая поддержка, нормальный курс. Буду пользоваться дальше.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-27T09:43:05"
+        },
+        {
+            "username": "Евдоким",
+            "text": "Каждый раз одинаковый результат — быстро, ровно, стабильно.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-26T16:12:33"
+        },
+        {
+            "username": "Алексей",
+            "text": "Часто обмениваю здесь. Радует, что обмен занимает всего 10–20 минут и всегда без проблем.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-26T14:36:45"
+        },
+        {
+            "username": "Евгений",
+            "text": "Перевёл крупную сумму, волновался, но всё прошло спокойно. Теперь доверяю этому обменнику.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-26T12:26:21"
+        },
+        {
+            "username": "Кевин",
+            "text": "Курс хороший, обмен прошёл без лишних вопросов. Спасибо за сервис.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-26T10:54:55"
+        },
+        {
+            "username": "Тарас",
+            "text": "Интуитивно понятный обменник, заявку оформил за пару минут. Дальше всё прошло гладко.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-26T09:07:54"
+        },
+        {
+            "username": "Антон",
+            "text": "Обмен USDT TRON-Ethereum прошёл без проблем.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-26T00:33:23"
+        },
+        {
+            "username": "Виталий",
+            "text": "Сначала сделал пробный перевод на небольшую сумму, всё прошло отлично, потом повторил — работает стабильно.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-25T13:47:34"
+        },
+        {
+            "username": "Василий",
+            "text": "Обычный обмен, всё по инструкции, деньги пришли без проблем. Советую.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-25T12:16:37"
+        },
+        {
+            "username": "Арсен",
+            "text": "Обменивал большую сумму, всё сделали корректно. Спасибо за надёжность.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-25T10:00:02"
+        },
+        {
+            "username": "Джеймс",
+            "text": "Первый обмен прошёл чётко. Деньги пришли быстро, без проблем.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-25T08:44:46"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Отличный обмен: без задержек, сумма на карте как в заявке.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-24T15:41:08"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Всё прошло хорошо, буду использовать обменник и дальше. Всем рекомендую.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-24T14:12:00"
+        },
+        {
+            "username": "Майкл",
+            "text": "Несколько раз обмениваю тут — всё прошло быстро и спокойно.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-24T12:58:27"
+        },
+        {
+            "username": "Платон",
+            "text": "Один из немногих обменников, которому доверяю. Каждый раз всё стабильно, быстро и чётко.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-24T11:17:38"
+        },
+        {
+            "username": "Эмиль",
+            "text": "Перевёл и получил средства. Всё просто и понятно, советую к использованию.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-24T09:43:02"
+        },
+        {
+            "username": "Игнат",
+            "text": "Оформление заявки заняло меньше минуты, деньги пришли быстро. Отличный опыт.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-23T16:18:36"
+        },
+        {
+            "username": "Роберт",
+            "text": "Нормальный обменник. Курс приятный, всё честно и стабильно.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-23T14:08:13"
+        },
+        {
+            "username": "Эндрю",
+            "text": "Проверенный обменник, не подводит. Всё стабильно.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-23T12:20:25"
+        },
+        {
+            "username": "Максим",
+            "text": "Обмен сделали быстро, за полчаса. Деньги пришли как надо. Претензий нет.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-23T11:04:45"
+        },
+        {
+            "username": "Джошуа",
+            "text": "Отличный обменник, обмен занимает 10-15 минут.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-22T16:07:15"
+        },
+        {
+            "username": "Илья",
+            "text": "Пользуюсь 1Mile долго. Курс удобный, сервис надежный. Рекомендую.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-22T14:22:08"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Всего 2 поля для заполнения, обмен завершён за пару минут. Полностью доволен.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-22T11:54:29"
+        },
+        {
+            "username": "Стивен",
+            "text": "Проверенный обменник. Сделал уже несколько обменов — всё стабильно и понятно.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-22T10:16:47"
+        },
+        {
+            "username": "Арсен",
+            "text": "Быстро обменяли USDT на Privat24 по хорошему курсу. Сайт удобный.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-22T09:12:05"
+        },
+        {
+            "username": "Тихон",
+            "text": "Дизайн нормальный, обмен работает без багов, курс устраивает. Рад, что нашёл этот сервис.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-21T17:12:16"
+        },
+        {
+            "username": "Назар",
+            "text": "Регулярно пользуюсь обменником, всё работает стабильно. От заявки до зачисления — минуты.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-21T14:52:18"
+        },
+        {
+            "username": "Евдоким",
+            "text": "Всё как всегда — без задержек и лишних вопросов. Сделал перевод и всё.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-21T13:06:14"
+        },
+        {
+            "username": "Брайан",
+            "text": "Сервис проверенный. Быстро, честно, без сюрпризов.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-21T11:00:23"
+        },
+        {
+            "username": "Станислав",
+            "text": "Уже не первый раз пользуюсь. Всегда просто, ничего лишнего, поддержка отвечает быстро.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-20T16:25:54"
+        },
+        {
+            "username": "Арсен",
+            "text": "Простой и удобный сервис, всё логично, полей минимум.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-20T14:30:39"
+        },
+        {
+            "username": "Аркадий",
+            "text": "Работают чётко и по существу. Проблем нет, сервис надежный.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-20T13:27:43"
+        },
+        {
+            "username": "Демьян",
+            "text": "Начинал осторожно, но после пары удачных обменов закрепился здесь, больше альтернатив не ищу.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-20T11:22:49"
+        },
+        {
+            "username": "Фаддей",
+            "text": "Не думал, что будет так просто. Интерфейс понятный, деньги пришли быстро, всё отлично.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-20T10:17:52"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Первый раз удивился. Быстро, чётко, без проблем. Теперь использую только этот сервис.",
+            "exchange_name": "1Mile",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-19T16:10:52"
+        }
+    ]
+}

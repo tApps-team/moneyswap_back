@@ -1,0 +1,424 @@
+{
+    "Kassa": [
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл легко и быстро, благодарю за оперативность.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:19:32"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все прошло чётко и быстро, спасибо!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:42:28"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сервис надёжный, обмен без проблем, скорость порадовала.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:21:08"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень удобная платформа для обмена криптовалюты.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:14:16"
+        },
+        {
+            "username": "Илья",
+            "text": "Простой и выгодный обмен. Всё супер.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:08:27"
+        },
+        {
+            "username": "Евгений",
+            "text": "Моментально обменял валюту, поддержка отзывчивая, сервис на уровне.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:47:46"
+        },
+        {
+            "username": "Максим",
+            "text": "Спасибо за быстрый обмен! Всё прошло без заминок.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T20:34:34"
+        },
+        {
+            "username": "Станислав",
+            "text": "Интерфейс удобный, первый обмен прошёл гладко и быстро!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:49:56"
+        },
+        {
+            "username": "Ольга",
+            "text": "Обмен очень быстрый, всё понравилось!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:11:44"
+        },
+        {
+            "username": "Константин",
+            "text": "Удобный сервис, процесс обмена не занял много времени, курс адекватный.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:06:20"
+        },
+        {
+            "username": "Николай",
+            "text": "Очень понятный сайт, обмен сделал буквально за пару минут.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:21:05"
+        },
+        {
+            "username": "Иван",
+            "text": "Обмен прошёл быстро, всё отлично, спасибо.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:03:08"
+        },
+        {
+            "username": "Андрей",
+            "text": "Спасибо за обмен, удачного дня! Сервис надёжный.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:59:29"
+        },
+        {
+            "username": "Семен",
+            "text": "Скорость обмена стабильно высокая, без сюрпризов.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:58:03"
+        },
+        {
+            "username": "Артур",
+            "text": "Сервис надёжный, удобный для обмена криптовалюты.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:26:18"
+        },
+        {
+            "username": "Марина",
+            "text": "Регулярно пользуюсь этим обменником. Всё быстро и удобно!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:14:09"
+        },
+        {
+            "username": "Филипп",
+            "text": "Отлично справились, всё выполнено быстро и корректно.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:40:49"
+        },
+        {
+            "username": "Олег",
+            "text": "Процесс обмена прошёл быстро, всем доволен.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:55:25"
+        },
+        {
+            "username": "Денис",
+            "text": "Использую только проверенные обменники, этот один из лучших. Спасибо!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:58:14"
+        },
+        {
+            "username": "Виктор",
+            "text": "Всё отлично, претензий нет. Спасибо за работу!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:53:50"
+        },
+        {
+            "username": "Слава",
+            "text": "Очень удобный обменник, честные курсы, рекомендую всем.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:40:49"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Поддержка отличная, всегда всё на высшем уровне.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:30:44"
+        },
+        {
+            "username": "Григорий",
+            "text": "Обмен прошёл быстро, сайт добавил в закладки для будущих операций.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:34:08"
+        },
+        {
+            "username": "Владислав",
+            "text": "Хороший и надёжный сервис для обмена.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:39:20"
+        },
+        {
+            "username": "Александр",
+            "text": "Обмен прошёл оперативно, всё выполнено точно.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:31:54"
+        },
+        {
+            "username": "Игорь",
+            "text": "Сервис надёжный, пользуюсь им постоянно. Рекомендую!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:05:56"
+        },
+        {
+            "username": "Богдан",
+            "text": "Лучший обменник, всё быстро и качественно.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:42:30"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Обмен происходит быстро, никаких сложностей. Пользуюсь несколько раз — доволен.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:18:36"
+        },
+        {
+            "username": "Егор",
+            "text": "Давно пользуюсь сервисом, всё быстро и удобно.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T18:48:48"
+        },
+        {
+            "username": "Матвей",
+            "text": "Обмен быстрый, точный, всё комфортно. Рекомендую!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T18:32:23"
+        },
+        {
+            "username": "Сергей",
+            "text": "Постоянно пользуюсь сервисом, поддержка всегда готова помочь.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T18:07:10"
+        },
+        {
+            "username": "Марсель",
+            "text": "Быстро, качественно и недорого. Поддержка решает любые вопросы.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:34:44"
+        },
+        {
+            "username": "Даниил",
+            "text": "Всё прошло отлично, перевод моментальный, курс устроил.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:21:22"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Удобно и честно, обмен прошёл без проблем, рекомендую.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T16:50:38"
+        },
+        {
+            "username": "Давид",
+            "text": "Очень быстрый обмен, всё прошло отлично!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T16:38:24"
+        },
+        {
+            "username": "Захар",
+            "text": "Иногда попадаются часы, когда перевод идёт мгновенно — очень удобно!",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:56:03"
+        },
+        {
+            "username": "Глеб",
+            "text": "Спасибо за работу! Отличный обменник, рекомендую всем.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:29:57"
+        },
+        {
+            "username": "Роман",
+            "text": "Все прошло надёжно, спасибо за качественный сервис.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:12:18"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл быстро и по хорошему курсу, как всегда.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:40:38"
+        },
+        {
+            "username": "Тихон",
+            "text": "Ещё один обмен прошёл успешно, доверяю этому сервису.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:27:23"
+        },
+        {
+            "username": "Василий",
+            "text": "Лучший обменник, рекомендую пользоваться всем.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:44:26"
+        },
+        {
+            "username": "Антон",
+            "text": "Сервис порадовал скоростью и качеством, всё оперативно.",
+            "exchange_name": "Kassa",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:19:21"
+        }
+    ]
+}

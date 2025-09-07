@@ -1,0 +1,334 @@
+{
+    "LunaBit": [
+        {
+            "username": "Марина",
+            "text": "Деньги пришли вовремя, благодарю.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:16:35"
+        },
+        {
+            "username": "Такеши",
+            "text": "Очень быстро, буду пользоваться снова.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:47:22"
+        },
+        {
+            "username": "Максим",
+            "text": "Поддержка помогла разобраться, молодцы.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:20:06"
+        },
+        {
+            "username": "Игорь",
+            "text": "Перевод на Альфа Банк занял пару минут.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:15:53"
+        },
+        {
+            "username": "Наиль",
+            "text": "Попробовал впервые, все прошло гладко и быстро.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:15:52"
+        },
+        {
+            "username": "Данила",
+            "text": "СБП перевел деньги за пару минут.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T08:36:51"
+        },
+        {
+            "username": "Никита",
+            "text": "Все прошло четко и без проблем.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:54:21"
+        },
+        {
+            "username": "Лев",
+            "text": "Отличный обмен, рекомендую сервис.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:38:42"
+        },
+        {
+            "username": "Денис",
+            "text": "Быстрое исполнение заявки, спасибо.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:50:54"
+        },
+        {
+            "username": "Евгений",
+            "text": "Как обычно, без задержек.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:30:36"
+        },
+        {
+            "username": "Владимир",
+            "text": "Первый раз обменялся, заняло минут 7.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T08:21:44"
+        },
+        {
+            "username": "Наталья",
+            "text": "Все сделали аккуратно и быстро.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:30:53"
+        },
+        {
+            "username": "Сергей",
+            "text": "СБП перевел средства за 5 минут.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:35:43"
+        },
+        {
+            "username": "Виктория",
+            "text": "Все прошло без задержек, рекомендую.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:15:59"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Процесс обмена был быстрым и понятным.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T19:59:30"
+        },
+        {
+            "username": "Али",
+            "text": "Обмен LTC на Альфа Банк занял 10 минут.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:10:44"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Средства поступили быстро, минут 10.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:48:35"
+        },
+        {
+            "username": "Павел",
+            "text": "Сбербанк перевел средства без задержек.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:57:21"
+        },
+        {
+            "username": "Лариса",
+            "text": "Сервис отличный, поддержка на высоте.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:42:45"
+        },
+        {
+            "username": "Александра",
+            "text": "Даже ночью обработали заявку быстро.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T21:01:43"
+        },
+        {
+            "username": "Евгения",
+            "text": "Обмен завершился быстро, благодарю поддержку.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:41:09"
+        },
+        {
+            "username": "Алина",
+            "text": "Обмен прошел успешно, достаточно оперативно.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:12:20"
+        },
+        {
+            "username": "Светлана",
+            "text": "Благодарю за быстрый обмен.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:21:57"
+        },
+        {
+            "username": "Илья",
+            "text": "Заявка выполнена очень оперативно, доволен.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T08:20:25"
+        },
+        {
+            "username": "Дарина",
+            "text": "Весь процесс занял меньше 10 минут, спасибо.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T20:38:39"
+        },
+        {
+            "username": "Денис",
+            "text": "Все просто и быстро, рекомендую.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T18:47:14"
+        },
+        {
+            "username": "Артем",
+            "text": "Как обычно, обмен прошел быстро.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:27:31"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обменник работает отлично.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T07:42:36"
+        },
+        {
+            "username": "Саид",
+            "text": "Все удобно и просто, рекомендую сервис.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T20:35:06"
+        },
+        {
+            "username": "Алина",
+            "text": "Очень хороший сервис, на высоте.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T19:04:23"
+        },
+        {
+            "username": "Константин",
+            "text": "СБП перевел средства за 5 минут, все отлично.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T11:07:33"
+        },
+        {
+            "username": "Роман",
+            "text": "Деньги поступили мгновенно, спасибо!",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T08:10:03"
+        },
+        {
+            "username": "Карина",
+            "text": "Обработали запрос за считанные минуты.",
+            "exchange_name": "LunaBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T19:21:28"
+        }
+    ]
+}

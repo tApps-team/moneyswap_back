@@ -1,0 +1,334 @@
+{
+    "FreeChange": [
+        {
+            "username": "Алексей",
+            "text": "Всё прошло моментально и удобно. Советую сервис!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T20:46:21"
+        },
+        {
+            "username": "Ирина",
+            "text": "Заявка закрыта без задержек. Всё чётко.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:46:33"
+        },
+        {
+            "username": "Наталья",
+            "text": "Очень довольна! Всё оформили быстро, курс приятный, сервис на уровне. Вернусь снова.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:11:52"
+        },
+        {
+            "username": "Гульнара",
+            "text": "Благодарю за качественную работу.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:34:37"
+        },
+        {
+            "username": "Антон",
+            "text": "Сервис отличный, вопросов нет. Поддержка реагирует быстро.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T14:07:50"
+        },
+        {
+            "username": "Валентина",
+            "text": "Очень быстрый обмен и выгодный курс. Советую!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:47:45"
+        },
+        {
+            "username": "Денис",
+            "text": "Все прошло отлично, без лишних вопросов. Рекомендую к использованию.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T08:17:28"
+        },
+        {
+            "username": "Карина",
+            "text": "Хороший обменник, курс устраивает, скорость радует.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T20:15:02"
+        },
+        {
+            "username": "Вероника",
+            "text": "Не первый раз пользуюсь — всегда всё четко и быстро.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T20:06:16"
+        },
+        {
+            "username": "Жанна",
+            "text": "Обмен прошёл идеально. Однозначно рекомендую этот сервис!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:26:52"
+        },
+        {
+            "username": "Катя",
+            "text": "Обмен прошёл без накладок, деньги поступили быстро.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T09:27:56"
+        },
+        {
+            "username": "Алёна",
+            "text": "Всё сработало чётко и без задержек. Курс соответствует заявленному. Отличный сервис для обмена!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T07:43:02"
+        },
+        {
+            "username": "Николай",
+            "text": "Всё прошло успешно, спасибо!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T18:03:52"
+        },
+        {
+            "username": "Алина",
+            "text": "Быстро провели обмен, курс порадовал!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:43:05"
+        },
+        {
+            "username": "Вера",
+            "text": "Средства зачислили очень оперативно!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:36:22"
+        },
+        {
+            "username": "Георгий",
+            "text": "Выгодно, быстро и честно. Отличный вариант для обмена валют.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T08:58:00"
+        },
+        {
+            "username": "Михаил",
+            "text": "Уже давно пользуюсь этим обменником. Всегда доволен сервисом.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T07:40:29"
+        },
+        {
+            "username": "Елизавета",
+            "text": "Сделку оформили быстро и без проблем!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:58:01"
+        },
+        {
+            "username": "Светлана",
+            "text": "Деньги пришли очень быстро. Всё отлично!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:53:56"
+        },
+        {
+            "username": "Дарина",
+            "text": "Очень привлекательные курсы и удобный сервис.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:55:14"
+        },
+        {
+            "username": "Оксана",
+            "text": "Заявку выполнили быстро, всё прошло отлично.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:02:11"
+        },
+        {
+            "username": "Ева",
+            "text": "Обмен занял минимум времени, средства поступили моментально.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T21:01:36"
+        },
+        {
+            "username": "Сергей",
+            "text": "Деньги поступили на счёт очень быстро. Отличный сервис, рекомендую!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T20:53:45"
+        },
+        {
+            "username": "Анна",
+            "text": "Операция прошла быстро и без задержек. Рекомендую обменник.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T20:44:28"
+        },
+        {
+            "username": "Людмила",
+            "text": "Очень удобный обменный пункт: хороший курс и вежливое обслуживание. Всё прошло без проблем.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T09:41:29"
+        },
+        {
+            "username": "Диана",
+            "text": "Отличный сервис! Курс выгодный, скорость приятно удивила.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T08:45:42"
+        },
+        {
+            "username": "Руслан",
+            "text": "Очень понравилось обслуживание! Всё честно и быстро. Доволен выбором.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T20:08:17"
+        },
+        {
+            "username": "Ксения",
+            "text": "Обмен прошёл максимально быстро, курс оказался отличным. Спасибо!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T15:33:30"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Спасибо за быстрый обмен и хорошие условия!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T15:26:58"
+        },
+        {
+            "username": "Эльмира",
+            "text": "Теперь это мой любимый обменник! Всё чётко, курс честный, а обслуживание приятное.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T09:06:14"
+        },
+        {
+            "username": "Владимир",
+            "text": "Лучший обменник на сайте, всегда нахожу тут самые выгодные курсы.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T08:17:01"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Зачисление прошло быстро и без проблем. Смело рекомендую.",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T20:27:11"
+        },
+        {
+            "username": "Олеся",
+            "text": "Мгновенно и без лишних вопросов пополнила телефон криптой. Очень удобно!",
+            "exchange_name": "FreeChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T20:20:51"
+        }
+    ]
+}

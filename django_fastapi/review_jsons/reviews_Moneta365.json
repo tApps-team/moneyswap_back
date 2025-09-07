@@ -1,0 +1,484 @@
+{
+    "Moneta365": [
+        {
+            "username": "Илья",
+            "text": "Пользуюсь регулярно, всё интуитивно и удобно, курс приятный, поддержка на высоте.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:16:52"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен проходит быстро, комиссия маленькая, служба поддержки помогла мгновенно.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:34:41"
+        },
+        {
+            "username": "Семен",
+            "text": "Отличный обмен, деньги пришли моментально, полностью доволен.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:47:04"
+        },
+        {
+            "username": "Константин",
+            "text": "Быстро и безопасно обменял, сервис советую всем экономящим время.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:52:52"
+        },
+        {
+            "username": "Евгений",
+            "text": "Вывод мгновенный, поддержка отзывчивая, сервис просто супер.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:15:00"
+        },
+        {
+            "username": "Вадим",
+            "text": "Просто и без заморочек, деньги поступили сразу, обмен на высоте.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:30:03"
+        },
+        {
+            "username": "Никита",
+            "text": "Выгодно и быстро, всегда доволен обменом здесь.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:52:41"
+        },
+        {
+            "username": "Александр",
+            "text": "Сервис очень удобный, интерфейс простой, поддержка на связи, приятно работать.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:09:10"
+        },
+        {
+            "username": "Радик",
+            "text": "Отличный обменник, деньги выводятся мгновенно, поддержка супер.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:28:02"
+        },
+        {
+            "username": "Станислав",
+            "text": "Простой и удобный обмен, комиссия нормальная, всё устраивает.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T11:20:37"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Сервис выручает в любой момент, обмен прошёл очень быстро.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:05:53"
+        },
+        {
+            "username": "Виталий",
+            "text": "Обмен прошёл без проблем, комиссии маленькие, курс приятный.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:22:39"
+        },
+        {
+            "username": "Давид",
+            "text": "Очень удобный обменник, ничто не мешает работать и пользоваться сервисом.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:41:33"
+        },
+        {
+            "username": "Олег",
+            "text": "Вывел крипту за пару минут, сервис надёжный, рекомендую.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:18:42"
+        },
+        {
+            "username": "Владислав",
+            "text": "Отличный обменник! Деньги пришли мгновенно после запроса.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:15:23"
+        },
+        {
+            "username": "Глеб",
+            "text": "Меняю монеты не первый раз — всегда честная цена и быстрый обмен.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:02:17"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Лучший сервис для обмена крипты, проверял разные варианты, этот стабильно выигрывает.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T10:09:04"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Простой обменник для новичков и опытных — удобно всем.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:27:21"
+        },
+        {
+            "username": "Максим",
+            "text": "Обмен прошёл успешно, всё гладко, никаких задержек.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T06:55:07"
+        },
+        {
+            "username": "Алексей",
+            "text": "Курс нормальный, комиссия небольшая, вывод моментальный — обмен на 5+.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:56:23"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отличный обмен, поддержка всегда на связи, курс адекватный.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:01:19"
+        },
+        {
+            "username": "Леонид",
+            "text": "Обмен прошёл быстро, служба поддержки помогла оперативно.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T10:32:23"
+        },
+        {
+            "username": "Самуил",
+            "text": "Деньги пришли мгновенно, обмен прошёл без задержек, рекомендую.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T09:46:13"
+        },
+        {
+            "username": "Ринат",
+            "text": "Интерфейс удобный, поддержка быстро отвечает, обмен радует.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T09:00:10"
+        },
+        {
+            "username": "Дамир",
+            "text": "Сервис очень нравится, обмен проходит буквально в пару кликов.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T07:37:21"
+        },
+        {
+            "username": "Эмиль",
+            "text": "Вывел деньги быстро и выгодно, поддержка сработала без нареканий.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T06:39:32"
+        },
+        {
+            "username": "Вадим",
+            "text": "Сделал обмен, комиссия честная, деньги поступили мгновенно.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T05:56:42"
+        },
+        {
+            "username": "Денис",
+            "text": "Удобный обменник, рекомендую тем, кто часто работает с криптой.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T12:03:09"
+        },
+        {
+            "username": "Егор",
+            "text": "Прозрачные комиссии, быстрый обмен — сервис держит марку.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:35:10"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Сделал несколько обменов — всё прошло безопасно и без проблем.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T10:49:57"
+        },
+        {
+            "username": "Николай",
+            "text": "Поддержка работает отлично, обмен проходит быстро и удобно.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T10:23:58"
+        },
+        {
+            "username": "Петр",
+            "text": "Рекомендую для быстрого и безопасного обмена — сервис на уровне.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T09:43:26"
+        },
+        {
+            "username": "Артур",
+            "text": "Обмен прошёл очень просто и быстро, сервис реально помогает.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:50:36"
+        },
+        {
+            "username": "Ильдар",
+            "text": "Быстро и выгодно обменял, без сбоев и задержек — буду обращаться ещё.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T09:42:42"
+        },
+        {
+            "username": "Данила",
+            "text": "Обмен прошёл идеально, никаких задержек, всё чисто и удобно.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T09:13:29"
+        },
+        {
+            "username": "Рамиль",
+            "text": "Простой и быстрый обмен — удобно заходить, менять и выходить.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T08:25:05"
+        },
+        {
+            "username": "Григорий",
+            "text": "Пробую впервые, уже доволен работой сервиса на все 100%.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T10:40:12"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обмен прошёл быстро, курс хороший, сервис очень удобный.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T09:54:25"
+        },
+        {
+            "username": "Денис",
+            "text": "Сервис на высоте, курс выгодный, всё прозрачно — советую друзьям.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T09:09:38"
+        },
+        {
+            "username": "Илья",
+            "text": "Очень понравилось обслуживание — быстро, внимательное отношение и без проблем.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T13:13:09"
+        },
+        {
+            "username": "Арсен",
+            "text": "Респект команде, работает без сбоев и всегда помогает с вопросами.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:44:22"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник быстрый, все операции проходят без задержек — удобно и надёжно.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:01:53"
+        },
+        {
+            "username": "Эрик",
+            "text": "Минимальные комиссии, моментальные выплаты, всё работает как часы.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T09:13:28"
+        },
+        {
+            "username": "Валерий",
+            "text": "Обмен проходит без задержек, всё прозрачно, очень доволен.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T08:25:46"
+        },
+        {
+            "username": "Эдуард",
+            "text": "Прозрачный и честный обмен, всё понятно и удобно для работы.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T07:48:35"
+        },
+        {
+            "username": "Тимур",
+            "text": "Мгновенный обмен, комиссия оптимальная, рекомендую всем.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T09:31:26"
+        },
+        {
+            "username": "Александр",
+            "text": "Надёжный обменник для тех, кто ценит скорость и комфорт.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T08:59:17"
+        },
+        {
+            "username": "Демид",
+            "text": "Помогли обменять крипту без заморочек, поддержка выручила быстро.",
+            "exchange_name": "Moneta365",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T08:28:54"
+        }
+    ]
+}

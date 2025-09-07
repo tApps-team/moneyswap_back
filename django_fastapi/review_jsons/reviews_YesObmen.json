@@ -1,0 +1,394 @@
+{
+    "YesObmen": [
+        {
+            "username": "Илья",
+            "text": "Очень удобный обмен, все прошло быстро и без заминок.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:24:00"
+        },
+        {
+            "username": "Марина",
+            "text": "Обмен USDT на рубли в СПб прошёл отлично, сервис на уровне, сотрудники приветливые.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:50:45"
+        },
+        {
+            "username": "Денис",
+            "text": "По моему мнению, это один из самых надежных обменников. Удобно, быстро и безопасно.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:51:27"
+        },
+        {
+            "username": "Сергей",
+            "text": "Курс отличный, средства зачислили мгновенно, всем доволен.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:20:29"
+        },
+        {
+            "username": "Ирина",
+            "text": "Отличный сервис, ребята работают без ошибок и быстро. Рекомендую!",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:59:04"
+        },
+        {
+            "username": "Александра",
+            "text": "Спасибо за быстрый обмен, очень удобно и надежно!",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T05:16:12"
+        },
+        {
+            "username": "Виктор",
+            "text": "Все прошло без заминок, деньги пришли полностью, доволен.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:51:27"
+        },
+        {
+            "username": "Алексей",
+            "text": "Менял XMR — отличная организация, быстрый и удобный обмен, вернусь еще.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:43:19"
+        },
+        {
+            "username": "Наталья",
+            "text": "Все четко, регулярно пользуюсь, деньги приходят мгновенно.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T16:27:37"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник понравился, обязательно вернусь для следующей сделки.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:34:17"
+        },
+        {
+            "username": "Константин",
+            "text": "Сделка прошла без проблем, сервис на высоте, всем рекомендую.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:53:30"
+        },
+        {
+            "username": "Николай",
+            "text": "Приятно работать с этим обменником, все надежно и быстро.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T05:16:58"
+        },
+        {
+            "username": "Оксана",
+            "text": "Скорость обмена на высоте, полностью довольна сервисом.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:31:52"
+        },
+        {
+            "username": "Людмила",
+            "text": "Получила средства одним переводом, курс адекватный, сервис отличный.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T04:41:26"
+        },
+        {
+            "username": "Артем",
+            "text": "Быстро и вежливо, доволен обменом!",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T08:20:54"
+        },
+        {
+            "username": "Маргарита",
+            "text": "Все четко, работа выполнена без нареканий, как всегда отлично.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T04:17:12"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обменник супер, только тут совершаю свои обмены.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T06:13:33"
+        },
+        {
+            "username": "Игорь",
+            "text": "Как всегда всё на высшем уровне, рекомендую обменник.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T13:22:53"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Сервис надежный, деньги приходят быстро, очень доволен.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T17:07:44"
+        },
+        {
+            "username": "Александр",
+            "text": "Хороший обменник, все сделано честно и оперативно.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-23T15:53:00"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень удобный обмен, честно и быстро. Спасибо.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T16:33:11"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все пришло в полном объёме, довольны сотрудничеством.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T05:01:45"
+        },
+        {
+            "username": "Виктория",
+            "text": "Пользуюсь регулярно, всегда всё четко и без задержек.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T11:29:46"
+        },
+        {
+            "username": "Эдуард",
+            "text": "Долго пользуюсь этим обменником, всегда платят вовремя.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T03:53:20"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Повторно пользуюсь сервисом, проблем не возникало.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T10:39:36"
+        },
+        {
+            "username": "Алина",
+            "text": "Обменяла USD на рубли, курс хороший, сервис отличный, вернусь ещё.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T09:20:37"
+        },
+        {
+            "username": "Георгий",
+            "text": "15 минут — и деньги на счёте, быстро и удобно.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T03:44:30"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Удивительно быстрая работа, приятно пользоваться обменником.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T16:27:47"
+        },
+        {
+            "username": "Ксения",
+            "text": "Лучшие в своем деле, обмен прошёл идеально, спасибо.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T16:53:08"
+        },
+        {
+            "username": "Софья",
+            "text": "Все прошло быстро, сотрудники работают оперативно, доволен сервисом.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T07:58:15"
+        },
+        {
+            "username": "Владислав",
+            "text": "Обмен прошёл быстро и без проблем, спасибо.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T13:55:16"
+        },
+        {
+            "username": "Роман",
+            "text": "Сделка прошла гладко, деньги поступили быстро, доволен.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T15:48:16"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все прошло отлично, обмен быстрый и удобный.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T02:22:24"
+        },
+        {
+            "username": "Сергей",
+            "text": "Хороший обменник, всё быстро и удобно, пользуюсь регулярно.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T16:41:42"
+        },
+        {
+            "username": "Степан",
+            "text": "Отличный сервис с быстрой обработкой обменов, всем доволен.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T16:34:53"
+        },
+        {
+            "username": "Тамара",
+            "text": "Всегда быстро и надежно, обмен прошёл без заминок.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T09:51:10"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Отличный сервис, все быстро и удобно, спасибо!",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T01:51:02"
+        },
+        {
+            "username": "Герман",
+            "text": "Очень оперативная и профессиональная работа, обмен занял 15 минут, менеджер внимательный. Буду обращаться ещё.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T20:01:23"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен прошёл быстро и без проблем, всем довольна.",
+            "exchange_name": "YesObmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T21:24:39"
+        }
+    ]
+}

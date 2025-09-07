@@ -1,0 +1,494 @@
+{
+    "Nadex": [
+        {
+            "username": "Данила",
+            "text": "Сервис подкачал, обмен занял слишком много времени.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-03T12:22:34"
+        },
+        {
+            "username": "Владимир",
+            "text": "Привет всем! Впервые выводил эфир наличными через офис, процесс быстрый, получил деньги без задержек. Спасибо.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:58:45"
+        },
+        {
+            "username": "Никита",
+            "text": "Отличный обменник, всё прошло гладко!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:56:49"
+        },
+        {
+            "username": "Леша",
+            "text": "Очень доволен скоростью обмена <3.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:33:54"
+        },
+        {
+            "username": "Олег",
+            "text": "Быстро, надёжно, как всегда!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:48:52"
+        },
+        {
+            "username": "Анна",
+            "text": "Всё отлично. Мой любимый обменник снова порадовал, рекомендую всем.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:20:47"
+        },
+        {
+            "username": "Саша",
+            "text": "Все как обычно — отлично. Рад, что вы есть.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:51:03"
+        },
+        {
+            "username": "Константин",
+            "text": "Обмен прошёл очень быстро, всем доволен!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:32:26"
+        },
+        {
+            "username": "Михаил",
+            "text": "Все прошло отлично, без проблем. Спасибо!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:12:49"
+        },
+        {
+            "username": "Илья",
+            "text": "Удобный и недорогой обменник, рекомендую!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:33:57"
+        },
+        {
+            "username": "Виталий",
+            "text": "Отличный обменник, полностью доволен.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:32:20"
+        },
+        {
+            "username": "Егор",
+            "text": "Заявка прошла моментально, не успел даже допить чай.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T04:58:16"
+        },
+        {
+            "username": "Виктория",
+            "text": "Повторно пользовалась обменником, всё прошло отлично. Обращусь ещё!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T00:48:19"
+        },
+        {
+            "username": "Артур",
+            "text": "Очень быстрый обменник, всё без лишних заморочек, лучший вариант.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T20:53:15"
+        },
+        {
+            "username": "Денис",
+            "text": "Менял стейблы на наличные, поддержка всегда на связи, офис работает быстро и без проблем.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:51:00"
+        },
+        {
+            "username": "Николай",
+            "text": "Все прошло гладко, обмен быстрый, служба поддержки отзывчивая.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:19:56"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен очень быстрый, поддержка всегда рядом, рекомендую.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:31:34"
+        },
+        {
+            "username": "Леша",
+            "text": "Спасибо за оперативность обмена <3.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:25:01"
+        },
+        {
+            "username": "Степан",
+            "text": "Опять все прошло идеально, как всегда супер.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:51:21"
+        },
+        {
+            "username": "Сергей",
+            "text": "За последний год сделал около 100 обменов, всегда качественно. Поддержка отличная.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:32:29"
+        },
+        {
+            "username": "Даниил",
+            "text": "Обмен прошёл быстро и надежно, спасибо команде!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:50:37"
+        },
+        {
+            "username": "Максим",
+            "text": "Отличный обменник, быстрый, выгодный курс, удобный офис.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T09:43:58"
+        },
+        {
+            "username": "Игорь",
+            "text": "Идеальная работа команды, обменник на высшем уровне!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T09:35:49"
+        },
+        {
+            "username": "Станислав",
+            "text": "Самый четкий обменник!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T08:52:46"
+        },
+        {
+            "username": "Маргарита",
+            "text": "Сегодня много операций, боялась ошибиться с оплатой, но всё прошло без проблем. Спасибо за курс и скорость!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:28:33"
+        },
+        {
+            "username": "Андрей",
+            "text": "Очень удобный обмен, команда быстро обрабатывает заявки. Оплатил, загрузил чеки — всё готово. Спасибо!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:13:02"
+        },
+        {
+            "username": "Ольга",
+            "text": "Вы лучшие! Поддержка и обменник на высоте. Всем советую.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:41:37"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Волнений было немного, первый раз обменял здесь, возникли мелкие проблемы, но поддержка помогла. Результат отличный.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:01:29"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл мгновенно, без лишних заморочек. Рекомендую всем.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T04:41:56"
+        },
+        {
+            "username": "Алексей",
+            "text": "Лучший обменник, работает стабильно и быстро.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T04:28:35"
+        },
+        {
+            "username": "Леонид",
+            "text": "Спасибо, обменник радует своей надежностью и скоростью.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:46:23"
+        },
+        {
+            "username": "Никита",
+            "text": "Сегодня процесс прошёл намного быстрее, чем раньше. Благодарю!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:01:13"
+        },
+        {
+            "username": "Владислав",
+            "text": "Каждый раз пользуюсь обменником, доволен качеством работы.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:41:44"
+        },
+        {
+            "username": "Денис",
+            "text": "Просто лучший обменник, рекомендую всем.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:29:47"
+        },
+        {
+            "username": "Константин",
+            "text": "Пользуюсь только этим обменником, очень доволен.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:24:56"
+        },
+        {
+            "username": "Михаил",
+            "text": "Не часто оставляю отзывы, но обменник заслуживает похвалы. Все быстро и удобно.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:10:41"
+        },
+        {
+            "username": "Станислав",
+            "text": "Вечером всё на высоте, обмен прошёл как всегда отлично.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:08:43"
+        },
+        {
+            "username": "Сергей",
+            "text": "Быстро и удобно. Поддержка работает оперативно и профессионально.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:42:54"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Все прошло чётко и быстро, обменником довольна!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:20:32"
+        },
+        {
+            "username": "Артём",
+            "text": "Обменник отличный! Советую всем.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:14:33"
+        },
+        {
+            "username": "Иван",
+            "text": "Отличный обменник, курс выгодный, поддержка всегда на связи.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:24:08"
+        },
+        {
+            "username": "Александр",
+            "text": "Курс хороший, обменник надежный, всем советую.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:03:45"
+        },
+        {
+            "username": "Армен",
+            "text": "Обмен проходит стабильно, но в розыгрышах пока не везёт.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:33:11"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обменник нормальный, курс удобный, всё проходит быстро.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:15:58"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошёл быстро и без проблем, все токены получили корректно.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:40:20"
+        },
+        {
+            "username": "Илья",
+            "text": "Все обмены проходят успешно, поддерживаются российские карты, удобно.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:57:57"
+        },
+        {
+            "username": "Олег",
+            "text": "Nadex снова лучший, пользуюсь только здесь.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:56:15"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл быстро, качественно и надежно. Рекомендую!",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:20:30"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все прошло супер быстро, полностью доволен.",
+            "exchange_name": "Nadex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:01:19"
+        }
+    ]
+}

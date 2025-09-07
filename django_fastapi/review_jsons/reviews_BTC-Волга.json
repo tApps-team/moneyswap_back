@@ -1,0 +1,464 @@
+{
+  "BTC-Волга": [
+    {
+      "username": "Максим",
+      "text": "Обмен прошёл молниеносно и без заминок! Условия отличные, особенно для Payeer-Мир. Рекомендую!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-27T10:00:02"
+    },
+    {
+      "username": "Артём",
+      "text": "Большое спасибо! Очень выручили.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-23T18:12:16"
+    },
+    {
+      "username": "Лилия",
+      "text": "Благодарю! Всё прошло быстро и без каких-либо задержек.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-10T18:35:04"
+    },
+    {
+      "username": "Егор",
+      "text": "Курс немного ниже, чем у других, но условия удобные. Отправил чек — и спустя короткое время пришли биткоины. Всё заняло около часа. При лучшем курсе точно рекомендовал бы.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-10T11:29:49"
+    },
+    {
+      "username": "Лев",
+      "text": "Обмен занял всего пару минут! Редко встречаю такую скорость — впечатлён.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-01T11:20:59"
+    },
+    {
+      "username": "Ольга",
+      "text": "Впервые пользовалась сервисом, всё прошло отлично! Быстро и без проблем, спасибо!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-15T14:41:24"
+    },
+    {
+      "username": "Вадим",
+      "text": "Сервис отличный! Взаимодействие было лёгким и быстрым.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-03T18:14:05"
+    },
+    {
+      "username": "Игорь",
+      "text": "Всё прошло быстро и без заминок, очень удобно.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-31T13:36:17"
+    },
+    {
+      "username": "Денис",
+      "text": "Очень удобно и быстро, благодарен сервису.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-30T18:53:32"
+    },
+    {
+      "username": "Николай",
+      "text": "Обмен прошёл за несколько секунд! Пользуюсь регулярно, проблем нет.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-29T06:29:00"
+    },
+    {
+      "username": "Степан",
+      "text": "Сначала были небольшие трудности с реквизитами, но поддержка быстро всё решила. Перевёл повторно — прошло мгновенно. Благодарю!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-24T14:44:24"
+    },
+    {
+      "username": "Евгений",
+      "text": "Обмен занял меньше 10 минут. Спасибо! Вернусь ещё.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-23T18:11:20"
+    },
+    {
+      "username": "Руслан",
+      "text": "Сервис отличный, всё работает как надо.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-23T10:11:26"
+    },
+    {
+      "username": "Алина",
+      "text": "Обмен прошёл идеально. Спасибо за качественный сервис.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-23T08:46:38"
+    },
+    {
+      "username": "Маргарита",
+      "text": "Очень быстрые ребята! Обмен занял 5 минут, рекомендую всем.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-22T12:43:33"
+    },
+    {
+      "username": "Константин",
+      "text": "Обмен прошёл оперативно, без лишних проверок и заминок.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-20T17:00:20"
+    },
+    {
+      "username": "Денис",
+      "text": "Спасибо, всё прошло просто и без заморочек. Получить реквизиты легко.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-20T11:53:55"
+    },
+    {
+      "username": "Илья",
+      "text": "Ранее пробовал другой обменник, там заблокировали деньги. Здесь всё быстро и удобно, сервис отличный!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-19T07:59:21"
+    },
+    {
+      "username": "Вячеслав",
+      "text": "Спасибо за надёжный и качественный обмен.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-10T11:15:12"
+    },
+    {
+      "username": "Семен",
+      "text": "Рекомендую всем! Очень быстро и удобно использовать сервис.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-07T13:57:18"
+    },
+    {
+      "username": "Алексей",
+      "text": "Отличный обмен, быстро и удобно.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-02-10T12:47:11"
+    },
+    {
+      "username": "Михаил",
+      "text": "Работал с этим сервисом в начале месяца: сначала небольшой перевод, потом основная сумма. Всё пришло вовремя, поддержка отзывчивая. Доволен!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-02-05T18:17:39"
+    },
+    {
+      "username": "Рустам",
+      "text": "Отличный обменник! Всё прошло моментально, очень доволен.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-02-01T12:04:22"
+    },
+    {
+      "username": "Даниил",
+      "text": "Обменник супер! Проблему, которая возникла, поддержка решила за пару минут. Рекомендую.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-28T09:23:44"
+    },
+    {
+      "username": "Никита",
+      "text": "Обмен прошёл мгновенно. Моя ошибка была решена быстро, сервис рекомендую.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-26T15:11:52"
+    },
+    {
+      "username": "Александр",
+      "text": "Volga — лучший! Всё прошло отлично, спасибо за работу.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-23T16:49:02"
+    },
+    {
+      "username": "Сергей",
+      "text": "Спасибо! Всё быстро и понятно, порог входа низкий. Советую.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-22T09:35:54"
+    },
+    {
+      "username": "Наталья",
+      "text": "Простой и удобный обменник, операции проходят быстро.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-20T17:16:53"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Btc на карту Мир — всё прошло без проблем.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-20T16:13:13"
+    },
+    {
+      "username": "Андрей",
+      "text": "Перевод с Payeer на Сбер прошёл быстро и удобно.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-19T13:33:50"
+    },
+    {
+      "username": "Роман",
+      "text": "Хороший обменник! Всё понятно, деньги приходят быстро. Идеально для новичков.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-18T15:39:27"
+    },
+    {
+      "username": "Денис",
+      "text": "Отличный обмен, всё быстро и без лишних действий. Рекомендую!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-18T15:02:55"
+    },
+    {
+      "username": "Сергей",
+      "text": "Сервис отличный, работает быстро и без проблем.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-18T14:14:51"
+    },
+    {
+      "username": "Олег",
+      "text": "Все прошло быстро, перевод занял около 10 минут. Спасибо!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-18T07:15:14"
+    },
+    {
+      "username": "Алексей",
+      "text": "Перевод с LTC на СБП занял 40 минут. Всё прошло отлично, спасибо сервису!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-17T12:54:29"
+    },
+    {
+      "username": "Сергей",
+      "text": "Отлично! Перевод с Payeer на СБП занял 30 минут, всё выполнено качественно.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-17T10:48:49"
+    },
+    {
+      "username": "Виталий",
+      "text": "Спасибо, перевод прошёл успешно и без задержек.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-16T19:52:50"
+    },
+    {
+      "username": "Михаил",
+      "text": "Всё прошло быстро, проблем не возникло.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-16T15:47:52"
+    },
+    {
+      "username": "Елена",
+      "text": "Обмен прошёл идеально, буду пользоваться сервисом ещё.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-16T09:11:52"
+    },
+    {
+      "username": "Александр",
+      "text": "USDT (BEP20) на Сбер прошло быстро, доволен результатом.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-16T08:21:21"
+    },
+    {
+      "username": "Сергей",
+      "text": "Прекрасный обменник — всё быстро и качественно. Рекомендую всем!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-15T17:54:02"
+    },
+    {
+      "username": "Роза",
+      "text": "Обмен прошёл быстрее, чем ожидала — всего около 5 минут. Отлично!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-15T13:58:10"
+    },
+    {
+      "username": "Артур",
+      "text": "Обмен Payeer USD на Сбер RUB занял около 7–8 минут, всё прошло идеально.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-14T11:54:57"
+    },
+    {
+      "username": "Андрей",
+      "text": "Всё прошло быстро и удобно, проблем не возникло.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-14T10:01:41"
+    },
+    {
+      "username": "Игорь",
+      "text": "Первый раз менял, сервис понравился. Перевод с Payeer на СБП сделали быстро!",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-14T09:38:26"
+    },
+    {
+      "username": "Леонид",
+      "text": "Обмен очень быстрый, 5–10 минут. С Payeer на карту Райффайзен — без проблем.",
+      "exchange_name": "BTC-Волга",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-01-13T16:55:41"
+    }
+  ]
+}

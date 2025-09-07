@@ -1,0 +1,504 @@
+{
+    "ExCenter": [
+        {
+            "username": "Дмитрий",
+            "text": "Поддержка реагирует быстро, а сервис работает без сбоев. Очень доволен!",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:33:32"
+        },
+        {
+            "username": "Сергей",
+            "text": "Надежная платформа, продолжу пользоваться без сомнений.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:15:29"
+        },
+        {
+            "username": "Николай",
+            "text": "Всё прошло гладко: деньги зачислили моментально, курс точный. Служба поддержки всегда на связи. Обязательно вернусь.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:05:46"
+        },
+        {
+            "username": "Александр",
+            "text": "Поддержка реагирует мгновенно, комиссия справедливая. Пользуюсь сервисом с удовольствием.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:37:55"
+        },
+        {
+            "username": "Игорь",
+            "text": "Требовали слишком много скриншотов и документов, в итоге обмен не провели. Не рекомендую этот сервис.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-02T12:16:38"
+        },
+        {
+            "username": "Мария",
+            "text": "Деньги пришли вовремя, платформа оставила положительное впечатление.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:16:01"
+        },
+        {
+            "username": "Павел",
+            "text": "Перевод прошёл быстро, курс совпал с расчетным. Очень удобно работать с этим сервисом.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:04:30"
+        },
+        {
+            "username": "Евгений",
+            "text": "Отличная платформа: всё выполнено точно и быстро.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:08:50"
+        },
+        {
+            "username": "Ольга",
+            "text": "Возникли проблемы с заморозкой средств, поддержка отвечает долго и непонятно. Надеюсь, администрация поможет разобраться.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-05-22T07:19:09"
+        },
+        {
+            "username": "Константин",
+            "text": "Средства не выплачиваются более 12 часов, поддержка ограничивается общими фразами.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-03T09:16:50"
+        },
+        {
+            "username": "Виктор",
+            "text": "Сервис удобный, обмен прошёл быстро и без ошибок. Деньги пришли вовремя, курс справедливый.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:21:03"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Отличная работа, буду обращаться снова.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:55:34"
+        },
+        {
+            "username": "Даниил",
+            "text": "Процесс обмена прошёл без проблем, результат полностью совпал с ожиданиями. Сервис надёжный, рекомендую.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:00:18"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обмен занял немного времени, результат порадовал. Всё прозрачно и просто, никаких проблем.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:01:58"
+        },
+        {
+            "username": "Надежда",
+            "text": "Сервис интуитивный и удобный. Перевод прошёл без ошибок, комиссия справедливая.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:26:00"
+        },
+        {
+            "username": "Артём",
+            "text": "Все условия совпали, впечатления исключительно положительные.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:52:38"
+        },
+        {
+            "username": "Ирина",
+            "text": "Деньги пришли вовремя, пользоваться удобно и безопасно.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:09:03"
+        },
+        {
+            "username": "Станислав",
+            "text": "Сервис стабильный, перевод прошёл без проблем, комиссия заранее известна.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T12:53:53"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Процесс прошёл без проблем, сервис работает чётко и надежно.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T12:34:37"
+        },
+        {
+            "username": "Александр",
+            "text": "Хороший обменный пункт, радует курс и скорость перевода.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T11:53:44"
+        },
+        {
+            "username": "Никита",
+            "text": "Удобно и надежно пользоваться сервисом.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:26:15"
+        },
+        {
+            "username": "Сергей",
+            "text": "Планирую пользоваться этим сервисом снова.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:05:14"
+        },
+        {
+            "username": "Владислав",
+            "text": "Курс совпал, деньги поступили вовремя. Отличный сервис.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T14:32:08"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошел успешно, буду пользоваться и дальше.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:52:37"
+        },
+        {
+            "username": "Игорь",
+            "text": "Сервис надежный, инструкция понятна, перевод прошел быстро.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:32:46"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен завершился быстро. Курс прозрачный, деньги поступили вовремя. Планирую пользоваться снова.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:06:26"
+        },
+        {
+            "username": "Марк",
+            "text": "Процесс обмена простой и удобный, комиссия прозрачная, перевод без задержек.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:24:04"
+        },
+        {
+            "username": "Андрей",
+            "text": "Отличный сервис, рекомендую.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:34:07"
+        },
+        {
+            "username": "Станислав",
+            "text": "Обмен прошёл быстро, поддержка помогла разобраться со всеми вопросами.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T09:13:51"
+        },
+        {
+            "username": "Григорий",
+            "text": "Сервис работает идеально, обмен без проблем.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:38:55"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Все прошло быстро и удобно. Курс совпал, деньги поступили вовремя. Очень доволен.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:25:44"
+        },
+        {
+            "username": "Вадим",
+            "text": "Перевод выполнен без проблем, уведомления приходили вовремя, средства зачислены корректно.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:51:29"
+        },
+        {
+            "username": "Виктор",
+            "text": "Все прошло стабильно, без лишних вопросов и проблем.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:40:06"
+        },
+        {
+            "username": "Людмила",
+            "text": "Деньги поступили без проблем, пользоваться сервисом удобно и безопасно.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:26:59"
+        },
+        {
+            "username": "Данил",
+            "text": "Перевод выполнен идеально, буду обращаться снова.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T14:51:39"
+        },
+        {
+            "username": "Роман",
+            "text": "Все этапы обмена понятны и удобны, процесс занял минимум времени.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T14:33:02"
+        },
+        {
+            "username": "Олег",
+            "text": "Обмен простой и понятный, комиссия прозрачная, всё прошло без проблем.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:50:56"
+        },
+        {
+            "username": "Денис",
+            "text": "Курс совпал, деньги поступили корректно, сервис отличный.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:30:55"
+        },
+        {
+            "username": "Полина",
+            "text": "Средства пришли сразу, пользоваться платформой удобно и безопасно.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:17:35"
+        },
+        {
+            "username": "Андрей",
+            "text": "Сервис сработал четко, перевод завершился успешно, курс прозрачный, никаких скрытых условий.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:44:43"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все этапы прошли без ошибок, деньги пришли сразу. Платформа удобная и надежная.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T18:32:59"
+        },
+        {
+            "username": "Леонид",
+            "text": "Сервис надежный и быстрый. Обязательно обращусь снова.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T16:22:57"
+        },
+        {
+            "username": "Марина",
+            "text": "Пользоваться платформой комфортно, интерфейс удобный.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:37:21"
+        },
+        {
+            "username": "Карина",
+            "text": "Обмен прошел идеально, никаких проблем не возникло.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:24:24"
+        },
+        {
+            "username": "Лев",
+            "text": "Все этапы выполнены корректно, перевод завершен быстро. Сервис удобный и надежный.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:51:53"
+        },
+        {
+            "username": "Павел",
+            "text": "Все прошло идеально, платформа надежная, перевод без задержек. Обязательно воспользуюсь снова.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:35:23"
+        },
+        {
+            "username": "Николай",
+            "text": "Сервис сработал четко, перевод завершился без ошибок, деньги пришли вовремя.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:11:04"
+        },
+        {
+            "username": "Иван",
+            "text": "Деньги поступили быстро и без задержек. Платформой удобно пользоваться, все шаги понятные.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:57:14"
+        },
+        {
+            "username": "Максим",
+            "text": "Платформа надежная, перевод без задержек, условия прозрачные. Буду использовать снова.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:28:43"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Все прошло стабильно и чётко. Средства зачислены быстро, ошибок не возникло. Очень удобно.",
+            "exchange_name": "ExCenter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:12:14"
+        }
+    ]
+}

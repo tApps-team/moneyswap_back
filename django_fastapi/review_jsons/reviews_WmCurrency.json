@@ -1,0 +1,354 @@
+{
+    "WmCurrency": [
+        {
+            "username": "Максим",
+            "text": "Не так быстро, заняло почти три часа, но в итоге всё отлично, спасибо за обмен!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-13T19:05:25"
+        },
+        {
+            "username": "Игорь",
+            "text": "Надежный обменник, быстро и удобно.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-29T11:09:27"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Спасибо за быстрый обмен, всё четко и понятно. Очень удобно.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-25T13:26:12"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сервис хороший, была небольшая задержка, но перевели с бонусом.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-09-26T16:07:38"
+        },
+        {
+            "username": "Владимир",
+            "text": "Менял рубли Т-банк на гривны Приват24, всё прошло быстро, курс отличный, поддержка на уровне. Рекомендую.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-09-01T23:24:29"
+        },
+        {
+            "username": "Николай",
+            "text": "Всё супер. Поддержка помогла быстро, обмен прошёл без проблем. Благодарю!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-03-14T12:54:15"
+        },
+        {
+            "username": "Марина",
+            "text": "Пользуюсь сайтом несколько дней, сегодня обменяла 50000 с Киви на Монобанк. Ответили в мессенджере за минуту, деньги пришли через 7 минут. Отличная поддержка!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-01-21T20:28:26"
+        },
+        {
+            "username": "Евгений",
+            "text": "Поддержка работает странно: сначала отвечают, потом блокируют. В остальном сервис нормальный.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2024-01-21T19:45:19"
+        },
+        {
+            "username": "Людмила",
+            "text": "Очень удобно, быстрые переводы и выгодный курс. Спасибо команде!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-12-28T15:35:54"
+        },
+        {
+            "username": "Надежда",
+            "text": "Отличный обменник! Полностью доверяю этому сервису.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-12-28T10:27:37"
+        },
+        {
+            "username": "Павел",
+            "text": "Хороший обменник, быстро решают вопросы, занимает буквально 5 минут.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-12-28T08:03:54"
+        },
+        {
+            "username": "Светлана",
+            "text": "Всё прошло отлично, обмен быстрый и без проблем.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-12-27T19:21:55"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Пыталась сделать перевод Киви-Монобанк, но перебросило на Киви-Приват24 и нельзя было изменить сумму. Немного запутанно.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2023-12-27T18:47:55"
+        },
+        {
+            "username": "Игорь",
+            "text": "С Киви на Моно всё прошло гладко. Спасибо за сервис!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-20T15:23:32"
+        },
+        {
+            "username": "Марк",
+            "text": "Первый раз пользовался, сделал два вывода: первый сразу пришёл, второй завис. Техподдержка помогла быстро. Очень доволен.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-17T20:28:40"
+        },
+        {
+            "username": "Артём",
+            "text": "Обмен прошёл быстро и без проблем. Рекомендую этот сервис.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-14T16:59:15"
+        },
+        {
+            "username": "Никита",
+            "text": "Отличная команда, всегда помогают и быстро решают вопросы. Всё понятно и удобно.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-14T16:54:59"
+        },
+        {
+            "username": "Владислав",
+            "text": "Очень странный сервис. Оператор заблокировал меня без объяснений, лучше обходить стороной.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2023-11-14T16:31:34"
+        },
+        {
+            "username": "Денис",
+            "text": "Отличный обменник, уже вывел почти 150 тысяч рублей. Быстро и надежно, рекомендую!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-11T16:31:28"
+        },
+        {
+            "username": "Эльмира",
+            "text": "Большое спасибо команде! Всегда помогают и реагируют вовремя. Отличный сервис!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-03T17:20:41"
+        },
+        {
+            "username": "Станислав",
+            "text": "Всё отлично, обмен делали вручную, но быстро и без задержек.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-01T07:19:46"
+        },
+        {
+            "username": "Даниил",
+            "text": "Приятно работать, быстро и качественно! Молодцы!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-10-25T19:17:03"
+        },
+        {
+            "username": "Николай",
+            "text": "Обмен просто супер, всем советую этот сервис.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-10-25T14:45:29"
+        },
+        {
+            "username": "Ольга",
+            "text": "Пользуюсь постоянно! Отличный курс, заявки обрабатываются быстро, поддержка всегда на месте. Рекомендую всем.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-10-25T14:40:17"
+        },
+        {
+            "username": "Артемий",
+            "text": "Хороший сервис, операторы вежливые и готовы помочь.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-10-25T13:53:31"
+        },
+        {
+            "username": "Ксения",
+            "text": "Пользуюсь больше года, всегда лучший курс и быстрая реакция в Telegram. Всегда помогают и подсказывают. Рекомендую!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-10-25T13:51:11"
+        },
+        {
+            "username": "Илья",
+            "text": "Обслуживание ужасное для Украины! С Киви на Монобанк хотел обменять, но операторы грубые.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2023-10-06T17:43:10"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Отличный обменник! Пользуюсь регулярно, всё быстро и по хорошему курсу. Советую!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-09-03T13:07:53"
+        },
+        {
+            "username": "Олеся",
+            "text": "Лучший обменник, работает в любое время суток. Очень нравится сервис!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-09-01T20:26:32"
+        },
+        {
+            "username": "Ирина",
+            "text": "Обменник отличный, от души рекомендую!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-08-18T11:58:08"
+        },
+        {
+            "username": "Юлия",
+            "text": "Лучший обменник! Всё быстро, надёжно и чётко. Благодарю за работу.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-08-15T08:13:22"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обменник один из самых надежных. Всё точно, приятное общение и выгодный курс. Рекомендую.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-08-14T15:32:46"
+        },
+        {
+            "username": "Юлия",
+            "text": "Классный сервис и внимательные операторы.",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-08-13T16:36:59"
+        },
+        {
+            "username": "Мария",
+            "text": "Отличный обменник, пользуюсь постоянно. Очень приятная поддержка. Советую всем!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-08-13T15:11:30"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Очень удобный обменник. Всё быстро и четко, моя палочка-выручалочка. Спасибо команде и процветания вам!",
+            "exchange_name": "WmCurrency",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-08-13T14:54:36"
+        }
+    ]
+}

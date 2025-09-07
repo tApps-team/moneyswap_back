@@ -1,0 +1,504 @@
+{
+    "CoinClick": [
+        {
+            "username": "Екатерина",
+            "text": "Просто невероятно, чувствуешь себя как дома.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:00:36"
+        },
+        {
+            "username": "Игорь",
+            "text": "Перевод прошёл моментально, деньги уже на счёте через пару минут. Отличная поддержка, внимательные сотрудники!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:31:45"
+        },
+        {
+            "username": "Максим",
+            "text": "Все быстро, никаких проблем с операцией.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:14:01"
+        },
+        {
+            "username": "Егор",
+            "text": "Обмен прошёл успешно, подтверждение пришло моментально.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:48:11"
+        },
+        {
+            "username": "Станислав",
+            "text": "Все супер, буквально через 5 минут деньги на руках.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:46:40"
+        },
+        {
+            "username": "Артём",
+            "text": "Пользуюсь не первый раз, все удобно и понятно.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:07:43"
+        },
+        {
+            "username": "Вадим",
+            "text": "Все быстро и без задержек, как обычно.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T04:50:25"
+        },
+        {
+            "username": "Людмила",
+            "text": "Большое спасибо за быструю обработку и хороший курс.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T20:52:10"
+        },
+        {
+            "username": "Данила",
+            "text": "Все отлично, обмен прошёл без проблем.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:51:52"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Спасибо, очень доволен сервисом и поддержкой.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:02:08"
+        },
+        {
+            "username": "Константин",
+            "text": "Первый раз обменивал, всё прошло идеально, комиссия минимальная, крипта пришла быстро. Рекомендую!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:46:52"
+        },
+        {
+            "username": "Николай",
+            "text": "Все сработало молниеносно, обмен прошёл гладко. Советую!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:08:52"
+        },
+        {
+            "username": "Виктория",
+            "text": "Огромное спасибо за качественный обмен, поддержка на высоте.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:30:23"
+        },
+        {
+            "username": "Елизавета",
+            "text": "Лучший сервис! Быстро, удобно, комиссия нормальная, поддержка отличная!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:30:22"
+        },
+        {
+            "username": "Сергей",
+            "text": "Пользуюсь уже больше года, всё стабильно и без проблем.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:23:31"
+        },
+        {
+            "username": "Михаил",
+            "text": "Отличный обменник, использую регулярно. Все проходит быстро, поддержка всегда на связи.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:05:49"
+        },
+        {
+            "username": "Андрей",
+            "text": "Хотите обмен без проблем — вам сюда. Отличный сервис.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:53:03"
+        },
+        {
+            "username": "Даниил",
+            "text": "Благодарю за обмен, все прошло очень быстро.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:21:15"
+        },
+        {
+            "username": "Николай",
+            "text": "Обмен моментальный, даже не успел заметить, как деньги на счету.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:59:18"
+        },
+        {
+            "username": "Светлана",
+            "text": "Поддержка очень приятная и вежливая, помогли с обменом без проблем.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:16:27"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все отлично, быстро и надежно. Работает без сбоев круглосуточно.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:11:52"
+        },
+        {
+            "username": "Александр",
+            "text": "Все пришло быстрее ожидания, как и обычно, рекомендую.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:05:42"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Отлично! Быстро, надежно, лучший сервис из тех, что я пробовал.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:58:15"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Очень быстрый обмен! Обслуживание и поддержка на высоте, рекомендую.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:28:21"
+        },
+        {
+            "username": "Валерий",
+            "text": "Отличный обменник с всем необходимым. Курс хороший, поддержка компетентная, обмен быстрый. Очень рекомендую!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:55:53"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Деньги приходят моментально, сервис работает отлично. Продолжу пользоваться.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:14:05"
+        },
+        {
+            "username": "Ольга",
+            "text": "Спасибо за быстрый вывод и мгновенную реакцию оператора.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:05:27"
+        },
+        {
+            "username": "Михаил",
+            "text": "Супер обменник, без лишней суеты. Пользуюсь только им последние месяцы.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:05:33"
+        },
+        {
+            "username": "Алиса",
+            "text": "Мгновенная скорость! Заявка до выплаты меньше двух минут, просто удивительно.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:38:36"
+        },
+        {
+            "username": "Иван",
+            "text": "Отличный обменник, выплаты проходят быстро и без задержек.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:03:08"
+        },
+        {
+            "username": "Станислав",
+            "text": "Обмен прошел успешно, желаю всем удачи!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T03:22:08"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все быстро и удобно, курс выгодный, поддержка на высоте.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T02:12:47"
+        },
+        {
+            "username": "Павел",
+            "text": "Всегда оперативно, обмен проходит без проблем, очень доволен.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T23:01:58"
+        },
+        {
+            "username": "Филипп",
+            "text": "Время обработки заявки 10 минут, обмен на высшем уровне.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:41:09"
+        },
+        {
+            "username": "Пётр",
+            "text": "Все хорошо, комиссия адекватная, операция прошла быстро.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T19:21:06"
+        },
+        {
+            "username": "Олег",
+            "text": "Сделал обмен, транзакция прошла моментально.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:58:18"
+        },
+        {
+            "username": "Владислав",
+            "text": "Работаю с обменником с удовольствием. Всё стабильно, желаю успехов!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:51:14"
+        },
+        {
+            "username": "Алина",
+            "text": "Все выполнено отлично, огромное спасибо за вашу работу!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:26:18"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обмен делал не впервые, как всегда всё безупречно. Благодарю!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:53:03"
+        },
+        {
+            "username": "Тимур",
+            "text": "Обменник отличный, перевод проходит быстро, рекомендую всем!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:30:24"
+        },
+        {
+            "username": "Денис",
+            "text": "Все надежно и быстро, сервис на высшем уровне, жаль скидок пока нет.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:14:32"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Рад, что открыл для себя этот обменник, все просто и понятно.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:14:32"
+        },
+        {
+            "username": "Андрей",
+            "text": "Все отлично как всегда, быстро и без задержек. Спасибо за вашу работу.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:54:09"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все супер! Получил деньги быстро и без проблем.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:46:14"
+        },
+        {
+            "username": "Александра",
+            "text": "Всё отлично, благодарю за оперативность и качественный обмен!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:24:35"
+        },
+        {
+            "username": "Олег",
+            "text": "Сервис работает безопасно и быстро.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:06:04"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все стабильно и отлично, как всегда!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:36:29"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все прошло быстро, рекомендую этот сервис всем.",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:18:46"
+        },
+        {
+            "username": "Ярослава",
+            "text": "Первый раз пользовалась, все очень оперативно, поддержка всегда на связи. Спасибо!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:23:04"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Все четко, быстро, постоянный клиент, всегда выгодный курс. Рекомендую!",
+            "exchange_name": "CoinClick",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:10:44"
+        }
+    ]
+}

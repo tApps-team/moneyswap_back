@@ -1,0 +1,504 @@
+{
+    "BTCDeal": [
+        {
+            "username": "Дмитрий",
+            "text": "Обменивал USDT на наличные в СПб, быстро и удобно. Офис в хорошем месте, рекомендую.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:10:53"
+        },
+        {
+            "username": "Игорь",
+            "text": "Поменял USDT в Питере, все прошло без проблем, доволен.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:41:23"
+        },
+        {
+            "username": "Станислав",
+            "text": "Обменял небольшую сумму наличных в СПб, всё быстро и без заморочек. Отлично для мелких сумм.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:58:05"
+        },
+        {
+            "username": "Марк",
+            "text": "Обмен прошел гладко, никаких заминок. Сервис на уровне.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:14:56"
+        },
+        {
+            "username": "Павел",
+            "text": "Сделка быстрая и точная, как обещали. Полностью доволен.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:57:01"
+        },
+        {
+            "username": "Владислав",
+            "text": "Офис в центре, обмен занял всего пару минут. Все прозрачно и удобно.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:14:26"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обменял USDT на наличку в СПб, все прошло быстро, курс очень хороший.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:01:21"
+        },
+        {
+            "username": "Николай",
+            "text": "Нашёл офис без проблем, внутри чисто и уютно. Всё заняло около 10 минут.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:35:08"
+        },
+        {
+            "username": "Роман",
+            "text": "Очередей не было, быстро обменял деньги и ушёл. Очень удобно.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:13:02"
+        },
+        {
+            "username": "Сергей",
+            "text": "Удобное место, обмен прошёл без заминок. Рядом с метро.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:24:44"
+        },
+        {
+            "username": "Леонид",
+            "text": "Персонал спокойный и внимательный, всё объяснили без лишней формальности.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:00:11"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошёл быстро и корректно, персонал приветливый, без проблем.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T22:56:54"
+        },
+        {
+            "username": "Егор",
+            "text": "Отличный сервис! Всё надежно и просто, советую.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T14:17:27"
+        },
+        {
+            "username": "Александр",
+            "text": "Обменник стабильно работает, всегда быстро и честно. Пользуюсь регулярно.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T10:45:52"
+        },
+        {
+            "username": "Владислав",
+            "text": "Нашёл офис быстро, всё чётко и чисто. Деньги получил без задержек.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:25:00"
+        },
+        {
+            "username": "Илья",
+            "text": "Офис в центре — быстро и удобно. Персонал дружелюбный, обмен прошёл гладко.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T10:56:31"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обменял USDT на наличные, всё чётко, без лишней суеты. Советую.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T12:36:44"
+        },
+        {
+            "username": "Михаил",
+            "text": "Офис удобный, обмен прошёл быстро и спокойно, деньги получили сразу.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T11:43:14"
+        },
+        {
+            "username": "Григорий",
+            "text": "Персонал вежливый, процесс обмена быстрый и понятный. Чувствуется доверие.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T10:20:02"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень доволен сервисом: быстро, удобно, курс отличный, деньги на руках.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T09:15:57"
+        },
+        {
+            "username": "Денис",
+            "text": "Регулярно пользуюсь обменником, всегда комфортно, персонал приветливый.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T16:34:57"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Чисто и удобно, без лишних вопросов. Всё прошло гладко.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T15:25:49"
+        },
+        {
+            "username": "Иван",
+            "text": "Быстрый и честный обмен, персонал приветливый и внимательный.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T19:31:43"
+        },
+        {
+            "username": "Александр",
+            "text": "Удобное расположение офиса, дружелюбный персонал. Сделка прошла быстро, без лишней бюрократии.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:06:46"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обмен прошёл быстро и честно. Всё пересчитали при мне, сервис понравился.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T12:51:41"
+        },
+        {
+            "username": "Михаил",
+            "text": "Офис в центре, персонал доброжелательный. Деньги получил без задержки.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:36:25"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Удобно, что всё можно сделать в центре. Персонал вежливый, обмен прошёл гладко.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T10:12:33"
+        },
+        {
+            "username": "Игорь",
+            "text": "Сделка прошла без проблем, обмен USDT на наличные быстрый и прозрачный.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T10:12:26"
+        },
+        {
+            "username": "Алексей",
+            "text": "Менял USDT на наличку в офисе, всё прошло гладко и честно. Сервис на уровне.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T00:06:17"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл отлично, персонал внимательный, деньги пересчитали при мне.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T14:49:08"
+        },
+        {
+            "username": "Никита",
+            "text": "Обменял USDT на наличку в СПб. Курс хороший, сделка прошла быстро, обязательно обращусь снова.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T12:05:49"
+        },
+        {
+            "username": "Артем",
+            "text": "Меняли быстро и без проблем, советую этот обменник.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T11:30:28"
+        },
+        {
+            "username": "Михаил",
+            "text": "Офис понравился — всё чётко, деньги пересчитали и оформили быстро. Спокойно и удобно.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T10:50:53"
+        },
+        {
+            "username": "Владимир",
+            "text": "Никакой спешки, очередей нет. Обмен прошёл спокойно и быстро.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T09:31:37"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обменял небольшую сумму в Питере, всё прошло гладко, сервис отличный.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T17:59:20"
+        },
+        {
+            "username": "Никита",
+            "text": "Сервис приятно удивил: курс нормальный, деньги пришли быстро. Всё чётко и без обмана.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T09:50:34"
+        },
+        {
+            "username": "Олег",
+            "text": "Отличный обменник, всё работает как часы — быстро и без сбоев. Вернусь снова.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T09:38:37"
+        },
+        {
+            "username": "Виктор",
+            "text": "Менял USDT на наличные в СПб. Курс хороший, обмен от небольших сумм, офис удобно расположен.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T19:03:57"
+        },
+        {
+            "username": "Евгения",
+            "text": "Первый опыт обмена криптовалюты через этот сервис оказался отличным. Всё понятно, быстро и удобно. Рекомендую!",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T13:19:17"
+        },
+        {
+            "username": "Олег",
+            "text": "Часто пользуюсь онлайн, но решил зайти в офис. Всё сделали аккуратно и быстро, деньги на руках.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T11:33:01"
+        },
+        {
+            "username": "Владислав",
+            "text": "Решил обменять лично — всё прошло спокойно. Деньги пересчитали при мне, доверие ощущается.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T09:56:52"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень удобный обменник, сотрудники приятные, курс адекватный. Рекомендую!",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T09:22:13"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Понравилось: сотрудники вежливые, показывают и пересчитывают всё при тебе. Без спешки.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T08:46:29"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обменял USDT в офисе, всё прозрачно, пересчитали при мне, курс совпал, лишних вопросов нет.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T10:06:20"
+        },
+        {
+            "username": "Игорь",
+            "text": "Спокойная атмосфера, всё быстро и понятно объяснили, обмен прошёл без проблем.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T08:53:38"
+        },
+        {
+            "username": "Константин",
+            "text": "Обменял USDT на наличку в СПб. Всё прошло оперативно и без лишних движений, менеджер приятный, вернусь ещё.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T13:23:26"
+        },
+        {
+            "username": "Станислав",
+            "text": "Курс отличный, BTC пришёл через минуту. Очень впечатлён!",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T11:35:28"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Проверил работу офиса лично, а не онлайн. Впечатления отличные: чисто, сотрудники без пафоса. Теперь доверяю больше.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T09:04:11"
+        },
+        {
+            "username": "Евгений",
+            "text": "Курс хороший, офис удобно расположен. Сделка прошла быстро, спасибо.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T16:37:38"
+        },
+        {
+            "username": "Василий",
+            "text": "Был рядом и решил зайти. Всё сделали быстро, настроение улучшилось.",
+            "exchange_name": "BTCDeal",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T16:21:48"
+        }
+    ]
+}

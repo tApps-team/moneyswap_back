@@ -1,0 +1,504 @@
+{
+    "LetsChange": [
+        {
+            "username": "Алина",
+            "text": "Обмен прошел отлично! Средства пришли моментально, без дробления и задержек. Обязательно вернусь снова.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T09:54:01"
+        },
+        {
+            "username": "Максим",
+            "text": "Сервис на высоком уровне, как всегда. Все быстро и удобно. Спасибо!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T17:52:16"
+        },
+        {
+            "username": "Игорь",
+            "text": "Потратил слишком много времени на обмен наличных на XMR в Краснодаре. Процесс проверки был долгим, мобильное приложение неудобное, в офисе пришлось ждать. Не советую.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-06T11:50:16"
+        },
+        {
+            "username": "Марина",
+            "text": "Приятно работать с этим сервисом! Быстро, четко и всегда на связи. Отличная команда!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-03T09:59:47"
+        },
+        {
+            "username": "Ольга",
+            "text": "Все прошло идеально! Быстрое выполнение обменов, всегда на связи, профессиональный подход.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T17:37:11"
+        },
+        {
+            "username": "Светлана",
+            "text": "Сервис отличный, обмен прошел быстро, поддержка помогала на всех этапах.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-24T10:54:14"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Все удобно и понятно, заявки отслеживаются в реальном времени, хороший курс и интерфейс.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T14:39:12"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен 5500 USDT на наличные прошел без проблем. Менеджер подробно объяснил процесс, проверили кошелек заранее, все прошло идеально. Рекомендую сервис!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-11T18:32:05"
+        },
+        {
+            "username": "Денис",
+            "text": "Отличный обменник! Все быстро, удобно и надежно. Рекомендую.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-29T19:51:06"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен с моими суммами прошел неудачно, возникли проблемы с переводами и вмешательство полиции. Потерял деньги из-за ошибок сервиса, не рекомендую.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-22T14:57:46"
+        },
+        {
+            "username": "Паоло",
+            "text": "Очень внимательное отношение к клиенту, всегда сообщают о статусе перевода. Все прошло гладко, доволен.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-04T16:14:23"
+        },
+        {
+            "username": "Клара",
+            "text": "Регулярно пользуюсь сервисом, всегда точные и быстрые обмены. Поддержка отвечает вовремя, курс выгодный для небольших сумм.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-04T14:42:23"
+        },
+        {
+            "username": "Вадим",
+            "text": "После обмена блокировка от банка, не по 115-ФЗ. Будьте осторожны, не рекомендую.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-01T07:31:42"
+        },
+        {
+            "username": "Игорь",
+            "text": "Спасибо за честность команды! Замороженные средства вернули полностью, комиссия минимальная. Отличный сервис!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-30T08:20:27"
+        },
+        {
+            "username": "Людмила",
+            "text": "Делала обмены больше года, все стабильно быстро и удобно, поддержка всегда на связи.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-28T08:10:38"
+        },
+        {
+            "username": "Артемий",
+            "text": "Вывод прошел без проблем, поддержка отличная, все сделали быстро и удобно.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-23T19:33:13"
+        },
+        {
+            "username": "Виктория",
+            "text": "Благодарю команду за слаженную работу! Все четко и быстро, как всегда профессионально.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-23T10:49:10"
+        },
+        {
+            "username": "Айдар",
+            "text": "Недавно обменял криптовалюту через LetsChange, все прошло гладко. Поддержка была на связи, интерфейс понятный. Рекомендую!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-22T17:08:55"
+        },
+        {
+            "username": "Надежда",
+            "text": "Отличная команда! Быстро, слаженно и профессионально. Рекомендую всем, кто ценит качество.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-22T11:10:03"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Вывод прошел без проблем, поддержка исправила некорректные данные, все удобно и быстро.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-21T11:07:52"
+        },
+        {
+            "username": "Константин",
+            "text": "Обмен биткоинов на рубли за полтора часа прошел идеально, подтверждения сети и зачисление на карту в полном порядке.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-21T11:03:08"
+        },
+        {
+            "username": "Ирина",
+            "text": "Самый удобный обменник! Пользуюсь уже год, все четко и быстро.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-19T13:45:37"
+        },
+        {
+            "username": "Галина",
+            "text": "Обмен BTCB BEP20 на СБП Озон прошел моментально, за 5 минут. Операторы всегда на связи. Молодцы!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-18T10:01:29"
+        },
+        {
+            "username": "Анна",
+            "text": "Все быстро и надежно. Сервис внушает доверие, рекомендую!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-15T10:46:56"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень стабильная работа, все четко и на высоком уровне. Рекомендую.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-14T13:50:13"
+        },
+        {
+            "username": "Захар",
+            "text": "Обмен прошел отлично, поддержка на связи весь процесс. Проблем с выплатами не было.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-13T10:39:26"
+        },
+        {
+            "username": "Николай",
+            "text": "Обмен USDT на Т-Банк прошел за 30 минут, курс хороший, все устроило. Благодарю!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-13T08:50:47"
+        },
+        {
+            "username": "Али",
+            "text": "Все подробно объяснили, помогли с переводом, обратная связь отличная, доволен сервисом.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-11T14:21:54"
+        },
+        {
+            "username": "Владислав",
+            "text": "Подход к обмену ответственный, всегда на связи и готовы помочь, всем доволен.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-05T20:24:45"
+        },
+        {
+            "username": "Ирина",
+            "text": "Обмен USDT на рубли прошел очень быстро, поддержка на связи, спасибо за оперативность!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-05T18:58:33"
+        },
+        {
+            "username": "Данила",
+            "text": "Сервис оперативный, все прошло быстро и удобно, рекомендую!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-05T09:21:16"
+        },
+        {
+            "username": "Сергей",
+            "text": "Перевод получил, все прошло без проблем, рекомендую.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-02T17:39:44"
+        },
+        {
+            "username": "Сергей",
+            "text": "Средства поступили быстро, обмен прошел гладко.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-02T15:22:07"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Отличный обменник, все сделки выполняются оперативно и без задержек.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-01T10:59:29"
+        },
+        {
+            "username": "Юлия",
+            "text": "Сумма пришла полностью, обмен прошел быстро, поддержка приятная и отзывчивая.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-29T07:29:18"
+        },
+        {
+            "username": "Анна",
+            "text": "Лучший сервис! Всегда на связи, все оперативно и удобно.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-27T10:09:09"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обмен прошел с задержками и проблемами, будьте внимательны при больших суммах.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-04-26T11:02:01"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Сервис отличный, все прошло успешно, поддержка отзывчивая и помогает.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-24T07:54:08"
+        },
+        {
+            "username": "Анна",
+            "text": "Быстрый и надежный обмен, рекомендую сервис!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-23T20:37:28"
+        },
+        {
+            "username": "Анна",
+            "text": "Все быстро, надежно и удобно. Пользуюсь больше года, сервис отличный.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-22T13:24:36"
+        },
+        {
+            "username": "Юрий",
+            "text": "Выводил USDC BEP20 на карту, все прошло быстро, курс хороший, без проблем.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-18T13:14:59"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен USDT на СБП прошел за полчаса, все быстро и удобно.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-18T06:51:26"
+        },
+        {
+            "username": "Наталья",
+            "text": "Все отлично, обмен прошел без проблем, спасибо большое!",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-17T10:21:04"
+        },
+        {
+            "username": "Анна",
+            "text": "Отличный обменник! Все удобно, ребята всегда на связи, пользуюсь больше года.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-16T14:42:37"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все супер! Быстро, качественно и без проблем. Вернусь еще.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-16T14:38:32"
+        },
+        {
+            "username": "Анна",
+            "text": "Долго пользуюсь сервисом, всегда на связи и выполняют обмены быстро.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-15T16:29:30"
+        },
+        {
+            "username": "Юлия",
+            "text": "Все отлично, быстро обменяли, времени на оплату было достаточно.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-14T12:07:04"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Быстро и качественно обменяли XMR, все прошло без задержек, доволен сервисом.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-10T20:18:25"
+        },
+        {
+            "username": "Мария",
+            "text": "Все понравилось, пользуюсь сервисом не первый раз. Обмен прошел гладко, рекомендую.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-10T18:36:07"
+        },
+        {
+            "username": "Валентин",
+            "text": "Будьте внимательны, сервис слил информацию мошенникам, произошли неприятные ситуации.",
+            "exchange_name": "LetsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-03-27T10:04:28"
+        }
+    ]
+}

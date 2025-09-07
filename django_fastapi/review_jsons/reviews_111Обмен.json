@@ -1,0 +1,324 @@
+{
+  "111Обмен": [
+    {
+      "username": "Арсений",
+      "text": "Отличный обменник: курс честный, поддержка оперативная, всё прошло быстро.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-29T06:21:38"
+    },
+    {
+      "username": "Макар",
+      "text": "Менял USDT на Monero без проблем. Поддержка отзывчивая, сервис заслуживает внимания.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T22:15:55"
+    },
+    {
+      "username": "Ильяс",
+      "text": "USDT на ETN поменял всего за 15 минут. Поддержка реагирует мгновенно, сервис супер.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T06:34:31"
+    },
+    {
+      "username": "Семен",
+      "text": "Обменял BTC на USDT быстро и удобно. Всё устроило, рекомендую.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T03:38:17"
+    },
+    {
+      "username": "Федор",
+      "text": "Обмен Monero на USDT прошёл без ошибок, всё работает стабильно.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T11:58:41"
+    },
+    {
+      "username": "Виктор",
+      "text": "Сделка прошла гладко, ответы поддержки быстрые. Добавил сервис в закладки.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T07:05:07"
+    },
+    {
+      "username": "Ростислав",
+      "text": "Менял USDT на TRX за считанные минуты, курс выгодный. Рекомендую.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T00:23:33"
+    },
+    {
+      "username": "Екатерина",
+      "text": "Покупала TRX через USDT. Очень удобно, обслуживание на высоте.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T08:04:19"
+    },
+    {
+      "username": "Ильдар",
+      "text": "USDT обменял без проблем. Курс честный, сервис надёжный, спасибо!",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T05:01:59"
+    },
+    {
+      "username": "Габриэль",
+      "text": "Обменял USDT на LTC быстро и удобно. Всё понятно, благодарю сервис.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T01:39:03"
+    },
+    {
+      "username": "Рустам",
+      "text": "TRX перевёл быстро, курс устроил. Отличная работа, сервис надёжный.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-25T07:38:21"
+    },
+    {
+      "username": "Вадим",
+      "text": "Сделка прошла идеально. Курс хороший, обменник работает без задержек.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-25T03:17:56"
+    },
+    {
+      "username": "Карен",
+      "text": "Поддержка отвечает мгновенно, все вопросы решаются быстро. Обмен TON на TRX прошёл отлично.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T11:32:11"
+    },
+    {
+      "username": "Денис",
+      "text": "USDT на TRX обменял за пару минут. Рад, что выбрал этот сервис.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T07:54:42"
+    },
+    {
+      "username": "Вячеслав",
+      "text": "TRX получил за 15–20 минут, курс справедливый. Сервис честный и надёжный.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T00:46:26"
+    },
+    {
+      "username": "Григорий",
+      "text": "BTC-ALGO обменял быстро. Сервис удобный, рекомендую.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T07:55:32"
+    },
+    {
+      "username": "Алексей",
+      "text": "BTC на ADA поменял без проблем. Курс устраивает, доволен сервисом.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T03:54:52"
+    },
+    {
+      "username": "Марк",
+      "text": "USDT на TRX обменял быстро, связь с оператором была стабильной. Отличный сервис.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T14:05:11"
+    },
+    {
+      "username": "Николас",
+      "text": "Обмен TON на Monero прошёл быстро и удобно. Сервис на высоте, доволен.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T23:07:09"
+    },
+    {
+      "username": "Евдоким",
+      "text": "BTC обменял на USDT без проблем. Прозрачно и удобно, рекомендую сервис.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T11:57:38"
+    },
+    {
+      "username": "Алена",
+      "text": "Первый обмен USDT прошёл удачно. Курс приятный, сервис надёжный.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T08:29:07"
+    },
+    {
+      "username": "Ярослав",
+      "text": "USDT на TRX обменяли очень быстро. Сервис на высоком уровне, доволен.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T00:33:03"
+    },
+    {
+      "username": "Павел",
+      "text": "Продал Monero и купил USDT TRC20. Пользуюсь сервисом регулярно, всегда надёжно.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T12:38:57"
+    },
+    {
+      "username": "Степан",
+      "text": "Обмен Monero на USDT прошёл мгновенно. Всё чётко и выгодно, благодарю сервис.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T09:23:10"
+    },
+    {
+      "username": "Вероника",
+      "text": "Сделка прошла гладко, все условия выполнены. Очень довольна обменом!",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T03:17:24"
+    },
+    {
+      "username": "Илья",
+      "text": "USDT в EUR обменял быстро. Чат работает отлично, сервис на высоком уровне.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-19T11:49:33"
+    },
+    {
+      "username": "Радмир",
+      "text": "Первый раз воспользовался обменником. Всё прошло быстро и без заминок.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T22:59:11"
+    },
+    {
+      "username": "Савелий",
+      "text": "USDT на TRX обменял без задержек, курс выгодный. Всё устроило.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T10:44:06"
+    },
+    {
+      "username": "Данила",
+      "text": "Часто меняю USDT здесь. Проблем не было, сервис надёжный.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T05:43:33"
+    },
+    {
+      "username": "Саида",
+      "text": "TON на USDT обменял без проблем. Всё быстро и удобно, спасибо.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T02:02:11"
+    },
+    {
+      "username": "Тимур",
+      "text": "USDT на Litecoin обменял быстро. Всё сделано аккуратно и без задержек.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T09:52:32"
+    },
+    {
+      "username": "Дамир",
+      "text": "Monero на USDT поменял всего за 10 минут. Курс выгодный, сервис отличный.",
+      "exchange_name": "111Обмен",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T00:25:50"
+    }
+  ]
+}

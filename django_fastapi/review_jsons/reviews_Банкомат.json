@@ -1,0 +1,334 @@
+{
+    "Банкомат": [
+        {
+            "username": "Максим",
+            "text": "Саппорт помог разобраться с переводом за считанные минуты. Отличная работа!",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:02:57"
+        },
+        {
+            "username": "Олег",
+            "text": "Курс здесь выгоднее, чем на других обменниках, доволен.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:02:05"
+        },
+        {
+            "username": "Иван",
+            "text": "Обмен прошёл моментально.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:22:51"
+        },
+        {
+            "username": "Мурад",
+            "text": "Деньги пришли на карту даже быстрее, чем ожидал.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T07:23:52"
+        },
+        {
+            "username": "Артем",
+            "text": "Сервис работает четко и быстро, всегда можно рассчитывать!",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T12:27:58"
+        },
+        {
+            "username": "Виктор",
+            "text": "Задавал вопросы по поводу наличия офиса и AML проверки, но отвечали одно и то же по скрипту. В итоге создал заявку, в чате бот ничего толком не сказал, контактов тоже не дали. Если бы оплатил, была бы проблема. На сайте много мёртвых ссылок и липовых партнёров. Лично у меня впечатление крайне негативное.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-31T11:31:47"
+        },
+        {
+            "username": "Алексей",
+            "text": "Всё прошло без проблем, только попросили пройти верификацию.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:12:43"
+        },
+        {
+            "username": "Денис",
+            "text": "Менял shiba на usdt, обмен занял пару минут. Всё ок.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T23:33:51"
+        },
+        {
+            "username": "Игорь",
+            "text": "Поменял эфир на биткоин, никаких скрытых сборов не было.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:08:44"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Хороший курс и быстрый обмен, доволен.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T19:15:46"
+        },
+        {
+            "username": "Николай",
+            "text": "Обмен прошёл быстро и без задержек, приятно сотрудничать.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T07:36:27"
+        },
+        {
+            "username": "Арсен",
+            "text": "Очень удобно менять USDT на карту Мир, интерфейс понятный даже для новичка.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T09:21:54"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Регулярно пользуюсь, всегда всё проходит без проблем.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T12:21:55"
+        },
+        {
+            "username": "Александр",
+            "text": "Обмен прошёл за секунды там, где у других это занимает часы. Советую.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T21:10:04"
+        },
+        {
+            "username": "Егор",
+            "text": "На обмен ушло меньше десяти минут.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T18:41:48"
+        },
+        {
+            "username": "Юрий",
+            "text": "Сервис честный, рекомендую.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T10:08:41"
+        },
+        {
+            "username": "Василий",
+            "text": "Меняю только здесь, всегда надежно и без сбоев.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T19:49:10"
+        },
+        {
+            "username": "Роман",
+            "text": "На сайте показывало, что обмен есть, создал заявку, но в итоге пришел отказ: «нет возможности принять наличные в вашей локации». Неприятно и неуважительно к клиентам.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-24T07:17:36"
+        },
+        {
+            "username": "Степан",
+            "text": "Обменял быстро на карту, спасибо за оперативность.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T17:15:19"
+        },
+        {
+            "username": "Женя",
+            "text": "Хороший обменник, менял ripple на btc, всегда помогают в случае вопросов.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:07:02"
+        },
+        {
+            "username": "Влад",
+            "text": "Обмен USDT на BTC прошёл быстрее, чем ожидал.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T06:49:07"
+        },
+        {
+            "username": "Валерий",
+            "text": "Очень хороший курс и быстрая обработка заявок.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T19:18:26"
+        },
+        {
+            "username": "Никита",
+            "text": "Подтверждение заняло больше времени, чем обычно, но обмен завершили быстро.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T12:26:49"
+        },
+        {
+            "username": "Антон",
+            "text": "Регулярно пользуюсь сервисом, всё стабильно и без проблем. Благодарю!",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T05:42:52"
+        },
+        {
+            "username": "Артур",
+            "text": "Менял USDT TRC20 на Т-Банк, всё прошло без проблем.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T11:29:29"
+        },
+        {
+            "username": "Станислав",
+            "text": "Нужно было пройти KYC, но сам обмен прошёл без задержек.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T10:09:54"
+        },
+        {
+            "username": "Костя",
+            "text": "Оператор вежливый, курс выгодный для обмена рублей на биткоин.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T15:03:00"
+        },
+        {
+            "username": "Леонид",
+            "text": "Обмен Monero на Т-Банк прошёл гладко, всё как всегда отлично.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T14:13:38"
+        },
+        {
+            "username": "Георгий",
+            "text": "За день сделал второй обмен, всё на уровне.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T05:34:48"
+        },
+        {
+            "username": "Владислав",
+            "text": "Курс приятный, деньги пришли быстро.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T18:12:14"
+        },
+        {
+            "username": "Рустам",
+            "text": "Обмен на карту прошёл моментально, благодарю.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T16:12:54"
+        },
+        {
+            "username": "Алихан",
+            "text": "Спасибо, всё прошло отлично.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T08:21:57"
+        },
+        {
+            "username": "Эдуард",
+            "text": "Обмен провели честно и быстро, вся сумма поступила.",
+            "exchange_name": "Банкомат",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T07:12:24"
+        }
+    ]
+}

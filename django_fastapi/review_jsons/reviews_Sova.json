@@ -1,0 +1,504 @@
+{
+    "Sova": [
+        {
+            "username": "Артур",
+            "text": "Очень удобный обмен, все прошло быстро, рекомендую.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:52:20"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Прекрасный сервис, всем довольна! Спасибо!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:55:00"
+        },
+        {
+            "username": "Марина",
+            "text": "Замечательная команда, обмен прошёл идеально, рекомендую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:21:51"
+        },
+        {
+            "username": "Артем",
+            "text": "Обмен прошёл молниеносно! Очень доволен работой сервиса.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:21:32"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен быстрый и надежный. Пользуюсь уже несколько лет.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:07:13"
+        },
+        {
+            "username": "Михаил",
+            "text": "Была небольшая задержка, но поддержка оперативно помогла, деньги дошли. Очень доволен сервисом!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:53:22"
+        },
+        {
+            "username": "Наталья",
+            "text": "Обмен прошёл быстро, комиссия минимальная, поддержка супер. Всем советую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:52:35"
+        },
+        {
+            "username": "Сергей",
+            "text": "Большое спасибо команде Sova за помощь и быструю работу!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:00:47"
+        },
+        {
+            "username": "Константин",
+            "text": "Отлично! Все прошло быстро и по курсу.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T01:43:15"
+        },
+        {
+            "username": "Виктория",
+            "text": "Нашла по отзывам, поддержка всегда на связи и реально помогает!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T00:05:33"
+        },
+        {
+            "username": "Александр",
+            "text": "Быстро, удобно, сервис радует.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T23:43:46"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Прекрасно, всё на высоте.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T22:50:55"
+        },
+        {
+            "username": "Максим",
+            "text": "Лучший обменник, всё работает отлично.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:04:16"
+        },
+        {
+            "username": "Егор",
+            "text": "Обменник супер, сервис просто огонь, рекомендую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:54:39"
+        },
+        {
+            "username": "Даниил",
+            "text": "Отличный обменник, всегда на связи, пользуюсь только им.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:05:01"
+        },
+        {
+            "username": "Ирина",
+            "text": "Очень хороший обменник. Комиссия минимальная, поддержка всегда на связи. Рекомендую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:01:23"
+        },
+        {
+            "username": "Светлана",
+            "text": "Сервис супер, всё быстро и чётко!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:34:38"
+        },
+        {
+            "username": "Людмила",
+            "text": "Спасибо! Всё выполнено аккуратно и быстро.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:27:54"
+        },
+        {
+            "username": "Алексей",
+            "text": "Молниеносно! Весь процесс занял всего пару минут.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:12:17"
+        },
+        {
+            "username": "Руслан",
+            "text": "Всё прошло очень быстро.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:22:12"
+        },
+        {
+            "username": "Эдуард",
+            "text": "Обмен прошёл как обычно, без нареканий, доволен сервисом.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T08:39:33"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Сервис помог с проблемной транзакцией, деньги дошли на нужный счёт. Отличная поддержка!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T08:29:33"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен прошёл быстро, рубли на биткоины обменял без проблем.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:36:36"
+        },
+        {
+            "username": "Николай",
+            "text": "Возникли проблемы с платёжной системой, поддержка помогла, деньги получил. Рекомендую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:55:16"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень быстрый и надежный обменник, советую.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T03:42:32"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл отлично, без проблем и задержек.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T01:31:25"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отличный обменник, быстро и удобно.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T01:02:44"
+        },
+        {
+            "username": "Денис",
+            "text": "Спасибо за качественную работу, лучший сервис.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T00:19:48"
+        },
+        {
+            "username": "Юлия",
+            "text": "Пользуюсь только этим обменником, всё быстро, поддержка помогает моментально. Рекомендую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T00:07:00"
+        },
+        {
+            "username": "Павел",
+            "text": "Супер обменник! Всё быстро и без задержек, сервис на высоте.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:13:52"
+        },
+        {
+            "username": "Игорь",
+            "text": "Быстро и удобно, никаких проблем с обменом.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:12:15"
+        },
+        {
+            "username": "Алексей",
+            "text": "Первый раз пользовался, было немного страшно, но всё прошло отлично.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T19:25:26"
+        },
+        {
+            "username": "Виталий",
+            "text": "Сервис отличный, поддержка отзывчивая, всё работает быстро.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:39:31"
+        },
+        {
+            "username": "Никита",
+            "text": "Новый оператор очень приятный, обмен прошёл без проблем, рекомендую.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:59:56"
+        },
+        {
+            "username": "Сергей",
+            "text": "Пользуюсь давно, обмен всегда быстрый, поддержка на связи 24/7. Рекомендую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:53:58"
+        },
+        {
+            "username": "Максим",
+            "text": "Хороший курс, обмен быстрый, пользуюсь часто, полностью доволен.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:44:44"
+        },
+        {
+            "username": "Артур",
+            "text": "Рекомендую Sova! Всё проходит очень быстро, поддержка решает вопросы оперативно.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:11:39"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Отличная команда, всё четко и быстро!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:09:14"
+        },
+        {
+            "username": "Иван",
+            "text": "Просто лучшие! Отличный курс и поддержка, доволен полностью.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:38:18"
+        },
+        {
+            "username": "Владислав",
+            "text": "Отлично, быстро, профессионально. Поддержка реагирует мгновенно. Советую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:26:11"
+        },
+        {
+            "username": "Марина",
+            "text": "Обмен прошёл быстро и без проблем. Рекомендую всем!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:32:50"
+        },
+        {
+            "username": "Артём",
+            "text": "Лучший обменник! Всё просто и без проблем.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:32:20"
+        },
+        {
+            "username": "Константин",
+            "text": "Лучший обменник, очень доволен, спасибо!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:57:24"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Оператор всегда помогает быстро, рекомендую сервис!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:43:05"
+        },
+        {
+            "username": "Иван",
+            "text": "Деньги пришли быстро, обмен прошёл без задержек.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T08:01:03"
+        },
+        {
+            "username": "Роман",
+            "text": "Выбрал обменник по отзывам, возникли сложности с выводом на карту, но поддержка помогла, хотя пришлось подождать. Сервис в целом рабочий, но будьте готовы к проверкам.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-01T07:16:15"
+        },
+        {
+            "username": "Семен",
+            "text": "Отличный обменник, все сделки проходят без проблем, рекомендую.",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T05:15:27"
+        },
+        {
+            "username": "Олег",
+            "text": "Снова обменял здесь, небольшая ошибка с реквизитами была решена поддержкой мгновенно, деньги получил. Отличный сервис!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:32:09"
+        },
+        {
+            "username": "Ирина",
+            "text": "Все прошло отлично, обмен сделали быстро, спасибо!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:21:37"
+        },
+        {
+            "username": "Дарья",
+            "text": "Пользуюсь не первый раз, обмен быстрый и качественный. Рекомендую!",
+            "exchange_name": "Sova",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:18:29"
+        }
+    ]
+}

@@ -1,0 +1,374 @@
+{
+    "SuperChange": [
+        {
+            "username": "Алексей",
+            "text": "Отличный обменник! Создал заявку, сумма осталась прежней, обработали мгновенно. Очень доволен!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T04:24:12"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Делала обмен, но деньги так и не пришли.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-02-05T10:54:54"
+        },
+        {
+            "username": "Никита",
+            "text": "Первый раз обменял, всё прошло быстро и без проблем.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-09-02T11:03:17"
+        },
+        {
+            "username": "Илья",
+            "text": "Не смог обменять евро на трон, хотя это было в списке. Непонятно.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2024-06-16T04:14:17"
+        },
+        {
+            "username": "Светлана",
+            "text": "Обмен TRX на USDT прошёл оперативно. Спасибо, рекомендую сервис!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2023-11-13T17:23:25"
+        },
+        {
+            "username": "Алена",
+            "text": "Не удаётся создать заявку на сайте, при нажатии 'продолжить' окно пустое уже неделями.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2023-10-26T10:17:40"
+        },
+        {
+            "username": "Даниил",
+            "text": "Отлично сработали! Ошибся с адресом, быстро исправили и деньги пришли. Спасибо поддержке!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2022-07-07T15:16:48"
+        },
+        {
+            "username": "Вадим",
+            "text": "SuperChange один из самых надёжных обменников. Смело пользуйтесь их услугами!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-08-16T09:33:41"
+        },
+        {
+            "username": "Максим",
+            "text": "Снова всё прошло отлично. Рекомендую!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-29T12:25:41"
+        },
+        {
+            "username": "Максим",
+            "text": "Всё без изменений, быстро и удобно.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-23T09:43:00"
+        },
+        {
+            "username": "Максим",
+            "text": "Сделал обмен снова — всё как раньше: лучший курс, без лишних комиссий, быстро.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-15T05:59:27"
+        },
+        {
+            "username": "Максим",
+            "text": "Повторюсь: обмен сделал снова, всё быстро и удобно, без лишних комиссий. Рекомендую.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-14T06:18:47"
+        },
+        {
+            "username": "Константин",
+            "text": "Быстрый обмен ETH на USDT, заняло 10–15 минут, всё чётко.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-13T07:57:32"
+        },
+        {
+            "username": "Максим",
+            "text": "Опять сделал обмен — всё так же быстро, курс хороший, без комиссий.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-13T06:09:52"
+        },
+        {
+            "username": "Игорь",
+            "text": "Пользуюсь регулярно. Всё удобно, быстро и без комиссий. Рекомендую!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-12T07:41:27"
+        },
+        {
+            "username": "Александр",
+            "text": "Простой и быстрый обмен, без комиссий. Лучший сервис для меня.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-04-01T10:16:31"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень быстрый и удобный обмен, без дополнительных комиссий. Рекомендую!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-03-31T05:47:47"
+        },
+        {
+            "username": "Владимир",
+            "text": "Сервис супер — всё быстро, чётко и удобно. Работать приятно.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2021-01-17T10:16:46"
+        },
+        {
+            "username": "Алекс",
+            "text": "Обменник хороший, пользуюсь часто, скидки активны. Работает отлично!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2020-10-30T12:27:57"
+        },
+        {
+            "username": "Станислав",
+            "text": "Переслал больше суммы по ошибке, прислали полную сумму без проблем. Поддержка супер!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2020-10-22T20:31:06"
+        },
+        {
+            "username": "Артём",
+            "text": "Моментальный обмен, благодарю за сервис.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2020-06-07T14:13:15"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл мгновенно. Рекомендую сервис.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2020-02-16T07:02:15"
+        },
+        {
+            "username": "Алина",
+            "text": "Очень быстрый обмен, спасибо!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2019-12-02T06:01:33"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен Payeer USD на Dash прошёл мгновенно. Отличный сервис!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2019-07-17T10:31:07"
+        },
+        {
+            "username": "София",
+            "text": "Благодарю за быстрый обмен Perfect на Bitcoin.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2019-06-07T07:57:29"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен РМ на BTC прошёл без проблем. Желаю успехов и много клиентов!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2019-06-04T07:00:42"
+        },
+        {
+            "username": "Сергей",
+            "text": "Быстрый обмен РМ на BTC. Всё прошло гладко.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2019-01-13T12:45:04"
+        },
+        {
+            "username": "Александр",
+            "text": "Обмен BTC на AdvCash прошёл успешно. Деньги получил после двух подтверждений сети.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-10-05T14:40:39"
+        },
+        {
+            "username": "Иван",
+            "text": "Автоматический обмен — очень удобно, оператор не нужен.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-08-05T14:52:21"
+        },
+        {
+            "username": "Денис",
+            "text": "Лучший обменный сервис! Сделал сотни обменов, все прошли без сбоев.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-05-27T19:16:09"
+        },
+        {
+            "username": "Владимир",
+            "text": "Очень быстрый и качественный обмен. Работать приятно.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-05-24T07:30:07"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Даже не успел моргнуть! Wex->Advcash за секунду. Комиссия адекватная, обменник впечатлил.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-05-21T22:14:10"
+        },
+        {
+            "username": "Виталий",
+            "text": "Один из лучших обменных сервисов, обмен прошёл без проблем. Спасибо!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-03-27T18:06:34"
+        },
+        {
+            "username": "Роман",
+            "text": "Всё прошло быстро и без сбоев.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-03-26T18:01:28"
+        },
+        {
+            "username": "Владимир",
+            "text": "Отличный и быстрый сервис, приятно работать.",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-03-11T13:24:37"
+        },
+        {
+            "username": "Александр",
+            "text": "Оплатили быстро, написал претензию — всё решили. Молодцы!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-02-09T10:06:47"
+        },
+        {
+            "username": "Сергей",
+            "text": "AdvCash на Bitcoin прошло гладко и быстро. Рекомендую!",
+            "exchange_name": "SuperChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2018-02-05T01:50:26"
+        }
+    ]
+}

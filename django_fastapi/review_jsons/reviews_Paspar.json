@@ -1,0 +1,504 @@
+{
+    "Paspar": [
+        {
+            "username": "Артём",
+            "text": "Очень быстрый обмен, приятно удивлён.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T07:52:06"
+        },
+        {
+            "username": "Марина",
+            "text": "Ночью обменник не работает. Оставила заявку поздно и пришлось ждать несколько часов. Онлайн-помощник тоже недоступен. Надеюсь, к утру перевод придёт.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-05T02:31:11"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Хороший обмен, все прошло без задержек.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-31T09:50:09"
+        },
+        {
+            "username": "Илья",
+            "text": "Обменял паер на гривны за 20 минут, всё отлично.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-29T13:35:12"
+        },
+        {
+            "username": "Николай",
+            "text": "Отличный сервис, пользуюсь не в первый раз — быстро и надёжно.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-23T12:37:34"
+        },
+        {
+            "username": "Сергей",
+            "text": "Надёжный обменник, Payeer поменяли на гривны мгновенно.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-14T08:18:51"
+        },
+        {
+            "username": "Алексей",
+            "text": "Быстро и безопасно. Рекомендую всем.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-25T08:43:39"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен прошёл без проблем, паер на гривны обменяли быстро.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-24T11:41:28"
+        },
+        {
+            "username": "Наталья",
+            "text": "Все прошло идеально, деньги на карту пришли за 5 минут. Очень довольна.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-18T12:00:23"
+        },
+        {
+            "username": "Михаил",
+            "text": "Отличный обмен, деньги буквально через пару минут на карте. Всем советую!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-01T19:50:04"
+        },
+        {
+            "username": "Игорь",
+            "text": "Менял usd на visa uan, всё прошло быстро, около 20 минут. Отлично!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-01T10:39:18"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обслуживание на высоте! Обмен на гривны за считанные минуты. Обязательно вернусь.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-14T18:05:18"
+        },
+        {
+            "username": "Роман",
+            "text": "Надёжный обменник, без нареканий.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-10T09:56:56"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Очень довольна! Всего 20 минут — и деньги на карте. Отличный сервис, поддержка всегда на связи.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-03T12:05:28"
+        },
+        {
+            "username": "Игорь",
+            "text": "Быстрый и надёжный обменник, проблем не возникло.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-01-29T07:44:03"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен прошёл нормально, деньги пришли без задержек.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-01-14T09:50:04"
+        },
+        {
+            "username": "Оксана",
+            "text": "Супер! Деньги пришли за час, очень довольна.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-01-02T11:24:34"
+        },
+        {
+            "username": "Владислав",
+            "text": "Все отлично, оплата пришла всего за 10 минут.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-26T19:58:11"
+        },
+        {
+            "username": "Сергей",
+            "text": "Снова всё прошло без проблем, как обычно.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-20T10:17:51"
+        },
+        {
+            "username": "Владимир",
+            "text": "Надёжный обменник, проблем не возникло.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-11T09:30:58"
+        },
+        {
+            "username": "Максим",
+            "text": "Первый раз делал обмен здесь. Через полчаса деньги уже на карте, очень удобно.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-10T13:19:11"
+        },
+        {
+            "username": "Сергей",
+            "text": "Курс отличный, обмен прошёл быстро. Спасибо за оперативность.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-09T13:08:13"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен прошёл быстро, сервис хороший.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-12-05T09:35:48"
+        },
+        {
+            "username": "Павел",
+            "text": "Спасибо! Обмен за 1 минуту, очень удобно.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-23T09:16:40"
+        },
+        {
+            "username": "Елена",
+            "text": "Быстрый и удобный обмен, курс хороший, обслуживание на высоте.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-14T12:06:44"
+        },
+        {
+            "username": "Владислав",
+            "text": "Обмен прошёл быстро, курс устроил.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-08T11:03:23"
+        },
+        {
+            "username": "Ирина",
+            "text": "Первый раз пользовалась обменником, очень довольна. Деньги пришли за 15 минут, поддержка отвечает мгновенно.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-06T15:27:55"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обменник надёжный, курс адекватный, проблем нет.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-11-06T12:12:33"
+        },
+        {
+            "username": "Жанна",
+            "text": "Обмен прошёл быстро, курс удобный. Благодарю!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-31T09:10:53"
+        },
+        {
+            "username": "Василиса",
+            "text": "Спасибо за оперативный обмен. Всем рекомендую этот сервис.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-29T09:54:05"
+        },
+        {
+            "username": "Даниил",
+            "text": "Хороший обменник, возникшую проблему решили быстро и перевели средства.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-20T18:14:34"
+        },
+        {
+            "username": "Виктория",
+            "text": "Деньги поступили в течение двух часов, всё отлично, спасибо.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-18T10:48:10"
+        },
+        {
+            "username": "Слава",
+            "text": "Перевод прошёл быстро. Молодцы!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-17T09:56:21"
+        },
+        {
+            "username": "Сергій",
+            "text": "Дякую, обмін пройшов швидко і зручно.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-17T09:49:07"
+        },
+        {
+            "username": "Ольга",
+            "text": "Обмен USDT на Visa прошёл без проблем, средства зачислены мгновенно. Спасибо!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-06T13:22:40"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все отлично! Спасибо за качественный обмен.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-09-27T18:22:43"
+        },
+        {
+            "username": "Ольга",
+            "text": "Очень быстрый обмен, сумма зачислилась за 15 минут.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-09-27T13:22:15"
+        },
+        {
+            "username": "Елена",
+            "text": "Спасибо за обмен! Курс хороший, перевод моментальный.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-09-25T05:49:07"
+        },
+        {
+            "username": "Андрей",
+            "text": "Все прошло буквально за минуту, удобно и быстро.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-09-23T05:58:03"
+        },
+        {
+            "username": "Антон",
+            "text": "Отличный сервис! Всё быстро, поддержка оперативная. Спасибо!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-08-31T14:14:37"
+        },
+        {
+            "username": "Андрей",
+            "text": "После нескольких неудачных попыток перевод прошёл успешно, сервис хороший.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-08-19T06:24:30"
+        },
+        {
+            "username": "Игорь",
+            "text": "Спасибо, обмен прошёл чётко и без задержек.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-08-13T10:17:36"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Все прошло быстро, минимальная сумма обмена устроила, курс хороший. Очень довольна!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-26T06:26:23"
+        },
+        {
+            "username": "Антон",
+            "text": "Превосходно! Перевод прошёл за пару минут, сервис отличный.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-06-30T17:48:37"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все отлично, деньги пришли быстро. Большое спасибо!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-06-28T14:55:47"
+        },
+        {
+            "username": "Виктор",
+            "text": "Деньги так и не пришли, служба поддержки не отвечает.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2024-06-18T09:19:19"
+        },
+        {
+            "username": "Валентина",
+            "text": "Все прошло отлично за 25 минут, спасибо, сервис отличный!",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-06-15T16:20:11"
+        },
+        {
+            "username": "Александр",
+            "text": "Обмен Advcash на UAH через Ощадбанк занял около получаса, всё пришло.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-05-30T14:32:58"
+        },
+        {
+            "username": "Рафаэль",
+            "text": "Быстрый обмен Peеr на Приват24, рекомендую этот сервис.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-05-29T07:39:12"
+        },
+        {
+            "username": "Диана",
+            "text": "Спасибо за ещё одну быстро выполненную заявку! Пользуюсь этим обменником регулярно и всем рекомендую.",
+            "exchange_name": "Paspar",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-05-26T18:39:33"
+        }
+    ]
+}

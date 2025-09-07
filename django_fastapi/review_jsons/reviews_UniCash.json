@@ -1,0 +1,504 @@
+{
+    "UniCash": [
+        {
+            "username": "Алексей",
+            "text": "Все обработали быстро, могу смело рекомендовать!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:04:28"
+        },
+        {
+            "username": "Сергей",
+            "text": "Хороший курс, выплата пришла мгновенно, рекомендую.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:15:08"
+        },
+        {
+            "username": "Денис",
+            "text": "Все прошло гладко, обмен успешный.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:37:39"
+        },
+        {
+            "username": "Илья",
+            "text": "Крипта через QR Сбербанк обменялась без проблем, все быстро и четко. Советую!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:12:40"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен прошёл быстро, никаких проблем.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T20:14:50"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Получил выплату моментально, все супер.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T20:11:04"
+        },
+        {
+            "username": "Степан",
+            "text": "Поддержка помогала в чате, обмен прошёл прозрачно, вернусь ещё!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T10:37:51"
+        },
+        {
+            "username": "Макар",
+            "text": "Все прошло без заминок. Trc20-сбер, поддержка была на связи.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:43:29"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обмен прошёл отлично, сумма поступила одним переводом.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:35:17"
+        },
+        {
+            "username": "Станислав",
+            "text": "Сервис на высоте! Сначала предупредили о возможной задержке, а в итоге все сделали быстро!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T12:17:50"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обмен мгновенный, все прошло гладко.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T20:19:46"
+        },
+        {
+            "username": "Александр",
+            "text": "Выплату сделали одним переводом, как и просил. Очень доволен, редкий случай для современных сервисов.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T11:47:36"
+        },
+        {
+            "username": "Евгений",
+            "text": "Поддержка быстро отвечала и помогла во всем, средства пришли вовремя.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T19:33:58"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмен сделали достаточно быстро, остался доволен.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:11:35"
+        },
+        {
+            "username": "Константин",
+            "text": "Сервис на высоком уровне, буду рекомендовать друзьям.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T19:45:28"
+        },
+        {
+            "username": "Михаил",
+            "text": "Деньги пришли быстро через QR код, все отлично.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T08:57:40"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Приятный обменник, все перевели без задержек, удобно и надежно.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T20:26:01"
+        },
+        {
+            "username": "Александр",
+            "text": "Всё чётко, обмен прошёл быстрее, чем ожидал.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T19:58:38"
+        },
+        {
+            "username": "Игорь",
+            "text": "Отличный сервис, перевод одним платежом, редко сейчас такое встретишь.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:48:17"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл быстро, поддержка на высоте.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T20:25:09"
+        },
+        {
+            "username": "Денис",
+            "text": "Оператор помог с заявкой, деньги пришли мгновенно. Отлично!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T11:05:42"
+        },
+        {
+            "username": "Владислав",
+            "text": "Пополнение прошло быстро, большое спасибо!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T20:26:25"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличные курсы, поддержка помогала на каждом шаге.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:05:27"
+        },
+        {
+            "username": "Илья",
+            "text": "Средства поступили вовремя, все без задержек.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T19:27:19"
+        },
+        {
+            "username": "Андрей",
+            "text": "Все прошло гладко, обмен занял 15 минут, рубли на базе, без проблем.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T11:32:25"
+        },
+        {
+            "username": "Роман",
+            "text": "Подробно объяснили процесс обмена, все прошло успешно, хотя раньше не пользовался такими сервисами.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T19:26:26"
+        },
+        {
+            "username": "Павел",
+            "text": "Все четко: скорость, курс, поддержка — полностью доволен!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T20:21:17"
+        },
+        {
+            "username": "Сергей",
+            "text": "Деньги получил без проблем, сервис на хорошем уровне, рекомендую.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T15:57:50"
+        },
+        {
+            "username": "Григорий",
+            "text": "Как всегда, приятный сервис и внимательная поддержка.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T09:10:09"
+        },
+        {
+            "username": "Илья",
+            "text": "Очень быстро пополнили карту через Cash IN, все супер.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T19:36:15"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обмен валюты прошёл быстро, спасибо за стабильность сервиса.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T06:43:39"
+        },
+        {
+            "username": "Николай",
+            "text": "Сначала предупредили о возможной задержке, но в итоге выплатили быстрее. Отличный сервис!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T20:14:33"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен прошёл успешно, сделали выплату в два перевода, что редкость. Очень доволен.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T11:51:36"
+        },
+        {
+            "username": "Михаил",
+            "text": "Деньги пришли, все прошло идеально.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T20:00:41"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен был быстрым, операторы подсказывали на каждом шагу, все понятно и удобно.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T12:12:24"
+        },
+        {
+            "username": "Олег",
+            "text": "Все прошло без вопросов, средства поступили полностью.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T19:35:58"
+        },
+        {
+            "username": "Илья",
+            "text": "Удобный и понятный обменник, все прошло гладко.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T12:11:46"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Кэш зачислили мгновенно, все прошло без задержек.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T11:02:54"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обменник реально работает на высоком уровне, поддержка кратко и ясно объяснила все детали.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T19:53:43"
+        },
+        {
+            "username": "Данил",
+            "text": "Все прошло отлично, поддержка помогла с оформлением заявки, благодарю.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T11:28:49"
+        },
+        {
+            "username": "Сергей",
+            "text": "Операторы работают быстро, всегда на связи, всем доволен.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T18:19:18"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен понятный и быстрый, без мелких дробных платежей.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T11:44:15"
+        },
+        {
+            "username": "Артем",
+            "text": "Успешно обменял тезеры на рубли.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T18:57:41"
+        },
+        {
+            "username": "Иван",
+            "text": "Я пользуюсь этим сервисом не первый год. Самый быстрый и удобный обмен, так держать!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T12:04:30"
+        },
+        {
+            "username": "Максим",
+            "text": "Отношение к клиентам на высоте, работают качественно.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T18:30:21"
+        },
+        {
+            "username": "Ольга",
+            "text": "Сервис помог с подсказками по обмену, все сделали, как просила.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T09:58:01"
+        },
+        {
+            "username": "Ильнур",
+            "text": "Очень достойный обменник, все сделали как обещали, без ошибок и задержек.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T18:40:37"
+        },
+        {
+            "username": "Егор",
+            "text": "Вывод был не мгновенным, но поддержка всё время на связи и помогала с заявкой.",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T08:42:31"
+        },
+        {
+            "username": "Олег",
+            "text": "Обмен выполнен быстро, а проблему с двойным переводом решили моментально. Настоящие профессионалы!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T20:56:58"
+        },
+        {
+            "username": "Петр",
+            "text": "Кэш зачислили успешно, без нареканий, спасибо!",
+            "exchange_name": "UniCash",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T12:36:14"
+        }
+    ]
+}

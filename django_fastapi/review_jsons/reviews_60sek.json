@@ -1,0 +1,464 @@
+{
+  "60sek": [
+    {
+      "username": "Иван",
+      "text": "Все прошло быстро и без заминок, сервис отработал отлично.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-03T10:47:24"
+    },
+    {
+      "username": "Максим",
+      "text": "Обменник классный! Всё сделали оперативно и надежно!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-02T18:48:54"
+    },
+    {
+      "username": "Кирилл",
+      "text": "Раньше не пользовался подобными обменниками, теперь понял что можно доверять.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-01T05:42:48"
+    },
+    {
+      "username": "Григорий",
+      "text": "Делал перевод ночью, приятно что сервис работает круглосуточно.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-30T07:46:57"
+    },
+    {
+      "username": "Марина",
+      "text": "Пользуюсь только здесь — всегда надежно, быстро и при необходимости помогут. Огромное спасибо!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-30T07:16:10"
+    },
+    {
+      "username": "Алина",
+      "text": "Молниеносные переводы, очень удобно и просто. Благодарю за сервис!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-29T15:17:17"
+    },
+    {
+      "username": "Степан",
+      "text": "Перед обменом сравнил много вариантов. Этот сервис проверенный и давно работает.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-29T10:16:36"
+    },
+    {
+      "username": "Михаил",
+      "text": "Простой интерфейс, легко разобраться даже новичку.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T07:02:30"
+    },
+    {
+      "username": "Said",
+      "text": "Hello. Поддержка ответила сразу и решила вопрос.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T08:22:49"
+    },
+    {
+      "username": "TraderX",
+      "text": "Снова удачный обмен. Всего минута — и деньги уже на счету. Спасибо команде!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T03:53:43"
+    },
+    {
+      "username": "Michael",
+      "text": "Great service, only had issues because of my own mistake. Support fixed everything quickly.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T14:20:35"
+    },
+    {
+      "username": "Виталий",
+      "text": "Очень порадовала скорость и прозрачность обмена.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T10:46:26"
+    },
+    {
+      "username": "CryptoMan",
+      "text": "Все чётко и быстро, без задержек. Благодарю за сервис!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T04:40:01"
+    },
+    {
+      "username": "Sofia",
+      "text": "На карту пришло меньше чем за 15 минут.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-25T10:54:39"
+    },
+    {
+      "username": "Ярослав",
+      "text": "Как всегда всё четко и без проблем.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T08:27:07"
+    },
+    {
+      "username": "Даниил",
+      "text": "Очень быстро и удобно, доволен результатом.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T06:56:15"
+    },
+    {
+      "username": "Руслан",
+      "text": "Объявление не совпало с реальностью, курс другой, а в телеграм отвечали очень медленно. Потратил время зря.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-23T23:38:01"
+    },
+    {
+      "username": "Олеся",
+      "text": "Все легко и понятно, без лишних нервов. Обмениваю только здесь.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T22:07:49"
+    },
+    {
+      "username": "Karina",
+      "text": "Меняла Cardano — всё прошло отлично, спасибо!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T08:35:49"
+    },
+    {
+      "username": "Егор",
+      "text": "Среди всех сервисов здесь оказался самый выгодный курс.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T11:02:03"
+    },
+    {
+      "username": "Анна",
+      "text": "Обмениваю здесь постоянно, всё быстро и удобно, техподдержка всегда доступна.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T09:18:20"
+    },
+    {
+      "username": "Глеб",
+      "text": "Как всегда лучший сервис, всё чётко и быстро!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T01:48:24"
+    },
+    {
+      "username": "CryptoMax",
+      "text": "Меньше минуты и деньги уже пришли. Благодарю!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T00:08:52"
+    },
+    {
+      "username": "Валерия",
+      "text": "Меняла первый раз, всё прошло гладко, деньги получила без задержек.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T09:22:17"
+    },
+    {
+      "username": "Денис",
+      "text": "Сервис реально лучший, всегда доволен!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T19:17:00"
+    },
+    {
+      "username": "Константин",
+      "text": "Всё прошло быстро и без сложностей, очень удобно.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T08:17:08"
+    },
+    {
+      "username": "CryptoUser",
+      "text": "Обмен занял чуть больше минуты, результатом доволен. Спасибо!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T02:17:43"
+    },
+    {
+      "username": "Сергей",
+      "text": "Пользуюсь регулярно, удобно и быстро. Поддержка работает всегда.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-19T12:49:56"
+    },
+    {
+      "username": "Ivan",
+      "text": "Как и всегда, обмен занял считанные минуты. Отлично!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T08:04:52"
+    },
+    {
+      "username": "Оксана",
+      "text": "Уже давно пользуюсь этим сервисом. По скорости и курсу лучшие!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T15:54:47"
+    },
+    {
+      "username": "Артур",
+      "text": "Обмениваю нечасто, но каждый раз всё проходит на высшем уровне.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T06:44:56"
+    },
+    {
+      "username": "Борис",
+      "text": "Очень надёжный сервис. Удобный интерфейс и грамотная поддержка. Пользуюсь давно.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-16T11:11:22"
+    },
+    {
+      "username": "Елизавета",
+      "text": "Снова воспользовалась обменником — всё быстро и надёжно, а при необходимости поддержка всегда помогает.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-16T10:14:42"
+    },
+    {
+      "username": "Николай",
+      "text": "Три минуты и операция завершена. Курс отличный, всё супер.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-16T08:43:09"
+    },
+    {
+      "username": "Daniel",
+      "text": "Вывод BTC занял всего пару минут, курс хороший. Благодарю!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-15T08:57:37"
+    },
+    {
+      "username": "Стас",
+      "text": "Зарегистрировался и сделал обмен. Всё прошло быстро и выгодно.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-14T10:31:37"
+    },
+    {
+      "username": "Andrew",
+      "text": "На сайте обещают офис, но по факту нужно отдавать наличку курьеру. Это не серьёзно.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-12T12:53:42"
+    },
+    {
+      "username": "Петр",
+      "text": "Удобный сервис, обмен занял считанные минуты. Рекомендую!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-12T11:44:56"
+    },
+    {
+      "username": "Виталик",
+      "text": "Часто пользуюсь, курс выгодный, заявки выполняют быстро, поддержка отличная. Советую.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-11T17:54:41"
+    },
+    {
+      "username": "Тамерлан",
+      "text": "Не первый раз меняю, обмен всегда проходит молниеносно.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-11T08:41:10"
+    },
+    {
+      "username": "Люся",
+      "text": "Отличный сервис с хорошим курсом. Всегда довольна.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-11T04:37:41"
+    },
+    {
+      "username": "Victor",
+      "text": "Самый надёжный обменник, всё на 100%.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-09T18:42:22"
+    },
+    {
+      "username": "Андрей",
+      "text": "Поддержка всегда помогает быстро и по делу. Благодарю за работу!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-09T12:44:27"
+    },
+    {
+      "username": "Женя",
+      "text": "Обмен прошёл очень быстро и удобно.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-09T12:40:57"
+    },
+    {
+      "username": "Арсен",
+      "text": "Ребята работают с душой, приятно обращаться снова и снова.",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-09T07:35:13"
+    },
+    {
+      "username": "Ольга",
+      "text": "Быстро, удобно и выгодно. Всем довольна!",
+      "exchange_name": "60sek",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-09T05:38:11"
+    }
+  ]
+}

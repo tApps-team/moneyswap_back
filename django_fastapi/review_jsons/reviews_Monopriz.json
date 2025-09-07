@@ -1,0 +1,504 @@
+{
+    "Monopriz": [
+        {
+            "username": "Савелий Романович",
+            "text": "Сделка прошла без проблем, обменник сработал оперативно.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:22:55"
+        },
+        {
+            "username": "Даниил",
+            "text": "Регулярно пользуюсь сервисом, всегда доволен скоростью обмена.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:55:30"
+        },
+        {
+            "username": "Максим",
+            "text": "Сервис работает стабильно, никаких сбоев не заметил.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:22:05"
+        },
+        {
+            "username": "Егор",
+            "text": "Очень доволен скоростью перевода, такие сервисы редкость.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:40:22"
+        },
+        {
+            "username": "Владимир",
+            "text": "Заявка выполнена чётко, всё совпало с ожиданиями.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:25:40"
+        },
+        {
+            "username": "Михаил",
+            "text": "Курс стабильный, обмен прошёл без проблем.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:45:21"
+        },
+        {
+            "username": "Руслан",
+            "text": "Фиксация курса сработала отлично, всё прошло спокойно.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:51:59"
+        },
+        {
+            "username": "Игорь",
+            "text": "Перевод пришёл точно в срок, обмен прошёл быстро.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:52:37"
+        },
+        {
+            "username": "Никита",
+            "text": "Поддержка реагирует мгновенно, всё работает стабильно.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:24:44"
+        },
+        {
+            "username": "Лев",
+            "text": "Обмен прошёл спокойно, деньги поступили полностью.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:26:06"
+        },
+        {
+            "username": "Всеволод",
+            "text": "Выгодный курс и быстрый обмен, получил всю сумму.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T07:38:45"
+        },
+        {
+            "username": "Моисей",
+            "text": "Курс был честный, сделка прошла прозрачно.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:41:08"
+        },
+        {
+            "username": "Илья",
+            "text": "Сервис удобный, результат полностью удовлетворил.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T16:38:38"
+        },
+        {
+            "username": "Фанис",
+            "text": "Перевод пришёл без задержек, обмен прошёл гладко.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:12:40"
+        },
+        {
+            "username": "Шамиль",
+            "text": "Рад, что выбрал этот обменник, всё быстро и удобно.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T14:08:12"
+        },
+        {
+            "username": "Давид",
+            "text": "Выбрал monopriz и не пожалел, сервис надёжный и быстрый.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:17:53"
+        },
+        {
+            "username": "Владислав",
+            "text": "Рекомендую этот обменник, всё прошло отлично.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:08:55"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Очень довольна, хороший курс и быстрые выплаты!",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:38:37"
+        },
+        {
+            "username": "Константин",
+            "text": "Заявка обработалась быстро, деньги пришли без ошибок.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T13:02:08"
+        },
+        {
+            "username": "Ростислав",
+            "text": "Обмен прошёл гладко, занял немного времени, всё ок.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T09:01:35"
+        },
+        {
+            "username": "Али",
+            "text": "Сделка прошла ровно, результат полностью совпал с ожиданиями.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T19:06:45"
+        },
+        {
+            "username": "Рафаэль",
+            "text": "Удобно, что обмен работает круглосуточно.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T13:53:36"
+        },
+        {
+            "username": "Андрей",
+            "text": "Сервис стабилен, заявки выполняются чётко, без задержек.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T12:50:32"
+        },
+        {
+            "username": "Тимур",
+            "text": "Обмен занял пару минут, всё прошло быстро, доволен.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T15:39:51"
+        },
+        {
+            "username": "Камиль",
+            "text": "Работаю с этим обменником не первый раз, результат стабилен.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T15:30:16"
+        },
+        {
+            "username": "Ярослав",
+            "text": "Обмен прошёл без задержек, всё совпало с расчётами, сервис надёжный.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T14:27:29"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Поддержка быстро отвечает, помогают в любой ситуации.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T07:25:57"
+        },
+        {
+            "username": "Ильдус",
+            "text": "Сделка прошла оперативно, сервис сработал отлично.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T18:50:54"
+        },
+        {
+            "username": "Анвар",
+            "text": "Все как обещали, обменник надёжный, проблем не возникло.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T17:26:11"
+        },
+        {
+            "username": "Захар",
+            "text": "Обмен прошёл честно, скрытых комиссий не было.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T16:13:09"
+        },
+        {
+            "username": "Камиль",
+            "text": "Пользуюсь сервисом регулярно, всегда доволен результатом.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T14:54:02"
+        },
+        {
+            "username": "Серафим",
+            "text": "Поддержка работает оперативно, результат приходит быстро.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T16:51:16"
+        },
+        {
+            "username": "Адам",
+            "text": "Все условия прозрачные, удобно и безопасно обменивать.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T14:22:07"
+        },
+        {
+            "username": "Булат",
+            "text": "Сервис работает стабильно, деньги приходят вовремя.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T11:58:01"
+        },
+        {
+            "username": "Радмир",
+            "text": "Оформил заявку вечером, результат пришёл быстро, спасибо.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T18:05:44"
+        },
+        {
+            "username": "Айдар",
+            "text": "Скорость и удобство обмена радуют, нареканий нет.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T15:55:11"
+        },
+        {
+            "username": "Ильнур",
+            "text": "Обменник простой в использовании, все прошло легко.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T12:30:15"
+        },
+        {
+            "username": "Валентин",
+            "text": "Каждый раз удобно пользоваться, результат всегда радует.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T19:19:51"
+        },
+        {
+            "username": "Раиль",
+            "text": "Сервис простой, оформление не занимает много времени.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T18:23:27"
+        },
+        {
+            "username": "Афанасий",
+            "text": "Опыт всегда положительный, сервис стабильно радует.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T15:33:39"
+        },
+        {
+            "username": "Антон",
+            "text": "Стабильность на высоте, сервис держит качество.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T14:03:31"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Советовал друзьям, все остались довольны, сервис надёжный.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T16:28:29"
+        },
+        {
+            "username": "Эмиль",
+            "text": "Современный и удобный обмен, пользоваться легко.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T13:06:43"
+        },
+        {
+            "username": "Айрат",
+            "text": "Процесс обмена простой, занимает всего минуту.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T18:56:27"
+        },
+        {
+            "username": "Валериан",
+            "text": "Поддержка всегда на связи и помогает в любой ситуации.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T18:06:16"
+        },
+        {
+            "username": "Александр",
+            "text": "Обмен БТС на СБП прошёл быстро и по хорошему курсу, рекомендую.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T16:39:46"
+        },
+        {
+            "username": "Павел",
+            "text": "Заявка обработалась оперативно, деньги пришли быстро.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T16:35:44"
+        },
+        {
+            "username": "Денис",
+            "text": "Менял USDT на Альфабанк, обмен занял около часа. Отлично!",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T15:56:38"
+        },
+        {
+            "username": "Семён",
+            "text": "Сервис надёжный, оформление простой и понятный, результат быстрый.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T14:09:05"
+        },
+        {
+            "username": "Вадим",
+            "text": "Рекомендовал друзьям, все довольны качеством обмена.",
+            "exchange_name": "Monopriz",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T11:03:55"
+        }
+    ]
+}

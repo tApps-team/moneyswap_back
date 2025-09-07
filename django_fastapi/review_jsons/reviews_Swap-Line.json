@@ -1,0 +1,504 @@
+{
+    "Swap-Line": [
+        {
+            "username": "Артём",
+            "text": "Отличный сервис! Всё прошло максимально быстро и удобно, советую.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:14:30"
+        },
+        {
+            "username": "Илья",
+            "text": "Большое спасибо за быструю помощь и моментальный перевод.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T08:21:38"
+        },
+        {
+            "username": "Марина",
+            "text": "Благодарю Натали за мгновенный перевод! Очень приятный сервис.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:54:29"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл довольно быстро, деньги пришли частями, всё ок.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:50:06"
+        },
+        {
+            "username": "Денис",
+            "text": "Как всегда, мгновенная выплата. Спасибо за работу!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T07:53:07"
+        },
+        {
+            "username": "Алекс",
+            "text": "Очень быстрый и удобный обмен. Благодарю команду!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:06:26"
+        },
+        {
+            "username": "Константин",
+            "text": "Обмен trc-20 на Монобанк прошёл без проблем, всё отлично.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T16:18:39"
+        },
+        {
+            "username": "Павел",
+            "text": "Моментальный обмен, быстро и удобно. Благодарю!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T16:22:33"
+        },
+        {
+            "username": "Игорь",
+            "text": "Отличный сервис, всё прошло без задержек. Спасибо!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:49:08"
+        },
+        {
+            "username": "Даниил",
+            "text": "Команда работает профессионально, как всегда на высоте. Благодарю!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:16:30"
+        },
+        {
+            "username": "Никита",
+            "text": "Пользуюсь часто, сервис надежный, особенно радует минимальная сумма обмена.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:38:33"
+        },
+        {
+            "username": "Олег",
+            "text": "Отличный обменник, пользуюсь регулярно. Поддержка работает хорошо.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:29:31"
+        },
+        {
+            "username": "Ирина",
+            "text": "Сервис удобный, пользуюсь часто. Рекомендую всем!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:04:54"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошёл быстро и без проблем (Tether UAH).",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:57:22"
+        },
+        {
+            "username": "Артём",
+            "text": "Менял Tether на гривну, всё быстро, деньги пришли на карту в течение часа.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T19:07:31"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень надежный обменник! Всё быстро и качественно, поддержка всегда на связи. Рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:52:15"
+        },
+        {
+            "username": "Максим",
+            "text": "Отличный сервис, быстрое выполнение обмена. Спасибо!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T14:21:43"
+        },
+        {
+            "username": "Сергей",
+            "text": "Нужны были деньги срочно, поддержка оперативно помогла, заявка была в приоритете — всё быстро и удобно. Рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:03:17"
+        },
+        {
+            "username": "Владислав",
+            "text": "Надежный обменник с выгодным курсом. Пользуюсь постоянно, советую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T13:58:16"
+        },
+        {
+            "username": "Анна",
+            "text": "Быстрые обмены и отзывчивая поддержка, всегда приятно работать с этим сервисом.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T13:13:45"
+        },
+        {
+            "username": "Николай",
+            "text": "Обменял USDT на гривну, всё прошло идеально. Рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:16:51"
+        },
+        {
+            "username": "Светлана",
+            "text": "Очень нравится этот обменник! Всегда быстро и без проблем. Минимальная сумма удобна, курс хороший. Спасибо!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T10:57:22"
+        },
+        {
+            "username": "Юрий",
+            "text": "Обмен прошёл автоматически, без задержек. Спасибо!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T19:32:18"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен прошёл отлично, быстро и без проблем. Благодарю!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T16:35:53"
+        },
+        {
+            "username": "Алан",
+            "text": "Полностью автоматический обмен, всё чётко, курс отличный. Доволен сервисом!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T15:59:21"
+        },
+        {
+            "username": "Леонид",
+            "text": "Сервис работает отлично, поддержка отвечает быстро.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T09:00:35"
+        },
+        {
+            "username": "Наталья",
+            "text": "Спасибо команде обменника за быстрые сделки и отзывчивую поддержку. Рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:32:08"
+        },
+        {
+            "username": "Виктор",
+            "text": "Пользовался несколько раз — всегда остаюсь доволен. Деньги приходят мгновенно, курс выгодный, интерфейс удобный, поддержка отличная.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T23:03:52"
+        },
+        {
+            "username": "Артём",
+            "text": "Скорость выплат просто супер! Поддержка реагирует моментально, сервис отличный.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T17:18:17"
+        },
+        {
+            "username": "Иван",
+            "text": "Второй мой обмен: BEP20 на MonoBank. Всё прошло быстро, деньги пришли без задержек.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:43:45"
+        },
+        {
+            "username": "Ольга",
+            "text": "Отличный курс, сервис быстрый, деньги приходят мгновенно. Спасибо команде обменника!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T07:13:15"
+        },
+        {
+            "username": "Константин",
+            "text": "Сервис отличный! Всё понятно, быстро и удобно, рекомендую.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T17:07:52"
+        },
+        {
+            "username": "Оксана",
+            "text": "Впервые всё прошло очень быстро — 7 минут и деньги на карте. Благодарю!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:24:08"
+        },
+        {
+            "username": "Роман",
+            "text": "Отличный обменник, всегда пользуюсь. Перевод занял меньше 10 минут, рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T08:23:33"
+        },
+        {
+            "username": "Алёна",
+            "text": "Первый раз пользовалась этим сервисом, всё понятно и удобно. Рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T00:54:57"
+        },
+        {
+            "username": "Владимир",
+            "text": "Деньги получил очень быстро, примерно за 15 минут. Всё отлично!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T14:43:23"
+        },
+        {
+            "username": "Сергей",
+            "text": "Всё прошло идеально, быстро и надёжно. Очень доволен сервисом, рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T10:22:29"
+        },
+        {
+            "username": "Людмила",
+            "text": "Обмен прошёл быстро и по выгодному курсу. Сервис рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T08:17:01"
+        },
+        {
+            "username": "Ирина",
+            "text": "Быстро и качественно обменяла USDT на Моно, благодарю!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T08:03:43"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл успешно, деньги пришли в течение получаса.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T09:07:21"
+        },
+        {
+            "username": "Александр",
+            "text": "Выплата прошла в течение часа сорока минут. Спасибо команде!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T08:32:47"
+        },
+        {
+            "username": "Олег",
+            "text": "Средства зачислились, но заняло больше времени, чем ожидал. Хотелось бы ускорения операций.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T08:17:34"
+        },
+        {
+            "username": "Юлия",
+            "text": "Сервис нормальный, спасибо за работу.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T18:11:51"
+        },
+        {
+            "username": "Андрей",
+            "text": "Рекомендую, деньги пришли очень быстро.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T17:13:31"
+        },
+        {
+            "username": "Влад",
+            "text": "Быстрый обмен с хорошим курсом, всё прошло отлично.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T09:33:35"
+        },
+        {
+            "username": "Эдуард",
+            "text": "Вывод USDT на украинскую карту за 10 минут одним переводом. Очень удобно, рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T11:20:48"
+        },
+        {
+            "username": "Михаил",
+            "text": "Пользуюсь уже третий раз. Всё быстро, обмены проходят автоматически и без задержек. Очень доволен.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T20:01:24"
+        },
+        {
+            "username": "Виктор",
+            "text": "BTC на Приват24 за 40 минут, всё прошло без проблем.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T18:18:43"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен BEP20 на MonoBank. Деньги пришли через 48 минут, всё чётко.",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T10:59:16"
+        },
+        {
+            "username": "Валерий",
+            "text": "Очень быстро! Обмен прошёл без проблем. Рекомендую!",
+            "exchange_name": "Swap-Line",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T09:33:40"
+        }
+    ]
+}

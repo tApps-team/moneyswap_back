@@ -1,0 +1,504 @@
+{
+    "WikiPays": [
+        {
+            "username": "Илья",
+            "text": "Жду перевода уже целый день. Формально обещают до 72 часов, но ощущение, что это лишь способ переложить ответственность. Поддержка мало помогает, сроки непонятны.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-01T15:51:10"
+        },
+        {
+            "username": "Сергей",
+            "text": "Менял крипту впервые, волновался, но всё прошло легко и быстро. Деньги пришли моментально, курс даже лучше, чем ожидал.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:53:30"
+        },
+        {
+            "username": "Марина",
+            "text": "Прозрачно, без скрытых комиссий.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:56:52"
+        },
+        {
+            "username": "Алекс",
+            "text": "Лучший сервис, который я пробовал. Рекомендую всем.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:12:41"
+        },
+        {
+            "username": "Рустам",
+            "text": "Прошу срочно разблокировать мои 500 долларов. Все средства легальные, подтверждения есть. Поддержка шутит вместо конкретных ответов, а блокировка без инструкций неприемлема.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-26T08:24:39"
+        },
+        {
+            "username": "Станислав",
+            "text": "Раньше не доверял обменникам после неудачного опыта, но здесь всё прошло гладко и честно. Профессиональный сервис.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T19:23:16"
+        },
+        {
+            "username": "Ирина",
+            "text": "Нужен был простой способ получать платежи из-за рубежа. Этот сервис справился идеально — быстро и надежно.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T18:36:24"
+        },
+        {
+            "username": "София",
+            "text": "Быстро и без проблем. Пользуюсь регулярно.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:52:18"
+        },
+        {
+            "username": "Дарья",
+            "text": "Ошиблась в реквизитах, думала деньги потеряны. Поддержка быстро всё исправила — отличный сервис.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:10:11"
+        },
+        {
+            "username": "Никита",
+            "text": "Использую для бизнес-переводов, задержек нет, курс честный, комиссии разумные.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T14:55:25"
+        },
+        {
+            "username": "Людмила",
+            "text": "Очень рада, что нашла этот обменник! Всего 3 минуты на обмен, курс лучше, чем у конкурентов. Поддержка ответила мгновенно.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T22:05:11"
+        },
+        {
+            "username": "Егор",
+            "text": "Первый раз переводил крупную сумму — волновался, но всё прошло без проблем. Деньги пришли быстро.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T18:19:26"
+        },
+        {
+            "username": "Максим",
+            "text": "Заказывал обмен USDT -> Paypal EUR. Поддержка тянула с ответом, в итоге получили только половину суммы. Сделка сорвана.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-21T08:00:09"
+        },
+        {
+            "username": "Лев",
+            "text": "Обмен на Revolut делал 10 июля, до сих пор деньги не пришли. Обещали возврат — игнорируют сообщения.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-06T09:52:35"
+        },
+        {
+            "username": "Наталья",
+            "text": "Первый раз боялась обмена, но всё прошло быстрее, чем ожидала. Уже год пользуюсь и советую друзьям.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T16:35:00"
+        },
+        {
+            "username": "Роман",
+            "text": "Забыл проверить реквизиты, отправил не туда, но поддержка за 10 минут всё исправила. Очень доволен.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T21:16:46"
+        },
+        {
+            "username": "Даниил",
+            "text": "Сделал заявку на обмен с выплатой на Revolut, но возврат не сделали и поддержки нет. Разочарован.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-06T17:50:43"
+        },
+        {
+            "username": "Илья",
+            "text": "Сначала думал, что это развод, но деньги пришли очень быстро. Теперь использую только этот сервис.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T09:44:27"
+        },
+        {
+            "username": "Анна",
+            "text": "Попробовала по совету подруги. Волновалась, но деньги пришли быстро и даже чуть больше. Рекомендую сама!",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T22:58:33"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Проверено, советую друзьям.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T20:16:55"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник тянет с выполнением заявки, регламент 72 часа не соблюдается. Поддержка не сообщает актуальный статус.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-28T11:26:02"
+        },
+        {
+            "username": "Светлана",
+            "text": "Разобралась без подсказок, интерфейс интуитивный.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-25T22:27:56"
+        },
+        {
+            "username": "Василий",
+            "text": "Не пользуйтесь этим сервисом, заявки остаются без ответа, деньги не возвращают — пустая трата времени.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-25T13:08:57"
+        },
+        {
+            "username": "Юлия",
+            "text": "Все объяснили ясно и понятно, без лишней сложности.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-23T21:40:11"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обмен прошёл быстро и без вопросов.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T16:45:06"
+        },
+        {
+            "username": "Оксана",
+            "text": "Сначала переживала, но всё прошло гладко.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-18T15:46:03"
+        },
+        {
+            "username": "Лидия",
+            "text": "Поддержка помогла быстро разобраться, все операции прошли корректно.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-17T16:39:40"
+        },
+        {
+            "username": "Александр",
+            "text": "Если бы знала, что обмен может занять от 12 до 72 часов, не стала бы менять. Не выбирайте для срочных операций.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-16T06:06:29"
+        },
+        {
+            "username": "Евгения",
+            "text": "Простой интерфейс, разобралась за пару минут.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T21:08:10"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Менял крупные суммы, иногда задержки и поддержка отвечает не сразу, но курс честный и деньги приходят в итоге.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T16:09:32"
+        },
+        {
+            "username": "Николай",
+            "text": "Деньги пришли, как и обещали. Всё надёжно.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T14:30:03"
+        },
+        {
+            "username": "Алина",
+            "text": "Ошибка в реквизитах, но поддержка оперативно исправила, деньги пришли.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T18:13:20"
+        },
+        {
+            "username": "Оксана",
+            "text": "С небольшой суммой всё сработало идеально, доволен сервисом.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-08T20:22:41"
+        },
+        {
+            "username": "Ксения",
+            "text": "Поддержка помогла разобраться с первым обменом. Благодарю!",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-08T14:36:06"
+        },
+        {
+            "username": "Анна",
+            "text": "Разобралась без проблем, интерфейс удобный, проще чем в других обменниках.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-07T15:02:56"
+        },
+        {
+            "username": "Михаил",
+            "text": "Не советую этот обменник — на просьбы вернуть деньги отвечают обещаниями, уже две недели без результата.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-04T15:55:20"
+        },
+        {
+            "username": "Кристина",
+            "text": "Если нужен быстрый обмен — сюда не стоит. Заявки выполняются очень долго, сервис и клиентоориентированность на низком уровне.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-03T11:50:03"
+        },
+        {
+            "username": "Мария",
+            "text": "Первый раз пользовалась, немного волновалась, но всё прошло гладко. Простое и понятное оформление.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-02T17:47:25"
+        },
+        {
+            "username": "Наталия",
+            "text": "Ошиблась при вводе данных, но оператор помог исправить, деньги пришли без проблем.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-02T11:17:42"
+        },
+        {
+            "username": "Артем",
+            "text": "Лучший обменник из тех, что пробовал. Курс выгодный, переводы без задержек.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T17:39:19"
+        },
+        {
+            "username": "Виктория",
+            "text": "Сначала сомневалась, но рискнула с небольшой суммой — всё прошло отлично.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-27T18:34:57"
+        },
+        {
+            "username": "Елена",
+            "text": "Поддержка ответила быстро, помогли с первым обменом. Теперь пользуюсь регулярно.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-27T14:06:53"
+        },
+        {
+            "username": "Анна",
+            "text": "Интерфейс простой и понятный. Разобралась без инструкций, обмен занял пару минут.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-26T19:51:39"
+        },
+        {
+            "username": "Алексей",
+            "text": "Категорически не рекомендую. Обмен USDT на евро. Заявка выполняется уже вторые сутки, результата нет.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-24T19:31:12"
+        },
+        {
+            "username": "Ольга",
+            "text": "Первый раз пользовалась, немного переживала, но обмен прошёл без задержек. Удобно.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-24T18:17:39"
+        },
+        {
+            "username": "Олег",
+            "text": "Лучший курс евро в Кракове, доволен обменом.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-23T08:34:21"
+        },
+        {
+            "username": "Антон",
+            "text": "Лучший курс доллара в Варшаве. Обменял 500$, дали больше, чем в других местах.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-20T19:57:50"
+        },
+        {
+            "username": "Алина",
+            "text": "Отвратительное впечатление. Обмен usdt -> eur revolut. Тянут выплату без извинений, регламент 12–72 часа. Сидишь и ждёшь деньги три дня.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-18T14:37:51"
+        },
+        {
+            "username": "Виктор",
+            "text": "Пользуюсь несколько месяцев — всегда стабильная работа, ни разу не подводили.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-18T20:17:57"
+        },
+        {
+            "username": "Лев",
+            "text": "Простой и понятный обменник. Перевод в гривны прошёл, сумма чуть больше расчетной.",
+            "exchange_name": "WikiPays",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-18T13:53:18"
+        }
+    ]
+}

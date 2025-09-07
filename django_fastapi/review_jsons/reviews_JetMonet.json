@@ -1,0 +1,314 @@
+{
+    "JetMonet": [
+        {
+            "username": "Дарья",
+            "text": "Все сделали аккуратно, деньги пришли полностью.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:56:53"
+        },
+        {
+            "username": "Константин",
+            "text": "Наличные получил быстро, обменник надежный.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T18:19:41"
+        },
+        {
+            "username": "Никита",
+            "text": "Курьер привез всю сумму вовремя и без задержек.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T07:04:53"
+        },
+        {
+            "username": "Марина",
+            "text": "Получила деньги быстро, курс был удобным.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:13:32"
+        },
+        {
+            "username": "Владимир",
+            "text": "В офисе все прошло гладко, деньги получили без проблем.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T19:22:41"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен простой, наличные на месте, все устроило.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T16:53:51"
+        },
+        {
+            "username": "Александр",
+            "text": "Курьер доставил нужную сумму точно и быстро.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T07:40:50"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Наличные выдали мгновенно, сервис работает надежно.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T14:53:27"
+        },
+        {
+            "username": "Денис",
+            "text": "Деньги получили быстро, курс устроил.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T17:47:42"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обменял в офисе, деньги пришли без проблем.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T16:54:23"
+        },
+        {
+            "username": "Алиса",
+            "text": "Курьер привёз деньги точно в срок, всё прошло гладко.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T19:23:42"
+        },
+        {
+            "username": "Евгений",
+            "text": "Получил кэш в офисе, всё прошло без задержек.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T12:01:39"
+        },
+        {
+            "username": "Даниил",
+            "text": "Обмен прошел просто, курс удобный, проблем не возникло.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T20:08:01"
+        },
+        {
+            "username": "Наталья",
+            "text": "Сервис удобный, деньги получила в офисе без задержек.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T11:37:05"
+        },
+        {
+            "username": "Алексей",
+            "text": "Наличные получил быстро, сумма совпала полностью.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T10:34:41"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обмен прошёл корректно, деньги на месте, всё удобно.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-27T17:27:53"
+        },
+        {
+            "username": "Игорь",
+            "text": "Служба поддержки помогла, деньги пришли без проблем.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T11:00:32"
+        },
+        {
+            "username": "Максим",
+            "text": "Менял впервые, деньги пришли быстро, сумма верная.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-11T15:30:32"
+        },
+        {
+            "username": "Ольга",
+            "text": "Курьер привез кэш, всё прошло без проблем, сервис отличный.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-03T15:40:58"
+        },
+        {
+            "username": "Павел",
+            "text": "Обменялся в Батуми, деньги пришли, небольшая задержка с частью суммы, но всё ок.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-03T08:22:07"
+        },
+        {
+            "username": "Светлана",
+            "text": "Всё прошло понятно и быстро, курс был удобным.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-02T15:28:14"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Деньги выдали мгновенно, курс полностью устроил.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-01T16:18:13"
+        },
+        {
+            "username": "Николай",
+            "text": "Обменник надежный, наличные пришли без проблем, курс нормальный.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T15:35:15"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обменялся в офисе быстро, всё без ошибок, курс был приемлемый.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-29T15:03:27"
+        },
+        {
+            "username": "Роман",
+            "text": "Курьер доставил деньги, сумма совпала, всё четко.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-28T08:08:33"
+        },
+        {
+            "username": "Виктор",
+            "text": "В офисе быстро получил наличные, всё прошло гладко.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-27T16:24:02"
+        },
+        {
+            "username": "Богдан",
+            "text": "Обмен прошел оперативно, курс удобный, деньги выданы сразу.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-26T15:56:20"
+        },
+        {
+            "username": "Глеб",
+            "text": "Кэш получил без задержек, курс устроил полностью.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-24T17:00:36"
+        },
+        {
+            "username": "Евгения",
+            "text": "Обмен прошёл просто и быстро, сумма пришла верная.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-23T17:47:32"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Деньги пришли быстро, зачисление прошло без проблем.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-23T15:18:53"
+        },
+        {
+            "username": "Вероника",
+            "text": "Курс был немного выгоднее, обмен прошёл без задержек.",
+            "exchange_name": "JetMonet",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-22T06:11:25"
+        }
+    ]
+}

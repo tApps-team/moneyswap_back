@@ -1,0 +1,584 @@
+{
+    "Nordex": [
+        {
+            "username": "Дмитрий",
+            "text": "Менял USDT TRC-20 на рубли впервые и остался доволен. Сделку оформили быстро, в чате подробно ответили на все вопросы. Деньги получил полностью, как и договаривались. Отличный обменник!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:50:47"
+        },
+        {
+            "username": "Игорь",
+            "text": "Очень удобный обмен с выгодным курсом. Благодарю!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:09:09"
+        },
+        {
+            "username": "Максим",
+            "text": "Надёжный и быстрый обменник. Очень приятные сотрудники! Обмен прошёл комфортно и быстро.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T19:03:54"
+        },
+        {
+            "username": "Владислав",
+            "text": "Сделка прошла легко и быстро, настоящие профессионалы.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:56:44"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен прошёл без проблем, не пришлось долго переписываться.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T16:36:13"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен занял всего 15 минут, сервис отличный, всё быстро и удобно.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:59:06"
+        },
+        {
+            "username": "Сергей",
+            "text": "Заявка обработана очень оперативно. Огромное спасибо!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:14:46"
+        },
+        {
+            "username": "Алексей",
+            "text": "Регулярно пользуюсь этим обменником, проблем никогда не было.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:41:57"
+        },
+        {
+            "username": "Илья",
+            "text": "Лучший обмен! Всё выполняется быстро и надёжно.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T07:21:14"
+        },
+        {
+            "username": "Роман",
+            "text": "Очень надежный сервис! Перевел крипту заранее, всё прошло без проблем, спасибо!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T13:02:26"
+        },
+        {
+            "username": "Павел",
+            "text": "Обменник действительно хороший, один из лучших, с которыми сталкивался.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T16:49:58"
+        },
+        {
+            "username": "Денис",
+            "text": "Отличный сервис по обмену криптовалюты. Всё прошло быстро и без заминок. Вернусь ещё!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T08:54:28"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обменялся в офисе СПб. Сделка заняла около 10 минут, менеджер отлично справился.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T16:41:06"
+        },
+        {
+            "username": "Марина",
+            "text": "Молодцы! Всё нравится, сервис рекомендую.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T17:38:20"
+        },
+        {
+            "username": "Ольга",
+            "text": "Очень впечатлена скоростью перевода, сайт удобный!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T13:36:32"
+        },
+        {
+            "username": "Данила",
+            "text": "Все деньги получил в полном объёме. Спасибо за оперативность.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T16:03:34"
+        },
+        {
+            "username": "Владислав",
+            "text": "Обменник честный и быстрый, удобно и выгодно.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T16:54:59"
+        },
+        {
+            "username": "Михаил",
+            "text": "Хороший курс, быстро получил платеж, благодарю.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T02:28:19"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Всё отлично, поставлю 5+. Очень доволен сервисом.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T15:36:02"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл на высшем уровне. Всё чётко, рекомендую!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T16:18:50"
+        },
+        {
+            "username": "Григорий",
+            "text": "Очень быстро и без заминок, всё понравилось!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T06:14:59"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Обмен прошёл мгновенно, довольна скоростью работы.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T14:44:28"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Качественный наличный обмен! Спасибо за оперативность и профессионализм.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T14:18:56"
+        },
+        {
+            "username": "Илья",
+            "text": "Первый раз менял USD в СПб здесь, отличный курс для небольшой суммы. Всё быстро и удобно, спасибо!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T15:02:11"
+        },
+        {
+            "username": "София",
+            "text": "Как всегда всё быстро и без проблем, спасибо!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-17T11:38:09"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Оперативно, в полном объёме и вовремя.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T03:27:10"
+        },
+        {
+            "username": "Никита",
+            "text": "Обменник один из лучших, с которыми сталкивался. Всё быстро, курс хороший, очень доволен.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T02:46:43"
+        },
+        {
+            "username": "Артем",
+            "text": "Любимый обменник! За наличными только сюда.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-11T12:12:55"
+        },
+        {
+            "username": "Михаил",
+            "text": "Всё чётко, деньги получил, операторы всегда на связи и отвечают быстро.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T03:42:04"
+        },
+        {
+            "username": "Людмила",
+            "text": "Обменник хороший, обмен прошёл быстро и удобно.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-08T10:20:28"
+        },
+        {
+            "username": "Наталья",
+            "text": "Обменяла быстро, деньги пришли полностью. Спасибо за честную работу.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-05T02:40:01"
+        },
+        {
+            "username": "Ирина",
+            "text": "Очень удобный сервис, успешно обменялась, всё быстро и легко.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-03T04:15:00"
+        },
+        {
+            "username": "Елена",
+            "text": "Просто и надёжно! Рекомендую менять крипту на наличные именно тут.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T12:52:02"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен всегда проходит быстро и надёжно, очень доволен сервисом.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-29T10:08:44"
+        },
+        {
+            "username": "Дарья",
+            "text": "Любимый обменник, обмениваю крипту только здесь, отличная работа!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-29T03:37:12"
+        },
+        {
+            "username": "Владислав",
+            "text": "В очередной раз убедился в надежности сервиса, спасибо!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-26T14:26:20"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обмен прошёл успешно! Условия отличные, средства получил быстро.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-25T07:33:12"
+        },
+        {
+            "username": "Константин",
+            "text": "Хороший обменник, всё прошло быстро и без проблем.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-22T14:19:19"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Курс обмена отличный, деньги пришли за считанные минуты, обязательно порекомендую друзьям!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-22T01:31:54"
+        },
+        {
+            "username": "Алиса",
+            "text": "Пользуюсь не первый раз, всегда всё чётко и удобно. Рекомендую!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-21T03:15:33"
+        },
+        {
+            "username": "София",
+            "text": "Сервис отличный, всё быстро и удобно. Пользуюсь уже больше года.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-17T10:50:20"
+        },
+        {
+            "username": "Константин",
+            "text": "Сервис отличный! Быстрый и безопасный обмен USDT на наличные, курс хороший, оператор вежливый и всё объяснил.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-16T10:46:59"
+        },
+        {
+            "username": "Андрей",
+            "text": "Сервис работает на высшем уровне, качественно и профессионально.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-16T03:26:06"
+        },
+        {
+            "username": "Алексей",
+            "text": "Очень порадовала скорость выплаты, благодарю за работу и желаю процветания!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-15T01:34:17"
+        },
+        {
+            "username": "Алена",
+            "text": "Хороший обменник, всё прошло быстро и точно.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-13T10:44:44"
+        },
+        {
+            "username": "Руслан",
+            "text": "Интерфейс понятный, условия прозрачные, оплата быстрая, спасибо!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-11T01:10:11"
+        },
+        {
+            "username": "Илья",
+            "text": "Обмен занял всего пару минут, всё прошло без задержек.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-10T00:37:25"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Спасибо за сделку! Удобный обменник для перевода USDT в наличные.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-09T09:41:26"
+        },
+        {
+            "username": "Александр",
+            "text": "Менял крипту на наличные, всё прошло быстро и чётко. Очень доволен сервисом!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:50:47"
+        },
+        {
+            "username": "Ирина",
+            "text": "Обменяла деньги мгновенно, сервис удобный и надежный.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:09:09"
+        },
+        {
+            "username": "Максим",
+            "text": "Сделка прошла без задержек, ребята работают отлично, рекомендую!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T19:03:54"
+        },
+        {
+            "username": "Виктор",
+            "text": "Очень удобный обменник, все быстро и качественно.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:56:44"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обмен прошёл без проблем, деньги получил полностью.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T16:36:13"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен занял буквально несколько минут, сервис отличный.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:59:06"
+        },
+        {
+            "username": "Артем",
+            "text": "Заявка выполнена моментально, спасибо за быструю работу!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:14:46"
+        },
+        {
+            "username": "Алексей",
+            "text": "Постоянно пользуюсь этим обменником, проблем никогда не было.",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:41:57"
+        },
+        {
+            "username": "Роман",
+            "text": "Отличный обменник, всё быстро и надежно!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T07:21:14"
+        },
+        {
+            "username": "Антон",
+            "text": "Сервис надёжный, перевёл заранее, получил точную сумму, спасибо!",
+            "exchange_name": "Nordex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T13:02:26"
+        }
+    ]
+}

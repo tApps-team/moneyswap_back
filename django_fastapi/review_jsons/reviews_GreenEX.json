@@ -1,0 +1,504 @@
+{
+    "GreenEX": [
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл успешно, деньги получил сразу.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:26:16"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Все честно и удобно, широкий выбор направлений.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T18:04:58"
+        },
+        {
+            "username": "Дарья",
+            "text": "Сделка прошла безопасно, могу советовать.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T16:40:45"
+        },
+        {
+            "username": "Никита",
+            "text": "Надежный обменник, всё без проблем.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:54:14"
+        },
+        {
+            "username": "Егор",
+            "text": "Очень быстро обменял эфир на рубли, доволен.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:03:23"
+        },
+        {
+            "username": "Ольга",
+            "text": "Первый опыт обмена прошел отлично, все удобно и надежно.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T08:27:31"
+        },
+        {
+            "username": "Денис",
+            "text": "Обмен выполнен быстро, ответы на вопросы подробные, доволен сервисом.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T06:04:40"
+        },
+        {
+            "username": "Ирина",
+            "text": "Лучшие как всегда, все нравится, быстро и надежно.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T17:18:50"
+        },
+        {
+            "username": "Максим",
+            "text": "Деньги на карте уже через 15 минут.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T17:19:56"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обменял USDT на карту, всё прошло без проблем.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T03:48:36"
+        },
+        {
+            "username": "Виктор",
+            "text": "Все безопасно, деньги получил за полчаса.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T16:37:07"
+        },
+        {
+            "username": "Наталья",
+            "text": "Все прошло отлично, поддержка всегда на связи.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T14:18:56"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличный сервис, быстро и выгодно, рекомендую.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T16:09:05"
+        },
+        {
+            "username": "Станислав",
+            "text": "Все прошло очень быстро, обмен отличный.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T17:02:00"
+        },
+        {
+            "username": "Константин",
+            "text": "Поддержка помогла разобраться, деньги получил через несколько минут.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T02:34:01"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмен прошёл быстро и удобно, сервис на высоте.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T15:40:38"
+        },
+        {
+            "username": "Светлана",
+            "text": "Не первый раз пользуюсь, всегда всё проходит без проблем.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T21:34:10"
+        },
+        {
+            "username": "Илья",
+            "text": "Эфир успешно обменял на Тбанк, доволен обменом.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T12:26:57"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень приятный обменник, поддержка всегда помогает.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T03:19:40"
+        },
+        {
+            "username": "Александр",
+            "text": "Хороший курс, ответы в чате быстрые, рекомендую всем.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T02:40:26"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обменял эфир на USDT, всё прошло менее чем за 20 минут, всё чисто.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T18:16:14"
+        },
+        {
+            "username": "Артур",
+            "text": "Все удобно и мгновенно, обмен понравился.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T12:28:26"
+        },
+        {
+            "username": "Игорь",
+            "text": "Отличный курс и быстрые выплаты, доволен полностью.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T03:10:53"
+        },
+        {
+            "username": "Николай",
+            "text": "Все пришло очень быстро, меньше чем за 15 минут, спасибо.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-09T22:29:28"
+        },
+        {
+            "username": "Михаил",
+            "text": "Перевел крипту и получил деньги через 10 минут, удобно и понятно.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-09T02:49:39"
+        },
+        {
+            "username": "Алина",
+            "text": "Обмен прошел быстро и точно, поддержка всегда на связи.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-08T11:07:17"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все выплаты занимают около 15 минут, сервис отличный.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-06T02:06:26"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Деньги поступили очень быстро, сервис радует.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-03T04:06:34"
+        },
+        {
+            "username": "Виктор",
+            "text": "Отличный обменник, все быстро и без лишней волокиты. Поддержка всегда на связи.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-01T23:50:58"
+        },
+        {
+            "username": "Леонид",
+            "text": "Деньги получил очень быстро, рекомендую.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T12:59:05"
+        },
+        {
+            "username": "Никита",
+            "text": "Быстро обменял крипту на фиат, всё прошло отлично, благодарю.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-29T03:31:53"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обменяла биткоин на Т-банк за 20 минут, всё прошло гладко, спасибо!",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-28T01:51:02"
+        },
+        {
+            "username": "Денис",
+            "text": "Самый надежный обменник, поддержка всегда отзывчива. Деньги пришли моментально.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-27T02:30:30"
+        },
+        {
+            "username": "Андрей",
+            "text": "Все супер, обмен прошёл очень быстро, благодарю команду.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-25T08:05:28"
+        },
+        {
+            "username": "Антон",
+            "text": "Приятный курс, комиссии уже включены, очень удобно.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-23T04:30:08"
+        },
+        {
+            "username": "Марина",
+            "text": "Обмен прошёл очень быстро и удобно, рекомендую.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-22T14:58:28"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Сервис надежный и быстрый, спасибо за качественный обмен.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-22T01:40:19"
+        },
+        {
+            "username": "Леонид",
+            "text": "Обменник надежный, деньги пришли быстро и без проблем.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-21T03:26:05"
+        },
+        {
+            "username": "Вероника",
+            "text": "Рекомендую, сделки проходят гладко, все супер.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-20T11:21:24"
+        },
+        {
+            "username": "Данил",
+            "text": "Пользуюсь повторно, деньги приходят быстро, поддержка всегда помогает.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-18T04:14:42"
+        },
+        {
+            "username": "Елена",
+            "text": "Качественный сервис, поддержка отвечает мгновенно, курс выгодный.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-17T00:45:30"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Все надежно, деньги пришли вовремя, сервис отличный.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-16T03:19:48"
+        },
+        {
+            "username": "Алена",
+            "text": "Деньги получила за 15 минут, все прошло идеально, повторно обращусь.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-15T01:24:14"
+        },
+        {
+            "username": "Руслан",
+            "text": "Отличный курс и сервис, обмен прошел без нареканий, спасибо.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-13T11:40:28"
+        },
+        {
+            "username": "Владислав",
+            "text": "Лучший обменник, обмен занимает всего 10-15 минут, всегда качественно.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-12T07:58:06"
+        },
+        {
+            "username": "Станислав",
+            "text": "Обмен прошёл быстро, без лишней волокиты, рекомендую.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-11T04:36:33"
+        },
+        {
+            "username": "Антон",
+            "text": "Удобный сервис и выгодный курс, сюда стоит обращаться за обменом.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-11T01:04:01"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Поддержка помогла сразу, даже ночью, сервис отличный.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-10T00:42:29"
+        },
+        {
+            "username": "Егор",
+            "text": "Быстро и качественно, спасибо за работу.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-09T02:29:08"
+        },
+        {
+            "username": "Марина",
+            "text": "Стабильный и честный обменник, очень радует.",
+            "exchange_name": "GreenEX",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-07T03:34:24"
+        }
+    ]
+}

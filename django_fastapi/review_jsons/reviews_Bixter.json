@@ -1,0 +1,414 @@
+{
+    "Bixter": [
+        {
+            "username": "Никита",
+            "text": "Пользуюсь Bixter уже долго. Ценю стабильность и внимательное отношение к клиентам. Иногда процесс занимает время, но всё надежно и без проблем.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:53:06"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Лучшее, что встречала! Заявки обрабатываются молниеносно. Спасибо за качественный сервис, Bixter!",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:14:04"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Создал заявку на обмен TON на карту Мир. Процесс затянулся, оператор сообщил о техническом сбое, что было неприятно. Надеюсь, в будущем будут предупреждать заранее.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-01T19:47:37"
+        },
+        {
+            "username": "Максим",
+            "text": "Скорость работы впечатляет, после перевода крипта пришла быстро. Буду обращаться снова. Спасибо!",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T18:14:59"
+        },
+        {
+            "username": "Сергей",
+            "text": "Первый раз пользовался обменником, всё прошло четко и быстро. Рекомендую.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T06:26:55"
+        },
+        {
+            "username": "Александр",
+            "text": "Очень быстрый перевод, все супер.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T08:50:01"
+        },
+        {
+            "username": "Марина",
+            "text": "Хороший обменник, надежно и удобно.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T10:56:28"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все отлично, поддержка оперативно отвечает. Рад обмену!",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T11:44:25"
+        },
+        {
+            "username": "Виктор",
+            "text": "Менял несколько раз, последний раз столкнулся с ошибкой оператора. Не рекомендую повторно.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-24T08:24:01"
+        },
+        {
+            "username": "Андрей",
+            "text": "Пользуюсь сервисом регулярно. Всегда всё работает без проблем.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T04:22:39"
+        },
+        {
+            "username": "Илья",
+            "text": "Отличный обменник, пользуюсь часто.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T12:56:57"
+        },
+        {
+            "username": "Валерий",
+            "text": "Прекрасная работа, ребята настоящие профессионалы! Советую всем.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T11:50:43"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все четко и быстро, отличный обменник.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T07:17:34"
+        },
+        {
+            "username": "Амина",
+            "text": "Обычно переводят одной суммой, но последние разы занимало несколько часов. Для терпеливых подходит, поддержка всегда на связи.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-11T10:37:14"
+        },
+        {
+            "username": "Виктор",
+            "text": "НЕ РЕКОМЕНДУЮ! Ваши данные могут быть скомпрометированы, служба поддержки не возвращает средства.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-07T08:41:46"
+        },
+        {
+            "username": "Сергей",
+            "text": "Всё работает как всегда.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T07:01:11"
+        },
+        {
+            "username": "Константин",
+            "text": "Отличный обменник, поддержка на высоте.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T06:57:07"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Регулярно пользуюсь обменником, всегда корректно и без проблем, поддержка на связи.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T10:00:09"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень быстро и качественно, всем рекомендую.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T14:14:47"
+        },
+        {
+            "username": "Олег",
+            "text": "Первый опыт был отличным: вежливая поддержка, быстрый перевод средств, всё ясно и понятно. Благодарю сервис.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T13:42:55"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все прошло профессионально и быстро.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T11:09:25"
+        },
+        {
+            "username": "Валентина",
+            "text": "Операторы мгновенно отвечают, реквизиты выдаются быстро. Перевод прошел гладко.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T11:07:59"
+        },
+        {
+            "username": "Руслан",
+            "text": "Обмен произвели быстро и выгодно. Спасибо команде, желаю удачи!",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T10:39:26"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен прошел без проблем, всё как всегда.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T09:39:04"
+        },
+        {
+            "username": "Владимир",
+            "text": "Заявка выполнена быстро, сервис на высоте. Рекомендую!",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T05:30:56"
+        },
+        {
+            "username": "Илья",
+            "text": "Обмен выполнен успешно и быстро, хороший сервис.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-03T13:42:14"
+        },
+        {
+            "username": "Юрий",
+            "text": "Пользуюсь обменником постоянно. Курс и скорость обмена отличные.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T17:11:56"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все прошло отлично, курс адекватный.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T08:48:06"
+        },
+        {
+            "username": "Анна",
+            "text": "Все прошло гладко.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T04:46:12"
+        },
+        {
+            "username": "Виталий",
+            "text": "Очень быстро, примерно 10 минут — отличная работа.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T08:46:20"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен USDT на Сбер занял более 4 часов, что крайне неудобно.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-29T20:22:33"
+        },
+        {
+            "username": "Артем",
+            "text": "Все прошло быстро и без задержек.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T15:54:38"
+        },
+        {
+            "username": "Николай",
+            "text": "Обмен выполнен четко и почти мгновенно. Отличный сервис!",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-26T17:45:13"
+        },
+        {
+            "username": "Евгений",
+            "text": "От общения с оператором до перевода — всё супер!",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T22:57:18"
+        },
+        {
+            "username": "Владислав",
+            "text": "Надежно и удобно, один из лучших обменников.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T22:33:56"
+        },
+        {
+            "username": "Степан",
+            "text": "Все прошло отлично, благодарю.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T22:18:09"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все выполнено быстро и надежно, спасибо.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T21:49:16"
+        },
+        {
+            "username": "Андрей",
+            "text": "Периодически пользуюсь, всегда без проблем.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T13:23:11"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Стабильно работает, обмены проходят без проблем.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-20T21:53:38"
+        },
+        {
+            "username": "Илья",
+            "text": "Заявка обработана успешно, довольны сервисом.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T10:38:10"
+        },
+        {
+            "username": "Евгений",
+            "text": "Команда отличная! Обмен прошел быстро, благодарю.",
+            "exchange_name": "Bixter",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T12:57:59"
+        }
+    ]
+}

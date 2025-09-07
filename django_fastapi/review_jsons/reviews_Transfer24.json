@@ -1,0 +1,424 @@
+{
+    "Transfer24": [
+        {
+            "username": "Марина",
+            "text": "Очень удобно и просто пользоваться этим обменником. Уже не первый раз, всегда всё на высоте.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:03:19"
+        },
+        {
+            "username": "Игорь",
+            "text": "Сервис на высшем уровне! Операторы компетентные, помогли быстро и без проблем.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:04:38"
+        },
+        {
+            "username": "Никита",
+            "text": "Очень доволен работой обменника, курс выгодный, обмен прошёл быстро и без заминок.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:48:21"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл быстро и удобно. Видно, что сервис заботится о своих клиентах.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:59:10"
+        },
+        {
+            "username": "Михаил",
+            "text": "Спасибо за обмен! Всё прошло гладко, курс хороший, приятно работать с таким сервисом.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T14:33:14"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошёл идеально! Консультант подробно всё объяснил, деньги пришли быстро. Теперь буду пользоваться только этим сервисом.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:16:37"
+        },
+        {
+            "username": "Максим",
+            "text": "Очень доволен обменом! Служба поддержки оперативная, обмен проходит быстро и без проблем. Планирую пользоваться дальше и рекомендовать друзьям.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:32:56"
+        },
+        {
+            "username": "Роман",
+            "text": "Сервис удобный и внимательный к клиентам. Работают четко и без лишних сложностей.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T18:58:34"
+        },
+        {
+            "username": "Евгений",
+            "text": "Удобный обменник с понятным интерфейсом. Пользуюсь регулярно, всё стабильно.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:00:05"
+        },
+        {
+            "username": "Артем",
+            "text": "Отличная работа! Крипту перевели быстро и аккуратно, с профессиональным подходом.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T16:18:55"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен прошёл без проблем, сервис быстрый и надёжный. Рада сотрудничеству.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:12:38"
+        },
+        {
+            "username": "Алена",
+            "text": "Удобный обменник! Всё прошло быстро, поддержка помогла, деньги пришли мгновенно.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T08:52:26"
+        },
+        {
+            "username": "Игорь",
+            "text": "Простой и надёжный обменник. Всё работает как надо. Рекомендую.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T18:06:58"
+        },
+        {
+            "username": "Станислав",
+            "text": "Очень удобный сервис, быстрая обработка, хороший курс и поддержка на уровне.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T09:13:59"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обмен прошёл без задержек, пришла вся сумма. Всё как договаривались, спасибо!",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:41:55"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличная работа! Обмен прошёл быстро, персонал внимательный и вежливый. Очень доволен.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T07:55:43"
+        },
+        {
+            "username": "Надежда",
+            "text": "Легко и безопасно сделал обмен криптовалюты, всё быстро. Очень понравилось!",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T14:25:30"
+        },
+        {
+            "username": "Егор",
+            "text": "Быстро, чётко, без лишних вопросов. Поддержка отвечает мгновенно, приятно пользоваться.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T10:16:13"
+        },
+        {
+            "username": "Ольга",
+            "text": "Любимый обменник! Всегда всё быстро, без заминок и лишней бюрократии. Даже в выходные поддержка на месте.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T13:26:58"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Спасибо за качественный обмен! Всё прошло просто и быстро, рекомендую сервис всем.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T12:19:05"
+        },
+        {
+            "username": "Денис",
+            "text": "Сервис отличный! Всё прошло быстро и без лишних сложностей. Рекомендую попробовать.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:38:04"
+        },
+        {
+            "username": "Алексей",
+            "text": "Быстро обработали заявку, всё точно по инструкции. Спасибо за оперативность!",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T17:33:16"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл быстро, курс хороший, поддержка отвечала мгновенно. Время выполнения меньше 15 минут.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T06:09:13"
+        },
+        {
+            "username": "Маргарита",
+            "text": "Спасибо за быстрый обмен. Оператор помог оперативно, всё прошло без проблем.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T19:03:11"
+        },
+        {
+            "username": "Илья",
+            "text": "Быстрый и надёжный обмен. Деньги пришли вовремя, без сюрпризов. Отличный сервис.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T07:47:28"
+        },
+        {
+            "username": "Михаил",
+            "text": "Пользовался обменником впервые, крипту менял на наличные. Всё прошло гладко, комиссия адекватная.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T16:17:57"
+        },
+        {
+            "username": "Антон",
+            "text": "Очень удобный обменник, интерфейс понятный, операции проходят быстро.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:57:11"
+        },
+        {
+            "username": "Владимир",
+            "text": "Служба поддержки работает мгновенно, обменник быстрый. Рекомендую!",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T13:47:13"
+        },
+        {
+            "username": "Евгений",
+            "text": "Всё чётко, быстро и удобно. Огромная благодарность сотрудникам за их работу и внимание.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T06:40:48"
+        },
+        {
+            "username": "Анна",
+            "text": "Очень нравится этот обменник. Заявки выполняют быстро, поддержка всегда на связи. Отличный сервис.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T09:03:25"
+        },
+        {
+            "username": "Андрей",
+            "text": "Простой и надёжный обменник. Всё чётко, без лишних сложностей. Буду пользоваться и дальше.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T14:12:02"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Очень понравился сервис! Быстро, удобно и дружелюбно. Все процедуры прошли без проблем.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T10:24:30"
+        },
+        {
+            "username": "Ирина",
+            "text": "Мне не удалось провести перевод. Причины не объяснили, пришлось отказаться. Будьте внимательны с личной информацией.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-17T06:18:56"
+        },
+        {
+            "username": "Алексей",
+            "text": "Поздний обмен обработали мгновенно, переживал зря. Всё прошло идеально, рекомендую!",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T13:24:51"
+        },
+        {
+            "username": "Светлана",
+            "text": "Приятно удивили! Курс выгодный, сервис вызывает доверие, всё работает без нареканий.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T09:04:50"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Менял наличные на USDT TRC20, всё прошло безопасно. Проверки AML показали низкий риск, буду работать и дальше.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T08:15:45"
+        },
+        {
+            "username": "Виктор",
+            "text": "Надёжный и удобный сервис, внимательно следят за корректностью обмена, проблем не было.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T12:35:47"
+        },
+        {
+            "username": "Людмила",
+            "text": "Спокойный и честный обмен, условия хорошие, сервис на высоте. Рекомендую.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T10:05:21"
+        },
+        {
+            "username": "Павел",
+            "text": "Офис в Севастополе, обмен USDT -> RUB наличными. Быстро, удобно, чётко. Рекомендую!",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T07:25:41"
+        },
+        {
+            "username": "Виктор",
+            "text": "Надёжный обменник с проверенной репутацией. Пользуюсь часто — всегда всё быстро и без сбоев.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T16:51:01"
+        },
+        {
+            "username": "Наталья",
+            "text": "Спасибо команде сервиса за профессионализм. Сайт удобный, курс выгодный, всё на высоте.",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T09:19:17"
+        },
+        {
+            "username": "Олеся",
+            "text": "Отличный сервис! Обмен сделали по выгодному курсу, быстро и удобно. Поддержка ведёт за руку весь процесс. Лучший обменник!",
+            "exchange_name": "Transfer24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T13:58:03"
+        }
+    ]
+}

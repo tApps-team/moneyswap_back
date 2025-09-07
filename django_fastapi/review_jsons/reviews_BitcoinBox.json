@@ -1,0 +1,494 @@
+{
+    "BitcoinBox": [
+        {
+            "username": "Алина",
+            "text": "Спасибо, перевод пришел мгновенно, я даже не успела заметить поступление. Отлично!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:16:40"
+        },
+        {
+            "username": "Игорь",
+            "text": "Меня слегка удивили сроки перевода — обещали 15-20 минут, а пришло за 7. Спасибо!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:54:49"
+        },
+        {
+            "username": "Айжан",
+            "text": "Банк подтвердил перевод быстро, запросили квитанцию — предоставили моментально. Всё отлично.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:30:14"
+        },
+        {
+            "username": "Максим",
+            "text": "Сервис не понравился: много запросов документов, фото, видео, лишняя информация, курс не фиксировали. Время теряется, обмен растянулся.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-03T10:04:15"
+        },
+        {
+            "username": "Ирина",
+            "text": "Перевод на каспи прошел молниеносно! Через 5 минут после заказа пришли уведомления об успешном обмене и зачислении в банке.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:36:12"
+        },
+        {
+            "username": "Надежда",
+            "text": "Деньги пришли быстро, всё отлично. Желаю вам дальнейших успехов.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:56:43"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отлично, всё сделали очень оперативно, даже ночью средства поступили без задержек.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:08:53"
+        },
+        {
+            "username": "Роман",
+            "text": "Быстро и надежно, без проблем. Один из лучших обменников в моем личном рейтинге.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T20:02:03"
+        },
+        {
+            "username": "Виктория",
+            "text": "Всё прошло отлично, деньги пришли быстро, единственное — хотела один перевод, а пришло два. В остальном супер.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:29:27"
+        },
+        {
+            "username": "Алексей",
+            "text": "Всё просто и понятно, перевод прошёл быстро.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:28:51"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Отличный обменник, уже несколько раз менял крипту на евро карту — всегда всё без проблем.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:06:21"
+        },
+        {
+            "username": "Аня",
+            "text": "Спасибо, всё быстро пришло, буду иметь вас в виду.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:44:12"
+        },
+        {
+            "username": "Ильяс",
+            "text": "Очень быстро перевели на кошелек, буду пользоваться снова.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:20:40"
+        },
+        {
+            "username": "Даниил",
+            "text": "Быстро и без лишних вопросов, даже ночью. Отличная работа.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:42:10"
+        },
+        {
+            "username": "Владислав",
+            "text": "Поддержка оперативно ответила, все вопросы разъяснили, перевод пришел полностью и быстро.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T19:01:16"
+        },
+        {
+            "username": "Гюльнар",
+            "text": "Спасибо за быстрый вывод на ABB, обязательно вернусь.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:54:00"
+        },
+        {
+            "username": "Светлана",
+            "text": "Очень быстро на USD, перевод пришел мгновенно, я даже не успела уследить.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:50:28"
+        },
+        {
+            "username": "Елизавета",
+            "text": "Деньги поступили идеально, ровно сколько нужно. Спасибо!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:34:11"
+        },
+        {
+            "username": "Виктор",
+            "text": "Средства поступили в течение часа, всё в порядке. Возможно, можно было бы чуть быстрее.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:52:47"
+        },
+        {
+            "username": "Андрей",
+            "text": "Очень быстро сработали с банком, буквально за мгновение. Спасибо!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:40:18"
+        },
+        {
+            "username": "Леонид",
+            "text": "Оплатили очень быстро, сервис отличный.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:57:52"
+        },
+        {
+            "username": "Михаил",
+            "text": "Спасибо, долго мучился с выводом через телеграм, здесь все прошло без проблем.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:48:07"
+        },
+        {
+            "username": "София",
+            "text": "Перевод на Wise мгновенный, рада, что обратилась к профессионалам.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:03:51"
+        },
+        {
+            "username": "Евгения",
+            "text": "Обмен прошел по хорошему курсу, средства перевели на карту банка быстро.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:00:43"
+        },
+        {
+            "username": "Анна",
+            "text": "Очень выручили в магазине, за 5 минут деньги поступили на AliPay.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T12:42:42"
+        },
+ {
+            "username": "Даниил",
+            "text": "Монобанк обработал быстро, деньги пришли за 10 минут. Очень доволен оперативностью.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T11:35:06"
+        },
+        {
+            "username": "Ярослав",
+            "text": "Всегда пользуюсь этим сервисом — всё приходит корректно и в нужном объеме, без комиссий.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:45:59"
+        },
+        {
+            "username": "Артур",
+            "text": "Супер быстро пополнили AliPay, буквально за 3 минуты после оплаты уже было уведомление. Очень удобно.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:08:46"
+        },
+        {
+            "username": "Федор",
+            "text": "Отличный обменник, на Freedom перевели за 17 минут, с учетом создания заявки заняло минут 10 реально.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:49:30"
+        },
+        {
+            "username": "Наталья",
+            "text": "Перевели чуть больше, чем заказывала, приятно удивлена. Спасибо!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T07:56:12"
+        },
+        {
+            "username": "Андрей",
+            "text": "Прямо пулей пришли деньги, думал, что дольше будет. Отличная скорость!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T19:39:47"
+        },
+        {
+            "username": "Егор",
+            "text": "За 5 минут деньги на карте, впечатляющая скорость работы обменника.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T18:45:42"
+        },
+        {
+            "username": "Сергей",
+            "text": "Поддержка помогла разобраться с заказом, все прошло гладко и быстро.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:27:49"
+        },
+        {
+            "username": "Валентина",
+            "text": "За 5 минут сделали перевод на Santander, очень удобный и быстрый сервис.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T09:58:09"
+        },
+        {
+            "username": "Олег",
+            "text": "Выводил деньги на карту несколько раз, всегда четко и быстро, без задержек.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T07:26:25"
+        },
+        {
+            "username": "Анна",
+            "text": "Деньги пришли моментально, теперь буду менять только здесь. Спасибо!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T06:53:06"
+        },
+        {
+            "username": "Валерия",
+            "text": "Очень быстро зачислили AliPay, приятно удивлена скоростью.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:45:36"
+        },
+        {
+            "username": "Виктор",
+            "text": "Деньги пришли за 10 минут, именно как обещано. Выбрал этот обменник ради скорости.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T16:51:06"
+        },
+        {
+            "username": "Лилия",
+            "text": "Сервис классный, поддержка отличная, но обмен занял два часа, надеюсь, исправитесь.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T16:02:12"
+        },
+        {
+            "username": "Юрий",
+            "text": "Перевод с Payeer на карту банка Moldova прошел без проблем, деньги пришли через 40 минут, курс устроил.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:27:41"
+        },
+        {
+            "username": "Елизавета",
+            "text": "Каспи карту пополнили за 15 минут, очень быстро, спасибо вам!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:58:14"
+        },
+        {
+            "username": "Роман",
+            "text": "10 минут и деньги на карте. Выводил биткоины на Приват — все идеально.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:57:39"
+        },
+        {
+            "username": "Айбек",
+            "text": "Перевод прошел быстро, спасибо. Хотелось бы одним переводом, но в целом отлично.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T20:10:53"
+        },
+        {
+            "username": "Лидия",
+            "text": "Деньги пришли за 10 минут, сразу пишу отзыв, спасибо!",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T18:29:25"
+        },
+        {
+            "username": "Бахадир",
+            "text": "По совету брата сделал вывод через Wallet, всё прошло быстро и успешно.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T18:14:32"
+        },
+        {
+            "username": "Ксения",
+            "text": "Перевод на BCC сделали мгновенно, как я просила. Очень благодарна.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T12:09:00"
+        },
+        {
+            "username": "Сергей",
+            "text": "Как всегда, всё работает отлично, BTC -> Mono. Надеюсь, что уровень сервиса останется высоким.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T11:18:02"
+        },
+        {
+            "username": "Эшред",
+            "text": "Быстрый обмен на Бир Банк, спасибо за оперативность.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T10:16:42"
+        },
+        {
+            "username": "Александр",
+            "text": "Отличный обменник, использовал его уже десятки раз — всегда надежно.",
+            "exchange_name": "BitcoinBox",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T10:03:37"
+        }
+    ]
+}

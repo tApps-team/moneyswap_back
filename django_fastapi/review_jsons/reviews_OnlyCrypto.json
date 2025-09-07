@@ -1,0 +1,364 @@
+{
+    "OnlyCrypto": [
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл мгновенно, деньги пришли точно по курсу, очень удобно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:17:28"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Подал заявку и получил деньги без задержек, всё просто и понятно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:15:48"
+        },
+        {
+            "username": "Никита",
+            "text": "Курс точный, совпадает с тем, что указан на сайте, никаких сюрпризов.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:02:10"
+        },
+        {
+            "username": "Саша",
+            "text": "Обмен сделал быстро, курс совпал, деньги пришли моментально, удобно и честно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:27:28"
+        },
+        {
+            "username": "Павел",
+            "text": "Сервис отработал идеально: курс совпал, деньги пришли сразу. Всё гладко.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T11:00:25"
+        },
+        {
+            "username": "Илья",
+            "text": "Всё прошло честно и без задержек. Курс точный, комиссии нет.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:08:43"
+        },
+        {
+            "username": "Егор",
+            "text": "Перевёл USDT на карту — деньги пришли быстро, курс совпал, всё отлично.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:40:44"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обмен прошёл без проблем: деньги пришли моментально, всё просто и быстро.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T10:34:33"
+        },
+        {
+            "username": "Константин",
+            "text": "Сервис понравился: всё чётко, быстро и без лишней суеты.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T09:39:31"
+        },
+        {
+            "username": "Даниил",
+            "text": "Создал заявку, перевёл — деньги пришли мгновенно. Курс зафиксирован, всё удобно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T09:52:27"
+        },
+        {
+            "username": "Лев",
+            "text": "Пробовал разные обменники, но тут всё быстро и без лишней мороки. Деньги пришли точно по курсу.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T10:12:11"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Слил USDT без проблем, курс адекватный, деньги пришли мгновенно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T08:57:12"
+        },
+        {
+            "username": "Рустам",
+            "text": "Сначала сомневался, но всё прошло гладко. Деньги пришли вовремя, курс точный.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T09:07:28"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Отлично, что всё быстро. Сделал обмен с телефона, деньги сразу пришли.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T15:58:28"
+        },
+        {
+            "username": "Николай",
+            "text": "Всё отлично: курс верный, деньги пришли быстро. Пользоваться удобно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T14:49:42"
+        },
+        {
+            "username": "Артём",
+            "text": "Всё прошло без лишних движений: перевёл — деньги пришли. Удобно и понятно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T09:05:46"
+        },
+        {
+            "username": "Денис",
+            "text": "Онлайн-обмен реально экономит время. Деньги пришли моментально, курс нормальный.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T11:08:54"
+        },
+        {
+            "username": "Аркадий",
+            "text": "Мне нравится, что всё экономит время. Сделал заявку из дома и сразу получил деньги.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T11:27:19"
+        },
+        {
+            "username": "Сергей",
+            "text": "Пользуюсь регулярно: обмен быстрый, курс выгодный. Сервис надёжный.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T09:27:23"
+        },
+        {
+            "username": "Михаил",
+            "text": "Впервые менял ночью — всё прошло так же быстро, как днём.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T13:35:28"
+        },
+        {
+            "username": "Владислав",
+            "text": "Деньги поступили быстро, комиссия адекватная, обмен прошёл без проблем.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T11:44:52"
+        },
+        {
+            "username": "Арсений",
+            "text": "Менял уже несколько раз — всё быстро и без задержек, курс нормальный.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T10:29:32"
+        },
+        {
+            "username": "Леонид",
+            "text": "Регулярно пользуюсь: курс фиксируется, деньги приходят вовремя, поддержка отзывчивая.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T10:46:17"
+        },
+        {
+            "username": "Игорь",
+            "text": "Сначала волновался, но обмен прошёл спокойно и быстро.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T11:35:32"
+        },
+        {
+            "username": "Пётр",
+            "text": "Сервис оставил хорошее впечатление: всё просто и без лишней суеты, деньги пришли вовремя.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T08:48:55"
+        },
+        {
+            "username": "Александр",
+            "text": "Надёжный обменник. Деньги приходят, курс не завышают, сервис стабильный.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T15:47:33"
+        },
+        {
+            "username": "Евгений",
+            "text": "Не подвели: всё чётко, деньги пришли быстро, без лишней писанины.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T13:17:13"
+        },
+        {
+            "username": "Денис",
+            "text": "Деньги поступили моментально, курс нормальный, поддержка отзывчивая.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T12:25:49"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Сравнивал обменники, выбрал этот — не пожалел. Всё честно, без лишней суеты.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T10:07:17"
+        },
+        {
+            "username": "Семён",
+            "text": "Заявку оформил — деньги пришли мгновенно. Без лишних заморочек, удобно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T12:54:38"
+        },
+        {
+            "username": "Богдан",
+            "text": "Обмен прошёл без лишней суеты. Всё ясно, понятно и быстро.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T11:11:36"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен прошёл без проблем: быстро, удобно, без лишних действий. Вернусь ещё.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-25T08:51:25"
+        },
+        {
+            "username": "Андрей",
+            "text": "Поменял мгновенно, перевод упал на карту за пару минут, курс адекватный.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-24T11:01:26"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл гладко, без задержек. Сервис видно, что старается.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-23T10:08:43"
+        },
+        {
+            "username": "Вадим",
+            "text": "Всё прошло быстро, по нормальному курсу, без скрытых комиссий.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-23T09:40:40"
+        },
+        {
+            "username": "Давид",
+            "text": "Никаких проблем: ввёл данные, подтвердил — деньги пришли почти сразу. Удобно.",
+            "exchange_name": "OnlyCrypto",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T10:48:31"
+        }
+    ]
+}

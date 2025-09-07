@@ -1,0 +1,504 @@
+{
+    "CryptoXchange": [
+        {
+            "username": "Алексей",
+            "text": "Впервые попробовал — всё прошло гладко, советую!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:37:12"
+        },
+        {
+            "username": "Марина",
+            "text": "Надёжный обменник, поддержка приятная, курс выгодный.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:28:33"
+        },
+        {
+            "username": "Владимир",
+            "text": "Уровень поддержки оставляет желать лучшего. Ждал выплату день с лишним, ответы стандартные и информации почти нет. Только после повторного обращения начали что-то делать. В итоге деньги вернули, но уведомления не было. Очень не рекомендую.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-31T16:49:04"
+        },
+        {
+            "username": "Аслан",
+            "text": "Сервис отличный, ребята реально стараются.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:24:33"
+        },
+        {
+            "username": "Степан",
+            "text": "Все быстро, обмен прошел без проблем.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:18:40"
+        },
+        {
+            "username": "Виктор",
+            "text": "Отличный обмен, быстро и удобно!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:39:13"
+        },
+        {
+            "username": "Константин",
+            "text": "Все прошло четко и без задержек. Сервис на уровне!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T16:54:06"
+        },
+        {
+            "username": "Семен",
+            "text": "Мгновенно всё сделали! Отличная работа!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T16:12:25"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен выполнен успешно. Уже пользуюсь не первый раз.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T10:14:44"
+        },
+        {
+            "username": "Даниил",
+            "text": "Отличный сервис! Пользуюсь постоянно, чат отвечает быстро, все четко и удобно. Рекомендую.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T09:48:07"
+        },
+        {
+            "username": "Илья",
+            "text": "Обмен прошел идеально, всё на высоте!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T12:30:31"
+        },
+        {
+            "username": "Максим",
+            "text": "Очень хороший обменник! Пользуюсь часто, поддержка всегда оперативна.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T19:00:00"
+        },
+        {
+            "username": "Сергей",
+            "text": "Пытался вывести эфир, была небольшая задержка, но после обращения в поддержку проблему быстро решили и деньги вернули. Не рекомендую тем, кто не хочет разбираться сам.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-12T14:13:11"
+        },
+        {
+            "username": "Тимур",
+            "text": "Могу ли я вывести средства на карту Белинвестбанк?",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-09T07:01:46"
+        },
+        {
+            "username": "Светлана",
+            "text": "Лучшие! Быстро выводят и курс очень выгодный.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T14:03:42"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Отличный обмен, быстрый и выгодный курс.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T14:24:38"
+        },
+        {
+            "username": "Павел",
+            "text": "Быстрый обмен по хорошему курсу. Благодарю!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T10:51:23"
+        },
+        {
+            "username": "Михаил",
+            "text": "Выводил 1000 USDT через ЕРИП (Альфа-Банк Беларусь), прошло минут за 15, всё успешно.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T16:42:31"
+        },
+        {
+            "username": "Александр",
+            "text": "Все прошло быстро и без проблем. Пользуюсь разными обменниками, но здесь надёжно.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T14:30:53"
+        },
+        {
+            "username": "Станислав",
+            "text": "Все оперативно. Проблему со счетом решили мгновенно, доволен.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T13:50:56"
+        },
+        {
+            "username": "Джон",
+            "text": "Как всегда всё четко и быстро. Рекомендую.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T13:29:20"
+        },
+        {
+            "username": "Наталья",
+            "text": "Обменник, которому реально доверяю. Быстро, удобно и надежно!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T12:55:57"
+        },
+        {
+            "username": "Игорь",
+            "text": "Отличный обменник, все прошло быстро и понятно.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T17:20:20"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Самый надёжный обмен, пользуюсь только им. Всё быстро и четко, рекомендую!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-25T12:03:00"
+        },
+        {
+            "username": "Ольга",
+            "text": "Быстро, удобно, надёжно. Отличный обменник, рекомендую!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-24T18:53:19"
+        },
+        {
+            "username": "Артём",
+            "text": "Все отлично, обмен прошел быстро.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-23T15:30:25"
+        },
+        {
+            "username": "Ирина",
+            "text": "Работают быстро, ответы в чате моментальные. Всё замечательно!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T05:35:48"
+        },
+        {
+            "username": "Эдгар",
+            "text": "Очень хороший сервис, быстрый обмен.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-16T16:52:50"
+        },
+        {
+            "username": "Виталий",
+            "text": "Сервис можно доверять! Ошибку при обмене исправили в течение получаса, спасибо!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T13:37:04"
+        },
+        {
+            "username": "Александра",
+            "text": "Деньги пришли в течение 15 минут, информирование хорошее, всё в порядке. Но 0,45€ недостает, не понятно куда.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-15T12:17:05"
+        },
+        {
+            "username": "Илья",
+            "text": "Все отлично! Были задержки от банка, но поддержка помогла, деньги пришли. Обменник рекомендую!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T09:47:33"
+        },
+        {
+            "username": "Руслан",
+            "text": "Обмен XRP на ВТБ прошел без проблем, поддержка живая, курс приятный. Желаю успехов сервису!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T07:35:54"
+        },
+        {
+            "username": "Алексей",
+            "text": "Быстрый обмен, все отлично.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-13T16:05:29"
+        },
+        {
+            "username": "Людмила",
+            "text": "Несколько обменов прошли успешно. Последний обмен потребовал дополнительной проверки AML, возврат не был сделан вовремя.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-03T19:52:14"
+        },
+        {
+            "username": "Ян",
+            "text": "Все прошло быстро и без проблем.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-11T10:37:02"
+        },
+        {
+            "username": "Наталья",
+            "text": "Не первый обмен, и снова идеально. Быстро, стабильно, надёжно. Рекомендую.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-11T08:52:47"
+        },
+        {
+            "username": "Сергей",
+            "text": "Спасибо CryptoXchange, переводил USDT в евро, деньги пришли, заняло около 3 часов, доволен.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T04:38:20"
+        },
+        {
+            "username": "Андрей",
+            "text": "Пользуюсь этим обменником не первый раз. Всё быстро и чётко, спасибо!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-07T11:08:14"
+        },
+        {
+            "username": "Евгений",
+            "text": "Ожидал перевод более 3 часов, произошёл бардак с человеком по СПБ. CryptoXchange лишь передавал данные, но ситуации с криптой не решили. Категорически не рекомендую.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-07-04T07:49:18"
+        },
+        {
+            "username": "Алина",
+            "text": "Все пришло, обменник отличный. Пользуюсь не первый раз, рекомендую!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-04T15:26:43"
+        },
+        {
+            "username": "Наталья",
+            "text": "Приятно возвращаться, всё стабильно и без нервов. Рекомендую сервис.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-04T13:20:54"
+        },
+        {
+            "username": "Антон",
+            "text": "Обмен Doge на Т-банк прошел 12.06.2025. Один платеж 110000р. Сейчас требуют возврат, банк звонил с угрозами. Обменник может лишь советовать. Потери пока впереди.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-06-27T12:35:11"
+        },
+        {
+            "username": "Павел",
+            "text": "Отличный обменник, снова не подвел.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-01T16:16:30"
+        },
+        {
+            "username": "Наталья",
+            "text": "Стабильно работают, курсы адекватные, переводы точные. Рекомендую.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-30T14:02:13"
+        },
+        {
+            "username": "Роман",
+            "text": "Быстрый обмен USDT ERC20 на Alipay CNY, деньги пришли минут за 10. Очень доволен.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-28T12:11:53"
+        },
+        {
+            "username": "Наталья",
+            "text": "Уже второй раз пользуюсь, всё стабильно, быстро и без проблем. Надёжный обменник.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-25T09:11:31"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмен крипты на юани через Alipay 4-й раз, все прошло быстро и четко. Спасибо!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-24T09:52:28"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Моментальный перевод USDT через Тинькофф.",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-20T08:53:08"
+        },
+        {
+            "username": "Денис",
+            "text": "Обмен и общение с командой на высоте, желаю процветания!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-17T19:18:05"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все быстро пришло, поддержка отличная. Спасибо!",
+            "exchange_name": "CryptoXchange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-17T16:02:51"
+        }
+    ]
+}

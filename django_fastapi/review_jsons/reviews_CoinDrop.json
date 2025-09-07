@@ -1,0 +1,494 @@
+{
+    "CoinDrop": [
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошёл гладко, курс приемлемый.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:36:49"
+        },
+        {
+            "username": "Игорь",
+            "text": "Процесс обмена впечатлил своей скоростью, спасибо.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:39:49"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обменял крипту на рубли без проблем, доволен скоростью.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:18:10"
+        },
+        {
+            "username": "Никита",
+            "text": "Средства пришли мгновенно, обмен без задержек.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T03:25:08"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Отлично! Всё быстро и удобно, рекомендую.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T22:36:45"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обмен с карты Сбер на USDT прошёл легко, курс выгодный, планирую вернуться снова.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:56:55"
+        },
+        {
+            "username": "Пользователь 001",
+            "text": "Заявка обрабатывалась долго, курс меняли в ожидании. Сервис не советую.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-02T18:07:12"
+        },
+        {
+            "username": "Михаил",
+            "text": "Сделал оплату, кнопка \"Я оплатил\" срабатывала с задержкой. Поддержка ответила, но подтверждение заняло время. Второй раз сюда идти не планирую.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-02T14:40:38"
+        },
+        {
+            "username": "Анна",
+            "text": "Крипту получила быстро, обмен прошёл без проблем.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:45:48"
+        },
+        {
+            "username": "Елена",
+            "text": "Все пришло вовремя, поддержка оперативно ответила на вопрос.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:42:50"
+        },
+        {
+            "username": "Дарья",
+            "text": "Часто пользуюсь сервисом, все устраивает.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T09:49:32"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен прошёл без проблем, поддержка реагировала быстро. Рекомендую!",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:42:20"
+        },
+        {
+            "username": "Илья",
+            "text": "Процесс занял немного времени из-за ночи, но поддержка ответила быстро. Все прошло хорошо!",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:20:38"
+        },
+        {
+            "username": "Николай",
+            "text": "Поддержка помогла быстро решить вопрос, сервис качественный. Спасибо!",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T04:24:23"
+        },
+        {
+            "username": "Артём",
+            "text": "Вывел деньги на карту без задержек, обмен прошёл быстро.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T02:43:46"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обмен прошёл успешно, спасибо за быстрый сервис!",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T23:31:57"
+        },
+        {
+            "username": "Светлана",
+            "text": "USDT поступили моментально, всем рекомендую обменник.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T19:57:08"
+        },
+        {
+            "username": "Максим",
+            "text": "Не понравился сервис: часть суммы удержали и правила слишком строгие.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-01T12:35:45"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл быстро и по хорошему курсу, доволен.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:54:43"
+        },
+        {
+            "username": "Денис",
+            "text": "Сделал обмен и получил средства сразу, рекомендую сервис.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:31:07"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Все прошло быстро, курс адекватный, поддержка в Telegram отличная.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:43:54"
+        },
+        {
+            "username": "Ольга",
+            "text": "BTC на Сбер поменяли без проблем, курс хороший, обменник надёжный.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:56:58"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все прошло быстро, курс отличный, доволен обменом.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:41:47"
+        },
+        {
+            "username": "Людмила",
+            "text": "Очень довольна скоростью обмена, сервис на высоте.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:16:49"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Курс хороший, обмен через несколько транзакций прошёл гладко. Поддержка отвечает в Telegram.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:01:08"
+        },
+        {
+            "username": "Александр",
+            "text": "Простой и выгодный обмен, спасибо сервису.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T02:46:09"
+        },
+        {
+            "username": "Мария",
+            "text": "Спасибо за обмен, все прошло отлично.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T01:26:23"
+        },
+        {
+            "username": "Наталья",
+            "text": "Все четко, деньги поступили без задержек, спасибо!",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T21:22:00"
+        },
+        {
+            "username": "Ирина",
+            "text": "Сервис хороший, курс выгодный, рекомендую.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T20:15:43"
+        },
+        {
+            "username": "Евгений",
+            "text": "Оператор помог с обменом, крипта пришла быстро, советую!",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T18:20:59"
+        },
+        {
+            "username": "Роман",
+            "text": "Быстро обменял биткоины на Т-Банк, все прошло отлично.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:04:07"
+        },
+        {
+            "username": "Александр",
+            "text": "Деньги пришли в два перевода, сроки соблюдены. Спасибо!",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T12:23:50"
+        },
+        {
+            "username": "Виктория",
+            "text": "Деньги поступили, благодарю за оперативность.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:58:52"
+        },
+        {
+            "username": "Кристина",
+            "text": "Курс выгодный, часто пользуюсь сервисом.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T07:37:47"
+        },
+        {
+            "username": "Станислав",
+            "text": "ЮMoney на TRC-20 обменял без проблем, все отлично.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T07:33:09"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошёл быстро и качественно, спасибо.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T04:35:47"
+        },
+        {
+            "username": "Илья",
+            "text": "Сервис быстрый и удобный, обмен прошёл гладко.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T01:24:58"
+        },
+        {
+            "username": "Юлия",
+            "text": "Все прошло отлично, деньги поступили на кошелек.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T21:58:05"
+        },
+        {
+            "username": "Евгений",
+            "text": "Делал обмен USDT, средства поступили мгновенно.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T18:50:14"
+        },
+        {
+            "username": "Артём",
+            "text": "Обмен рубли -> USDT прошёл успешно, без проблем.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:39:39"
+        },
+        {
+            "username": "Николай",
+            "text": "Менял рубли на LTC, всё быстро, заявку выполнили за считанные минуты.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:27:45"
+        },
+        {
+            "username": "Александра",
+            "text": "Всё прошло как обычно, без проблем.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:51:27"
+        },
+        {
+            "username": "Олег",
+            "text": "Биткоин обменял быстро, доволен сервисом.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T09:29:46"
+        },
+        {
+            "username": "Андрей",
+            "text": "Сбер на USDT поменял без проблем, благодарю.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T06:17:00"
+        },
+        {
+            "username": "Михаил",
+            "text": "Сервис реально лучше, чем ожидал, админы молодцы.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T03:49:50"
+        },
+        {
+            "username": "Сергей",
+            "text": "Деньги поступили, обмен прошёл быстро и удобно.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T02:56:03"
+        },
+        {
+            "username": "Валентина",
+            "text": "Благодарна за помощь при обмене, всё отлично.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T23:46:28"
+        },
+        {
+            "username": "Максим",
+            "text": "Обмен прошёл моментально, даже не успел заметить задержек.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T22:23:48"
+        },
+        {
+            "username": "Вадим",
+            "text": "Крипта пришла, обмен по выгодному курсу, всё чётко.",
+            "exchange_name": "CoinDrop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T19:13:17"
+        }
+    ]
+}

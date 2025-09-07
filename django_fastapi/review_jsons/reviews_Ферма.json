@@ -1,0 +1,334 @@
+{
+  "Ферма": [
+    {
+      "username": "Максим",
+      "text": "Отличная работа, очень доволен!",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-01T22:14:15"
+    },
+    {
+      "username": "Алексей",
+      "text": "Всё прошло без нареканий, как обычно.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-01T03:40:40"
+    },
+    {
+      "username": "Савелий",
+      "text": "Обменник отличный, проверено лично.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-31T19:24:46"
+    },
+    {
+      "username": "Анатолий",
+      "text": "Быстро и удобно, всё устроило, спасибо!",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-31T19:15:46"
+    },
+    {
+      "username": "Григорий",
+      "text": "Сделка прошла моментально, очень доволен.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-31T04:18:42"
+    },
+    {
+      "username": "Семен",
+      "text": "Отличный обмен, быстро и профессионально, поддержка на высоте.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-30T07:58:55"
+    },
+    {
+      "username": "Людмила",
+      "text": "Надёжный и простой сервис обмена.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-30T07:13:30"
+    },
+    {
+      "username": "Татьяна",
+      "text": "Стабильно и безопасно, всем рекомендую.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-29T09:43:22"
+    },
+    {
+      "username": "Александр",
+      "text": "Всё прошло отлично, рекомендую сервис.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T18:29:14"
+    },
+    {
+      "username": "Вячеслав",
+      "text": "Быстро обменял рубли на ETH, даже небольшие суммы работают без проблем.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T16:28:57"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Первый перевод прошёл с мелкими трудностями, поддержка быстро помогла.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T10:39:09"
+    },
+    {
+      "username": "Константин",
+      "text": "Всё прошло гладко и без задержек.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T08:42:56"
+    },
+    {
+      "username": "Сергей",
+      "text": "Удобный и надёжный обмен, поддержка на связи всегда.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T08:32:37"
+    },
+    {
+      "username": "Илья",
+      "text": "Работа выполнена отлично, всем доволен!",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T02:46:33"
+    },
+    {
+      "username": "Роман",
+      "text": "Приложение удобное, всё работает без сбоев.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T23:50:16"
+    },
+    {
+      "username": "Леонид",
+      "text": "Деньги пришли на карту очень быстро, всё супер.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T08:17:06"
+    },
+    {
+      "username": "Игорь",
+      "text": "Хороший обмен, работает без задержек, удобно и просто.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T11:14:08"
+    },
+    {
+      "username": "Светлана",
+      "text": "Всё выполняется очень быстро и удобно.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-25T09:19:20"
+    },
+    {
+      "username": "Вячеслав",
+      "text": "Обмен прошёл быстро и надёжно.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T21:59:30"
+    },
+    {
+      "username": "Павел",
+      "text": "Оперативно и качественно, спасибо!",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T21:15:32"
+    },
+    {
+      "username": "Даниил",
+      "text": "Обмен прошёл без сбоев, всё устраивает.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T16:50:46"
+    },
+    {
+      "username": "Артемий",
+      "text": "Всё сделали быстро и надежно, проблем не возникло.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T10:57:02"
+    },
+    {
+      "username": "Ксения",
+      "text": "Попытка перевода не удалась, надеюсь вернуть деньги. Всем успехов!",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-22T10:44:33"
+    },
+    {
+      "username": "Станислав",
+      "text": "Всё прошло гладко, спасибо за помощь!",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T04:48:51"
+    },
+    {
+      "username": "Алена",
+      "text": "Очень выгодный и быстрый обмен, всем советую.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T20:00:27"
+    },
+    {
+      "username": "Денис",
+      "text": "Просто и удобно, всё понятно и без лишних шагов.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T07:32:36"
+    },
+    {
+      "username": "Владимир",
+      "text": "Выплаты своевременные, проблем нет.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-19T09:01:47"
+    },
+    {
+      "username": "Павел",
+      "text": "Обменник хороший, бывают небольшие задержки, но в целом всё отлично.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T22:06:06"
+    },
+    {
+      "username": "Андрей",
+      "text": "Сервис замечательный, быстро и качественно.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T21:23:43"
+    },
+    {
+      "username": "Игорь",
+      "text": "Очень доволен обменником, рекомендую всем.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T19:35:45"
+    },
+    {
+      "username": "Константин",
+      "text": "Просто супер, обмен прошёл без проблем.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T16:03:28"
+    },
+    {
+      "username": "Сергей",
+      "text": "Всё прошло отлично, рекомендую данный обменник.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T12:42:22"
+    },
+    {
+      "username": "Иван",
+      "text": "Команда работает слаженно и очень быстро.",
+      "exchange_name": "Ферма",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T08:33:08"
+    }
+  ]
+}

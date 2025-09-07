@@ -1,0 +1,314 @@
+{
+    "BullsChange": [
+        {
+            "username": "Денис",
+            "text": "Перевод прошёл мгновенно, служба поддержки помогла с любыми вопросами.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:26:12"
+        },
+        {
+            "username": "Арсен",
+            "text": "Обмен завершён быстро, ждать не пришлось, всё в порядке.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:02:23"
+        },
+        {
+            "username": "Вадим",
+            "text": "Отличная организация обмена, без нареканий.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:31:20"
+        },
+        {
+            "username": "Константин",
+            "text": "Очень быстрая обработка обмена, поддержка на высоте. Благодарю!",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:39:01"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл без задержек, всё чётко.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:09:03"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Оперативный обмен, поддержка объяснила все нюансы, спасибо за надёжность!",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:08:52"
+        },
+        {
+            "username": "Марк",
+            "text": "Все прошло гладко, претензий нет.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:14:57"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмен завершён успешно, курс хороший, минимальная сумма доступна, деньги приходят мгновенно.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:13:46"
+        },
+        {
+            "username": "Никита",
+            "text": "Работа обменника выполнена оперативно, рекомендую.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:58:54"
+        },
+        {
+            "username": "Азиз",
+            "text": "Все прошло спокойно, деньги поступили быстро, проверено ранее, всегда надежно.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:29:18"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Обмен стабилен и быстрый, поддержка всегда отвечает.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:51:41"
+        },
+        {
+            "username": "Илья",
+            "text": "Все прошло оперативно, даже с моим недочётом по комиссии, деньги пришли быстро. Советую!",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:52:22"
+        },
+        {
+            "username": "Вадим",
+            "text": "Сервис отличный, даже если что-то задерживается, все решают моментально. Проверено лично.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T17:13:38"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен делал не первый раз, всё как обычно, без нареканий.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:19:18"
+        },
+        {
+            "username": "Денис",
+            "text": "Первый обмен прошёл успешно, нареканий нет. Ставлю пять, спасибо!",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:20:02"
+        },
+        {
+            "username": "Иса",
+            "text": "Деньги пришли, немного подождал, но в целом всё отлично.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:23:49"
+        },
+        {
+            "username": "Рашид",
+            "text": "Первый обмен прошёл супер, быстро, просто, поддержка всегда на связи и подскажет.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:05:26"
+        },
+        {
+            "username": "Самсон",
+            "text": "Сервис на высоте, не только быстрый обмен, но и помощь с любыми сложностями.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T07:15:49"
+        },
+        {
+            "username": "Ринат",
+            "text": "Все строго и без лишних вопросов, доволен работой обменника.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T04:41:47"
+        },
+        {
+            "username": "Юлиан",
+            "text": "Первый обмен в этом сервисе прошёл хорошо, надеюсь стать постоянным клиентом.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:18:24"
+        },
+        {
+            "username": "Даниил",
+            "text": "Все полностью устраивает, сервис работает стабильно.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:07:52"
+        },
+        {
+            "username": "Виктор",
+            "text": "Честный обменник, не обманывают, все прозрачно.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:48:19"
+        },
+        {
+            "username": "Егор",
+            "text": "Обмен прошёл гладко, курс нормальный, пользоваться удобно, буду обращаться ещё.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T10:47:22"
+        },
+        {
+            "username": "Владислав",
+            "text": "Средства поступили быстро, спасибо за надёжность.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:27:50"
+        },
+        {
+            "username": "Даниил",
+            "text": "Обменял эфир, пользуюсь этим сервисом давно, всегда консультируют и помогают.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T07:59:43"
+        },
+        {
+            "username": "Сергей",
+            "text": "Надёжный обменник, работает без проблем.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T06:33:40"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен выполнен исправно, курс удобный, сервис классический и без лишнего.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T19:11:33"
+        },
+        {
+            "username": "Олег",
+            "text": "Обмен прошёл отлично, чат реагирует быстро, деньги зачислены мгновенно, сервис отличный!",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T18:52:21"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличный обменник! Удобный интерфейс, поддержка на связи, платежи проходят вовремя. Очень рекомендую!",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:08:51"
+        },
+        {
+            "username": "Леонид",
+            "text": "Обмен завершён! Немного ждал, но поддержка была на связи и всё проконтролировала.",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:42:32"
+        },
+        {
+            "username": "Николай",
+            "text": "Первый раз пользовался по совету, все быстро, менеджер на связи, курс отличный. Рекомендую!",
+            "exchange_name": "BullsChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:14:26"
+        }
+    ]
+}

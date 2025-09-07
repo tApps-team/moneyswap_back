@@ -1,0 +1,434 @@
+{
+    "CryptoVortex": [
+        {
+            "username": "Игорь",
+            "text": "Обменял Tether, всё прошло гладко. Сервис заслуживает доверия, рекомендую!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:06:00"
+        },
+        {
+            "username": "Вадим",
+            "text": "Быстро и удобно, обмен занял пару минут. Отличный сервис, советую!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:38:20"
+        },
+        {
+            "username": "Светлана",
+            "text": "Впервые пользовалась этим обменником, все просто и понятно. Курс адекватный, поддержка отзывчивая. Отлично!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:33:49"
+        },
+        {
+            "username": "Илья",
+            "text": "Хороший выбор валют и направления, обмен проходит быстро. Очень доволен.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T12:00:08"
+        },
+        {
+            "username": "Марина",
+            "text": "Поддержка на высоте, помогли с вопросами, всё спокойно и вежливо. Деньги пришли быстро.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:47:05"
+        },
+        {
+            "username": "Людмила",
+            "text": "Деньги пришли моментально, всё чётко и без проблем. Большое спасибо за сервис!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:44:58"
+        },
+        {
+            "username": "Сергей",
+            "text": "Менял USDT, всё прошло быстро, поддержка отвечает моментально. Обменник рекомендую.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:44:56"
+        },
+        {
+            "username": "Денис",
+            "text": "Отличный сервис! Перевод прошёл за считанные минуты, поддержка помогала на каждом шагу.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:39:42"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Спасибо за обмен и интересную информацию о криптовалюте. Сервис на высоком уровне!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T11:41:04"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен прошёл быстро и удобно. Очень доволен вашей работой!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T14:42:51"
+        },
+        {
+            "username": "Алиса",
+            "text": "Сервис отличный! Быстрое выполнение обмена и отзывчивая поддержка. Очень удобно.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T12:45:42"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошёл без проблем, курс хороший, поддержка оперативно отвечает. Рекомендую.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T11:56:12"
+        },
+        {
+            "username": "Ксения",
+            "text": "Работу выполнили быстро и без заминок. Первый раз пользовалась обменником, осталась довольна.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T09:59:18"
+        },
+        {
+            "username": "Виктор",
+            "text": "Очень хороший обменник, перевёл крипту на счёт быстро и без проблем.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:15:38"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмен прошёл с первого раза, быстро и удобно. Доволен сервисом.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T17:36:06"
+        },
+        {
+            "username": "Наталья",
+            "text": "Все мои вопросы были быстро решены, заявка выполнена раньше времени. Спасибо!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T11:10:08"
+        },
+        {
+            "username": "Вера",
+            "text": "Рада, что нашла вас! Поддержка всегда на связи и помогает оперативно. Спасибо!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T12:30:38"
+        },
+        {
+            "username": "Станислав",
+            "text": "Обмен прошёл как планировал. USDT на счёт пришли без задержек. Рекомендую сервис.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T11:02:19"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Была небольшая задержка, но поддержка быстро всё исправила. Очень приятно, когда сервис заботится о клиенте.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T14:31:14"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Обмен выгодный и быстрый, не пришлось ждать долго. Всё прошло отлично.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T12:31:09"
+        },
+        {
+            "username": "Марк",
+            "text": "Сайт простой и понятный, заявку приняли мгновенно. Очень удобно, рекомендую!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T07:42:53"
+        },
+        {
+            "username": "Константин",
+            "text": "Благодарю за быстрый обмен, всё прошло спокойно и безопасно. Отличный сервис.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T13:25:05"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Сайт удобный, всё ясно и прозрачно. Цифры при обмене понятные, без скрытых комиссий.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T12:20:15"
+        },
+        {
+            "username": "Леонид",
+            "text": "Очень быстрый и удобный обмен USDT в Таиланде. Деньги пришли за считанные минуты. Рекомендую!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T07:19:01"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Сотрудничать с этим обменником приятно! USDT обменял по выгодному курсу без проблем.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T15:26:47"
+        },
+        {
+            "username": "Виктор",
+            "text": "Поддержка помогла выбрать лучшее направление для обмена, всё быстро и просто. Очень доволен сервисом!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T09:56:49"
+        },
+        {
+            "username": "Даниил",
+            "text": "Все понравилось! От поддержки до зачисления средств — сервис на высоте. Обязательно вернусь.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T12:27:19"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен выполнен отлично! Друзьям уже посоветовал, очень доволен качеством работы и курсом.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T11:56:33"
+        },
+        {
+            "username": "Ольга",
+            "text": "Спасибо за быстрый обмен и экономию времени. Поддержка на высоте!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T17:01:00"
+        },
+        {
+            "username": "Евгений",
+            "text": "Сначала сомневался, но обмен прошёл прозрачно и быстро. USDT получил менее чем за 10 минут. Приятно удивлён.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T12:33:59"
+        },
+        {
+            "username": "Алексей",
+            "text": "Сервис отличный! Команда знает своё дело и всё работает без проблем.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T15:32:24"
+        },
+        {
+            "username": "Владислав",
+            "text": "Обмен прошёл полностью, деньги получил, сервис работает надёжно. Рекомендую.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T11:49:34"
+        },
+        {
+            "username": "Наталия",
+            "text": "Продала крипту, деньги пришли почти мгновенно. Всё прошло гладко, особенно в час пик.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T12:35:31"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обмен организован очень хорошо, быстро и без задержек. Всем рекомендую!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-03T11:23:23"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Пока другие думают, здесь обмен уже завершён. Настоящий экспресс-сервис.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T10:23:37"
+        },
+        {
+            "username": "Полина",
+            "text": "Сервис работает как хорошо отлаженный механизм, весь обмен простой и быстрый. Молодцы!",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T11:58:35"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен USDТ на наличные прошёл без проблем, деньги получил через банкомат. Всё быстро и качественно.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T11:29:40"
+        },
+        {
+            "username": "Сергей",
+            "text": "На счёт деньги пришли быстро, никаких проблем. Поддержка есть, обменником доволен.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T11:29:22"
+        },
+        {
+            "username": "Игорь",
+            "text": "Выводил впервые, обмен прошёл быстро и без заминок. Рекомендую сервис.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T14:28:48"
+        },
+        {
+            "username": "Виктория",
+            "text": "Очень удобно и без сложностей. Всё сработало идеально, обмен прошёл мгновенно.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T10:13:33"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошёл быстро, поддержка всегда на связи и отвечает на любые вопросы.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T10:53:31"
+        },
+        {
+            "username": "Николай",
+            "text": "Был нестандартный запрос по обмену, поддержка отработала четко и быстро. Доволен сотрудничеством.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-27T18:45:51"
+        },
+        {
+            "username": "Михаил",
+            "text": "Обмен прошёл оперативно и без проблем. Сайт удобный, поддержка отвечает быстро. Рекомендую.",
+            "exchange_name": "CryptoVortex",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-27T11:21:29"
+        }
+    ]
+}

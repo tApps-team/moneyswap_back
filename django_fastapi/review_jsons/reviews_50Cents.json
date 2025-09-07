@@ -1,0 +1,334 @@
+{
+    "50Cents": [
+        {
+            "username": "Роман",
+            "text": "Обменивался уже несколько раз, все делают быстро и всегда отвечают. Подход к клиенту на высоте.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:48:53"
+        },
+        {
+            "username": "Никита",
+            "text": "Все понравилось, удобный обменник.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:26:46"
+        },
+        {
+            "username": "Владислав",
+            "text": "Спасибо за оперативность и внимание к деталям. Смело советую сервис.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:14:54"
+        },
+        {
+            "username": "Антон",
+            "text": "Все прошло отлично, поддержка отвечает и помогает. Обмен занял пару минут.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T19:01:04"
+        },
+        {
+            "username": "Георгий",
+            "text": "Сервис быстрый и надежный, Alipay теперь меняю только тут.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T20:17:33"
+        },
+        {
+            "username": "Ярослав",
+            "text": "Сделка прошла успешно, благодарю команду за помощь.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T12:00:24"
+        },
+        {
+            "username": "Игорь",
+            "text": "Как всегда надежный сервис, стабильно на высшем уровне.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T20:13:23"
+        },
+        {
+            "username": "Федор",
+            "text": "Обмен прошел без проблем, средства получил в срок.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:04:06"
+        },
+        {
+            "username": "Руслан",
+            "text": "Учли мой запрос, сделали так как попросил. Огромное спасибо!",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T20:43:53"
+        },
+        {
+            "username": "Григорий",
+            "text": "Заявка выполнена быстро, плюс сделали в один перевод по моей просьбе. Спасибо за внимание!",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T11:12:28"
+        },
+        {
+            "username": "Полина",
+            "text": "Хороший сервис, сняла деньги без проблем, все удобно.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T20:37:26"
+        },
+        {
+            "username": "Станислав",
+            "text": "Поддержка работает отлично, выплаты приходят без задержек.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T12:06:24"
+        },
+        {
+            "username": "Алина",
+            "text": "Спасибо за быстрый обмен, всю сумму перевели одним платежом. Очень довольна.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T19:33:18"
+        },
+        {
+            "username": "Роман",
+            "text": "Хочу отметить работу оператора — всегда помогает и отвечает без задержек.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T12:03:47"
+        },
+        {
+            "username": "Аркадий",
+            "text": "Пользуюсь не первый раз, все устраивает. Благодарю за стабильность.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T20:41:37"
+        },
+        {
+            "username": "Виталий",
+            "text": "Спасибо, сделали одним платежом. Это очень важно!",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T11:31:11"
+        },
+        {
+            "username": "Денис",
+            "text": "Все супер, деньги пришли быстро. Отличный обмен.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T20:43:06"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обмен прошел без сложностей, обязательно обращусь еще раз.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:51:27"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Отлично сработали! Деньги зачислили через банкомат, очень удобно и быстро.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T20:22:06"
+        },
+        {
+            "username": "Алина",
+            "text": "Ребята справились быстро и аккуратно, все четко. С удовольствием рекомендую.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T10:45:05"
+        },
+        {
+            "username": "Степан",
+            "text": "Все прошло хорошо, сервис понравился.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T20:06:18"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен занял считанные минуты, персонал помог разобраться. Спасибо!",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T20:16:11"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все четко, без задержек и ошибок. Доволен.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T18:07:12"
+        },
+        {
+            "username": "Егор",
+            "text": "Хороший курс и быстрая обработка, благодарю.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T12:08:33"
+        },
+        {
+            "username": "Daniel",
+            "text": "Perfect service! Fast exchange and excellent support every step of the way.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T20:23:18"
+        },
+        {
+            "username": "Константин",
+            "text": "Все прошло без проблем, выплату получил в тот же день. Советую!",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T04:16:17"
+        },
+        {
+            "username": "Савелий",
+            "text": "Сервис отличный, буду пользоваться и дальше.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T19:56:08"
+        },
+        {
+            "username": "Артур",
+            "text": "Все четко и оперативно, обмен прошел гладко. Давно искал такой сервис.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T11:45:18"
+        },
+        {
+            "username": "Ильдар",
+            "text": "Спасибо за работу, перевели деньги в срок.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T17:26:47"
+        },
+        {
+            "username": "Владимир",
+            "text": "Пользуюсь обменником не впервые, всегда все четко и надежно. Советую.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T19:41:17"
+        },
+        {
+            "username": "Сергей",
+            "text": "Вывод через этот сервис делаю регулярно, всегда доволен результатом.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T11:55:14"
+        },
+        {
+            "username": "Тамерлан",
+            "text": "Спасибо за оперативность, очень выручили в нужный момент!",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T20:04:15"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Сервис понравился, перевод пришел в указанные сроки, все честно. Рекомендую.",
+            "exchange_name": "50Cents",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T10:31:27"
+        }
+    ]
+}

@@ -1,0 +1,504 @@
+{
+    "MoneyMate": [
+        {
+            "username": "Арсен",
+            "text": "Сервис работает без перебоев, доступен круглосуточно.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:50:46"
+        },
+        {
+            "username": "Вадим",
+            "text": "Всегда приятно использовать платформу, обмен проходит быстро и без проблем.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T03:38:19"
+        },
+        {
+            "username": "Егор",
+            "text": "Обмен занял минут 15, средства пришли вовремя.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:06:45"
+        },
+        {
+            "username": "Артём",
+            "text": "Советовал друзьям, всем понравилось.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:19:20"
+        },
+        {
+            "username": "Ильшат",
+            "text": "Приятно видеть честность сервиса, всё работает надёжно.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:11:16"
+        },
+        {
+            "username": "Семён",
+            "text": "Курс фиксируется мгновенно, обмен проходит спокойно, результат вовремя.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:42:51"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обмен завершился менее чем за 20 минут, доволен.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:24:28"
+        },
+        {
+            "username": "Константин",
+            "text": "Пользуюсь долго, сервис всегда на уровне.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:27:28"
+        },
+        {
+            "username": "Лев",
+            "text": "Остались только положительные впечатления, вернусь снова.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T00:56:10"
+        },
+        {
+            "username": "Рамиль",
+            "text": "Уже рекомендовал друзьям, всем понравилось.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:19:31"
+        },
+        {
+            "username": "Никита",
+            "text": "Удобно пользоваться, оформление проходит быстро и легко.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:20:53"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Менять крипту на фиат удобно, сервис надёжен, ни разу не подвёл.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T22:40:10"
+        },
+        {
+            "username": "Даниил",
+            "text": "Быстрый обмен, хороший курс. Всё прошло отлично.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T20:06:00"
+        },
+        {
+            "username": "Виктория",
+            "text": "Оператор подробно объяснила процесс, всё прошло легко.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T18:58:26"
+        },
+        {
+            "username": "Сергей",
+            "text": "Часто пользуюсь сервисом, результат всегда радует.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:35:58"
+        },
+        {
+            "username": "Азамат",
+            "text": "Очень быстрый и простой обмен, лучший из тех, которыми пользовался.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:43:49"
+        },
+        {
+            "username": "Валерия",
+            "text": "Перевела крипту, получила фиат, уведомление пришло вовремя.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:00:51"
+        },
+        {
+            "username": "София",
+            "text": "Обменяла тезер, рубли пришли быстро, лимиты видны сразу.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:40:14"
+        },
+        {
+            "username": "Никита",
+            "text": "Полностью доволен сервисом.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T06:20:53"
+        },
+        {
+            "username": "Иван",
+            "text": "Уже советовал друзьям, обмен прошёл без проблем.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T02:05:13"
+        },
+        {
+            "username": "Алиса",
+            "text": "Перевела рубли, заявка завершилась быстро, спасибо.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T03:06:17"
+        },
+        {
+            "username": "Денис",
+            "text": "Всё отлично, обмен прошёл гладко.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T01:34:53"
+        },
+        {
+            "username": "Тимур",
+            "text": "Только положительные впечатления.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T22:12:09"
+        },
+        {
+            "username": "Максим",
+            "text": "Выбор moneymate оправдал ожидания.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T13:12:05"
+        },
+        {
+            "username": "Людмила",
+            "text": "С телефона обмен прошёл без проблем, всё корректно.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T10:30:08"
+        },
+        {
+            "username": "Ярослав",
+            "text": "Обмен прошёл гладко, всем доволен.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T07:09:34"
+        },
+        {
+            "username": "Абрам",
+            "text": "Только положительные стороны, никаких минусов.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T05:11:23"
+        },
+        {
+            "username": "Рустам",
+            "text": "Оформил заявку, всё прошло как надо.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T07:27:46"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Выбрал этот обменник и не пожалел, всё работает отлично.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T06:22:29"
+        },
+        {
+            "username": "Захар",
+            "text": "Оформление быстрое и удобное.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T05:24:59"
+        },
+        {
+            "username": "Владислав",
+            "text": "Интерфейс простой, никаких сложностей.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T02:43:11"
+        },
+        {
+            "username": "Михаил",
+            "text": "Оформление прошло без проблем, всё понятно и просто.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T15:26:49"
+        },
+        {
+            "username": "Тамара",
+            "text": "Заявка на usdt обработалась быстро, получила результат без задержек.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T12:54:19"
+        },
+        {
+            "username": "Роман",
+            "text": "Часто пользуюсь, всегда доволен.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T10:04:17"
+        },
+        {
+            "username": "Игорь",
+            "text": "Процесс обмена предельно простой.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T06:00:29"
+        },
+        {
+            "username": "Матвей",
+            "text": "Только положительные впечатления, продолжаю пользоваться сервисом.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T03:13:52"
+        },
+        {
+            "username": "Али",
+            "text": "Сервис стабилен, сбои отсутствуют, пользуюсь давно.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T01:10:54"
+        },
+        {
+            "username": "Никифор",
+            "text": "Сайт простой, оформление удобное.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T08:48:16"
+        },
+        {
+            "username": "Ильяс",
+            "text": "Процесс обмена быстрый, всё прошло отлично.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T06:16:00"
+        },
+        {
+            "username": "Руслан",
+            "text": "Сайт работает стабильно, ни разу не подвёл.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T04:51:01"
+        },
+        {
+            "username": "Розалия",
+            "text": "Вывела деньги на Тинькофф без проблем, всё просто и быстро.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T03:54:57"
+        },
+        {
+            "username": "Борис",
+            "text": "Оформление прошло быстро, удобно использовать.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T23:47:35"
+        },
+        {
+            "username": "Нина",
+            "text": "Уведомление о завершении поступило сразу, удобно.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T15:02:50"
+        },
+        {
+            "username": "Марина",
+            "text": "Смс о поступлении пришло быстро, всё корректно.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T11:02:05"
+        },
+        {
+            "username": "Фаниль",
+            "text": "Современный подход к обмену, оформление простое и быстрое.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T07:51:06"
+        },
+        {
+            "username": "Рита",
+            "text": "Обмен прошёл успешно, спасибо команде поддержки.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T09:27:15"
+        },
+        {
+            "username": "Ренат",
+            "text": "Простое оформление, удобно для обмена.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T03:35:23"
+        },
+        {
+            "username": "Таисия",
+            "text": "Сумма поступила полностью, всё совпало.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T23:45:18"
+        },
+        {
+            "username": "Валерий",
+            "text": "Рекомендовал друзьям, все довольны качеством работы сервиса.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T20:45:50"
+        },
+        {
+            "username": "Ильдус",
+            "text": "Оформление заняло всего пару минут, удобно.",
+            "exchange_name": "MoneyMate",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T19:55:35"
+        }
+    ]
+}

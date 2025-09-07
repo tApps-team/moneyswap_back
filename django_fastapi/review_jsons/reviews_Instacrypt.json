@@ -1,0 +1,384 @@
+{
+    "Instacrypt": [
+        {
+            "username": "Максим",
+            "text": "Все прошло отлично, деньги получил без проблем.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:54:06"
+        },
+        {
+            "username": "Сергей",
+            "text": "Меняю уже второй раз, первый обмен был медленнее, сейчас все заняло около получаса. Сервис заметно улучшился.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:42:45"
+        },
+        {
+            "username": "Игорь",
+            "text": "Удобно расположен офис, перевод на наличные мгновенный, курс приемлемый.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:41:15"
+        },
+        {
+            "username": "Эмир",
+            "text": "Все как в описании, курс нормальный, деньги пришли полностью. Буду пользоваться снова.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:37:54"
+        },
+        {
+            "username": "Николай",
+            "text": "Пользуюсь не первый раз, перевод прошел без сбоев, хоть и немного дольше, чем обычно.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:46:23"
+        },
+        {
+            "username": "Александр",
+            "text": "Все работает стабильно, вопросы решают быстро, курс нормальный, резерв есть. Буду обращаться еще.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T17:13:31"
+        },
+        {
+            "username": "Руслан",
+            "text": "Всегда вовремя, даже если возникают форс-мажоры. Техподдержка отзывчивая, пользуюсь регулярно.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:28:40"
+        },
+        {
+            "username": "Виктор",
+            "text": "Простой и понятный процесс. Обмен занял около часа, все удобно.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:31:09"
+        },
+        {
+            "username": "Стивен",
+            "text": "Все хорошо, только деньги поступили немного позже обычного.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:49:01"
+        },
+        {
+            "username": "Виталий",
+            "text": "Пробовал много обменников, этот один из лучших. Курсы выгодные, обмен быстрый и с минимальными потерями.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:11:32"
+        },
+        {
+            "username": "Илья",
+            "text": "Перевод прошел удачно, заняло чуть больше часа, доволен.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:59:04"
+        },
+        {
+            "username": "Даниил",
+            "text": "Несколько раз пользовался, всегда быстро и без задержек. Курс выгодный, поддержка оперативная.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:48:52"
+        },
+        {
+            "username": "Константин",
+            "text": "Отличный обменник, простой процесс, курс хороший, поддержка вежливая. Всем доволен.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T16:23:14"
+        },
+        {
+            "username": "Леон",
+            "text": "Простое оформление, без лишних условий. Перевод пришел быстро, спасибо.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T12:59:32"
+        },
+        {
+            "username": "Станислав",
+            "text": "Регулярно пользуюсь этим обменником, проблем не возникало, все четко и быстро.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T10:25:30"
+        },
+        {
+            "username": "Андрей",
+            "text": "Заявка обработана быстро, деньги зачислились на карту без задержек, рекомендую!",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T15:02:16"
+        },
+        {
+            "username": "Борис",
+            "text": "Надежный обменник, всегда использую. Сервис удобный, поддержка внимательная, все нравится.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T11:28:43"
+        },
+        {
+            "username": "Тимур",
+            "text": "Обслуживание приятное, операторы вежливые, направления обмена достаточно широкие.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T16:31:49"
+        },
+        {
+            "username": "Никита",
+            "text": "Все работает слаженно, нестандартные ситуации решаются быстро, курс нормальный, сайт удобный.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T11:24:00"
+        },
+        {
+            "username": "Данил",
+            "text": "Перевод прошел вовремя, сервисом доволен, буду пользоваться и дальше.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T15:58:40"
+        },
+        {
+            "username": "Егор",
+            "text": "Быстрый и удобный обменник, менеджеры всегда помогут и объяснят, все отлично.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T12:45:42"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обмен прошел быстро, оформление удобное, но выбор пар небольшой.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T11:02:21"
+        },
+        {
+            "username": "Павел Сергеевич",
+            "text": "Заявки обрабатываются идеально, общение вежливое. Желаю процветания обменнику.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T11:30:27"
+        },
+        {
+            "username": "Олег",
+            "text": "Обменивал наличные три раза, каждый раз успешно. Рекомендую сервис.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T17:23:34"
+        },
+        {
+            "username": "Леонид",
+            "text": "Сотрудничаю около года, направление обменов увеличилось, стабильный курс и отзывчивая поддержка.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T16:12:17"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень приятно совершать обмен, комфортный сервис, благодарю!",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T10:48:55"
+        },
+        {
+            "username": "Игнатий",
+            "text": "Обмениваю не впервые, функционал удобный, все вопросы решаются быстро.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T16:19:19"
+        },
+        {
+            "username": "Артур",
+            "text": "Все четко, сумма соответствует расчету на сайте, перевод быстрый и по хорошему курсу.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T11:52:16"
+        },
+        {
+            "username": "Вильям",
+            "text": "Несколько раз обменивал с разными направлениями, поддержка отвечает быстро, курс всегда стабильный.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T12:14:46"
+        },
+        {
+            "username": "Зак",
+            "text": "Пользуюсь этим обменником регулярно, удобно и быстро. Сегодня немного задержали, но техподдержка все быстро решила.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T17:14:57"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Главное здесь — нет нужды постоянно проверять действия, все логично и без сюрпризов.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T11:52:28"
+        },
+        {
+            "username": "Дерек",
+            "text": "Отлично! Быстро и без нареканий. Начал пользоваться после закрытия моего предыдущего обменника.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T16:09:15"
+        },
+        {
+            "username": "Норман",
+            "text": "Часто ищу обменники, возвращаюсь сюда. Курс важен, иногда другие чуть лучше, но тут меньше проблем. Рекомендую.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T12:48:22"
+        },
+        {
+            "username": "Ларри",
+            "text": "Использую сервис время от времени, качество на уровне, надежный, курс актуальный, скорость обмена нормальная.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T10:30:57"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Не первый раз меняю здесь, сотрудники вежливые, все прошло без проблем.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T15:40:09"
+        },
+        {
+            "username": "Ислам",
+            "text": "Все сделали быстро, без лишних действий. Обмен делаю не впервые, проблем нет.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T13:00:56"
+        },
+        {
+            "username": "Антон",
+            "text": "Очень оперативный и надежный обменник.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T10:55:54"
+        },
+        {
+            "username": "Рашид",
+            "text": "Хорошее обслуживание, поддержка терпеливая, помогают разобраться со всеми нюансами.",
+            "exchange_name": "Instacrypt",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T10:50:16"
+        }
+    ]
+}

@@ -1,0 +1,474 @@
+{
+  "AllCash": [
+    {
+      "username": "Алина",
+      "text": "Получила реквизиты, но оплата не прошла. Потратила слишком много времени на отмену.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-09-02T18:31:54"
+    },
+    {
+      "username": "Екатерина",
+      "text": "Впервые делала обмен здесь, разобралась минут за 20, деньги пришли, спасибо!",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-02T19:15:46"
+    },
+    {
+      "username": "Денис",
+      "text": "Обработка заняла немного времени, но в итоге всё прошло хорошо. Курс нормальный, поддержка присутствует.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-02T18:31:00"
+    },
+    {
+      "username": "Александр",
+      "text": "Сделал обмен, всё прошло быстро и гладко. Благодарю команду за работу.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-02T15:36:00"
+    },
+    {
+      "username": "Виктор",
+      "text": "Обменял рубли на LTC, операция прошла быстро, курс устроил.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-01T15:13:11"
+    },
+    {
+      "username": "Павел",
+      "text": "Прошло уже несколько часов, но деньги не пришли. Оператор пишет, что заявка ещё в обработке. Очень медленно.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-31T21:17:02"
+    },
+    {
+      "username": "Олег",
+      "text": "Обменял рубли на USDT, всё прошло корректно, заняло около 25 минут.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-31T15:02:06"
+    },
+    {
+      "username": "Светлана",
+      "text": "Обменник отличный! Поддержка помогла разобраться в сложной ситуации. Рекомендую.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-30T19:14:19"
+    },
+    {
+      "username": "Владимир",
+      "text": "Сервис на уровне. Сделка заняла меньше получаса. Советую.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T09:03:58"
+    },
+    {
+      "username": "Алиса",
+      "text": "Помогите: перевод выполнен, деньги списались, но не дошли. Поддержка долго не отвечала.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-21T12:15:23"
+    },
+    {
+      "username": "Марина",
+      "text": "Подала заявку USDT на ВТБ, пришло не всё. Банк заморозил средства, обменник предложил решение, но хотелось бы быстрее.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-25T17:04:39"
+    },
+    {
+      "username": "Андрей",
+      "text": "Купил USDC, подтверждение прошло без проблем. Курс устроил, доволен.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T10:21:25"
+    },
+    {
+      "username": "Михаил",
+      "text": "Покупка USDC заняла пару минут. Всё быстро и удобно.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T10:11:00"
+    },
+    {
+      "username": "Никита",
+      "text": "Обмен прошёл легко, блокировок не было, всё как ожидал.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T19:07:49"
+    },
+    {
+      "username": "Александр",
+      "text": "Хороший курс, поддержка вежливая. Всегда помогают при необходимости.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T15:07:54"
+    },
+    {
+      "username": "Сергей",
+      "text": "Перевод завис долго, не рекомендую ждать без подтверждения.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-21T14:16:23"
+    },
+    {
+      "username": "Владислав",
+      "text": "Сервис быстрый и удобный, много операций прошло без проблем. Курс отличный.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T20:35:48"
+    },
+    {
+      "username": "Евгений",
+      "text": "Не стоит рассчитывать на заявленные сроки, обмен затянулся.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-17T10:45:21"
+    },
+    {
+      "username": "Иван",
+      "text": "Была задержка больше, чем ожидал, но в итоге всё пришло.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T17:15:06"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Обмен прошёл успешно, небольшая задержка, менеджер всё объяснил.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T15:31:07"
+    },
+    {
+      "username": "Николай",
+      "text": "Обмен прошёл быстро и без проблем, реквизиты были верные.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-15T13:35:46"
+    },
+    {
+      "username": "Алиса",
+      "text": "Все прошло отлично, реквизиты быстро обновили, поддержка помогла.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-13T18:20:29"
+    },
+    {
+      "username": "Денис",
+      "text": "Обмен крайне медленный, деньги пришли с задержкой, сроки не соблюдаются.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-12T07:11:01"
+    },
+    {
+      "username": "Андрей",
+      "text": "Все сделали быстро, поддержка помогла с вопросами, рекомендую сервис.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-11T14:13:36"
+    },
+    {
+      "username": "София",
+      "text": "Меняла Monero, поддержка быстро помогла, обмен прошёл без проблем, курс хороший.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-11T12:33:17"
+    },
+    {
+      "username": "Алексей",
+      "text": "Обмен завершён, всё прошло как планировалось. Поддержка работает отлично.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-11T10:19:47"
+    },
+    {
+      "username": "Илья",
+      "text": "Обмен на 24 тыс в TON, деньги пришли за 5–8 минут, всё супер.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-10T19:50:40"
+    },
+    {
+      "username": "Роман",
+      "text": "Менял Monero на Сбер, прошло быстро и удобно. Советую.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-10T12:11:57"
+    },
+    {
+      "username": "Егор",
+      "text": "Первый раз пользуюсь, прошло полтора часа, деньги ещё не пришли, поддержка только пишет ждать.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-10T07:13:35"
+    },
+    {
+      "username": "Владислав",
+      "text": "Переводил XLM в рубли, курс хороший, деньги пришли через пару часов, бот информативный.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-09T17:25:35"
+    },
+    {
+      "username": "Полина",
+      "text": "Перевожу не первый раз, всегда всё оперативно и без проблем.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-09T10:23:15"
+    },
+    {
+      "username": "Александр",
+      "text": "Ждал более трёх часов, оператор прислал неверный txid.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-07T15:24:23"
+    },
+    {
+      "username": "Семен",
+      "text": "Обмен эфира на рубли не прошёл, деньги не поступили, транзакция непонятна. Прошу разобраться.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-06T17:13:42"
+    },
+    {
+      "username": "Марина",
+      "text": "Быстро и без задержек, обмен прошёл отлично. Рекомендую сервис.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-05T16:13:57"
+    },
+    {
+      "username": "Игорь",
+      "text": "Подтверждение оплаты заняло долго, запросили дополнительные скриншоты. Финансовых проблем нет, будьте внимательны.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-07-31T20:15:16"
+    },
+    {
+      "username": "Ярослав",
+      "text": "Обмен Ripple прошёл быстро и по хорошему курсу.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-31T15:37:11"
+    },
+    {
+      "username": "Никита",
+      "text": "Обмен небольшой суммы прошёл успешно, подтверждение оплаты заняло около 4,5 часов.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-07-30T20:33:10"
+    },
+    {
+      "username": "Александр",
+      "text": "Обмен прошёл быстро, поддержка отзывчивая и помогла с вопросами.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-29T12:41:23"
+    },
+    {
+      "username": "Вадим",
+      "text": "Обмен 50000 рублей на USDT разделили на три части. Система квитанций неудобная, но деньги пришли.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-07-29T09:54:31"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Сервис быстрый, непредвиденные нюансы решаются профессионально. Отличная работа!",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-28T09:53:41"
+    },
+    {
+      "username": "Ольга",
+      "text": "Обмен прошёл быстро, проблем не возникло. Спасибо сотрудникам!",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-27T06:18:13"
+    },
+    {
+      "username": "Екатерина",
+      "text": "Очень хороший обменник, советую всем.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-25T10:59:25"
+    },
+    {
+      "username": "Алексей",
+      "text": "Прошло два часа, деньги не пришли, курс вырос, хочу пересчёт и быстрый вывод.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-07-24T08:24:06"
+    },
+    {
+      "username": "Сергей",
+      "text": "Обмен прошёл, деньги не поступили, поддержка долго не отвечает.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-07-23T15:10:28"
+    },
+    {
+      "username": "Владислав",
+      "text": "Курс хороший, оплата прошла за 15 минут, реквизиты единые — удобно.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-23T10:13:39"
+    },
+    {
+      "username": "Ярослав",
+      "text": "Спасибо за быстрый и выгодный обмен Ripple.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-22T11:40:49"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Помогли при моей ошибке, деньги пришли, курс отличный.",
+      "exchange_name": "AllCash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-20T17:40:29"
+    }
+  ]
+}

@@ -1,0 +1,444 @@
+{
+    "E-Change": [
+        {
+            "username": "Игорь",
+            "text": "Раньше переводы занимали 1-3 часа, но в последнее время система подвисает, сегодня перевод занял больше шести часов.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-03T02:44:03"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все прошло быстро и надежно, доволен.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:52:48"
+        },
+        {
+            "username": "Владимир",
+            "text": "Третий раз пользуюсь. Перевод рубли в USDT прошёл мгновенно, меньше получаса.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:40:23"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен USDT на Сбербанк прошёл за пару часов, сумма пришла одним платежом. Сервис на уровне.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:37:46"
+        },
+        {
+            "username": "Никита",
+            "text": "Перевод через СБП на USDT двумя траншами, заняло около 40 минут.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:41:24"
+        },
+        {
+            "username": "Илья",
+            "text": "Вся сумма дошла за час и сразу целиком, что для меня важно. Обязательно вернусь.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:16:45"
+        },
+        {
+            "username": "Александр",
+            "text": "Надежный обменник, обслуживание качественное, спасибо!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T08:46:24"
+        },
+        {
+            "username": "Станислав",
+            "text": "Очень быстрый обмен USDT TRC20 на Сбер, сумма пришла за 5 минут одним переводом.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T21:54:20"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Выбирал обменник для USDT — наличные. Оператор на связи, АМЛ проверка прошла, но после запроса ФИО и даты рождения мне отказали. Жаль, обменник показался нормальным.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-31T11:00:07"
+        },
+        {
+            "username": "Роман",
+            "text": "Обмен СБП RUB на USDT TRC20 прошёл без проблем. Деньги пришли примерно через час с половиной, довольный.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T14:29:55"
+        },
+        {
+            "username": "Алина",
+            "text": "Очень удобно: сразу приходит письмо с деталями, оператор всегда на связи, при необходимости продолжают переписку в мессенджере. Спасибо!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:38:25"
+        },
+        {
+            "username": "Игорь",
+            "text": "Перевод через СБП на USDT разделил на два платежа, заняло чуть меньше часа, всё без нареканий.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T11:50:05"
+        },
+        {
+            "username": "Людмила",
+            "text": "Как всегда всё прошло идеально! Быстро сделали обмен. Этот сервис проверенный, рекомендую.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:16:38"
+        },
+        {
+            "username": "Марина",
+            "text": "Обменом довольна, поддержка работает безупречно, спасибо!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T07:47:24"
+        },
+        {
+            "username": "Павел",
+            "text": "Третий раз обмениваю здесь. Всё четко, в чате отвечают на все вопросы и остаются на связи до конца сделки.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T18:45:58"
+        },
+        {
+            "username": "Денис",
+            "text": "Четвертый обмен, как всегда всё без проблем! Спасибо.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T16:27:39"
+        },
+        {
+            "username": "Алексей",
+            "text": "Сделал обмен на наличные снова. Всё прошло быстро, сотрудники в чате и офисе вежливые. Приятно пользоваться сервисом.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T14:18:11"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Отличный сервис, как всегда. Не рассматриваю другие обменники. Спасибо!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:04:51"
+        },
+        {
+            "username": "Максим",
+            "text": "Всё прошло просто, менял СБП на TRX, без проблем.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T18:01:27"
+        },
+        {
+            "username": "Светлана",
+            "text": "Сервис отличный! Всегда быстро и комфортно. Без переживаний, спокойно обмениваю деньги.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:52:59"
+        },
+        {
+            "username": "Павел",
+            "text": "Не первый раз пользуюсь этим обменником. Все проходит быстро и корректно, лучший сервис!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T10:57:56"
+        },
+        {
+            "username": "Антон",
+            "text": "Пользуюсь этим обменником периодически, уже 7 раз обменял — снова положительный опыт.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T08:44:02"
+        },
+        {
+            "username": "Мария",
+            "text": "От одного до трёх обменов в день, всё проходит быстро и без проблем. Рекомендую!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T00:32:28"
+        },
+        {
+            "username": "Даниил",
+            "text": "Не рекомендую. Заявка на обмен сбп на биткоины заняла 2 часа, реквизиты выдали с задержкой, потом просто закрыли заявку. Очень разочарован.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-28T19:11:27"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл относительно быстро, около часа. Банковский перевод заблокировался, но оператор быстро предоставил новые реквизиты. Сделка завершена успешно.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:27:37"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Сделали быстро, пошли на встречу и уменьшили минимальную сумму. Благодарю!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:52:03"
+        },
+        {
+            "username": "Никита",
+            "text": "Сервис отличный. Банк заблокировал карту при переводе частями, но всё выплатили без задержек. Команда профессиональная.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T07:36:43"
+        },
+        {
+            "username": "Александр",
+            "text": "Профессиональный коллектив, помогают при любой проблеме: ниже лимита или задержка перевода. Поддержка 24/7. Отличный сервис.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T10:11:27"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен прошёл быстро, как всегда. Желаю сервису дальнейшего процветания.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T08:48:21"
+        },
+        {
+            "username": "Аноним",
+            "text": "Попал в P2P-схему, звонки от пострадавшего, который перевёл деньги за услуги, хотя сам ничего не понимает. Сервис не рекомендую, ситуация неприятная.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-15T11:32:44"
+        },
+        {
+            "username": "Илья",
+            "text": "Все прошло гладко. Иногда банк может попросить разделить перевод на несколько частей, чтобы избежать проблем.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T10:15:30"
+        },
+        {
+            "username": "Виталий",
+            "text": "Хороший обменник, всё быстро и качественно, доволен сервисом.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T08:56:35"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен проходит быстро и по выгодному курсу, всем рекомендую.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T08:11:10"
+        },
+        {
+            "username": "Сергей",
+            "text": "Рекомендую данный обменник, пользуюсь уже не первый раз, всё стабильно и без проблем.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T21:35:20"
+        },
+        {
+            "username": "Евгений",
+            "text": "Надёжный обменник, выгодный курс, не требуют сканы документов. Часто пользуюсь.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T10:38:29"
+        },
+        {
+            "username": "Артур",
+            "text": "Положительный опыт снова! Всё прошло отлично.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T08:48:24"
+        },
+        {
+            "username": "Ирина",
+            "text": "В третий раз обмен прошёл без проблем, через Telegram было удобно.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T18:21:18"
+        },
+        {
+            "username": "Гулом",
+            "text": "Отличная команда, всегда на связи, быстрые решения и без проблем. Спасибо!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T15:39:48"
+        },
+        {
+            "username": "Роман",
+            "text": "Как всегда меняю USDT на рубли, всё быстро и удобно. Спасибо!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T12:41:10"
+        },
+        {
+            "username": "Сергей",
+            "text": "Второй раз всё прошло отлично, разовым переводом через Telegram бота.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T11:19:44"
+        },
+        {
+            "username": "Александр",
+            "text": "Прекрасный обменник, всё быстро, без лишней верификации, супер сервис!",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T07:56:13"
+        },
+        {
+            "username": "Павел",
+            "text": "Очень хороший обменник! Без верификации карт с фото. Покупку 5000 USDT разделили на три платежа, всё заняло меньше часа.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:25:48"
+        },
+        {
+            "username": "Артём",
+            "text": "Быстро и удобно, одним платежом. Пользуюсь только этим обменником, очень комфортно.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T13:16:02"
+        },
+        {
+            "username": "Евгений",
+            "text": "Хороший обменник, пошли на встречу, деньги пришли меньше чем за час, поддержка реагирует оперативно.",
+            "exchange_name": "E-Change",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:54:53"
+        }
+    ]
+}

@@ -1,0 +1,504 @@
+{
+  "ABCobmen": [
+    {
+      "username": "Илья",
+      "text": "Служба поддержки помогла быстро и без заминок, оформил обмен легко.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-03T09:37:47"
+    },
+    {
+      "username": "Марина",
+      "text": "Обмен прошёл мгновенно, условия прозрачные, рекомендую всем!",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-03T09:17:02"
+    },
+    {
+      "username": "Вадим",
+      "text": "Все прошло без задержек, очень доволен.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-03T07:53:47"
+    },
+    {
+      "username": "Сергей",
+      "text": "Обмен завершился за считанные минуты, все оперативно.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-02T14:47:13"
+    },
+    {
+      "username": "Никита",
+      "text": "Использовал реферальную ссылку, бонус успешно получен.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-09-01T08:08:28"
+    },
+    {
+      "username": "Андрей",
+      "text": "Очень удобно, обмен прошёл гладко и быстро.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-30T08:34:20"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Можно выбрать проверку или сразу обменять — всё понятно и легко.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-29T10:46:13"
+    },
+    {
+      "username": "Егор",
+      "text": "Как обычно, обмен быстрый и надежный. Благодарен сервису!",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-29T08:53:46"
+    },
+    {
+      "username": "Владимир",
+      "text": "Обмен прошёл без лишних шагов, быстро и удобно.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T09:18:44"
+    },
+    {
+      "username": "Анастасия",
+      "text": "Сервис на высоте! Всё прошло быстро и качественно.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T08:13:00"
+    },
+    {
+      "username": "Ольга",
+      "text": "Обмен моментальный, условия выгодные, полностью довольна.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-28T05:26:22"
+    },
+    {
+      "username": "Владислав",
+      "text": "Часто использую сервис, все обмены проходят быстро и безопасно.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T16:37:25"
+    },
+    {
+      "username": "Павел",
+      "text": "Деньги приходят почти мгновенно, очень удобно.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-27T09:13:06"
+    },
+    {
+      "username": "Игорь",
+      "text": "Обмен надежный и быстрый, пользуюсь не первый раз.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-26T11:41:08"
+    },
+    {
+      "username": "Даниил",
+      "text": "Все прошло очень быстро, всем рекомендую.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-25T16:19:17"
+    },
+    {
+      "username": "Виктор",
+      "text": "Обмен удобный и безопасный, поддержка отвечает быстро.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-25T12:08:06"
+    },
+    {
+      "username": "Денис",
+      "text": "Сервис отличный, все операции прошли четко и быстро.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-23T09:09:34"
+    },
+    {
+      "username": "Андрей",
+      "text": "Оплатил и сразу получил средства, сервис на высоте.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T15:39:00"
+    },
+    {
+      "username": "Валерия",
+      "text": "Удобный обмен, всё прошло быстро и выгодно.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-22T12:41:10"
+    },
+    {
+      "username": "Сергей",
+      "text": "Курс адекватный, обмен без задержек.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T19:26:50"
+    },
+    {
+      "username": "Евгений",
+      "text": "Обмен прошёл успешно, деньги пришли вовремя.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T19:24:21"
+    },
+    {
+      "username": "Роман",
+      "text": "Поддержка всегда помогает, остаюсь клиентом сервиса.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T19:21:39"
+    },
+    {
+      "username": "Иван",
+      "text": "Сервис на высоте, обмены быстрые, поддержка отзывчивая.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T19:17:46"
+    },
+    {
+      "username": "Александра",
+      "text": "Меняюсь здесь регулярно, удобно и быстро.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T19:14:26"
+    },
+    {
+      "username": "Ольга",
+      "text": "Деньги поступили на карту мгновенно, обмен отличный.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T19:10:54"
+    },
+    {
+      "username": "Никита",
+      "text": "Спасибо за обмен и участие в акции, доволен результатом.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T19:06:36"
+    },
+    {
+      "username": "Иван",
+      "text": "Обмен прошёл мгновенно, все отлично.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T14:02:13"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Полностью автоматизировано: ввел реквизиты, оплатил — крипта на месте.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T13:54:48"
+    },
+    {
+      "username": "Сергей",
+      "text": "Сервис на высоком уровне, отправки быстрые, поддержка рядом.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T13:52:58"
+    },
+    {
+      "username": "Алексей",
+      "text": "Оплатил вечером, подтверждение пришло моментально — всё отлично.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T13:51:00"
+    },
+    {
+      "username": "Михаил",
+      "text": "Криптовалюту получил быстро, обмен прошёл без проблем.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T13:46:16"
+    },
+    {
+      "username": "Роман",
+      "text": "Очень быстро и качественно, рекомендую сервис.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T09:35:04"
+    },
+    {
+      "username": "Екатерина",
+      "text": "Обмен прошёл оперативно, курс отличный, всем советую.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T05:49:19"
+    },
+    {
+      "username": "Вадим",
+      "text": "Купил Monero, обмен быстрый, курс устраивает, всем рекомендую.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T09:00:29"
+    },
+    {
+      "username": "Константин",
+      "text": "Часто пользуюсь сервисом, обмен проходит быстро и без лишних шагов.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-19T21:57:15"
+    },
+    {
+      "username": "Виктор",
+      "text": "Много раз менял USDT — всё проходит надежно и быстро.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-19T10:22:33"
+    },
+    {
+      "username": "Егор",
+      "text": "Менял USDT на Payeer USD, обмен прошёл без проблем, доволен.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T09:17:45"
+    },
+    {
+      "username": "Александр",
+      "text": "Очень быстро и понятно, обмен прошёл отлично.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T21:15:41"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "Криптовалюта пришла, задача выполнена полностью.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T21:13:02"
+    },
+    {
+      "username": "Наталья",
+      "text": "Благодарю за быструю поддержку и обмен.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T21:00:48"
+    },
+    {
+      "username": "Олег",
+      "text": "Криптовалюта на месте, обманов не было!",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T20:54:58"
+    },
+    {
+      "username": "Семен",
+      "text": "Обмен прошёл отлично, ставлю высшую оценку.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T20:53:37"
+    },
+    {
+      "username": "Виталий",
+      "text": "Деньги уже на карте, процесс прошёл быстро и понятно.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T20:50:12"
+    },
+    {
+      "username": "Никита",
+      "text": "Лучший обменник, рад что нашёл сервис.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T20:46:19"
+    },
+    {
+      "username": "Андрей",
+      "text": "Рубли получил быстро, обмен занял 20-25 минут.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T20:44:24"
+    },
+    {
+      "username": "Надежда",
+      "text": "Спасибо любимому обменнику! Всегда на высоте.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T18:17:03"
+    },
+    {
+      "username": "Полина",
+      "text": "Сначала было непросто, но справилась, в следующий раз будет проще.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-17T07:16:48"
+    },
+    {
+      "username": "Юрий",
+      "text": "Все прошло быстро и без задержек, сервис отличный.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-16T12:23:11"
+    },
+    {
+      "username": "Надежда",
+      "text": "Профессиональный сервис, поддержка и обмен на высоте.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-16T05:59:25"
+    },
+    {
+      "username": "Роман",
+      "text": "Как обычно, доволен качеством обмена.",
+      "exchange_name": "ABCobmen",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-15T11:10:23"
+    }
+  ]
+}

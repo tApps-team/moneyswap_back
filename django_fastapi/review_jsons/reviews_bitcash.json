@@ -1,0 +1,364 @@
+{
+  "bitcash": [
+    {
+      "username": "Алексей",
+      "text": "Деньги перевелись моментально, даже не ожидал такой скорости!",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-20T13:41:04"
+    },
+    {
+      "username": "Роман",
+      "text": "Менял PayPal на криптовалюту, всё прошло молниеносно, поддержка работает отлично, очень доволен.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-19T16:24:33"
+    },
+    {
+      "username": "Георгий",
+      "text": "Случайно ошибся с реквизитами, но сотрудники быстро решили проблему. Теперь обращаюсь только сюда.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-18T16:58:03"
+    },
+    {
+      "username": "Степан",
+      "text": "Очень удобный обменник, поддержка отвечает без задержек, пользоваться приятно.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-10T09:30:56"
+    },
+    {
+      "username": "Алиса",
+      "text": "Не успела вовремя подтвердить заявку, её отменили, а средства не вернули. Осталась недовольна.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-08-06T17:18:55"
+    },
+    {
+      "username": "Руслан",
+      "text": "Все сделали быстро, операторы вежливые и внимательные, остался доволен.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-04T11:34:08"
+    },
+    {
+      "username": "Олег",
+      "text": "Очень надёжный обменник, всё прошло без задержек, спасибо за сервис.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-22T15:09:12"
+    },
+    {
+      "username": "Виталий",
+      "text": "Сначала сомневался, но сделка прошла быстро и честно. Теперь доверяю этому сервису.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-28T10:11:22"
+    },
+    {
+      "username": "Елена",
+      "text": "Очень быстрый обмен! Видно, что команда опытная, теперь использую только этот сайт.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-22T12:45:19"
+    },
+    {
+      "username": "Тимофей",
+      "text": "Обмен прошёл идеально — быстро и без всяких проблем!",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-17T18:16:36"
+    },
+    {
+      "username": "Карина",
+      "text": "Очень хороший обменник, обязательно воспользуюсь ещё раз, сотрудники помогают быстро.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-03-15T11:48:06"
+    },
+    {
+      "username": "Вадим",
+      "text": "Возникла непростая ситуация, но сотрудники разобрались и помогли, обмен прошёл успешно.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-12-23T17:45:40"
+    },
+    {
+      "username": "Григорий",
+      "text": "Обмен USDT на PayPal занял буквально несколько минут, сервис советую!",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-12-04T15:19:18"
+    },
+    {
+      "username": "Людмила",
+      "text": "Никто раньше так быстро не выполнял обмен, сервис на высшем уровне.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-11-20T18:05:42"
+    },
+    {
+      "username": "Кирилл",
+      "text": "Очень доволен тем, как быстро прошёл обмен USDT на PayPal, всё прошло идеально.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-11-13T14:08:23"
+    },
+    {
+      "username": "Валерий",
+      "text": "Прекрасный сервис, проверка данных заняла минимум времени, поддержка на высоте.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-11-10T14:33:34"
+    },
+    {
+      "username": "Татьяна",
+      "text": "Меняла USDT TRC20 на MoneyGram, всё оформили быстро, поддержка помогла с деталями.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-11-05T05:26:42"
+    },
+    {
+      "username": "Станислав",
+      "text": "Сделка прошла без проблем, верификация прошла легко и быстро.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-10-23T13:25:32"
+    },
+    {
+      "username": "Артур",
+      "text": "Пользуюсь сервисом не первый раз, всегда всё чётко и без задержек, рекомендую.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-10-10T18:37:03"
+    },
+    {
+      "username": "Оксана",
+      "text": "Сервис очень понравился, сайт удобный, служба поддержки быстро отвечает.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-10-09T11:14:02"
+    },
+    {
+      "username": "Пётр",
+      "text": "Отличная площадка, сотрудники помогли разобраться во всех нюансах, благодарю.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-10-01T07:24:54"
+    },
+    {
+      "username": "Ярослав",
+      "text": "Все прошло отлично, никаких задержек не было.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-09-25T09:33:02"
+    },
+    {
+      "username": "Елизавета",
+      "text": "Очень надёжный и быстрый обмен, советую воспользоваться всем!",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-09-21T08:22:02"
+    },
+    {
+      "username": "Дарья",
+      "text": "Всё прошло мгновенно и удобно, перевод получила без задержек.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-09-02T17:47:49"
+    },
+    {
+      "username": "Антон",
+      "text": "Очень надёжный сервис, смело могу рекомендовать другим.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-08-31T19:09:44"
+    },
+    {
+      "username": "Матвей",
+      "text": "Все отлично, сотрудники всегда доступны, обмен занял пару минут.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-08-21T06:53:10"
+    },
+    {
+      "username": "Дамир",
+      "text": "Деньги с карты перевелись моментально, поддержка всё проверила и подтвердила.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-07-19T14:23:16"
+    },
+    {
+      "username": "Глеб",
+      "text": "Заявку обработали очень быстро, деньги пришли сразу, рекомендую сервис.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-07-11T18:26:09"
+    },
+    {
+      "username": "Фёдор",
+      "text": "Менял USDT на PayPal, средства пришли, поддержка помогла с вопросами.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2024-06-25T17:47:20"
+    },
+    {
+      "username": "Полина",
+      "text": "Все сделки прошли быстро и без проблем, благодарю за работу!",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-06-19T11:38:53"
+    },
+    {
+      "username": "Виктор",
+      "text": "Отправил рубли, крипта не поступила, поддержка ответила странно, неприятный опыт.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2024-06-19T07:46:19"
+    },
+    {
+      "username": "Сергей",
+      "text": "Перевод на PayPal прошёл отлично, сервис быстрый и надёжный.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-06-12T17:47:04"
+    },
+    {
+      "username": "Николай",
+      "text": "Сделал перевод MoneyGram → Tether TRC20, всё прошло оперативно, крипта на месте.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-06-10T16:21:15"
+    },
+    {
+      "username": "Денис",
+      "text": "Перевод с карты прошёл без задержек, сервис отличный.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-06-10T08:27:50"
+    },
+    {
+      "username": "Владислав",
+      "text": "100 USD перевёл за 20 минут, всё пришло на кошелёк без проблем, очень удобно.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-06-06T10:50:57"
+    },
+    {
+      "username": "Алексей",
+      "text": "Сервис отличный! Всё быстро, качественно, поддержка отзывчивая, рекомендую.",
+      "exchange_name": "bitcash",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2024-05-31T06:31:43"
+    }
+  ]
+}

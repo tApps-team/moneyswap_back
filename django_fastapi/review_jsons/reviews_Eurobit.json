@@ -1,0 +1,324 @@
+{
+    "Eurobit": [
+        {
+            "username": "Игорь",
+            "text": "Менял рубли на USDT — операция прошла мгновенно, очень доволен.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:56:50"
+        },
+        {
+            "username": "Максим",
+            "text": "Обмен BTC прошёл отлично, всё быстро и удобно.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:02:33"
+        },
+        {
+            "username": "Евгений",
+            "text": "Надёжный обменник. Заявка обработана очень быстро, средства пришли одним платежом, рекомендую.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:58:54"
+        },
+        {
+            "username": "Владислав",
+            "text": "Перевод на карту прошёл без проблем, всё быстро и чётко. Желаю успехов!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:25:01"
+        },
+        {
+            "username": "Марина",
+            "text": "Отличный сервис! Обмен быстрый, курс хороший, поддержка отвечает моментально.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T16:29:47"
+        },
+        {
+            "username": "Никита",
+            "text": "Менял рубли на BTC, перевод сделал давно, а проверка оплаты всё ещё длится, ситуация похожа на прошлый раз.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-23T18:31:53"
+        },
+        {
+            "username": "Константин",
+            "text": "Отправил рубли на биткоины 10 минут назад, заявка ещё на проверке, обмен затянулся.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-22T20:18:43"
+        },
+        {
+            "username": "Денис",
+            "text": "USDT на Сбер прошёл без задержек, средства пришли за час двумя переводами.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T21:23:47"
+        },
+        {
+            "username": "Илья",
+            "text": "Спасибо за быстрый обмен! Заявка обработана за 15 минут, всё чётко.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T12:33:28"
+        },
+        {
+            "username": "Семен",
+            "text": "Обмен прошёл гладко, все операции выполнены быстро.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T09:12:32"
+        },
+        {
+            "username": "Борис",
+            "text": "Благодарен сервису за выгодный курс и быстрый обмен!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T13:30:53"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Всё прошло отлично, обмен завершён быстро и без проблем.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T07:17:12"
+        },
+        {
+            "username": "Павел",
+            "text": "Средства пришли на счёт без задержек, пользуюсь сервисом не первый раз, рекомендую.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T18:13:16"
+        },
+        {
+            "username": "Егор",
+            "text": "Второй раз меняюсь здесь, заявку на большую сумму обработали всего за 15 минут, всё супер!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T17:15:39"
+        },
+        {
+            "username": "Сергей",
+            "text": "Поддержка на высоте, помогли быстро разобраться. Очень рекомендую!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T14:58:48"
+        },
+        {
+            "username": "Артём",
+            "text": "Обменник отличный — всё прошло мгновенно, курс выгодный!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T18:46:09"
+        },
+        {
+            "username": "Илья",
+            "text": "Лучший обменник! Отличная цена и высокая скорость работы. Поддержка всегда на связи, рекомендую!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T15:18:25"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Огромное спасибо за оперативность. Всё прошло без проблем, всем советую.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T18:58:11"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Вывел 50 тыс. руб. на Т-Банк двумя переводами. Не так быстро, как хотелось, но всё прошло успешно.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T07:06:10"
+        },
+        {
+            "username": "Николай",
+            "text": "Обмен занял всего 10 минут, поддержка отвечает быстро, очень доволен.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T23:49:21"
+        },
+        {
+            "username": "Игорь",
+            "text": "Всё прошло чётко и быстро, реквизиты совпали, проблем не было.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T17:07:02"
+        },
+        {
+            "username": "Елена",
+            "text": "Очень хороший обменник, всегда работает без нареканий.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T14:16:16"
+        },
+        {
+            "username": "Джоан",
+            "text": "Мгновенный обмен, сервис держит планку на высоком уровне!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T05:40:50"
+        },
+        {
+            "username": "Михаил",
+            "text": "Очень быстрый обмен одной транзакцией — что редкость сегодня.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T12:34:48"
+        },
+        {
+            "username": "Виктория",
+            "text": "Обмен прошёл отлично, пользуюсь этим сервисом часто и всегда без проблем.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T19:11:50"
+        },
+        {
+            "username": "Даниил",
+            "text": "Моментально переслали деньги, проверили и сразу отправили обратно, супер!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T21:29:48"
+        },
+        {
+            "username": "Анонимус",
+            "text": "Все отлично и быстро, сервис работает стабильно!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T10:17:24"
+        },
+        {
+            "username": "Владимир",
+            "text": "Перевод средств прошёл очень быстро, сервис на высоте. Рекомендую!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T02:46:15"
+        },
+        {
+            "username": "Ашель",
+            "text": "Транзакцию обработали быстро и аккуратно, хвалю и рекомендую!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T22:02:11"
+        },
+        {
+            "username": "Денис",
+            "text": "Прошло больше двух часов, а деньги так и не пришли, обещания пока не выполняются.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-04T06:07:36"
+        },
+        {
+            "username": "Николай",
+            "text": "Заявка обработана очень быстро, суммы большие, все удобно и радует.",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T19:00:41"
+        },
+        {
+            "username": "Александр",
+            "text": "Меняют крупные суммы, в отличие от других обменников, проблем с картами нет, всё отлично!",
+            "exchange_name": "Eurobit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T18:34:30"
+        }
+    ]
+}

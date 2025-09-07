@@ -1,0 +1,504 @@
+{
+    "Swop": [
+        {
+            "username": "Максим",
+            "text": "Нашёл здесь самую выгодную комиссию, обмен прошёл молниеносно, поддержка всегда на связи. Очень доволен!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:10:06"
+        },
+        {
+            "username": "Владислав",
+            "text": "Как всегда без нареканий.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:34:10"
+        },
+        {
+            "username": "Даниил",
+            "text": "Всё отлично, поддержка работает на высшем уровне.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T04:48:36"
+        },
+        {
+            "username": "Александр",
+            "text": "Обменник надёжный, поддержка реагирует очень быстро!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T20:55:45"
+        },
+        {
+            "username": "Константин",
+            "text": "Все прошло быстро, сервис отличный, благодарю.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:49:41"
+        },
+        {
+            "username": "Артём",
+            "text": "Очень хороший обменник. Если возникают вопросы — поддержка всегда поможет. Всегда пользуюсь только ими.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T09:05:07"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Спасибо за быстрый и удобный обмен!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:14:59"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Заявку обрабатывали очень долго, поддержка плохо реагировала, перевод до сих пор не пришёл!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-02T00:28:58"
+        },
+        {
+            "username": "Лина",
+            "text": "Отличный сервис: перевод на карту пришёл за считанные минуты. Большое спасибо!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:59:16"
+        },
+        {
+            "username": "Виталий",
+            "text": "Превосходный обменник! Сделки проходят быстро и чётко. Поддержка заслуживает отдельной благодарности.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:24:16"
+        },
+        {
+            "username": "Артур",
+            "text": "Лучший обмен с очень отзывчивой командой!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:04:55"
+        },
+        {
+            "username": "Мария",
+            "text": "Не первый раз пользуюсь сервисом. Огромное спасибо всей команде, всегда все четко и быстро!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T05:41:27"
+        },
+        {
+            "username": "Александра",
+            "text": "Команда просто супер, всегда помогут и подскажут! Оператор Марина очень компетентна.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T19:50:15"
+        },
+        {
+            "username": "Илья",
+            "text": "Как всегда, всё на высоте.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:38:32"
+        },
+        {
+            "username": "Никита",
+            "text": "Инструкция понятная, но реквизиты для международного перевода не подошли. Нужно доработать.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-31T15:28:58"
+        },
+        {
+            "username": "Кира",
+            "text": "Сделки проходят быстро, всё под контролем команды!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T11:01:37"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен USDT ERC20 -> BTC прошёл за 5 минут, всё отлично. Спасибо, вернусь ещё.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:14:19"
+        },
+        {
+            "username": "Денис",
+            "text": "Обмен прошёл быстро, поддержка отзывчивая, транзакции без задержек.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T06:20:27"
+        },
+        {
+            "username": "Виктор",
+            "text": "Сделка прошла гладко, поддержка на уровне, рекомендую!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T17:50:07"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отличный вариант, пользуюсь только этим обменником.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T14:16:51"
+        },
+        {
+            "username": "Алексей",
+            "text": "Всё просто супер, сервис работает отлично.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T07:47:04"
+        },
+        {
+            "username": "Евгений",
+            "text": "Команда обменника просто замечательная, быстро и надежно решают все вопросы.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T06:10:52"
+        },
+        {
+            "username": "Роман",
+            "text": "Swop — отличный обменник, поддержка всегда контролирует процесс. Очень доволен, регулярно пользуюсь.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T19:19:52"
+        },
+        {
+            "username": "Владимир",
+            "text": "Спасибо за качественную работу, всё прошло гладко.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:09:29"
+        },
+        {
+            "username": "Михаил",
+            "text": "Даже дают ссылку на транзакцию. Всё быстро, поддержка моментальная, доволен.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:08:32"
+        },
+        {
+            "username": "Александра",
+            "text": "Сбп -> BTC прошло оперативно, поддержка отвечает мгновенно, рекомендую!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T08:33:05"
+        },
+        {
+            "username": "Иван",
+            "text": "ЮMoney-SOL только здесь, всегда всё быстро и без проблем.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T08:02:32"
+        },
+        {
+            "username": "Лев",
+            "text": "Обмен тонкоин на биткоин прошёл быстро, сервис удобный и оперативный.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T06:42:32"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен прошёл без проблем, полностью доволен.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:44:31"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Все супер, быстро и аккуратно.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:06:56"
+        },
+        {
+            "username": "Константин",
+            "text": "Сервис отличный, рекомендую.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:10:35"
+        },
+        {
+            "username": "Арсений",
+            "text": "Работать с командой одно удовольствие! Всё понятно и быстро.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T06:21:25"
+        },
+        {
+            "username": "Станислав",
+            "text": "Всё отлично, обмениваю тут часто. Даже если появляются проблемы — поддержка быстро решает все вопросы.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T22:14:48"
+        },
+        {
+            "username": "Сергей",
+            "text": "USDT trc20 -> ЮMoney прошло без проблем, обмен очень быстрый и удобный!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T11:40:39"
+        },
+        {
+            "username": "Амина",
+            "text": "Все прошло отлично, оператор на связи и отвечает на все вопросы.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T07:52:14"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен прошёл быстро, без задержек. Оператор всегда на связи.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T17:46:13"
+        },
+        {
+            "username": "Марина",
+            "text": "Вопрос решили быстро, перевод прошёл без задержек. Доверяю этому обменнику.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T16:11:31"
+        },
+        {
+            "username": "Даниил",
+            "text": "Любимый обменник, всегда помогут, комиссия адекватная, курс выгодный. Спасибо за сервис!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T10:04:46"
+        },
+        {
+            "username": "София",
+            "text": "Все супер, помощь с заявкой USDT -> ЮMoney, выплаты пришли очень быстро. Отличный сервис.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T09:32:59"
+        },
+        {
+            "username": "Павел",
+            "text": "Ребята — просто молодцы! Всё отлично и быстро, не первый раз пользуюсь.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T03:55:45"
+        },
+        {
+            "username": "Виктор",
+            "text": "Обменник хороший, поддержка моментально отвечает и решает вопросы. Рекомендую!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T03:04:05"
+        },
+        {
+            "username": "Александр",
+            "text": "Перепутал реквизиты, поддержка отказалась выплатить — будьте внимательны.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-24T21:50:04"
+        },
+        {
+            "username": "Роман",
+            "text": "Отличный обменник, быстро и удобно.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T23:41:07"
+        },
+        {
+            "username": "Юрий",
+            "text": "Сервис отличный! Обмен прошёл быстро, информация была в течение пары часов, перевод занял 20-30 минут.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T13:15:51"
+        },
+        {
+            "username": "Влад",
+            "text": "Хороший обменник, была пара проблем с переводом, но поддержка быстро помогла их решить.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T12:05:06"
+        },
+        {
+            "username": "Алексей",
+            "text": "Благодарю Александру за помощь при обмене. Обменник отличный, всё быстро.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T10:17:06"
+        },
+        {
+            "username": "Алексей",
+            "text": "Сервис просто супер, оператор Александра на высоте.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T17:00:53"
+        },
+        {
+            "username": "Николай",
+            "text": "Лучший обменник! Последние пару месяцев проблем не было, поддержка решает всё быстро. Рекомендую всем.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T15:22:10"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл быстро, как всегда.",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T14:12:09"
+        },
+        {
+            "username": "Андрей",
+            "text": "Всё прошло отлично, обмен без задержек. Благодарю команду!",
+            "exchange_name": "Swop",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T06:54:44"
+        }
+    ]
+}

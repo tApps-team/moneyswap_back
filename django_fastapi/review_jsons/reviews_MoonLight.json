@@ -1,0 +1,504 @@
+{
+    "MoonLight": [
+        {
+            "username": "Артур",
+            "text": "Пользуюсь MoonLight уже несколько месяцев, все обмены проходят быстро и без задержек, сервис надёжен и удобен.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:48:51"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обменник радует скоростью и точностью расчетов, без каких-либо проблем. Настоятельно рекомендую.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:42:20"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Хороший обменник с выгодными курсами и быстрой обработкой. Техподдержка отзывчивая, все вопросы решаются оперативно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:41:10"
+        },
+        {
+            "username": "Марина",
+            "text": "Заявку обработали моментально, сервис приятно удивил качеством.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:47:27"
+        },
+        {
+            "username": "Пользователь",
+            "text": "Деньги дошли, но пришлось немного подождать.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:30:09"
+        },
+        {
+            "username": "Самуил",
+            "text": "Процесс простой и удобный, приятно пользоваться.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:28:00"
+        },
+        {
+            "username": "Игнат",
+            "text": "Честно скажу, обменник отличный! Уже делал несколько обменов — всё быстро, без заморочек. Курсы и комиссии приятно удивляют.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:53:38"
+        },
+        {
+            "username": "Станислав",
+            "text": "Обращаюсь сюда регулярно, все всегда проходит четко и без проблем.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:27:21"
+        },
+        {
+            "username": "Никита",
+            "text": "Обмен прошёл без заминок, средства поступили быстро, сервис сработал отлично.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:40:14"
+        },
+        {
+            "username": "Денис",
+            "text": "Сайт надежный, репутация отличная, одобрено.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T05:05:26"
+        },
+        {
+            "username": "Роман",
+            "text": "Очень доволен скоростью обработки заявки, поддержка всегда на связи. Стал постоянным клиентом.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:26:16"
+        },
+        {
+            "username": "Максим",
+            "text": "Рекомендовал друзьям, все остались довольны сервисом.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:24:59"
+        },
+        {
+            "username": "Вадим",
+            "text": "Стараюсь пользоваться этим обменником, нареканий нет. Быстро и по хорошему курсу.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:17:55"
+        },
+        {
+            "username": "Самир",
+            "text": "Сервис надежный, всегда уверен в результате.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:07:37"
+        },
+        {
+            "username": "Игорь",
+            "text": "Пользуюсь сервисом давно, всё нравится. Курсы хорошие, поддержка приветливая. Рекомендую.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:48:45"
+        },
+        {
+            "username": "Павел",
+            "text": "Приятно работать с обменником, где всё прозрачно: курс, сумма, скорость — как обещано.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:36:44"
+        },
+        {
+            "username": "Денис",
+            "text": "Сервис стабилен и быстрый, нареканий нет. Рекомендую.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T08:41:58"
+        },
+        {
+            "username": "Виктория",
+            "text": "Сроки соблюдены, деньги поступили почти через час. Главное, что всё пришло. Спасибо!",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:28:12"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Советовал друзьям, сервис работает 24/7, удобно и быстро.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T19:59:42"
+        },
+        {
+            "username": "Александр",
+            "text": "Познакомился с обменником сегодня, всё оперативно и удобно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:18:43"
+        },
+        {
+            "username": "Тимур",
+            "text": "Сервис за скорость и простоту заслуживает отдельного уважения.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:11:29"
+        },
+        {
+            "username": "Олег",
+            "text": "Рекомендовал друзьям, все остались довольны обменом.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:31:39"
+        },
+        {
+            "username": "Арман",
+            "text": "Все прошло отлично, обмен прошёл быстро и аккуратно, как и нужно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:51:04"
+        },
+        {
+            "username": "Егор",
+            "text": "Выплаты моментальные, никаких задержек. Сервис полностью устраивает.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T16:16:22"
+        },
+        {
+            "username": "Владислав",
+            "text": "Обмен надежный, хоть и не молниеносный, все проходит без лишних сложностей.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:25:45"
+        },
+        {
+            "username": "Роман",
+            "text": "Все нужные направления есть, обмен прошел гладко. Рекомендую сервис.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:03:54"
+        },
+        {
+            "username": "Хасан",
+            "text": "Результат приходит быстро, без задержек, что очень радует.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:04:03"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Сервис справляется с любыми суммами быстро и без проблем. Пользуюсь регулярно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:54:14"
+        },
+        {
+            "username": "Богдан",
+            "text": "Стабильная работа, заявки проходят быстро в любое время суток, всегда доволен.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:53:55"
+        },
+        {
+            "username": "Семен",
+            "text": "Заявка выполнена точно в срок. Спасибо за помощь, операторы отличные.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:43:08"
+        },
+        {
+            "username": "Андрей",
+            "text": "Рад, что выбрал этот обменник, результат всегда точный и без задержек.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T19:59:35"
+        },
+        {
+            "username": "Михаил",
+            "text": "Ребята снова порадовали: выплаты быстрые, курс приемлемый, все надежно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T16:12:16"
+        },
+        {
+            "username": "Ильяс",
+            "text": "Очень доволен качеством работы обменника, все совпало с ожиданиями.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T14:10:08"
+        },
+        {
+            "username": "Рафик",
+            "text": "Поддержка всегда отвечает быстро и доступно, приятно работать.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T14:09:05"
+        },
+        {
+            "username": "Артем",
+            "text": "Сервис стабильно быстрый, результаты точные, независимо от времени суток.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:47:45"
+        },
+        {
+            "username": "Вадим",
+            "text": "Стабильный обменник, много сделок прошло без проблем. Рекомендую.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T07:01:21"
+        },
+        {
+            "username": "Евгений",
+            "text": "Заявку сделал вечером, деньги пришли через несколько минут, очень удобно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T19:25:37"
+        },
+        {
+            "username": "Константин",
+            "text": "Постоянным клиентам дают выгодный курс, поддержка общается как с персональным менеджером. Всё быстро.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T17:08:18"
+        },
+        {
+            "username": "Иван",
+            "text": "Благодарен за честность и скорость, команда работает отлично.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T17:02:53"
+        },
+        {
+            "username": "Павел",
+            "text": "Была небольшая задержка, но после обращения в поддержку всё завершилось успешно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:59:03"
+        },
+        {
+            "username": "Степан",
+            "text": "Все прошло отлично, курс нормальный, обмен короткий — именно то, что нужно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T15:10:18"
+        },
+        {
+            "username": "Станислав",
+            "text": "Сервис работает прекрасно, ни разу не подводил, поддержка на высшем уровне.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T14:37:55"
+        },
+        {
+            "username": "Даниил",
+            "text": "Оператор помог на всех этапах обмена, обязательно вернусь ещё.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:15:50"
+        },
+        {
+            "username": "Никита",
+            "text": "Рад снова пользоваться сервисом, всегда положительный опыт.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:03:02"
+        },
+        {
+            "username": "Александр",
+            "text": "Лучший обменник, поддержка на связи, быстрые переводы ровными суммами. Очень доволен.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:47:39"
+        },
+        {
+            "username": "Леонид",
+            "text": "Обмен прошёл нормально, заняло около 30 минут, иногда быстрее.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:32:42"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обмениваю здесь уже полгода, заявки обрабатываются в течение 15–30 минут.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:32:42"
+        },
+        {
+            "username": "Илья",
+            "text": "Пользуюсь месяц, ни разу не подвели, честно и прозрачно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:19:21"
+        },
+        {
+            "username": "Шамиль",
+            "text": "Опыт исключительно положительный, обмен проходит быстро, честно и круглосуточно.",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:17:52"
+        },
+        {
+            "username": "Пользователь",
+            "text": "Немного дольше, чем в первый раз, но всё в пределах нормы. Успеха сервису, спасибо!",
+            "exchange_name": "MoonLight",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:21:58"
+        }
+    ]
+}

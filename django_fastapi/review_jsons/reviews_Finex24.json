@@ -1,0 +1,424 @@
+{
+    "Finex24": [
+        {
+            "username": "Дмитрий",
+            "text": "Второй раз перевел биткоины, всё дошло за 50 минут. Отлично!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:30:56"
+        },
+        {
+            "username": "Максим",
+            "text": "Обменник работает стабильно. Поддержка отвечает быстро на все вопросы.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:18:23"
+        },
+        {
+            "username": "Анна",
+            "text": "Всё отлично, как всегда приятно пользоваться сервисом :)",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:12:03"
+        },
+        {
+            "username": "Игорь",
+            "text": "Сервис на высшем уровне, выгодные курсы. Рекомендую!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:47:34"
+        },
+        {
+            "username": "Роман",
+            "text": "Хороший обменник, рекомендую к использованию.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:27:02"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обменник удобный, но хотелось бы круглосуточной поддержки, тогда было бы идеально.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T04:38:49"
+        },
+        {
+            "username": "Ольга",
+            "text": "Пользуюсь сервисом регулярно, всем советую.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T22:41:32"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Быстро и надежно, как всегда.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:39:54"
+        },
+        {
+            "username": "Николай",
+            "text": "Каждый раз пользуюсь обменником и остаюсь доволен. Все проходит быстро и без задержек.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:16:09"
+        },
+        {
+            "username": "Евгений",
+            "text": "Пока всё устраивает, надеюсь, что качество останется на этом уровне. Спасибо!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:03:53"
+        },
+        {
+            "username": "Илья",
+            "text": "Обмен проходит без проблем, если что-то не так — поддержка помогает моментально.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:01:28"
+        },
+        {
+            "username": "Владислав",
+            "text": "Операции проходят быстро, ответы на вопросы моментально. Очень удобный обменник.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:01:37"
+        },
+        {
+            "username": "Павел",
+            "text": "Благодарю за обмен, всё прошло отлично!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:19:34"
+        },
+        {
+            "username": "Марина",
+            "text": "Несколько месяцев пользуюсь Finex24, всё работает быстро и без задержек. Очень удобно и безопасно. Поддержка всегда на связи.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:09:33"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Сервис быстрый, поддержка на высоте. Всем рекомендую.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:46:08"
+        },
+        {
+            "username": "Никита",
+            "text": "Всё отлично, оплатил и сразу получил. 10 минут и всё готово.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:38:51"
+        },
+        {
+            "username": "Иван",
+            "text": "Очень удобно и быстро, больше не ищу другие обменники. Команде респект!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:15:53"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все работает идеально, уже забыл про другие сервисы.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:07:30"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Постоянный клиент этого обменника, всегда всё удобно и быстро.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:04:29"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Finex24 — всё, что нужно! Отличное отношение к клиентам, быстрые транзакции, поддержка всегда поможет, удобный интерфейс и приятные акции.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:21:53"
+        },
+        {
+            "username": "Владислав",
+            "text": "Отличная работа сервиса. Благодарю команду.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:11:47"
+        },
+        {
+            "username": "Хорхе",
+            "text": "На этот раз немного задержали, но в итоге всё пришло правильно.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T07:02:00"
+        },
+        {
+            "username": "Виталий",
+            "text": "Пользуюсь не первый раз. Все обмены проходят чётко и без проблем.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T04:20:35"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все прошло быстро, ровно, за 10 минут. Поддержка 5*, спасибо!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T03:31:25"
+        },
+        {
+            "username": "Андрей",
+            "text": "Всё отлично, второй раз меняю здесь, сервис без нареканий.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T21:40:25"
+        },
+        {
+            "username": "Константин",
+            "text": "Создал заявку через BestChange. Менеджер связался, одобрение пришло на почту. Курс немного изменился, отказался от сделки.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-01T12:36:36"
+        },
+        {
+            "username": "Станислав",
+            "text": "Простой и удобный сервис! Быстро, безопасно, без скрытых комиссий.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:57:45"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Оператор отвечает быстро, забрал наличные за 5 минут. Всё удобно и просто.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:26:24"
+        },
+        {
+            "username": "Богдан",
+            "text": "Нормальный сервис. Ждал немного дольше, чем у других, но в целом всё пришло, поддержка оперативно отвечает.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T15:55:09"
+        },
+        {
+            "username": "Андрей",
+            "text": "Пользуюсь только этим обменником уже год. Никогда не подводили, всегда быстро и четко.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:51:38"
+        },
+        {
+            "username": "Михаил",
+            "text": "Меняю здесь всё: скорость и комиссия устраивают полностью.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:08:08"
+        },
+        {
+            "username": "Олег",
+            "text": "Как обычно, всё прошло гладко и без проблем.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:56:27"
+        },
+        {
+            "username": "Эльмар",
+            "text": "Сервис быстрый, как всегда оперативно! Спасибо.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:20:06"
+        },
+        {
+            "username": "Иван",
+            "text": "Сотрудничаю с вами долго, сервис всегда на высшем уровне, профессионалы своего дела!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:21:42"
+        },
+        {
+            "username": "Артем",
+            "text": "Сегодня 1 сентября! Всех с праздником!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:44:52"
+        },
+        {
+            "username": "Денис",
+            "text": "Сервисом пользуюсь давно, всё приходит без проблем. Поддержка всегда подскажет, курс устраивает.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:27:56"
+        },
+        {
+            "username": "Рафик",
+            "text": "Обменник отличный, рекомендую всем.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T09:13:22"
+        },
+        {
+            "username": "Светлана",
+            "text": "Хороший сервис, иногда немного медленно, но в целом лучший среди других на BestChange.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T07:49:24"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Регулярно пользуюсь Alipay и WeChat, всё стабильно и без проблем.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T07:44:08"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Отлично, быстро и без задержек.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T07:04:13"
+        },
+        {
+            "username": "Мария",
+            "text": "Очень удобно и быстро, приятно пользоваться сервисом.",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:50:51"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Быстро, качественно и стабильно. Спасибо команде!",
+            "exchange_name": "Finex24",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T02:21:52"
+        }
+    ]
+}

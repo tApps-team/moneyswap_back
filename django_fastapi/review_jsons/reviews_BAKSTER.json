@@ -1,0 +1,504 @@
+{
+  "BAKSTER": [
+    {
+      "username": "Максим",
+      "text": "Обмен прошел гладко, заявку обработали моментально, спасибо!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-24T19:44:54"
+    },
+    {
+      "username": "Даниил",
+      "text": "Деньги успешно пришли на карту, все без задержек.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-21T16:14:29"
+    },
+    {
+      "username": "Виктория",
+      "text": "Очень быстрый обмен, видно, что команда старается.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-08-02T20:01:35"
+    },
+    {
+      "username": "Михаил",
+      "text": "Все прошло быстро, сумма пришла полностью, советую!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-17T08:34:02"
+    },
+    {
+      "username": "Константин",
+      "text": "Отличный сервис, сотрудники помогли с каждым вопросом.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-07-15T15:37:29"
+    },
+    {
+      "username": "Дарья",
+      "text": "Оформила заявку и получила быстрый ответ с полной информацией, буду пользоваться этим сервисом.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-29T12:29:56"
+    },
+    {
+      "username": "Людмила",
+      "text": "Следила за курсом, оформила вовремя, но оператор указал неправильный курс — неприятно.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 0,
+      "date": "2025-06-26T07:18:54"
+    },
+    {
+      "username": "Анатолий",
+      "text": "Обмен прошел нормально, перевели биткоины на карту Тинькофф.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-22T17:33:40"
+    },
+    {
+      "username": "Данила",
+      "text": "LTC обменяли на Т-Банк QR быстро, все прошло отлично.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-22T09:55:23"
+    },
+    {
+      "username": "Светлана",
+      "text": "Обмен сделали быстро, думала дольше займет, всем советую!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-16T13:25:23"
+    },
+    {
+      "username": "Игорь",
+      "text": "Надежный сервис, все четко и быстро, поддержка на связи.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-10T15:07:57"
+    },
+    {
+      "username": "Алина",
+      "text": "Отличный обмен, деньги пришли за полчаса.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-10T08:21:35"
+    },
+    {
+      "username": "Надежда",
+      "text": "Обмен прошел хорошо, оператор вежливый, вернусь снова.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-06-05T14:03:46"
+    },
+    {
+      "username": "Сергей",
+      "text": "QR-обмен занял около 30 минут, все прошло отлично.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-28T13:15:36"
+    },
+    {
+      "username": "Роман",
+      "text": "Быстрый и удобный обмен, полностью доволен.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-26T09:19:55"
+    },
+    {
+      "username": "Владислав",
+      "text": "Обмен прошел хорошо, скорость нормальная, всегда пользуюсь этим сервисом.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-25T19:59:36"
+    },
+    {
+      "username": "Павел",
+      "text": "Все быстро и без вопросов, обмен отличный.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-25T09:12:51"
+    },
+    {
+      "username": "Вадим",
+      "text": "Сервис на высоте, курс очень выгодный.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-24T10:04:04"
+    },
+    {
+      "username": "Евгений",
+      "text": "Обмен сделали быстро и качественно, обращусь снова.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-21T06:40:20"
+    },
+    {
+      "username": "Анна",
+      "text": "Все прошло отлично, рекомендую этот сервис.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-20T07:49:30"
+    },
+    {
+      "username": "Даниил",
+      "text": "Сделка прошла гладко, всем советую этот обменник.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-13T13:42:11"
+    },
+    {
+      "username": "Игорь",
+      "text": "Все супер! Быстро, удобный курс, минимальные суммы — идеально.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-12T13:46:35"
+    },
+    {
+      "username": "Владимир",
+      "text": "Очень доволен обменом, рекомендую этот сервис.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-12T07:54:21"
+    },
+    {
+      "username": "Семен",
+      "text": "Обмен прошел отлично, буду пользоваться чаще.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-12T07:30:13"
+    },
+    {
+      "username": "Алексей",
+      "text": "Спасибо за обмен, все четко, курс хороший, доволен.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-12T05:54:15"
+    },
+    {
+      "username": "Федор",
+      "text": "Обмен прошел быстро, буду обращаться еще.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-06T15:29:39"
+    },
+    {
+      "username": "Екатерина",
+      "text": "Сервис приятно удивил: курс выше, поддержка отвечает быстро, деньги пришли за 15 минут.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-06T14:18:21"
+    },
+    {
+      "username": "Данил",
+      "text": "Обмен прошел очень быстро, оператор компетентный, всем советую.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-01T14:45:29"
+    },
+    {
+      "username": "Константин",
+      "text": "Обменник единственный, который выплатил меньше чем за час! Рекомендую.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-05-01T14:21:14"
+    },
+    {
+      "username": "Марк",
+      "text": "Курс выгодный, обмен выполнен быстро и удобно.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-30T13:59:29"
+    },
+    {
+      "username": "Иван",
+      "text": "Все прошло просто отлично, сервис на высоте.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-30T07:07:48"
+    },
+    {
+      "username": "Денис",
+      "text": "Обмен на Сбер прошел быстро, деньги пришли за 25 минут, рекомендую!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-29T17:51:27"
+    },
+    {
+      "username": "Михаил",
+      "text": "Менял USDT на рубли, все быстро, поддержка отвечает мгновенно.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-29T13:55:55"
+    },
+    {
+      "username": "Елена",
+      "text": "Обмен USDT TRC20 -> Alfabank занял полтора часа, поддержка на связи, удобно.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-28T11:01:08"
+    },
+    {
+      "username": "Андрей",
+      "text": "TRON -> Сбер обмен прошел меньше чем за час, курс зафиксирован, доволен.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-26T15:50:28"
+    },
+    {
+      "username": "Кирилл",
+      "text": "Обмен прошел без проблем, поддержка помогала, все четко.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-25T14:12:30"
+    },
+    {
+      "username": "Глеб",
+      "text": "Менял USDT TRC на Тинькофф, сделка прошла быстро, поддержка внимательная.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-24T12:29:03"
+    },
+    {
+      "username": "Олег",
+      "text": "Обмен USDT TRC20 на Т-Банк прошел мгновенно, спасибо оператору.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-18T17:17:55"
+    },
+    {
+      "username": "Александр",
+      "text": "Отличный обмен USDT на Т-Банк QR, быстро и удобно.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-18T10:36:10"
+    },
+    {
+      "username": "Сергей",
+      "text": "Обменял тезер на рубли без проблем, оператор вежливый.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-16T18:35:54"
+    },
+    {
+      "username": "Дмитрий",
+      "text": "TRX -> T-Bank обмен прошел без задержек, деньги пришли, курс зафиксирован.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-16T16:11:18"
+    },
+    {
+      "username": "Мария",
+      "text": "Обмен на Тинькофф QR занял около 30 минут, все прошло отлично, рекомендую.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-16T09:31:22"
+    },
+    {
+      "username": "Илья",
+      "text": "Сделка выполнена быстро, благодарю за обмен.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-16T07:32:15"
+    },
+    {
+      "username": "Алина",
+      "text": "Меняла Тез на рубли, деньги пришли за 10 минут, отличный сервис!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-15T08:51:01"
+    },
+    {
+      "username": "Сергей",
+      "text": "Все прошло очень быстро и оперативно, как всегда!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-14T13:39:29"
+    },
+    {
+      "username": "Никита",
+      "text": "USDT TRC20 -> Tinkoff QR, обмен быстрый, поддержка на связи, доволен.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-12T08:27:16"
+    },
+    {
+      "username": "Кристина",
+      "text": "Все прошло за 20 минут, быстро и удобно, спасибо!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-11T06:13:50"
+    },
+    {
+      "username": "Йохан",
+      "text": "Обмен USDT -> Т-Банк выполнен быстро, все корректно.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-10T16:06:35"
+    },
+    {
+      "username": "Алексей",
+      "text": "Обменник отличный, округляют в пользу клиента, все прошло быстро.",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-10T13:39:48"
+    },
+    {
+      "username": "Виктор",
+      "text": "Быстро и даже немного округлили сумму в мою пользу, спасибо!",
+      "exchange_name": "BAKSTER",
+      "status": "Опубликован",
+      "review_from": "ai",
+      "moderation": true,
+      "grade": 1,
+      "date": "2025-04-10T11:20:59"
+    }
+  ]
+}

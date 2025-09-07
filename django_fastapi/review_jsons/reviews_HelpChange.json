@@ -1,0 +1,464 @@
+{
+    "HelpChange": [
+        {
+            "username": "Лариса",
+            "text": "Спасибо за оперативность! Деньги пришли на карту всего за пару минут. Как постоянный клиент, рекомендую этот обменник!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:46:42"
+        },
+        {
+            "username": "Ирина",
+            "text": "Постоянно пользуюсь этим обменником. Надежно, быстро и удобно. Всем советую!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T13:54:26"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обменял 5К на TRX — все прошло быстро и без проблем. Очень удобно.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T12:47:16"
+        },
+        {
+            "username": "Наталья",
+            "text": "Сегодня обменяла рубли на Tether USD (BEP20) USDT. Скорость просто впечатляет. Буду работать только с этим обменником.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T05:18:32"
+        },
+        {
+            "username": "Игорь",
+            "text": "Менял рипл на рубли, перевод поступил в течение получаса.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T14:27:03"
+        },
+        {
+            "username": "Стефан",
+            "text": "Надежный и быстрый обмен. Рубли пришли через полминуты после перевода USDC SOL. Очень доволен сервисом!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T08:04:30"
+        },
+        {
+            "username": "Марина",
+            "text": "Все прошло быстро и четко. Обмен рубли на Tether (BEP20) USDT выполнен за считанные минуты. Буду обращаться только сюда!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T13:51:41"
+        },
+        {
+            "username": "Филипп",
+            "text": "Сервис работает быстро и надежно. Рубли поступили через минуту после перевода USDC SOL. Отличный обменник!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-27T12:49:05"
+        },
+        {
+            "username": "Рикардо",
+            "text": "Очень быстрый обмен, без проблем и задержек.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-20T16:44:43"
+        },
+        {
+            "username": "Виктория",
+            "text": "Все прошло отлично, выгодный курс и быстрый обмен. Спасибо!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-18T14:48:01"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен завершен всего за пару минут. Очень доволен скоростью.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-18T07:27:21"
+        },
+        {
+            "username": "Кристиан",
+            "text": "Сервис быстрый и надежный. Рубли пришли на счет через минуту после перевода USDC SOL. Отличный обменник!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-01T16:37:54"
+        },
+        {
+            "username": "Леон",
+            "text": "Обмен прошел идеально. Деньги поступили очень быстро, как всегда доволен этим обменником.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-27T06:10:05"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Очень удобный обменник. Можно выводить даже небольшие суммы, курс выгодный, деньги приходят почти мгновенно.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-24T13:07:01"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обменник надежный, все операции проходят быстро и без сбоев. Рекомендую.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-21T13:22:06"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все прошло быстро и четко. Хороший обменник, пользуюсь регулярно.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-16T16:50:21"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличный сервис. Деньги поступили быстро и без проблем. Обмен прошел на 5+.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-12T11:37:35"
+        },
+        {
+            "username": "Феликс",
+            "text": "Сервис работает очень быстро. Рубли на счет поступили через минуту после перевода USDC SOL. Рекомендую.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-06T09:43:16"
+        },
+        {
+            "username": "Илья",
+            "text": "Любимый обменник, всегда все проходит быстро. USDC SOL приходит на Сбербанк RUB за минуту.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-05-29T08:23:44"
+        },
+        {
+            "username": "Игорь",
+            "text": "Отличный обменник, переводы проходят молниеносно. USDC SOL на Сбербанк RUB за 1 минуту.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-30T22:52:06"
+        },
+        {
+            "username": "Валентино",
+            "text": "Курс хороший, обмен проходил быстро, но иногда на этапе оплаты бывают задержки. Надо оптимизировать.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-04-29T16:44:15"
+        },
+        {
+            "username": "Женя",
+            "text": "Обмен прошел очень быстро, менее 5 минут. Отличная работа, спасибо!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-19T03:58:00"
+        },
+        {
+            "username": "Павел",
+            "text": "Благодарю операторов за помощь. Заявка обработана быстро и без проблем.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-16T09:26:41"
+        },
+        {
+            "username": "Станислава",
+            "text": "Все прошло отлично! Деньги на кошельке за пару минут. Спасибо за работу!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-12T08:44:39"
+        },
+        {
+            "username": "Даниил",
+            "text": "Обмен всегда быстрый и надежный. Деньги приходят на счет в считанные минуты.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-12T04:25:09"
+        },
+        {
+            "username": "Ольга",
+            "text": "Очень удобный обменник! Все прошло четко и быстро. Рекомендую!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-08T09:55:22"
+        },
+        {
+            "username": "Владимир",
+            "text": "Пользуюсь впервые, крипту прислали через 4 минуты после оплаты. Отлично!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-07T14:40:00"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все сделали быстро, за 10 минут все готово. Рекомендую.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-07T11:16:29"
+        },
+        {
+            "username": "Павел",
+            "text": "Спасибо команде операторов за помощь, все исправили и обмен прошел успешно.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-04-01T12:09:46"
+        },
+        {
+            "username": "Мария",
+            "text": "Деньги пришли на кошелек всего за 2 минуты. Отличная работа, рекомендую!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-22T09:50:18"
+        },
+        {
+            "username": "Александр",
+            "text": "Замечательный обменник! Все прошло за 7 минут. Благодарю!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-14T04:11:32"
+        },
+        {
+            "username": "Женя",
+            "text": "На все ушло всего 15–20 минут, обмен прошел без проблем. Рекомендую HelpChange.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-12T07:04:48"
+        },
+        {
+            "username": "Светлана",
+            "text": "Монеты получила быстро. Спасибо за обмен!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-10T07:30:46"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обменник рекомендую, все прошло отлично.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-09T13:39:29"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошел идеально.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-06T12:50:54"
+        },
+        {
+            "username": "Максим",
+            "text": "Четкий и удобный обменник, все прошло без заминок.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-06T12:04:09"
+        },
+        {
+            "username": "Александр",
+            "text": "Все пришло на карту за считанные минуты. Отличный обмен EUR->RUB.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-03-06T10:21:57"
+        },
+        {
+            "username": "Андрей",
+            "text": "Отличный обменник, средства поступили быстро, все на высшем уровне. Рекомендую!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-26T16:58:39"
+        },
+        {
+            "username": "Оксана",
+            "text": "Как всегда сервис на высоте! Быстро и надежно, рекомендую всем.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-22T14:22:44"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Очень хороший обменник! Всем советую.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-21T15:46:28"
+        },
+        {
+            "username": "Роман",
+            "text": "USDT SOL обменял на RUB Сбер. Быстро и удобно, можно менять небольшие суммы.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-21T08:52:05"
+        },
+        {
+            "username": "Людмила",
+            "text": "Благодарю за отличную работу! Все быстро, без проблем. Рекомендую!",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-19T17:39:59"
+        },
+        {
+            "username": "Георгий",
+            "text": "Обмен прошел отлично, приятно удивлен скоростью.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-18T16:12:35"
+        },
+        {
+            "username": "Алексей",
+            "text": "Кажется, нашел идеальный обменник. Все заняло всего 3 минуты, никаких лишних действий.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-12T10:49:49"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень быстрый перевод. Все прошло идеально.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-09T15:54:32"
+        },
+        {
+            "username": "Андрей",
+            "text": "Минимальная сумма, все понятно и под контролем, обмен выполнен очень быстро.",
+            "exchange_name": "HelpChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-02-04T17:08:56"
+        }
+    ]
+}

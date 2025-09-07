@@ -1,0 +1,314 @@
+{
+    "PrimeEx": [
+        {
+            "username": "Максим",
+            "text": "Курс всегда радует, работать приятно.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:01:32"
+        },
+        {
+            "username": "Никита",
+            "text": "Отличный сервис, выгодные обмены, всё проходит быстро.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T15:51:58"
+        },
+        {
+            "username": "Ольга",
+            "text": "Очень удобный курс, обмен прошёл выгодно.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:48:01"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Крипту легко покупать через этот обменник, советую.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:14:04"
+        },
+        {
+            "username": "Даниил",
+            "text": "Сервис понравился — без лишней регистрации и ожидания. Вернусь ещё.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T14:10:33"
+        },
+        {
+            "username": "Владислав",
+            "text": "Успешно купил тезер, спасибо за быструю обработку.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:49:19"
+        },
+        {
+            "username": "Анатолий",
+            "text": "Очень удобный курс, обмен проходит без задержек.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T11:51:35"
+        },
+        {
+            "username": "Роман",
+            "text": "Заявка обработана быстро, деньги поступили вовремя.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T12:40:01"
+        },
+        {
+            "username": "Лев",
+            "text": "Курс выгодный, поддержка ответила быстро. Рекомендую.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T18:44:54"
+        },
+        {
+            "username": "Алексей",
+            "text": "Сервис работает на высоком уровне, все быстро и удобно.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T19:46:29"
+        },
+        {
+            "username": "Игорь",
+            "text": "Тезер пришёл в считанные минуты, доволен сервисом.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T12:57:00"
+        },
+        {
+            "username": "Марина",
+            "text": "Обмен прошёл быстро, спасибо за работу.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T12:22:54"
+        },
+        {
+            "username": "Алина",
+            "text": "Благодарна за быстрый обмен, всё сделано оперативно.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-24T14:31:47"
+        },
+        {
+            "username": "Ксения",
+            "text": "Обмен сделали быстро, спасибо за сервис.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-17T16:53:54"
+        },
+        {
+            "username": "Николай",
+            "text": "Быстро перевели деньги, всё поступило вовремя.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-17T14:11:09"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Сделка прошла успешно, рекомендую сервис.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-14T14:41:57"
+        },
+        {
+            "username": "Лидия",
+            "text": "За десять минут получила крипту, очень удобно.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-13T19:34:54"
+        },
+        {
+            "username": "Станислав",
+            "text": "Поддержка помогла быстро решить вопрос, все прошло отлично.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-13T17:11:00"
+        },
+        {
+            "username": "Тимур",
+            "text": "Очень удобно, буквально пять-шесть минут и все готово.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-13T16:25:00"
+        },
+        {
+            "username": "Виктор",
+            "text": "Регулярно пользуюсь этим обменником, проблем не возникало.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-13T12:19:32"
+        },
+        {
+            "username": "Евгений",
+            "text": "Обмен прошёл моментально, спасибо за оперативность!",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-12T16:25:33"
+        },
+        {
+            "username": "Денис",
+            "text": "Обмен сделали быстро, курс отличный.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-11T17:37:53"
+        },
+        {
+            "username": "Наталья",
+            "text": "Хороший обменник, деньги приходят вовремя. Если вопросы — быстро отвечают.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T19:41:06"
+        },
+        {
+            "username": "Олег",
+            "text": "Обмен прошёл мгновенно, доволен скоростью работы.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T18:10:34"
+        },
+        {
+            "username": "Артур",
+            "text": "Сегодня уже дважды воспользовался обменом — всё быстро и удобно.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T17:27:08"
+        },
+        {
+            "username": "Илья",
+            "text": "Отличный обмен: быстро, удобно и выгодно. Буду пользоваться снова.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T13:57:00"
+        },
+        {
+            "username": "Полина",
+            "text": "Обмен прошёл оперативно, курс устроил.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T11:44:57"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень быстрая работа сервиса, поддержка всегда на связи.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-10T10:32:27"
+        },
+        {
+            "username": "Роман",
+            "text": "Сделка прошла быстро, спасибо за качественную работу.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-08T16:29:05"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Благодарю за обмен, все сделали быстро и без проблем.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-08T11:13:59"
+        },
+        {
+            "username": "Константин",
+            "text": "Положительный опыт: обмен прошёл без проблем, техподдержка отзывчивая.",
+            "exchange_name": "PrimeEx",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-04T18:18:28"
+        }
+    ]
+}

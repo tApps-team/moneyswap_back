@@ -1,0 +1,484 @@
+{
+    "MisterBit": [
+        {
+            "username": "Максим",
+            "text": "Обмен прошел без проблем, деньги поступили мгновенно.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:23:07"
+        },
+        {
+            "username": "Виктор",
+            "text": "Все понравилось, точно вернусь для следующего обмена.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:13:48"
+        },
+        {
+            "username": "Павел",
+            "text": "Обменник отличный, поддержка всегда на связи, быстро и удобно. Рекомендую!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:36:02"
+        },
+        {
+            "username": "Денис",
+            "text": "Средства пришли полностью, скорость обмена радует. Всем советую.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:46:05"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличная обменка, пользуюсь не первый раз — всегда на высоте.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:53:41"
+        },
+        {
+            "username": "Николай",
+            "text": "Сервис работает оперативно. Благодарю за качественную работу.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:10:43"
+        },
+        {
+            "username": "Марат",
+            "text": "Обмен прошел гладко, с выводом проблем не возникло. Отличная работа.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T10:23:43"
+        },
+        {
+            "username": "Евгений",
+            "text": "Быстро, удобно и выгодно. Поддержка отвечает оперативно.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T14:16:59"
+        },
+        {
+            "username": "Роман",
+            "text": "Все прошло отлично, обменник работает стабильно. Спасибо!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T09:59:38"
+        },
+        {
+            "username": "Константин",
+            "text": "Чат поддерживает отлично, все объяснили и помогли. Обмен прошел легко.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T17:46:17"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Все прошло гладко, без проблем. Очень доволен.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T16:32:44"
+        },
+        {
+            "username": "Денис",
+            "text": "Сервис надежный, проверили кошелек и подтвердили обмен — все четко.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T15:17:35"
+        },
+        {
+            "username": "Станислав",
+            "text": "Менял не первый раз, всегда быстро и удобно. Обменник надежный.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T13:59:53"
+        },
+        {
+            "username": "Игорь",
+            "text": "С кошельком возникли вопросы, но чат помог быстро решить все. Обмен прошел отлично.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T12:37:51"
+        },
+        {
+            "username": "Арсен",
+            "text": "Все прошло быстро, USDT пришли мгновенно. Очень удобный сайт.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T10:21:37"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Ребята реально молодцы, все работает как надо.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T09:06:35"
+        },
+        {
+            "username": "Леонид",
+            "text": "Очень доволен, все прошло отлично. Рекомендую этот обменный пункт.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T14:09:36"
+        },
+        {
+            "username": "Федор",
+            "text": "Деньги поступили полностью и довольно быстро. Обменник надежный.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T13:35:44"
+        },
+        {
+            "username": "Виталий",
+            "text": "Обмен прошел четко и без вопросов. Благодарю за качественную работу.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T15:42:17"
+        },
+        {
+            "username": "Игорь",
+            "text": "Рекомендую обменник, заявка обработана быстро, деньги пришли без задержек.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T13:47:41"
+        },
+        {
+            "username": "Владислав",
+            "text": "Все прошло быстро и удобно, обменник работает стабильно. Спасибо!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T10:14:57"
+        },
+        {
+            "username": "Петр",
+            "text": "Сделал заявку, уточнил детали, перевел средства и получил их без проблем. Рекомендую.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T11:55:49"
+        },
+        {
+            "username": "Ян",
+            "text": "Деньги поступили быстро, обменка понравилась. Обязательно вернусь.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T12:28:44"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обмен прошел отлично, курс и скорость на высоте. Благодарю за сервис.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T13:07:54"
+        },
+        {
+            "username": "Савелий",
+            "text": "Быстро получил деньги, полностью доволен обменом. Спасибо!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T11:51:53"
+        },
+        {
+            "username": "Роман",
+            "text": "Средства поступили мгновенно, все прошло четко. Рекомендую обменник.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T10:13:46"
+        },
+        {
+            "username": "Артур",
+            "text": "Обмен прошел гладко, с ХМР на USDT, никаких проблем не возникло.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T11:40:29"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Очень довольна обменником, деньги пришли быстро. Всем рекомендую!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T08:40:45"
+        },
+        {
+            "username": "Николай",
+            "text": "Поддержка всегда на связи, вопросы решают быстро и адекватно. Отличный обменник.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T17:08:00"
+        },
+        {
+            "username": "Артем",
+            "text": "Сервис удобный, обмен прошел быстро и без проблем. Пользуюсь регулярно.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T11:46:47"
+        },
+        {
+            "username": "Евгений",
+            "text": "Деньги поступили быстро, обмен прошел без задержек. Очень доволен.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T11:59:36"
+        },
+        {
+            "username": "Матвей",
+            "text": "Обменник радует скоростью и курсом. Деньги пришли быстро, спасибо!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T12:58:31"
+        },
+        {
+            "username": "Глеб",
+            "text": "Все прошло гладко, деньги пришли в полном объеме, обменник рекомендую.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T13:52:27"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен выполнен быстро и четко, все деньги на месте. Спасибо за работу!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T12:45:38"
+        },
+        {
+            "username": "Александр",
+            "text": "Обмен прошел отлично, никаких лишних вопросов. Сервис на высоте.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T15:11:36"
+        },
+        {
+            "username": "Илья",
+            "text": "Деньги поступили быстро, все устроило. Рекомендую обменный пункт.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T12:05:49"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник работает идеально, полностью доволен процессом. Спасибо!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T12:40:16"
+        },
+        {
+            "username": "Семен",
+            "text": "Обмен прошел быстро и надежно. Буду пользоваться снова.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-03T11:35:09"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Все прошло спокойно, чат помог оперативно, обмен совершился без проблем.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T12:49:28"
+        },
+        {
+            "username": "Денис",
+            "text": "Обмен завершен без заминок. Деньги пришли быстро, сервис отличный.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T18:40:51"
+        },
+        {
+            "username": "Никита",
+            "text": "Все прошло гладко, курс хороший, деньги зашли быстро. Благодарю обменник.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T15:09:39"
+        },
+        {
+            "username": "Евгений",
+            "text": "Деньги пришли быстро, обмен прошел без проблем. Рекомендую этот сервис.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T10:33:50"
+        },
+        {
+            "username": "Вадим",
+            "text": "Заявка обработана моментально, обмен прошел отлично. Приду снова.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T14:31:01"
+        },
+        {
+            "username": "Алексей",
+            "text": "Деньги поступили оперативно, обмен прошел без нареканий, сервис надежный.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T13:27:20"
+        },
+        {
+            "username": "Матвей",
+            "text": "Все прошло спокойно, курс адекватный, деньги пришли вовремя. Спасибо!",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T07:29:52"
+        },
+        {
+            "username": "Владимир",
+            "text": "Полностью доволен обменом, сайт работает стабильно и быстро. Рекомендую всем.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-26T10:48:52"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошел быстро и качественно. Курс удобный, сервис надежный.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-25T12:08:12"
+        },
+        {
+            "username": "Данил",
+            "text": "Менял впервые, все прошло за считанные минуты. Обменка понравилась, приду еще.",
+            "exchange_name": "MisterBit",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-24T10:01:08"
+        }
+    ]
+}

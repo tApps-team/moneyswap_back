@@ -1,0 +1,504 @@
+{
+    "OneMoment": [
+        {
+            "username": "Илья",
+            "text": "Очень удобный обмен, все прошло быстро и без проблем!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:00:40"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Повторно пользуюсь этим обменником, всегда на высоте.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:43:17"
+        },
+        {
+            "username": "Марина",
+            "text": "Очень быстро и качественно, как всегда благодарна за работу.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:10:20"
+        },
+        {
+            "username": "Сергей",
+            "text": "Деньги поступили моментально, несмотря на загруженность сети, спасибо за скорость!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:44:30"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен прошёл мгновенно, лучший сервис на рынке.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:39:01"
+        },
+        {
+            "username": "Максим",
+            "text": "Ответили очень быстро, ценю оперативность.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T22:05:46"
+        },
+        {
+            "username": "Игорь",
+            "text": "Как всегда обмен без задержек, очень доволен качеством.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:43:19"
+        },
+        {
+            "username": "Николай",
+            "text": "Очень надёжный обменник, поддержка всегда готова помочь.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:37:54"
+        },
+        {
+            "username": "Евгений",
+            "text": "Моментально всё зачислилось, сервис без нареканий.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:48:08"
+        },
+        {
+            "username": "Виктор",
+            "text": "Проверенный обменник, все прошло быстро и удобно, рекомендую.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:00:28"
+        },
+        {
+            "username": "Алена",
+            "text": "Спасибо! Всё прошло гладко и без задержек.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T11:21:28"
+        },
+        {
+            "username": "Даниил",
+            "text": "Пользуюсь этим обменником долго, всегда всё четко и быстро.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T10:06:59"
+        },
+        {
+            "username": "Светлана",
+            "text": "К сожалению, сервис меня заблокировал, деньги не перевели.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-01T13:59:29"
+        },
+        {
+            "username": "Артём",
+            "text": "Интерфейс сайта удобный, обмен быстрый, поддержка всегда на связи, супер сервис!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:23:38"
+        },
+        {
+            "username": "Олег",
+            "text": "Отличный обменник, курс хороший и задержек нет, всем советую.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T21:48:16"
+        },
+        {
+            "username": "Денис",
+            "text": "Снова воспользовался обменником, деньги пришли моментально, благодарю!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T20:10:18"
+        },
+        {
+            "username": "Александра",
+            "text": "Все прошло быстро и четко, рекомендую команду обменника!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:29:11"
+        },
+        {
+            "username": "Вадим",
+            "text": "Очень быстрый обмен, все отлично.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:56:41"
+        },
+        {
+            "username": "Илья",
+            "text": "Как всегда всё прошло отлично, благодарю за работу.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T08:54:58"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Очень нравится сервис, пользуюсь давно — всё без проблем. Рекомендую!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:12:52"
+        },
+        {
+            "username": "Александра",
+            "text": "Лучшие! Всё быстро и удобно, рекомендую всем. Спасибо команде!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T22:41:00"
+        },
+        {
+            "username": "Ольга",
+            "text": "Обмен прошёл быстро, никаких проблем, благодарю!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T19:00:55"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отличный обменник, всё оперативно и удобно.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:11:06"
+        },
+        {
+            "username": "Анна",
+            "text": "Все отлично, благодарна за постоянное качество работы.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T15:50:12"
+        },
+        {
+            "username": "Никита",
+            "text": "Очень надёжный обменник! Поддержка на высшем уровне.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T10:54:49"
+        },
+        {
+            "username": "Марина",
+            "text": "Всегда использую этот обменник, всё быстро и без лишних комиссий.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T21:40:19"
+        },
+        {
+            "username": "Константин",
+            "text": "Все пришло вовремя, обмен прошёл гладко.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:46:51"
+        },
+        {
+            "username": "Павел",
+            "text": "Очень доволен сервисом, обмен быстрый и удобный.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T13:18:34"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обменник хороший, комиссия невысокая, сервис удобный.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T12:07:09"
+        },
+        {
+            "username": "Александра",
+            "text": "Как всегда всё прошло без проблем, рекомендую сервис!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T11:00:13"
+        },
+        {
+            "username": "Виктор",
+            "text": "Менял средства через банк, все прошло успешно, немного доплатил, всё ок, благодарю!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:46:34"
+        },
+        {
+            "username": "Игорь",
+            "text": "Спасибо обменнику! Радуюсь качественному и добросовестному сервису.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T10:25:55"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл отлично, доволен сервисом.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T08:58:36"
+        },
+        {
+            "username": "Владислав",
+            "text": "Использую этот обменник давно, всё быстро и комиссии низкие.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T07:06:15"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все пришло мгновенно, поддержка работает отлично.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T19:09:56"
+        },
+        {
+            "username": "Михаил",
+            "text": "Получил средства быстро, сервис на высоте!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:52:22"
+        },
+        {
+            "username": "Евгения",
+            "text": "Очень удобный обмен, реквизиты присылают мгновенно, курс выгодный, рекомендую!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T16:39:40"
+        },
+        {
+            "username": "Владимир",
+            "text": "Сервис супер, вывели крипту буквально за полчаса, все быстро и удобно.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:07:54"
+        },
+        {
+            "username": "Алина",
+            "text": "Обмен прошёл без проблем, сервис всегда работает чётко, рекомендую!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T11:03:02"
+        },
+        {
+            "username": "Илья",
+            "text": "Отличный обменник, всё супер!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T07:09:07"
+        },
+        {
+            "username": "Денис",
+            "text": "Обмен прошёл очень быстро, рекомендую этот сервис всем пользователям!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T02:57:04"
+        },
+        {
+            "username": "Ирина",
+            "text": "Сервис не сработал, по заявленным направлениям переводы не прошли, не советую.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-28T22:06:13"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Очень быстрый обмен с Payeer на карту, прошло меньше часа.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T17:04:35"
+        },
+        {
+            "username": "Сергей",
+            "text": "Все прошло отлично, как обычно, буду использовать снова, рекомендую!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T15:37:35"
+        },
+        {
+            "username": "Александра",
+            "text": "Все прошло быстро и чётко, благодарю команду обменника, вы лучшие!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T12:15:01"
+        },
+        {
+            "username": "Виталий",
+            "text": "Все отлично, обмен прошёл быстро, благодарю за работу!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:15:46"
+        },
+        {
+            "username": "Андрей",
+            "text": "Как всегда, всё прошло идеально, спасибо!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:48:04"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен прошёл очень быстро и качественно, благодарю за вашу работу!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T02:53:14"
+        },
+        {
+            "username": "Антон",
+            "text": "Все обменялось быстро, поддержка на связи, сервис отличный, рекомендую!",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T23:38:58"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Не предоставляют реальные реквизиты, сервис ненадёжный, деньги теряются.",
+            "exchange_name": "OneMoment",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-27T19:12:04"
+        }
+    ]
+}

@@ -1,0 +1,504 @@
+{
+    "StoreBucks": [
+        {
+            "username": "Лейла",
+            "text": "Обмен прошёл быстро, всё устроило.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:03:55"
+        },
+        {
+            "username": "Григорий",
+            "text": "Поддержка отвечает моментально, всегда готова помочь.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:23:15"
+        },
+        {
+            "username": "Ильдар",
+            "text": "Очень удобно пользоваться сервисом, обмен проходит быстро и без проблем.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T03:56:01"
+        },
+        {
+            "username": "Мехмет",
+            "text": "Сделка прошла за считанные минуты, доволен всем.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T02:20:58"
+        },
+        {
+            "username": "Даниил",
+            "text": "Скорость обмена приятно удивила.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T01:05:35"
+        },
+        {
+            "username": "Борис",
+            "text": "Нашёл этот сервис недавно, теперь пользуюсь только им, всегда всё стабильно и быстро.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T22:30:39"
+        },
+        {
+            "username": "Егор",
+            "text": "Обменял USDT на наличные, всё прошло идеально, сервис отличный!",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T20:06:28"
+        },
+        {
+            "username": "Алина",
+            "text": "Выбрала курс здесь, обмен прошёл выгодно и быстро.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:49:03"
+        },
+        {
+            "username": "Кимберли",
+            "text": "Оформил заявку, деньги перевели мгновенно.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:28:00"
+        },
+        {
+            "username": "Рустам",
+            "text": "Всё честно и прозрачно, заняло пару минут.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:06:35"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обменял деньги с зарубежной карты на рубли, курс адекватный, деньги пришли моментально.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:47:27"
+        },
+        {
+            "username": "София",
+            "text": "Все прошло быстро, деньги пришли мгновенно, как и обещали.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:56:27"
+        },
+        {
+            "username": "Михаил",
+            "text": "Ни разу не было задержек, процесс простой, поддержка отвечает быстро.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:52:19"
+        },
+        {
+            "username": "Дарья",
+            "text": "Удобно, что можно отслеживать курс. Обмен прошёл выгодно.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:33:57"
+        },
+        {
+            "username": "Григорий",
+            "text": "Нет проблем с обменом, всё удобно и понятно.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:29:05"
+        },
+        {
+            "username": "Алиса",
+            "text": "Всё понятно с первого раза, деньги пришли быстро, сервис отличный!",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:59:25"
+        },
+        {
+            "username": "Виктория",
+            "text": "Процесс занял минуты, всё просто. Сервис очень понравился.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:19:01"
+        },
+        {
+            "username": "Наталья",
+            "text": "Обмен валют прошёл быстро и без лишних трудностей, теперь только здесь!",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:11:40"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сервис работает без сбоев, курс прозрачный, комиссия отсутствует.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:02:16"
+        },
+        {
+            "username": "Лидия",
+            "text": "Простой и удобный обмен, справится даже новичок. Очень довольна сервисом.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T23:52:11"
+        },
+        {
+            "username": "Артём",
+            "text": "Работает без нареканий, обмен проходит быстро, разные варианты оплаты удобны. Доверяю полностью.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:59:28"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл без проблем даже ночью, сумма зачислена полностью.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:39:42"
+        },
+        {
+            "username": "Константин",
+            "text": "Пользуюсь год, ни одной ошибки. Настоящий эталон надежности.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T22:18:09"
+        },
+        {
+            "username": "Рената",
+            "text": "Спасибо за сервис, всё прошло быстро и выгодно, рекомендую.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T21:29:41"
+        },
+        {
+            "username": "Владислав",
+            "text": "Нет назойливой рекламы, уважение к приватности чувствуется.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:25:37"
+        },
+        {
+            "username": "Людмила",
+            "text": "Минималистичный интерфейс удобен, обмен проходит быстро и без лишнего отвлечения.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T17:06:36"
+        },
+        {
+            "username": "Дарина",
+            "text": "Оформила обмен, всё получила моментально.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T14:14:05"
+        },
+        {
+            "username": "Алексей",
+            "text": "Поддержка отвечает быстрее, чем мессенджеры, впечатляет!",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:13:35"
+        },
+        {
+            "username": "Степан",
+            "text": "Цены выгодные, даже по сравнению с крупными биржами. Рекомендую.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T13:06:44"
+        },
+        {
+            "username": "Зиновий",
+            "text": "Поддержка на связи моментально, всегда готовы помочь.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:25:06"
+        },
+        {
+            "username": "Олег",
+            "text": "Пользуюсь с самого начала, сервис каждый раз становится лучше. Так держать!",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:48:12"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Обменял несколько валют подряд, всё прошло стабильно. Надёжность на высоте.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:30:33"
+        },
+        {
+            "username": "Ирина",
+            "text": "Перевод прошёл без задержек, курс совпал, деньги зачислены полностью.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:10:52"
+        },
+        {
+            "username": "Семён",
+            "text": "Уже постоянный клиент, сервис честный и предсказуемый.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T08:20:25"
+        },
+        {
+            "username": "Валентина",
+            "text": "Курс адекватный, платёж прошёл точно и без задержек.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T06:11:06"
+        },
+        {
+            "username": "Ильдар",
+            "text": "Регулярно пользуюсь сервисом, обмен проходит спокойно и без проблем.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T04:33:27"
+        },
+        {
+            "username": "Ярослав",
+            "text": "За всё время ни одной проблемы с обменами.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T23:04:06"
+        },
+        {
+            "username": "Денис",
+            "text": "Очень доволен сотрудничеством, профессионализм на высоте, буду обращаться ещё.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T17:21:47"
+        },
+        {
+            "username": "Эмиль",
+            "text": "Сервис не подвёл, срочный перевод прошёл идеально. Надёжный партнёр.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:34:08"
+        },
+        {
+            "username": "Максим",
+            "text": "Обмен прошёл мгновенно, деньги уже на карте за считанные минуты. Отличный курс.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T13:28:09"
+        },
+        {
+            "username": "Даниил",
+            "text": "Всё быстро и без вопросов, рекомендую сервис.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T07:08:45"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Обмен прошёл легко и быстро, всё отлично.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:50:01"
+        },
+        {
+            "username": "Тимур",
+            "text": "Обмен прошёл просто, результат получил моментально.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T10:44:27"
+        },
+        {
+            "username": "Виктор",
+            "text": "Пользуюсь сервисом регулярно, проблем ни разу не было.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T09:19:21"
+        },
+        {
+            "username": "Руслан",
+            "text": "Уже постоянный клиент, обмен всегда проходит без проблем.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T13:44:51"
+        },
+        {
+            "username": "Аскольд",
+            "text": "Обмен проходит быстро, пользоваться удобно и комфортно.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T11:22:56"
+        },
+        {
+            "username": "Ильшат",
+            "text": "Обмен всегда проходит чётко, деньги зачисляются вовремя.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T09:56:46"
+        },
+        {
+            "username": "Ксения",
+            "text": "Очень понравилась скорость обмена, всё прошло моментально.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:54:38"
+        },
+        {
+            "username": "Виталий",
+            "text": "Меняю валюту здесь регулярно, курс прозрачный и без скрытых комиссий. Надёжно и удобно.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:42:40"
+        },
+        {
+            "username": "Светлана",
+            "text": "Все чётко, перевела монеты и дождалась фиата, курс совпал, платёж обработан вовремя.",
+            "exchange_name": "StoreBucks",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T07:46:20"
+        }
+    ]
+}

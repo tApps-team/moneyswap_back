@@ -1,0 +1,504 @@
+{
+    "FloatChange": [
+        {
+            "username": "Максим",
+            "text": "Обмен проходит без проблем. Долго проверенный и надежный сервис!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:16:17"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все быстро и аккуратно, как всегда. Рекомендую!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T04:35:27"
+        },
+        {
+            "username": "Игорь",
+            "text": "Очень удобный обменник, работает стабильно и без сбоев.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T21:45:44"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Хороший сервис с быстрыми транзакциями и понятным интерфейсом.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T18:28:06"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошел быстро и без заминок. Очень удобный сервис.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T20:30:33"
+        },
+        {
+            "username": "Марина",
+            "text": "Все прошло отлично, деньги пришли моментально. Сервис на высоте!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T18:21:10"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Сервис супер. Появляется все больше направлений обмена, очень удобно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T20:25:31"
+        },
+        {
+            "username": "Ирина",
+            "text": "Быстрое оформление заявки и мгновенный перевод. Очень удобный обменник!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T18:08:28"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен небольших сумм прошел быстро, за несколько минут. Очень доволен!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T18:29:56"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все прошло идеально, обмен быстрый и удобный. Топ сервис!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T17:04:37"
+        },
+        {
+            "username": "Ольга",
+            "text": "Все очень быстро и без проблем, полностью довольна.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T13:10:56"
+        },
+        {
+            "username": "Светлана",
+            "text": "Перевод в Норвегию прошел моментально, комиссия минимальная. Очень довольна работой сервиса.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T12:33:16"
+        },
+        {
+            "username": "Михаил",
+            "text": "Сервис быстрый и надежный, саппорт всегда на связи. Очень доволен!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T18:55:53"
+        },
+        {
+            "username": "Константин",
+            "text": "Обмен с BTC на TRON не прошел из-за AML. Ранее такого не было, неприятно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-08-28T02:42:37"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Прекрасный обменник. Заявка простая, перевод средств моментальный. Благодарю за работу!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T18:01:16"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все прошло отлично, без задержек. Очень доволен сервисом!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-27T06:03:10"
+        },
+        {
+            "username": "Владислав",
+            "text": "Менял USDT на LTC, быстро и честно, поддержка всегда отвечает, комиссии адекватные.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T18:17:52"
+        },
+        {
+            "username": "Роман",
+            "text": "Все супер. Обмен занял меньше 5 минут, очень удобно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T16:28:27"
+        },
+        {
+            "username": "Антон",
+            "text": "Обмен прошел быстро и качественно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T13:20:19"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Обмен сделали за несколько минут, я доволен. Курс хороший, лимиты удобные.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T18:10:47"
+        },
+        {
+            "username": "Николай",
+            "text": "Обменник хороший, множество монет и выгодные курсы. Все всегда оперативно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T14:29:32"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сервис отличный, пользуюсь регулярно. Всегда делают все на высшем уровне.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T18:19:42"
+        },
+        {
+            "username": "Виктор",
+            "text": "Любимый обменник, всегда выручает. Хорошие курсы и можно менять небольшие суммы.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T10:21:42"
+        },
+        {
+            "username": "Павел",
+            "text": "Обмен прошел быстро, курс достойный, меньше 10 минут на транзакцию. Надежный сервис.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T18:18:53"
+        },
+        {
+            "username": "Илья",
+            "text": "Все супер. Обмен быстрый, простой и удобный сервис.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T08:18:18"
+        },
+        {
+            "username": "Андрей",
+            "text": "Как всегда на высоте! Работает идеально.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-23T05:00:51"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Все четко, средства пришли быстро, проблем не возникло. Рекомендую!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T18:01:13"
+        },
+        {
+            "username": "Никита",
+            "text": "Быстро и удобно, как всегда.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T15:01:35"
+        },
+        {
+            "username": "Владимир",
+            "text": "Обменник отличный, даже ночью работает четко и без задержек.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T22:41:26"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Все прошло быстро и без сложностей.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T19:47:21"
+        },
+        {
+            "username": "Сергей",
+            "text": "Быстро и удобно. Контроль и подтверждение переводов онлайн. Доволен сервисом.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T18:03:28"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Пользовался впервые, немного волновался, но все прошло идеально за час. Буду пользоваться постоянно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T17:24:51"
+        },
+        {
+            "username": "Роман",
+            "text": "Обменник отличный, операции занимают максимум 5 минут. Можно менять мелкие суммы.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T21:24:40"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличный сервис, пользуюсь не первый раз. Всегда делают качественно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T12:11:00"
+        },
+        {
+            "username": "Егор",
+            "text": "Перевод прошел быстро, 5-10 минут как обычно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T05:51:15"
+        },
+        {
+            "username": "Даниил",
+            "text": "Все четко, деньги пришли на карту за 5 минут. Советую.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T05:33:00"
+        },
+        {
+            "username": "Ксения",
+            "text": "Поддержка помогала мне на каждом шаге, даже успокаивали новичка. Очень довольна!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T22:28:01"
+        },
+        {
+            "username": "Игорь",
+            "text": "Все четко! Быстрый и надежный обмен.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T20:22:13"
+        },
+        {
+            "username": "Алина",
+            "text": "Первый раз пользовалась, все быстро и без проблем. Буду еще!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T10:39:43"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Отличный сервис! Все работает идеально, деньги приходят в течение 5–10 минут. Пользовался несколько раз, всегда надежно.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T06:32:50"
+        },
+        {
+            "username": "Александр",
+            "text": "Очень удобно, что обменник работает ночью. Отличная поддержка и скорость!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T20:10:48"
+        },
+        {
+            "username": "Юрий",
+            "text": "Сервис надежный и быстрый. Все прошло без проблем. Рекомендую!",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T13:22:27"
+        },
+        {
+            "username": "Игорь",
+            "text": "Любимый обменник, работает 24/7. Всегда все быстро и без задержек.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T18:46:59"
+        },
+        {
+            "username": "Сергей",
+            "text": "Сервис 5+. Все прошло легко и быстро. Удобно пользоваться и менять небольшие суммы.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T17:02:50"
+        },
+        {
+            "username": "Наиль",
+            "text": "Быстро и без проблем пополнил кошелек. Отличный сервис, рекомендую.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T10:44:45"
+        },
+        {
+            "username": "Владимир",
+            "text": "Все работает отлично! Быстро и четко.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T07:35:59"
+        },
+        {
+            "username": "Алексей",
+            "text": "Обмен занял всего 5 минут. Сервис понравился, удобно и быстро.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T13:02:56"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Первый опыт обмена прошел отлично. Быстро и удобно, все понравилось.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-14T14:06:10"
+        },
+        {
+            "username": "Игорь",
+            "text": "Один из обменников, где все проходит быстро и удобно. Рекомендую.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T16:26:25"
+        },
+        {
+            "username": "Галина",
+            "text": "Обмен прошел очень быстро, благодарю команду сервиса! Рекомендую.",
+            "exchange_name": "FloatChange",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T15:50:52"
+        }
+    ]
+}

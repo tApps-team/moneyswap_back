@@ -1,0 +1,484 @@
+{
+    "Coco-Pay": [
+        {
+            "username": "Алексей",
+            "text": "Обмен прошёл гладко, всё супер.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:04:01"
+        },
+        {
+            "username": "Марина",
+            "text": "Даже поздно ночью поддержка на высоте, помогли во всём.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T19:56:11"
+        },
+        {
+            "username": "Роман",
+            "text": "Сервис надёжен, пользуюсь часто — всё прозрачно и без проблем.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T09:04:56"
+        },
+        {
+            "username": "Сергей",
+            "text": "Курс подошёл, техподдержка объяснила всё доступно, спасибо!",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-31T09:49:06"
+        },
+        {
+            "username": "Игорь",
+            "text": "Не хватает некоторых валют, но с тем, что есть, всё прошло отлично.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-30T20:14:51"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Очень быстро и удобно! Молодцы ребята!",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-29T20:14:39"
+        },
+        {
+            "username": "Никита",
+            "text": "Простой обмен без сложностей, рекомендую всем.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T08:01:48"
+        },
+        {
+            "username": "Ольга",
+            "text": "Лучший сервис из тех, что пробовала. Вернулась сюда снова.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-28T07:14:52"
+        },
+        {
+            "username": "Андрей",
+            "text": "Обмен прошёл без задержек, деньги пришли за 15 минут.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T18:30:54"
+        },
+        {
+            "username": "Виктор",
+            "text": "Постоянно пользуюсь, всё стабильно и без проблем. Перевод пришёл быстро.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-26T18:21:29"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Раньше были трудности с переводами, но здесь всё отлично.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T20:05:06"
+        },
+        {
+            "username": "Константин",
+            "text": "Хороший обменник, всё быстро и чётко!",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-25T06:31:24"
+        },
+        {
+            "username": "Владислав",
+            "text": "Обменник надёжен, проверено временем. Всё приходит точно.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-24T12:07:57"
+        },
+        {
+            "username": "Даниил",
+            "text": "Курс удобный, буду пользоваться снова.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-22T07:48:01"
+        },
+        {
+            "username": "Олег",
+            "text": "Скорость и стабильность на высоте, приятно работать.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-21T17:22:33"
+        },
+        {
+            "username": "Станислав",
+            "text": "Сервис заслуживает доверия: обмен честный, поддержка всегда рядом.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-20T19:12:20"
+        },
+        {
+            "username": "Игорь",
+            "text": "Обмен прошёл без задержек, всё чётко.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-19T15:50:41"
+        },
+        {
+            "username": "Владимир",
+            "text": "Сервис работает быстро и удобно.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-18T13:44:55"
+        },
+        {
+            "username": "Алексей",
+            "text": "Все прошло как заявлено, быстро и без лишних вопросов.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-17T10:33:47"
+        },
+        {
+            "username": "Марина",
+            "text": "Отличный сервис, всё просто и понятно!",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-16T13:37:06"
+        },
+        {
+            "username": "Александр",
+            "text": "Супер сервис! Всё работает корректно.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T20:06:28"
+        },
+        {
+            "username": "Сергей",
+            "text": "Доверяю сервису. Первый обмен прошёл быстро, деньги пришли за полчаса.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-15T05:20:05"
+        },
+        {
+            "username": "Максим",
+            "text": "Все прошло отлично, теперь только сюда обращаюсь.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-13T17:51:59"
+        },
+        {
+            "username": "Анна",
+            "text": "Сначала было сложно разобраться, но потом всё получилось.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-12T20:23:08"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Выбрал сервис за стабильность и удобный интерфейс. Работает без проблем.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-11T19:01:23"
+        },
+        {
+            "username": "Николай",
+            "text": "Мгновенный обмен, всё супер.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-10T11:05:50"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обратился в чат, заявку быстро обработали.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-09T14:11:41"
+        },
+        {
+            "username": "Назар",
+            "text": "Сервис понравился, поддержка помогла с заявкой очень быстро.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-08T08:26:49"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Всегда готовы помочь, спасибо большое!",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-07T15:06:52"
+        },
+        {
+            "username": "Роман",
+            "text": "Не люблю ждать, а здесь всё прошло быстро. Рекомендую.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-06T14:30:53"
+        },
+        {
+            "username": "Александра",
+            "text": "Всё отлично, нареканий нет.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-05T20:11:10"
+        },
+        {
+            "username": "Илья",
+            "text": "Выводил USDT, деньги пришли меньше чем за 10 минут, рекомендую.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-04T13:33:54"
+        },
+        {
+            "username": "Олег",
+            "text": "Прозрачные условия, удобный курс, поддержка отвечает быстро. Работать комфортно.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-02T18:45:20"
+        },
+        {
+            "username": "Иван",
+            "text": "Обмен прошёл успешно, пользуюсь не первый раз.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T13:28:05"
+        },
+        {
+            "username": "Алексей",
+            "text": "Лучшие курсы и переводы, доступно в любое время.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-08-01T12:42:24"
+        },
+        {
+            "username": "Светлана",
+            "text": "Недавно нашла сайт, очень понравился, буду пользоваться долго.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-31T18:53:48"
+        },
+        {
+            "username": "Вячеслав",
+            "text": "Серьёзный подход, обмены проходят быстро, интерфейс удобный, поддержка всегда на связи.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-30T15:32:21"
+        },
+        {
+            "username": "Даниил",
+            "text": "Хороший обменник. Всё заняло меньше 10 минут, доволен.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-29T12:22:44"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Сначала грустно было, но деньги пришли вовремя, стало спокойнее.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-28T20:20:06"
+        },
+        {
+            "username": "Виктор",
+            "text": "Пользуюсь регулярно, всё устраивает. Обмен быстрый, результат предсказуемый.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-27T19:59:09"
+        },
+        {
+            "username": "Сергей",
+            "text": "Обмен прошёл быстро, всё честно и удобно. Спасибо!",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-26T09:46:55"
+        },
+        {
+            "username": "Мария",
+            "text": "Перепробовал разные обменники, этот советовала подруга — приятно удивлена.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-25T14:01:25"
+        },
+        {
+            "username": "Андрей",
+            "text": "Топовый сервис, не вижу смысла расписывать снова.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-24T08:36:27"
+        },
+        {
+            "username": "Илья",
+            "text": "Заявка и перевод подтвердились очень быстро. Отлично.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-23T08:34:01"
+        },
+        {
+            "username": "Алена",
+            "text": "Была небольшая задержка, но всё решили и деньги пришли.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-22T20:31:01"
+        },
+        {
+            "username": "Тимофей",
+            "text": "Меняю почти ежедневно, всегда доволен сервисом, на высоте!",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-21T07:26:18"
+        },
+        {
+            "username": "Николай",
+            "text": "Обмен без проблем, скрытых комиссий нет.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-20T12:49:22"
+        },
+        {
+            "username": "Павел",
+            "text": "Работают чётко, без задержек. Пользуюсь месяц — ни разу не возникло вопросов.",
+            "exchange_name": "Coco-Pay",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-07-19T19:00:38"
+        }
+    ]
+}

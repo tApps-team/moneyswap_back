@@ -1,0 +1,414 @@
+{
+    "NameToken": [
+        {
+            "username": "Данила",
+            "text": "Я новичок в крипте, но здесь всё оказалось просто! Поддержка помогала на каждом этапе. Деньги пришли вовремя.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T12:12:22"
+        },
+        {
+            "username": "Михаил",
+            "text": "Перевод на карту прошел без проблем, USDT дошли за один раз. Всё супер!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T11:19:52"
+        },
+        {
+            "username": "Лилия",
+            "text": "Очень быстрый обмен. Не работают с банками Таджикистана. Рекомендую.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T10:00:18"
+        },
+        {
+            "username": "Марина",
+            "text": "Сделала обмен, прошло без проблем, всем советую.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:49:29"
+        },
+        {
+            "username": "Игорь",
+            "text": "Не люблю писать отзывы, но тут хочется отметить. Ошибся с кошельком, быстро помогли исправить.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T09:15:35"
+        },
+        {
+            "username": "Рамиль",
+            "text": "Скорость обмена приятно удивила. Всё прошло гладко.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T08:43:46"
+        },
+        {
+            "username": "Алиса",
+            "text": "Заявку обработали быстро! Буду пользоваться только этим обменником!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:19:22"
+        },
+        {
+            "username": "Светлана",
+            "text": "Благодарю за оперативный обмен! Всё отлично, рекомендую сервис.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T07:02:31"
+        },
+        {
+            "username": "Софья",
+            "text": "Работает отлично, рекомендую!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:50:06"
+        },
+        {
+            "username": "Тамара",
+            "text": "Всё прошло без нареканий, скорость и качество на высоте.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:41:12"
+        },
+        {
+            "username": "Евгений",
+            "text": "Простой интерфейс, надёжно и быстро, полностью доволен.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-03T06:19:04"
+        },
+        {
+            "username": "Игорь",
+            "text": "Не смогли подтвердить платеж сразу, запросили чек и видео. Предоставил, но процесс долгий и нервный.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-09-02T21:46:02"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Всё прошло нормально, деньги на месте.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:40:45"
+        },
+        {
+            "username": "Эвелина",
+            "text": "Надёжный обменник, рекомендую. Проверено временем и друзьями.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T18:24:32"
+        },
+        {
+            "username": "Татьяна",
+            "text": "Обмениваю тут регулярно небольшие суммы. Пока без проблем, надёжно и удобно.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T17:35:32"
+        },
+        {
+            "username": "Людмила",
+            "text": "Обмен прошел без проблем, оплата поступила вовремя, спасибо.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:17:26"
+        },
+        {
+            "username": "Алена",
+            "text": "Отличный сервис, получили монеты без проблем.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T16:13:01"
+        },
+        {
+            "username": "Фёдор",
+            "text": "Обмен прошел гладко, никаких трудностей не возникло.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:52:57"
+        },
+        {
+            "username": "Даниил",
+            "text": "Как всегда моментально вывели средства. Курс хороший, рекомендую.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T15:10:11"
+        },
+        {
+            "username": "Виктория",
+            "text": "Сайт удобный, всё понятно, поддержка отвечает быстро.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:59:42"
+        },
+        {
+            "username": "Яна",
+            "text": "Обмен проходит быстро и без заморочек.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:35:03"
+        },
+        {
+            "username": "Константин",
+            "text": "Отличный сервис, всё честно и оперативно. Рекомендую!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:27:51"
+        },
+        {
+            "username": "Семён",
+            "text": "Перевод прошёл успешно, спасибо!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:26:32"
+        },
+        {
+            "username": "Сергей",
+            "text": "Волновался, но всё прошло без проблем. Благодарю!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T14:15:52"
+        },
+        {
+            "username": "Вера",
+            "text": "Очень быстро, поддержка на связи, всё удобно и понятно!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:37:24"
+        },
+        {
+            "username": "Алексей",
+            "text": "Перевод пришёл очень быстро. Рекомендую всем.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:29:57"
+        },
+        {
+            "username": "Никита",
+            "text": "Спасибо! Всё просто и быстро.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T13:00:53"
+        },
+        {
+            "username": "Максим",
+            "text": "Всё отлично! Деньги перевели мгновенно, рекомендую!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:30:18"
+        },
+        {
+            "username": "Лана",
+            "text": "Спасибо сервису, смогла быстро оплатить всё что нужно)",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:24:59"
+        },
+        {
+            "username": "Сергей",
+            "text": "Очень советую этот обменник. Крупные суммы за пару минут! Спасибо!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:21:21"
+        },
+        {
+            "username": "Павел",
+            "text": "Прекрасный сервис, быстро и без лишнего интерфейса.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:15:10"
+        },
+        {
+            "username": "Анастасия",
+            "text": "Обменник удобный, не тормозит, вывод быстрый.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T12:09:12"
+        },
+        {
+            "username": "Роман",
+            "text": "Деньги обменял, всё в порядке. Отлично.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:47:43"
+        },
+        {
+            "username": "Олег",
+            "text": "Всё прошло быстро и без проблем. Обменник надёжный!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:43:38"
+        },
+        {
+            "username": "Анна",
+            "text": "Всё отлично! Продолжайте в том же духе! Молодцы!",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:40:04"
+        },
+        {
+            "username": "Павел",
+            "text": "Пользуюсь давно. Всё надёжно и быстро. Рекомендую.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T06:35:19"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обмен прошёл успешно, всё отлично.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-02T05:50:45"
+        },
+        {
+            "username": "Сергей",
+            "text": "Всем привет! Недавно начал пользоваться, но всё работает быстро и надежно, без задержек.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T12:02:57"
+        },
+        {
+            "username": "Виталий",
+            "text": "Пользуюсь не первый раз. Всегда быстро, без проблем и по выгодному курсу.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T11:14:08"
+        },
+        {
+            "username": "Галина",
+            "text": "Отличный обменник! Всё проходит быстро и качественно, оператор мгновенно отвечает.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:55:09"
+        },
+        {
+            "username": "Кирилл",
+            "text": "Обмен завершился без проблем и быстро, благодарен сервису.",
+            "exchange_name": "NameToken",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-09-01T10:27:35"
+        }
+    ]
+}

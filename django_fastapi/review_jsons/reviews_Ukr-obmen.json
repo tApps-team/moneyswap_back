@@ -1,0 +1,414 @@
+{
+    "Ukr-obmen": [
+        {
+            "username": "Михайло",
+            "text": "Обмен прошёл быстро, всё четко и удобно.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2025-06-24T08:15:25"
+        },
+        {
+            "username": "Игорь",
+            "text": "Связался с поддержкой, доказательства предоставил. Курс не совпадает с биржей, комиссии не учитываются. Нужно внимательнее работать с курсами, а не просто выставлять позиции.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2025-04-10T18:22:21"
+        },
+        {
+            "username": "Марина",
+            "text": "Не удалось войти на сайт с разных устройств, блокировка без объяснений.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 0,
+            "date": "2024-12-05T03:49:35"
+        },
+        {
+            "username": "Арам",
+            "text": "Это первый сервис, куда я обращаюсь при обмене крипты. Пишу на английском из-за проблем с кириллицей после публикации.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-10-12T12:18:30"
+        },
+        {
+            "username": "Лена",
+            "text": "Всё прошло гладко, выгодный курс и оперативная работа. Отличный сервис, рекомендую!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-15T18:57:51"
+        },
+        {
+            "username": "Оксана",
+            "text": "Обмен прошёл мгновенно, все работает как надо. Благодарю!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T16:16:46"
+        },
+        {
+            "username": "Илья",
+            "text": "Отличный обменник, пользуюсь регулярно. Обслуживание всегда на высоте, спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T13:29:17"
+        },
+        {
+            "username": "София",
+            "text": "Все сделано точно по времени, быстрое обслуживание и мгновенный ответ в чате. Очень рекомендую!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T07:32:01"
+        },
+        {
+            "username": "Алексей",
+            "text": "Отличный обмен, спасибо за скорость и аккуратность!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T05:04:07"
+        },
+        {
+            "username": "Никита",
+            "text": "Благодарю за качественный обмен, всё прошло быстро и профессионально.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T04:41:35"
+        },
+        {
+            "username": "Леонид",
+            "text": "Очень хороший обменник, пользуюсь не первый раз, всё всегда быстро. Респект!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T04:21:07"
+        },
+        {
+            "username": "Денис",
+            "text": "Лучший сервис! Всегда быстро и надежно. Рекомендую всем!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T03:59:12"
+        },
+        {
+            "username": "Саша",
+            "text": "Обмен прошёл без проблем, оформление заявки простое, курс хороший. Спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T03:43:27"
+        },
+        {
+            "username": "Артем",
+            "text": "Денежные средства поступили мгновенно. Отличный обмен, всем советую!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-05T03:26:46"
+        },
+        {
+            "username": "Валерия",
+            "text": "Все прошло быстро и удобно. Очень довольна, обязательно вернусь!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T20:23:19"
+        },
+        {
+            "username": "Тамара",
+            "text": "Отличный обмен, рекомендую данный сервис!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T19:53:05"
+        },
+        {
+            "username": "Даша",
+            "text": "Спасибо за обмен, всё прошло отлично.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T18:10:02"
+        },
+        {
+            "username": "Георгий",
+            "text": "Быстро и удобно, интерфейс понятный, обмен прошёл без проблем.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T17:55:22"
+        },
+        {
+            "username": "Евгения",
+            "text": "Очень доволен сервисом, только положительные эмоции!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T17:01:53"
+        },
+        {
+            "username": "Максим",
+            "text": "Обмен быстрый, минимальная сумма доступна, курс хороший. Сервис на уровне!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T13:38:13"
+        },
+        {
+            "username": "Светлана",
+            "text": "Заявка выполнена без ошибок, оператор всегда на связи. Отличный сервис и выгодный обмен!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T10:17:16"
+        },
+        {
+            "username": "Александр",
+            "text": "Ребята очень оперативно работают, USDT на кошельке появились мгновенно. Спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T06:08:16"
+        },
+        {
+            "username": "Виктор",
+            "text": "Очень понравился обменник, быстро и удобно. Рекомендую всем.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T05:34:43"
+        },
+        {
+            "username": "Леонид",
+            "text": "Сервис отличный, заявка обработана мгновенно. Очень доволен!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T05:24:45"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Надежный обменник, выгодный курс и минимум действий на сайте. Очень доволен, спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T04:52:21"
+        },
+        {
+            "username": "Сеня",
+            "text": "Обмен прошёл быстро и удобно, исключительно положительные впечатления!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T04:36:23"
+        },
+        {
+            "username": "Сергей",
+            "text": "Отличный сервис! Деньги поступили быстро, обмен качественный. Рекомендую всем.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-04T04:27:33"
+        },
+        {
+            "username": "Григорий",
+            "text": "Сделка прошла мгновенно, всё просто и удобно. Молодцы, спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T20:23:37"
+        },
+        {
+            "username": "Екатерина",
+            "text": "Сделала обмен, деньги быстро поступили на счет. Благодарю за сервис!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T16:59:57"
+        },
+        {
+            "username": "Дарья",
+            "text": "Обмен прошёл отлично, сервис работает без нареканий.",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T15:18:06"
+        },
+        {
+            "username": "Максим",
+            "text": "Отличный обменник, все быстро и удобно. Рекомендую пользоваться!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T13:31:13"
+        },
+        {
+            "username": "Ольга",
+            "text": "Снова быстрый обмен, всё прошло без задержек. Спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T12:12:27"
+        },
+        {
+            "username": "Стефания",
+            "text": "Обмен выполнен идеально, время обработки минимальное. Отличная работа и приятный сервис!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T07:18:01"
+        },
+        {
+            "username": "Алексей",
+            "text": "Лучший сервис для обмена, все быстро, надежно и точно. Спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T05:19:14"
+        },
+        {
+            "username": "Вадим",
+            "text": "Обменник с выгодным курсом, всё выполняется очень быстро. Советую!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T04:41:09"
+        },
+        {
+            "username": "Леонид",
+            "text": "Постоянно пользуюсь сервисом, всё очень просто и быстро. Респект команде!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T04:21:10"
+        },
+        {
+            "username": "Дмитрий",
+            "text": "Удобный обменник, быстрая обработка заявок. Очень доволен, рекомендую!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T04:02:20"
+        },
+        {
+            "username": "Сеня",
+            "text": "Моментальный обмен, курс отличный, впечатления исключительно положительные!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T03:46:31"
+        },
+        {
+            "username": "Сергей",
+            "text": "Всё прошло отлично, средства поступили быстро и безопасно. Спасибо!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-03T03:29:11"
+        },
+        {
+            "username": "Григорий",
+            "text": "Быстрая и удобная сделка, комиссия минимальная. Отличный обменник!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-02T20:23:19"
+        },
+        {
+            "username": "Ірина",
+            "text": "Быстрый обмен PM на USDT, всё прошло гладко. Благодарю сервис!",
+            "exchange_name": "Ukr-obmen",
+            "status": "Опубликован",
+            "review_from": "ai",
+            "moderation": true,
+            "grade": 1,
+            "date": "2024-07-02T18:35:52"
+        }
+    ]
+}
