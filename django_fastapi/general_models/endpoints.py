@@ -1,7 +1,10 @@
+import os
+import json
+
 from typing import List, Union
 from datetime import datetime, timedelta
 from math import ceil
-from random import choice, shuffle
+from random import choice, shuffle, randint
 
 from asgiref.sync import async_to_sync
 
@@ -87,6 +90,8 @@ from .schemas import (AddCommentSchema, BlackListExchangeSchema, DetailBlackList
                       FeedbackFormSchema,
                       SiteMapDirectonSchema)
 
+from config import DEV_HANDLER_SECRET
+
 
 common_router = APIRouter(tags=['Общее'])
 
@@ -125,6 +130,51 @@ review_router = APIRouter(prefix='/reviews',
     
 #     return json_dict
 #
+
+@test_router.get('/dev_handler')
+def test_direction(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    folder_path = "review_jsons"
+
+    custom_timedelta = timedelta(days=1)
+
+    # Проходим по всем файлам в папке
+    for filename in os.listdir(folder_path):
+        # rewrite = False
+        if filename.endswith(".json"):  # фильтруем только JSON файлы
+            file_path = os.path.join(folder_path, filename)
+            # print(f"Файл: {filename}")
+            with open(file_path, "r", encoding="utf-8") as f:
+                try:
+                    data = json.load(f)  # загружаем содержимое JSON
+                    data: dict
+                    for key in data:
+                        review_list: list[dict] = data[key]
+
+                        create_list = []
+                        for review in review_list:
+                            old_date = review.pop('date')
+                            # print('old', old_date)
+                            random_minute = randint(10, 120)
+                            new_timedelta = custom_timedelta + timedelta(minutes=random_minute)
+                            new_date = datetime.fromisoformat(old_date) + new_timedelta
+                            # print('new',new_date)
+                            # break
+                            review['time_create'] = new_date
+                            create_list.append(NewBaseReview(**review))
+                        
+                        NewBaseReview.objects.bulk_create(create_list)
+                        print(f'{filename} {len(create_list)} has been added!')
+                        # if len(review_list) > 50:
+                        #     print(f'{filename} - {len(review_list)}')
+
+                except Exception as ex:
+                    print(f'ERROR WITH {filename}!')
+                    print(ex)
+
+
 
 @common_router.get('/available_valutes_2')
 def get_available_valutes2(request: Request,
@@ -1092,9 +1142,9 @@ def new_get_exchange_list():
         .filter(moderation=True)
         .values('exchange_name')
         .annotate(
-            positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
-            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
-            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
         )
     )
 
@@ -1263,9 +1313,9 @@ def new_get_exchange_list():
         .filter(moderation=True)
         .values('exchange_name')
         .annotate(
-            positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
-            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
-            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
         )
     )
 
@@ -1790,9 +1840,9 @@ def get_exchange_detail_info(exchange_id: int,
                 exchange_name=exchange.name)
         .values('exchange_name')
         .annotate(
-            positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
-            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
-            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
         )
     )
 
@@ -1852,9 +1902,9 @@ def get_exchange_detail_info(exchange_id: int,
                 exchange_name=exchange.name)
         .values('exchange_name')
         .annotate(
-            positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
-            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
-            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
         )
     )
 
@@ -2599,9 +2649,9 @@ def new_get_top_exchanges():
         .filter(moderation=True)
         .values('exchange_name')
         .annotate(
-            positive_count=Count('id', filter=Q(grade='1')),
-            neutral_count=Count('id', filter=Q(grade='0')),
-            negative_count=Count('id', filter=Q(grade='-1')),
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
         )
     )
 
@@ -2809,8 +2859,9 @@ def new_get_reviews_by_exchange(exchange_name: str,
                                     .annotate(user_comment_count=Subquery(user_comment_subquery))\
                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
                                     .filter(exchange_name=exchange_name,
-                                            review_from='moneyswap',
-                                            moderation=True)
+                                            review_from__in=('moneyswap', 'ai'),
+                                            moderation=True)\
+                                    # .order_by('-time_create')
 
     if review_id:
         reviews = reviews.filter(pk=review_id)
@@ -2840,6 +2891,8 @@ def new_get_reviews_by_exchange(exchange_name: str,
                                     exchange_name=exchange_name,
                                     element_on_page=len(review_list),
                                     content=review_list)
+    
+    reviews = reviews.order_by('-time_create')
 
     if grade_filter is not None:
         reviews = reviews.filter(grade=str(grade_filter))

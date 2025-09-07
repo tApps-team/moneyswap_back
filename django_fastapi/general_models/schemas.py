@@ -3,7 +3,7 @@ from typing import Literal
 from enum import Enum
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class MultipleName(BaseModel):
@@ -110,7 +110,11 @@ class ReviewViewSchema(BaseModel):
     grade: int
     text: str
     comment_count: int
-    review_from: Literal['moneyswap', 'bestchange']
+    review_from: Literal['moneyswap', 'bestchange', 'ai']
+
+    @field_validator('review_from', mode='before')
+    def force_review_from(cls, w):
+        return 'moneyswap'
 
 
 class ReviewsByExchangeSchema(BaseModel):

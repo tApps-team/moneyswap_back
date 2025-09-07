@@ -270,7 +270,7 @@ def new_get_reviews_count_filters(marker: Literal['exchange',
         exchange_name=OuterRef(outref_name),
         moderation=True,
         grade='1',
-        review_from='moneyswap',
+        review_from__in=('moneyswap', 'ai'),
     ).values('exchange_name').annotate(
         count=Count('id')
     ).values('count')[:1]
@@ -278,7 +278,7 @@ def new_get_reviews_count_filters(marker: Literal['exchange',
         exchange_name=OuterRef(outref_name),
         moderation=True,
         grade='0',
-        review_from='moneyswap',
+        review_from__in=('moneyswap', 'ai'),
     ).values('exchange_name').annotate(
         count=Count('id')
     ).values('count')[:1]
@@ -286,7 +286,7 @@ def new_get_reviews_count_filters(marker: Literal['exchange',
         exchange_name=OuterRef(outref_name),
         moderation=True,
         grade='-1',
-        review_from='moneyswap',
+        review_from__in=('moneyswap', 'ai'),
     ).values('exchange_name').annotate(
         count=Count('id')
     ).values('count')[:1]

@@ -912,21 +912,21 @@ def edit_admin_exchange_order(partner: partner_dependency):
         
 
 
-@test_partner_router.get('/dev_handler')
-def test_direction(secret: str):
-    if secret != DEV_HANDLER_SECRET:
-        raise HTTPException(status_code=400)
+# @test_partner_router.get('/dev_handler')
+# def test_direction(secret: str):
+#     if secret != DEV_HANDLER_SECRET:
+#         raise HTTPException(status_code=400)
     
-    from django_celery_beat.models import PeriodicTask
+#     from django_celery_beat.models import PeriodicTask
 
-    try:
-        # task = PeriodicTask.objects.get(name='check_update_time_for_directions_task')
-        task = PeriodicTask.objects.get(name='exchange_admin_notifications_task')
-        interval = get_or_create_schedule(12, IntervalSchedule.HOURS)
-        task.interval = interval
-        task.save()
-    except Exception as ex:
-        print(ex)
+#     try:
+#         # task = PeriodicTask.objects.get(name='check_update_time_for_directions_task')
+#         task = PeriodicTask.objects.get(name='exchange_admin_notifications_task')
+#         interval = get_or_create_schedule(12, IntervalSchedule.HOURS)
+#         task.interval = interval
+#         task.save()
+#     except Exception as ex:
+#         print(ex)
     # else:
         # amount = fields_to_update['amount']
         # unit_time = fields_to_update['unit_time']
