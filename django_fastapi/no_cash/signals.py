@@ -52,6 +52,9 @@ def add_en_name_for_exchange(sender, instance, **kwargs):
     if instance.en_name is None:
         instance.en_name = instance.name
 
+    if instance.active_status != 'active':
+        instance.is_active = False
+
     # print(instance.__dict__)
 
     # print(instance.active_status in ('disabled', 'sсam'))

@@ -57,6 +57,9 @@ def try_create_reverse_direction(sender, instance, **kwargs):
 def add_en_name_for_exchange(sender, instance, **kwargs):
     if instance.en_name is None:
         instance.en_name = instance.name
+    
+    if instance.active_status != 'active':
+        instance.is_active = False
 
 
 #Сигнал для создания периодических задач

@@ -271,8 +271,9 @@ class BlackListExchangeSchema(BaseModel):
     # workStatus: str = Field(alias='active_status')
     # reserves: str | None = Field(alias='reserve_amount')
     # courses: int | None = Field(alias='direction_count')
-    url: str | None
+    # url: str | None
     # reviews: ReviewCountSchema
+
 
 
 class DetailBlackListExchangeSchema(BaseModel):
@@ -287,6 +288,10 @@ class DetailBlackListExchangeSchema(BaseModel):
     # courses: int | None = Field(alias='direction_count')
     url: str | None
     # reviews: ReviewCountSchema
+
+
+class NewDetailBlackListExchangeSchema(DetailBlackListExchangeSchema):
+    linked_urls: list
 
 
 class DetailExchangeSchema(BaseModel):

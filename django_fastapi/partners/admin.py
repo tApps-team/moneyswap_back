@@ -1126,7 +1126,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
         else:
             readonly_fields = ('partner_link', 'time_create', 'get_total_direction_count',) + readonly_fields
 
-        return readonly_fields + ('link_count', 'country_link_count', 'is_available', 'time_disable')
+        return readonly_fields + ('link_count', 'country_link_count', 'is_available')
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         # print(len(connection.queries))
