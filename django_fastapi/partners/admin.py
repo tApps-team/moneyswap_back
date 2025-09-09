@@ -1275,7 +1275,8 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
                 obj.is_active = True
 
             if obj.active_status == 'disabled':
-                obj.time_disable = timezone.now()
+                if obj.time_disable is None:
+                    obj.time_disable = timezone.now()
             else:
                 obj.time_disable = None
 
