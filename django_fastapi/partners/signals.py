@@ -13,7 +13,7 @@ from general_models.utils.base import get_actual_datetime, UNIT_TIME_CHOICES
 from general_models.utils.periodic_tasks import get_or_create_schedule
 from general_models.models import ExchangeAdmin, PartnerTimeUpdate
 
-from .models import Direction, Exchange, Review, Comment, AdminComment, PartnerCountry, PartnerCity
+from .models import Direction, Exchange, PartnerCountry, PartnerCity
 
 
 # Сигнал для создания периодической задачи, которая проверяет
@@ -53,27 +53,27 @@ def add_en_name_for_exchange(sender, instance, **kwargs):
 
 #Сигнал для автоматической установки времени
 #по московскому часовому поясу при создании отзыва в БД
-@receiver(pre_save, sender=Review)
-def change_time_create_for_review(sender, instance, **kwargs):
-    if instance.time_create is None:
-        instance.time_create = datetime.now()
+# @receiver(pre_save, sender=Review)
+# def change_time_create_for_review(sender, instance, **kwargs):
+#     if instance.time_create is None:
+#         instance.time_create = datetime.now()
 
 
-#Сигнал для автоматической установки времени
-#по московскому часовому поясу при создании комментария в БД
-@receiver(pre_save, sender=Comment)
-def change_time_create_for_comment(sender, instance, **kwargs):
-    if instance.time_create is None:
-        instance.time_create = datetime.now()
+# #Сигнал для автоматической установки времени
+# #по московскому часовому поясу при создании комментария в БД
+# @receiver(pre_save, sender=Comment)
+# def change_time_create_for_comment(sender, instance, **kwargs):
+#     if instance.time_create is None:
+#         instance.time_create = datetime.now()
 
 
-#Сигнал для автоматической установки времени
-#по московскому часовому поясу при создании комментария
-#администрации в БД
-@receiver(pre_save, sender=AdminComment)
-def change_time_create_for_comment(sender, instance, **kwargs):
-    if instance.time_create is None:
-        instance.time_create = datetime.now()
+# #Сигнал для автоматической установки времени
+# #по московскому часовому поясу при создании комментария
+# #администрации в БД
+# @receiver(pre_save, sender=AdminComment)
+# def change_time_create_for_comment(sender, instance, **kwargs):
+#     if instance.time_create is None:
+#         instance.time_create = datetime.now()
 
 
 # @receiver(pre_save, sender=Direction)
@@ -81,24 +81,24 @@ def change_time_create_for_comment(sender, instance, **kwargs):
 #     if instance.time_update is None:
 #         instance.time_update = get_actual_datetime()
 
-@receiver(post_save, sender=Review)
-def send_notification_after_add_review(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Review)
+# def send_notification_after_add_review(sender, instance, created, **kwargs):
     
-    if not created and instance.moderation == True:
-        exchange_marker = 'partner'
+#     if not created and instance.moderation == True:
+#         exchange_marker = 'partner'
 
-        exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.exchange_id,
-                                                      exchange_marker=exchange_marker).first()
+#         exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.exchange_id,
+#                                                       exchange_marker=exchange_marker).first()
         
-        if exchange_admin:
-            user_id = exchange_admin.user_id
+#         if exchange_admin:
+#             user_id = exchange_admin.user_id
 
-            async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
-                                                                      instance.exchange.id,
-                                                                      instance.pk,
-                                                                      exchange_marker)
-            # send notification to admin user in chat with bot
-            pass
+#             async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
+#                                                                       instance.exchange.id,
+#                                                                       instance.pk,
+#                                                                       exchange_marker)
+#             # send notification to admin user in chat with bot
+#             pass
 
 
 @receiver(pre_save, sender=PartnerCountry)

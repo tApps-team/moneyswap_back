@@ -12,7 +12,7 @@ from general_models.utils.base import get_actual_datetime
 
 from general_models.models import ExchangeAdmin
 
-from .models import Exchange, Direction, ExchangeDirection, Review, Comment, AdminComment
+from .models import Exchange, Direction, ExchangeDirection
 from .periodic_tasks import (manage_periodic_task_for_create,
                              manage_periodic_task_for_update,
                              manage_periodic_task_for_parse_black_list)
@@ -88,47 +88,47 @@ def delete_task_for_exchange(sender, instance, **kwargs):
 
 #Сигнал для автоматической установки времени
 #по московскому часовому поясу при создании отзыва в БД
-@receiver(pre_save, sender=Review)
-def change_time_create_for_review(sender, instance, **kwargs):
-    if instance.time_create is None:
-        instance.time_create = datetime.now()
+# @receiver(pre_save, sender=Review)
+# def change_time_create_for_review(sender, instance, **kwargs):
+#     if instance.time_create is None:
+#         instance.time_create = datetime.now()
 
 
 #Сигнал для автоматической установки времени
 #по московскому часовому поясу при создании комментария в БД
-@receiver(pre_save, sender=Comment)
-def change_time_create_for_comment(sender, instance, **kwargs):
-    if instance.time_create is None:
-        instance.time_create = datetime.now()
+# @receiver(pre_save, sender=Comment)
+# def change_time_create_for_comment(sender, instance, **kwargs):
+#     if instance.time_create is None:
+#         instance.time_create = datetime.now()
 
 
 #Сигнал для автоматической установки времени
 #по московскому часовому поясу при создании комментария
 #администрации в БД
-@receiver(pre_save, sender=AdminComment)
-def change_time_create_for_comment(sender, instance, **kwargs):
-    if instance.time_create is None:
-        instance.time_create = datetime.now()
+# @receiver(pre_save, sender=AdminComment)
+# def change_time_create_for_comment(sender, instance, **kwargs):
+#     if instance.time_create is None:
+#         instance.time_create = datetime.now()
 
 
-@receiver(post_save, sender=Review)
-def send_notification_after_add_review(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Review)
+# def send_notification_after_add_review(sender, instance, created, **kwargs):
     
-    if not created and instance.moderation == True:
-        exchange_marker = 'cash'
+#     if not created and instance.moderation == True:
+#         exchange_marker = 'cash'
 
-        exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.exchange_id,
-                                                      exchange_marker=exchange_marker).first()
+#         exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.exchange_id,
+#                                                       exchange_marker=exchange_marker).first()
         
-        if exchange_admin:
-            user_id = exchange_admin.user_id
+#         if exchange_admin:
+#             user_id = exchange_admin.user_id
 
-            async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
-                                                                      instance.exchange.id,
-                                                                      instance.pk,
-                                                                      exchange_marker)
-            # send notification to admin user in chat with bot
-            pass
+#             async_to_sync(send_review_notifitation_to_exchange_admin)(user_id,
+#                                                                       instance.exchange.id,
+#                                                                       instance.pk,
+#                                                                       exchange_marker)
+#             # send notification to admin user in chat with bot
+#             pass
 
 
 # @receiver(post_save, sender=Comment)

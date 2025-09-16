@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from general_models.models import (BaseExchange,
-                                   BaseReview,
-                                   BaseComment,
+                                #    BaseReview,
+                                #    BaseComment,
                                    Guest,
-                                   BaseAdminComment,
+                                #    BaseAdminComment,
                                    BaseExchangeLinkCount,
                                    Valute,
                                    BaseDirectionRate)
@@ -196,7 +196,7 @@ class CountryDirection(models.Model):
     limit_direction = get_limit_direction()
 
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
                                  verbose_name='Обменник',
                                  related_name='country_directions',
                                  blank=True,
@@ -209,7 +209,9 @@ class CountryDirection(models.Model):
                              related_name='partner_directions')
     direction = models.ForeignKey(CashDirection,
                                   verbose_name='Направление',
-                                  on_delete=models.CASCADE,
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
                                   limit_choices_to=limit_direction,
                                   related_name='partner_country_directions')
     min_amount = models.FloatField('Минимальное количество',
@@ -249,21 +251,23 @@ class Direction(models.Model):
     limit_direction = get_limit_direction()
 
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
                                  verbose_name='Обменник',
                                  related_name='city_directions',
                                  blank=True,
                                  null=True,
                                  default=None)
-
-
     city = models.ForeignKey(PartnerCity,
-                             on_delete=models.CASCADE,
+                             on_delete=models.SET_NULL,
+                             blank=True,
+                             null=True,
                              verbose_name='Город',
                              related_name='partner_directions')
     direction = models.ForeignKey(CashDirection,
                                   verbose_name='Направление',
-                                  on_delete=models.CASCADE,
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
                                   limit_choices_to=limit_direction,
                                   related_name='partner_directions')
     min_amount = models.FloatField('Минимальное количество',
@@ -301,12 +305,16 @@ class Direction(models.Model):
 
 class NonCashDirection(models.Model):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='no_cash_directions')
     direction = models.ForeignKey(NoCashDirection,
                                   verbose_name='Направление',
-                                  on_delete=models.CASCADE,
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
                                   related_name='partner_directions')
     min_amount = models.FloatField('Минимальное количество',
                                    blank=True,
@@ -341,69 +349,71 @@ class NonCashDirection(models.Model):
         return f'{self.exchange} - {self.direction}'
 
 
-class Review(BaseReview):
-    exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
-                                 verbose_name='Наличный обменник',
-                                 related_name='reviews')
-    guest = models.ForeignKey(Guest,
-                              blank=True,
-                              null=True,
-                              default=None,
-                              verbose_name='Гостевой пользователь',
-                              related_name='partner_reviews',
-                              on_delete=models.CASCADE)
+# class Review(BaseReview):
+#     exchange = models.ForeignKey(Exchange,
+#                                  on_delete=models.CASCADE,
+#                                  verbose_name='Наличный обменник',
+#                                  related_name='reviews')
+#     guest = models.ForeignKey(Guest,
+#                               blank=True,
+#                               null=True,
+#                               default=None,
+#                               verbose_name='Гостевой пользователь',
+#                               related_name='partner_reviews',
+#                               on_delete=models.CASCADE)
     
-    class Meta:
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
-        ordering = ('-time_create', 'status', 'exchange')
+#     class Meta:
+#         verbose_name = 'Отзыв'
+#         verbose_name_plural = 'Отзывы'
+#         ordering = ('-time_create', 'status', 'exchange')
 
-    def __str__(self):
-        return 'Партнёрский ' + super().__str__()
+#     def __str__(self):
+#         return 'Партнёрский ' + super().__str__()
 
 
-class Comment(BaseComment):
-    review = models.ForeignKey(Review,
-                               on_delete=models.CASCADE,
-                               verbose_name='Отзыв',
-                               related_name='comments')
-    guest = models.ForeignKey(Guest,
-                              blank=True,
-                              null=True,
-                              default=None,
-                              verbose_name='Гостевой пользователь',
-                              related_name='partner_comments',
-                              on_delete=models.CASCADE)
+# class Comment(BaseComment):
+#     review = models.ForeignKey(Review,
+#                                on_delete=models.CASCADE,
+#                                verbose_name='Отзыв',
+#                                related_name='comments')
+#     guest = models.ForeignKey(Guest,
+#                               blank=True,
+#                               null=True,
+#                               default=None,
+#                               verbose_name='Гостевой пользователь',
+#                               related_name='partner_comments',
+#                               on_delete=models.CASCADE)
     
-    class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
-        ordering = ('-time_create', 'status', 'review')
+#     class Meta:
+#         verbose_name = 'Комментарий'
+#         verbose_name_plural = 'Комментарии'
+#         ordering = ('-time_create', 'status', 'review')
 
-    def __str__(self):
-        return 'Партнёрский ' + super().__str__()
+#     def __str__(self):
+#         return 'Партнёрский ' + super().__str__()
     
 
-class AdminComment(BaseAdminComment):
-    review = models.ForeignKey(Review,
-                               on_delete=models.CASCADE,
-                               verbose_name='Отзыв',
-                               related_name='admin_comments')
+# class AdminComment(BaseAdminComment):
+#     review = models.ForeignKey(Review,
+#                                on_delete=models.CASCADE,
+#                                verbose_name='Отзыв',
+#                                related_name='admin_comments')
 
-    class Meta:
-        # unique_together = (('review','username','time_create'), )
-        verbose_name = 'Комментарий администрации'
-        verbose_name_plural = 'Комментарии администрации'
-        ordering = ('-time_create', 'review')
+#     class Meta:
+#         # unique_together = (('review','username','time_create'), )
+#         verbose_name = 'Комментарий администрации'
+#         verbose_name_plural = 'Комментарии администрации'
+#         ordering = ('-time_create', 'review')
 
-    def __str__(self):
-        return 'Партнёрский админский ' + super().__str__()
+#     def __str__(self):
+#         return 'Партнёрский админский ' + super().__str__()
     
 
 class ExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='exchange_counts')
     user = models.ForeignKey(Guest,
@@ -411,7 +421,7 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                              verbose_name='Гостевой пользователь',
                              related_name='partner_exchange_counts')
     exchange_direction = models.ForeignKey(Direction,
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
                                            verbose_name='Готовое направление',
                                            related_name='exchange_counts',
                                            null=True,
@@ -420,7 +430,9 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
 
 class CountryExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='exchange_country_counts')
     user = models.ForeignKey(Guest,
@@ -428,7 +440,7 @@ class CountryExchangeLinkCount(BaseExchangeLinkCount):
                              verbose_name='Гостевой пользователь',
                              related_name='partner_exchange_country_counts')
     exchange_direction = models.ForeignKey(CountryDirection,
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
                                            verbose_name='Готовое направление',
                                            related_name='country_exchange_counts',
                                            null=True,
@@ -441,7 +453,9 @@ class CountryExchangeLinkCount(BaseExchangeLinkCount):
 
 class NonCashExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='exchange_no_cash_counts')
     user = models.ForeignKey(Guest,
@@ -449,7 +463,7 @@ class NonCashExchangeLinkCount(BaseExchangeLinkCount):
                              verbose_name='Гостевой пользователь',
                              related_name='partner_exchange_no_cash_counts')
     exchange_direction = models.ForeignKey(NonCashDirection,
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
                                            verbose_name='Готовое направление',
                                            related_name='no_cash_exchange_counts',
                                            null=True,
@@ -462,11 +476,15 @@ class NonCashExchangeLinkCount(BaseExchangeLinkCount):
 
 class DirectionRate(BaseDirectionRate):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='exchange_rates')
     exchange_direction = models.ForeignKey(Direction,
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
+                                           blank=True,
+                                           null=True,
                                            verbose_name='Готовое направление',
                                            related_name='direction_rates')
     
@@ -487,11 +505,15 @@ class DirectionRate(BaseDirectionRate):
 
 class CountryDirectionRate(BaseDirectionRate):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='exchange_country_rates')
     exchange_direction = models.ForeignKey(CountryDirection,
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
+                                           blank=True,
+                                           null=True,
                                            verbose_name='Готовое направление',
                                            related_name='direction_rates')
     
@@ -512,11 +534,15 @@ class CountryDirectionRate(BaseDirectionRate):
 
 class NonCashDirectionRate(BaseDirectionRate):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='exchange_no_cash_rates')
     exchange_direction = models.ForeignKey(NonCashDirection,
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
+                                           blank=True,
+                                           null=True,
                                            verbose_name='Готовое направление',
                                            related_name='direction_rates')
     

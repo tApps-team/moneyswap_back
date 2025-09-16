@@ -4,7 +4,7 @@ from celery.app.task import Task
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 
-from django.db.models import Value, CharField
+from django.db.models import Value, CharField, Q
 
 from django.db import connection
 
@@ -13,6 +13,8 @@ from no_cash import models as no_cash_models
 from partners import models as partner_models
 
 from config import SELENIUM_DRIVER
+
+from .models import NewBaseReview
 
 from .utils.parse_reviews.selenium import parse_reviews
 from .utils.parse_exchange_info.base import parse_exchange_info
@@ -23,13 +25,14 @@ from .utils.tasks import try_update_courses
 #со статусом "Отклонён" из БД
 @shared_task(name='delete_cancel_reviews')
 def delete_cancel_reviews():
-    cash_models.Review.objects.filter(status='Отклонён').delete()
-    no_cash_models.Review.objects.filter(status='Отклонён').delete()
-    partner_models.Review.objects.filter(status='Отклонён').delete()
+    # cash_models.Review.objects.filter(status='Отклонён').delete()
+    # no_cash_models.Review.objects.filter(status='Отклонён').delete()
+    # partner_models.Review.objects.filter(status='Отклонён').delete()
 
-    cash_models.Comment.objects.filter(status='Отклонён').delete()
-    no_cash_models.Comment.objects.filter(status='Отклонён').delete()
-    partner_models.Comment.objects.filter(status='Отклонён').delete()
+    # cash_models.Comment.objects.filter(status='Отклонён').delete()
+    # no_cash_models.Comment.objects.filter(status='Отклонён').delete()
+    # partner_models.Comment.objects.filter(status='Отклонён').delete()
+    NewBaseReview.objects.filter(status='Отклонён').delete()
 
 
 #WITH SELENIUM
@@ -76,8 +79,8 @@ def parse_reviews_for_exchange(exchange_name: str, marker: str):
 
 @shared_task(name='update_popular_count_direction_time')
 def update_popular_count_direction():
-    cash_direction = cash_models.Direction.objects.all()
-    no_cash_directions = no_cash_models.Direction.objects.all()
+    cash_direction = cash_models.Direction.objects
+    no_cash_directions = no_cash_models.Direction.objects
 
     cash_direction.update(popular_count=0)
     no_cash_directions.update(popular_count=0)
@@ -178,3 +181,49 @@ def parse_actual_exchanges_info():
     parse_exchange_info(exchange_list)
     # for exchange in exchange_list:
     #     parse_exchange_info(exchange)
+
+
+@shared_task(name='periodic_delete_unlinked_exchange_records')
+def periodic_delete_unlinked_exchange_records():
+    batch_size = 1000
+
+    exchangedirection_delete_filter = Q(exchange_id__isnull=True)
+
+    deleted_tuples_list = [
+        ('no_cash', no_cash_models.ExchangeDirection),
+        ('cash', cash_models.ExchangeDirection),
+        ('partner', partner_models.Direction),
+        ('partner', partner_models.CountryDirection),
+        ('partner', partner_models.NonCashDirection),
+        ('partner', partner_models.DirectionRate),
+        ('partner', partner_models.CountryDirectionRate),
+        ('partner', partner_models.NonCashDirectionRate),
+    ]
+
+    for marker, _model in deleted_tuples_list:
+        _model: cash_models.ExchangeDirection # как пример для аннотации
+
+        if batch_size <= 0:
+            print(f'end with RETURN {batch_size}')
+            return
+        
+        record_pks_on_delete = _model.objects.filter(exchangedirection_delete_filter)\
+                                                .values_list('pk',
+                                                             flat=True)[:batch_size]
+
+        len_records_on_delete = len(record_pks_on_delete)
+
+        if batch_size < len_records_on_delete:
+            batch_size = 0
+        else:
+            batch_size -= len_records_on_delete
+
+        print(f'{marker} {_model}')
+        print(f'len queryset {len_records_on_delete}')
+        print(f'batch size {batch_size}')
+        _model.objects.filter(pk__in=record_pks_on_delete).delete()
+
+    else:
+        print(f'end with ELSE {batch_size}')
+    
+    # print(connection.queries)

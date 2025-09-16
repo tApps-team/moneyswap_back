@@ -16,7 +16,7 @@ from .utils.tasks import (get_cash_direction_set_for_creating,
                           generate_direction_dict_2)
 from .utils.cache import get_or_set_cash_directions_cache
 
-from .models import Exchange, ExchangeDirection, BlackListElement, Direction, City
+from .models import Exchange, ExchangeDirection, Direction, City
 
 
 # #PERIODIC CREATE
@@ -142,13 +142,14 @@ def create_direction(dict_for_parse: dict,
     
         dict_for_create_exchange_direction = cash_parse_xml(dict_for_parse, xml_file)
     except NoFoundXmlElement:
-        black_list_element, _ = BlackListElement\
-                                .objects\
-                                .get_or_create(city_id=dict_for_parse['city_id'],
-                                               direction_id=dict_for_parse['direction_id'])
+        pass
+        # black_list_element, _ = BlackListElement\
+        #                         .objects\
+        #                         .get_or_create(city_id=dict_for_parse['city_id'],
+        #                                        direction_id=dict_for_parse['direction_id'])
         # print('Нет элемента')
-        Exchange.objects.get(name=dict_for_parse['name'])\
-                        .direction_black_list.add(black_list_element)
+        # Exchange.objects.get(name=dict_for_parse['name'])\
+        #                 .direction_black_list.add(black_list_element)
     except Exception as ex:
         print('PARSE FAILED', ex)
         pass
@@ -341,10 +342,10 @@ def try_create_black_list_direction(dict_for_parse: dict,
             
             ExchangeDirection.objects.create(**dict_for_exchange_direction)
 
-            black_list_element = BlackListElement.objects\
-                                    .get(city_id=dict_for_parse['city_id'],
-                                         direction_id=dict_for_parse['direction_id'])
+            # black_list_element = BlackListElement.objects\
+            #                         .get(city_id=dict_for_parse['city_id'],
+            #                              direction_id=dict_for_parse['direction_id'])
 
-            exchange.direction_black_list.remove(black_list_element)
+            # exchange.direction_black_list.remove(black_list_element)
         except Exception:
             pass

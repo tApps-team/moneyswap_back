@@ -11,24 +11,24 @@ from django_summernote.models import Attachment
 from general_models.models import MassSendMessage, MassSendImage, MassSendVideo, MassSendFile
 from general_models.utils.endpoints import try_generate_icon_url, generate_image_icon
 
-from .models import SimplePage, FAQCategory, FAQPage
+# from .models import SimplePage, FAQCategory, FAQPage
 
 admin.site.unregister(Attachment)
 
 # @admin.register(SimplePage)
-class SimplePageAdmin(SummernoteModelAdmin):
-    summernote_fields = ('upper_content', 'lower_content', )
+# class SimplePageAdmin(SummernoteModelAdmin):
+#     summernote_fields = ('upper_content', 'lower_content', )
 
 
 # @admin.register(FAQCategory)
-class FAQCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', )
+# class FAQCategoryAdmin(admin.ModelAdmin):
+#     list_display = ('name', )
 
 
-# @admin.register(FAQPage)
-class FAQPageAdmin(SummernoteModelAdmin):
-    list_display = ('question', )
-    summernote_fields = ('answer', )
+# # @admin.register(FAQPage)
+# class FAQPageAdmin(SummernoteModelAdmin):
+#     list_display = ('question', )
+#     summernote_fields = ('answer', )
 
 
 class MassSendImageStacked(admin.StackedInline):

@@ -85,6 +85,7 @@ class LogEntryAdmin(admin.ModelAdmin):
 class FeedbackFormAdmin(admin.ModelAdmin):
     list_display = (
         'username',
+        'time_create',
         )
     
     readonly_fields = (
@@ -534,6 +535,8 @@ class BaseReviewStacked(admin.StackedInline):
 class BaseExchangeDirectionAdmin(admin.ModelAdmin):
     list_display = (
         "get_display_name",
+        'is_active',
+        'time_action',
         )
     # list_filter = (
     #     'direction',

@@ -19,7 +19,6 @@ from fastapi import APIRouter, Request, Depends, HTTPException
 
 from .utils.periodic_tasks import get_or_create_schedule
 from general_models.models import (ExchangeAdmin, NewBaseAdminComment, NewBaseComment, NewBaseReview, Valute,
-                                   BaseAdminComment, 
                                    Guest,
                                    FeedbackForm,
                                    en_type_valute_dict)
@@ -46,7 +45,7 @@ from cash.schemas import (SpecialCashDirectionMultiModel,
                           SpecialCashDirectionMultiPrtnerModel,
                           SpecialCashDirectionMultiPrtnerWithExchangeRatesModel,
                           SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel)
-from cash.models import Direction, Country, Exchange, Review
+from cash.models import Direction, Country, Exchange
 
 import partners.models as partner_models
 

@@ -98,4 +98,4 @@ def run_update_tasks(task: Proxy,
         dict_for_parse[f'{valute_from_id} {valute_to_id}'] = direction
     parse_xml_to_dict(dict_for_parse,
                       xml_file,
-                      task)
+                      exchange)

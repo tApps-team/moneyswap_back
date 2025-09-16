@@ -14,9 +14,6 @@ import cash.models as cash_models
 from no_cash.models import (Exchange,
                             Direction,
                             ExchangeDirection,
-                            Review,
-                            Comment,
-                            AdminComment,
                             PopularDirection,
                             ExchangeLinkCount)
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
@@ -45,22 +42,22 @@ class CommentAdmin(BaseCommentAdmin):
 
 
 #Отображение комментариев на странице связанного отзыва
-class CommentStacked(BaseCommentStacked):
-    model = Comment
+# class CommentStacked(BaseCommentStacked):
+#     model = Comment
 
 
 #Отображение комментариев администрации на странице связанного отзыва
-class AdminCommentStacked(BaseAdminCommentStacked):
-    model = AdminComment
+# class AdminCommentStacked(BaseAdminCommentStacked):
+#     model = AdminComment
 
 
 #Отображение отзывов в админ панели
 # @admin.register(Review)
-class ReviewAdmin(BaseReviewAdmin):
-    inlines = [
-        CommentStacked,
-        AdminCommentStacked,
-        ]
+# class ReviewAdmin(BaseReviewAdmin):
+#     inlines = [
+#         CommentStacked,
+#         AdminCommentStacked,
+#         ]
         
     # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
     #     return super().get_queryset(request)\
@@ -68,13 +65,13 @@ class ReviewAdmin(BaseReviewAdmin):
 
 
 #Отображение отзывов на странице связанного обменника
-class ReviewStacked(BaseReviewStacked):
-    model = Review
-    # raw_id_fields = ('guest', )
+# class ReviewStacked(BaseReviewStacked):
+#     model = Review
+#     # raw_id_fields = ('guest', )
 
-    def get_queryset(self, request):
-        return super().get_queryset(request).select_related('exchange',
-                                                            'guest')
+#     def get_queryset(self, request):
+#         return super().get_queryset(request).select_related('exchange',
+#                                                             'guest')
 
 
 #Отображение готовых направлений на странице связанного обменника
@@ -133,7 +130,6 @@ class ExchangeAdmin(BaseExchangeAdmin):
         formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
         
         if isinstance(inline, ExchangeDirectionStacked) or \
-            isinstance(inline, ReviewStacked) or \
                 isinstance(inline, ExchangeLinkCountStacked):
             queryset = formset_kwargs['queryset']
 

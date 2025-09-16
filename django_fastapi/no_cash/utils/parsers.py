@@ -54,7 +54,7 @@ def no_cash_parse_xml(dict_for_parser: dict,
 
 def parse_xml_to_dict(dict_for_parse: dict,
                       xml_file: str,
-                      task: Proxy):
+                      exchange: Exchange):
     # root = etree.fromstring(xml_file.encode())
     xml_file = xml_file.encode()
 
@@ -104,7 +104,7 @@ def parse_xml_to_dict(dict_for_parse: dict,
                             
                             make_valid_values_for_dict(d)
                         except Exception as ex:
-                            # print(ex)
+                            print(f'{ex} || {exchange.name}')
                             d = {
                                 # 'direction_id': direction_id,
                                 'is_active': False,
@@ -282,7 +282,7 @@ def new_parse_xml_to_dict_2(dict_for_parse: dict,
                     
                         make_valid_values_for_dict(d)
                     except Exception as ex:
-                        # print(ex)
+                        print(f'{ex} || {exchange.name}')
                         continue
 
                     else:

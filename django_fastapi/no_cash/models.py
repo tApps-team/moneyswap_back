@@ -6,80 +6,81 @@ from general_models.models import (Valute,
                                    ParseExchange,
                                    BaseDirection,
                                    BaseExchangeDirection,
-                                   BaseReview,
-                                   BaseComment,
+                                #    BaseReview,
+                                #    BaseComment,
                                    Guest,
-                                   BaseAdminComment,
+                                #    BaseAdminComment,
                                    BaseExchangeLinkCount)
 
 
 #Модель обменника 
 class Exchange(ParseExchange):
-    direction_black_list = models.ManyToManyField('Direction', verbose_name='Чёрный список')
+    pass
+    # direction_black_list = models.ManyToManyField('Direction', verbose_name='Чёрный список')
 
 
 #Модель отзыва
-class Review(BaseReview):
-    exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
-                                 verbose_name='Безналичный обменник',
-                                 related_name='reviews')
-    guest = models.ForeignKey(Guest,
-                              blank=True,
-                              null=True,
-                              default=None,
-                              verbose_name='Гостевой пользователь',
-                              related_name='no_cash_reviews',
-                              on_delete=models.CASCADE)
+# class Review(BaseReview):
+#     exchange = models.ForeignKey(Exchange,
+#                                  on_delete=models.CASCADE,
+#                                  verbose_name='Безналичный обменник',
+#                                  related_name='reviews')
+#     guest = models.ForeignKey(Guest,
+#                               blank=True,
+#                               null=True,
+#                               default=None,
+#                               verbose_name='Гостевой пользователь',
+#                               related_name='no_cash_reviews',
+#                               on_delete=models.CASCADE)
     
-    class Meta:
-        # unique_together = (('exchange','username','time_create'), )
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
-        ordering = ('-time_create', 'status', 'exchange')
+#     class Meta:
+#         # unique_together = (('exchange','username','time_create'), )
+#         verbose_name = 'Отзыв'
+#         verbose_name_plural = 'Отзывы'
+#         ordering = ('-time_create', 'status', 'exchange')
 
-    def __str__(self):
-        return 'Безналичный' + super().__str__()
+#     def __str__(self):
+#         return 'Безналичный' + super().__str__()
 
 
 #Модель комментария
-class Comment(BaseComment):
-    review = models.ForeignKey(Review,
-                               on_delete=models.CASCADE,
-                               verbose_name='Отзыв',
-                               related_name='comments')
-    guest = models.ForeignKey(Guest,
-                              blank=True,
-                              null=True,
-                              default=None,
-                              verbose_name='Гостевой пользователь',
-                              related_name='no_cash_comments',
-                              on_delete=models.CASCADE)
+# class Comment(BaseComment):
+#     review = models.ForeignKey(Review,
+#                                on_delete=models.CASCADE,
+#                                verbose_name='Отзыв',
+#                                related_name='comments')
+#     guest = models.ForeignKey(Guest,
+#                               blank=True,
+#                               null=True,
+#                               default=None,
+#                               verbose_name='Гостевой пользователь',
+#                               related_name='no_cash_comments',
+#                               on_delete=models.CASCADE)
     
-    class Meta:
-        unique_together = (('review','username','time_create'), )
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
-        ordering = ('-time_create', 'status', 'review')
+#     class Meta:
+#         unique_together = (('review','username','time_create'), )
+#         verbose_name = 'Комментарий'
+#         verbose_name_plural = 'Комментарии'
+#         ordering = ('-time_create', 'status', 'review')
     
-    def __str__(self):
-        return 'Безналичный' + super().__str__()
+#     def __str__(self):
+#         return 'Безналичный' + super().__str__()
     
 
-class AdminComment(BaseAdminComment):
-    review = models.ForeignKey(Review,
-                               on_delete=models.CASCADE,
-                               verbose_name='Отзыв',
-                               related_name='admin_comments')
+# class AdminComment(BaseAdminComment):
+#     review = models.ForeignKey(Review,
+#                                on_delete=models.CASCADE,
+#                                verbose_name='Отзыв',
+#                                related_name='admin_comments')
 
-    class Meta:
-        # unique_together = (('review','username','time_create'), )
-        verbose_name = 'Комментарий администрации'
-        verbose_name_plural = 'Комментарии администрации'
-        ordering = ('-time_create', 'review')
+#     class Meta:
+#         # unique_together = (('review','username','time_create'), )
+#         verbose_name = 'Комментарий администрации'
+#         verbose_name_plural = 'Комментарии администрации'
+#         ordering = ('-time_create', 'review')
 
-    def __str__(self):
-        return 'Безналичный' + super().__str__()
+#     def __str__(self):
+#         return 'Безналичный' + super().__str__()
 
 
 #Модель направления
@@ -123,12 +124,16 @@ class PopularDirection(models.Model):
 #Модель готового направления
 class ExchangeDirection(BaseExchangeDirection):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='directions')
     direction = models.ForeignKey(Direction,
                                   verbose_name='Направление для обмена',
-                                  on_delete=models.CASCADE,
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
                                   related_name='exchange_directions')
     
     class Meta:
@@ -154,7 +159,9 @@ class ExchangeDirection(BaseExchangeDirection):
 
 class ExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
-                                 on_delete=models.CASCADE,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
                                  verbose_name='Обменник',
                                  related_name='exchange_counts')
     user = models.ForeignKey(Guest,
@@ -162,7 +169,7 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                              verbose_name='Гостевой пользователь',
                              related_name='no_cash_exchange_counts')
     exchange_direction = models.ForeignKey(ExchangeDirection,
-                                           on_delete=models.CASCADE,
+                                           on_delete=models.SET_NULL,
                                            verbose_name='Готовое направление',
                                            related_name='no_cash_exchange_counts',
                                            null=True,

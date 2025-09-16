@@ -36,9 +36,6 @@ from .models import (Country,
                      Exchange,
                      Direction,
                      ExchangeDirection,
-                     Review,
-                     Comment,
-                     AdminComment,
                      PopularDirection,
                      ExchangeLinkCount)
 
@@ -110,48 +107,48 @@ class CountryAdmin(admin.ModelAdmin):
 
 #Отображение комментариев в админ панели
 # @admin.register(Comment)
-class CommentAdmin(BaseCommentAdmin):
+# class CommentAdmin(BaseCommentAdmin):
     
-    def get_queryset(self, request):
-        return super().get_queryset(request)
+#     def get_queryset(self, request):
+#         return super().get_queryset(request)
 
 
 #Отображение комментариев на странице связанного отзыва
-class CommentStacked(BaseCommentStacked):
-    model = Comment
+# class CommentStacked(BaseCommentStacked):
+#     model = Comment
 
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        return super().get_queryset(request).select_related('review')
+#     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+#         return super().get_queryset(request).select_related('review')
 
 
 #Отображение комментариев администрации на странице связанного отзыва
-class AdminCommentStacked(BaseAdminCommentStacked):
-    model = AdminComment
+# class AdminCommentStacked(BaseAdminCommentStacked):
+#     model = AdminComment
 
 
 #Отображение отзывов в админ панели
 # @admin.register(Review)
-class ReviewAdmin(BaseReviewAdmin):
-    inlines = [
-        CommentStacked,
-        AdminCommentStacked,
-        ]
+# class ReviewAdmin(BaseReviewAdmin):
+#     inlines = [
+#         CommentStacked,
+#         AdminCommentStacked,
+#         ]
 
-    def has_add_permission(self, request: HttpRequest) -> bool:
-        if not request.user.is_superuser:
-                return False
-        return super().has_add_permission(request)
+#     def has_add_permission(self, request: HttpRequest) -> bool:
+#         if not request.user.is_superuser:
+#                 return False
+#         return super().has_add_permission(request)
 
-    def get_queryset(self, request): 
-        return super().get_queryset(request)
+#     def get_queryset(self, request): 
+#         return super().get_queryset(request)
 
 
 #Отображение отзывов на странице связанного обменника
-class ReviewStacked(BaseReviewStacked):
-    model = Review
+# class ReviewStacked(BaseReviewStacked):
+#     model = Review
 
-    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-        return super().get_queryset(request).select_related('exchange')
+#     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+#         return super().get_queryset(request).select_related('exchange')
 
 
 #Отображение готовых направлений на странице связанного обменника
@@ -213,7 +210,6 @@ class ExchangeAdmin(BaseExchangeAdmin):
         formset_kwargs = super().get_formset_kwargs(request, obj, inline, prefix)
         
         if isinstance(inline, ExchangeDirectionStacked) or \
-            isinstance(inline, ReviewStacked) or \
                 isinstance(inline, ExchangeLinkCountStacked):
             queryset = formset_kwargs['queryset']
 

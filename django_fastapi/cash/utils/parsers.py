@@ -14,7 +14,7 @@ from django.utils import timezone
 from general_models.utils.exc import NoFoundXmlElement
 from general_models.utils.tasks import make_valid_values_for_dict
 
-from cash.models import ExchangeDirection, Exchange, BlackListElement
+from cash.models import ExchangeDirection, Exchange
 
 
 def cash_parse_xml(dict_for_parse: dict,
@@ -50,7 +50,8 @@ def parse_update_direction_by_city(dict_for_parse: dict,
                                    city: str,
                                    valute_from: str,
                                    valute_to: str,
-                                   update_list: list):
+                                   update_list: list,
+                                   exchange: Exchange):
     inner_key = f'{city} {valute_from[0]} {valute_to[0]}'
 
     if dict_for_parse.get(inner_key, False):
@@ -97,7 +98,7 @@ def parse_update_direction_by_city(dict_for_parse: dict,
             
             make_valid_values_for_dict(d)
         except Exception as ex:
-            print(ex)
+            print(f'{ex} | {exchange.name}')
             d = {
                 # 'direction_id': direction_id,
                 'is_active': False,
@@ -114,7 +115,7 @@ def parse_update_direction_by_city(dict_for_parse: dict,
 
 def parse_xml_to_dict(dict_for_parse: dict,
                       xml_file: str,
-                      task: Proxy):
+                      exchange: Exchange):
     # root = etree.fromstring(xml_file.encode())
     xml_file = xml_file.encode()
 
@@ -148,7 +149,8 @@ def parse_xml_to_dict(dict_for_parse: dict,
                                                        city,
                                                        valute_from,
                                                        valute_to,
-                                                       update_list)
+                                                       update_list,
+                                                       exchange)
                     else:
                         cities = [c.strip() for c in city.split(',')]
                         
@@ -158,7 +160,8 @@ def parse_xml_to_dict(dict_for_parse: dict,
                                                             city,
                                                             valute_from,
                                                             valute_to,
-                                                            update_list)
+                                                            update_list,
+                                                            exchange)
                         # inner_key = f'{city} {valute_from[0]} {valute_to[0]}'
                         
                         # if dict_for_parse.get(key, False):
@@ -482,7 +485,7 @@ def new_parse_create_direction_by_city(dict_for_parse: dict,
                 
                     make_valid_values_for_dict(d)
                 except Exception as ex:
-                    print(ex)
+                    print(f'{ex} | {exchange.name}')
                     pass
                 else:
                     try:
@@ -628,10 +631,10 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                         for inner_key in inner_dict:
                             if value := inner_dict.get(inner_key):
                                 city_id, direction_id = value
-                                black_list_direction, _ = BlackListElement\
-                                                        .objects\
-                                                        .get_or_create(city_id=city_id,
-                                                                       direction_id=direction_id)
+                                # black_list_direction, _ = BlackListElement\
+                                #                         .objects\
+                                #                         .get_or_create(city_id=city_id,
+                                #                                        direction_id=direction_id)
                                 # black_list_element_query = BlackListElement.objects.filter(city_id=city_id,
                                 #                                                         direction_id=direction_id)
 
@@ -642,7 +645,7 @@ def parse_xml_to_dict_2(dict_for_parse: dict,
                                 #                             .objects\
                                 #                             .create(city_id=city_id,
                                 #                                     direction_id=direction_id)
-                                black_list.append(black_list_direction)
+                                # black_list.append(black_list_direction)
                                 
                 exchange.direction_black_list.add(*black_list)
                 # создаем BlackListElement`ы и добавляюм в exchange.direction_black_list.add(*elements)
