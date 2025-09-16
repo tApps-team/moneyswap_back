@@ -485,7 +485,7 @@ def new_parse_create_direction_by_city(dict_for_parse: dict,
                 
                     make_valid_values_for_dict(d)
                 except Exception as ex:
-                    print(f'{ex} | {exchange.name}')
+                    print(f'{ex} | {exchange.name} direction_id {direction_id}')
                     pass
                 else:
                     try:

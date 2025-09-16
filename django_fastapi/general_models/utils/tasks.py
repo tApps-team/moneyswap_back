@@ -1,5 +1,6 @@
 import functools
 from typing import Union
+from decimal import Decimal, ROUND_HALF_UP
 
 from django.core.cache import cache
 from django.db.models import Prefetch, Subquery, OuterRef
@@ -44,6 +45,14 @@ def make_valid_values_for_dict(dict_for_exchange_direction: dict):
         else:
             defferent = in_count / 100 * fromfee
             in_count = in_count - defferent  
+    
+    in_count = Decimal(in_count).quantize(Decimal('0.00001'),
+                                          rounding=ROUND_HALF_UP)
+    out_count = Decimal(out_count).quantize(Decimal('0.00001'),
+                                            rounding=ROUND_HALF_UP)
+    
+    if len(str(in_count)) >= 20 or len(str(out_count)) >= 20:
+        raise ValueError("Слишком большое число для DecimalField(max_digits=20)")
     
     dict_for_exchange_direction['in_count'] = in_count
     dict_for_exchange_direction['out_count'] = out_count
