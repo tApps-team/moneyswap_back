@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.db import models
 from django.forms import ValidationError
+from django.utils import timezone
 
 # from partners.models import CustomUser
 
@@ -64,6 +65,162 @@ class Valute(models.Model):
 
     def __str__(self):
         return self.code_name
+
+
+# new Valute model
+class NewValute(models.Model):
+    type_valute_list = [
+        ('Криптовалюта', 'Криптовалюта'),
+        ('Эл. деньги', 'Эл. деньги'),
+        ('Балансы криптобирж', 'Балансы криптобирж'),
+        ('Банкинг', 'Банкинг'),
+        ('Денежные переводы', 'Денежные переводы'),
+        ('Наличные', 'Наличные'),
+        ('ATM QR', 'ATM QR'),
+        ]
+    name = models.CharField('Название валюты(ru)',
+                            max_length=50)
+    en_name = models.CharField('Название валюты(en)',
+                               max_length=50,
+                               unique=True,
+                               null=True,
+                               default=None)
+    code_name = models.CharField('Кодовое сокращение',
+                                 max_length=10,
+                                 unique=True)
+    type_valute = models.CharField('Тип валюты',
+                                   max_length=30,
+                                   choices=type_valute_list)
+    icon_url = models.FileField('Иконка валюты',
+                                upload_to='icons/valute/',
+                                blank=True,
+                                null=True)
+    available_for_partners = models.BooleanField('Доступно для партнёров',
+                                                 default=False)
+    is_popular = models.BooleanField('Популярная',
+                                     default=False)
+
+    class Meta:
+        verbose_name = 'Валюта'
+        verbose_name_plural = 'Валюты'
+        ordering = ['code_name']
+        indexes = [
+            models.Index(fields=['code_name', ])
+        ]
+
+    def __str__(self):
+        return self.code_name
+
+
+class Exchanger(models.Model):
+    active_status_choice = [
+        ('Cостояния для изменения', [
+            ('active', 'Активный'),
+            ('disabled', 'Отключен'),
+            ('scam', 'Скам'),
+            ('skip', 'Не попадает ни в одну выдачу'),
+        ]),
+        ('Служебные состояния', [
+            ('inactive', 'Неактивный'),
+            ('timeout error', 'Ошибка по таймауту'),
+            ('robot check error', 'Ошибка проверки на робота'),
+        ])
+    ]
+
+    name = models.CharField('Название обменника(ru)',
+                            max_length=255,
+                            unique=True)
+    en_name = models.CharField('Название обменника(en)',
+                               max_length=255,
+                               unique=True,
+                               blank=True,
+                               null=True,
+                               default=None)
+    # cделать поле обязательным ? ✅
+    # partner_link = models.CharField('Партнёрская ссылка',
+    #                                 max_length=255,
+    #                                 blank=True,
+    #                                 null=True,
+    #                                 default=None)
+    partner_link = models.CharField('Партнёрская ссылка',
+                                    max_length=255)
+    is_active = models.BooleanField('Статус обменника', default=True)
+    active_status = models.CharField('Новый статус обменника',
+                                     max_length=255,
+                                     choices=active_status_choice,
+                                     default='active')
+    is_vip = models.BooleanField('VIP',
+                                 default=False)
+    course_count = models.CharField('Количество курсов для обмена',
+                                    max_length=255,
+                                    blank=True,
+                                    null=True,
+                                    default=None)
+    reserve_amount = models.CharField('Сумма резерва',
+                                      max_length=255,
+                                      blank=True,
+                                      null=True,
+                                      default=None)
+    # возможно стоит поменять на datetime для авто вычисления возраста ✅
+    # age = models.CharField('Возраст',
+    #                        max_length=255,
+    #                        blank=True,
+    #                        null=True,
+    #                        default=None)
+    age = models.DateTimeField('Время добавления',
+                               blank=True,
+                               null=True,
+                               default=None)
+    time_create = models.DateTimeField('Время добавления',
+                                       blank=True,
+                                       null=True,
+                                       default=None)
+    time_disable = models.DateTimeField('Время отключения',
+                                        blank=True,
+                                        null=True,
+                                        default=None)
+    country = models.CharField('Страна',
+                               max_length=255,
+                               blank=True,
+                               null=True,
+                               default=None)
+    #поправить default icon ✅
+    icon_url = models.FileField('Иконка обменника',
+                                upload_to='icons/exchange/',
+                                blank=True,
+                                null=True,
+                                default='icons/exchange/empty_icon.svg')
+    high_aml = models.BooleanField('Высокий AML риск?',
+                                   default=False)
+    xml_url = models.CharField('Ссылка на XML файл',
+                               blank=True,
+                               null=True,
+                               default=None,
+                               max_length=255)
+    period_for_create = models.IntegerField('Частота периодической задачи в секундах',
+                                            blank=True,
+                                            null=True,
+                                            default=90,
+                                            help_text='Значение - положительное целое число.При установлении в 0, останавливает периодическую задачу',
+                                            validators=[is_positive_validate])
+    timeout = models.IntegerField('Кастомный таймаут',
+                                  null=True,
+                                  blank=True,
+                                  default=None,
+                                  help_text='Значение должно быть больше 0 и не больше 15',
+                                  validators=[custom_timeout_validate])
+    
+    class Meta:
+        verbose_name = 'Обменник (новый)'
+        verbose_name_plural = 'Обменники (новые)'
+        ordering = [
+            'name',
+        ]
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['en_name']),
+        ]
+
 
 
 # Модель для времени проверки партнёрских
@@ -391,9 +548,9 @@ class NewBaseReview(BaseReviewComment):
                                       default=None)
     
     class Meta:
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
-        unique_together = (('exchange_name','username','time_create'), )
+        verbose_name = 'Отзыв (новый)'
+        verbose_name_plural = 'Отзывы (новые)'
+        unique_together = (('exchange','username','time_create'), )
     
     def __str__(self):
         if self.time_create is None:
@@ -401,6 +558,37 @@ class NewBaseReview(BaseReviewComment):
             
         date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
         return f'Отзыв {self.pk}, Обменник: {self.exchange_name}, Пользователь: {self.username}, Время создания: {date}'
+
+
+# new Review model
+class Review(BaseReviewComment):
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='new_reviews',
+                              on_delete=models.CASCADE)
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 verbose_name='Обменник',
+                                 related_name='reviews')
+    transaction_id = models.CharField('Номер транзакции',
+                                      blank=True,
+                                      null=True,
+                                      default=None)
+    
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        unique_together = (('exchange_name','username','time_create'), )
+    
+    def __str__(self):
+        if self.time_create is None:
+            self.time_create = timezone.now()
+            
+        date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
+        return f'Отзыв {self.pk}, Обменник: {self.exchange.name}, Пользователь: {self.username}, Время создания: {date}'
 
 
 class NewBaseComment(BaseReviewComment):
@@ -428,6 +616,33 @@ class NewBaseComment(BaseReviewComment):
         return f' комментарий {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange_name}, Пользователь: {self.username}, Время создания: {date}'
 
 
+# new Comment model
+class Comment(BaseReviewComment):
+    guest = models.ForeignKey(Guest,
+                              blank=True,
+                              null=True,
+                              default=None,
+                              verbose_name='Гостевой пользователь',
+                              related_name='new_comments',
+                              on_delete=models.CASCADE)
+    review = models.ForeignKey(Review,
+                               on_delete=models.CASCADE,
+                               verbose_name='Отзыв',
+                               related_name='comments')
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        unique_together = (('review','username','time_create'), )
+
+    def __str__(self):
+        if self.time_create is None:
+            self.time_create = timezone.now()
+
+        date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
+        return f' комментарий {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange.name}, Пользователь: {self.username}, Время создания: {date}'
+
+
+
 class NewBaseAdminComment(models.Model):
     review = models.ForeignKey(NewBaseReview,
                                on_delete=models.CASCADE,
@@ -450,6 +665,31 @@ class NewBaseAdminComment(models.Model):
 
         date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
         return f' комментарий администрации {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange_name}, Время создания: {date}'
+
+
+# new AdminComment model
+class AdminComment(models.Model):
+    review = models.ForeignKey(Review,
+                               on_delete=models.CASCADE,
+                               verbose_name='Отзыв',
+                               related_name='admin_comments')
+    text = models.TextField('Текст сообщения')
+    time_create = models.DateTimeField('Дата создания',
+                                       blank=True,
+                                       null=True,
+                                       default=None,
+                                       help_text='Если оставить поля пустыми, время установится автоматически по московскому часовому поясу')
+
+    class Meta:
+        verbose_name = 'Комментарий администрации'
+        verbose_name_plural = 'Комментарии администрации'
+
+    def __str__(self):
+        if self.time_create is None:
+            self.time_create = timezone.now()
+
+        date = self.time_create.strftime("%d.%m.%Y, %H:%M:%S")
+        return f' комментарий администрации {self.pk}, Отзыв №{self.review.pk}, Обменник: {self.review.exchange.name}, Время создания: {date}'
 
 
 #Абстрактная модель комментария (для наследования)
@@ -743,6 +983,43 @@ class ExchangeAdminOrder(models.Model):
             raise ValidationError('У пользователя есть неактивированная (непромодерированная) заявка. Дождитесь активации предыдущей заявки на стороне пользователя или удалите её в разделе "Общее" (Заявки на подключения обменников к юзерам) и создайте новую')
 
 
+# new ExchangeAdminOrder model
+class NewExchangeAdminOrder(models.Model):
+    # user = models.ForeignKey(Guest,
+    #                          on_delete=models.CASCADE,
+    #                          verbose_name='Пользователь')
+    user_id = models.BigIntegerField('Tg id пользователя')
+    # exchange_name = models.CharField('Название обменника',
+    #                                  max_length=255,
+    #                                  help_text='Название должно совпадать с названием обменника из НАШЕЙ базы!')
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_admin_orders')
+    moderation = models.BooleanField('Модерация',
+                                     default=False)
+    time_create = models.DateTimeField('Время создания',
+                                       auto_now_add=True)
+    
+    class Meta:
+        verbose_name = 'Заявка на подключение обменника к юзеру (новая)'
+        verbose_name_plural = 'Заявки на подключения обменников к юзерам (новые)'
+
+    def __str__(self):
+        return f'{self.user_id} {self.exchange.name}'
+    
+    def clean(self) -> None:
+        super().clean_fields()
+                
+        if ExchangeAdminOrder.objects.filter(exchange_id=self.exchange_id).exists():
+            raise ValidationError('Заявка на этот обменник уже существует. Если хотите привязать нового адимна к этому обменнику, сначала удалите старую заявку и убедитесь, что у обменника нет действующего привязанного админа (Раздел "Общее" [Подключенные обменники к юзерам])')
+
+        if ExchangeAdminOrder.objects.filter(user_id=self.user_id,
+                                             moderation=False).exists():
+            raise ValidationError('У пользователя есть неактивированная (непромодерированная) заявка. Дождитесь активации предыдущей заявки на стороне пользователя или удалите её в разделе "Общее" (Заявки на подключения обменников к юзерам) и создайте новую')
+
+
+
 class ExchangeAdmin(models.Model):
     user = models.ForeignKey(Guest,
                              on_delete=models.CASCADE,
@@ -761,4 +1038,30 @@ class ExchangeAdmin(models.Model):
         verbose_name_plural = 'Подключенные обменники к юзерам'
 
     def __str__(self):
-        return f'{self.user} {self.exchange_name} {self.exchange_marker}'    
+        return f'{self.user} {self.exchange_name} {self.exchange_marker}'
+    
+
+# new ExchangeAdmin model
+class NewExchangeAdmin(models.Model):
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Пользователь',
+                             related_name='new_liked_exchanges')
+    # exchange_marker = models.CharField('Маркер обменника',
+    #                                    max_length=255)
+    # exchange_name = models.CharField('Название обменника',
+    #                                  max_length=255)
+    # exchange_id = models.IntegerField('Id обменника')
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_admins')
+    notification = models.BooleanField('Уведомления включены?', default=True)
+    
+    class Meta:
+        unique_together = [('user', 'exchange')]
+        verbose_name = 'Подключенный обменник к юзеру (новый)'
+        verbose_name_plural = 'Подключенные обменники к юзерам (новые)'
+
+    def __str__(self):
+        return f'{self.user} {self.exchange.name}'

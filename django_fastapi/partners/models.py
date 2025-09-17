@@ -5,13 +5,16 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from general_models.models import (BaseExchange,
-                                #    BaseReview,
-                                #    BaseComment,
-                                   Guest,
-                                #    BaseAdminComment,
                                    BaseExchangeLinkCount,
+                                   BaseDirectionRate,
+                                   Exchanger,
+                                   Guest,
                                    Valute,
-                                   BaseDirectionRate)
+                                   NewValute,
+                                   )
+
+import cash.models as cash_models
+import no_cash.models as no_cash_models
 
 from cash.models import Direction as CashDirection, City, Country
 
@@ -59,6 +62,36 @@ class CustomUser(models.Model):
 
     def __str__(self):
         return f'Пользователь: {self.user}, Обменник: {self.exchange}'
+    
+
+# new CustomUser model
+class NewCustomUser(models.Model):
+    limit_user = Q(is_superuser=False)
+
+    user = models.OneToOneField(User,
+                                verbose_name='Пользователь',
+                                on_delete=models.CASCADE,
+                                limit_choices_to=limit_user,
+                                related_name='new_moderator_account')
+    exchange = models.OneToOneField(Exchanger,
+                                    verbose_name='Партнёрский обменник',
+                                    unique=True,
+                                    blank=True,
+                                    null=True,
+                                    default=None,
+                                    on_delete=models.SET_NULL,
+                                    related_name='account')
+    refresh_token = models.CharField('Рефреш токен',
+                                     max_length=255,
+                                     null=True,
+                                     default=None)
+    
+    class Meta:
+        verbose_name = 'Администратор обменника'
+        verbose_name_plural = 'Администраторы обменников'
+
+    def __str__(self):
+        return f'Пользователь: {self.user}, Обменник: {self.exchange}'
 
 
 class WorkingDay(models.Model):
@@ -91,6 +124,64 @@ class PartnerCountry(models.Model):
     has_office = models.BooleanField('Есть ли офис?', default=False)
     working_days = models.ManyToManyField(WorkingDay,
                                           related_name='working_days_counrties',
+                                          verbose_name='Рабочие дни',
+                                          blank=True)
+    time_from = models.CharField('Работаем с ',
+                                 max_length=50,
+                                 null=True,
+                                 default=None)
+    time_to = models.CharField('Работаем до ',
+                               max_length=50,
+                               null=True,
+                               default=None)
+    weekend_time_from = models.CharField('Работаем с (выходные)',
+                                         max_length=50,
+                                         null=True,
+                                         default=None) 
+    weekend_time_to = models.CharField('Работаем до (выходные)',
+                                       max_length=50,
+                                       null=True,
+                                       default=None)
+    time_update = models.DateTimeField('Время последнего обновления',
+                                       null=True,
+                                       blank=True,
+                                       default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    exclude_cities = models.ManyToManyField(City,
+                                            verbose_name='Исключить города из выдачи',
+                                            blank=True,
+                                            null=True)
+    
+    class Meta:
+        verbose_name = 'Партнёрская страна'
+        verbose_name_plural = 'Партнёрские страны'
+        
+        unique_together = (('exchange', 'country'),)
+        ordering = ('exchange', 'country')
+
+    def __str__(self):
+        return self.country.name
+    
+
+# new PartnerCountry model
+class NewPartnerCountry(models.Model):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.CASCADE,
+                                 related_name='partner_countries')
+    country = models.ForeignKey(Country,
+                                on_delete=models.CASCADE,
+                                related_name='new_partner_countries')
+    has_delivery = models.BooleanField('Есть ли доставка?', default=False)
+    has_office = models.BooleanField('Есть ли офис?', default=False)
+    working_days = models.ManyToManyField(WorkingDay,
+                                          related_name='new_working_days_counrties',
                                           verbose_name='Рабочие дни',
                                           blank=True)
     time_from = models.CharField('Работаем с ',
@@ -190,6 +281,62 @@ class PartnerCity(models.Model):
 
     def __str__(self):
         return f'{self.city}'
+    
+
+# new PartnerCity model
+class NewPartnerCity(models.Model):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.CASCADE,
+                                 related_name='partner_cities')
+    city = models.ForeignKey(City,
+                             on_delete=models.CASCADE,
+                             verbose_name='Город',
+                             related_name='new_partner_cities')
+    has_delivery = models.BooleanField('Есть ли доставка?', default=False)
+    has_office = models.BooleanField('Есть ли офис?', default=False)
+    working_days = models.ManyToManyField(WorkingDay,
+                                          related_name='new_working_days_cities',
+                                          verbose_name='Рабочие дни',
+                                          blank=True)
+    time_from = models.CharField('Работаем с ',
+                                 max_length=50,
+                                 null=True,
+                                 default=None)
+    time_to = models.CharField('Работаем до ',
+                               max_length=50,
+                               null=True,
+                               default=None)
+    weekend_time_from = models.CharField('Работаем с (выходные)',
+                                         max_length=50,
+                                         null=True,
+                                         default=None) 
+    weekend_time_to = models.CharField('Работаем до (выходные)',
+                                       max_length=50,
+                                       null=True,
+                                       default=None)
+    time_update = models.DateTimeField('Время последнего обновления',
+                                       null=True,
+                                       blank=True,
+                                       default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+
+    class Meta:
+        #
+        unique_together = (('exchange', 'city'),)
+        #
+        verbose_name = 'Партнёрский город'
+        verbose_name_plural = 'Партнёрские города'
+        ordering = ('exchange', 'city')
+
+    def __str__(self):
+        return f'{self.city}'
 
 
 class CountryDirection(models.Model):
@@ -208,6 +355,62 @@ class CountryDirection(models.Model):
                              verbose_name='Страна',
                              related_name='partner_directions')
     direction = models.ForeignKey(CashDirection,
+                                  verbose_name='Направление',
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
+                                  limit_choices_to=limit_direction,
+                                  related_name='partner_country_directions')
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=5,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=5,
+                                    null=True,
+                                    default=None)
+    time_update = models.DateTimeField('Последнее обновление',
+                                       auto_now_add=True,
+                                       help_text='Время указано по московскому часовому поясу. При не обновлении процентов или фикс. ставки в течении 3 дней, направление становится неактивным.')
+    is_active = models.BooleanField('Активно?', default=True)
+
+    class Meta:
+        verbose_name = 'Направление страны'
+        verbose_name_plural = 'Направления страны'
+        unique_together = (('country', 'direction'), )
+        ordering = ('country__exchange', 'country', 'direction')
+
+    def __str__(self):
+        return f'{self.country.exchange} {self.country} - {self.direction}'
+    
+
+# new CountryDirection model
+class NewCountryDirection(models.Model):
+    limit_direction = get_limit_direction()
+
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 verbose_name='Обменник',
+                                 related_name='country_directions',
+                                 blank=True,
+                                 null=True,
+                                 default=None)
+
+    country = models.ForeignKey(NewPartnerCountry,
+                             on_delete=models.CASCADE,
+                             verbose_name='Страна',
+                             related_name='partner_directions')
+    direction = models.ForeignKey(cash_models.NewDirection,
                                   verbose_name='Направление',
                                   on_delete=models.SET_NULL,
                                   blank=True,
@@ -303,6 +506,63 @@ class Direction(models.Model):
         return f'{self.city.exchange} {self.city} - {self.direction}'
 
 
+# new Direction model
+class NewDirection(models.Model):
+    limit_direction = get_limit_direction()
+
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 verbose_name='Обменник',
+                                 related_name='city_directions',
+                                 blank=True,
+                                 null=True,
+                                 default=None)
+    city = models.ForeignKey(NewPartnerCity,
+                             on_delete=models.SET_NULL,
+                             blank=True,
+                             null=True,
+                             verbose_name='Город',
+                             related_name='partner_directions')
+    direction = models.ForeignKey(cash_models.NewDirection,
+                                  verbose_name='Направление',
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
+                                  limit_choices_to=limit_direction,
+                                  related_name='partner_directions')
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=5,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=5,
+                                    null=True,
+                                    default=None)
+    time_update = models.DateTimeField('Последнее обновление',
+                                       auto_now_add=True,
+                                       help_text='Время указано по московскому часовому поясу. При не обновлении процентов или фикс. ставки в течении 3 дней, направление становится неактивным.')
+    is_active = models.BooleanField('Активно?', default=True)
+
+    class Meta:
+        verbose_name = 'Направление'
+        verbose_name_plural = 'Направления'
+        unique_together = (('city', 'direction'), )
+        ordering = ('city__exchange', 'city', 'direction')
+
+    def __str__(self):
+        return f'{self.city.exchange} {self.city} - {self.direction}'
+
+
 class NonCashDirection(models.Model):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.SET_NULL,
@@ -348,6 +608,52 @@ class NonCashDirection(models.Model):
     def __str__(self):
         return f'{self.exchange} - {self.direction}'
 
+
+# new NonCashDirection model
+class NewNonCashDirection(models.Model):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='no_cash_directions')
+    direction = models.ForeignKey(no_cash_models.NewDirection,
+                                  verbose_name='Направление',
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
+                                  related_name='partner_directions')
+    min_amount = models.FloatField('Минимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    max_amount = models.FloatField('Максимальное количество',
+                                   blank=True,
+                                   null=True,
+                                   default=None)
+    in_count = models.DecimalField('Сколько отдаём',
+                                   max_digits=20,
+                                   decimal_places=5,
+                                   null=True,
+                                   default=None)
+    out_count = models.DecimalField('Сколько получаем',
+                                    max_digits=20,
+                                    decimal_places=5,
+                                    null=True,
+                                    default=None)
+    time_update = models.DateTimeField('Последнее обновление',
+                                       auto_now_add=True,
+                                       help_text='Время указано по московскому часовому поясу. При не обновлении процентов или фикс. ставки в течении 3 дней, направление становится неактивным.')
+    is_active = models.BooleanField('Активно?', default=True)
+
+    class Meta:
+        verbose_name = 'Безналичное направление'
+        verbose_name_plural = 'Безналичные направления'
+        unique_together = (('exchange', 'direction'), )
+        ordering = ('exchange', 'direction')
+
+    def __str__(self):
+        return f'{self.exchange} - {self.direction}'
 
 # class Review(BaseReview):
 #     exchange = models.ForeignKey(Exchange,
@@ -428,6 +734,31 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                                            default=None)
     
 
+# new ExchangeLinkCount model
+class NewExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='partner_city_exchange_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='new_partner_exchange_counts')
+    exchange_direction = models.ForeignKey(NewDirection,
+                                           on_delete=models.SET_NULL,
+                                           verbose_name='Готовое направление',
+                                           related_name='exchange_direction_counts',
+                                           null=True,
+                                           default=None)
+    
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке (новый)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (новые)'
+        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+    
+
 class CountryExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.SET_NULL,
@@ -451,6 +782,30 @@ class CountryExchangeLinkCount(BaseExchangeLinkCount):
         unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
 
 
+# new CountryExchangeLinkCount
+class NewCountryExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_country_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='new_partner_exchange_country_counts')
+    exchange_direction = models.ForeignKey(NewCountryDirection,
+                                           on_delete=models.SET_NULL,
+                                           verbose_name='Готовое направление',
+                                           related_name='country_exchange_direction_counts',
+                                           null=True,
+                                           default=None)
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке (страны) (новый)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (страны) (новые)'
+        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+
+
 class NonCashExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.SET_NULL,
@@ -471,6 +826,30 @@ class NonCashExchangeLinkCount(BaseExchangeLinkCount):
     class Meta:
         verbose_name = 'Счётчик перехода по ссылке (безналичные)'
         verbose_name_plural = 'Счётчики перехода по ссылкам (безналичные)'
+        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+
+
+# new NonCashExchangeLinkCount model
+class NewNonCashExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_no_cash_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='new_partner_exchange_no_cash_counts')
+    exchange_direction = models.ForeignKey(NewNonCashDirection,
+                                           on_delete=models.SET_NULL,
+                                           verbose_name='Готовое направление',
+                                           related_name='no_cash_exchange_direction_counts',
+                                           null=True,
+                                           default=None)
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке (безналичные) (новый)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (безналичные) (новые)'
         unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
 
 
@@ -503,6 +882,36 @@ class DirectionRate(BaseDirectionRate):
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
 
 
+# new DirectionRate model
+class NewDirectionRate(BaseDirectionRate):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_city_rates')
+    exchange_direction = models.ForeignKey(NewDirection,
+                                           on_delete=models.SET_NULL,
+                                           blank=True,
+                                           null=True,
+                                           verbose_name='Готовое направление',
+                                           related_name='direction_rates')
+    
+    def clean(self):
+        direction_rate_count = DirectionRate.objects.filter(exchange_id=self.exchange_id,
+                                                            exchange_direction_id=self.exchange_direction_id)\
+                                                    .count()
+        if direction_rate_count >= 3:
+            raise ValidationError('Достигнут лимит записей по Объемам для партнера на выбранное направление (3 шт)')
+        
+        return super().clean()
+
+    class Meta:
+        verbose_name = 'Объём направления (новый)'
+        verbose_name_plural = 'Объёмы направлений (новые)'
+        unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
+
+
 class CountryDirectionRate(BaseDirectionRate):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.SET_NULL,
@@ -529,6 +938,36 @@ class CountryDirectionRate(BaseDirectionRate):
     class Meta:
         verbose_name = 'Объём направления (страны)'
         verbose_name_plural = 'Объёмы направлений (страны)'
+        unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
+
+
+# new CountryDirectionRate model
+class NewCountryDirectionRate(BaseDirectionRate):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_country_rates')
+    exchange_direction = models.ForeignKey(NewCountryDirection,
+                                           on_delete=models.SET_NULL,
+                                           blank=True,
+                                           null=True,
+                                           verbose_name='Готовое направление',
+                                           related_name='direction_rates')
+    
+    def clean(self):
+        direction_rate_count = CountryDirectionRate.objects.filter(exchange_id=self.exchange_id,
+                                                                   exchange_direction_id=self.exchange_direction_id)\
+                                                            .count()
+        if direction_rate_count >= 3:
+            raise ValidationError('Достигнут лимит записей по Объемам для партнера на выбранное направление (3 шт)')
+        
+        return super().clean()
+    
+    class Meta:
+        verbose_name = 'Объём направления (страны) (новый)'
+        verbose_name_plural = 'Объёмы направлений (страны) (новые)'
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
 
 
@@ -559,6 +998,36 @@ class NonCashDirectionRate(BaseDirectionRate):
         verbose_name = 'Объём направления (безналичные)'
         verbose_name_plural = 'Объёмы направлений (безналичные)'
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
+
+
+# new NonCashDirectionRate model
+class NewNonCashDirectionRate(BaseDirectionRate):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_no_cash_rates')
+    exchange_direction = models.ForeignKey(NewNonCashDirection,
+                                           on_delete=models.SET_NULL,
+                                           blank=True,
+                                           null=True,
+                                           verbose_name='Готовое направление',
+                                           related_name='direction_rates')
+    
+    def clean(self):
+        direction_rate_count = NonCashDirectionRate.objects.filter(exchange_id=self.exchange_id,
+                                                            exchange_direction_id=self.exchange_direction_id)\
+                                                    .count()
+        if direction_rate_count >= 3:
+            raise ValidationError('Достигнут лимит записей по Объемам для партнера на выбранное направление (3 шт)')
+        
+        return super().clean()
+
+    class Meta:
+        verbose_name = 'Объём направления (безналичные) (новый)'
+        verbose_name_plural = 'Объёмы направлений (безналичные) (новые)'
+        unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
     
 
 class Bankomat(models.Model):
@@ -585,6 +1054,31 @@ class Bankomat(models.Model):
         return self.name
     
 
+# new Bankomat model
+class NewBankomat(models.Model):
+    limit_valutes = Q(type_valute='ATM QR')
+    name = models.CharField('Название',
+                            unique=True,
+                            max_length=255)
+    valutes = models.ManyToManyField(NewValute,
+                                     limit_choices_to=limit_valutes,
+                                     related_name='bankomats',
+                                     verbose_name='Валюты',
+                                     blank=True)
+    icon_url = models.FileField('Иконка банкомата',
+                                upload_to='icons/bankomat/',
+                                blank=True,
+                                null=True,
+                                default='icons/country/russia.svg')
+    
+    class Meta:
+        verbose_name = 'Банкомат (новый)'
+        verbose_name_plural = 'Банкоматы (новые)'
+
+    def __str__(self):
+        return self.name
+    
+
 # Intermate table Partner/Valute
 class QRValutePartner(models.Model):
     valute = models.ForeignKey(Valute,
@@ -601,34 +1095,17 @@ class QRValutePartner(models.Model):
         unique_together = (('partner', 'valute'), )
 
 
-# class DirectionRate(models.Model):
-#     marker_choice = (
-#         ('city', 'city'),
-#         ('country', 'country'),
-#     )
-
-#     exchange = models.ForeignKey(Exchange,
-#                                  on_delete=models.CASCADE,
-#                                  related_name='partner_rates')
-#     direction_id = models.IntegerField('ID направления')
-#     direction_marker = models.CharField('Маркер направления',
-#                                         max_length=50,
-#                                         choices=marker_choice)
-#     in_count = models.DecimalField('Сколько отдаём',
-#                                    max_digits=20,
-#                                    decimal_places=5,
-#                                    null=True,
-#                                    default=None)
-#     out_count = models.DecimalField('Сколько получаем',
-#                                     max_digits=20,
-#                                     decimal_places=5,
-#                                     null=True,
-#                                     default=None)
-#     min_limit_count = models.IntegerField('Минимальный лимит')
-#     max_limit_count = models.IntegerField('Максимальный лимит',
-#                                           null=True,
-#                                           blank=True,
-#                                           default=None)
+# new Intermate table Partner/Valute
+class NewQRValutePartner(models.Model):
+    valute = models.ForeignKey(NewValute,
+                               verbose_name='Валюта',
+                               on_delete=models.CASCADE)
+    partner = models.ForeignKey(NewCustomUser,
+                                verbose_name='Партнёр',
+                                on_delete=models.CASCADE)
+    bankomats = models.ManyToManyField(NewBankomat,
+                                       verbose_name='Банкоматы',
+                                       blank=True)
     
-#     class Meta:
-#         unique_together = (('exchange', 'direction_id', 'direction_marker', 'min_limit_count'), )
+    class Meta:
+        unique_together = (('partner', 'valute'), )

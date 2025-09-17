@@ -2,14 +2,17 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 from general_models.models import (BaseExchangeDirection,
-                                   Valute,
-                                   ParseExchange,
+                                   BaseExchangeLinkCount,
                                    BaseDirection,
+                                   ParseExchange,
+                                   Valute,
+                                   Guest,
+                                   NewValute,
+                                   Exchanger,
                                 #    BaseReview,
                                 #    BaseComment,
-                                   Guest,
                                 #    BaseAdminComment,
-                                   BaseExchangeLinkCount)
+                                   )
 
 
 #Модель страны
@@ -182,6 +185,39 @@ class Direction(BaseDirection):
             raise ValidationError('Одно из значений "Отдаём" и "Получаем" должно иметь наличный тип валюты, другое - безналичный')
 
 
+# new Direction model
+class NewDirection(BaseDirection):
+    valute_from = models.ForeignKey(NewValute,
+                                    to_field='code_name',
+                                    on_delete=models.SET_NULL,
+                                    verbose_name='Отдаём',
+                                    related_name='cash_valutes_from')
+    valute_to = models.ForeignKey(NewValute,
+                                  to_field='code_name',
+                                  on_delete=models.SET_NULL,
+                                  verbose_name='Получаем',
+                                  related_name='cash_valutes_to')
+    display_name = models.CharField('Отображение в админ панели',
+                                    max_length=40,
+                                    blank=True,
+                                    null=True,
+                                    default=None)
+    previous_course = models.FloatField('Предыдующий курс обмена',
+                                        blank=True,
+                                        null=True,
+                                        default=None)
+    
+    def __str__(self):
+        return self.display_name
+    
+    def clean(self) -> None:
+        super().clean_fields()
+        
+        if (not 'Наличные' in (self.valute_from.type_valute, self.valute_to.type_valute)) and \
+            (not 'ATM QR' in self.valute_to.type_valute):
+            raise ValidationError('Одно из значений "Отдаём" и "Получаем" должно иметь наличный тип валюты, другое - безналичный')
+
+
 #Модель готового направления
 class ExchangeDirection(BaseExchangeDirection):
     exchange = models.ForeignKey(Exchange,
@@ -225,6 +261,49 @@ class ExchangeDirection(BaseExchangeDirection):
         return f'{self.exchange} {self.city}: {self.direction}'
 
 
+# new ExchangeDirection model
+class NewExchangeDirection(BaseExchangeDirection):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 verbose_name='Обменник',
+                                 related_name='cash_directions',
+                                 blank=True,
+                                 null=True)
+    direction = models.ForeignKey(NewDirection,
+                                  verbose_name='Направление для обмена',
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
+                                  related_name='exchange_directions')
+    # city = models.CharField('Город', max_length=100)
+    city = models.ForeignKey(City,
+                             verbose_name='Город',
+                             on_delete=models.SET_NULL,
+                             blank=True,
+                             null=True,
+                             related_name='new_cash_directions')
+    fromfee = models.FloatField('Процент', blank=True, null=True)
+    params = models.CharField('Параметры', max_length=100, blank=True, null=True)
+
+    class Meta:
+        # unique_together = (("exchange", "city", "valute_from", "valute_to"), )
+        unique_together = (("exchange", "city", "direction"), )
+        verbose_name = 'Готовое направление'
+        verbose_name_plural = 'Готовые направления'
+        ordering = ['-is_active',
+                    'exchange',
+                    'city',
+                    'direction__valute_from',
+                    'direction__valute_to']
+        # indexes = [
+        #     models.Index(fields=['city', 'valute_from', 'valute_to'])
+        # ]
+
+    def __str__(self):
+        # return f'{self.city}: {self.valute_from} -> {self.valute_to}'
+        return f'{self.exchange} {self.city}: {self.direction}'
+
+
 #Модель попуярного направления
 class PopularDirection(models.Model):
     name = models.CharField('Название',
@@ -240,6 +319,21 @@ class PopularDirection(models.Model):
     def __str__(self):
         return self.name
 
+
+# new PopularDirection model
+class NewPopularDirection(models.Model):
+    name = models.CharField('Название',
+                            max_length=255)
+    directions = models.ManyToManyField(NewDirection,
+                                        verbose_name='Популярные направления',
+                                        blank=True)
+    
+    class Meta:
+        verbose_name = 'Популярное направление'
+        verbose_name_plural = 'Популярные направления'
+
+    def __str__(self):
+        return self.name
 
 #Модель элемента чёрного списка
 # class BlackListElement(models.Model):
@@ -293,5 +387,22 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                                            default=None)
     
 
-    # def __str__(self):
-    #     return f'{self.user} {self.exchange} - {self.count}'
+# new ExchangeLinkCount model
+class NewExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='cash_exchange_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='new_cash_exchange_counts')
+    exchange_direction = models.ForeignKey(NewExchangeDirection,
+                                           on_delete=models.SET_NULL,
+                                           verbose_name='Готовое направление',
+                                           related_name='exchange_direction_counts',
+                                           blank=True,
+                                           null=True,
+                                           default=None)

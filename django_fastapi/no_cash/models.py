@@ -2,15 +2,15 @@ from django.db import models
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 
-from general_models.models import (Valute,
-                                   ParseExchange,
+from general_models.models import (BaseExchangeDirection,
+                                   BaseExchangeLinkCount,
                                    BaseDirection,
-                                   BaseExchangeDirection,
-                                #    BaseReview,
-                                #    BaseComment,
+                                   ParseExchange,
+                                   Valute,
+                                   NewValute,
+                                   Exchanger,
                                    Guest,
-                                #    BaseAdminComment,
-                                   BaseExchangeLinkCount)
+                                   )
 
 
 #Модель обменника 
@@ -103,6 +103,27 @@ class Direction(BaseDirection):
         
         if self.valute_from == self.valute_to:
             raise ValidationError('Валюты "Отдаём" и "Получаем" должны быть разные')
+        
+# new Direction model
+class NewDirection(BaseDirection):
+    valute_from = models.ForeignKey(NewValute,
+                                    to_field='code_name',
+                                    on_delete=models.CASCADE,
+                                    verbose_name='Отдаём',
+                                    limit_choices_to=~Q(type_valute='Наличные'),
+                                    related_name='no_cash_valutes_from')
+    valute_to = models.ForeignKey(NewValute,
+                                  to_field='code_name',
+                                  on_delete=models.CASCADE,
+                                  verbose_name='Получаем',
+                                  limit_choices_to=~Q(type_valute='Наличные'),
+                                  related_name='no_cash_valutes_to')
+    
+    def clean(self) -> None:
+        super().clean_fields()
+        
+        if self.valute_from == self.valute_to:
+            raise ValidationError('Валюты "Отдаём" и "Получаем" должны быть разные')
 
 
 #Модель попуярного направления
@@ -110,6 +131,22 @@ class PopularDirection(models.Model):
     name = models.CharField('Название',
                             max_length=255)
     directions = models.ManyToManyField(Direction,
+                                        verbose_name='Популярные направления',
+                                        blank=True)
+    
+    class Meta:
+        verbose_name = 'Популярное направление'
+        verbose_name_plural = 'Популярные направления'
+
+    def __str__(self):
+        return self.name
+
+
+# new PopularDirection model
+class NewPopularDirection(models.Model):
+    name = models.CharField('Название',
+                            max_length=255)
+    directions = models.ManyToManyField(NewDirection,
                                         verbose_name='Популярные направления',
                                         blank=True)
     
@@ -157,6 +194,37 @@ class ExchangeDirection(BaseExchangeDirection):
         return f'{self.exchange.name}:  {self.direction}'
     
 
+# new ExchangeDirection model
+class NewExchangeDirection(BaseExchangeDirection):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='no_cash_directions')
+    direction = models.ForeignKey(NewDirection,
+                                  verbose_name='Направление для обмена',
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
+                                  related_name='exchange_directions')
+    
+    class Meta:
+        unique_together = (("exchange", "direction"), )
+        verbose_name = 'Готовое направление'
+        verbose_name_plural = 'Готовые направления'
+        ordering = ['-is_active',
+                    'exchange',
+                    'direction__valute_from',
+                    'direction__valute_to']
+        indexes = [
+            models.Index(fields=['is_active', 'exchange']),
+        ]
+
+    def __str__(self):
+        return f'{self.exchange.name}:  {self.direction}'
+    
+
 class ExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
                                  on_delete=models.SET_NULL,
@@ -172,6 +240,26 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
                                            on_delete=models.SET_NULL,
                                            verbose_name='Готовое направление',
                                            related_name='no_cash_exchange_counts',
+                                           null=True,
+                                           default=None)
+    
+
+# new ExchangeLinkCount model
+class NewExchangeLinkCount(BaseExchangeLinkCount):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='no_cash_exchange_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.SET_NULL,
+                             verbose_name='Гостевой пользователь',
+                             related_name='new_no_cash_exchange_counts')
+    exchange_direction = models.ForeignKey(NewExchangeDirection,
+                                           on_delete=models.SET_NULL,
+                                           verbose_name='Готовое направление',
+                                           related_name='exchange_direction_counts',
                                            null=True,
                                            default=None)
     
