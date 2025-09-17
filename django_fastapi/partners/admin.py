@@ -6,6 +6,7 @@ from decimal import Decimal
 from django_admin_action_forms import action_with_form, AdminActionForm
 
 from django.db import connection
+from django.shortcuts import redirect
 
 from django import forms
 from django.contrib import admin, messages
@@ -239,7 +240,9 @@ class DirectionAdmin(admin.ModelAdmin):
             # for query in connection.queries:
             #     print(query)
             #     print('*' * 8)
-            return super().changelist_view(request, extra_context)
+            return redirect(f"{request.path}?{request.META.get('QUERY_STRING','')}")
+            # return redirect(request.path)
+            # return super().changelist_view(request, extra_context)
 
         return super().changelist_view(request, extra_context)
 
@@ -555,7 +558,8 @@ class CountryDirectionAdmin(admin.ModelAdmin):
             # for query in connection.queries:
             #     print(query)
             #     print('*' * 8)
-            return super().changelist_view(request, extra_context)
+            return redirect(f"{request.path}?{request.META.get('QUERY_STRING','')}")
+            # return super().changelist_view(request, extra_context)
 
         return super().changelist_view(request, extra_context)
         
@@ -693,6 +697,50 @@ class NonCashDirectionAdmin(admin.ModelAdmin):
                     obj.save(update_fields=update_fields)
         else:
             return super().save_model(request, obj, form, change)
+        
+    # Перехватываю list_editable для оптимизации SELECT запросов в один
+    def changelist_view(self, request, extra_context=None):
+        # print('from changelist view..')
+        if request.method == 'POST' and '_save' in request.POST:
+            obj_count = int(request.POST['form-TOTAL_FORMS'])
+            pks = [int(request.POST[f'form-{i}-id']) for i in range(obj_count)]
+            objs = list(NonCashDirection.objects.filter(pk__in=pks))  # один SELECT
+            obj_dict = {o.pk: o for o in objs}
+
+            time_update = timezone.now()
+            update_objs = []
+
+            for i in range(obj_count):
+                obj_pk = int(request.POST[f'form-{i}-id'])
+                in_count = Decimal(request.POST[f'form-{i}-in_count'])
+                out_count = Decimal(request.POST[f'form-{i}-out_count'])
+                obj = obj_dict[obj_pk]
+                
+                if obj.in_count != in_count or obj.out_count != out_count:
+                    obj.in_count = in_count
+                    obj.out_count = out_count
+                    obj.time_update = time_update
+                    obj.is_active = True
+                    update_objs.append(obj)
+
+            if update_objs:
+                update_fields = [
+                    'in_count',
+                    'out_count',
+                    'time_update',
+                    'is_active',
+                ]
+                NonCashDirection.objects.bulk_update(update_objs,
+                                              fields=update_fields)
+                # self.message_user(request, f"{len(update_objs)} записей успешно обновлено!", messages.SUCCESS)
+                self.message_user(request, f'Выбранные направления страны успешно обновлены!({len(update_objs)} шт)', messages.SUCCESS)
+            # for query in connection.queries:
+            #     print(query)
+            #     print('*' * 8)
+            return redirect(f"{request.path}?{request.META.get('QUERY_STRING','')}")
+            # return super().changelist_view(request, extra_context)
+
+        return super().changelist_view(request, extra_context)
         
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         queryset = super().get_queryset(request)\
