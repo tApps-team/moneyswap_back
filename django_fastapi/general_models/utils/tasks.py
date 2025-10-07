@@ -208,3 +208,27 @@ def try_update_courses(direction_model: direction_union,
         bulk_update_fields,
         batch_size=1000
     )
+
+
+def generate_cash_direction_dict(direction_dict: dict,
+                                 direction_set: set):
+    for city_id, city_code_name, directon_id, valute_from, valute_to in direction_set:
+        if not direction_dict.get(city_code_name):
+            direction_dict[city_code_name] = dict()
+        
+        inner_key = f'{valute_from} {valute_to}'
+        if not direction_dict[city_code_name].get(inner_key):
+            direction_dict[city_code_name][inner_key] = (city_id, directon_id)
+
+
+def generate_no_cash_direction_dict(direction_dict: dict,
+                                    direction_set: set):
+    no_cash_key = 'NOCASH'
+    direction_dict[no_cash_key] = dict()
+
+    for direction_id, valute_from, valute_to in direction_set:
+        key = f'{valute_from} {valute_to}'
+        direction_dict[no_cash_key][key] = direction_id
+
+
+

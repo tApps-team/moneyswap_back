@@ -3,7 +3,9 @@ from django.core.exceptions import ValidationError
 
 from general_models.models import (BaseExchangeDirection,
                                    BaseExchangeLinkCount,
+                                   NewBaseExchangeLinkCount,
                                    BaseDirection,
+                                   BaseNewDirection,
                                    ParseExchange,
                                    Valute,
                                    Guest,
@@ -57,6 +59,8 @@ class City(models.Model):
                                 verbose_name='Страна',
                                 related_name='cities')
     is_parse = models.BooleanField('Статус парсинга', default=False)
+    popular_count = models.BigIntegerField('Счетчик популярности',
+                                           default=0)
     # has_partner_cities: bool
 
     class Meta:
@@ -186,29 +190,32 @@ class Direction(BaseDirection):
 
 
 # new Direction model
-class NewDirection(BaseDirection):
+class NewDirection(BaseNewDirection):
     valute_from = models.ForeignKey(NewValute,
                                     to_field='code_name',
                                     on_delete=models.SET_NULL,
+                                    blank=True,
+                                    null=True,
+                                    default=None,
                                     verbose_name='Отдаём',
                                     related_name='cash_valutes_from')
     valute_to = models.ForeignKey(NewValute,
                                   to_field='code_name',
                                   on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
+                                  default=None,
                                   verbose_name='Получаем',
                                   related_name='cash_valutes_to')
-    display_name = models.CharField('Отображение в админ панели',
-                                    max_length=40,
-                                    blank=True,
-                                    null=True,
-                                    default=None)
-    previous_course = models.FloatField('Предыдующий курс обмена',
-                                        blank=True,
-                                        null=True,
-                                        default=None)
     
-    def __str__(self):
-        return self.display_name
+    class Meta:
+        unique_together = (("valute_from", "valute_to"), )
+        verbose_name = 'Направление для обмена (новое)'
+        verbose_name_plural = 'Направления для обмена (новые)'
+        ordering = ['valute_from', 'valute_to']
+        indexes = [
+            models.Index(fields=['valute_from', 'valute_to'])
+        ]
     
     def clean(self) -> None:
         super().clean_fields()
@@ -321,19 +328,19 @@ class PopularDirection(models.Model):
 
 
 # new PopularDirection model
-class NewPopularDirection(models.Model):
-    name = models.CharField('Название',
-                            max_length=255)
-    directions = models.ManyToManyField(NewDirection,
-                                        verbose_name='Популярные направления',
-                                        blank=True)
+# class NewPopularDirection(models.Model):
+#     name = models.CharField('Название',
+#                             max_length=255)
+#     directions = models.ManyToManyField(NewDirection,
+#                                         verbose_name='Популярные направления',
+#                                         blank=True)
     
-    class Meta:
-        verbose_name = 'Популярное направление'
-        verbose_name_plural = 'Популярные направления'
+#     class Meta:
+#         verbose_name = 'Популярное направление'
+#         verbose_name_plural = 'Популярные направления'
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 #Модель элемента чёрного списка
 # class BlackListElement(models.Model):
@@ -388,7 +395,7 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
     
 
 # new ExchangeLinkCount model
-class NewExchangeLinkCount(BaseExchangeLinkCount):
+class NewExchangeLinkCount(NewBaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchanger,
                                  on_delete=models.SET_NULL,
                                  blank=True,

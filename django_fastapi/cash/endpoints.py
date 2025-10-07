@@ -11,20 +11,33 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             get_exchange_direction_list_with_location,
                                             get_valute_json,
                                             get_valute_json_2, get_valute_json_3,
-                                            increase_popular_count_direction, new_get_reviews_count_filters,
+                                            increase_popular_count_direction,
+                                            new_increase_popular_count_direction,
+                                            new_get_reviews_count_filters,
                                             positive_review_count_filter,
                                             neutral_review_count_filter,
-                                            negative_review_count_filter, test_get_exchange_direction_list, test_get_exchange_direction_list_with_aml,
+                                            negative_review_count_filter,
+                                            test_get_exchange_direction_list,
+                                            test_get_exchange_direction_list_with_aml,
+                                            new_get_exchange_direction_list_with_aml,
+                                            new_get_exchange_direction_list_with_aml_and_location,
                                             try_generate_icon_url,
                                             get_reviews_count_filters)
+from general_models.utils.base import annotate_string_field
 
 from partners.utils.endpoints import (get_partner_directions,
                                       get_partner_directions3,
                                       get_partner_directions_with_location,
-                                      get_partner_directions2, new_test_get_partner_directions2_with_aml, new_test_get_partner_directions2_with_aml2, test_get_partner_directions2, test_get_partner_directions2_with_aml, test_get_partner_directions3)
-from partners.models import CountryDirection, Direction as PartnerDirection, PartnerCountry
+                                      get_partner_directions2,
+                                      new_test_get_partner_directions2_with_aml,
+                                      new_test_get_partner_directions2_with_aml2,
+                                      test_get_partner_directions2,
+                                      test_get_partner_directions2_with_aml,
+                                      get_partner_directions_with_aml,
+                                      test_get_partner_directions3)
+from partners.models import CountryDirection, Direction as PartnerDirection, PartnerCountry, NewCountryDirection, NewDirection as NewPartnerDirection
 
-from .models import City, ExchangeDirection, Country
+from .models import City, ExchangeDirection, Country, NewExchangeDirection
 from .schemas import (MultipleName,
                       RuEnCountryModel, RuEnCountryModel1,
                       SpecificCountrySchema,
@@ -36,6 +49,10 @@ from .utils.cache import get_or_set_cache_available_countries, get_or_set_cache_
 
 cash_router = APIRouter(prefix='/cash',
                         tags=['Наличные'])
+
+new_cash_router = APIRouter(prefix='/cash',
+                            tags=['Наличные(НОВЫЕ)'])
+
 
 
 # Эндпоинт для получения доступных стран
@@ -190,6 +207,16 @@ def get_available_coutries3(request: Request):
     return countries
 
 
+@new_cash_router.get('/countries',
+                 response_model=List[RuEnCountryModel1],
+                 response_model_by_alias=False)
+def get_available_coutries(request: Request):
+
+    countries = get_available_countries(request)
+
+    return countries
+
+
 #
 @cash_router.get('/specific_city',
                  response_model=SpecificCitySchema,
@@ -212,68 +239,68 @@ def get_specific_city(code_name: str):
 #
 
 # Вспомогательный эндпоинт для получения наличных валют
-def cash_valutes(request: Request,
-                 params: dict):
-    for param in params:
-        if not params[param]:
-            http_exception_json(status_code=400, param=param)
+# def cash_valutes(request: Request,
+#                  params: dict):
+#     for param in params:
+#         if not params[param]:
+#             http_exception_json(status_code=400, param=param)
     
-    city, base = (params[key] for key in params)
+#     city, base = (params[key] for key in params)
 
-    cash_queries = ExchangeDirection.objects\
-                                    .select_related('exchange',
-                                                    'city',
-                                                    'direction',
-                                                    'direction__valute_from',
-                                                    'direction__valute_to')\
-                                    .filter(city__code_name=city,
-                                            is_active=True,
-                                            exchange__is_active=True)
-    partner_queries = PartnerDirection.objects\
-                                        .select_related('direction',
-                                                        'city',
-                                                        'direction__valute_from',
-                                                        'direction__valute_to',
-                                                        'city__exchange')\
-                                        .filter(city__city__code_name=city,
-                                                is_active=True,
-                                                city__exchange__isnull=False,
-                                                city__exchange__is_active=True)
+#     cash_queries = ExchangeDirection.objects\
+#                                     .select_related('exchange',
+#                                                     'city',
+#                                                     'direction',
+#                                                     'direction__valute_from',
+#                                                     'direction__valute_to')\
+#                                     .filter(city__code_name=city,
+#                                             is_active=True,
+#                                             exchange__is_active=True)
+#     partner_queries = PartnerDirection.objects\
+#                                         .select_related('direction',
+#                                                         'city',
+#                                                         'direction__valute_from',
+#                                                         'direction__valute_to',
+#                                                         'city__exchange')\
+#                                         .filter(city__city__code_name=city,
+#                                                 is_active=True,
+#                                                 city__exchange__isnull=False,
+#                                                 city__exchange__is_active=True)
     
-    country_directions_query = CountryDirection.objects\
-                                .select_related('direction',
-                                                'direction__valute_from',
-                                                'direction__valute_to',
-                                                'country',
-                                                'country__country',
-                                                'country__exchange')\
-                                .filter(is_active=True,
-                                        country__exchange__is_active=True,
-                                        country__exchange__isnull=False,
-                                        country__country__cities__code_name=city)
+#     country_directions_query = CountryDirection.objects\
+#                                 .select_related('direction',
+#                                                 'direction__valute_from',
+#                                                 'direction__valute_to',
+#                                                 'country',
+#                                                 'country__country',
+#                                                 'country__exchange')\
+#                                 .filter(is_active=True,
+#                                         country__exchange__is_active=True,
+#                                         country__exchange__isnull=False,
+#                                         country__country__cities__code_name=city)
 
-    if base == 'ALL':
-        cash_queries = cash_queries\
-                                .values_list('direction__valute_from').all()
-        partner_queries = partner_queries\
-                                .values_list('direction__valute_from__code_name').all()
-        country_directions_query = country_directions_query\
-                                .values_list('direction__valute_from__code_name').all()
-    else:
-        cash_queries = cash_queries.filter(direction__valute_from=base)\
-                                    .values_list('direction__valute_to').all()
-        partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
-                                        .values_list('direction__valute_to__code_name').all()
-        country_directions_query = country_directions_query\
-                                        .filter(direction__valute_from__code_name=base)\
-                                        .values_list('direction__valute_to__code_name').all()
+#     if base == 'ALL':
+#         cash_queries = cash_queries\
+#                                 .values_list('direction__valute_from').all()
+#         partner_queries = partner_queries\
+#                                 .values_list('direction__valute_from__code_name').all()
+#         country_directions_query = country_directions_query\
+#                                 .values_list('direction__valute_from__code_name').all()
+#     else:
+#         cash_queries = cash_queries.filter(direction__valute_from=base)\
+#                                     .values_list('direction__valute_to').all()
+#         partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
+#                                         .values_list('direction__valute_to__code_name').all()
+#         country_directions_query = country_directions_query\
+#                                         .filter(direction__valute_from__code_name=base)\
+#                                         .values_list('direction__valute_to__code_name').all()
 
-    queries = cash_queries.union(partner_queries, country_directions_query)
+#     queries = cash_queries.union(partner_queries, country_directions_query)
 
-    if not queries:
-        http_exception_json(status_code=404, param=request.url)
+#     if not queries:
+#         http_exception_json(status_code=404, param=request.url)
 
-    return get_valute_json(queries)
+#     return get_valute_json(queries)
 
 
 #
@@ -385,19 +412,25 @@ def cash_valutes_3(request: Request,
 
     if base == 'ALL':
         cash_queries = cash_queries\
-                                .values_list('direction__valute_from').all()
+                                .values_list('direction__valute_from',
+                                             flat=True).all()
         partner_queries = partner_queries\
-                                .values_list('direction__valute_from__code_name').all()
+                                .values_list('direction__valute_from__code_name',
+                                             flat=True).all()
         country_directions_query = country_directions_query\
-                                .values_list('direction__valute_from__code_name').all()
+                                .values_list('direction__valute_from__code_name',
+                                             flat=True).all()
     else:
         cash_queries = cash_queries.filter(direction__valute_from=base)\
-                                    .values_list('direction__valute_to').all()
+                                    .values_list('direction__valute_to',
+                                                 flat=True).all()
         partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
-                                        .values_list('direction__valute_to__code_name').all()
+                                        .values_list('direction__valute_to__code_name',
+                                                     flat=True).all()
         country_directions_query = country_directions_query\
                                         .filter(direction__valute_from__code_name=base)\
-                                        .values_list('direction__valute_to__code_name').all()
+                                        .values_list('direction__valute_to__code_name',
+                                                     flat=True).all()
 
     queries = cash_queries.union(partner_queries, country_directions_query)
 
@@ -407,54 +440,119 @@ def cash_valutes_3(request: Request,
     return get_valute_json_3(queries)
 
 
-# Вспомогательный эндпоинт для получения наличных готовых направлений
-def cash_exchange_directions(request: Request,
-                             params: dict):
+def cash_valutes(request: Request,
+                 params: dict):
     for param in params:
         if not params[param]:
-            http_exception_json(status_code=400, param=param) 
+            http_exception_json(status_code=400, param=param)
+    
+    city, base = (params[key] for key in params)
 
-    city, valute_from, valute_to = (params[key] for key in params)
-
-    review_counts = get_reviews_count_filters('exchange_direction')
-
-    queries = ExchangeDirection.objects\
-                                .select_related('exchange',
-                                                'city',
-                                                'city__country',
-                                                'direction',
+    cash_queries = NewExchangeDirection.objects\
+                                    .select_related('exchange',
+                                                    'city',
+                                                    'direction',
+                                                    'direction__valute_from',
+                                                    'direction__valute_to')\
+                                    .filter(city__code_name=city,
+                                            is_active=True,
+                                            exchange__is_active=True)
+    partner_queries = NewPartnerDirection.objects\
+                                        .select_related('direction',
+                                                        'direction__valute_from',
+                                                        'direction__valute_to',
+                                                        'city',
+                                                        'city__city',
+                                                        'city__exchange')\
+                                        .filter(city__city__code_name=city,
+                                                is_active=True,
+                                                city__exchange__is_active=True,
+                                                city__exchange__isnull=False)
+    
+    country_directions_query = NewCountryDirection.objects\
+                                .select_related('direction',
                                                 'direction__valute_from',
-                                                'direction__valute_to')\
-                                .annotate(positive_review_count=review_counts['positive'])\
-                                .annotate(neutral_review_count=review_counts['neutral'])\
-                                .annotate(negative_review_count=review_counts['negative'])\
-                                .filter(city__code_name=city,
-                                        direction__valute_from=valute_from,
-                                        direction__valute_to=valute_to,
-                                        is_active=True,
-                                        exchange__is_active=True)\
-                                .all()
-    
-    partner_directions = get_partner_directions(valute_from,
-                                                valute_to,
-                                                city)
-    
-    queries = sorted(list(queries) + list(partner_directions),
-                     key=lambda query: (-query.exchange.is_vip,
-                                        -query.out_count,
-                                        query.in_count))
-    
+                                                'direction__valute_to',
+                                                'country',
+                                                'country__country',
+                                                'country__exchange')\
+                                .filter(is_active=True,
+                                        country__exchange__is_active=True,
+                                        country__exchange__isnull=False,
+                                        country__country__cities__code_name=city)
+
+    if base == 'ALL':
+        cash_queries = cash_queries\
+                                .values_list('direction__valute_from_id')
+        partner_queries = partner_queries\
+                                .values_list('direction__valute_from_id')
+        country_directions_query = country_directions_query\
+                                .values_list('direction__valute_from_id')
+    else:
+        cash_queries = cash_queries.filter(direction__valute_from=base)\
+                                    .values_list('direction__valute_to_id')
+        partner_queries = partner_queries.filter(direction__valute_from__code_name=base)\
+                                        .values_list('direction__valute_to_id')
+        country_directions_query = country_directions_query\
+                                        .filter(direction__valute_from__code_name=base)\
+                                        .values_list('direction__valute_to_id')
+
+    queries = cash_queries.union(partner_queries, country_directions_query)
+
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
-    increase_popular_count_direction(valute_from=valute_from,
-                                     valute_to=valute_to,
-                                     city=city)
+    return get_valute_json(queries)
 
-    return get_exchange_direction_list(queries,
-                                       valute_from,
-                                       valute_to,
-                                       city=city)
+
+# Вспомогательный эндпоинт для получения наличных готовых направлений
+# def cash_exchange_directions(request: Request,
+#                              params: dict):
+#     for param in params:
+#         if not params[param]:
+#             http_exception_json(status_code=400, param=param) 
+
+#     city, valute_from, valute_to = (params[key] for key in params)
+
+#     review_counts = get_reviews_count_filters('exchange_direction')
+
+#     queries = ExchangeDirection.objects\
+#                                 .select_related('exchange',
+#                                                 'city',
+#                                                 'city__country',
+#                                                 'direction',
+#                                                 'direction__valute_from',
+#                                                 'direction__valute_to')\
+#                                 .annotate(positive_review_count=review_counts['positive'])\
+#                                 .annotate(neutral_review_count=review_counts['neutral'])\
+#                                 .annotate(negative_review_count=review_counts['negative'])\
+#                                 .filter(city__code_name=city,
+#                                         direction__valute_from=valute_from,
+#                                         direction__valute_to=valute_to,
+#                                         is_active=True,
+#                                         exchange__is_active=True)\
+#                                 .all()
+    
+#     partner_directions = get_partner_directions(valute_from,
+#                                                 valute_to,
+#                                                 city)
+    
+#     queries = sorted(list(queries) + list(partner_directions),
+#                      key=lambda query: (-query.exchange.is_vip,
+#                                         -query.out_count,
+#                                         query.in_count))
+    
+#     if not queries:
+#         http_exception_json(status_code=404, param=request.url)
+
+#     increase_popular_count_direction(valute_from=valute_from,
+#                                      valute_to=valute_to,
+#                                      city=city)
+
+#     return get_exchange_direction_list(queries,
+#                                        valute_from,
+#                                        valute_to,
+#                                        city=city)
 
 # Вспомогательный эндпоинт для получения наличных готовых направлений
 def cash_exchange_directions2(request: Request,
@@ -659,33 +757,32 @@ def test_cash_exchange_directions22(request: Request,
                                        city=city)
 
 
+def cash_exchange_directions(request: Request,
+                             params: dict):
+    for param in params:
+        if not params[param]:
+            http_exception_json(status_code=400, param=param) 
 
-# Вспомогательный эндпоинт для получения наличных готовых направлений
-def cash_exchange_directions_with_location(request: Request,
-                                           params: dict): 
-    valute_from, valute_to = (params[key] for key in params)
+    city, valute_from, valute_to = (params[key] for key in params)
 
-    review_counts = get_reviews_count_filters('exchange_direction')
-
-    queries = ExchangeDirection.objects\
+    queries = NewExchangeDirection.objects\
                                 .select_related('exchange',
                                                 'city',
                                                 'city__country',
                                                 'direction',
                                                 'direction__valute_from',
                                                 'direction__valute_to')\
-                                .annotate(positive_review_count=review_counts['positive'])\
-                                .annotate(neutral_review_count=review_counts['neutral'])\
-                                .annotate(negative_review_count=review_counts['negative'])\
-                                .filter(
+                                .annotate(direction_marker=annotate_string_field('auto_cash'))\
+                                .filter(city__code_name=city,
                                         direction__valute_from=valute_from,
                                         direction__valute_to=valute_to,
                                         is_active=True,
                                         exchange__is_active=True)\
-                                .all()
+
     
-    partner_directions = get_partner_directions(valute_from,
-                                                valute_to)
+    partner_directions = get_partner_directions_with_aml(valute_from,
+                                                         valute_to,
+                                                         city)
     
     queries = sorted(list(queries) + list(partner_directions),
                      key=lambda query: (-query.exchange.is_vip,
@@ -695,10 +792,56 @@ def cash_exchange_directions_with_location(request: Request,
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
-    return get_exchange_direction_list(queries,
-                                       valute_from,
-                                       valute_to,
-                                       with_location=True)
+    new_increase_popular_count_direction(valute_from=valute_from,
+                                         valute_to=valute_to,
+                                         city=city)
+
+    return new_get_exchange_direction_list_with_aml(queries,
+                                                    valute_from,
+                                                    valute_to,
+                                                    city=city)
+
+
+
+# Вспомогательный эндпоинт для получения наличных готовых направлений
+# def cash_exchange_directions_with_location(request: Request,
+#                                            params: dict): 
+#     valute_from, valute_to = (params[key] for key in params)
+
+#     review_counts = get_reviews_count_filters('exchange_direction')
+
+#     queries = ExchangeDirection.objects\
+#                                 .select_related('exchange',
+#                                                 'city',
+#                                                 'city__country',
+#                                                 'direction',
+#                                                 'direction__valute_from',
+#                                                 'direction__valute_to')\
+#                                 .annotate(positive_review_count=review_counts['positive'])\
+#                                 .annotate(neutral_review_count=review_counts['neutral'])\
+#                                 .annotate(negative_review_count=review_counts['negative'])\
+#                                 .filter(
+#                                         direction__valute_from=valute_from,
+#                                         direction__valute_to=valute_to,
+#                                         is_active=True,
+#                                         exchange__is_active=True)\
+#                                 .all()
+    
+#     partner_directions = get_partner_directions(valute_from,
+#                                                 valute_to)
+    
+#     queries = sorted(list(queries) + list(partner_directions),
+#                      key=lambda query: (-query.exchange.is_vip,
+#                                         -query.out_count,
+#                                         query.in_count))
+    
+#     if not queries:
+#         http_exception_json(status_code=404, param=request.url)
+
+#     return get_exchange_direction_list(queries,
+#                                        valute_from,
+#                                        valute_to,
+#                                        with_location=True)
 
 
 # Вспомогательный эндпоинт для получения наличных готовых направлений
@@ -783,6 +926,68 @@ def test_cash_exchange_directions_with_location2(request: Request,
                                        valute_from,
                                        valute_to,
                                        with_location=True)
+
+
+def cash_exchange_directions_with_location(request: Request,
+                                           params: dict): 
+    valute_from, valute_to = (params[key] for key in params)
+
+    # review_counts = new_get_reviews_count_filters('exchange_direction')
+
+    queries = NewExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'city',
+                                                'city__country',
+                                                'direction',
+                                                'direction__valute_from',
+                                                'direction__valute_to')\
+                                .annotate(direction_marker=annotate_string_field('auto_cash'))\
+                                .filter(direction__valute_from=valute_from,
+                                        direction__valute_to=valute_to,
+                                        is_active=True,
+                                        exchange__is_active=True)\
+
+    auto_cash_direction_dict_list = []
+    for direction in queries:
+        direction_dict = {
+            'exchange': direction.exchange,
+            # for sort
+            'is_vip': direction.exchange.is_vip,
+            'exchange_direction_id': direction.pk,
+            'direction': direction.direction,
+            'direction_marker': direction.direction_marker,
+            'valute_from': direction.direction.valute_from_id,
+            'valute_to': direction.direction.valute_to_id,
+            'params': direction.params,
+            'fromfee': None,
+            'city': direction.city,
+            'min_amount': direction.min_amount,
+            'max_amount': direction.max_amount,
+            'in_count': direction.in_count,
+            'out_count': direction.out_count,
+
+        }
+        auto_cash_direction_dict_list.append(direction_dict)
+
+    # нужна новая функция get_partner_directions_with_aml_with_location
+    # с доп for циклом по разрешенным городам страны направления для NewCountryDirection ?
+    partner_directions: list[dict] = get_partner_directions_with_location(valute_from,
+                                                                            valute_to)
+    
+    # print(partner_directions)
+    
+    directions = sorted(list(auto_cash_direction_dict_list) + list(partner_directions),
+                     key=lambda el: (-el['is_vip'],
+                                        -el['out_count'],
+                                        el['in_count']))
+    
+    if not directions:
+        http_exception_json(status_code=404, param=request.url)
+
+    return new_get_exchange_direction_list_with_aml_and_location(directions,
+                                                    valute_from,
+                                                    valute_to,
+                                                    with_location=True)
 
 
 def new_test_cash_exchange_directions_with_location(request: Request,

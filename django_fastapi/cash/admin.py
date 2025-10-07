@@ -37,7 +37,9 @@ from .models import (Country,
                      Direction,
                      ExchangeDirection,
                      PopularDirection,
-                     ExchangeLinkCount)
+                     ExchangeLinkCount,
+                     NewDirection,
+                     NewExchangeDirection)
 
 
 #Отображение городов в админ панели
@@ -296,6 +298,18 @@ class DirectionAdmin(BaseDirectionAdmin):
         return super().get_queryset(request).select_related('valute_from', 'valute_to')
     
 
+@admin.register(NewDirection)
+class DirectionAdmin(BaseDirectionAdmin):
+
+    def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
+        readonly_fileds = super().get_readonly_fields(request, obj)
+        readonly_fileds += ('display_name', 'actual_course', 'previous_course')
+        return readonly_fileds
+
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        return super().get_queryset(request).select_related('valute_from', 'valute_to')
+    
+
 # Кастомный фильтр для ExchangeDirection для отпимизации sql запросов ( решение для N+1 prodlem ) 
 class CustomDirectionFilter(admin.SimpleListFilter):
     title = 'Direction'
@@ -311,6 +325,22 @@ class CustomDirectionFilter(admin.SimpleListFilter):
         if self.value():
             return queryset.filter(direction__id=self.value())
         return queryset
+    
+
+class NewCustomDirectionFilter(admin.SimpleListFilter):
+    title = 'Направление для обмена'
+    parameter_name = 'direction'
+
+    def lookups(self, request, model_admin):
+        # Используйте select_related для оптимизации запроса
+        directions = NewDirection.objects.select_related('valute_from',
+                                                      'valute_to').distinct()
+        return [(d.id, str(d)) for d in directions]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(direction__id=self.value())
+        return queryset
 
 
 #Отображение готовых направлений в админ панели
@@ -319,6 +349,26 @@ class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     list_filter = (
         'exchange',
         CustomDirectionFilter,
+    )
+    def get_display_name(self, obj):
+        return f'{obj.exchange} ({obj.city}: {obj.direction})'
+    
+    def get_list_filter(self, request: HttpRequest) -> Sequence[str]:
+        list_filter = super().get_list_filter(request)
+        list_filter = list_filter + ('city', )
+        return list_filter
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange',
+                                                            'direction',
+                                                            'city')
+    
+
+@admin.register(NewExchangeDirection)
+class NewExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
+    list_filter = (
+        'exchange',
+        NewCustomDirectionFilter,
     )
     def get_display_name(self, obj):
         return f'{obj.exchange} ({obj.city}: {obj.direction})'

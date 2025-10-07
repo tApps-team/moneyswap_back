@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 
 from general_models.models import (BaseExchange,
                                    BaseExchangeLinkCount,
+                                   NewBaseExchangeLinkCount,
                                    BaseDirectionRate,
                                    Exchanger,
                                    Guest,
@@ -64,7 +65,7 @@ class CustomUser(models.Model):
         return f'Пользователь: {self.user}, Обменник: {self.exchange}'
     
 
-# new CustomUser model
+# # new CustomUser model
 class NewCustomUser(models.Model):
     limit_user = Q(is_superuser=False)
 
@@ -503,7 +504,7 @@ class Direction(models.Model):
         ordering = ('city__exchange', 'city', 'direction')
 
     def __str__(self):
-        return f'{self.city.exchange} {self.city} - {self.direction}'
+        return f'{self.exchange} {self.city} - {self.direction}'
 
 
 # new Direction model
@@ -616,7 +617,7 @@ class NewNonCashDirection(models.Model):
                                  blank=True,
                                  null=True,
                                  verbose_name='Обменник',
-                                 related_name='no_cash_directions')
+                                 related_name='noncash_directions')
     direction = models.ForeignKey(no_cash_models.NewDirection,
                                   verbose_name='Направление',
                                   on_delete=models.SET_NULL,
@@ -735,7 +736,7 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
     
 
 # new ExchangeLinkCount model
-class NewExchangeLinkCount(BaseExchangeLinkCount):
+class NewExchangeLinkCount(NewBaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchanger,
                                  on_delete=models.SET_NULL,
                                  blank=True,
@@ -756,7 +757,7 @@ class NewExchangeLinkCount(BaseExchangeLinkCount):
     class Meta:
         verbose_name = 'Счётчик перехода по ссылке (новый)'
         verbose_name_plural = 'Счётчики перехода по ссылкам (новые)'
-        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+        unique_together = [('exchange', 'user', 'exchange_direction',)]
     
 
 class CountryExchangeLinkCount(BaseExchangeLinkCount):
@@ -783,7 +784,7 @@ class CountryExchangeLinkCount(BaseExchangeLinkCount):
 
 
 # new CountryExchangeLinkCount
-class NewCountryExchangeLinkCount(BaseExchangeLinkCount):
+class NewCountryExchangeLinkCount(NewBaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchanger,
                                  on_delete=models.SET_NULL,
                                  blank=True,
@@ -803,7 +804,7 @@ class NewCountryExchangeLinkCount(BaseExchangeLinkCount):
     class Meta:
         verbose_name = 'Счётчик перехода по ссылке (страны) (новый)'
         verbose_name_plural = 'Счётчики перехода по ссылкам (страны) (новые)'
-        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+        unique_together = [('exchange', 'user', 'exchange_direction',)]
 
 
 class NonCashExchangeLinkCount(BaseExchangeLinkCount):
@@ -830,7 +831,7 @@ class NonCashExchangeLinkCount(BaseExchangeLinkCount):
 
 
 # new NonCashExchangeLinkCount model
-class NewNonCashExchangeLinkCount(BaseExchangeLinkCount):
+class NewNonCashExchangeLinkCount(NewBaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchanger,
                                  on_delete=models.SET_NULL,
                                  blank=True,
@@ -850,7 +851,7 @@ class NewNonCashExchangeLinkCount(BaseExchangeLinkCount):
     class Meta:
         verbose_name = 'Счётчик перехода по ссылке (безналичные) (новый)'
         verbose_name_plural = 'Счётчики перехода по ссылкам (безналичные) (новые)'
-        unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
+        unique_together = [('exchange', 'user', 'exchange_direction',)]
 
 
 class DirectionRate(BaseDirectionRate):
@@ -898,7 +899,7 @@ class NewDirectionRate(BaseDirectionRate):
                                            related_name='direction_rates')
     
     def clean(self):
-        direction_rate_count = DirectionRate.objects.filter(exchange_id=self.exchange_id,
+        direction_rate_count = NewDirectionRate.objects.filter(exchange_id=self.exchange_id,
                                                             exchange_direction_id=self.exchange_direction_id)\
                                                     .count()
         if direction_rate_count >= 3:
@@ -957,7 +958,7 @@ class NewCountryDirectionRate(BaseDirectionRate):
                                            related_name='direction_rates')
     
     def clean(self):
-        direction_rate_count = CountryDirectionRate.objects.filter(exchange_id=self.exchange_id,
+        direction_rate_count = NewCountryDirectionRate.objects.filter(exchange_id=self.exchange_id,
                                                                    exchange_direction_id=self.exchange_direction_id)\
                                                             .count()
         if direction_rate_count >= 3:
@@ -1016,7 +1017,7 @@ class NewNonCashDirectionRate(BaseDirectionRate):
                                            related_name='direction_rates')
     
     def clean(self):
-        direction_rate_count = NonCashDirectionRate.objects.filter(exchange_id=self.exchange_id,
+        direction_rate_count = NewNonCashDirectionRate.objects.filter(exchange_id=self.exchange_id,
                                                             exchange_direction_id=self.exchange_direction_id)\
                                                     .count()
         if direction_rate_count >= 3:

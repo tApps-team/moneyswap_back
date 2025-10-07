@@ -1,26 +1,45 @@
 import os
 import json
+import re
 
-from typing import List, Union
+from time import time
+from typing import List, Union, Literal
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 from math import ceil
 from random import choice, shuffle, randint
+from collections import Counter
 
 from asgiref.sync import async_to_sync
 
 from django.contrib.admin.models import LogEntry
 from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch, Sum, Value, IntegerField
 from django.db.models.functions import Coalesce
-from django.db import connection
+from django.db import connection, transaction
 from django.db.utils import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
+
+from django.utils import timezone
 
 from fastapi import APIRouter, Request, Depends, HTTPException
 
 from .utils.periodic_tasks import get_or_create_schedule
-from general_models.models import (ExchangeAdmin, NewBaseAdminComment, NewBaseComment, NewBaseReview, Valute,
+from general_models.models import (ExchangeAdmin,
+                                   NewBaseAdminComment,
+                                   NewBaseComment,
+                                   NewBaseReview,
+                                   Valute,
                                    Guest,
                                    FeedbackForm,
+                                   #
+                                   NewValute,
+                                   Exchanger,
+                                   Review,
+                                   Comment,
+                                   AdminComment,
+                                   ExchangeAdminOrder,
+                                   NewExchangeAdmin,
+                                   NewExchangeAdminOrder,
                                    en_type_valute_dict)
 from general_models.utils.endpoints import (positive_review_count_filter,
                                             neutral_review_count_filter,
@@ -28,18 +47,38 @@ from general_models.utils.endpoints import (positive_review_count_filter,
                                             availabale_active_status_list,
                                             get_reviews_count_filters,
                                             get_exchange,
+                                            get_review_count_dict,
                                             generate_image_icon,
-                                            # add_reviews_counts,
                                             generate_top_exchanges_query_by_model)
 from general_models.utils.base import annotate_number_field, annotate_string_field
 
 import no_cash.models as no_cash_models
-from no_cash.endpoints import no_cash_exchange_directions2, no_cash_valutes, no_cash_exchange_directions, no_cash_valutes_2, no_cash_valutes_3, test_no_cash_exchange_directions2, test_no_cash_exchange_directions3, test_no_cash_exchange_directions4
+from no_cash.endpoints import (no_cash_exchange_directions2,
+                               no_cash_exchange_directions,
+                               no_cash_valutes,
+                               no_cash_valutes_2,
+                               no_cash_valutes_3,
+                               test_no_cash_exchange_directions2,
+                               test_no_cash_exchange_directions3,
+                               test_no_cash_exchange_directions4)
 
 import cash.models as cash_models
-from cash.endpoints import  cash_valutes, cash_exchange_directions, cash_valutes_2, cash_exchange_directions2, cash_valutes_3, test_cash_exchange_directions2, test_cash_exchange_directions22, test_cash_exchange_directions3
-from cash.schemas import (SpecialCashDirectionMultiModel,
-                          CityModel, SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel, SpecialCashDirectionMultiWithAmlModel,
+from cash.endpoints import (cash_valutes,
+                            cash_exchange_directions,
+                            cash_valutes_2,
+                            cash_exchange_directions2,
+                            cash_valutes_3,
+                            test_cash_exchange_directions2,
+                            test_cash_exchange_directions22,
+                            test_cash_exchange_directions3)
+from cash.schemas import (NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                          NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                          NewSpecialCashDirectionMultiWithAmlModel,
+                          NewSpecialCashDirectionMultiWithLocationModel,
+                          SpecialCashDirectionMultiModel,
+                          CityModel,
+                          SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                          SpecialCashDirectionMultiWithAmlModel,
                           SpecialCashDirectionMultiWithLocationModel,
                           SpecialCashDirectionMultiPrtnerWithLocationModel,
                           SpecialCashDirectionMultiPrtnerModel,
@@ -51,15 +90,25 @@ import partners.models as partner_models
 
 from partners.utils.endpoints import generate_actual_course
 
-# from partners.utils.endpoints import get_partner_directions_for_test
-
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
-from .utils.endpoints import (check_exchage_by_name, check_exchage_marker, check_perms_for_adding_comment,
-                              check_perms_for_adding_review, get_base_url, get_exchange_dircetions_dict_tuple,
+from .utils.endpoints import (check_exchage_by_name,
+                              check_exchage_marker,
+                              check_perms_for_adding_comment,
+                              check_perms_for_adding_review,
+                              get_base_url,
+                              get_exchange_dircetions_dict_tuple,
+                              new_get_exchange_directions_count_dict,
                               get_exchange_with_direction_count,
-                              get_exchange_with_direction_count_for_exchange_list, new_check_perms_for_adding_comment, new_check_perms_for_adding_review, new_generate_top_exchanges_query_by_model, new_get_reviews_count_filters,
-                              pust_to_send_bot, send_comment_notifitation,
+                              get_exchange_with_direction_count_for_exchange_list,
+                              new_check_perms_for_adding_comment,
+                              new_check_perms_for_adding_review,
+                              new_generate_top_exchanges_query_by_model,
+                              new_get_reviews_count_filters,
+                              new_send_comment_notifitation,
+                              new_send_review_notifitation,
+                              pust_to_send_bot,
+                              send_comment_notifitation,
                               try_generate_icon_url,
                               generate_valute_for_schema,
                               get_exchange_directions,
@@ -67,7 +116,25 @@ from .utils.endpoints import (check_exchage_by_name, check_exchage_marker, check
                               generate_coin_for_schema,
                               send_review_notifitation)
 
-from .schemas import (AddCommentSchema, BlackListExchangeSchema, DetailBlackListExchangeSchema, NewAddCommentSchema, NewAddReviewSchema, NewCommonExchangeSchema, NewDetailBlackListExchangeSchema, NewDetailExchangeSchema, NewReviewsByExchangeSchema, NewSiteMapDirectonSchema, PopularDirectionSchema, SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema,
+from .schemas import (AddCommentSchema,
+                      BlackListExchangeSchema,
+                      DetailBlackListExchangeSchema,
+                      NewAddCommentSchema,
+                      NewAddReviewSchema,
+                      NewCommonExchangeSchema,
+                      ExchangeListElementSchema,
+                      NewDetailBlackListExchangeSchema,
+                      NewDetailExchangeSchema,
+                      NewExchangeLinkCountSchema,
+                      NewReviewsByExchangeSchema,
+                      NewSiteMapDirectonSchema,
+                      NewSiteMapDirectonSchema2,
+                      NewSpecialDirectionMultiWithAmlModel,
+                      NewSpecialPartnerNoCashDirectionSchema,
+                      NewTopExchangeSchema,
+                      PopularDirectionSchema,
+                      SpecialDirectionMultiWithAmlModel,
+                      SpecialPartnerNoCashDirectionSchema,
                       ValuteModel,
                       EnValuteModel,
                       SpecialDirectionMultiModel,
@@ -87,12 +154,19 @@ from .schemas import (AddCommentSchema, BlackListExchangeSchema, DetailBlackList
                       TopExchangeSchema,
                       TopCoinSchema,
                       FeedbackFormSchema,
-                      SiteMapDirectonSchema)
+                      SiteMapDirectonSchema,
+                      NewSpecificValuteSchema,
+                      NewBlackListExchangeSchema,
+                      BlackExchangeDetailSchema)
 
 from config import DEV_HANDLER_SECRET
 
 
 common_router = APIRouter(tags=['Общее'])
+
+#new common router
+new_common_router = APIRouter(tags=['Общее (НОВЫЕ)'])
+
 
 test_router = APIRouter(prefix='/test',
                           tags=['Общее(Changed)'])
@@ -100,106 +174,1094 @@ test_router = APIRouter(prefix='/test',
 #
 review_router = APIRouter(prefix='/reviews',
                           tags=['Отзывы'])
+
+#new review router
+new_review_router = APIRouter(prefix='/reviews',
+                          tags=['Отзывы (НОВЫЕ)'])
 #
 
 
-# Эндпоинт для получения доступных валют
-# @common_router.get('/available_valutes',
-#                    response_model=dict[str, dict[str, list[ValuteModel | EnValuteModel]]],
-#                    response_model_by_alias=False)
-# def get_available_valutes(request: Request,
-#                           query: AvailableValutesQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         json_dict = no_cash_valutes(request, params)
-#     else:
-#         json_dict = cash_valutes(request, params)
-    
-#     return json_dict
+################################################################################################
+# СИСТЕМНЫЕ АПИ РУЧКИ ДЛЯ ПЕРЕНОСА ДАННЫХ ИЗ СТАРЫХ ТАБЛИЦ В НОВЫЕ ( РЕДИЗАЙН БД )
 
-#
-# @common_router.get('/available_valutes_2')
-# def get_available_valutes(request: Request,
-#                           query: AvailableValutesQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         json_dict = no_cash_valutes_2(request, params)
-#     else:
-#         json_dict = cash_valutes_2(request, params)
-    
-#     return json_dict
-#
-
-@test_router.get('/dev_handler')
-def test_direction(secret: str):
+@test_router.get('/recreate_valute_records')
+def recreate_valute_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
     
-    folder_path = "review_jsons"
+    create_list = []
+    for valute in Valute.objects.all():
+        _d = valute.__dict__
+        _d.pop('_state')
+        create_list.append(NewValute(**_d))
 
-    custom_timedelta = timedelta(days=1)
+    try:
+        NewValute.objects.bulk_create(create_list)
+    except Exception as ex:
+        res = 'ERROR'
+        print(ex)
+    else:
+        res = 'VALUTES ADDED!!!'
+        print(res)
+    
+    return res
 
-    # Проходим по всем файлам в папке
-    for filename in os.listdir(folder_path):
-        # rewrite = False
-        if filename.endswith(".json"):  # фильтруем только JSON файлы
-            file_path = os.path.join(folder_path, filename)
-            # print(f"Файл: {filename}")
-            with open(file_path, "r", encoding="utf-8") as f:
-                try:
-                    data = json.load(f)  # загружаем содержимое JSON
-                    data: dict
-                    for key in data:
-                        review_list: list[dict] = data[key]
 
-                        create_list = []
-                        for review in review_list:
-                            old_date = review.pop('date')
-                            # print('old', old_date)
-                            random_minute = randint(10, 120)
-                            new_timedelta = custom_timedelta + timedelta(minutes=random_minute)
-                            new_date = datetime.fromisoformat(old_date) + new_timedelta
-                            # print('new',new_date)
-                            # break
-                            review['time_create'] = new_date
-                            create_list.append(NewBaseReview(**review))
+@test_router.get('/recreate_directions_records')
+def recreate_directions_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+
+    no_cash_create_list = []
+    for direction in no_cash_models.Direction.objects.select_related('valute_from',
+                                                                      'valute_to').all():
+        _d = direction.__dict__
+        _d.pop('_state')
+        _d.pop('id')
+        no_cash_create_list.append(no_cash_models.NewDirection(**_d))
+
+    try:
+        no_cash_models.NewDirection.objects.bulk_create(no_cash_create_list)
+    except Exception as ex:
+        res = 'NO CASH DIRECTION ERROR'
+        print(ex)
+        return res
+
+    cash_create_list = []
+    for direction in cash_models.Direction.objects.select_related('valute_from',
+                                                                      'valute_to').all():
+        _d = direction.__dict__
+        _d.pop('_state')
+        _d.pop('id')
+        _d.pop('display_name')
+        cash_create_list.append(cash_models.NewDirection(**_d))
+
+    try:
+        cash_models.NewDirection.objects.bulk_create(cash_create_list)
+    except Exception as ex:
+        res = 'CASH DIRECTION ERROR'
+        print(ex)
+        return res
+    else:
+        res = 'NO CASH AND CASH DIRECTION ADDED!!!'
+        print(res)
+
+    return res
+
+
+
+def parse_relative_date(text: str):
+    """
+    Преобразует строку вроде '1 год 3 месяца', '3 месяца', '2 года'
+    в datetime.
+    """
+    years, months = 0, 0
+
+    # ищем годы
+    match_years = re.search(r"(\d+)\s*(год|года|лет)", text)
+    if match_years:
+        years = int(match_years.group(1))
+
+    # ищем месяцы
+    match_months = re.search(r"(\d+)\s*(месяц|месяца|месяцев)", text)
+    if match_months:
+        months = int(match_months.group(1))
+
+    return timezone.now() - relativedelta(years=years, months=months)
+
+
+def format_relative_date(dt: datetime) -> str:
+    """
+    Преобразует datetime в строку вроде '1 год 3 месяца', '3 месяца', '2 года'.
+    От текущего времени (timezone.now()).
+    """
+    now = timezone.now().today()
+    
+    delta = relativedelta(now, dt)
+
+    years = delta.years
+    months = delta.months
+
+    parts = []
+
+    # склонения для лет
+    if years:
+        if years % 10 == 1 and years % 100 != 11:
+            parts.append(f"{years} год")
+        elif 2 <= years % 10 <= 4 and not (12 <= years % 100 <= 14):
+            parts.append(f"{years} года")
+        else:
+            parts.append(f"{years} лет")
+
+    # склонения для месяцев
+    if months:
+        if months % 10 == 1 and months % 100 != 11:
+            parts.append(f"{months} месяц")
+        elif 2 <= months % 10 <= 4 and not (12 <= months % 100 <= 14):
+            parts.append(f"{months} месяца")
+        else:
+            parts.append(f"{months} месяцев")
+
+    # если совсем ничего нет — значит "0 месяцев"
+    if not parts:
+        return "0 месяцев"
+
+    return " ".join(parts)
+
+
+@test_router.get('/recreate_exchanger_records')
+def recreate_exchanger_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    create_list = []
+    exchange_name_set = set()
+    for exchange_model in (no_cash_models.Exchange,
+                           cash_models.Exchange,
+                           partner_models.Exchange):
+        for exchange in exchange_model.objects.all():
+            if exchange.en_name not in exchange_name_set:
+                
+                exchange_name_set.add(exchange.en_name)
+                _d = exchange.__dict__
+                _d.pop('_state')
+                _d.pop('id')
+                if _d.get('age'):
+                    _d['age'] = parse_relative_date(_d['age'])
+                # print(_d)
+                create_list.append(Exchanger(**_d))
+
+    try:
+        # Exchanger.objects.bulk_create(create_list)
+        for exchanger in create_list:
+            exchanger.save()
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGERS ADDED!!!'
+        # print('len unique set', len(exchange_name_set))
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_auto_no_cash_links_records')
+def recreate_auto_no_cash_links_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    create_list = []
+
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    no_cash_exchange_direction_dict = {(d.direction.valute_from_id, d.direction.valute_to_id, d.exchange_id): d.pk\
+                                        for d in no_cash_models.NewExchangeDirection.objects.select_related('direction').all()}
+
+    for exchange_link in no_cash_models.ExchangeLinkCount.objects.select_related('exchange',
+                                                                                 'exchange_direction',
+                                                                                 'exchange_direction__direction').all():
+        try:
+            exchange_en_name = exchange_link.exchange.en_name
+        except Exception:
+            continue
+        else:
+            valute_from_id = exchange_link.exchange_direction.direction.valute_from_id
+            valute_to_id = exchange_link.exchange_direction.direction.valute_to_id
+            # city_id = exchange_link.exchange_direction.city_id
+
+            if exchange_id := exchanger_dict.get(exchange_en_name):
+                exchange_direction_dict_key = (valute_from_id, valute_to_id, exchange_id)
+
+                if exchange_direction_id := no_cash_exchange_direction_dict.get(exchange_direction_dict_key):
+                    data = {
+                        'user_id': exchange_link.user_id,
+                        'count': exchange_link.count,
+                        'exchange_id': exchange_id,
+                        'exchange_direction_id': exchange_direction_id,
+                    }
+
+                    create_list.append(no_cash_models.NewExchangeLinkCount(**data))
+    try:
+        no_cash_models.NewExchangeLinkCount.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER NO CASH LINKS ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_auto_cash_links_records')
+def recreate_auto_cash_links_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    create_list = []
+
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    cash_exchange_direction_dict = {(d.direction.valute_from_id, d.direction.valute_to_id, d.city_id, d.exchange_id): d.pk\
+                                        for d in cash_models.NewExchangeDirection.objects.select_related('direction').all()}
+
+    for exchange_link in cash_models.ExchangeLinkCount.objects.select_related('exchange',
+                                                                                 'exchange_direction',
+                                                                                 'exchange_direction__direction').all():
+        try:
+            exchange_en_name = exchange_link.exchange.en_name
+        except Exception:
+            continue
+        else:
+            valute_from_id = exchange_link.exchange_direction.direction.valute_from_id
+            valute_to_id = exchange_link.exchange_direction.direction.valute_to_id
+            city_id = exchange_link.exchange_direction.city_id
+
+            if exchange_id := exchanger_dict.get(exchange_en_name):
+                exchange_direction_dict_key = (valute_from_id, valute_to_id, city_id, exchange_id)
+
+                if exchange_direction_id := cash_exchange_direction_dict.get(exchange_direction_dict_key):
+                    data = {
+                        'user_id': exchange_link.user_id,
+                        'count': exchange_link.count,
+                        'exchange_id': exchange_id,
+                        'exchange_direction_id': exchange_direction_id,
+                    }
+
+                    create_list.append(cash_models.NewExchangeLinkCount(**data))
+    try:
+        cash_models.NewExchangeLinkCount.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER CASH LINKS ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_partner_countries_records')
+def recreate_partner_countries_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    try:
+        for partner_country in partner_models.PartnerCountry.objects.select_related('exchange',
+                                                                                    'country')\
+                                                                    .prefetch_related('exclude_cities',
+                                                                                      'working_days').all():
+            # if partner_country.exchange.name == 'test_ex':
+                _d = partner_country.__dict__
+                exchange_en_name = partner_country.exchange.en_name
+                new_exchage_id = exchanger_dict.get(exchange_en_name)
+                
+                if new_exchage_id:
+                    _d.pop('_state')
+                    _d.pop('id')
+                    _d.pop('exchange_id')
+                    prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+                    exclude_cities = prefetch_dict.get('exclude_cities')
+                    working_days = prefetch_dict.get('working_days')
+                    _d['exchange_id'] = new_exchage_id
+
+                    with transaction.atomic():
+                        new_partner_country = partner_models.NewPartnerCountry.objects.create(**_d)
+
+                        if exclude_cities:
+                            new_partner_country.exclude_cities.add(*exclude_cities)
+                        if working_days:
+                            new_partner_country.working_days.add(*working_days)
+
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER COUNTRIES ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_partner_cities_records')
+def recreate_partner_cities_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    try:
+        for partner_country in partner_models.PartnerCity.objects.select_related('exchange',
+                                                                                    'city')\
+                                                                    .prefetch_related('working_days').all():
+            # if partner_country.exchange.name == 'test_ex':
+                _d = partner_country.__dict__
+                exchange_en_name = partner_country.exchange.en_name
+                new_exchage_id = exchanger_dict.get(exchange_en_name)
+                
+                if new_exchage_id:
+                    _d.pop('_state')
+                    _d.pop('id')
+                    _d.pop('exchange_id')
+                    prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+                    # exclude_cities = prefetch_dict.get('exclude_cities')
+                    working_days = prefetch_dict.get('working_days')
+                    _d['exchange_id'] = new_exchage_id
+
+                    with transaction.atomic():
+                        new_partner_country = partner_models.NewPartnerCity.objects.create(**_d)
+
+                        if working_days:
+                            new_partner_country.working_days.add(*working_days)
+
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER CITIES ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_partner_city_direction_records')
+def recreate_partner_city_direction_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+
+    try:
+        for city_direction in partner_models.Direction.objects.select_related('exchange',
+                                                                              'direction',
+                                                                            'city',
+                                                                            'city__city')\
+                                                                .prefetch_related('direction_rates').all():
+            # print(city_direction.__dict__)
+            # break
+            exchange_en_name = city_direction.exchange.en_name
+            new_exchange_id = exchanger_dict.get(exchange_en_name)
+            
+            if new_exchange_id:
+                new_city_id = partner_models.NewPartnerCity.objects.get(city_id=city_direction.city.city_id,
+                                                                        exchange_id=new_exchange_id).pk
+                _valute_from = city_direction.direction.valute_from_id
+                _valute_to = city_direction.direction.valute_to_id
+
+                new_direction_id = cash_models.NewDirection.objects.get(valute_from_id=_valute_from,
+                                                                        valute_to_id=_valute_to).pk
+                # if city_direction.exchange.name == 'test_ex':
+                _d = city_direction.__dict__
+                _d.pop('_state')
+                _d.pop('id')
+                _d.pop('exchange_id')
+                _d.pop('city_id')
+                _d.pop('direction_id')
+                prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+                direction_rates = prefetch_dict.get('direction_rates')
+                # print(direction_rates)
+                _d['exchange_id'] = new_exchange_id
+                _d['city_id'] = new_city_id
+                _d['direction_id'] = new_direction_id
+                # break
+
+                with transaction.atomic():
+                    new_partner_city_direction = partner_models.NewDirection.objects.create(**_d)
+
+                    if direction_rates:
+                        direction_rate_list = []
+                        for rate in direction_rates:
+                            # print(rate.__dict__)
+                            rate_dict: dict = rate.__dict__
+                            rate_dict.pop('_state')
+                            rate_dict.pop('id')
+                            rate_dict.pop('exchange_id')
+                            rate_dict.pop('exchange_direction_id')
+                            rate_dict['exchange_id'] = new_exchange_id
+                            rate_dict['exchange_direction_id'] = new_partner_city_direction.pk
+                            direction_rate_list.append(partner_models.NewDirectionRate(**rate_dict))
                         
-                        NewBaseReview.objects.bulk_create(create_list)
-                        print(f'{filename} {len(create_list)} has been added!')
-                        # if len(review_list) > 50:
-                        #     print(f'{filename} - {len(review_list)}')
+                        partner_models.NewDirectionRate.objects.bulk_create(direction_rate_list)
 
-                except Exception as ex:
-                    print(f'ERROR WITH {filename}!')
-                    print(ex)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER CITY DIRECTIONS WITH DIRECTION RATES ADDED!!!'
+        print(res)
+
+    return res
 
 
+@test_router.get('/recreate_partner_country_direction_records')
+def recreate_partner_country_direction_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+
+    try:
+        for country_direction in partner_models.CountryDirection.objects.select_related('exchange',
+                                                                            'country',
+                                                                            'country__country')\
+                                                                .prefetch_related('direction_rates').all():
+            exchange_en_name = country_direction.exchange.en_name
+            new_exchange_id = exchanger_dict.get(exchange_en_name)
+            
+            if new_exchange_id:
+                new_country_id = partner_models.NewPartnerCountry.objects.get(country_id=country_direction.country.country_id,
+                                                                        exchange_id=new_exchange_id).pk
+                # if city_direction.exchange.name == 'test_ex':
+                _valute_from = country_direction.direction.valute_from_id
+                _valute_to = country_direction.direction.valute_to_id
+
+                new_direction_id = cash_models.NewDirection.objects.get(valute_from_id=_valute_from,
+                                                                        valute_to_id=_valute_to).pk
+                
+                _d = country_direction.__dict__
+                _d.pop('_state')
+                _d.pop('id')
+                _d.pop('exchange_id')
+                _d.pop('country_id')
+                _d.pop('direction_id')
+                prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+                direction_rates = prefetch_dict.get('direction_rates')
+                # print(direction_rates)
+                _d['exchange_id'] = new_exchange_id
+                _d['country_id'] = new_country_id
+                _d['direction_id'] = new_direction_id
+                # break
+
+                with transaction.atomic():
+                    new_partner_country_direction = partner_models.NewCountryDirection.objects.create(**_d)
+
+                    if direction_rates:
+                        direction_rate_list = []
+                        for rate in direction_rates:
+                            # print(rate.__dict__)
+                            rate_dict: dict = rate.__dict__
+                            rate_dict.pop('_state')
+                            rate_dict.pop('id')
+                            rate_dict.pop('exchange_id')
+                            rate_dict.pop('exchange_direction_id')
+                            rate_dict['exchange_id'] = new_exchange_id
+                            rate_dict['exchange_direction_id'] = new_partner_country_direction.pk
+                            direction_rate_list.append(partner_models.NewCountryDirectionRate(**rate_dict))
+                        
+                        partner_models.NewCountryDirectionRate.objects.bulk_create(direction_rate_list)
+
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER COUNTRY DIRECTIONS WITH DIRECTION RATES ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_partner_noncash_direction_records')
+def recreate_partner_noncash_direction_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+
+    try:
+        for noncash_direction in partner_models.NonCashDirection.objects.select_related('exchange')\
+                                                                .prefetch_related('direction_rates').all():
+            exchange_en_name = noncash_direction.exchange.en_name
+            new_exchange_id = exchanger_dict.get(exchange_en_name)
+            
+            if new_exchange_id:
+
+                _valute_from = noncash_direction.direction.valute_from_id
+                _valute_to = noncash_direction.direction.valute_to_id
+
+                new_direction_id = no_cash_models.NewDirection.objects.get(valute_from_id=_valute_from,
+                                                                        valute_to_id=_valute_to).pk
+                # if city_direction.exchange.name == 'test_ex':
+                _d = noncash_direction.__dict__
+                _d.pop('_state')
+                _d.pop('id')
+                _d.pop('exchange_id')
+                _d.pop('direction_id')
+                prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+                direction_rates = prefetch_dict.get('direction_rates')
+                # print(direction_rates)
+                _d['exchange_id'] = new_exchange_id
+                _d['direction_id'] = new_direction_id
+                # break
+
+                with transaction.atomic():
+                    new_partner_noncash_direction = partner_models.NewNonCashDirection.objects.create(**_d)
+
+                    if direction_rates:
+                        direction_rate_list = []
+                        for rate in direction_rates:
+                            # print(rate.__dict__)
+                            rate_dict: dict = rate.__dict__
+                            rate_dict.pop('_state')
+                            rate_dict.pop('id')
+                            rate_dict.pop('exchange_id')
+                            rate_dict.pop('exchange_direction_id')
+                            rate_dict['exchange_id'] = new_exchange_id
+                            rate_dict['exchange_direction_id'] = new_partner_noncash_direction.pk
+                            direction_rate_list.append(partner_models.NewNonCashDirectionRate(**rate_dict))
+                        
+                        partner_models.NewNonCashDirectionRate.objects.bulk_create(direction_rate_list)
+
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER NONCASH DIRECTIONS WITH DIRECTION RATES ADDED!!!'
+        print(res)
+
+    return res
+    
+
+@test_router.get('/union_partner_city_link_count_records_by_marker')
+def recreate_partner_city_link_count_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    link_dict = {}
+
+    records_on_delete = []
+
+    for exchange_link in partner_models.ExchangeLinkCount.objects.all():
+        dict_key = (exchange_link.user_id, exchange_link.exchange_id, exchange_link.exchange_direction_id)
+
+        if dict_key not in link_dict:
+            link_dict[dict_key] = exchange_link
+        else:
+            link_dict[dict_key].count += exchange_link.count
+            records_on_delete.append(exchange_link.pk)
+    
+    _update = partner_models.ExchangeLinkCount.objects.bulk_update(objs=list(link_dict.values()),
+                                                         fields=['count'])
+    
+    _delete = partner_models.ExchangeLinkCount.objects.filter(pk__in=records_on_delete).delete()
+
+    print('update', _update)
+    print('delete', _delete)
+
+
+@test_router.get('/recreate_partner_city_link_count_records')
+def recreate_partner_city_link_count_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    create_list = []
+
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    partner_city_exchange_direction_dict = {(d.direction.valute_from_id, d.direction.valute_to_id, d.city.city_id, d.exchange_id): d.pk\
+                                        for d in partner_models.NewDirection.objects.select_related('direction',
+                                                                                                    'city').all()}
+
+    for exchange_link in partner_models.ExchangeLinkCount.objects.select_related('exchange',
+                                                                                 'exchange_direction',
+                                                                                 'exchange_direction__direction',
+                                                                                 'exchange_direction__city').all():
+        try:
+            exchange_en_name = exchange_link.exchange.en_name
+        except Exception:
+            print('catch error',exchange_link.__dict__)
+            continue
+        else:
+            valute_from_id = exchange_link.exchange_direction.direction.valute_from_id
+            valute_to_id = exchange_link.exchange_direction.direction.valute_to_id
+            city_id = exchange_link.exchange_direction.city.city_id
+
+            if exchange_id := exchanger_dict.get(exchange_en_name):
+                exchange_direction_dict_key = (valute_from_id, valute_to_id, city_id, exchange_id)
+
+                if exchange_direction_id := partner_city_exchange_direction_dict.get(exchange_direction_dict_key):
+                    data = {
+                        'user_id': exchange_link.user_id,
+                        'count': exchange_link.count,
+                        'exchange_id': exchange_id,
+                        'exchange_direction_id': exchange_direction_id,
+                    }
+
+                    create_list.append(partner_models.NewExchangeLinkCount(**data))
+                else:
+                    print('exchange_direction_id not found', exchange_direction_dict_key, exchange_link.exchange.name, exchange_link.exchange_id)
+            else:
+                print('exchange_id not found')
+    try:
+        partner_models.NewExchangeLinkCount.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER CITY LINKS ADDED!!!'
+        print(res)
+    
+    return res
+
+
+@test_router.get('/union_partner_country_link_count_records_by_marker')
+def union_partner_country_link_count_records_by_marker(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    link_dict = {}
+
+    records_on_delete = []
+
+    for exchange_link in partner_models.CountryExchangeLinkCount.objects.all():
+        dict_key = (exchange_link.user_id, exchange_link.exchange_id, exchange_link.exchange_direction_id)
+
+        if dict_key not in link_dict:
+            link_dict[dict_key] = exchange_link
+        else:
+            link_dict[dict_key].count += exchange_link.count
+            records_on_delete.append(exchange_link.pk)
+    
+    _update = partner_models.CountryExchangeLinkCount.objects.bulk_update(objs=list(link_dict.values()),
+                                                         fields=['count'])
+    
+    _delete = partner_models.CountryExchangeLinkCount.objects.filter(pk__in=records_on_delete).delete()
+
+    print('update', _update)
+    print('delete', _delete)
+
+
+@test_router.get('/recreate_partner_country_link_count_records')
+def recreate_partner_country_link_count_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    # partner_models.ExchangeLinkCount.objects.update(exchange_marker='city')
+    
+    create_list = []
+
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    partner_country_exchange_direction_dict = {(d.direction.valute_from_id, d.direction.valute_to_id, d.country.country_id, d.exchange_id): d.pk\
+                                        for d in partner_models.NewCountryDirection.objects.select_related('direction',
+                                                                                                    'country').all()}
+
+    for exchange_link in partner_models.CountryExchangeLinkCount.objects.select_related('exchange',
+                                                                                 'exchange_direction',
+                                                                                 'exchange_direction__direction',
+                                                                                 'exchange_direction__country').all():
+        try:
+            exchange_en_name = exchange_link.exchange.en_name
+        except Exception:
+            print('catch error',exchange_link.__dict__)
+            continue
+        else:
+            valute_from_id = exchange_link.exchange_direction.direction.valute_from_id
+            valute_to_id = exchange_link.exchange_direction.direction.valute_to_id
+            country_id = exchange_link.exchange_direction.country.country_id
+
+            if exchange_id := exchanger_dict.get(exchange_en_name):
+                exchange_direction_dict_key = (valute_from_id, valute_to_id, country_id, exchange_id)
+
+                if exchange_direction_id := partner_country_exchange_direction_dict.get(exchange_direction_dict_key):
+                    data = {
+                        'user_id': exchange_link.user_id,
+                        'count': exchange_link.count,
+                        'exchange_id': exchange_id,
+                        'exchange_direction_id': exchange_direction_id,
+                    }
+
+                    create_list.append(partner_models.NewCountryExchangeLinkCount(**data))
+                else:
+                    print('exchange_direction_id not found', exchange_direction_dict_key, exchange_link.exchange.name, exchange_link.exchange_id)
+            else:
+                print('exchange_id not found')
+    try:
+        partner_models.NewCountryExchangeLinkCount.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER COUNTRY LINKS ADDED!!!'
+        print(res)
+    
+    return res
+
+
+@test_router.get('/union_partner_noncash_link_count_records_by_marker')
+def union_partner_noncash_link_count_records_by_marker(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    link_dict = {}
+
+    records_on_delete = []
+
+    for exchange_link in partner_models.NonCashExchangeLinkCount.objects.all():
+        dict_key = (exchange_link.user_id, exchange_link.exchange_id, exchange_link.exchange_direction_id)
+
+        if dict_key not in link_dict:
+            link_dict[dict_key] = exchange_link
+        else:
+            link_dict[dict_key].count += exchange_link.count
+            records_on_delete.append(exchange_link.pk)
+    
+    _update = partner_models.NonCashExchangeLinkCount.objects.bulk_update(objs=list(link_dict.values()),
+                                                         fields=['count'])
+    
+    _delete = partner_models.NonCashExchangeLinkCount.objects.filter(pk__in=records_on_delete).delete()
+
+    print('update', _update)
+    print('delete', _delete)
+
+
+@test_router.get('/recreate_partner_noncash_link_count_records')
+def recreate_partner_noncash_link_count_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    # partner_models.ExchangeLinkCount.objects.update(exchange_marker='city')
+    
+    create_list = []
+
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    partner_noncash_exchange_direction_dict = {(d.direction.valute_from_id, d.direction.valute_to_id, d.exchange_id): d.pk\
+                                        for d in partner_models.NewNonCashDirection.objects.select_related('direction').all()}
+
+    for exchange_link in partner_models.NonCashExchangeLinkCount.objects.select_related('exchange',
+                                                                                 'exchange_direction',
+                                                                                 'exchange_direction__direction').all():
+        try:
+            exchange_en_name = exchange_link.exchange.en_name
+        except Exception:
+            print('catch error',exchange_link.__dict__)
+            continue
+        else:
+            valute_from_id = exchange_link.exchange_direction.direction.valute_from_id
+            valute_to_id = exchange_link.exchange_direction.direction.valute_to_id
+
+            if exchange_id := exchanger_dict.get(exchange_en_name):
+                exchange_direction_dict_key = (valute_from_id, valute_to_id, exchange_id)
+
+                if exchange_direction_id := partner_noncash_exchange_direction_dict.get(exchange_direction_dict_key):
+                    data = {
+                        'user_id': exchange_link.user_id,
+                        'count': exchange_link.count,
+                        'exchange_id': exchange_id,
+                        'exchange_direction_id': exchange_direction_id,
+                    }
+
+                    create_list.append(partner_models.NewNonCashExchangeLinkCount(**data))
+                else:
+                    print('exchange_direction_id not found', exchange_direction_dict_key, exchange_link.exchange.name, exchange_link.exchange_id)
+            else:
+                print('exchange_id not found')
+    try:
+        partner_models.NewNonCashExchangeLinkCount.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER PARTNER NONCASH LINKS ADDED!!!'
+        print(res)
+    
+    return res
+
+
+@test_router.get('/recreate_exchanger_review_records')
+def recreate_exchanger_review_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.name: e.pk for e in Exchanger.objects.all()}
+
+    create_list = []
+
+    for review in NewBaseReview.objects.filter(review_from__in=('moneyswap', 'ai')).prefetch_related('comments',
+                                                         'admin_comments').all():
+        exchange_name = review.exchange_name
+
+        _d = review.__dict__
+        _d.pop('_state')
+        _d.pop('id')
+        _d.pop('exchange_name')
+        prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+        comments = prefetch_dict.get('comments')
+        admin_comments = prefetch_dict.get('admin_comments')
+
+        new_exchange_id = exchanger_dict.get(exchange_name)
+        
+        if new_exchange_id:
+            _d['exchange_id'] = new_exchange_id
+            
+            with transaction.atomic():
+                new_review = Review.objects.create(**_d)
+
+                if comments:
+                    comment_create_list = []
+                    for comment in comments:
+                        comment_dict: dict = comment.__dict__
+                        comment_dict.pop('_state')
+                        comment_dict.pop('id')
+                        comment_dict.pop('review_id')
+                        comment_dict['review_id'] = new_review.pk
+                        comment_create_list.append(Comment(**comment_dict))
+                    
+                    Comment.objects.bulk_create(comment_create_list)
+                
+                if admin_comments:
+                    admin_comment_create_list = []
+                    for admin_comment in admin_comments:
+                        admin_comment_dict: dict = admin_comment.__dict__
+                        admin_comment_dict.pop('_state')
+                        admin_comment_dict.pop('id')
+                        admin_comment_dict.pop('review_id')
+                        admin_comment_dict['review_id'] = new_review.pk
+                        admin_comment_create_list.append(AdminComment(**admin_comment_dict))
+
+                    AdminComment.objects.bulk_create(admin_comment_create_list)
+            # create_list.append(Review(**_d))
+        else:
+            print('exchange_id not found', exchange_name)
+    
+    try:
+        Review.objects.bulk_create(create_list)
+    except Exception as ex:
+        res = 'ERROR'
+        print(ex)
+    else:
+        res = 'EXCHANGER REVIEWS WITH COMMENTS AND ADMIN COMMENTS ADDED!!!'
+
+    return res
+
+
+@test_router.get('/recreate_partner_bankomat_records')
+def recreate_partner_bankomat_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    try:
+        for bankomat in partner_models.Bankomat.objects.prefetch_related('valutes').all():
+            _d = bankomat.__dict__
+            _d.pop('_state')
+            _d.pop('id')
+            prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+            valutes = prefetch_dict.get('valutes')
+
+            valute_name_list = [v.name for v in valutes]
+
+
+            new_valute_list = list(NewValute.objects.filter(name__in=valute_name_list).values_list('pk', flat=True))
+
+            # print(new_valute_list)
+            with transaction.atomic():
+                new_bankomat = partner_models.NewBankomat.objects.create(**_d)
+
+                if new_valute_list:
+                    new_bankomat.valutes.add(*new_valute_list)
+    
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'PARTNER BANKOMATS WITH RELATED VALUTES ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_partner_custom_user_records')
+def recreate_partner_custom_user_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+
+    try:
+        create_list = []
+        for custom_user in partner_models.CustomUser.objects.select_related('exchange',
+                                                                            'user').all():
+            try:
+                exchange_en_name = custom_user.exchange.en_name
+            except Exception:
+                continue
+            else:
+                new_exchange_id = exchanger_dict.get(exchange_en_name)
+                
+                if new_exchange_id:
+                    _d = custom_user.__dict__
+                    _d.pop('id')
+                    _d.pop('_state')
+                    _d.pop('exchange_id')
+                    _d['exchange_id'] = new_exchange_id
+                    create_list.append(partner_models.NewCustomUser(**_d))
+
+        partner_models.NewCustomUser.objects.bulk_create(create_list)
+
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'CUSTOM USERS ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_partner_qrvalute_partner_records')
+def recreate_partner_qrvalute_partner_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
+    
+    try:
+        for qr_partner in partner_models.QRValutePartner.objects.select_related('valute',
+                                                                                'partner',
+                                                                                'partner__exchange',
+                                                                                'partner__user')\
+                                                                .prefetch_related('bankomats').all():
+            # print(qr_partner.__dict__)
+            bankomats = qr_partner.bankomats.all()
+            bankomat_name_list = [b.name for b in bankomats]
+
+            if bankomat_name_list:
+                new_bankomats = list(partner_models.NewBankomat.objects.filter(name__in=bankomat_name_list)\
+                                                                        .values_list('pk', flat=True))
+            else:
+                new_bankomats = None
+            
+            try:
+                partner_exchange_en_name = qr_partner.partner.exchange.en_name
+            except Exception:
+                continue
+            else:
+                partner_user_id = qr_partner.partner.user_id
+
+                valute_name = qr_partner.valute.name
+
+                new_valute_pk = NewValute.objects.get(name=valute_name).pk
+                new_exchange_id = exchanger_dict.get(partner_exchange_en_name)
+                
+                if new_exchange_id:
+                    new_custom_user_pk = partner_models.NewCustomUser.objects.get(user_id=partner_user_id,
+                                                                            exchange_id=new_exchange_id).pk
+                    _d = {
+                        'valute_id': new_valute_pk,
+                        'partner_id': new_custom_user_pk,
+                    }
+                    new_qr_partner = partner_models.NewQRValutePartner.objects.create(**_d)
+
+                    if new_bankomats:
+                        new_qr_partner.bankomats.add(*new_bankomats)
+
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'QR PARTNER VALUTE ADDED!!!'
+        print(res)
+
+    return res
+
+
+@test_router.get('/recreate_exchange_admin_order_records')
+def recreate_exchange_admin_order_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.name: e.pk for e in Exchanger.objects.all()}
+
+    create_list = []
+
+    for exchange_admin_order in ExchangeAdminOrder.objects.all():
+        _d = exchange_admin_order.__dict__
+        _d.pop('_state')
+        _d.pop('id')
+
+        exchange_name = _d.pop('exchange_name')
+        new_exchange_id = exchanger_dict.get(exchange_name)
+        
+        if new_exchange_id:
+            _d['exchange_id'] = new_exchange_id
+            create_list.append(NewExchangeAdminOrder(**_d))
+    try:
+        NewExchangeAdminOrder.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER ADMIN ORDERS ADDED!!!'
+    
+    return res
+
+
+@test_router.get('/recreate_exchange_admin_records')
+def recreate_exchange_admin_records(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchanger_dict = {e.name: e.pk for e in Exchanger.objects.all()}
+
+    exchange_admin_order_set = {(e.user_id, e.exchange.name) for e in NewExchangeAdminOrder.objects.select_related('exchange').all()}
+
+    create_list = []
+    exchange_name_set = set()
+
+    for exchange_admin in ExchangeAdmin.objects.all():
+        _d = exchange_admin.__dict__
+        _user_id = exchange_admin.user_id
+        exchange_name = _d.pop('exchange_name')
+        if (_user_id, exchange_name) in exchange_admin_order_set:
+            if exchange_name in exchange_name_set:
+                print(f'duble {exchange_name}')
+                continue
+            else:
+                exchange_name_set.add(exchange_name)
+
+                _d.pop('_state')
+                _d.pop('id')
+                _d.pop('exchange_id')
+                _d.pop('exchange_marker')
+
+                new_exchange_id = exchanger_dict.get(exchange_name)
+                
+                if new_exchange_id:
+                    _d['exchange_id'] = new_exchange_id
+                    create_list.append(NewExchangeAdmin(**_d))
+    try:
+        NewExchangeAdmin.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGER ADMINS ADDED!!!'
+    
+    return res
+
+
+################################################################################################
 
 @common_router.get('/available_valutes_2')
 def get_available_valutes2(request: Request,
                           query: AvailableValutesQuery = Depends()):
     params = query.params()
     if not params['city']:
-        json_dict = no_cash_valutes_3(request, params)
+        valute_dict = no_cash_valutes_3(request, params)
     else:
-        json_dict = cash_valutes_3(request, params)
+        valute_dict = cash_valutes_3(request, params)
     
-    return json_dict
+    return valute_dict
 
 
-# @test_router.get('/available_valutes_2')
-# def get_available_valutes2(request: Request,
-#                           query: AvailableValutesQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         json_dict = no_cash_valutes_3(request, params)
-#     else:
-#         json_dict = cash_valutes_3(request, params)
+# new available_valutes
+@new_common_router.get('/available_valutes')
+def available_valutes(request: Request,
+                      query: AvailableValutesQuery = Depends()):
+    params = query.params()
+    if not params['city']:
+        valute_dict = no_cash_valutes(request, params)
+    else:
+        valute_dict = cash_valutes(request, params)
     
-#     return json_dict
+    return valute_dict
 
 
-#
 @common_router.get('/specific_valute',
                    response_model=SpecificValuteSchema,
                    response_model_by_alias=False)
@@ -219,27 +1281,30 @@ def get_specific_valute(code_name: str):
                                             en_name=en_type_valute_dict[valute.type_valute])
         
         return valute
-#
-
-# Эндпоинт для получения доступных готовых направлений
-# @common_router.get('/directions',
-#                  response_model=list[SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
-#                  response_model_by_alias=False)
-# def get_current_exchange_directions(request: Request,
-#                                     query: SpecificDirectionsQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         exchange_direction_list = no_cash_exchange_directions(request, params)
-#     else:
-#         exchange_direction_list = cash_exchange_directions(request, params)
     
-#     return exchange_direction_list
-# @test_router.get('/directions')
-# def get_current_exchange_directions(valute_from: str,
-#                                     valute_to: str):
-#     get_partner_directions_for_test(valute_from=valute_from,
-#                                     valute_to=valute_to)
-#     pass
+
+# new specific_valute
+@new_common_router.get('/specific_valute',
+                   response_model=NewSpecificValuteSchema,
+                   response_model_by_alias=False)
+def new_get_specific_valute(code_name: str):
+    code_name = code_name.upper()
+    try:
+        valute = NewValute.objects.get(code_name=code_name)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=400)
+    else:
+        # print(valute.icon_url)
+        valute.icon = try_generate_icon_url(valute)
+        # print(valute.icon)
+        valute.multiple_name = MultipleName(name=valute.name,
+                                            en_name=valute.en_name)
+        valute.multiple_type = MultipleName(name=valute.type_valute,
+                                            en_name=en_type_valute_dict[valute.type_valute])
+        
+        return valute
+
+
 union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
                                          SpecialCashDirectionMultiPrtnerWithLocationModel,
                                          SpecialCashDirectionMultiWithLocationModel,
@@ -247,57 +1312,6 @@ union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchange
                                          SpecialCashDirectionMultiPrtnerModel,
                                          SpecialCashDirectionMultiModel,
                                          SpecialDirectionMultiModel]
-
-# @common_router.get('/directions',
-#                    response_model=list[union_directions_response_models],
-#                    response_model_by_alias=False)
-#                 #  response_model=list[SpecialCashDirectionMultiPrtnerWithLocationModel | SpecialCashDirectionMultiWithLocationModel | SpecialCashDirectionMultiPrtnerModel | SpecialCashDirectionMultiModel | SpecialDirectionMultiModel],
-# def get_current_exchange_directions(request: Request,
-#                                     query: SpecificDirectionsQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         exchange_direction_list = no_cash_exchange_directions2(request, params)
-#     else:
-#         exchange_direction_list = cash_exchange_directions2(request, params)
-    
-#     return exchange_direction_list
-
-
-# @common_router.get('/directions',
-#                    response_model=list[union_directions_response_models],
-#                    response_model_by_alias=False)
-# def get_current_exchange_directions(request: Request,
-#                                     query: SpecificDirectionsQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         exchange_direction_list = test_no_cash_exchange_directions2(request, params)
-#     else:
-#         exchange_direction_list = test_cash_exchange_directions2(request, params)
-    
-#     return exchange_direction_list
-
-
-# test_union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
-#                                          SpecialCashDirectionMultiPrtnerWithLocationModel,
-#                                          SpecialCashDirectionMultiWithLocationModel,
-#                                          SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
-#                                          SpecialCashDirectionMultiPrtnerModel,
-#                                          SpecialCashDirectionMultiWithAmlModel,
-#                                          SpecialDirectionMultiWithAmlModel]
-
-# @common_router.get('/directions',
-#                    response_model=list[test_union_directions_response_models],
-#                    response_model_by_alias=False)
-# def get_current_exchange_directions(request: Request,
-#                                     query: SpecificDirectionsQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         exchange_direction_list = test_no_cash_exchange_directions3(request, params)
-#     else:
-#         exchange_direction_list = test_cash_exchange_directions3(request, params)
-    
-#     return exchange_direction_list
-
 
 new_test_union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
                                          SpecialCashDirectionMultiPrtnerWithLocationModel,
@@ -307,37 +1321,6 @@ new_test_union_directions_response_models = Union[SpecialCashDirectionMultiPrtne
                                          SpecialCashDirectionMultiWithAmlModel,
                                          SpecialPartnerNoCashDirectionSchema,
                                          SpecialDirectionMultiWithAmlModel]
-
-# @test_router.get('/directions',
-#                    response_model=list[new_test_union_directions_response_models],
-#                    response_model_by_alias=False)
-# def get_current_exchange_directions(request: Request,
-#                                     query: SpecificDirectionsQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         exchange_direction_list = test_no_cash_exchange_directions4(request, params)
-#     else:
-#         exchange_direction_list = test_cash_exchange_directions3(request, params)
-    
-#     return exchange_direction_list
-
-
-# @common_router.get('/directions',
-#                    response_model=list[new_test_union_directions_response_models],
-#                    response_model_by_alias=False)
-# def get_current_exchange_directions(request: Request,
-#                                     query: SpecificDirectionsQuery = Depends()):
-#     params = query.params()
-#     if not params['city']:
-#         exchange_direction_list = test_no_cash_exchange_directions4(request, params)
-#     else:
-#         exchange_direction_list = test_cash_exchange_directions3(request, params)
-
-#     # for query in connection.queries:
-#     #     print(query)
-#     #     print('*' * 8)
-
-#     return exchange_direction_list
 
 
 new_test_union_directions_response_models2 = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
@@ -364,6 +1347,33 @@ def get_current_exchange_directions2(request: Request,
     # for query in connection.queries:
     #     print(query)
     #     print('*' * 8)
+
+    return exchange_direction_list
+
+
+new_union_directions_response_models = Union[NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                                              NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                                              NewSpecialCashDirectionMultiWithLocationModel,
+                                              NewSpecialCashDirectionMultiWithAmlModel,
+                                              NewSpecialPartnerNoCashDirectionSchema,
+                                              NewSpecialDirectionMultiWithAmlModel]
+
+
+# new directions
+@new_common_router.get('/directions',
+                   response_model=list[new_union_directions_response_models],
+                   response_model_by_alias=False)
+def get_current_exchange_directions(request: Request,
+                                    query: SpecificDirectionsQuery = Depends()):
+    start_time = time()
+    params = query.params()
+
+    if not params['city']:
+        exchange_direction_list = no_cash_exchange_directions(request, params)
+    else:
+        exchange_direction_list = cash_exchange_directions(request, params)
+
+    print(f'all run time /directions {time() - start_time} sec | {len(exchange_direction_list)} el')
 
     return exchange_direction_list
 
@@ -426,6 +1436,50 @@ def get_popular_directions(exchange_marker: str,
     return res
 
 
+@new_common_router.get('/popular_directions',
+                   response_model=list[PopularDirectionSchema],
+                   response_model_by_alias=False)
+def new_get_popular_directions(segment_marker: Literal['cash',
+                                                        'no_cash',
+                                                        'both'],
+                           limit: int = None):
+    limit = 9 if limit is None else limit
+
+    match segment_marker:
+        case 'no_cash':
+            directions = no_cash_models.NewDirection.objects.select_related('valute_from',
+                                                                            'valute_to')\
+                                                            .order_by('-is_popular',
+                                                                      '-popular_count')\
+                                                            .all()[:limit]
+        case 'cash':
+            directions = cash_models.NewDirection.objects.select_related('valute_from',
+                                                                         'valute_to')\
+                                                            .order_by('-is_popular',
+                                                                      '-popular_count')\
+                                                            .all()[:limit]
+        case 'both':
+            no_cash_directions = no_cash_models.NewDirection.objects.select_related('valute_from',
+                                                                                    'valute_to')
+
+            cash_directions = cash_models.NewDirection.objects.select_related('valute_from',
+                                                                                'valute_to')
+
+            
+            directions = no_cash_directions.union(cash_directions).order_by('-is_popular',
+                                                                            '-popular_count')[:limit]
+    
+    res = []
+
+    for direction in directions:
+
+        valute_from = generate_valute_for_schema(direction.valute_from)
+        valute_to = generate_valute_for_schema(direction.valute_to)
+        res.append(PopularDirectionSchema(valute_from=valute_from.__dict__,
+                                          valute_to=valute_to.__dict__))
+
+    return res
+
 
 @common_router.get('/random_directions',
                    response_model=list[PopularDirectionSchema],
@@ -472,6 +1526,97 @@ def get_random_directions(exchange_marker: str,
     # print(connection.queries)
     print(len(connection.queries))
     return directions
+
+
+@new_common_router.get('/random_directions',
+                   response_model=list[PopularDirectionSchema],
+                   response_model_by_alias=False)
+def new_get_random_directions(segment_marker: Literal['cash',
+                                                        'no_cash',
+                                                        'both'],
+                              limit: int = None):
+    
+    limit = 9 if limit is None else limit
+
+    if limit <= 0:
+        raise HTTPException(status_code=400,
+                            detail=f'parameter "limit" must be positive number, given {limit}')
+
+    match segment_marker:
+        case 'no_cash':
+            exchange_direction_pks = no_cash_models.NewExchangeDirection.objects\
+                                                .select_related('exchange')\
+                                                .filter(exchange__is_active=True,
+                                                        is_active=True)\
+                                                .order_by('direction_id')\
+                                                .distinct('direction_id')\
+                                                .values_list('direction_id',
+                                                             flat=True)
+            direction_pks = list(exchange_direction_pks)
+            shuffle(direction_pks)
+
+            directions = no_cash_models.NewDirection.objects.select_related('valute_from',
+                                                                'valute_to')\
+                                                .filter(pk__in=direction_pks[:limit])
+        case 'cash':
+            exchange_direction_pks = cash_models.NewExchangeDirection.objects\
+                                                .select_related('exchange')\
+                                                .filter(exchange__is_active=True,
+                                                        is_active=True)\
+                                                .order_by('direction_id')\
+                                                .distinct('direction_id')\
+                                                .values_list('direction_id',
+                                                             flat=True)
+            direction_pks = list(exchange_direction_pks)
+            shuffle(direction_pks)
+
+            directions = cash_models.NewDirection.objects.select_related('valute_from',
+                                                                'valute_to')\
+                                                .filter(pk__in=direction_pks[:limit])
+        case 'both':
+            no_cash_exchange_direction_pks = no_cash_models.NewExchangeDirection.objects\
+                                                .select_related('exchange')\
+                                                .filter(exchange__is_active=True,
+                                                        is_active=True)\
+                                                .order_by('direction_id')\
+                                                .distinct('direction_id')\
+                                                .values_list('direction_id',
+                                                             flat=True)
+            no_cash_direction_pks = list(no_cash_exchange_direction_pks)
+            shuffle(no_cash_direction_pks)
+
+            no_cash_directions = no_cash_models.NewDirection.objects.select_related('valute_from',
+                                                                                    'valute_to')\
+                                                .filter(pk__in=no_cash_direction_pks)[:limit]
+            
+            cash_exchange_direction_pks = cash_models.NewExchangeDirection.objects\
+                                                .select_related('exchange')\
+                                                .filter(exchange__is_active=True,
+                                                        is_active=True)\
+                                                .order_by('direction_id')\
+                                                .distinct('direction_id')\
+                                                .values_list('direction_id',
+                                                             flat=True)
+            cash_direction_pks = list(cash_exchange_direction_pks)
+            shuffle(cash_direction_pks)
+
+            cash_directions = cash_models.NewDirection.objects.select_related('valute_from',
+                                                                                'valute_to')\
+                                                .filter(pk__in=cash_direction_pks)[:limit]
+            
+            union_directions = no_cash_directions.union(cash_directions)
+            directions = list(union_directions)
+            shuffle(directions)
+
+    res = []
+    for direction in directions[:limit]:
+        valute_from = generate_valute_for_schema(direction.valute_from)
+        valute_to = generate_valute_for_schema(direction.valute_to)
+        direction = PopularDirectionSchema(valute_from=valute_from.__dict__,
+                                           valute_to=valute_to.__dict__)
+        res.append(direction)
+
+    return res
 
 
 @common_router.get('/similar_directions',
@@ -569,6 +1714,145 @@ def get_similar_directions(exchange_marker: str,
     # print(len(connection.queries))
     return similar_directions
 
+
+@new_common_router.get('/similar_directions',
+                   response_model=list[PopularDirectionSchema],
+                   response_model_by_alias=False)
+def new_get_similar_directions(segment_marker: Literal['no_cash',
+                                                         'cash'],
+                                                         valute_from: str,
+                                                         valute_to: str,
+                                                         city: str = None,
+                                                         limit: int = None):
+
+    limit = 9 if limit is None else limit
+
+    if limit <= 0:
+        raise HTTPException(status_code=400,
+                            detail=f'parameter "limit" must be positive number, given {limit}')
+    
+    city = None if city is None else city.upper()
+    valute_from, valute_to = [el.upper() for el in (valute_from, valute_to)]
+
+    if segment_marker == 'no_cash':
+        direction_model = no_cash_models.NewDirection
+
+        exchange_direction_model = no_cash_models.NewExchangeDirection
+        partner_direction_model = partner_models.NewNonCashDirection
+
+        similar_direction_filter = Q(direction__valute_from_id=valute_from,
+                                     exchange__is_active=True,
+                                     is_active=True) \
+                                    | Q(direction__valute_to_id=valute_to,
+                                        exchange__is_active=True,
+                                        is_active=True)
+
+        exchange_direction_pks = exchange_direction_model.objects.select_related('direction',
+                                                                    'exchange')\
+                                                    .exclude(direction__valute_from_id=valute_from,
+                                                             direction__valute_to_id=valute_to)\
+                                                    .filter(similar_direction_filter)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)
+
+        partner_exchange_direction_pks = partner_direction_model.objects.select_related('direction',
+                                                                                       'exchange')\
+                                                    .exclude(direction__valute_from_id=valute_from,
+                                                             direction__valute_to_id=valute_to)\
+                                                    .filter(similar_direction_filter)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)
+        
+        similar_direction_pks = exchange_direction_pks.union(partner_exchange_direction_pks)
+
+
+    else:
+        if not city:
+            raise HTTPException(status_code=400)
+
+        direction_model = cash_models.NewDirection
+
+        exchange_direction_model = cash_models.NewExchangeDirection
+        partner_city_direction_model = partner_models.NewDirection
+        partner_country_direction_model = partner_models.NewCountryDirection
+
+
+        similar_direction_filter = Q(direction__valute_from=valute_from,
+                                     city__code_name=city,
+                                     exchange__is_active=True,
+                                     is_active=True)\
+                                | Q(direction__valute_to=valute_to,
+                                    city__code_name=city,
+                                    exchange__is_active=True,
+                                    is_active=True)
+        similar_partner_city_direction_filter = Q(direction__valute_from=valute_from,
+                                             city__city__code_name=city,
+                                             city__exchange__is_active=True,
+                                             is_active=True)\
+                                         | Q(direction__valute_to=valute_to,
+                                             city__city__code_name=city,
+                                             city__exchange__is_active=True,
+                                             is_active=True)
+        similar_partner_country_direction_filter = Q(direction__valute_from=valute_from,
+                                             country__country__cities__code_name=city,
+                                             country__exchange__is_active=True,
+                                             is_active=True)\
+                                         | Q(direction__valute_to=valute_to,
+                                             country__country__cities__code_name=city,
+                                             country__exchange__is_active=True,
+                                             is_active=True)
+        
+        exchange_direction_pks = exchange_direction_model.objects.select_related('direction',
+                                                                            'exchange,'
+                                                                            'city')\
+                                                    .exclude(city__code_name=city,
+                                                             direction__valute_from=valute_from,
+                                                             direction__valute_to=valute_to)\
+                                                    .filter(similar_direction_filter)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)\
+                                                    .all()
+        partner_city_direction_pks = partner_city_direction_model.objects.select_related('direction',
+                                                                                       'city',
+                                                                                       'city__city',
+                                                                                       'city__exchange')\
+                                                    .exclude(city__city__code_name=city,
+                                                             direction__valute_from=valute_from,
+                                                             direction__valute_to=valute_to)\
+                                                    .filter(similar_partner_city_direction_filter)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)\
+                                                    .all()
+        partner_country_direction_pks = partner_country_direction_model.objects.select_related('direction',
+                                                                                       'country',
+                                                                                       'country__country',
+                                                                                       'country__exchange')\
+                                                    .exclude(country__country__cities__code_name=city,
+                                                             direction__valute_from=valute_from,
+                                                             direction__valute_to=valute_to)\
+                                                    .filter(similar_partner_country_direction_filter)\
+                                                    .values_list('direction__pk',
+                                                                 flat=True)\
+                                                    .all()
+        similar_direction_pks = exchange_direction_pks.union(partner_city_direction_pks,
+                                                             partner_country_direction_pks)
+
+    similar_direction_pks = list(similar_direction_pks)
+    shuffle(similar_direction_pks)
+
+    similar_directions = direction_model.objects.select_related('valute_from',
+                                                                'valute_to')\
+                                                .filter(pk__in=similar_direction_pks[:limit])
+
+    for direction in similar_directions:
+        valute_from = generate_valute_for_schema(direction.valute_from)
+        valute_to = generate_valute_for_schema(direction.valute_to)
+        direction = PopularDirectionSchema(valute_from=valute_from.__dict__,
+                                           valute_to=valute_to.__dict__)
+
+    # print(len(connection.queries))
+
+    return similar_directions
 
 
 @common_router.get('/similar_cities_by_direction',
@@ -692,435 +1976,121 @@ def get_similar_cities_by_direction(valute_from: str,
         # print(connection.queries)
         # 4 queries
         return cities
-    
 
 
-# @common_router.get('/exchange_list',
-#                    response_model=list[CommonExchangeSchema],
-#                    response_model_by_alias=False)
-# def get_exchange_list():
-
-#     review_counts = get_reviews_count_filters(marker='exchange')
-    
-#     exchanges = []
-
-#     for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
-#                                             ('cash', cash_models.Exchange),
-#                                             ('partner', partner_models.Exchange)):
-#         exchange_query = exchange_model.objects\
-#                                     .annotate(positive_review_count=review_counts['positive'])\
-#                                     .annotate(neutral_review_count=review_counts['neutral'])\
-#                                     .annotate(negative_review_count=review_counts['negative'])\
-#                                     .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-#                                     .values('pk',
-#                                             'name',
-#                                             'reserve_amount',
-#                                             'course_count',
-#                                             'positive_review_count',
-#                                             'neutral_review_count',
-#                                             'negative_review_count',
-#                                             'is_active',
-#                                             'exchange_marker',
-#                                             'partner_link')\
-#                                     .all()
-#         exchanges.append(exchange_query)
-
-#     exchange_list = exchanges[0].union(exchanges[1])\
-#                                 .union(exchanges[2])
-
-#     for exchange in exchange_list:
-#         exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
-#                                                 neutral=exchange['neutral_review_count'],
-#                                                 negative=exchange['neutral_review_count'])
-
-#     # print(len(connection.queries))
-#     return sorted(exchange_list,
-#                   key=lambda el: el.get('name'))
-
-
-# новый exchange_marker 'both'
-# @common_router.get('/exchange_list',
-#                    response_model=list[CommonExchangeSchema],
-#                    response_model_by_alias=False)
-# def get_exchange_list():
-#     # print(len(connection.queries))
-
-#     review_counts = new_get_reviews_count_filters(marker='exchange')
-    
-#     queries = []
-
-#     for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
-#                                             ('cash', cash_models.Exchange),
-#                                             ('partner', partner_models.Exchange)):
-#         # review_counts = new_get_reviews_count_filters(exchange_marker)
-
-#         exchange_query = exchange_model.objects\
-#                                     .annotate(positive_review_count=review_counts['positive'])\
-#                                     .annotate(neutral_review_count=review_counts['neutral'])\
-#                                     .annotate(negative_review_count=review_counts['negative'])\
-#                                     .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-#                                     # .values('pk',
-#                                     #         'name',
-#                                     #         'reserve_amount',
-#                                     #         'course_count',
-#                                     #         'positive_review_count',
-#                                     #         'neutral_review_count',
-#                                     #         'negative_review_count',
-#                                     #         'is_active',
-#                                     #         'exchange_marker',
-#                                     #         'partner_link')\
-#                                     # .filter(is_active=True)
-#                                     # .all()
-
-#         exchange_query = get_exchange_with_direction_count_for_exchange_list(exchange_list=exchange_query,
-#                                                                              exchange_marker=exchange_marker)
-#         exchange_query = exchange_query.order_by()\
-#                                         .values('pk',
-#                                             'name',
-#                                             'reserve_amount',
-#                                             'direction_count',
-#                                             'positive_review_count',
-#                                             'neutral_review_count',
-#                                             'negative_review_count',
-#                                             'is_active',
-#                                             'exchange_marker',
-#                                             'partner_link')\
-#                                     .filter(is_active=True,
-#                                             direction_count__gt=0)
-
-#         queries.append(exchange_query)
-
-#     exchange_list = queries[0].union(queries[1], all=True)\
-#                                 .union(queries[2], all=True)
-    
-#     exchange_dict = {}
-#     exchange_name_set = set()
-
-#     for exchange in exchange_list:
-#         exchange_name = exchange.get('name').lower()   # lower() для name !
-
-#         if exchange_name in exchange_name_set:
-#             exchange_marker = exchange['exchange_marker']
-#             exchange_dict[exchange_name]['exchange_marker'] = 'both'
-#             exchange_dict[exchange_name]['direction_count'] += exchange.get('direction_count', 0)
-
-#             if exchange_marker == 'no_cash':
-#                 exchange_dict[exchange_name]['pk'] = exchange['pk'] # id no_cash обменников
-#         else:
-#             exchange_name_set.add(exchange_name)
-
-#             exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
-#                                                     neutral=exchange['neutral_review_count'],
-#                                                     negative=exchange['negative_review_count'])
-            
-#             exchange_dict[exchange_name] = exchange
-
-#     # print(len(connection.queries))
-#     # print(connection.queries[-1]['sql'])
-
-#     # print(len(exchange_dict))
-
-
-#     # return sorted(exchange_list,
-#                 #   key=lambda el: el.get('name'))
-#     return sorted(exchange_dict.values(),
-#                   key=lambda el: el.get('name'))
-
-
-
-# @common_router.get('/exchange_list',
-#                    response_model=list[CommonExchangeSchema],
-#                    response_model_by_alias=False)
-# def new_get_exchange_list():
-#     # print(len(connection.queries))
-
-#     # review_counts = new_get_reviews_count_filters(marker='exchange')
-
-#     review_counts = (
-#         NewBaseReview.objects
-#         .filter(moderation=True)
-#         .values('exchange_name')
-#         .annotate(
-#             positive_count=Count('id', filter=Q(grade='1')),
-#             neutral_count=Count('id', filter=Q(grade='0')),
-#             negative_count=Count('id', filter=Q(grade='-1')),
-#         )
-#     )
-
-#     review_map = {r['exchange_name']: r for r in review_counts}
-
-#     result = get_exchange_dircetions_dict_tuple()
-
-#     # print('result',result)
-    
-#     queries = []
-
-#     for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
-#                                             ('cash', cash_models.Exchange),
-#                                             ('partner', partner_models.Exchange)):
-#         # review_counts = new_get_reviews_count_filters(exchange_marker)
-
-#         # exchange_query = exchange_model.objects\
-#         #                             .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-#                                     # .annotate(positive_review_count=review_counts['positive'])\
-#                                     # .annotate(neutral_review_count=review_counts['neutral'])\
-#                                     # .annotate(negative_review_count=review_counts['negative'])\
-#                                     # .values('pk',
-#                                     #         'name',
-#                                     #         'reserve_amount',
-#                                     #         'course_count',
-#                                     #         'positive_review_count',
-#                                     #         'neutral_review_count',
-#                                     #         'negative_review_count',
-#                                     #         'is_active',
-#                                     #         'exchange_marker',
-#                                     #         'partner_link')\
-#                                     # .filter(is_active=True)
-#                                     # .all()
-
-#         # exchange_query = get_exchange_with_direction_count_for_exchange_list(exchange_list=exchange_query,
-#         #                                                                      exchange_marker=exchange_marker)
-#         exchange_query = exchange_model.objects\
-#                                     .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-#                                     .values('pk',
-#                                             'name',
-#                                             'reserve_amount',
-#                                             # 'direction_count',
-#                                             # 'positive_review_count',
-#                                             # 'neutral_review_count',
-#                                             # 'negative_review_count',
-#                                             'is_active',
-#                                             'active_status',
-#                                             'exchange_marker',
-#                                             'partner_link')\
-#                                     .filter(is_active=True)\
-#                                     .order_by()
-
-#         queries.append(exchange_query)
-
-#     exchange_list = queries[0].union(queries[1],queries[2],
-#                                      all=True)\
-#                                 # .union(queries[2], all=True)
-    
-#     exchange_dict = {}
-#     exchange_name_set = set()
-
-#     for exchange in exchange_list:
-#         exchange_name = exchange.get('name').lower()   # lower() для name !
-#         exchange_marker = exchange['exchange_marker']
-
-#         if exchange_name in exchange_name_set:
-#             try:
-#                 exchange['direction_count'] = result[exchange_marker][exchange['pk']]
-#             except KeyError as ex:
-#                 # print('1error',ex)
-#                 exchange['direction_count'] = 0
-            
-#             exchange_dict[exchange_name]['exchange_marker'] = 'both'
-
-#             exchange_dict[exchange_name]['direction_count'] += exchange.get('direction_count', 0)
-
-#             if exchange_marker == 'no_cash':
-#                 exchange_dict[exchange_name]['pk'] = exchange['pk'] # id no_cash обменников
-#         else:
-
-#             # exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
-#             #                                         neutral=exchange['neutral_review_count'],
-#             #                                         negative=exchange['negative_review_count'])
-#             try:
-#                 exchange['reviews'] = ReviewCountSchema(positive=review_map[exchange.get('name')]['positive_count'],
-#                                                         neutral=review_map[exchange.get('name')]['neutral_count'],
-#                                                         negative=review_map[exchange.get('name')]['negative_count'])
-#             except KeyError:
-#                 exchange['reviews'] = ReviewCountSchema(positive=0,
-#                                                         neutral=0,
-#                                                         negative=0)
-#             try:
-#                 exchange['direction_count'] = result[exchange_marker][exchange['pk']]
-#                 # exchange_dict[exchange_name] = exchange
-#                 # exchange_name_set.add(exchange_name)
-#             except KeyError as ex:
-#                 # print('2error',ex, exchange_marker)
-#                 exchange['direction_count'] = 0
-            
-#             exchange_dict[exchange_name] = exchange
-#             exchange_name_set.add(exchange_name)
-
-
-
-#     # print(len(connection.queries))
-#     # print(connection.queries[-1]['sql'])
-
-#     # print(len(exchange_dict))
-#     # print(exchange_dict)
-
-#     result_list = [el for el in exchange_dict.values() if el['direction_count'] > 0]
-
-#     # return sorted(exchange_list,
-#                 #   key=lambda el: el.get('name'))
-#     # return sorted(exchange_dict.values(),
-#     #               key=lambda el: el.get('name'))
-#     return sorted(result_list,
-#                   key=lambda el: el.get('name'))
-
-
-# @common_router.get('/exchange_list',
-#                    response_model=list[NewCommonExchangeSchema],
-#                    response_model_by_alias=False)
-# def new_get_exchange_list():
-#     # print(len(connection.queries))
-
-#     # review_counts = new_get_reviews_count_filters(marker='exchange')
-
-#     # review_counts = (
-#     #     NewBaseReview.objects
-#     #     .filter(moderation=True)
-#     #     .values('exchange_name')
-#     #     .annotate(
-#     #         positive_count=Count('id', filter=Q(grade='1')),
-#     #         neutral_count=Count('id', filter=Q(grade='0')),
-#     #         negative_count=Count('id', filter=Q(grade='-1')),
-#     #     )
-#     # )
-
-#     review_counts = (
-#         NewBaseReview.objects
-#         .filter(moderation=True)
-#         .values('exchange_name')
-#         .annotate(
-#             positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
-#             neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
-#             negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
-#         )
-#     )
-
-#     review_map = {r['exchange_name']: r for r in review_counts}
-
-#     result = get_exchange_dircetions_dict_tuple()
-
-#     # print('result',result)
-    
-#     queries = []
-
-#     for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
-#                                             ('cash', cash_models.Exchange),
-#                                             ('partner', partner_models.Exchange)):
-#         # review_counts = new_get_reviews_count_filters(exchange_marker)
-
-#         # exchange_query = exchange_model.objects\
-#         #                             .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-#                                     # .annotate(positive_review_count=review_counts['positive'])\
-#                                     # .annotate(neutral_review_count=review_counts['neutral'])\
-#                                     # .annotate(negative_review_count=review_counts['negative'])\
-#                                     # .values('pk',
-#                                     #         'name',
-#                                     #         'reserve_amount',
-#                                     #         'course_count',
-#                                     #         'positive_review_count',
-#                                     #         'neutral_review_count',
-#                                     #         'negative_review_count',
-#                                     #         'is_active',
-#                                     #         'exchange_marker',
-#                                     #         'partner_link')\
-#                                     # .filter(is_active=True)
-#                                     # .all()
-
-#         # exchange_query = get_exchange_with_direction_count_for_exchange_list(exchange_list=exchange_query,
-#         #                                                                      exchange_marker=exchange_marker)
-#         exchange_query = exchange_model.objects\
-#                                     .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-#                                     .values('pk',
-#                                             'name',
-#                                             'en_name',
-#                                             'reserve_amount',
-#                                             # 'direction_count',
-#                                             # 'positive_review_count',
-#                                             # 'neutral_review_count',
-#                                             # 'negative_review_count',
-#                                             'is_active',
-#                                             'active_status',
-#                                             'exchange_marker',
-#                                             'partner_link')\
-#                                     .filter(active_status__in=availabale_active_status_list)\
-#                                     .order_by()
-#                                     # .filter(is_active=True)\
-
-#         queries.append(exchange_query)
-
-#     exchange_list = queries[0].union(queries[1],queries[2],
-#                                      all=True)\
-#                                 # .union(queries[2], all=True)
-    
-#     exchange_dict = {}
-#     exchange_name_set = set()
-
-#     for exchange in exchange_list:
-#         exchange_name = exchange.get('name').lower()   # lower() для name !
-#         exchange_marker = exchange['exchange_marker']
-
-#         if exchange_name in exchange_name_set:
-#             try:
-#                 exchange['direction_count'] = result[exchange_marker][exchange['pk']]
-#             except KeyError as ex:
-#                 # print('1error',ex)
-#                 exchange['direction_count'] = 0
-            
-#             exchange_dict[exchange_name]['exchange_marker'] = 'both'
-
-#             exchange_dict[exchange_name]['direction_count'] += exchange.get('direction_count', 0)
-
-#             exchange_dict[exchange_name]['multiple_name'] = MultipleName(name=exchange['name'],
-#                                                           en_name=exchange['en_name'])
-
-#             if exchange_marker == 'no_cash':
-#                 exchange_dict[exchange_name]['pk'] = exchange['pk'] # id no_cash обменников
-#         else:
-#             exchange['multiple_name'] = MultipleName(name=exchange['name'],
-#                                                           en_name=exchange['en_name'])
-#             # exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
-#             #                                         neutral=exchange['neutral_review_count'],
-#             #                                         negative=exchange['negative_review_count'])
-#             try:
-#                 exchange['reviews'] = ReviewCountSchema(positive=review_map[exchange.get('name')]['positive_count'],
-#                                                         neutral=review_map[exchange.get('name')]['neutral_count'],
-#                                                         negative=review_map[exchange.get('name')]['negative_count'])
-#             except KeyError:
-#                 exchange['reviews'] = ReviewCountSchema(positive=0,
-#                                                         neutral=0,
-#                                                         negative=0)
-#             try:
-#                 exchange['direction_count'] = result[exchange_marker][exchange['pk']]
-#                 # exchange_dict[exchange_name] = exchange
-#                 # exchange_name_set.add(exchange_name)
-#             except KeyError as ex:
-#                 # print('2error',ex, exchange_marker)
-#                 exchange['direction_count'] = 0
-            
-#             exchange_dict[exchange_name] = exchange
-#             exchange_name_set.add(exchange_name)
-
-
-
-#     # print(len(connection.queries))
-#     # print(connection.queries[-1]['sql'])
-
-#     # print(len(exchange_dict))
-#     # print(exchange_dict)
-
-#     # result_list = [el for el in exchange_dict.values() if el['direction_count'] > 0]
-
-#     # return sorted(exchange_list,
-#                 #   key=lambda el: el.get('name'))
-#     return sorted(exchange_dict.values(),
-#                   key=lambda el: el.get('name'))
-#     # return sorted(result_list,
-#     #               key=lambda el: el.get('name'))
+@new_common_router.get('/similar_cities_by_direction',
+                   response_model=list[CityModel])
+def new_get_similar_cities_by_direction(valute_from: str,
+                                        valute_to: str,
+                                        city: str):
+    valute_from, valute_to, city = [el.upper() for el in (valute_from, valute_to, city)]
+
+    cash_direction_model = cash_models.NewExchangeDirection
+    partner_city_direction_model = partner_models.NewDirection
+    partner_country_direction_model = partner_models.NewCountryDirection
+
+    try:
+        city_model = cash_models.City.objects.select_related('country')\
+                                            .get(code_name=city)
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='City not found by given "city"')
+    else:
+        similar_cities = cash_direction_model.objects.select_related('direction',
+                                                                'exchange',
+                                                                'city')\
+                                                    .exclude(city__code_name=city)\
+                                                    .filter(direction__valute_from_id=valute_from,
+                                                            direction__valute_to_id=valute_to,
+                                                            is_active=True,
+                                                            exchange__is_active=True)\
+                                                    .values_list('city__pk',
+                                                                 flat=True)
+        
+        similar_partner_cities = partner_city_direction_model.objects.select_related('direction',
+                                                                                'city',
+                                                                                'city__city',
+                                                                                'city__exchange')\
+                                                                .exclude(city__city__code_name=city)\
+                                                                .filter(direction__valute_from_id=valute_from,
+                                                                        direction__valute_to_id=valute_to,
+                                                                        is_active=True,
+                                                                        city__exchange__is_active=True)\
+                                                                .values_list('city__city__pk',
+                                                                            flat=True)
+        
+        similar_partner_country_directions = partner_country_direction_model.objects.select_related('direction',
+                                                                                'country',
+                                                                                'country__country',
+                                                                                'country__exchange')\
+                                                                .prefetch_related('country__country__cities',
+                                                                                  'country__exclude_cities')\
+                                                                .filter(direction__valute_from_id=valute_from,
+                                                                        direction__valute_to_id=valute_to,
+                                                                        is_active=True,
+                                                                        country__exchange__is_active=True)
+        
+        country_cites_pk = set()
+        for country_direction in similar_partner_country_directions:
+            available_cities = country_direction.country.country.cities.all()
+            available_city_pks = {c.pk for c in available_cities}
+
+            exclude_cities = country_direction.country.exclude_cities.all()
+            exclude_city_pks = {c.pk for c in exclude_cities}
+
+            country_cites_pk = available_city_pks - exclude_city_pks
+        
+        similar_city_pks = set(similar_cities.union(similar_partner_cities))
+
+        similar_city_pks |= country_cites_pk
+        similar_city_pks -= set([city_model.pk])
+
+        exchange_count_filter = Q(cash_directions__direction__valute_from_id=valute_from,
+                                cash_directions__direction__valute_to_id=valute_to,
+                                cash_directions__exchange__is_active=True,
+                                cash_directions__is_active=True)
+        partner_city_exchange_count_filter = Q(new_partner_cities__partner_directions__direction__valute_from_id=valute_from,
+                                        new_partner_cities__partner_directions__direction__valute_to_id=valute_to,
+                                        new_partner_cities__partner_directions__is_active=True)
+        partner_country_exchange_count_filter = Q(country__new_partner_countries__partner_directions__direction__valute_from_id=valute_from,
+                                                    country__new_partner_countries__partner_directions__direction__valute_to_id=valute_to,
+                                                    country__new_partner_countries__partner_directions__is_active=True)
+
+        cities = city_model.country.cities\
+                                    .annotate(exchange_count=Count('cash_directions',
+                                                        filter=exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .order_by('pk')\
+                                    .all()
+        
+        partner_cities = list(city_model.country.cities\
+                                    .annotate(partner_exchange_count=Count('new_partner_cities__partner_directions',
+                                                                filter=partner_city_exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .values_list('partner_exchange_count',
+                                                flat=True)\
+                                    .order_by('pk')\
+                                    .all())
+        
+        partner_country_cities = list(city_model.country.cities\
+                                    .annotate(partner_exchange_count=Count('country__new_partner_countries__partner_directions',
+                                                                filter=partner_country_exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .values_list('partner_exchange_count',
+                                                flat=True)\
+                                    .order_by('pk')\
+                                    .all())
+        
+        for idx in range(len(cities)):
+            cities[idx].exchange_count += partner_cities[idx] + partner_country_cities[idx]
+
+        return cities
 
 
 @common_router.get('/exchange_list',
                    response_model=list[NewCommonExchangeSchema],
                    response_model_by_alias=False)
-def new_get_exchange_list():
+def get_exchange_list():
     # print(len(connection.queries))
 
     # review_counts = new_get_reviews_count_filters(marker='exchange')
@@ -1288,244 +2258,129 @@ def new_get_exchange_list():
                   key=lambda el: (-el.get('is_active'), el.get('name')))
 
 
-@test_router.get('/exchange_list',
-                   response_model=list[NewCommonExchangeSchema],
+@new_common_router.get('/exchange_list',
+                   response_model=list[ExchangeListElementSchema],
                    response_model_by_alias=False)
 def new_get_exchange_list():
-    # print(len(connection.queries))
 
-    # review_counts = new_get_reviews_count_filters(marker='exchange')
+    review_count_dict = get_review_count_dict()
 
-    # review_counts = (
-    #     NewBaseReview.objects
-    #     .filter(moderation=True)
-    #     .values('exchange_name')
-    #     .annotate(
-    #         positive_count=Count('id', filter=Q(grade='1')),
-    #         neutral_count=Count('id', filter=Q(grade='0')),
-    #         negative_count=Count('id', filter=Q(grade='-1')),
-    #     )
-    # )
 
-    review_counts = (
-        NewBaseReview.objects
-        .filter(moderation=True)
-        .values('exchange_name')
-        .annotate(
-            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
-            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
-            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
-        )
-    )
-
-    review_map = {r['exchange_name']: r for r in review_counts}
-
-    result = get_exchange_dircetions_dict_tuple()
-
-    # print('result',result)
+    exchange_query = Exchanger.objects\
+                                .values('pk',
+                                        'name',
+                                        'en_name',
+                                        'reserve_amount',
+                                        'is_active',
+                                        'active_status',
+                                        'partner_link')\
+                                .filter(active_status__in=availabale_active_status_list)
     
-    queries = []
-
-    for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
-                                            ('cash', cash_models.Exchange),
-                                            ('partner', partner_models.Exchange)):
-        # review_counts = new_get_reviews_count_filters(exchange_marker)
-
-        # exchange_query = exchange_model.objects\
-        #                             .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-                                    # .annotate(positive_review_count=review_counts['positive'])\
-                                    # .annotate(neutral_review_count=review_counts['neutral'])\
-                                    # .annotate(negative_review_count=review_counts['negative'])\
-                                    # .values('pk',
-                                    #         'name',
-                                    #         'reserve_amount',
-                                    #         'course_count',
-                                    #         'positive_review_count',
-                                    #         'neutral_review_count',
-                                    #         'negative_review_count',
-                                    #         'is_active',
-                                    #         'exchange_marker',
-                                    #         'partner_link')\
-                                    # .filter(is_active=True)
-                                    # .all()
-
-        # exchange_query = get_exchange_with_direction_count_for_exchange_list(exchange_list=exchange_query,
-        #                                                                      exchange_marker=exchange_marker)
-        exchange_query = exchange_model.objects\
-                                    .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-                                    .values('pk',
-                                            'name',
-                                            'en_name',
-                                            'reserve_amount',
-                                            # 'direction_count',
-                                            # 'positive_review_count',
-                                            # 'neutral_review_count',
-                                            # 'negative_review_count',
-                                            'is_active',
-                                            'active_status',
-                                            'exchange_marker',
-                                            'partner_link')\
-                                    .filter(active_status__in=availabale_active_status_list)\
-                                    .order_by()
-                                    # .filter(is_active=True)\
-
-        queries.append(exchange_query)
-
-    exchange_list = queries[0].union(queries[1],queries[2],
-                                     all=True)\
-                                # .union(queries[2], all=True)
+    exchange_direction_count_dict = new_get_exchange_directions_count_dict(exchange_query)
     
-    exchange_dict = {}
-    exchange_name_set = set()
+    exchange_list = []
 
-    for exchange in exchange_list:
-        exchange_name = exchange.get('name').lower()   # lower() для name !
-        exchange_marker = exchange['exchange_marker']
+    for exchange in exchange_query:
+        exchange_id = exchange['pk']
 
-        if exchange_name in exchange_name_set:
-            try:
-                if exchange['active_status'] != 'active':
-                    exchange['direction_count'] = 0
-                else:
-                    exchange['direction_count'] = result[exchange_marker][exchange['pk']]
-                    if exchange['direction_count'] == 0 and exchange['active_status'] == 'active':
-                        exchange['active_status'] = 'inactive'
-                        exchange['is_active'] = False
-            except KeyError as ex:
-                # print('1error',ex)
-                exchange['direction_count'] = 0
-                if exchange['active_status'] == 'active':
-                    exchange['active_status'] = 'inactive'
-                    exchange['is_active'] = False
-            
-            exchange_dict[exchange_name]['exchange_marker'] = 'both'
-
-            exchange_dict[exchange_name]['direction_count'] += exchange.get('direction_count', 0)
-
-            exchange_dict[exchange_name]['multiple_name'] = MultipleName(name=exchange['name'],
-                                                          en_name=exchange['en_name'])
-
-            if exchange_marker == 'no_cash':
-                exchange_dict[exchange_name]['pk'] = exchange['pk'] # id no_cash обменников
+        exchange['multiple_name'] = MultipleName(name=exchange['name'],
+                                                    en_name=exchange['en_name'])
+        try:
+            exchange['reviews'] = ReviewCountSchema(positive=review_count_dict[exchange_id]['positive_count'],
+                                                    neutral=review_count_dict[exchange_id]['neutral_count'],
+                                                    negative=review_count_dict[exchange_id]['negative_count'])
+        except KeyError:
+            exchange['reviews'] = ReviewCountSchema(positive=0,
+                                                    neutral=0,
+                                                    negative=0)
+        if exchange['active_status'] != 'active':
+            exchange['direction_count'] = 0
         else:
-            exchange['multiple_name'] = MultipleName(name=exchange['name'],
-                                                          en_name=exchange['en_name'])
-            # exchange['reviews'] = ReviewCountSchema(positive=exchange['positive_review_count'],
-            #                                         neutral=exchange['neutral_review_count'],
-            #                                         negative=exchange['negative_review_count'])
-            try:
-                exchange['reviews'] = ReviewCountSchema(positive=review_map[exchange.get('name')]['positive_count'],
-                                                        neutral=review_map[exchange.get('name')]['neutral_count'],
-                                                        negative=review_map[exchange.get('name')]['negative_count'])
-            except KeyError:
-                exchange['reviews'] = ReviewCountSchema(positive=0,
-                                                        neutral=0,
-                                                        negative=0)
-            try:
-                if exchange['active_status'] != 'active':
-                    exchange['direction_count'] = 0
-                else:
-                    exchange['direction_count'] = result[exchange_marker][exchange['pk']]
+            exchange['direction_count'] = exchange_direction_count_dict[exchange_id]
 
-                    if exchange['direction_count'] == 0 and exchange['active_status'] == 'active':
-                        exchange['active_status'] = 'inactive'
-                        exchange['is_active'] = False
-                # exchange_dict[exchange_name] = exchange
-                # exchange_name_set.add(exchange_name)
-            except KeyError as ex:
-                # print('2error',ex, exchange_marker)
-                exchange['direction_count'] = 0
-                
-                if exchange['active_status'] == 'active':
-                    exchange['active_status'] = 'inactive'
-                    exchange['is_active'] = False
-            
-            exchange_dict[exchange_name] = exchange
-            exchange_name_set.add(exchange_name)
+            if exchange['direction_count'] == 0 and exchange['active_status'] == 'active':
+                exchange['active_status'] = 'inactive'
+                exchange['is_active'] = False
+        
+        exchange_list.append(exchange)
+
+    return sorted(exchange_list,
+                  key=lambda el: (-el.get('is_active'),
+                                  el.get('name')))
 
 
+@new_common_router.get('/exchange_detail',
+                   response_model=DetailExchangeSchema,
+                   response_model_by_alias=False)
+def new_get_exchange_detail_info(exchange_id: int):
 
-    # print(len(connection.queries))
-    # print(connection.queries[-1]['sql'])
+    try:
+        exchange = Exchanger.objects.values(
+            'pk',
+            'name',
+            'en_name',
+            'icon_url',
+            'partner_link',
+            'active_status',
+            'is_active',
+            'high_aml',
+            'country',
+            'reserve_amount',
+            'age',
+            'time_create',
+            'time_disable',
+        ).get(pk=exchange_id,
+              active_status__in=availabale_active_status_list)
 
-    # print(len(exchange_dict))
-    # print(exchange_dict)
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404,
+                            detail='valid Exchanger not found by given "exchange_id"')
+    else:
+        exchange_direction_dict, segment_marker = new_get_exchange_directions_count_dict([exchange],
+                                                                                         _pk=exchange_id)
 
-    # result_list = [el for el in exchange_dict.values() if el['direction_count'] > 0]
+        review_counts = (
+            Review.objects
+            .filter(moderation=True,
+                    exchange_id=exchange_id)
+            .values('exchange_id')
+            .annotate(
+                positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
+                neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
+                negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
+            )
+        )
 
-    # return sorted(exchange_list,
-                #   key=lambda el: el.get('name'))
-    return sorted(exchange_dict.values(),
-                  key=lambda el: (-el.get('is_active'), el.get('name')))
+        review_map = {r['exchange_id']: r for r in review_counts}
 
+        try:
+            exchange['review_set'] = ReviewCountSchema(positive=review_map[exchange_id]['positive_count'],
+                                                    neutral=review_map[exchange_id]['neutral_count'],
+                                                    negative=review_map[exchange_id]['negative_count'])
+        except KeyError:
+            exchange['review_set'] = ReviewCountSchema(positive=0,
+                                                       neutral=0,
+                                                       negative=0)
 
-# @common_router.get('/exchangers_blacklist',
-#                    response_model=list[BlackListExchangeSchema],
-#                    response_model_by_alias=False)
-# def get_black_exchange_list():  
-#     queries = []
+        exchange['icon'] = generate_image_icon2(icon_url=exchange['icon_url'])
 
-#     for exchange_marker, exchange_model in (('no_cash', no_cash_models.Exchange),
-#                                             ('cash', cash_models.Exchange),
-#                                             ('partner', partner_models.Exchange)):
+        exchange['multiple_name'] = MultipleName(name=exchange['name'],
+                                                 en_name=exchange['en_name'])
+        if age := exchange['age']:
+            exchange['age'] = format_relative_date(age)
+        
+        exchange['course_count'] = exchange_direction_dict.get(exchange_id, 0)
 
-#         exchange_query = exchange_model.objects\
-#                                     .annotate(exchange_marker=annotate_string_field(exchange_marker))\
-#                                     .values('pk',
-#                                             'name',
-#                                             'en_name',
-#                                             # 'reserve_amount',
-#                                             # 'direction_count',
-#                                             # 'positive_review_count',
-#                                             # 'neutral_review_count',
-#                                             # 'negative_review_count',
-#                                             # 'is_active',
-#                                             'active_status',
-#                                             'exchange_marker',
-#                                             'partner_link')\
-#                                     .filter(active_status='scam')\
-#                                     .order_by()
+        if exchange['course_count'] == 0 and exchange['active_status'] == 'active':
+            exchange['active_status'] = 'inactive'
 
-#         queries.append(exchange_query)
+        elif exchange['active_status'] != 'active':
+            exchange['course_count'] = 0
 
-#     exchange_list = queries[0].union(queries[1],queries[2],
-#                                      all=True)\
-#                                 # .union(queries[2], all=True)
-    
-#     exchange_dict = {}
-#     exchange_name_set = set()
-
-#     for exchange in exchange_list:
-#         exchange_name = exchange.get('name').lower()   # lower() для name !
-#         exchange_marker = exchange['exchange_marker']
-
-#         if exchange['exchange_marker'] != 'partner' and not exchange['partner_link'].startswith('https://t.me'):
-#             exchange['url'] = get_base_url(exchange['partner_link'])
-#         else:
-#             exchange['url'] = exchange['partner_link']
-
-#         if exchange_name in exchange_name_set:
-  
-#             exchange_dict[exchange_name]['multiple_name'] = MultipleName(name=exchange['name'],
-#                                                           en_name=exchange['en_name'])
-
-            
-            
-#             exchange_dict[exchange_name]['exchange_marker'] = 'both'
-
-
-#             if exchange_marker == 'no_cash':
-#                 exchange_dict[exchange_name]['pk'] = exchange['pk'] # id no_cash обменников
-#         else:
-
-#             exchange['multiple_name'] = MultipleName(name=exchange['name'],
-#                                                           en_name=exchange['en_name'])
-            
-#             exchange_dict[exchange_name] = exchange
-#             exchange_name_set.add(exchange_name)
-
-#     return sorted(exchange_dict.values(),
-#                   key=lambda el: el.get('name'))
+        exchange['segment_marker'] = None if exchange['course_count'] == 0 else segment_marker
+        
+        return exchange
 
 
 @common_router.get('/exchangers_blacklist',
@@ -1608,121 +2463,28 @@ def get_black_exchange_list():
                   key=lambda el: el.get('name'))
 
 
-# @common_router.get('/exchange_detail',
-#                    response_model=DetailExchangeSchema,
-#                    response_model_by_alias=False)
-# def get_exchange_detail_info(exchange_id: int,
-#                              exchange_marker: str):
-#     review_counts = get_reviews_count_filters(marker='exchange')
+@new_common_router.get('/exchangers_blacklist',
+                   response_model=list[NewBlackListExchangeSchema],
+                   response_model_by_alias=False)
+def new_get_black_exchange_list():
 
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker,
-#                             review_counts=review_counts)
-#     exchange = exchange.first()
+    exchange_query = Exchanger.objects\
+                                .filter(active_status='scam')\
+                                .values('pk',
+                                        'name',
+                                        'en_name')\
+                                .order_by('name')
 
-#     exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
-#                                             neutral=exchange.neutral_review_count,
-#                                             negative=exchange.negative_review_count)
-#     exchange.icon = try_generate_icon_url(exchange)
-    
-#     if exchange.course_count is None or not exchange.course_count.isdigit():
-#         exchange.course_count = None
-#     else:
-#         exchange.course_count = int(exchange.course_count)
-    
-#     return exchange
+    exchange_black_list = []
 
+    for exchange in exchange_query:
+        exchange_black_list.append({
+            'pk': exchange['pk'],
+            'multiple_name': MultipleName(name=exchange['name'],
+                                          en_name=exchange['en_name']),
+        })
 
-# @common_router.get('/exchange_detail',
-#                    response_model=DetailExchangeSchema,
-#                    response_model_by_alias=False)
-# def get_exchange_detail_info(exchange_id: int,
-#                              exchange_marker: str):
-#     # is_both = None
-#     # if exchange_marker == 'both':
-#     #     exchange_marker = 'no_cash'
-#     #     is_both = True
-
-#     review_counts = new_get_reviews_count_filters(marker='exchange')
-
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker,
-#                             review_counts=review_counts)
-#     exchange = get_exchange_with_direction_count(exchange,
-#                                                  exchange_id,
-#                                                  exchange_marker)
-#     exchange = exchange.first()
-
-#     exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
-#                                             neutral=exchange.neutral_review_count,
-#                                             negative=exchange.negative_review_count)
-#     exchange.icon = try_generate_icon_url(exchange)
-
-#     # exchange.multiple_name = MultipleName(name=exchange.name,
-#     #                                       en_name=exchange.en_name)
-    
-#     # if exchange.course_count is None or not exchange.course_count.isdigit():
-#     #     exchange.course_count = None
-#     # else:
-#     #     exchange.course_count = int(exchange.course_count)
-#     # print(exchange.direction_count)
-#     # print(exchange.city_direction_count)
-#     # print(exchange.country_direction_count)
-#     exchange.course_count = exchange.direction_count
-    
-#     return exchange
-
-
-# @common_router.get('/exchange_blacklist_detail',
-#                    response_model=DetailBlackListExchangeSchema,
-#                    response_model_by_alias=False)
-# def get_exchange_detail_info(exchange_id: int,
-#                              exchange_marker: str):
-#     # is_both = None
-#     # if exchange_marker == 'both':
-#     #     exchange_marker = 'no_cash'
-#     #     is_both = True
-
-#     # review_counts = new_get_reviews_count_filters(marker='exchange')
-
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker,
-#                             black_list_exchange=True)
-#     # exchange = get_exchange_with_direction_count(exchange,
-#     #                                              exchange_id,
-#     #                                              exchange_marker)
-#     exchange = exchange.first()
-
-#     # if exchange_marker != 'partner':
-#     #     exchange.url = get_base_url(exchange.partner_link)
-#     # else:
-#     #     exchange.url = exchange.partner_link
-
-#     if exchange_marker != 'partner' and not exchange.partner_link.startswith('https://t.me'):
-#         exchange.url = get_base_url(exchange.partner_link)
-#     else:
-#         exchange.url = exchange.partner_link
-
-#     # exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
-#     #                                         neutral=exchange.neutral_review_count,
-#     #                                         negative=exchange.negative_review_count)
-#     exchange.icon = try_generate_icon_url(exchange)
-
-#     exchange.multiple_name = MultipleName(name=exchange.name,
-#                                           en_name=exchange.en_name)
-    
-#     exchange.exchange_marker = exchange_marker
-    
-#     # if exchange.course_count is None or not exchange.course_count.isdigit():
-#     #     exchange.course_count = None
-#     # else:
-#     #     exchange.course_count = int(exchange.course_count)
-#     # print(exchange.direction_count)
-#     # print(exchange.city_direction_count)
-#     # print(exchange.country_direction_count)
-#     # exchange.course_count = exchange.direction_count
-    
-#     return exchange
+    return exchange_black_list
 
 
 @common_router.get('/exchange_blacklist_detail',
@@ -1777,99 +2539,35 @@ def get_exchange_detail_info(exchange_id: int,
     
     return exchange
 
-# @test_router.get('/exchange_detail',
-#                    response_model=NewDetailExchangeSchema,
-#                    response_model_by_alias=False)
-# def get_exchange_detail_info(exchange_id: int,
-#                              exchange_marker: str):
-#     # is_both = None
-#     # if exchange_marker == 'both':
-#     #     exchange_marker = 'no_cash'
-#     #     is_both = True
 
-#     review_counts = new_get_reviews_count_filters(marker='exchange')
+@new_common_router.get('/exchange_blacklist_detail',
+                   response_model=BlackExchangeDetailSchema,
+                   response_model_by_alias=False)
+def new_get_black_exchange_detail_info(exchange_id: int):
+    try:
+        exchange = Exchanger.objects.prefetch_related('linked_url_list')\
+                                    .get(pk=exchange_id,
+                                         active_status='scam')
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404,
+                            detail='Exchanger with status "scam" not found by given "exchange_id"')
+    else:
+        linked_urls = [el.url for el in exchange.linked_url_list.all()]
 
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker,
-#                             review_counts=review_counts)
-#     exchange = get_exchange_with_direction_count(exchange,
-#                                                  exchange_id,
-#                                                  exchange_marker)
-#     exchange = exchange.first()
+        exchange.linked_urls = linked_urls
 
-#     exchange.review_set = ReviewCountSchema(positive=exchange.positive_review_count,
-#                                             neutral=exchange.neutral_review_count,
-#                                             negative=exchange.negative_review_count)
-#     exchange.icon = try_generate_icon_url(exchange)
+        if not exchange.partner_link.startswith('https://t.me'):
+            exchange.url = get_base_url(exchange.partner_link)
+        else:
+            exchange.url = exchange.partner_link
 
-#     exchange.multiple_name = MultipleName(name=exchange.name,
-#                                           en_name=exchange.en_name)
-    
-#     # if exchange.course_count is None or not exchange.course_count.isdigit():
-#     #     exchange.course_count = None
-#     # else:
-#     #     exchange.course_count = int(exchange.course_count)
-#     # print(exchange.direction_count)
-#     # print(exchange.city_direction_count)
-#     # print(exchange.country_direction_count)
-#     exchange.course_count = exchange.direction_count
-    
-#     return exchange
+        exchange.icon = try_generate_icon_url(exchange)
 
-# @common_router.get('/exchange_detail',
-#                    response_model=NewDetailExchangeSchema,
-#                    response_model_by_alias=False)
-# def get_exchange_detail_info(exchange_id: int,
-#                              exchange_marker: str):
-
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker)
-#     exchange = get_exchange_with_direction_count(exchange,
-#                                                  exchange_id,
-#                                                  exchange_marker)
-#     exchange = exchange.first()
-
-#     review_counts = (
-#         NewBaseReview.objects
-#         .filter(moderation=True,
-#                 exchange_name=exchange.name)
-#         .values('exchange_name')
-#         .annotate(
-#             positive_count=Count('id', filter=Q(grade='1') & Q(review_from='moneyswap')),
-#             neutral_count=Count('id', filter=Q(grade='0') & Q(review_from='moneyswap')),
-#             negative_count=Count('id', filter=Q(grade='-1') & Q(review_from='moneyswap')),
-#         )
-#     )
-
-#     review_map = {r['exchange_name']: r for r in review_counts}
-
-#     # print(review_map)
-#     try:
-#         exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
-#                                                 neutral=review_map[exchange.name]['neutral_count'],
-#                                                 negative=review_map[exchange.name]['negative_count'])
-#     except KeyError:
-#         exchange.review_set = ReviewCountSchema(positive=0,
-#                                                 neutral=0,
-#                                                 negative=0)
-#     # exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
-#     #                                         neutral=review_map[exchange.name]['neutral_count'],
-#     #                                         negative=review_map[exchange.name]['negative_count'])
-#     exchange.icon = try_generate_icon_url(exchange)
-
-#     exchange.multiple_name = MultipleName(name=exchange.name,
-#                                           en_name=exchange.en_name)
-    
-#     # if exchange.course_count is None or not exchange.course_count.isdigit():
-#     #     exchange.course_count = None
-#     # else:
-#     #     exchange.course_count = int(exchange.course_count)
-#     # print(exchange.direction_count)
-#     # print(exchange.city_direction_count)
-#     # print(exchange.country_direction_count)
-#     exchange.course_count = exchange.direction_count
-    
-#     return exchange
+        exchange.multiple_name = MultipleName(name=exchange.name,
+                                              en_name=exchange.en_name)
+                
+        return exchange
 
 
 @common_router.get('/exchange_detail',
@@ -1932,271 +2630,6 @@ def get_exchange_detail_info(exchange_id: int,
         exchange.course_count = 0
     
     return exchange
-
-
-@test_router.get('/exchange_detail',
-                   response_model=NewDetailExchangeSchema,
-                   response_model_by_alias=False)
-def get_exchange_detail_info(exchange_id: int,
-                             exchange_marker: str):
-
-    exchange = get_exchange(exchange_id,
-                            exchange_marker)
-    exchange = get_exchange_with_direction_count(exchange,
-                                                 exchange_id,
-                                                 exchange_marker)
-    exchange = exchange.first()
-
-    review_counts = (
-        NewBaseReview.objects
-        .filter(moderation=True,
-                exchange_name=exchange.name)
-        .values('exchange_name')
-        .annotate(
-            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
-            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
-            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
-        )
-    )
-
-    review_map = {r['exchange_name']: r for r in review_counts}
-
-    # print(review_map)
-    try:
-        exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
-                                                neutral=review_map[exchange.name]['neutral_count'],
-                                                negative=review_map[exchange.name]['negative_count'])
-    except KeyError:
-        exchange.review_set = ReviewCountSchema(positive=0,
-                                                neutral=0,
-                                                negative=0)
-    # exchange.review_set = ReviewCountSchema(positive=review_map[exchange.name]['positive_count'],
-    #                                         neutral=review_map[exchange.name]['neutral_count'],
-    #                                         negative=review_map[exchange.name]['negative_count'])
-    exchange.icon = try_generate_icon_url(exchange)
-
-    exchange.multiple_name = MultipleName(name=exchange.name,
-                                          en_name=exchange.en_name)
-    
-    # if exchange.course_count is None or not exchange.course_count.isdigit():
-    #     exchange.course_count = None
-    # else:
-    #     exchange.course_count = int(exchange.course_count)
-    # print(exchange.direction_count)
-    # print(exchange.city_direction_count)
-    # print(exchange.country_direction_count)
-    exchange.course_count = exchange.direction_count
-
-    if exchange.course_count == 0 and exchange.active_status == 'active':
-        exchange.active_status = 'inactive'
-
-    elif exchange.active_status != 'active':
-        exchange.course_count = 0
-    
-    return exchange
-
-# @common_router.get('/direction_pair_by_exchange',
-#                    response_model=list[DirectionSideBarSchema],
-#                    response_model_by_alias=False)
-# def get_all_directions_by_exchange(exchange_id: int,
-#                                    exchange_marker: str):
-#     # print(len(connection.queries))
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker)
-    
-#     exchange_directions_queryset = get_exchange_directions(exchange,
-#                                                            exchange_marker)
-
-#     exchange_directions = exchange_directions_queryset\
-#                                     .select_related('direction',
-#                                                     'direction__valute_from',
-#                                                     'direction__valute_to')\
-#                                     .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                         direction__exchange_directions__is_active=True,
-#                                                                         direction__exchange_directions__exchange__is_active=True)))\
-
-#     if exchange_marker == 'both':
-#         exchange_marker = 'no_cash'
-
-#     if exchange_marker != 'no_cash':
-#         prefetch_queryset = Prefetch('direction__partner_directions',
-#                                      partner_models.Direction.objects.filter(is_active=True,
-#                                                                              pk=F('pk')))
-#         exchange_directions = exchange_directions.prefetch_related(prefetch_queryset)
-
-#     check_direction_id_set = set()
-#     exchange_direction_list = []
-
-#     for exchange_direction in exchange_directions:
-#         if exchange_direction.direction_id not in check_direction_id_set:
-#             # exchange_direction_list.append(exchange_direction)
-#             check_direction_id_set.add(exchange_direction.direction_id)
-        
-#             valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
-#             exchange_direction.direction.valute_from.icon_url = valute_from_icon
-
-#             valute_to_icon = try_generate_icon_url(exchange_direction.direction.valute_to)
-#             exchange_direction.direction.valute_to.icon_url = valute_to_icon
-
-#             exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
-#             exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
-#             exchange_direction.direction_type = 'no_cash'
-            
-#             if exchange_marker != 'no_cash':
-#                 exchange_direction.direction_type = 'cash'
-#                 similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
-#                 exchange_direction.pair_count += similar_partner_direction_count
-
-#             if exchange_direction.pair_count > 0:
-#                 exchange_direction_list.append(exchange_direction)
-
-#     # print(connection.queries)
-#     # print(len(connection.queries))
-#     return exchange_direction_list
-# @common_router.get('/direction_pair_by_exchange',
-#                    response_model=list[DirectionSideBarSchema],
-#                    response_model_by_alias=False)
-# def get_all_directions_by_exchange(exchange_id: int,
-#                                    exchange_marker: str):
-#     # print(len(connection.queries))
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker)
-    
-#     exchange_directions_queryset = get_exchange_directions(exchange,
-#                                                            exchange_marker)
-    
-#     if exchange_marker == 'both':
-#         try:
-#             no_cash_exchange_directions = exchange_directions_queryset\
-#                                             .select_related('exchange',
-#                                                             'direction',
-#                                                             'direction__valute_from',
-#                                                             'direction__valute_to')\
-#                                             .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                     filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                                 direction__exchange_directions__is_active=True,
-#                                                                                 direction__exchange_directions__exchange__is_active=True)),
-#                                                     marker=annotate_string_field('no_cash'))\
-#                                             .filter(exchange__is_active=True,
-#                                                     is_active=True)
-            
-#             cash_exchange_directions_queryset = cash_models.Exchange.objects.get(name=exchange.first().name).directions
-#             cash_exchange_directions = cash_exchange_directions_queryset\
-#                                             .select_related('exchange',
-#                                                             'direction',
-#                                                             'direction__valute_from',
-#                                                             'direction__valute_to')\
-#                                             .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                     filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                                 direction__exchange_directions__is_active=True,
-#                                                                                 direction__exchange_directions__exchange__is_active=True)),
-#                                                     marker=annotate_string_field('cash'))\
-#                                             .filter(exchange__is_active=True,
-#                                                     is_active=True)
-
-#             no_cash_prefetch_queryset = Prefetch('direction__partner_directions',
-#                                         partner_models.NonCashDirection.objects.filter(is_active=True,
-#                                                                                 pk=F('pk')))
-#             prefetch_queryset = Prefetch('direction__partner_directions',
-#                                         partner_models.Direction.objects.filter(is_active=True,
-#                                                                                 pk=F('pk')))
-
-#             no_cash_exchange_directions = no_cash_exchange_directions.prefetch_related(no_cash_prefetch_queryset)
-#             cash_exchange_directions = cash_exchange_directions.prefetch_related(prefetch_queryset)
-
-#             # exchange_directions = no_cash_exchange_directions.union(cash_exchange_directions)
-#             exchange_directions = list(no_cash_exchange_directions) + list(cash_exchange_directions)
-
-#             # print([el.marker for el in exchange_directions])
-
-#             check_direction_id_set = set()
-#             exchange_direction_list = []
-
-#             for exchange_direction in exchange_directions:
-#                 if exchange_direction.direction_id not in check_direction_id_set:
-#                     # exchange_direction_list.append(exchange_direction)
-#                     check_direction_id_set.add(exchange_direction.direction_id)
-                
-#                     valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
-#                     exchange_direction.direction.valute_from.icon_url = valute_from_icon
-
-#                     valute_to_icon = try_generate_icon_url(exchange_direction.direction.valute_to)
-#                     exchange_direction.direction.valute_to.icon_url = valute_to_icon
-
-#                     exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
-#                     exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
-#                     exchange_direction.direction_type = exchange_direction.marker
-                    
-#                     if exchange_direction.marker != 'no_cash':
-#                         # exchange_direction.direction_type = 'cash'
-#                         similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
-#                         exchange_direction.pair_count += similar_partner_direction_count
-
-#                     if exchange_direction.pair_count > 0:
-#                         exchange_direction_list.append(exchange_direction)
-#         except Exception as ex:
-#             print(ex)
-#             raise HTTPException(status_code=400,
-#                                 detail='error with "both" marker')    
-#         # for conn in connection.queries:
-#         #     print(conn)
-#         #     print('*' * 8)
-#         # print(len(connection.queries))
-#         return exchange_direction_list
-
-#     else:
-#         exchange_directions = exchange_directions_queryset\
-#                                         .select_related('direction',
-#                                                         'direction__valute_from',
-#                                                         'direction__valute_to')\
-#                                         .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                 filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                             direction__exchange_directions__is_active=True,
-#                                                                             direction__exchange_directions__exchange__is_active=True)))\
-
-
-#         if exchange_marker == 'both':
-#             exchange_marker = 'no_cash'
-
-#         if exchange_marker != 'no_cash':
-#             prefetch_queryset = Prefetch('direction__partner_directions',
-#                                         partner_models.Direction.objects.filter(is_active=True,
-#                                                                                 pk=F('pk')))
-#             exchange_directions = exchange_directions.prefetch_related(prefetch_queryset)
-
-#     check_direction_id_set = set()
-#     exchange_direction_list = []
-
-#     for exchange_direction in exchange_directions:
-#         if exchange_direction.direction_id not in check_direction_id_set:
-#             # exchange_direction_list.append(exchange_direction)
-#             check_direction_id_set.add(exchange_direction.direction_id)
-        
-#             valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
-#             exchange_direction.direction.valute_from.icon_url = valute_from_icon
-
-#             valute_to_icon = try_generate_icon_url(exchange_direction.direction.valute_to)
-#             exchange_direction.direction.valute_to.icon_url = valute_to_icon
-
-#             exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
-#             exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
-#             exchange_direction.direction_type = 'no_cash'
-            
-#             if exchange_marker != 'no_cash':
-#                 exchange_direction.direction_type = 'cash'
-#                 similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
-#                 exchange_direction.pair_count += similar_partner_direction_count
-
-#             if exchange_direction.pair_count > 0:
-#                 exchange_direction_list.append(exchange_direction)
-
-#     # print(connection.queries)
-#     # for conn in connection.queries:
-#     #     print(conn)
-#     #     print('*' * 8)
-#     # print(len(connection.queries))
-#     return exchange_direction_list
 
 
 @common_router.get('/direction_pair_by_exchange',
@@ -2356,210 +2789,160 @@ def new_get_all_directions_by_exchange(exchange_id: int,
     return exchange_direction_list
 
 
-# @test_router.get('/direction_pair_by_exchange',
-#                    response_model=list[DirectionSideBarSchema],
-#                    response_model_by_alias=False)
-# def get_all_directions_by_exchange(exchange_id: int,
-#                                    exchange_marker: str):
-#     # print(len(connection.queries))
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker)
-    
-    
-#     exchange_directions_queryset = get_exchange_directions(exchange,
-#                                                            exchange_marker)
-    
-#     if exchange_marker == 'both':
-#         no_cash_exchange_directions = exchange_directions_queryset\
-#                                         .select_related('direction',
-#                                                         'direction__valute_from',
-#                                                         'direction__valute_to')\
-#                                         .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                 filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                             direction__exchange_directions__is_active=True,
-#                                                                             direction__exchange_directions__exchange__is_active=True)),
-#                                                 marker=annotate_string_field('no_cash'))
-        
-#         cash_exchange_directions_queryset = cash_models.Exchange.objects.get(name=exchange.first().name).directions
-#         cash_exchange_directions = cash_exchange_directions_queryset\
-#                                         .select_related('direction',
-#                                                         'direction__valute_from',
-#                                                         'direction__valute_to')\
-#                                         .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                 filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                             direction__exchange_directions__is_active=True,
-#                                                                             direction__exchange_directions__exchange__is_active=True)),
-#                                                 marker=annotate_string_field('cash'))
-#         no_cash_prefetch_queryset = Prefetch('direction__partner_directions',
-#                                      partner_models.NonCashDirection.objects.filter(is_active=True,
-#                                                                              pk=F('pk')))
+@new_common_router.get('/direction_pair_by_exchange',
+                   response_model=list[DirectionSideBarSchema],
+                   response_model_by_alias=False)
+def new_get_all_directions_by_exchange(exchange_id: int):
 
-#         prefetch_queryset = Prefetch('direction__partner_directions',
-#                                      partner_models.Direction.objects.filter(is_active=True,
-#                                                                              pk=F('pk')))
-#         # no_cash_exchange_directions = cash_exchange_directions.prefetch_related(no_cash_prefetch_queryset)
+    no_cash_exchange_directions = no_cash_models.NewExchangeDirection.objects.select_related('exchange',
+                                                                                       'direction__valute_from',
+                                                                                       'direction__valute_to')\
+                                                                        .filter(exchange_id=exchange_id,
+                                                                                is_active=True,
+                                                                                exchange__is_active=True)\
+                                                                        .values_list('direction_id', flat=True)\
+                                                                        .order_by()
 
-#         cash_exchange_directions = cash_exchange_directions.prefetch_related(prefetch_queryset)
+    partner_noncash_exchange_directions = partner_models.NewNonCashDirection.objects.select_related('exchange',
+                                                                                                    'direction__valute_from',
+                                                                                                    'direction__valute_to')\
+                                                                        .filter(exchange_id=exchange_id,
+                                                                                is_active=True,
+                                                                                exchange__is_active=True)\
+                                                                        .values_list('direction_id', flat=True)\
+                                                                        .order_by()
 
+    no_cash_direction_pks = no_cash_exchange_directions.union(partner_noncash_exchange_directions)
 
-#         # exchange_directions = no_cash_exchange_directions.union(cash_exchange_directions)
-#         exchange_directions = list(no_cash_exchange_directions) + list(cash_exchange_directions)
+    cash_exchange_directions = cash_models.NewExchangeDirection.objects.select_related('exchange',
+                                                                                       'direction__valute_from',
+                                                                                       'direction__valute_to')\
+                                                                        .filter(exchange_id=exchange_id,
+                                                                                is_active=True,
+                                                                                exchange__is_active=True)\
+                                                                        .values_list('direction_id', flat=True)\
+                                                                        .order_by()
 
-#         # print([el.marker for el in exchange_directions])
+    partner_city_exchange_directions = partner_models.NewDirection.objects.select_related('exchange',
+                                                                                       'direction__valute_from',
+                                                                                       'direction__valute_to')\
+                                                                        .filter(exchange_id=exchange_id,
+                                                                                is_active=True,
+                                                                                exchange__is_active=True)\
+                                                                        .values_list('direction_id', flat=True)\
+                                                                        .order_by()
 
-#         check_direction_id_set = set()
-#         exchange_direction_list = []
+    partner_country_exchange_directions = partner_models.NewCountryDirection.objects.select_related('exchange',
+                                                                                                    'direction__valute_from',
+                                                                                                    'direction__valute_to')\
+                                                                        .filter(exchange_id=exchange_id,
+                                                                                is_active=True,
+                                                                                exchange__is_active=True)\
+                                                                        .values_list('direction_id', flat=True)\
+                                                                        .order_by()
 
-#         for exchange_direction in exchange_directions:
-#             if exchange_direction.direction_id not in check_direction_id_set:
-#                 # exchange_direction_list.append(exchange_direction)
-#                 check_direction_id_set.add(exchange_direction.direction_id)
-            
-#                 valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
-#                 exchange_direction.direction.valute_from.icon_url = valute_from_icon
+    cash_direction_pks = cash_exchange_directions.union(partner_city_exchange_directions,
+                                                        partner_country_exchange_directions)
 
-#                 valute_to_icon = try_generate_icon_url(exchange_direction.direction.valute_to)
-#                 exchange_direction.direction.valute_to.icon_url = valute_to_icon
+    no_cash_exchange_direction_subquery = no_cash_models.NewExchangeDirection.objects.select_related('exchange')\
+        .filter(
+            direction_id=OuterRef('pk'),
+            is_active=True,
+            exchange__is_active=True,
+        ).values('direction_id').annotate(pair_count=Count('id')).values('pair_count')
 
-#                 exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
-#                 exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
-#                 exchange_direction.direction_type = exchange_direction.marker
-                
-#                 if exchange_direction.marker != 'no_cash':
-#                     # exchange_direction.direction_type = 'cash'
-#                     similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
-#                     exchange_direction.pair_count += similar_partner_direction_count
-
-#                 if exchange_direction.pair_count > 0:
-#                     exchange_direction_list.append(exchange_direction)
-        
-#         # print(len(connection.queries))
-#         return exchange_direction_list
-
-#     else:
-#         exchange_directions = exchange_directions_queryset\
-#                                         .select_related('direction',
-#                                                         'direction__valute_from',
-#                                                         'direction__valute_to')\
-#                                         .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                 filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                             direction__exchange_directions__is_active=True,
-#                                                                             direction__exchange_directions__exchange__is_active=True)))\
+    partner_no_cash_exchange_direction_subquery = partner_models.NewNonCashDirection.objects.select_related('exchange')\
+        .filter(
+            direction_id=OuterRef('pk'),
+            is_active=True,
+            exchange__is_active=True,
+        ).values('direction_id').annotate(pair_count=Count('id')).values('pair_count')
 
 
-#         if exchange_marker == 'both':
-#             exchange_marker = 'no_cash'
+    no_cash_directions = no_cash_models.NewDirection.objects.select_related('valute_from',
+                                                                            'valute_to').filter(pk__in=no_cash_direction_pks)\
+                                                            .annotate(auto_pair_count=Subquery(no_cash_exchange_direction_subquery),
+                                                                      partner_pair_count=Subquery(partner_no_cash_exchange_direction_subquery),
+                                                                      direction_marker=annotate_string_field('no_cash'))\
+                                                            .filter(Q(auto_pair_count__gt=0) | Q(partner_pair_count__gt=0))
 
-#         if exchange_marker != 'no_cash':
-#             prefetch_queryset = Prefetch('direction__partner_directions',
-#                                         partner_models.Direction.objects.filter(is_active=True,
-#                                                                                 pk=F('pk')))
-#             exchange_directions = exchange_directions.prefetch_related(prefetch_queryset)
+    auto_pairs = (
+        cash_models.NewExchangeDirection.objects
+        .filter(is_active=True, exchange__is_active=True)
+        .values('direction_id')
+        .annotate(auto_pair_count=Count('id'))
+    )
 
-#     check_direction_id_set = set()
-#     exchange_direction_list = []
+    partner_city_pairs = (
+        partner_models.NewDirection.objects
+        .filter(is_active=True, exchange__is_active=True)
+        .values('direction_id')
+        .annotate(partner_city_pair_count=Count('id'))
+    )
 
-#     for exchange_direction in exchange_directions:
-#         if exchange_direction.direction_id not in check_direction_id_set:
-#             # exchange_direction_list.append(exchange_direction)
-#             check_direction_id_set.add(exchange_direction.direction_id)
-        
-#             valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
-#             exchange_direction.direction.valute_from.icon_url = valute_from_icon
+    partner_country_pairs = (
+        partner_models.NewCountryDirection.objects
+        .filter(is_active=True, exchange__is_active=True)
+        .values('direction_id')
+        .annotate(partner_country_pair_count=Count('id'))
+    )
 
-#             valute_to_icon = try_generate_icon_url(exchange_direction.direction.valute_to)
-#             exchange_direction.direction.valute_to.icon_url = valute_to_icon
+    cash_directions = (
+        cash_models.NewDirection.objects
+        .select_related('valute_from', 'valute_to')
+        .filter(pk__in=cash_direction_pks)
+        .annotate(
+            auto_pair_count=Coalesce(
+                Subquery(auto_pairs.filter(direction_id=OuterRef('pk')).values('auto_pair_count')[:1]), 0
+            ),
+            partner_city_pair_count=Coalesce(
+                Subquery(partner_city_pairs.filter(direction_id=OuterRef('pk')).values('partner_city_pair_count')[:1]), 0
+            ),
+            partner_country_pair_count=Coalesce(
+                Subquery(partner_country_pairs.filter(direction_id=OuterRef('pk')).values('partner_country_pair_count')[:1]), 0
+            ),
+            direction_marker=annotate_string_field('cash'),
+        )
+        .filter(
+            Q(auto_pair_count__gt=0) |
+            Q(partner_city_pair_count__gt=0) |
+            Q(partner_country_pair_count__gt=0)
+        )
+    )
 
-#             exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
-#             exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
-#             exchange_direction.direction_type = 'no_cash'
-            
-#             if exchange_marker != 'no_cash':
-#                 exchange_direction.direction_type = 'cash'
-#                 similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
-#                 exchange_direction.pair_count += similar_partner_direction_count
+    direction_pair_list = []
+    for direction_query in (no_cash_directions, cash_directions):
+        for direction in direction_query:
+            valute_from_icon = try_generate_icon_url(direction.valute_from)
+            direction.valute_from.icon_url = valute_from_icon
 
-#             if exchange_direction.pair_count > 0:
-#                 exchange_direction_list.append(exchange_direction)
+            valute_to_icon = try_generate_icon_url(direction.valute_to)
+            direction.valute_to.icon_url = valute_to_icon
 
-#     # print(connection.queries)
-#     # for conn in connection.queries:
-#     #     print(conn)
-#     #     print('*' * 8)
-#     print(len(connection.queries))
-#     return exchange_direction_list
+            pair_count = 0
+            if direction.direction_marker == 'no_cash':
+                for _count in (direction.auto_pair_count, direction.partner_pair_count):
+                    if _count:
+                        pair_count += _count
 
+            else:
+                for _count in (direction.auto_pair_count,
+                               direction.partner_city_pair_count,
+                               direction.partner_country_pair_count):
+                    if _count:
+                        pair_count += _count
 
-# @test_router.get('/direction_pair_by_exchange',
-#                    response_model=list[DirectionSideBarSchema],
-#                    response_model_by_alias=False)
-# def get_all_directions_by_exchange2(exchange_id: int,
-#                                    exchange_marker: str):
-#     # print(len(connection.queries))
-#     exchange = get_exchange(exchange_id,
-#                             exchange_marker)
-    
-#     exchange_directions_queryset = get_exchange_directions(exchange,
-#                                                            exchange_marker)
-    
-#     if isinstance(exchange_directions_queryset, tuple):
-#         for exchange_directions in exchange_directions_queryset:
-#             exchange_directions = exchange_directions_queryset\
-#                                             .select_related('direction',
-#                                                             'direction__valute_from',
-#                                                             'direction__valute_to')\
-#                                             .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                     filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                                 direction__exchange_directions__is_active=True,
-#                                                                                 direction__exchange_directions__exchange__is_active=True)))\
-                                                                        
+            direction_dict = {
+                'valuteFrom': ValuteModel.model_construct(**direction.valute_from.__dict__),
+                'valuteTo': ValuteModel.model_construct(**direction.valute_to.__dict__),
+                'direction_type': direction.direction_marker,
+                'pair_count': pair_count,
+            }
+            direction_pair_list.append(direction_dict)
 
+    return sorted(direction_pair_list,
+                  key= lambda el: -el.get('pair_count'))
 
-#     exchange_directions = exchange_directions_queryset\
-#                                     .select_related('direction',
-#                                                     'direction__valute_from',
-#                                                     'direction__valute_to')\
-#                                     .annotate(pair_count=Count('direction__exchange_directions',
-#                                                                filter=Q(direction__exchange_directions__direction_id=F('direction_id'),
-#                                                                         direction__exchange_directions__is_active=True,
-#                                                                         direction__exchange_directions__exchange__is_active=True)))\
-                                                                        
-#     if exchange_marker != 'no_cash':
-#         prefetch_queryset = Prefetch('direction__partner_directions',
-#                                      partner_models.Direction.objects.filter(is_active=True,
-#                                                                              pk=F('pk')))
-#         exchange_directions = exchange_directions.prefetch_related(prefetch_queryset)
-
-#     check_direction_id_set = set()
-#     exchange_direction_list = []
-
-#     for exchange_direction in exchange_directions:
-#         if exchange_direction.direction_id not in check_direction_id_set:
-#             # exchange_direction_list.append(exchange_direction)
-#             check_direction_id_set.add(exchange_direction.direction_id)
-        
-#             valute_from_icon = try_generate_icon_url(exchange_direction.direction.valute_from)
-#             exchange_direction.direction.valute_from.icon_url = valute_from_icon
-
-#             valute_to_icon = try_generate_icon_url(exchange_direction.direction.valute_to)
-#             exchange_direction.direction.valute_to.icon_url = valute_to_icon
-
-#             exchange_direction.valuteFrom = ValuteModel.model_construct(**exchange_direction.direction.valute_from.__dict__)
-#             exchange_direction.valuteTo = ValuteModel.model_construct(**exchange_direction.direction.valute_to.__dict__)
-#             exchange_direction.direction_type = 'no_cash'
-            
-#             if exchange_marker != 'no_cash':
-#                 exchange_direction.direction_type = 'cash'
-#                 similar_partner_direction_count = len(exchange_direction.direction.partner_directions.all())
-#                 exchange_direction.pair_count += similar_partner_direction_count
-
-#             if exchange_direction.pair_count > 0:
-#                 exchange_direction_list.append(exchange_direction)
-
-#     # print(connection.queries)
-#     # print(len(connection.queries))
-#     return exchange_direction_list
-    
 
 @common_router.post('/feedback_form')
 def add_feedback_form(feedback: FeedbackFormSchema):
@@ -2592,25 +2975,6 @@ def add_feedback_form(feedback: FeedbackFormSchema):
 
 # Эндпоинт для получения актуального курса обмена
 # для выбранного направления
-# @common_router.get('/actual_course')
-# def get_actual_course_for_direction(valute_from: str, valute_to: str):
-#     valute_from, valute_to = valute_from.upper(), valute_to.upper()
-    
-#     direction = cash_models.Direction.objects\
-#                             .filter(display_name=f'{valute_from} -> {valute_to}')\
-#                             .first()
-    
-#     if not direction:
-#         direction = no_cash_models.Direction.objects\
-#                                     .filter(valute_from_id=valute_from,
-#                                             valute_to_id=valute_to).first()
-        
-#     if direction and direction.actual_course is not None:
-#         return direction.actual_course
-#     else:
-#         raise HTTPException(status_code=404)
-    
-
 @common_router.get('/actual_course')
 def get_actual_course_for_direction(valute_from: str, valute_to: str):
     valute_from, valute_to = valute_from.upper(), valute_to.upper()
@@ -2633,58 +2997,26 @@ def get_actual_course_for_direction(valute_from: str, valute_to: str):
     return generate_actual_course(direction) 
 
 
-# @test_router.get('/actual_course')
-# def get_actual_course_for_direction(valute_from: str, valute_to: str):
-#     valute_from, valute_to = valute_from.upper(), valute_to.upper()
+@new_common_router.get('/actual_course')
+def new_get_actual_course_for_direction(valute_from: str,
+                                        valute_to: str):
+    valute_from, valute_to = valute_from.upper(), valute_to.upper()
     
-#     direction = cash_models.Direction.objects\
-#                             .filter(display_name=f'{valute_from} -> {valute_to}')\
-#                             .first()
+    direction = cash_models.NewDirection.objects\
+                            .filter(valute_from_id=valute_from,
+                                    valute_to_id=valute_to)\
+                            .first()
     
-#     if not direction:
-#         direction = no_cash_models.Direction.objects\
-#                                     .filter(valute_from_id=valute_from,
-#                                             valute_to_id=valute_to).first()
+    if not direction:
+        direction = no_cash_models.NewDirection.objects\
+                                    .filter(valute_from_id=valute_from,
+                                            valute_to_id=valute_to).first()
         
-#     # if direction and direction.actual_course is not None:
-#     #     return direction.actual_course
-#     # else:
-#     if not direction:
-#         raise HTTPException(status_code=404)
+    if not direction:
+        raise HTTPException(status_code=404,
+                            detail=f'Direction {valute_from} -> {valute_to} not found')
     
-#     return generate_actual_course(direction) 
-
-
-# @common_router.get('/top_exchanges',
-#                    response_model=list[TopExchangeSchema],
-#                    response_model_by_alias=False)
-# def get_top_exchanges():
-#     limit = 10
-#     # print(len(connection.queries))
-#     review_counts = new_get_reviews_count_filters(marker='exchange')
-
-#     no_cash_exchanges = generate_top_exchanges_query_by_model('no_cash',
-#                                            review_counts=review_counts)
-
-#     cash_exchanges = generate_top_exchanges_query_by_model('cash',
-#                                         review_counts=review_counts)
-
-#     partner_exchanges = generate_top_exchanges_query_by_model('partner',
-#                                            review_counts=review_counts)
-    
-#     top_exchanges = no_cash_exchanges.union(cash_exchanges,
-#                                             partner_exchanges)
-                                                
-#     for top_exchange in top_exchanges:
-#         top_exchange['reviews'] = ReviewCountSchema(positive=top_exchange['positive_review_count'],
-#                                                     neutral=top_exchange['neutral_review_count'],
-#                                                     negative=top_exchange['negative_review_count'])
-#         top_exchange['icon'] = generate_image_icon2(top_exchange['icon_url'])
-
-
-#     return sorted(top_exchanges,
-#                   key=lambda el: el.get('link_count'),
-#                   reverse=True)[:limit]
+    return generate_actual_course(direction) 
 
 
 @common_router.get('/top_exchanges',
@@ -2735,6 +3067,58 @@ def new_get_top_exchanges():
                   reverse=True)[:limit]
 
 
+@new_common_router.get('/top_exchanges',
+                   response_model=list[NewTopExchangeSchema],
+                   response_model_by_alias=False)
+def get_top_exchanges():
+    limit = 10
+
+    review_count_dict = get_review_count_dict()
+
+    def link_counts():
+        models = [
+            no_cash_models.NewExchangeLinkCount,
+            cash_models.NewExchangeLinkCount,
+            partner_models.NewExchangeLinkCount,
+            partner_models.NewCountryExchangeLinkCount,
+            partner_models.NewNonCashExchangeLinkCount,
+        ]
+        counts = Counter()
+        for m in models:
+            for r in m.objects.values('exchange_id').annotate(total=Sum('count')):
+                counts[r['exchange_id']] += r['total']
+        return counts
+
+    counts = link_counts()
+
+    top_exchanger_ids = [exchange_id for exchange_id, total in counts.most_common(limit)]
+
+    top_exchangers = (
+        Exchanger.objects
+        .filter(pk__in=top_exchanger_ids)
+        .values('pk',
+                'name',
+                'icon_url')
+    )
+                                                
+    for top_exchange in top_exchangers:
+        top_exchange['total_link_count'] = counts.get(top_exchange['pk'], 0)
+        # print(top_exchange['total_link_count'])
+        try:
+            top_exchange['reviews'] = ReviewCountSchema(positive=review_count_dict[top_exchange['pk']]['positive_count'],
+                                                        neutral=review_count_dict[top_exchange['pk']]['neutral_count'],
+                                                        negative=review_count_dict[top_exchange['pk']]['negative_count'])
+        except Exception as ex:
+            top_exchange['reviews'] = ReviewCountSchema(positive=0,
+                                                        neutral=0,
+                                                        negative=0)
+            
+        top_exchange['icon'] = generate_image_icon2(top_exchange['icon_url'])
+
+    return sorted(top_exchangers, key=lambda el: (-el['total_link_count'],
+                                                   el['name']))
+
+
 @common_router.get('/top_coins',
                    response_model=list[TopCoinSchema],
                    response_model_by_alias=False)
@@ -2757,121 +3141,26 @@ def get_top_coins():
     return coin_list
 
 
-# Эндпоинт для получения списка отзывов
-# для определённого обменника
-# @review_router.get('/reviews_by_exchange',
-#                    response_model=ReviewsByExchangeSchema)
-# def get_reviews_by_exchange(exchange_id: int,
-#                             exchange_marker: str,
-#                             page: int,
-#                             review_id: int = None,
-#                             element_on_page: int = None,
-#                             grade_filter: int = None):
-#     if exchange_marker == 'both':     # !
-#         exchange_marker = 'no_cash'
+@new_common_router.get('/top_coins',
+                   response_model=list[TopCoinSchema],
+                   response_model_by_alias=False)
+def new_get_top_coins():
+    usd = 'CASHUSD'
+    limit = 10
+    top_coins = cash_models.NewDirection.objects.select_related('valute_from',
+                                                                'valute_to')\
+                                            .filter(valute_to_id=usd,
+                                                    actual_course__isnull=False)\
+                                            .order_by('-popular_count')[:limit]
+    coin_list = []
 
-#     check_exchage_marker(exchange_marker)
+    for direction in top_coins:
+        coin = direction.valute_from
+        coin = generate_coin_for_schema(direction,
+                                        coin)
+        coin_list.append(coin)
 
-#     if page < 1:
-#         raise HTTPException(status_code=400,
-#                             detail='Параметр "page" должен быть положительным числом')
-    
-#     if element_on_page is not None:
-#         if element_on_page < 1:
-#             raise HTTPException(status_code=400,
-#                                 detail='Параметр "element_on_page" должен быть положительным числом')
-    
-#     match exchange_marker:
-#         case 'no_cash':
-#             review_model = no_cash_models.Review
-#         case 'cash':
-#             review_model = cash_models.Review
-#         case 'partner':
-#             review_model = partner_models.Review
-
-#     reviews = review_model.objects.select_related('guest')\
-#                                     .annotate(admin_comment_count=Count('admin_comments',
-#                                                                         filter=Q(moderation=True)))\
-#                                     .annotate(user_comment_count=Count('comments',
-#                                                                        filter=Q(moderation=True)))\
-#                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
-#                                     .filter(exchange_id=exchange_id,
-#                                             moderation=True)
-#                                     # .order_by('-time_create')
-#     if review_id:
-#         reviews = reviews.filter(pk=review_id)
-        
-#         review_list = []
-
-#         for review in reviews:
-#             date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-#             # review.username = review.username  review.guest is None else review.guest.username
-#             # print(review.__dict__)
-#             if not review.username:
-#                 if review.guest:
-#                     if review.guest.username:
-#                         review.username = review.guest.username
-#                     elif review.guest.first_name:
-#                         review.username = review.guest.first_name
-#                     else:
-#                         review.username = 'Гость'
-#                 else:
-#                     review.username = 'Гость'
-                        
-#             review.review_date = date
-#             review.review_time = time
-#             review_list.append(ReviewViewSchema(**review.__dict__))
-
-#         return ReviewsByExchangeSchema(page=page,
-#                                     pages=1,
-#                                     exchange_id=exchange_id,
-#                                     exchange_marker=exchange_marker,
-#                                     element_on_page=len(review_list),
-#                                     content=review_list)
-
-#     if grade_filter is not None:
-#         reviews = reviews.filter(grade=str(grade_filter))
-
-#     reviews = reviews.order_by('-time_create').all()
-    
-#     pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
-
-#     # if element_on_page:
-#     #     pages = ceil(len(reviews) / element_on_page)
-
-
-#     # if element_on_page:
-#     #     pages = len(reviews) // element_on_page
-
-#     #     if len(reviews) % element_on_page != 0:
-#     #         pages += 1
-    
-
-#     # reviews = reviews.all() if grade_filter is None\
-#     #              else reviews.filter(grade=str(grade_filter)).all()
-
-#     # reviews = reviews.all()
-
-
-#     if element_on_page:
-#         offset = (page - 1) * element_on_page
-#         limit = offset + element_on_page
-#         reviews = reviews[offset:limit]
-
-#     review_list = []
-#     for review in reviews:
-#         date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-#         review.username = review.username if review.guest is None else review.guest.username
-#         review.review_date = date
-#         review.review_time = time
-#         review_list.append(ReviewViewSchema(**review.__dict__))
-
-#     return ReviewsByExchangeSchema(page=page,
-#                                    pages=pages,
-#                                    exchange_id=exchange_id,
-#                                    exchange_marker=exchange_marker,
-#                                    element_on_page=len(review_list),
-#                                    content=review_list)
+    return coin_list
 
 
 @review_router.get('/reviews_by_exchange',
@@ -2982,164 +3271,113 @@ def new_get_reviews_by_exchange(exchange_name: str,
                                    content=review_list)
 
 
-# @test_router.get('/reviews_by_exchange',
-#                    response_model=NewReviewsByExchangeSchema)
-# def new_get_reviews_by_exchange(exchange_name: str,
-#                             page: int,
-#                             review_id: int = None,
-#                             element_on_page: int = None,
-#                             grade_filter: int = None):
-#     if page < 1:
-#         raise HTTPException(status_code=400,
-#                             detail='Параметр "page" должен быть положительным числом')
+@new_review_router.get('/reviews_by_exchange',
+                   response_model=ReviewsByExchangeSchema)
+def get_reviews_by_exchange(exchange_id: int,
+                            page: int,
+                            review_id: int = None,
+                            element_on_page: int = None,
+                            grade_filter: int = None):
+    if page < 1:
+        raise HTTPException(status_code=400,
+                            detail='Параметр "page" должен быть положительным числом')
     
-#     if element_on_page is not None:
-#         if element_on_page < 1:
-#             raise HTTPException(status_code=400,
-#                                 detail='Параметр "element_on_page" должен быть положительным числом')
+    if element_on_page is not None:
+        if element_on_page < 1:
+            raise HTTPException(status_code=400,
+                                detail='Параметр "element_on_page" должен быть положительным числом')
     
-#     user_comment_subquery = NewBaseComment.objects.filter(
-#         review_id=OuterRef('pk'),
-#         moderation=True,
-#     ).values('review_id').annotate(
-#         total_count=Coalesce(Count('id'), Value(0))
-#     ).values('total_count')
+    user_comment_subquery = Comment.objects.filter(
+        review_id=OuterRef('pk'),
+        moderation=True,
+        review_from='moneyswap',
+    ).values('review_id').annotate(
+        total_count=Coalesce(Count('id'), Value(0))
+    ).values('total_count')
 
-#     admin_comment_subquery = NewBaseAdminComment.objects.filter(
-#         review_id=OuterRef('pk'),
-#     ).values('review_id').annotate(
-#         total_count=Coalesce(Count('id'), Value(0))
-#     ).values('total_count')
+    admin_comment_subquery = AdminComment.objects.filter(
+        review_id=OuterRef('pk'),
+    ).values('review_id').annotate(
+        total_count=Coalesce(Count('id'), Value(0))
+    ).values('total_count')
 
 
-#     reviews = NewBaseReview.objects.select_related('guest')\
-#                                     .annotate(admin_comment_count=Subquery(admin_comment_subquery))\
-#                                     .annotate(user_comment_count=Subquery(user_comment_subquery))\
-#                                     .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
-#                                     .filter(exchange_name=exchange_name,
-#                                             moderation=True)
+    reviews = Review.objects.select_related('guest')\
+                                    .annotate(admin_comment_count=Subquery(admin_comment_subquery))\
+                                    .annotate(user_comment_count=Subquery(user_comment_subquery))\
+                                    .annotate(comment_count=Coalesce(F('admin_comment_count'), Value(0)) + Coalesce(F('user_comment_count'), Value(0)))\
+                                    .filter(exchange_id=exchange_id,
+                                            review_from__in=('moneyswap', 'ai'),
+                                            moderation=True)\
 
-#     if review_id:
-#         reviews = reviews.filter(pk=review_id)
+    if review_id:
+        reviews = reviews.filter(pk=review_id)
         
-#         review_list = []
+        review_list = []
 
-#         for review in reviews:
-#             date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+        for review in reviews:
+            date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
 
-#             if review.username is None:
-#                 if review.guest:
-#                     if review.guest.username:
-#                         review.username = review.guest.username
-#                     elif review.guest.first_name:
-#                         review.username = review.guest.first_name
-#                     else:
-#                         review.username = 'Гость'
-#                 else:
-#                     review.username = 'Гость'
+            if review.username is None:
+                if review.guest:
+                    if review.guest.username:
+                        review.username = review.guest.username
+                    elif review.guest.first_name:
+                        review.username = review.guest.first_name
+                    else:
+                        review.username = 'Гость'
+                else:
+                    review.username = 'Гость'
                         
-#             review.review_date = date
-#             review.review_time = time
-#             review_list.append(ReviewViewSchema(**review.__dict__))
+            review.review_date = date
+            review.review_time = time
+            review_list.append(ReviewViewSchema(**review.__dict__))
 
-#         return NewReviewsByExchangeSchema(page=page,
-#                                     pages=1,
-#                                     exchange_name=exchange_name,
-#                                     element_on_page=len(review_list),
-#                                     content=review_list)
-
-#     if grade_filter is not None:
-#         reviews = reviews.filter(grade=str(grade_filter))
-
-#     reviews = reviews.order_by('-time_create').all()
+        return ReviewsByExchangeSchema(page=page,
+                                    pages=1,
+                                    exchange_id=exchange_id,
+                                    element_on_page=len(review_list),
+                                    content=review_list)
     
-#     pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
+    reviews = reviews.order_by('-time_create')
 
-#     if element_on_page:
-#         offset = (page - 1) * element_on_page
-#         limit = offset + element_on_page
-#         reviews = reviews[offset:limit]
+    if grade_filter is not None:
+        reviews = reviews.filter(grade=str(grade_filter))
 
-#     review_list = []
-#     for review in reviews:
-#         date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
-#         if review.username is None:
-#             if review.guest:
-#                 if review.guest.username:
-#                     review.username = review.guest.username
-#                 elif review.guest.first_name:
-#                     review.username = review.guest.first_name
-#                 else:
-#                     review.username = 'Гость'
-#             else:
-#                 review.username = 'Гость'
-
-#         review.review_date = date
-#         review.review_time = time
-#         review_list.append(ReviewViewSchema(**review.__dict__))
-
-#     return NewReviewsByExchangeSchema(page=page,
-#                                    pages=pages,
-#                                    exchange_name=exchange_name,
-#                                    element_on_page=len(review_list),
-#                                    content=review_list)
-
-
-# Эндпоинт для добавления нового отзыва
-# для определённого обменника
-# @review_router.post('/add_review_by_exchange')
-# def add_review_by_exchange(review: AddReviewSchema):
-#     check_exchage_marker(review.exchange_marker)
-
-#     check_perms_for_adding_review(exchange_id=review.exchange_id,
-#                                   exchange_marker=review.exchange_marker,
-#                                   tg_id=review.tg_id)
-
-#     if review.grade != -1 and review.transaction_id is not None:
-#         raise HTTPException(status_code=423,
-#                             detail='Неотрицательный отзыв не требует номера транзакции')
+    reviews = reviews.order_by('-time_create').all()
     
-#     if not Guest.objects.filter(tg_id=review.tg_id).exists():
-#         raise HTTPException(status_code=404,
-#                             detail='User don`t exist in db')
-    
-#     match review.exchange_marker:
-#         case 'no_cash':
-#             review_model = no_cash_models.Review
-#         case 'cash':
-#             review_model = cash_models.Review
-#         case 'partner':
-#             review_model = partner_models.Review
-#         case 'both':
-#             review_model = no_cash_models.Review
+    pages = 1 if element_on_page is None else ceil(len(reviews) / element_on_page)
 
-#     new_review = {
-#         'exchange_id': review.exchange_id,
-#         'guest_id': review.tg_id,
-#         'grade': review.grade,
-#         'text': review.text,
-#     }
+    if element_on_page:
+        offset = (page - 1) * element_on_page
+        limit = offset + element_on_page
+        reviews = reviews[offset:limit]
 
-#     if review.transaction_id:
-#         new_review.update({'transaction_id': review.transaction_id})
+    review_list = []
+    for review in reviews:
+        date, time = review.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+        if review.username is None:
+            if review.guest:
+                if review.guest.username:
+                    review.username = review.guest.username
+                elif review.guest.first_name:
+                    review.username = review.guest.first_name
+                else:
+                    review.username = 'Гость'
+            else:
+                review.username = 'Гость'
 
-#     try:
-#         # review_model.objects.create(
-#         #     exchange_id=review.exchange_id,
-#         #     guest_id=review.tg_id,
-#         #     grade=review.grade,
-#         #     text=review.text
-#         #     )
-#         new_review_record = review_model.objects.create(**new_review)
-#     except Exception:
-#         raise HTTPException(status_code=400,
-#                             detail='Переданы некорректные данные')
-#     else:
-#         # уведомление об отзыве в бота уведомлений
-#         # async_to_sync(send_review_notifitation)(new_review_record.pk,
-#         #                                         review.exchange_marker)
+        review.review_date = date
+        review.review_time = time
+        review_list.append(ReviewViewSchema(**review.__dict__))
 
-#         return {'status': 'success'}
+    return ReviewsByExchangeSchema(page=page,
+                                   pages=pages,
+                                   exchange_id=exchange_id,
+                                   element_on_page=len(review_list),
+                                   content=review_list)
+
+
 @review_router.post('/add_review_by_exchange')
 def new_add_review_by_exchange(review: NewAddReviewSchema):
     check_exchage_by_name(review.exchange_name)
@@ -3178,54 +3416,47 @@ def new_add_review_by_exchange(review: NewAddReviewSchema):
         return {'status': 'success'}
     
 
-# @test_router.post('/add_review_by_exchange')
-# def new_add_review_by_exchange(review: NewAddReviewSchema):
-#     check_exchage_by_name(review.exchange_name)
+@new_review_router.post('/add_review_by_exchange')
+def add_review_by_exchange(review: AddReviewSchema):
 
-#     new_check_perms_for_adding_review(exchange_name=review.exchange_name,
-#                                       tg_id=review.tg_id)
+    if not Exchanger.objects.filter(pk=review.exchange_id).exists():
+        raise HTTPException(status_code=404,
+                            detail=f'Exchanger not found by given "exchange_id"')
 
-#     if review.grade != -1 and review.transaction_id is not None:
-#         raise HTTPException(status_code=423,
-#                             detail='Неотрицательный отзыв не требует номера транзакции')
+    check_perms_for_adding_review(exchange_id=review.exchange_id,
+                                  tg_id=review.tg_id)
+
+    if review.grade != -1 and review.transaction_id is not None:
+        raise HTTPException(status_code=423,
+                            detail='Неотрицательный отзыв не требует номера транзакции')
     
-#     if not Guest.objects.filter(tg_id=review.tg_id).exists():
-#         raise HTTPException(status_code=404,
-#                             detail='User don`t exist in db')
+    if not Guest.objects.filter(tg_id=review.tg_id).exists():
+        raise HTTPException(status_code=404,
+                            detail='User doesn`t exists in db')
 
-#     new_review = {
-#         'exchange_name': review.exchange_name,
-#         'guest_id': review.tg_id,
-#         'grade': review.grade,
-#         'text': review.text,
-#         'time_create': datetime.now(),
-#     }
+    new_review = {
+        'exchange_id': review.exchange_id,
+        'guest_id': review.tg_id,
+        'grade': review.grade,
+        'text': review.text,
+        'time_create': timezone.now(),
+    }
 
-#     if review.transaction_id:
-#         new_review.update({'transaction_id': review.transaction_id})
+    if review.transaction_id:
+        new_review.update({'transaction_id': review.transaction_id})
 
-#     try:
-#         new_review_record = NewBaseReview.objects.create(**new_review)
-#     except Exception:
-#         raise HTTPException(status_code=400,
-#                             detail='Переданы некорректные данные')
-#     else:
-#         # уведомление об отзыве в бота уведомлений
-#         async_to_sync(send_review_notifitation)(new_review_record.pk)
+    try:
+        new_review_record = Review.objects.create(**new_review)
+    except Exception:
+        raise HTTPException(status_code=400,
+                            detail='Переданы некорректные данные')
+    else:
+        # уведомление об отзыве в бота уведомлений
+        async_to_sync(new_send_review_notifitation)(new_review_record.pk)
 
-#         return {'status': 'success'}
+        return {'status': 'success'}
+    
 
-
-# Эндпоинт для проверки пользователя,
-# может ли он добавить новый отзыв
-# для опеределённого обменника (один в день)
-# @review_router.get('/check_user_review_permission')
-# def check_user_review_permission(exchange_id: int,
-#                                  exchange_marker: str,
-#                                  tg_id: int):
-#     return check_perms_for_adding_review(exchange_id,
-#                                          exchange_marker,
-#                                          tg_id)
 @review_router.get('/check_user_review_permission')
 def check_user_review_permission(exchange_name: str,
                                  tg_id: int):
@@ -3233,89 +3464,13 @@ def check_user_review_permission(exchange_name: str,
                                              tg_id)
 
 
-# @test_router.get('/check_user_review_permission')
-# def check_user_review_permission(exchange_name: str,
-#                                  tg_id: int):
-#     return new_check_perms_for_adding_review(exchange_name,
-#                                              tg_id)
+@new_review_router.get('/check_user_review_permission')
+def new_check_user_review_permission(exchange_id: int,
+                                     tg_id: int):
+    return check_perms_for_adding_review(exchange_id,
+                                         tg_id)
 
 
-# @review_router.get('/get_comments_by_review',
-#                    response_model=list[CommentSchema],
-#                    response_model_exclude_none=True)
-# def get_comments_by_review(exchange_id: int,
-#                            exchange_marker: str,
-#                            review_id: int):
-#     check_exchage_marker(exchange_marker)
-
-#     if exchange_marker == 'both':
-#         exchange_marker = 'no_cash'
-#     # print(len(connection.queries))
-#     match exchange_marker:
-#         case 'no_cash':
-#             # review_model = no_cash_models.Review
-#             user_comment_model = no_cash_models.Comment
-#             admin_comment_model = no_cash_models.AdminComment
-#         case 'cash':
-#             # review_model = cash_models.Review
-#             user_comment_model = cash_models.Comment
-#             admin_comment_model = cash_models.AdminComment
-#         case 'partner':
-#             # review_model = partner_models.Review
-#             user_comment_model = partner_models.Comment
-#             admin_comment_model = partner_models.AdminComment
-
-#     # review = review_model.objects.filter(exchange_id=exchange_id,
-#     #                                      pk=review_id)
-#     user_comments = user_comment_model.objects.select_related('review',
-#                                                     'review__exchange')\
-#                                     .annotate(role=annotate_string_field('user'))\
-#                                     .filter(review_id=review_id,
-#                                             review__exchange_id=exchange_id,
-#                                             moderation=True)\
-#                                     .values('id',
-#                                             'time_create',
-#                                             'text',
-#                                             'username',
-#                                             'role')\
-#                                     # .order_by('time_create')
-    
-#     admin_comments = admin_comment_model.objects.select_related('review',
-#                                                     'review__exchange')\
-#                                     .annotate(role=annotate_string_field('admin'))\
-#                                     .annotate(username=annotate_string_field('admin'))\
-#                                     .filter(review_id=review_id,
-#                                             review__exchange_id=exchange_id)\
-#                                     .values('id',
-#                                             'time_create',
-#                                             'text',
-#                                             'username',
-#                                             'role')\
-#                                     # .order_by('time_create')
-    
-#     comments = user_comments.union(admin_comments)
-
-#     if not comments:
-#         raise HTTPException(status_code=404)
-    
-#     #
-#     # comments = review.first().admin_comments\
-#     #                             .order_by('time_create').all()
-#     comment_list = []
-
-#     for comment in sorted(comments, key=lambda el: el.get('time_create')):
-#         # if isinstance(comment, BaseAdminComment):
-#         #     comment.role = CommentRoleEnum.admin
-#         date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
-#         # comment.comment_date = date
-#         # comment.comment_time = time
-#         comment['comment_date'] = date
-#         comment['comment_time'] = time
-
-#         comment_list.append(comment)
-#     #
-#     # print(len(connection.queries))
-#     return comment_list
 @review_router.get('/get_comments_by_review',
                    response_model=list[CommentSchema],
                    response_model_exclude_none=True)
@@ -3383,113 +3538,81 @@ def new_get_comments_by_review(review_id: int):
     return comment_list
 
 
-# @test_router.get('/get_comments_by_review',
-#                    response_model=list[CommentSchema],
-#                    response_model_exclude_none=True)
-# def new_get_comments_by_review(review_id: int):
-#     try:
-#         review = NewBaseReview.objects.get(pk=review_id)
+@new_review_router.get('/get_comments_by_review',
+                   response_model=list[CommentSchema],
+                   response_model_exclude_none=True)
+def get_comments_by_review(review_id: int):
+    try:
+        user_comment_queryset = Comment.objects.select_related('guest')\
+                                                .filter(review_id=review_id,
+                                                        review_from='moneyswap',
+                                                        moderation=True)\
+                                                .annotate(role=annotate_string_field('user'))
+        user_comment_prefetch = Prefetch('comments',
+                                         queryset=user_comment_queryset)
+        
+        admin_comment_queryset = AdminComment.objects.filter(review_id=review_id)\
+                                                    .annotate(role=annotate_string_field('admin'))\
+                                                    .annotate(username=annotate_string_field('Администрация MoneySwap'))\
+                                                    .annotate(guest_id=annotate_number_field(1))
+        admin_comment_prefetch = Prefetch('admin_comments',
+                                         queryset=admin_comment_queryset)
+        
+        review = Review.objects.select_related('exchange')\
+                                .prefetch_related(user_comment_prefetch,admin_comment_prefetch)\
+                                .get(pk=review_id)
 
-#         exchange_admin = ExchangeAdmin.objects.filter(exchange_name=review.exchange_name).first()
-#     except Exception as ex:
-#         print(ex)
-#         raise HTTPException(status_code=404,
-#                             detail='Review does not exist')
+        exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=review.exchange_id).first()
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=404,
+                            detail='Review not found by given "review_id"')
     
-#     user_comments = NewBaseComment.objects.select_related('review')\
-#                                     .annotate(role=annotate_string_field('user'))\
-#                                     .filter(review_id=review_id,
-#                                             moderation=True)\
-#                                     .values('id',
-#                                             'time_create',
-#                                             'text',
-#                                             'username',
-#                                             'role',
-#                                             'guest_id')\
-#                                     # .order_by('time_create')
+    comments = list(review.comments.all()) + list(review.admin_comments.all())
+
+    if not comments:
+        raise HTTPException(status_code=404,
+                            detail='Comments not found for review by given "review_id"')
     
-#     admin_comments = NewBaseAdminComment.objects.select_related('review')\
-#                                     .annotate(username=annotate_string_field('Администрация MoneySwap'))\
-#                                     .annotate(guest_id=annotate_number_field(1))\
-#                                     .annotate(role=annotate_string_field('admin'))\
-#                                     .filter(review_id=review_id)\
-#                                     .values('id',
-#                                             'time_create',
-#                                             'text',
-#                                             'username',
-#                                             'role',
-#                                             'guest_id')\
-#                                     # .order_by('time_create')
-    
-#     comments = user_comments.union(admin_comments)
+    comment_list = []
 
-#     if not comments:
-#         raise HTTPException(status_code=404)
-    
-#     comment_list = []
+    for comment in sorted(comments, key=lambda el: el.time_create):
+        comment_dict = {
+            'id': comment.pk,
+            'text': comment.text,
+        }
+        if comment.role == 'user':
+            if exchange_admin and str(comment.guest_id) == str(exchange_admin.user_id):
 
-#     for comment in sorted(comments, key=lambda el: el.get('time_create')):
+                comment_dict['role'] = CommentRoleEnum.exchenger
+                comment_dict['username'] = f'Администратор {review.exchange.name}'
+            else:
+                comment_dict['role'] = CommentRoleEnum.user
+                if comment.username is None:
+                    if comment.guest:
+                        if comment.guest.username:
+                            comment_dict['username'] = comment.guest.username
+                        elif comment.guest.first_name:
+                            comment_dict['username'] = comment.guest.first_name
+                        else:
+                            comment_dict['username'] = 'Гость'
+                    else:
+                        comment_dict['username'] = 'Гость'
+                else:
+                    comment_dict['username'] = 'Гость'
+        else:
+            comment_dict['role'] = CommentRoleEnum.admin
+            comment_dict['username'] = comment.username
 
-#         if comment.get('role') == 'user':
-#             if exchange_admin and str(comment.get('guest_id')) == str(exchange_admin.user_id):
+        date, time = comment.time_create.astimezone().strftime('%d.%m.%Y %H:%M').split()
+        comment_dict['comment_date'] = date
+        comment_dict['comment_time'] = time
 
-#                 comment['role'] = CommentRoleEnum.exchenger
-#                 comment['username'] = f'Администратор {review.exchange_name}'
-#             else:
-#                 if not comment.get('username'):
-#                     comment['username'] = f'Гость'
+        comment_list.append(comment_dict)
+    #
+    # print(len(connection.queries))
+    return comment_list
 
-#         date, time = comment.get('time_create').astimezone().strftime('%d.%m.%Y %H:%M').split()
-#         comment['comment_date'] = date
-#         comment['comment_time'] = time
-
-#         comment_list.append(comment)
-#     #
-#     # print(len(connection.queries))
-#     return comment_list
-
-
-# @review_router.post('/add_comment_by_review')
-# def add_comment_by_comment(comment: AddCommentSchema):
-#     check_exchage_marker(comment.exchange_marker)
-
-#     check_perms_for_adding_comment(review_id=comment.review_id,
-#                                   exchange_marker=comment.exchange_marker,
-#                                   user_id=comment.tg_id)
-
-#     # if not Guest.objects.filter(tg_id=comment.tg_id).exists():
-#     #     raise HTTPException(status_code=404,
-#     #                         detail='User don`t exist in db')
-    
-#     match comment.exchange_marker:
-#         case 'no_cash':
-#             comment_model = no_cash_models.Comment
-#         case 'cash':
-#             comment_model = cash_models.Comment
-#         case 'partner':
-#             comment_model = partner_models.Comment
-#         case 'both':
-#             comment_model = no_cash_models.Comment
-
-#     new_comment = {
-#         'review_id': comment.review_id,
-#         'guest_id': comment.tg_id,
-#         'grade': comment.grade,
-#         'text': comment.text,
-#         'time_create': datetime.now(),
-#     }
-
-#     try:
-#         new_comment_record = comment_model.objects.create(**new_comment)
-#     except Exception:
-#         raise HTTPException(status_code=400,
-#                             detail='Переданы некорректные данные')
-#     else:
-#         # уведомление об отзыве в бота уведомлений
-#         # async_to_sync(send_comment_notifitation)(new_comment_record.pk,
-#         #                                         comment.exchange_marker)
-
-#         return {'status': 'success'}
 
 @review_router.post('/add_comment_by_review')
 def new_add_comment_by_comment(comment: NewAddCommentSchema):
@@ -3515,41 +3638,34 @@ def new_add_comment_by_comment(comment: NewAddCommentSchema):
         async_to_sync(send_comment_notifitation)(new_comment_record.pk)
 
         return {'status': 'success'}
+    
+
+@new_review_router.post('/add_comment_by_review')
+def add_comment_by_comment(comment: NewAddCommentSchema):
+
+    check_perms_for_adding_comment(review_id=comment.review_id,
+                                   user_id=comment.tg_id)
+
+    new_comment = {
+        'review_id': comment.review_id,
+        'guest_id': comment.tg_id,
+        'grade': comment.grade, # зачем?
+        'text': comment.text,
+        'time_create': timezone.now(),
+    }
+
+    try:
+        new_comment_record = Comment.objects.create(**new_comment)
+    except Exception:
+        raise HTTPException(status_code=400,
+                            detail='Переданы некорректные данные')
+    else:
+        # уведомление об отзыве в бота уведомлений
+        async_to_sync(new_send_comment_notifitation)(new_comment_record.pk)
+
+        return {'status': 'success'}
 
 
-# @test_router.post('/add_comment_by_review')
-# def new_add_comment_by_comment(comment: NewAddCommentSchema):
-
-#     new_check_perms_for_adding_comment(review_id=comment.review_id,
-#                                        user_id=comment.tg_id)
-
-#     new_comment = {
-#         'review_id': comment.review_id,
-#         'guest_id': comment.tg_id,
-#         'grade': comment.grade,
-#         'text': comment.text,
-#         'time_create': datetime.now(),
-#     }
-
-#     try:
-#         new_comment_record = NewBaseComment.objects.create(**new_comment)
-#     except Exception:
-#         raise HTTPException(status_code=400,
-#                             detail='Переданы некорректные данные')
-#     else:
-#         # уведомление об отзыве в бота уведомлений
-#         async_to_sync(send_comment_notifitation)(new_comment_record.pk)
-
-#         return {'status': 'success'}
-
-
-# @review_router.get('/check_user_comment_permission')
-# def check_user_review_permission(exchange_marker: str,
-#                                  review_id: int,
-#                                  tg_id: int):
-#     return check_perms_for_adding_comment(review_id,
-#                                          exchange_marker,
-#                                          tg_id)
 @review_router.get('/check_user_comment_permission')
 def new_check_user_review_permission(review_id: int,
                                      tg_id: int):
@@ -3557,40 +3673,19 @@ def new_check_user_review_permission(review_id: int,
                                               tg_id)
 
 
-# @test_router.get('/check_user_comment_permission')
-# def new_check_user_review_permission(review_id: int,
-#                                      tg_id: int):
-#     return new_check_perms_for_adding_comment(review_id,
-#                                               tg_id)
+@new_review_router.get('/check_user_comment_permission')
+def check_user_review_permission(review_id: int,
+                                 tg_id: int):
+    return check_perms_for_adding_comment(review_id,
+                                              tg_id)
 
-# @common_router.get('/change_interval')
-# def change_interval_info_exchange_task(interval: int,
-#                                        period: str):
-#     from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
-#     period_dict = {
-#         'second': IntervalSchedule.SECONDS,
-#         'minute': IntervalSchedule.MINUTES,
-#         'day': IntervalSchedule.DAYS,
-#     }
-
-#     period = period_dict[period.lower()]
-
-#     task = PeriodicTask.objects.get(name='parse_actual_exchanges_info_task')
-
-#     interval = get_or_create_schedule(interval, period)
-
-#     task.interval = interval
-
-#     task.save()
-    
-###
 exchange_link_count_dict = {
     'cash': cash_models.ExchangeLinkCount,
     'no_cash': no_cash_models.ExchangeLinkCount,
     'partner': partner_models.ExchangeLinkCount,
 }
-###
+
 
 @common_router.post('/increase_link_count')
 def increase_link_count(data: ExchangeLinkCountSchema):
@@ -3630,84 +3725,52 @@ def increase_link_count(data: ExchangeLinkCountSchema):
     return {'status': 'success'}
 
 
+new_exchange_link_count_dict = {
+    'auto_cash': cash_models.NewExchangeLinkCount,
+    'auto_no_cash': no_cash_models.NewExchangeLinkCount,
+    'city': partner_models.NewExchangeLinkCount,
+    'country': partner_models.NewCountryExchangeLinkCount,
+    'no_cash': partner_models.NewNonCashExchangeLinkCount,
+}
 
-# @common_router.get('/sitemap_directions',
-#                    response_model=list[SiteMapDirectonSchema])
-# def get_directions_for_sitemap():
-#     # print(len(connection.queries))
-#     #valute_from
-#     #valute_to
-#     #city | None
-#     #exchange_marker
-#     no_cash_directions = no_cash_models.ExchangeDirection.objects\
-#                                 .select_related('exchange',
-#                                                 'direction')\
-#                                 .annotate(exchange_marker=annotate_string_field('no_cash'))\
-#                                 .values_list('direction__valute_from',
-#                                              'direction__valute_to',
-#                                              'exchange_marker',
-#                                              'exchange__name')\
-#                                 .order_by('direction_id')\
-#                                 .distinct('direction_id')
-    
-#     # print(no_cash_directions)
 
-#     cash_directions = cash_models.ExchangeDirection.objects\
-#                                 .select_related('exchange',
-#                                                 'direction',
-#                                                 'city')\
-#                                 .annotate(exchange_marker=annotate_string_field('cash'))\
-#                                 .values_list('direction__valute_from',
-#                                              'direction__valute_to',
-#                                              'exchange_marker',
-#                                              'city__code_name')\
-#                                 .order_by('direction_id')\
-#                                 .distinct('direction_id',
-#                                           'city_id')
-#     # print(cash_directions)
+@new_common_router.post('/increase_link_count')
+def new_increase_link_count(data: NewExchangeLinkCountSchema):
+    exchange_link_count: Union[no_cash_models.NewExchangeLinkCount,
+                               cash_models.NewExchangeLinkCount,
+                               partner_models.NewExchangeLinkCount,
+                               partner_models.NewCountryExchangeLinkCount,
+                               partner_models.NewNonCashExchangeLinkCount] = new_exchange_link_count_dict.get(data.direction_marker)
 
-#     partner_directions = partner_models.Direction.objects\
-#                                 .select_related('direction',
-#                                                 'city',
-#                                                 'city__city',
-#                                                 'city__exchange')\
-#                                 .annotate(exchange_marker=annotate_string_field('cash'))\
-#                                 .values_list('direction__valute_from',
-#                                              'direction__valute_to',
-#                                              'exchange_marker',
-#                                              'city__city__code_name')\
-#                                 .order_by('direction_id')\
-#                                 .distinct('direction_id',
-#                                           'city__city_id')
-    
-#     # print(partner_directions)
+    if not exchange_link_count:
+        raise HTTPException(status_code=400,
+                            detail='invalid marker')
 
-#     directions = no_cash_directions.union(cash_directions,
-#                                           partner_directions)
-    
-#     # print(len(list(directions)) == len(set(directions)))
+    check_user = Guest.objects.filter(tg_id=data.user_id)
 
-#     result = []
+    if not check_user.exists():
+        raise HTTPException(status_code=400,
+                            detail='invalid "user_id", User not found')
 
-#     for direction in directions:
-#         valute_from, valute_to, exchange_marker, city = direction
+    exchange_link_count_queryset = exchange_link_count.objects\
+                                                .filter(exchange_id=data.exchange_id,
+                                                        exchange_direction_id=data.exchange_direction_id,
+                                                        user_id=data.user_id)
+    if not exchange_link_count_queryset.exists():
+        try:
+            exchange_link_count_queryset = exchange_link_count.objects.create(user_id=data.user_id,
+                                                                              exchange_id=data.exchange_id,
+                                                                              exchange_direction_id=data.exchange_direction_id,
+                                                                              count=1)
+        except IntegrityError:
+            raise HTTPException(status_code=400,
+                                detail='Constraint error. This row already exists')
 
-#         #
-#         if exchange_marker == 'no_cash':
-#             city = None
-#         #
+    else:
+        exchange_link_count_queryset.update(count=F('count') + 1)
 
-#         result.append(
-#             {
-#                 'valute_from': valute_from,
-#                 'valute_to': valute_to,
-#                 'exchange_marker': exchange_marker,
-#                 'city': city,
-#             }
-#         )
+    return {'status': 'success'}
 
-#     # print(connection.queries)
-#     return result
 
 @common_router.get('/sitemap_directions',
                    response_model=NewSiteMapDirectonSchema)
@@ -3792,95 +3855,135 @@ def new_get_directions_for_sitemap(page: int,
     }
 
 
-# @test_router.get('/sitemap_directions',
-#                    response_model=NewSiteMapDirectonSchema)
-# def new_get_directions_for_sitemap(page: int,
-#                                element_on_page: int = None):
+@new_common_router.get('/sitemap_directions',
+                   response_model=NewSiteMapDirectonSchema2)
+def get_directions_for_sitemap(page: int,
+                               element_on_page: int = None):
     
-#     if element_on_page is not None:
-#         if element_on_page < 1:
-#             raise HTTPException(status_code=400,
-#                                 detail='Параметр "element_on_page" должен быть положительным числом')
+    if element_on_page is not None:
+        if element_on_page < 1:
+            raise HTTPException(status_code=400,
+                                detail='Параметр "element_on_page" должен быть положительным числом')
     
-#     no_cash_directions = no_cash_models.ExchangeDirection.objects\
-#                                 .select_related('exchange',
-#                                                 'direction')\
-#                                 .annotate(exchange_marker=annotate_string_field('no_cash'))\
-#                                 .values_list('direction__valute_from',
-#                                              'direction__valute_to',
-#                                              'exchange_marker',
-#                                              'exchange__name')\
-#                                 .order_by('direction_id')\
-#                                 .distinct('direction_id')
+    no_cash_directions = no_cash_models.NewExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction')\
+                                .filter(is_active=True,
+                                        exchange__is_active=True)\
+                                .annotate(direction_marker=annotate_string_field('no_cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'direction_marker',
+                                             'exchange__name')\
+                                .order_by()\
+                                .distinct('direction_id')
 
-#     cash_directions = cash_models.ExchangeDirection.objects\
-#                                 .select_related('exchange',
-#                                                 'direction',
-#                                                 'city')\
-#                                 .annotate(exchange_marker=annotate_string_field('cash'))\
-#                                 .values_list('direction__valute_from',
-#                                              'direction__valute_to',
-#                                              'exchange_marker',
-#                                              'city__code_name')\
-#                                 .order_by('direction_id')\
-#                                 .distinct('direction_id',
-#                                           'city_id')
+    cash_directions = cash_models.NewExchangeDirection.objects\
+                                .select_related('exchange',
+                                                'direction',
+                                                'city')\
+                                .filter(is_active=True,
+                                        exchange__is_active=True)\
+                                .annotate(direction_marker=annotate_string_field('cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'direction_marker',
+                                             'city__code_name')\
+                                .order_by()\
+                                .distinct('direction_id',
+                                          'city_id')
 
-#     partner_directions = partner_models.Direction.objects\
-#                                 .select_related('direction',
-#                                                 'city',
-#                                                 'city__city',
-#                                                 'city__exchange')\
-#                                 .annotate(exchange_marker=annotate_string_field('cash'))\
-#                                 .values_list('direction__valute_from',
-#                                              'direction__valute_to',
-#                                              'exchange_marker',
-#                                              'city__city__code_name')\
-#                                 .order_by('direction_id')\
-#                                 .distinct('direction_id',
-#                                           'city__city_id')
+    partner_city_directions = partner_models.NewDirection.objects\
+                                .select_related('direction',
+                                                'exchange',
+                                                'city',
+                                                'city__city')\
+                                .filter(is_active=True,
+                                        exchange__is_active=True)\
+                                .annotate(direction_marker=annotate_string_field('cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'direction_marker',
+                                             'city__city__code_name')\
+                                .order_by()\
+                                .distinct('direction_id',
+                                          'city__city_id')
+    partner_noncash_directions = partner_models.NewNonCashDirection.objects\
+                                .select_related('exchange',
+                                                'direction')\
+                                .filter(is_active=True,
+                                        exchange__is_active=True)\
+                                .annotate(direction_marker=annotate_string_field('no_cash'))\
+                                .values_list('direction__valute_from',
+                                             'direction__valute_to',
+                                             'direction_marker',
+                                             'exchange__name')\
+                                .order_by()\
+                                .distinct('direction_id')
+    
+    partner_country_directions = partner_models.NewCountryDirection.objects\
+                                .select_related('direction',
+                                                'exchange',
+                                                'country',
+                                                'country__country')\
+                                .filter(is_active=True,
+                                        exchange__is_active=True)\
+                                .prefetch_related('country__country__cities',
+                                                  'country__exclude_cities')\
+                                .annotate(direction_marker=annotate_string_field('cash'))\
+                                .order_by()\
 
-#     directions = no_cash_directions.union(cash_directions,
-#                                           partner_directions)
+    partner_country_direction_set = set()
+    for country_direction in partner_country_directions:
+        cities = [city.code_name for city in country_direction.country.country.cities.all()]
+        exclude_cities = {city.code_name for city in country_direction.country.exclude_cities.all()}
+        
+        for city in cities:
+            if city not in exclude_cities:
+                direction_tuple = (
+                    country_direction.direction.valute_from_id,
+                    country_direction.direction.valute_to_id,
+                    country_direction.direction_marker,
+                    city,
+                )
+                if direction_tuple not in partner_country_direction_set:
+                    partner_country_direction_set.add(direction_tuple)
 
-#     result = []
+    directions = no_cash_directions.union(cash_directions,
+                                          partner_city_directions,
+                                          partner_noncash_directions)
 
-#     pages = 1 if element_on_page is None else ceil(len(directions) / element_on_page)
+    result = []
 
-#     if element_on_page:
-#         offset = (page - 1) * element_on_page
-#         limit = offset + element_on_page
-#         directions = directions[offset:limit]
+    all_directions = list(set(directions) | partner_country_direction_set)
 
-#     for direction in directions:
-#         valute_from, valute_to, exchange_marker, city = direction
+    pages = 1 if element_on_page is None else ceil(len(all_directions) / element_on_page)
 
-#         if exchange_marker == 'no_cash':
-#             city = None
+    # print(len(all_directions))
 
-#         result.append(
-#             {
-#                 'valute_from': valute_from,
-#                 'valute_to': valute_to,
-#                 'exchange_marker': exchange_marker,
-#                 'city': city,
-#             }
-#         )
+    if element_on_page:
+        offset = (page - 1) * element_on_page
+        limit = offset + element_on_page
+        all_directions = all_directions[offset:limit]
 
-#     return {
-#         'page': page,
-#         'pages': pages,
-#         'element_on_page': element_on_page,
-#         'directions': result,
-#     }
+    for direction in all_directions:
+        valute_from, valute_to, direction_marker, city = direction
 
+        if direction_marker == 'no_cash':
+            city = None
 
-# @common_router.get('/test_logentry')
-# def test_log_entry():
-#     w = LogEntry.objects.all()[:5]
-#     for q in w:
-#         print(q)
-#         print(q.__dict__)
-#         print(q.action_time)
-    # print(w.content_type.get_object_for_this_type(pk=w.object_id))
-    # print(w.objects)
+        result.append(
+            {
+                'valute_from': valute_from,
+                'valute_to': valute_to,
+                'direction_marker': direction_marker,
+                'city': city,
+            }
+        )
+
+    return {
+        'page': page,
+        'pages': pages,
+        'element_on_page': element_on_page,
+        'directions': result,
+    }

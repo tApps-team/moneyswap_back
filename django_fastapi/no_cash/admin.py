@@ -15,7 +15,9 @@ from no_cash.models import (Exchange,
                             Direction,
                             ExchangeDirection,
                             PopularDirection,
-                            ExchangeLinkCount)
+                            ExchangeLinkCount,
+                            NewDirection,
+                            NewExchangeDirection)
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
                                     manage_periodic_task_for_update,
                                     manage_periodic_task_for_parse_black_list)
@@ -214,6 +216,11 @@ class ExchangeAdmin(BaseExchangeAdmin):
 class DirectionAdmin(BaseDirectionAdmin):
     pass
 
+
+@admin.register(NewDirection)
+class DirectionAdmin(BaseDirectionAdmin):
+    pass
+
 # Кастомный фильтр для ExchangeDirection для отпимизации sql запросов ( решение для N+1 prodlem ) 
 class CustomDirectionFilter(admin.SimpleListFilter):
     title = 'Direction'
@@ -234,6 +241,24 @@ class CustomDirectionFilter(admin.SimpleListFilter):
 #Отображение готовых направлений в админ панели
 @admin.register(ExchangeDirection)
 class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
+    list_filter = (
+        'exchange',
+        CustomDirectionFilter,
+    )
+    def get_display_name(self, obj):
+        return f'{obj.exchange} ({obj.direction})'
+    
+    get_display_name.short_description = 'Название'
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange',
+                                                            'direction',
+                                                            'direction__valute_to',
+                                                            'direction__valute_from')
+    
+
+@admin.register(NewExchangeDirection)
+class NewExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     list_filter = (
         'exchange',
         CustomDirectionFilter,

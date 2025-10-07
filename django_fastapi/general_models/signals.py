@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.admin.models import LogEntry
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from partners.models import CustomUser
 
@@ -14,10 +15,21 @@ from .models import (ExchangeAdmin,
                      Valute,
                      CustomOrder,
                      NewBaseReview,
-                     NewBaseAdminComment)
+                     NewBaseAdminComment,
+                     Exchanger,
+                     Review,
+                     Comment,
+                     AdminComment,
+                     NewExchangeAdmin)
+from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.base import get_actual_datetime
 from .utils.periodic_tasks import request_to_bot_swift_sepa
-from .utils.endpoints import send_comment_notifitation_to_exchange_admin, send_comment_notifitation_to_review_owner, send_review_notifitation_to_exchange_admin
+from .utils.endpoints import (send_comment_notifitation_to_exchange_admin,
+                              send_comment_notifitation_to_review_owner,
+                              send_review_notifitation_to_exchange_admin,
+                              new_send_comment_notifitation_to_exchange_admin,
+                              new_send_comment_notifitation_to_review_owner,
+                              new_send_review_notifitation_to_exchange_admin)
 
 
 #Сигнал для автоматической установки английского названия
@@ -98,6 +110,43 @@ def send_notification_after_add_review(sender, instance, created, **kwargs):
             pass
 
 
+@receiver(pre_save, sender=Review)
+def new_change_time_create_for_review(sender, instance, **kwargs):
+    if instance.time_create is None:
+        instance.time_create = timezone.now()
+
+
+@receiver(pre_save, sender=Comment)
+def new_change_time_create_for_comment(sender, instance, **kwargs):
+    if instance.time_create is None:
+        instance.time_create = timezone.now()
+
+
+@receiver(pre_save, sender=AdminComment)
+def new_change_time_create_for_admin_comment(sender, instance, **kwargs):
+    if instance.time_create is None:
+        instance.time_create = timezone.now()
+
+
+@receiver(post_save, sender=Review)
+def new_send_notification_after_add_review(sender, instance, created, **kwargs):
+    
+    if not created and instance.moderation == True:
+
+        exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=instance.exchange_id)\
+                                                .first()
+        
+        if exchange_admin:
+            user_id = exchange_admin.user_id
+            exchange_id = instance.exchange_id
+
+            # send notification to admin user in chat with bot
+            async_to_sync(new_send_review_notifitation_to_exchange_admin)(user_id,
+                                                                      exchange_id,
+                                                                      instance.pk)
+            pass
+
+
 @receiver(post_save, sender=NewBaseComment)
 def send_notification_after_add_comment(sender, instance, created, **kwargs):
 
@@ -137,13 +186,33 @@ def send_notification_after_add_comment(sender, instance, created, **kwargs):
                                                                  exchange_marker,
                                                                  instance.review_id)
 
-#Сигнал для создания связующей модели (пользователь + наличный обменник)
-#при создании модели пользователя админ панели
-#и ограничения прав доступа созданного пользователя
-# @receiver(post_save, sender=User)
-# def create_custom_user_for_user(sender, instance, created, **kwargs):
-#     if created:
-#         if not instance.is_superuser:
-#             moderator_group = Group.objects.get(name='Партнёры')
-#             instance.groups.add(moderator_group)
-#             CustomUser.objects.create(user=instance)
+
+@receiver(post_save, sender=Comment)
+def new_send_notification_after_add_comment(sender, instance, created, **kwargs):
+    
+    if not created and instance.moderation == True:
+
+        exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.review.exchange_id)\
+                                                .first()
+        
+        if exchange_admin:
+            user_id = exchange_admin.user_id
+            exchange_id = exchange_admin.exchange_id
+
+            # send notification to admin user in chat with bot
+            async_to_sync(new_send_comment_notifitation_to_exchange_admin)(user_id,
+                                                                           exchange_id,
+                                                                           instance.review_id)
+            
+        # send notification to review owner in chat with bot
+        async_to_sync(new_send_comment_notifitation_to_review_owner)(instance.review.guest_id,
+                                                                     exchange_id,
+                                                                     instance.review_id)
+
+
+@receiver(post_save, sender=Exchanger)
+def try_create_periodic_task_for_parse_directions(sender, instance, created, **kwargs):
+    if created and instance.xml_url is not None:
+        print(f'CREATING PERIODIC TASK TO PARSE DIRECTIONS FOR {instance.name}')
+        manage_periodic_task_for_parse_directions(instance.pk,
+                                                  instance.period_for_create)

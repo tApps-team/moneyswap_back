@@ -6,7 +6,13 @@ from django.db.models import CharField, Value, IntegerField
 
 from django.utils import timezone
 
+from fastapi import APIRouter
+
 from general_models.models import PartnerTimeUpdate
+
+
+v2_api_router = APIRouter(prefix='/v2',
+                          tags=['Новая версия API'])
 
 
 UNIT_TIME_CHOICES = {

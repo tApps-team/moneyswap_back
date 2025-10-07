@@ -1,4 +1,5 @@
 import re
+from time import time
 from urllib.parse import urlparse
 from typing import Any, List, Literal
 from collections import defaultdict
@@ -9,6 +10,7 @@ from django.conf import settings
 from django.db import connection, models
 from django.db.models import Count, Q, QuerySet, Prefetch, Sum, OuterRef, Subquery, Value, F, IntegerField
 from django.db.models.functions import Coalesce
+from django.utils import timezone
 
 from fastapi import HTTPException
 
@@ -17,19 +19,42 @@ import cash.models as cash_models
 import partners.models as partner_models
 
 from cash.models import ExchangeDirection as CashExDir, City, Country, Direction as CashDirection
-from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel, SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel, SpecialCashDirectionMultiWithAmlModel, SpecificCitySchema,
+from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                          NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                          SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                          NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                          SpecialCashDirectionMultiWithAmlModel,
+                          NewSpecialCashDirectionMultiWithAmlModel,
+                          SpecificCitySchema,
                           SpecificCountrySchema,
                           RuEnCityModel,
                           SpecialCashDirectionMultiPrtnerModel,
                           SpecialCashDirectionMultiWithLocationModel,
+                          NewSpecialCashDirectionMultiWithLocationModel,
                           SpecialCashDirectionMultiModel,
                           SpecialCashDirectionMultiPrtnerWithLocationModel,
                           SpecialCashDirectionMultiPrtnerWithExchangeRatesModel)
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
-from general_models.models import ExchangeAdmin, Guest, NewBaseComment, Valute, en_type_valute_dict, BaseExchange, NewBaseReview
-from general_models.schemas import (SpecialDirectionMultiWithAmlModel, SpecialPartnerNoCashDirectionSchema, ValuteListSchema1,
+from general_models.models import (Comment,
+                                   ExchangeAdmin,
+                                   Review,
+                                   Guest,
+                                   NewBaseComment,
+                                   Valute,
+                                   en_type_valute_dict,
+                                   BaseExchange,
+                                   NewBaseReview,
+                                   NewValute,
+                                   Exchanger,
+                                   NewExchangeAdmin)
+from general_models.schemas import (SpecialDirectionMultiWithAmlModel,
+                                    NewSpecialDirectionMultiWithAmlModel,
+                                    SpecialPartnerNoCashDirectionSchema,
+                                    NewSpecialPartnerNoCashDirectionSchema,
+                                    ValuteListSchema1,
                                     ValuteListSchema2,
+                                    NewValuteListSchema,
                                     ValuteModel,
                                     EnValuteModel,
                                     MultipleName,
@@ -96,6 +121,39 @@ def get_base_url(url: str | None) -> str:
 #         'neutral': neutral_review_count_filter,
 #         'negative': negative_review_count_filter,
 #     }
+
+def get_review_count_dict():
+    # '''
+    # Возвращает словарь вида {'exchange_id': {'positive_count': int,'neutral_count': int,'negative_count': int,},}
+    # '''
+    """
+    Возвращает кол-во отзывов обменников разделенных по grade
+
+    Returns:
+        dict: Словарь вида:
+            {
+                "exchange_id": {
+                    "positive_count": int,
+                    "neutral_count": int,
+                    "negative_count": int,
+                },
+                ...
+            }
+    """
+    review_counts = (
+        Review.objects
+        .filter(moderation=True)
+        .values('exchange_id')
+        .annotate(
+            positive_count=Count('id', filter=Q(grade='1') & Q(review_from__in=('moneyswap', 'ai'))),
+            neutral_count=Count('id', filter=Q(grade='0') & Q(review_from__in=('moneyswap', 'ai'))),
+            negative_count=Count('id', filter=Q(grade='-1') & Q(review_from__in=('moneyswap', 'ai'))),
+        )
+    )
+
+    review_map = {r['exchange_id']: r for r in review_counts}
+
+    return review_map
 
 
 def get_reviews_count_filters(marker: Literal['exchange',
@@ -305,6 +363,55 @@ def new_get_reviews_count_filters(marker: Literal['exchange',
     negative_review_count = Subquery(negative_reviews_count_subquery, output_field=models.IntegerField())
 
 
+
+    return {
+        'positive': Coalesce(positive_review_count, Value(0)),
+        'neutral': Coalesce(neutral_review_count, Value(0)),
+        'negative': Coalesce(negative_review_count, Value(0)),
+    }
+
+
+def new_get_reviews_count_filters_2(marker: Literal['exchange',
+                                                    'exchange_direction',
+                                                    'partner_direction']):
+    match marker:
+        case 'exchange':
+            outref_name = 'pk'
+        case 'partner_direction':
+            outref_name = 'city__exchange_id'
+        case 'partner_country_direction':
+            outref_name = 'country__exchange_id'
+        case 'exchange_direction':
+            outref_name = 'exchange_id'
+
+    positive_reviews_count_subquery = Review.objects.filter(
+        exchange_id=OuterRef(outref_name),
+        moderation=True,
+        grade='1',
+        review_from__in=('moneyswap', 'ai'),
+    ).values('exchange_id').annotate(
+        count=Count('id')
+    ).values('count')[:1]
+    neutral_reviews_count_subquery = Review.objects.filter(
+        exchange_id=OuterRef(outref_name),
+        moderation=True,
+        grade='0',
+        review_from__in=('moneyswap', 'ai'),
+    ).values('exchange_id').annotate(
+        count=Count('id')
+    ).values('count')[:1]
+    negative_reviews_count_subquery = Review.objects.filter(
+        exchange_id=OuterRef(outref_name),
+        moderation=True,
+        grade='-1',
+        review_from__in=('moneyswap', 'ai'),
+    ).values('exchange_id').annotate(
+        count=Count('id')
+    ).values('count')[:1]
+            
+    positive_review_count = Subquery(positive_reviews_count_subquery, output_field=models.IntegerField())
+    neutral_review_count = Subquery(neutral_reviews_count_subquery, output_field=models.IntegerField())
+    negative_review_count = Subquery(negative_reviews_count_subquery, output_field=models.IntegerField())
 
     return {
         'positive': Coalesce(positive_review_count, Value(0)),
@@ -879,38 +986,88 @@ def get_exchange_dircetions_dict_tuple():
     return result_dict
 
 
+def new_get_exchange_directions_count_dict(exchange_list: list[Exchanger],
+                                           _pk: int = None):
 
-    # direction_count_subquery = no_cash_models.ExchangeDirection.objects.filter(
-    #     exchange_id=OuterRef('id'),
-    #     is_active=True,
-    # ).values('exchange_id').annotate(
-    #     direction_count=Coalesce(Count('id'), Value(0))
-    # ).values('direction_count')
-    # direction_count_subquery = cash_models.ExchangeDirection.objects.filter(
-    #     exchange_id=OuterRef('id'),
-    #     is_active=True,
-    # ).values('exchange_id').annotate(
-    #     direction_count=Coalesce(Count('id'), Value(0))
-    # ).values('direction_count')
-    # city_direction_count_subquery = partner_models.Direction.objects.select_related(
-    #     'city',
-    #     'city__exchange',
-    # ).filter(
-    #     city__exchange__pk=OuterRef('id'),
-    #     is_active=True,
-    # ).values('city__exchange__pk').annotate(
-    #     direction_count=Coalesce(Count('id'), Value(0))
-    # ).values('direction_count')
+    exchange_direction_count_dict = {exchanger['pk']: 0 \
+                                     for exchanger in exchange_list}
 
-    # country_direction_count_subquery = partner_models.CountryDirection.objects.select_related(
-    #     'country',
-    #     'country__exchange',
-    # ).filter(
-    #     country__exchange__pk=OuterRef('id'),
-    #     is_active=True,
-    # ).values('country__exchange__pk').annotate(
-    #     direction_count=Coalesce(Count('id'), Value(0))
-    # ).values('direction_count')
+    no_cash_exchange_directions =  no_cash_models.NewExchangeDirection.objects\
+        .select_related('exchange')\
+        .filter(is_active=True, exchange__is_active=True)\
+        .values("exchange_id")\
+        .annotate(total=Count("id"))\
+        .values_list("exchange_id", "total")
+
+    cash_exchange_directions = cash_models.NewExchangeDirection.objects\
+        .select_related('exchange')\
+        .filter(is_active=True, exchange__is_active=True)\
+        .values("exchange_id")\
+        .annotate(total=Count("id"))\
+        .values_list("exchange_id", "total")\
+
+    partner_city_exchange_directions = partner_models.NewDirection.objects\
+        .select_related('city__exchange')\
+        .filter(is_active=True,
+                city__exchange__is_active=True)\
+        .values("city__exchange_id")\
+        .annotate(total=Count("id"))\
+        .values_list("city__exchange_id", "total")\
+
+    partner_country_exchange_directions = partner_models.NewCountryDirection.objects\
+        .select_related('country__exchange')\
+        .filter(is_active=True,
+                country__exchange__is_active=True)\
+        .values("country__exchange_id")\
+        .annotate(total=Count("id"))\
+        .values_list("country__exchange_id", "total")\
+
+    partner_noncash_exchange_directions = partner_models.NewNonCashDirection.objects\
+        .select_related('exchange')\
+        .filter(is_active=True, exchange__is_active=True)\
+        .values("exchange_id")\
+        .annotate(total=Count("id"))\
+        .values_list("exchange_id", "total")\
+
+    if _pk:
+        no_cash_exchange_directions = no_cash_exchange_directions.filter(exchange_id=_pk)
+        cash_exchange_directions = cash_exchange_directions.filter(exchange_id=_pk)
+        partner_city_exchange_directions = partner_city_exchange_directions.filter(city__exchange_id=_pk)
+        partner_country_exchange_directions = partner_country_exchange_directions.filter(country__exchange_id=_pk)
+        partner_noncash_exchange_directions = partner_noncash_exchange_directions.filter(exchange_id=_pk)
+
+    no_cash_exchange_directions = dict(no_cash_exchange_directions)
+    cash_exchange_directions = dict(cash_exchange_directions)
+    partner_city_exchange_directions = dict(partner_city_exchange_directions)
+    partner_country_exchange_directions = dict(partner_country_exchange_directions)
+    partner_noncash_exchange_directions = dict(partner_noncash_exchange_directions)
+
+
+    for exchange_id in exchange_direction_count_dict.keys():
+        exchange_direction_count_dict[exchange_id] += no_cash_exchange_directions.get(exchange_id, 0)
+        exchange_direction_count_dict[exchange_id] += cash_exchange_directions.get(exchange_id, 0)
+        exchange_direction_count_dict[exchange_id] += partner_city_exchange_directions.get(exchange_id, 0)
+        exchange_direction_count_dict[exchange_id] += partner_country_exchange_directions.get(exchange_id, 0)
+        exchange_direction_count_dict[exchange_id] += partner_noncash_exchange_directions.get(exchange_id, 0)
+
+    if not _pk:
+        return exchange_direction_count_dict
+    
+    else:
+        no_cash_sigment = bool(no_cash_exchange_directions or partner_noncash_exchange_directions)
+        
+        cash_sigment = bool(cash_exchange_directions or partner_city_exchange_directions or partner_country_exchange_directions)
+        
+        if no_cash_sigment and cash_sigment:
+            segment_marker = 'both'
+        elif no_cash_sigment:
+            segment_marker = 'no_cash'
+        elif cash_sigment:
+            segment_marker = 'cash'
+        else:
+            segment_marker = None
+
+        return exchange_direction_count_dict, segment_marker
 
 
 def add_location_to_exchange_direction(exchange_direction: dict[str, Any],
@@ -938,6 +1095,40 @@ def add_location_to_exchange_direction(exchange_direction: dict[str, Any],
     city_model.__dict__['country_info'] = country_info
 
     location = SpecificCitySchema.model_construct(**city_model.__dict__)
+    exchange_direction['location'] = location
+
+
+def new_add_location_to_exchange_direction(exchange_direction: dict[str, Any]):
+    
+    if exchange_direction['direction_marker'] in ('city', 'country'):
+
+        country_model = exchange_direction['country_model']
+        city_model = exchange_direction['city_model']
+
+    else:
+        country_model = exchange_direction['city'].country
+        city_model = exchange_direction['city']
+
+    # country_multiple_name = MultipleName.model_construct(**country_model.__dict__)
+    country_multiple_name = MultipleName(name=country_model.name,
+                                         en_name=country_model.en_name)
+
+    country_flag = try_generate_icon_url(country_model)
+    country_info = SpecificCountrySchema(name=country_multiple_name,
+                                         icon_url=country_flag)
+    # city_multiple_name = MultipleName.model_construct(**city_model.__dict__)
+    city_multiple_name = MultipleName(name=city_model.name,
+                                         en_name=city_model.en_name)
+
+    city_dict = {
+        'pk': city_model.pk,
+        'name': city_multiple_name,
+        'en_name': city_model.en_name,
+        'code_name': city_model.code_name,
+        'country_info': country_info,
+    }
+
+    location = SpecificCitySchema.model_construct(**city_dict)
     exchange_direction['location'] = location
 
 
@@ -1101,16 +1292,33 @@ def test_get_schema_model_by_exchange_marker_with_aml(exchange_marker: Literal['
                                                              else SpecialCashDirectionMultiWithLocationModel
         case 'partner':
             if is_no_cash:
-                # pass
                 schema_model = SpecialPartnerNoCashDirectionSchema
             else:
-                # schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesModel if not with_location\
-                #                                                  else SpecialCashDirectionMultiPrtnerWithLocationModel
                 schema_model = SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel if not with_location\
                                                                 else SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
+    
+    return schema_model
 
-            # print(schema_model)
-            # SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
+
+def get_schema_model_by_exchange_marker_with_aml(direction_marker: Literal['auto_cash',
+                                                                           'auto_noncash',
+                                                                           'city',
+                                                                           'country',
+                                                                           'no_cash'],
+                                                                           with_location: bool,
+                                                                           is_no_cash: bool = False):
+    match direction_marker:
+        case 'auto_noncash':
+            schema_model = NewSpecialDirectionMultiWithAmlModel
+        case 'auto_cash':
+            schema_model = NewSpecialCashDirectionMultiWithAmlModel if not with_location\
+                                                             else NewSpecialCashDirectionMultiWithLocationModel
+        case 'city' | 'country' | 'no_cash':
+            if is_no_cash:
+                schema_model = NewSpecialPartnerNoCashDirectionSchema
+            else:
+                schema_model = NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel if not with_location\
+                                                                else NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel
     
     return schema_model
 
@@ -1320,6 +1528,204 @@ def get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
     #                  key=lambda query: (-query.exchange.is_vip,
     #                                     -query.out_count,
     #                                     query.in_count))
+
+
+def new_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
+                                        valute_from: str,
+                                        valute_to: str,
+                                        city: str = None,
+                                        with_location: bool = False,
+                                        is_no_cash: bool = False):
+    '''
+    Возвращает список готовых направлений с необходимыми данными
+    '''
+
+    if city and with_location:
+        raise AttributeError('сity and with_location args can`t use together')
+    
+    reviews_dict = get_review_count_dict()
+
+    direction_list = []
+
+    partner_link_pattern = f'&cur_from={valute_from}&cur_to={valute_to}'
+    
+    if city:
+        partner_link_pattern += f'&city={city}'
+
+    # start_time = time()
+
+    for _id, query in enumerate(queries, start=1):
+        _partner_link: str = query.exchange.partner_link
+       
+        if query.exchange.xml_url:
+            if _partner_link.startswith('https://t.me'):
+                pass
+            else:
+                partner_link = get_valid_partner_link(_partner_link)
+                query.exchange.__dict__['partner_link'] = partner_link + partner_link_pattern
+
+                if with_location:
+                    query.exchange.__dict__['partner_link'] += f'&city={query.city.code_name}'
+
+        valute_from_obj = query.direction.valute_from
+        icon_url_valute_from = try_generate_icon_url(valute_from_obj)
+        type_valute_from = valute_from_obj.type_valute
+
+        valute_to_obj = query.direction.valute_to
+        icon_url_valute_to = try_generate_icon_url(valute_to_obj)
+        type_valute_to = valute_to_obj.type_valute
+
+        exchange_direction = query.__dict__ | query.exchange.__dict__
+        exchange_direction['id'] = _id
+        exchange_direction['exchange_direction_id'] = query.pk
+        exchange_direction['exchange_id'] = query.exchange.pk
+        # print('CHECK!!!', exchange_direction)
+
+        if count_dict := reviews_dict.get(query.exchange.pk):
+            positive_count = count_dict['positive_count']
+            neutral_count = count_dict['neutral_count']
+            negative_count = count_dict['negative_count']
+        else:
+            positive_count = neutral_count = negative_count = 0
+
+        exchange_direction['review_count'] = ReviewCountSchema(
+            positive=positive_count,
+            neutral=neutral_count,
+            negative=negative_count,
+            )
+
+        exchange_direction['name'] = MultipleName(name=exchange_direction['name'],
+                                                  en_name=exchange_direction['en_name'])
+        exchange_direction['valute_from'] = valute_from
+        exchange_direction['icon_valute_from'] = icon_url_valute_from
+        exchange_direction['type_valute_from'] = type_valute_from
+
+        exchange_direction['valute_to'] = valute_to
+        exchange_direction['icon_valute_to'] = icon_url_valute_to
+        exchange_direction['type_valute_to'] = type_valute_to
+
+        if not exchange_direction.get('info'):
+            exchange_direction['info'] = InfoSchema(high_aml=exchange_direction['high_aml'])
+
+        if with_location:
+            new_add_location_to_exchange_direction(exchange_direction,
+                                                   query)
+            
+        round_valute_values(exchange_direction)
+
+        schema_model = get_schema_model_by_exchange_marker_with_aml(exchange_direction['direction_marker'],
+                                                                    with_location,
+                                                                    is_no_cash=is_no_cash)
+
+        exchange_direction = schema_model(**exchange_direction)
+
+        direction_list.append(exchange_direction)
+
+    # print(f'time generating direction list {time() - start_time} sec | {len(direction_list)} el')
+
+    return sorted(direction_list,
+                     key=lambda el: (-el.is_vip,
+                                     -el.out_count,
+                                     el.in_count))
+
+
+def new_get_exchange_direction_list_with_aml_and_location(directions: List[dict],
+                                        valute_from: str,
+                                        valute_to: str,
+                                        city: str = None,
+                                        with_location: bool = False,
+                                        is_no_cash: bool = False):
+    '''
+    Возвращает список готовых направлений с необходимыми данными
+    '''
+
+    if city and with_location:
+        raise AttributeError('сity and with_location args can`t use together')
+    
+    reviews_dict = get_review_count_dict()
+
+    direction_list = []
+
+    partner_link_pattern = f'&cur_from={valute_from}&cur_to={valute_to}'
+    
+    if city:
+        partner_link_pattern += f'&city={city}'
+
+    start_time = time()
+
+    for _id, exchange_direction in enumerate(directions, start=1):
+        _partner_link: str = exchange_direction['exchange'].partner_link
+       
+        if exchange_direction['exchange'].xml_url:
+            if _partner_link.startswith('https://t.me'):
+                exchange_direction['partner_link'] = _partner_link
+            else:
+                partner_link = get_valid_partner_link(_partner_link)
+                exchange_direction['partner_link'] = partner_link + partner_link_pattern
+
+                if with_location:
+                    exchange_direction['partner_link'] += f'&city={exchange_direction["city"].code_name}'
+        else:
+            exchange_direction['partner_link'] = _partner_link
+
+        valute_from_obj = exchange_direction['direction'].valute_from
+        icon_url_valute_from = try_generate_icon_url(valute_from_obj)
+        type_valute_from = valute_from_obj.type_valute
+
+        valute_to_obj = exchange_direction['direction'].valute_to
+        icon_url_valute_to = try_generate_icon_url(valute_to_obj)
+        type_valute_to = valute_to_obj.type_valute
+
+        # exchange_direction = query.__dict__ | query.exchange.__dict__
+        exchange_direction['id'] = _id
+        # exchange_direction['exchange_direction_id'] = query.pk
+        exchange_direction['exchange_id'] = exchange_direction['exchange'].pk
+
+        if count_dict := reviews_dict.get(exchange_direction['exchange'].pk):
+            positive_count = count_dict['positive_count']
+            neutral_count = count_dict['neutral_count']
+            negative_count = count_dict['negative_count']
+        else:
+            positive_count = neutral_count = negative_count = 0
+
+        exchange_direction['review_count'] = ReviewCountSchema(
+            positive=positive_count,
+            neutral=neutral_count,
+            negative=negative_count,
+            )
+
+        exchange_direction['name'] = MultipleName(name=exchange_direction['exchange'].name,
+                                                  en_name=exchange_direction['exchange'].en_name)
+        exchange_direction['valute_from'] = valute_from
+        exchange_direction['icon_valute_from'] = icon_url_valute_from
+        exchange_direction['type_valute_from'] = type_valute_from
+
+        exchange_direction['valute_to'] = valute_to
+        exchange_direction['icon_valute_to'] = icon_url_valute_to
+        exchange_direction['type_valute_to'] = type_valute_to
+
+        if not exchange_direction.get('info'):
+            exchange_direction['info'] = InfoSchema(high_aml=exchange_direction['exchange'].high_aml)
+
+        if with_location:
+            new_add_location_to_exchange_direction(exchange_direction)
+            
+        round_valute_values(exchange_direction)
+
+        schema_model = get_schema_model_by_exchange_marker_with_aml(exchange_direction['direction_marker'],
+                                                                    with_location,
+                                                                    is_no_cash=is_no_cash)
+
+        exchange_direction = schema_model(**exchange_direction)
+
+        direction_list.append(exchange_direction)
+
+    # print(f'time generating direction list {time() - start_time} sec | {len(direction_list)} el')
+
+    return sorted(direction_list,
+                     key=lambda el: (-el.is_vip,
+                                     -el.out_count,
+                                     el.in_count))
 
 
 
@@ -1632,33 +2038,33 @@ def get_exchange_directions(exchange: QuerySet[BaseExchange],
     return exchange_directions
 
 
-def get_valute_json(queries: List[NoCashExDir | CashExDir]):
+# def get_valute_json(queries: List[NoCashExDir | CashExDir]):
     
-    '''
-    Возвращает словарь валют с необходимыми данными 
-    '''
+#     '''
+#     Возвращает словарь валют с необходимыми данными 
+#     '''
 
-    # valute_name_list = set(map(lambda query: query[0], queries))
-    valutes = Valute.objects.filter(code_name__in=queries).all()
+#     # valute_name_list = set(map(lambda query: query[0], queries))
+#     valutes = Valute.objects.filter(code_name__in=queries).all()
     
-    json_dict = {'ru': dict(), 'en': dict()}
-    # json_dict = defaultdict(dict)
+#     json_dict = {'ru': dict(), 'en': dict()}
+#     # json_dict = defaultdict(dict)
 
-    # json_dict.fromkeys(default_dict_keys)
+#     # json_dict.fromkeys(default_dict_keys)
 
-    for id, valute in enumerate(valutes, start=1):
-        icon_url = try_generate_icon_url(valute)
-        valute.icon_url = icon_url
-        valute.id = id
+#     for id, valute in enumerate(valutes, start=1):
+#         icon_url = try_generate_icon_url(valute)
+#         valute.icon_url = icon_url
+#         valute.id = id
 
-        json_dict['ru'][valute.type_valute] = json_dict['ru'].get(valute.type_valute, [])\
-                                                 + [ValuteModel(**valute.__dict__)]
+#         json_dict['ru'][valute.type_valute] = json_dict['ru'].get(valute.type_valute, [])\
+#                                                  + [ValuteModel(**valute.__dict__)]
         
-        en_type_valute = en_type_valute_dict[valute.type_valute]
-        json_dict['en'][en_type_valute] = json_dict['en'].get(en_type_valute, [])\
-                                                 + [EnValuteModel(**valute.__dict__)]
+#         en_type_valute = en_type_valute_dict[valute.type_valute]
+#         json_dict['en'][en_type_valute] = json_dict['en'].get(en_type_valute, [])\
+#                                                  + [EnValuteModel(**valute.__dict__)]
 
-    return json_dict
+#     return json_dict
 
 
 def get_valute_json_2(queries: List[NoCashExDir | CashExDir]):
@@ -1780,6 +2186,43 @@ def get_valute_json_3(queries: List[NoCashExDir | CashExDir]):
     return res
 
 
+def get_valute_json(queries: List[NoCashExDir | CashExDir]):
+    
+    '''
+    Возвращает словарь валют с необходимыми данными 
+    '''
+
+    valutes = NewValute.objects.filter(code_name__in=queries)\
+                            .order_by('-is_popular', 'name')\
+                            .all()
+    
+    json_dict = {}
+    json_dict = defaultdict(list)
+
+    for valute in valutes:
+        icon_url = try_generate_icon_url(valute)
+
+        dict_key = (valute.type_valute, en_type_valute_dict[valute.type_valute])
+        json_dict[dict_key].append({
+            'id': valute.pk,
+            'name': ValuteTypeNameSchema(ru=valute.name,
+                                         en=valute.en_name),
+            'code_name': valute.code_name,
+            'icon_url': icon_url,
+            'is_popular': valute.is_popular,
+            }
+        )
+    
+    res = []
+    for idx, obj in enumerate(json_dict, start=1):
+        res.append(NewValuteListSchema(id=idx,
+                                    name=ValuteTypeNameSchema(ru=obj[0],
+                                                              en=obj[-1]),
+                                    currencies=json_dict[obj]))
+
+    return res
+
+
 def get_valute_json_4(queries: List[NoCashExDir | CashExDir]):
     
     '''
@@ -1832,6 +2275,21 @@ def increase_popular_count_direction(**kwargs):
     direction.save()
 
 
+def new_increase_popular_count_direction(**kwargs):
+    city_code_name = kwargs.get('city')
+    direction = cash_models.NewDirection if city_code_name else no_cash_models.NewDirection
+    valute_from, valute_to = kwargs['valute_from'], kwargs['valute_to']
+    try:
+        direction = direction.objects.filter(valute_from_id=valute_from,
+                                             valute_to_id=valute_to).update(popular_count=F('popular_count') + 1)
+        
+        if city_code_name:
+            City.objects.filter(code_name=city_code_name).update(popular_count=F('popular_count') + 1)
+
+    except Exception as ex:
+        print(ex)
+
+
 def check_exchage_marker(exchange_marker: str):
     if exchange_marker not in {'no_cash', 'cash', 'partner', 'both'}:
         raise HTTPException(status_code=400,
@@ -1850,36 +2308,21 @@ def check_exchage_by_name(exchange_name: str):
 
 
 def check_perms_for_adding_review(exchange_id: int,
-                                  exchange_marker: str,
                                   tg_id: int):
     time_delta = timedelta(days=1)
 
-    check_exchage_marker(exchange_marker)
+    check_time = timezone.now() - time_delta
 
-    match exchange_marker:
-        case 'no_cash':
-            review_model = no_cash_models.Review
-        case 'cash':
-            review_model = cash_models.Review
-        case 'partner':
-            review_model = partner_models.Review
-        case 'both':
-            review_model = no_cash_models.Review
-
-    check_time = datetime.now() - time_delta
-
-    review = review_model.objects.select_related('guest')\
-                                    .filter(exchange_id=exchange_id,
-                                            guest_id=tg_id,
-                                            time_create__gt=check_time)\
-                                    .first()
+    review = Review.objects.filter(exchange_id=exchange_id,
+                                   guest_id=tg_id,
+                                   time_create__gt=check_time)\
+                            .first()
 
     if review:
         next_time_review = review.time_create.astimezone() + time_delta
         review_exception_json(status_code=423,
                               param=next_time_review.strftime('%d.%m.%Y %H:%M'))
 
-    
     return {'status': 'success'}
 
 
@@ -1918,49 +2361,29 @@ def new_check_perms_for_adding_review(exchange_name: str,
 
 
 def check_perms_for_adding_comment(review_id: int,
-                                   exchange_marker: str,
                                    user_id: int):
     time_delta = timedelta(minutes=5)
 
     if not Guest.objects.filter(tg_id=user_id).exists():
         raise HTTPException(status_code=404,
                              detail='User don`t exists in DB')
-    
-    check_exchage_marker(exchange_marker)
 
-    match exchange_marker:
-        case 'no_cash':
-            comment_model = no_cash_models.Comment
-            review_model = no_cash_models.Review
-        case 'cash':
-            comment_model = cash_models.Comment
-            review_model = cash_models.Review
-        case 'partner':
-            comment_model = partner_models.Comment
-            review_model = partner_models.Review
-        case 'both':
-            comment_model = no_cash_models.Comment
-            review_model = no_cash_models.Review
-
-
-    review = review_model.objects.select_related('exchange')\
+    review = Review.objects.select_related('exchange')\
                                     .filter(pk=review_id)
     
     if not review.exists():
-        raise HTTPException(status_code=400,
+        raise HTTPException(status_code=404,
                         detail='Review not found')
     
-    if review.filter(guest_id=user_id).exists() or ExchangeAdmin.objects.filter(user_id=user_id,
-                                                       exchange_marker=exchange_marker,
-                                                       exchange_id=review.first().exchange.pk):
-        check_time = datetime.now() - time_delta
+    if review.filter(guest_id=user_id).exists() or NewExchangeAdmin.objects.filter(user_id=user_id,
+                                                                                exchange_id=review.first().exchange.pk):
+        check_time = timezone.now() - time_delta
 
-        comment = comment_model.objects.select_related('guest',
-                                                    'review')\
+        comment = Comment.objects.select_related('guest',
+                                                 'review')\
                                         .filter(review_id=review_id,
                                                 guest_id=user_id,
                                                 time_create__gt=check_time)\
-                                        .order_by('-time_create')\
                                         .first()
 
         if comment:
@@ -1968,28 +2391,11 @@ def check_perms_for_adding_comment(review_id: int,
             review_exception_json(status_code=423,
                                 param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
 
-        # return {'status': 'success'}
+        return {'status': 'success'}
 
     else:
         raise HTTPException(status_code=404,
                              detail='User not review owner or exchange admin')
-
-    # check_time = datetime.now() - time_delta
-
-    # comment = comment_model.objects.select_related('guest',
-    #                                                'review')\
-    #                                 .filter(review_id=review_id,
-    #                                         guest_id=user_id,
-    #                                         time_create__gt=check_time)\
-    #                                 .first()
-
-    # if comment:
-    #     next_time_comment = comment.time_create.astimezone() + time_delta
-    #     review_exception_json(status_code=423,
-    #                           param=next_time_comment.strftime('%d.%m.%Y %H:%M'))
-
-    
-    # return {'status': 'success'}
 
 
 def new_check_perms_for_adding_comment(review_id: int,
@@ -2071,6 +2477,13 @@ def check_valute_on_cash(valute_from: str,
                             .exists()
 
 
+def new_check_valute_on_cash(valute_from: str,
+                             valute_to: str):
+    return NewValute.objects.filter(code_name__in=(valute_from,valute_to),
+                                 type_valute__in=('Наличные', 'ATM QR'))\
+                            .exists()
+
+
 async def pust_to_send_bot(user_id: int,
                            order_id: int,
                            marker: str):
@@ -2095,8 +2508,26 @@ async def send_review_notifitation(review_id: int):
             pass
 
 
+async def new_send_review_notifitation(review_id: int):
+    _url = f'https://api.moneyswap.online/new_send_to_tg_group_review?review_id={review_id}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
 async def send_comment_notifitation(comment_id: int):
     _url = f'https://api.moneyswap.online/send_to_tg_group_comment?comment_id={comment_id}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
+async def new_send_comment_notifitation(comment_id: int):
+    _url = f'https://api.moneyswap.online/new_send_to_tg_group_comment?comment_id={comment_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,
@@ -2116,6 +2547,17 @@ async def send_review_notifitation_to_exchange_admin(user_id: int,
             pass
 
 
+async def new_send_review_notifitation_to_exchange_admin(user_id: int,
+                                                         exchange_id: int,
+                                                         review_id: int):
+    _url = f'https://api.moneyswap.online/new_send_notification_to_exchange_admin?user_id={user_id}&exchange_id={exchange_id}&review_id={review_id}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
 async def send_comment_notifitation_to_exchange_admin(user_id: int,
                                                       exchange_id: int,
                                                       exchange_marker: str,
@@ -2128,11 +2570,34 @@ async def send_comment_notifitation_to_exchange_admin(user_id: int,
             pass
 
 
+async def new_send_comment_notifitation_to_exchange_admin(user_id: int,
+                                                          exchange_id: int,
+                                                          review_id: int):
+    _url = f'https://api.moneyswap.online/new_send_comment_notification_to_exchange_admin?user_id={user_id}&exchange_id={exchange_id}&review_id={review_id}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
+
 async def send_comment_notifitation_to_review_owner(user_id: int,
                                                     exchange_id: int,
                                                     exchange_marker: str,
                                                     review_id: int):
     _url = f'https://api.moneyswap.online/send_comment_notification_to_review_owner?user_id={user_id}&exchange_id={exchange_id}&exchange_marker={exchange_marker}&review_id={review_id}'
+    timeout = aiohttp.ClientTimeout(total=5)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(_url,
+                            timeout=timeout) as response:
+            pass
+
+
+async def new_send_comment_notifitation_to_review_owner(user_id: int,
+                                                        exchange_id: int,
+                                                        review_id: int):
+    _url = f'https://api.moneyswap.online/new_send_comment_notification_to_review_owner?user_id={user_id}&exchange_id={exchange_id}&review_id={review_id}'
     timeout = aiohttp.ClientTimeout(total=5)
     async with aiohttp.ClientSession() as session:
         async with session.get(_url,

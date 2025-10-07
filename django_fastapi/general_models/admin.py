@@ -1,7 +1,7 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from typing import Any
 
-from django.db.models import Count, Sum, Value, OuterRef, Subquery, DateTimeField
+from django.db.models import Count, Sum, Value, OuterRef, Subquery, DateTimeField, Q
 from django.db.models.functions import Coalesce
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
@@ -10,6 +10,7 @@ from django.utils.safestring import mark_safe
 from django.http.request import HttpRequest
 from django.contrib.admin import AdminSite
 from django.contrib.admin.models import LogEntry
+from django.utils import timezone
 
 from django_celery_beat.models import (SolarSchedule,
                                        PeriodicTask,
@@ -26,9 +27,26 @@ from rangefilter.filters import (
 
 from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on_active
 
+from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.admin import NewUTMSourceFilter, ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
-from .models import ExchangeAdmin, ExchangeAdminOrder, NewBaseAdminComment, NewBaseComment, Valute, PartnerTimeUpdate, Guest, CustomOrder, FeedbackForm, NewBaseReview
+from .models import (ExchangeAdmin,
+                     ExchangeAdminOrder,
+                     NewBaseAdminComment,
+                     NewBaseComment,
+                     Valute,
+                     PartnerTimeUpdate,
+                     Guest,
+                     CustomOrder,
+                     FeedbackForm,
+                     NewBaseReview,
+                     NewValute,
+                     Exchanger,
+                     LinkedUrl,
+                     Review,
+                     Comment,
+                     NewExchangeAdmin,
+                     NewExchangeAdminOrder)
 
 from no_cash import models as no_cash_models
 from cash import models as cash_models
@@ -421,6 +439,56 @@ class ValuteAdmin(admin.ModelAdmin):
     get_icon.short_description = 'Иконка'
 
 
+# Новое Отображение валют в админ панели
+@admin.register(NewValute)
+class NewValuteAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'code_name',
+        'get_icon',
+        'type_valute',
+        'available_for_partners',
+        )
+    list_editable = (
+        'available_for_partners',
+        )
+    list_filter = (
+        'type_valute',
+        'available_for_partners',
+        'is_popular',
+        )
+    fields = (
+        'name',
+        'en_name',
+        'code_name',
+        'icon_url',
+        'get_icon',
+        'type_valute',
+        'is_popular',
+        'available_for_partners',
+        )
+    readonly_fields = (
+        'get_icon',
+        )
+    search_fields = (
+        'name',
+        'en_name',
+        'code_name',
+        )
+    ordering = (
+        '-available_for_partners',
+        'code_name',
+        )
+    list_per_page = 20
+
+    def get_icon(self, obj):
+        if obj.icon_url:
+            icon_url = try_generate_icon_url(obj)
+            return mark_safe(f"<img src='{icon_url}' width=40")
+
+    get_icon.short_description = 'Иконка'
+
+
 #Базовое отображение комментариев в админ панели
 class BaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
@@ -695,6 +763,121 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     ]
 
 
+# Новое Базовое отображение обменника в админ панели
+class NewBaseExchangeAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        # 'xml_url',
+        'link_count',
+        'is_active',
+        'active_status',
+        'time_create',
+        'high_aml',
+        )
+    readonly_fields = (
+        'is_active',
+        'get_total_direction_count',
+        'time_create',
+        'get_icon',
+        'link_count',
+        )
+    
+    list_editable = (
+        'high_aml',
+    )
+    list_filter = (
+        'name',
+    )
+    search_fields = (
+        'name',
+    )
+    
+    # def link_count(self, obj):
+    #     link_count = 0
+
+    #     # for 
+    #     # exchange_link_count = obj.exchange_counts.all()
+
+    #     # _sum = sum([link.count for link in exchange_link_count])
+    #     # print(obj.link_count)
+    #     return link_count
+    
+    # link_count.short_description = 'Счетчик перехода по ссылке'
+
+    # def get_queryset(self, request: HttpRequest) -> QuerySet:
+    #     queryset = super().get_queryset(request)
+    #     # return queryset.annotate(link_count=Sum('exchange_counts__count'))
+    #     return queryset.prefetch_related('exchange_counts')
+
+
+    def get_icon(self, obj):
+        if obj.icon_url:
+            icon_url = try_generate_icon_url(obj)
+            return mark_safe(f"<img src='{icon_url}' width=40")
+
+    get_icon.short_description = 'Иконка'
+    
+    fieldsets = [
+        (
+            'Основные параметры',
+            {
+                "fields": [("name", "en_name"),
+                           "partner_link",
+                           'active_status',
+                           "is_active",
+                           "country",
+                           "reserve_amount",
+                           'icon_url',
+                           'get_icon',
+                           ],
+            },
+        ),
+        (
+            'Фукционал XML файла (необязательный)',
+            {
+                'fields': [
+                    "xml_url",
+                    "period_for_create",
+                    "timeout",
+                ],
+                'classes': [
+                    'collapse',
+                    ],
+                'description': 'Параметры для настройки авто парсинга XML файла с направлениями',
+            },
+        ),
+        (
+            'Допольнительные параметры обменника',
+            {
+                'fields': [
+                    "is_vip",
+                    "high_aml",
+                ],
+            },
+        ),
+        (
+            'Параметры даты и времени',
+            {
+                'fields': [
+                    "age",
+                    "time_create",
+                    "time_disable",
+                ],
+            },
+        ),
+        (
+            'Статистика',
+            {
+                'fields': [
+                    "get_total_direction_count",
+                    "link_count",
+                ],
+            },
+        ),
+
+    ]
+
+
 #Базовое отображение направлений в админ панели
 class BaseDirectionAdmin(admin.ModelAdmin):
     list_display = (
@@ -812,6 +995,38 @@ class ExchangeAdminOrderAdmin(admin.ModelAdmin):
     activate_link.short_description = 'Ссылка для активации'
 
 
+@admin.register(NewExchangeAdminOrder)
+class NewExchangeAdminOrderAdmin(admin.ModelAdmin):
+    list_display = (
+        'user_id',
+        'exchange',
+        'moderation',
+        'time_create',
+    )
+    readonly_fields = (
+        'moderation',
+        'exchange',
+        'activate_link',
+    )
+    fields = (
+        'user_id',
+        'exchange',
+        'activate_link',
+    )
+
+    ordering = (
+        '-time_create',
+    )
+
+    def activate_link(self, obj):
+        return f'https://t.me/MoneySwap_robot?start=admin_activate'
+    
+    activate_link.short_description = 'Ссылка для активации'
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange')
+
+
 @admin.register(ExchangeAdmin)
 class ExchangeAdminAdmin(admin.ModelAdmin):
     list_display = (
@@ -826,13 +1041,36 @@ class ExchangeAdminAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('user')
-    # readonly_fields = (
-    #     'moderation',
-    # )
-    # fields = (
-    #     'user_id',
-    #     'exchange_name',
-    # )
+
+
+@admin.register(NewExchangeAdmin)
+class NewExchangeAdminAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'exchange',
+    )
+    readonly_fields = (
+        'exchange',
+        'user',
+    )
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": [
+                    'user',
+                    'exchange',
+                    'notification',
+                ]
+            },
+        ),
+    ]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('user',
+                                                            'exchange')
+
+
 class NewBaseAdminCommentStacked(admin.StackedInline):
     model = NewBaseAdminComment
     extra = 0
@@ -889,6 +1127,36 @@ class NewBaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('guest')
     
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'exchange',
+        'time_create',
+        'moderation',
+    )
+
+    list_filter = (
+        'exchange',
+    )
+
+    raw_id_fields = (
+        'guest',
+    )
+
+    ordering = (
+        '-time_create',
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('guest',
+                                                            'exchange')
+    
+    def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
+        obj.moderation = obj.status == 'Опубликован'
+        return super().save_model(request, obj, form, change)
+    
     
 @admin.register(NewBaseComment)
 class NewBaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
@@ -917,3 +1185,185 @@ class NewBaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('review',
                                                             'guest')
+    
+
+@admin.register(Comment)
+class CommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
+    list_display = (
+        'username',
+        'exchange_name',
+        'time_create',
+        'moderation',
+        'review_from',
+    )
+
+    raw_id_fields = (
+        'guest',
+        'review',
+    )
+
+    list_filter = (
+        'guest',
+    )
+
+    readonly_field = (
+        'exchange_name',
+    )
+
+    ordering = (
+        '-time_create',
+    )
+
+    def exchange_name(self, obj):
+        return obj.review.exchange.name
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('review',
+                                                            'review__exchange',
+                                                            'guest')
+    
+
+class LinkedUrlStacked(admin.StackedInline):
+    model = LinkedUrl
+    extra = 0
+    classes = [
+        'collapse',
+        ]
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange')
+
+
+
+#Отображение обменников в админ панели
+@admin.register(Exchanger)
+class ExchangerAdmin(NewBaseExchangeAdmin):
+    inlines = [
+        LinkedUrlStacked,
+        ]
+
+    def get_total_direction_count(self, obj):
+        direction_count = 0
+
+        for count_field in ('cash_direction_count',
+                            'no_cash_direction_count',
+                            'manual_city_direction_count',
+                            'manual_country_direction_count',
+                            'manual_noncash_direction_count'):
+            if _count := obj.__dict__.get(count_field):
+                direction_count += _count
+
+        return direction_count
+    
+    get_total_direction_count.short_description = 'Кол-во активных направлений'
+
+    def link_count(self, obj):
+        link_count = 0
+
+        for link_field in ('cash_link_count',
+                           'no_cash_link_count',
+                           'manual_city_link_count',
+                           'manual_country_link_count',
+                           'manual_noncash_link_count'):
+            if _count := obj.__dict__.get(link_field):
+                link_count += _count
+            
+        return link_count
+
+    link_count.short_description = 'Счетчик перехода по ссылкам'
+
+    def save_model(self, request, obj, form, change):
+        update_fields = []
+
+        if change: 
+            # print(form.cleaned_data.items())
+            for key, value in form.cleaned_data.items():
+                # print(obj.name)
+                # print('key', key)
+                # print('value', value)
+                if key == 'id':
+                    continue
+                if value != form.initial[key]:
+                    match key:
+                        case 'period_for_create':
+                            manage_periodic_task_for_parse_directions(obj.pk,
+                                                                      value)
+                        case 'active_status':
+                            if value in ('disabled', 'scam', 'skip'):
+                                obj.is_active = False
+                                update_fields.append('is_active')
+                            
+                            if value == 'disabled':
+                                obj.time_disable = timezone.now()
+                            else:
+                                obj.time_disable = None
+
+                            update_fields.append('time_disable')
+                                
+                    update_fields.append(key)
+
+            obj.save(update_fields=update_fields)
+        else:
+            print('NOT CHANGE! CREATE IN ADMIN MODEL!')
+            super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+
+        # аттонации кол-ва переходов по направлениям обменника
+        no_cash_link_count_subquery = no_cash_models.NewExchangeLinkCount.objects.filter(
+            exchange_id=OuterRef('id')
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        cash_link_count_subquery = cash_models.NewExchangeLinkCount.objects.filter(
+            exchange_id=OuterRef('id')
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        partner_link_count_subquery = partner_models.NewExchangeLinkCount.objects.filter(
+            exchange_id=OuterRef('id')
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        partner_country_link_count_subquery = partner_models.NewCountryExchangeLinkCount.objects.filter(
+            exchange_id=OuterRef('id')
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        partner_noncash_link_count_subquery = partner_models.NewNonCashExchangeLinkCount.objects.filter(
+            exchange_id=OuterRef('id')
+        ).values('exchange_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        queryset = queryset.annotate(no_cash_link_count=Subquery(no_cash_link_count_subquery),
+                                     cash_link_count=Subquery(cash_link_count_subquery),
+                                     manual_city_link_count=Subquery(partner_link_count_subquery),
+                                     manual_country_link_count=Subquery(partner_country_link_count_subquery),
+                                     manual_noncash_link_count=Subquery(partner_noncash_link_count_subquery))
+        
+        if not request.resolver_match.view_name.endswith("changelist"):
+
+            # аттонации кол-ва активных направлений
+            queryset = queryset.annotate(cash_direction_count=Count('cash_directions',
+                                                                filter=Q(cash_directions__is_active=True),
+                                                                distinct=True))\
+                            .annotate(no_cash_direction_count=Count('no_cash_directions',
+                                                                filter=Q(no_cash_directions__is_active=True),
+                                                                distinct=True))\
+                            .annotate(manual_city_direction_count=Count('city_directions',
+                                                                filter=Q(city_directions__is_active=True),
+                                                                distinct=True))\
+                            .annotate(manual_country_direction_count=Count('country_directions',
+                                                                filter=Q(country_directions__is_active=True),
+                                                                distinct=True))\
+                            .annotate(manual_noncash_direction_count=Count('noncash_directions',
+                                                                filter=Q(noncash_directions__is_active=True),
+                                                                distinct=True))
+            
+        return queryset

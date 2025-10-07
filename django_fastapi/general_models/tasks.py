@@ -1,5 +1,7 @@
-from celery import shared_task, current_task
-from celery.app.task import Task
+from time import time
+
+from celery import shared_task
+from celery_once import QueueOnce
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -12,26 +14,26 @@ from cash import models as cash_models
 from no_cash import models as no_cash_models
 from partners import models as partner_models
 
+from cash.utils.cache import get_or_set_cash_directions_cache, new_get_or_set_cash_directions_cache
+from no_cash.utils.cache import get_or_set_no_cash_directions_cache, new_get_or_set_no_cash_directions_cache
+
 from config import SELENIUM_DRIVER
 
-from .models import NewBaseReview
+from .models import NewBaseReview, Exchanger
+from .utils.periodic_tasks import try_get_xml_file
 
 from .utils.parse_reviews.selenium import parse_reviews
 from .utils.parse_exchange_info.base import parse_exchange_info
-from .utils.tasks import try_update_courses
+from .utils.tasks import (try_update_courses,
+                          generate_cash_direction_dict,
+                          generate_no_cash_direction_dict)
+from .utils.parsers import parse_xml_and_create_or_update_directions
 
 
 #Задача для периодического удаления отзывов и комментариев
 #со статусом "Отклонён" из БД
 @shared_task(name='delete_cancel_reviews')
 def delete_cancel_reviews():
-    # cash_models.Review.objects.filter(status='Отклонён').delete()
-    # no_cash_models.Review.objects.filter(status='Отклонён').delete()
-    # partner_models.Review.objects.filter(status='Отклонён').delete()
-
-    # cash_models.Comment.objects.filter(status='Отклонён').delete()
-    # no_cash_models.Comment.objects.filter(status='Отклонён').delete()
-    # partner_models.Comment.objects.filter(status='Отклонён').delete()
     NewBaseReview.objects.filter(status='Отклонён').delete()
 
 
@@ -84,56 +86,6 @@ def update_popular_count_direction():
 
     cash_direction.update(popular_count=0)
     no_cash_directions.update(popular_count=0)
-
-
-
-# @shared_task(name='parse_no_cash_courses')
-# def parse_no_cash_courses():
-#     no_cash_directions = no_cash_models.Direction.objects.all()
-#     #
-#     cash_directions = cash_models.Direction.objects.all()
-#     #
-
-#     for direction in no_cash_directions:
-#         best_course = no_cash_models.ExchangeDirection.objects.filter(direction_id=direction.pk)\
-#                                                                 .order_by('-out_count',
-#                                                                           '-in_count')\
-#                                                                 .values_list('in_count',
-#                                                                              'out_count')\
-#                                                                 .first()
-#         if best_course:
-#             in_count, out_count = best_course
-
-#             if out_count == 1:
-#                 actual_course = out_count / in_count
-#             else:
-#                 actual_course = out_count
-#             direction.actual_course = actual_course
-#         else:
-#             direction.actual_course = None
-            
-#         direction.save()
-
-#     for direction in cash_directions:
-#         best_course = cash_models.ExchangeDirection.objects.filter(direction_id=direction.pk)\
-#                                                                 .order_by('-out_count',
-#                                                                           '-in_count')\
-#                                                                 .values_list('in_count',
-#                                                                              'out_count')\
-#                                                                 .first()
-#         if best_course:
-#             in_count, out_count = best_course
-
-#             if out_count == 1:
-#                 actual_course = out_count / in_count
-#             else:
-#                 actual_course = out_count
-#             direction.actual_course = actual_course
-#         else:
-#             direction.actual_course = None
-            
-#         direction.save()
-
 
 
 ################
@@ -225,5 +177,70 @@ def periodic_delete_unlinked_exchange_records():
 
     else:
         print(f'end with ELSE {batch_size}')
-    
-    # print(connection.queries)
+
+
+
+#new (одна задача на добавление и обновление направлений)
+@shared_task(base=QueueOnce,
+             once={'graceful': True},
+             name='create_update_directions_for_exchanger')
+def create_update_directions_for_exchanger(exchange_id: int):
+    try:
+        exchange = Exchanger.objects.get(pk=exchange_id)
+
+        if exchange.active_status in ('disabled', 'scam', 'skip'):
+            return
+        
+        all_cash_directions = new_get_or_set_cash_directions_cache()
+
+        all_no_cash_directions = new_get_or_set_no_cash_directions_cache()
+
+        if all_cash_directions or all_no_cash_directions:
+            # print(f'request to exchanger {exchange.name}')
+            start_time = time()
+            xml_file = try_get_xml_file(exchange)
+            print(f'Задача для Exchanger {exchange.name}! время получения xml {time() - start_time} sec')
+            # print('get xml file', time() - start_time)
+        
+            if xml_file is not None and exchange.is_active:
+                # start_generate_time = time()
+                direction_dict = {}
+
+                if all_cash_directions:
+                    generate_cash_direction_dict(direction_dict,
+                                                 all_cash_directions[-1])
+                if all_no_cash_directions:
+                    generate_no_cash_direction_dict(direction_dict,
+                                                    all_no_cash_directions)
+
+                # print('время генерации словаря направлений', time() - start_generate_time)
+                if direction_dict:
+                    parse_xml_and_create_or_update_directions(exchange,
+                                                              xml_file,
+                                                              direction_dict)
+
+    except Exception as ex:
+        print(ex, exchange_id)
+
+
+        # all_no_cash_directions = get_or_set_no_cash_directions_cache()
+        
+        # if all_no_cash_directions:
+        #     # direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
+        #     #                                                         exchange)
+                    
+        #     # if direction_list:
+        #         print(f'no cash {exchange.name}')
+        #         start_time = time()
+        #         xml_file = try_get_xml_file(exchange)
+        #         print(f'безнал время на получения xml файла {time() - start_time} sec')
+
+        #         if xml_file is not None and exchange.is_active:
+        #             #
+        #             # if exchange.name == 'Bixter':
+        #             #     print('Bixter', xml_file)
+        #             #
+        #             direction_dict = generate_direction_dict(all_no_cash_directions)
+        #             new_run_no_cash_background_tasks(exchange,
+        #                                              direction_dict,
+        #                                              xml_file)

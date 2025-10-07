@@ -39,6 +39,14 @@ class SpecificValuteSchema(BaseModel):
     type_valute: MultipleName = Field(alias='multiple_type')
 
 
+class NewSpecificValuteSchema(BaseModel):
+    id: int
+    name: MultipleName = Field(alias='multiple_name')
+    code_name: str
+    icon_url: str | None = Field(alias='icon')
+    type_valute: MultipleName = Field(alias='multiple_type')
+
+
 #Схема готового направления для отображения в json ответе
 class SpecialDirectionModel(BaseModel):
     id: int
@@ -82,11 +90,34 @@ class SpecialDirectionMultiModel(BaseModel):
     exchange_direction_id: int
 
 
+class NewSpecialDirectionMultiModel(BaseModel):
+    id: int
+    name: MultipleName
+    exchange_id: int
+    partner_link: str | None
+    is_vip: bool
+    review_count: ReviewCountSchema
+    valute_from: str
+    icon_valute_from: str | None
+    valute_to: str
+    icon_valute_to: str | None
+    in_count: float
+    out_count: float
+    min_amount: str | None
+    max_amount: str | None
+    exchange_direction_id: int
+    direction_marker: str
+
+
 class InfoSchema(BaseModel):
     high_aml: bool
 
 
 class SpecialDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
+    info: InfoSchema
+
+
+class NewSpecialDirectionMultiWithAmlModel(NewSpecialDirectionMultiModel):
     info: InfoSchema
 
 
@@ -99,6 +130,10 @@ class PartnerExchangeRate(BaseModel):
 
 
 class SpecialPartnerNoCashDirectionSchema(SpecialDirectionMultiWithAmlModel):
+    exchange_rates: list[PartnerExchangeRate] | None
+
+
+class NewSpecialPartnerNoCashDirectionSchema(NewSpecialDirectionMultiWithAmlModel):
     exchange_rates: list[PartnerExchangeRate] | None
 
 
@@ -121,10 +156,7 @@ class ReviewsByExchangeSchema(BaseModel):
     pages: int
     page: int
     element_on_page: int
-    #
     exchange_id: int
-    exchange_marker: str
-    #
     content: list[ReviewViewSchema]
 
 
@@ -140,7 +172,6 @@ class NewReviewsByExchangeSchema(BaseModel):
 
 class AddReviewSchema(BaseModel):
     exchange_id: int
-    exchange_marker: str
     tg_id: int
     text: str
     grade: int
@@ -206,6 +237,13 @@ class ValuteTypeListSchema1(BaseModel):
     icon_url: str
     is_popular: bool
 
+class NewValuteTypeListSchema(BaseModel):
+    id: int
+    name: ValuteTypeNameSchema
+    code_name: str
+    icon_url: str
+    is_popular: bool
+
 class ValuteTypeListSchema2(BaseModel):
     id: str
     name: ValuteTypeNameSchema
@@ -225,6 +263,12 @@ class ValuteListSchema1(BaseModel):
     id: int
     name: ValuteTypeNameSchema
     currencies: list[ValuteTypeListSchema1]
+
+
+class NewValuteListSchema(BaseModel):
+    id: int
+    name: ValuteTypeNameSchema
+    currencies: list[NewValuteTypeListSchema]
 
 
 class ValuteListSchema2(BaseModel):
@@ -263,6 +307,16 @@ class NewCommonExchangeSchema(BaseModel):
     reviews: ReviewCountSchema
 
 
+class ExchangeListElementSchema(BaseModel):
+    id: int = Field(alias='pk')
+    exchangerName: MultipleName = Field(alias='multiple_name')
+    workStatus: str = Field(alias='active_status')
+    reserves: str | None = Field(alias='reserve_amount')
+    courses: int | None = Field(alias='direction_count')
+    url: str | None = Field(alias='partner_link')
+    reviews: ReviewCountSchema
+
+
 class BlackListExchangeSchema(BaseModel):
     id: int = Field(alias='pk')
     # exchangerName: str = Field(alias='name')
@@ -274,6 +328,10 @@ class BlackListExchangeSchema(BaseModel):
     # url: str | None
     # reviews: ReviewCountSchema
 
+
+class NewBlackListExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
+    exchangerName: MultipleName = Field(alias='multiple_name')
 
 
 class DetailBlackListExchangeSchema(BaseModel):
@@ -294,16 +352,25 @@ class NewDetailBlackListExchangeSchema(DetailBlackListExchangeSchema):
     linked_urls: list
 
 
+class BlackExchangeDetailSchema(BaseModel):
+    id: int = Field(alias='pk')
+    exchangerName: MultipleName = Field(alias='multiple_name')
+    iconUrl: str | None = Field(alias='icon',
+                                default=None)
+    url: str | None
+    linked_urls: list[str]
+
+
 class DetailExchangeSchema(BaseModel):
-    name: str
-    # exchangerName: MultipleName = Field(alias='multiple_name')
+    exchangerName: MultipleName = Field(alias='multiple_name')
     iconUrl: str | None = Field(alias='icon',
                                 default=None)
     url: str = Field(alias='partner_link')
     high_aml: bool
-    workStatus: bool = Field(alias='is_active')
+    workStatus: str = Field(alias='active_status')
     reviews: ReviewCountSchema = Field(alias='review_set')
     country: str | None
+    segment_marker: str | None
     amountReserves: str | None = Field(alias='reserve_amount',
                                        default=None)
     exchangeRates: int | None = Field(alias='course_count',
@@ -354,6 +421,17 @@ class ExchangeLinkCountSchema(BaseModel):
     exchange_direction_id: int
 
 
+class NewExchangeLinkCountSchema(BaseModel):
+    user_id: int
+    exchange_id: int
+    direction_marker: Literal['auto_no_cash',
+                              'auto_cash',
+                              'city',
+                              'country',
+                              'no_cash']
+    exchange_direction_id: int
+
+
 
 class TopExchangeSchema(BaseModel):
     id: int = Field(alias='pk')
@@ -361,6 +439,13 @@ class TopExchangeSchema(BaseModel):
     iconUrl: str = Field(alias='icon')
     reviewCount: ReviewCountSchema = Field(alias='reviews')
     exchangerMarker: str = Field(alias='exchange_marker')
+
+
+class NewTopExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
+    name: str
+    iconUrl: str = Field(alias='icon')
+    reviewCount: ReviewCountSchema = Field(alias='reviews')
 
 
 class TopCoinSchema(BaseModel):
@@ -395,8 +480,22 @@ class SiteMapDirectonSchema(BaseModel):
     city: str | None
 
 
+class SiteMapDirectonSchemaNew(BaseModel):
+    valute_from : str
+    valute_to: str
+    direction_marker: str
+    city: str | None
+
+
 class NewSiteMapDirectonSchema(BaseModel):
     page: int
     pages: int
     element_on_page: int | None = Field(default=None)
     directions: list[SiteMapDirectonSchema]
+
+
+class NewSiteMapDirectonSchema2(BaseModel):
+    page: int
+    pages: int
+    element_on_page: int | None = Field(default=None)
+    directions: list[SiteMapDirectonSchemaNew]

@@ -79,6 +79,7 @@ class NewValute(models.Model):
         ('ATM QR', 'ATM QR'),
         ]
     name = models.CharField('Название валюты(ru)',
+                            unique=True,
                             max_length=50)
     en_name = models.CharField('Название валюты(en)',
                                max_length=50,
@@ -92,17 +93,15 @@ class NewValute(models.Model):
                                    max_length=30,
                                    choices=type_valute_list)
     icon_url = models.FileField('Иконка валюты',
-                                upload_to='icons/valute/',
-                                blank=True,
-                                null=True)
+                                upload_to='icons/valute/')
     available_for_partners = models.BooleanField('Доступно для партнёров',
                                                  default=False)
     is_popular = models.BooleanField('Популярная',
                                      default=False)
 
     class Meta:
-        verbose_name = 'Валюта'
-        verbose_name_plural = 'Валюты'
+        verbose_name = 'Валюта (новая)'
+        verbose_name_plural = 'Валюты (новые)'
         ordering = ['code_name']
         indexes = [
             models.Index(fields=['code_name', ])
@@ -167,15 +166,22 @@ class Exchanger(models.Model):
     #                        blank=True,
     #                        null=True,
     #                        default=None)
-    age = models.DateTimeField('Время добавления',
-                               blank=True,
-                               null=True,
-                               default=None)
-    time_create = models.DateTimeField('Время добавления',
+
+    # ? изменить на DateField !
+    # models.DateField()
+    # age = models.DateTimeField('Дата открытия обменника',
+    #                            blank=True,
+    #                            null=True,
+    #                            default=None)
+    age = models.DateField('Дата открытия обменника',
+                           blank=True,
+                           null=True,
+                           default=None)
+    time_create = models.DateTimeField('Дата добавления в мониторинг',
                                        blank=True,
                                        null=True,
                                        default=None)
-    time_disable = models.DateTimeField('Время отключения',
+    time_disable = models.DateTimeField('Дата отключения',
                                         blank=True,
                                         null=True,
                                         default=None)
@@ -221,6 +227,28 @@ class Exchanger(models.Model):
             models.Index(fields=['en_name']),
         ]
 
+    def __str__(self):
+        return self.name
+
+
+# Модель связанных (похожих) ссылок на обменник
+class LinkedUrl(models.Model):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 default=None,
+                                 verbose_name='Обменник',
+                                 related_name='linked_url_list')
+    url = models.CharField('Ссылка',
+                           max_length=255)
+    
+    class Meta:
+        verbose_name = 'Связанная ссылка'
+        verbose_name_plural = 'Связанные ссылки'
+
+    def __str__(self):
+        return f'{self.exchange.name} {self.url}'
 
 
 # Модель для времени проверки партнёрских
@@ -550,7 +578,7 @@ class NewBaseReview(BaseReviewComment):
     class Meta:
         verbose_name = 'Отзыв (новый)'
         verbose_name_plural = 'Отзывы (новые)'
-        unique_together = (('exchange','username','time_create'), )
+        unique_together = (('exchange_name','username','time_create'), )
     
     def __str__(self):
         if self.time_create is None:
@@ -571,6 +599,9 @@ class Review(BaseReviewComment):
                               on_delete=models.CASCADE)
     exchange = models.ForeignKey(Exchanger,
                                  on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 default=None,
                                  verbose_name='Обменник',
                                  related_name='reviews')
     transaction_id = models.CharField('Номер транзакции',
@@ -581,7 +612,7 @@ class Review(BaseReviewComment):
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
-        unique_together = (('exchange_name','username','time_create'), )
+        unique_together = (('exchange','username','time_create'), )
     
     def __str__(self):
         if self.time_create is None:
@@ -880,6 +911,35 @@ class BaseDirection(models.Model):
         return self.valute_from.code_name + ' -> ' + self.valute_to.code_name + '\n\n'
     
 
+#Абстрактная модель направления (для наследования)
+class BaseNewDirection(models.Model):
+    popular_count = models.IntegerField('Счётчик популярности',
+                                        default=0)
+    actual_course = models.FloatField('Актуальный курс обмена',
+                                      blank=True,
+                                      null=True,
+                                      default=None)
+    previous_course = models.FloatField('Предыдующий курс обмена',
+                                        blank=True,
+                                        null=True,
+                                        default=None)
+    is_popular = models.BooleanField('Популярная',
+                                     default=False)
+    
+    class Meta:
+        abstract = True
+        unique_together = (("valute_from", "valute_to"), )
+        verbose_name = 'Направление для обмена'
+        verbose_name_plural = 'Направления для обмена'
+        ordering = ['valute_from', 'valute_to']
+        indexes = [
+            models.Index(fields=['valute_from', 'valute_to'])
+        ]
+    
+    def __str__(self):
+        return self.valute_from_id + ' -> ' + self.valute_to_id
+    
+
 #Абстрактная модель готового направления (для наследования)
 class BaseExchangeDirection(models.Model):
     # valute_from = models.CharField('Отдаём', max_length=10)
@@ -922,6 +982,21 @@ class BaseExchangeLinkCount(models.Model):
         return f'{self.user} {self.exchange} - {self.count}'
     # def __str__(self):
     #     return f'{self.user}  - {self.count}'
+
+
+# new BaseExchangeLinkCount model
+class NewBaseExchangeLinkCount(models.Model):
+    count = models.PositiveBigIntegerField('Счетчик просмотров',
+                                           default=0)
+    
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке'
+        verbose_name_plural = 'Счётчики перехода по ссылкам'
+        unique_together = [('exchange', 'user', 'exchange_direction',)]
+        abstract = True
+
+    def __str__(self):
+        return f'{self.user} {self.exchange} - {self.count}'
     
 
 class BaseDirectionRate(models.Model):
@@ -994,12 +1069,17 @@ class NewExchangeAdminOrder(models.Model):
     #                                  help_text='Название должно совпадать с названием обменника из НАШЕЙ базы!')
     exchange = models.ForeignKey(Exchanger,
                                  on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 default=None,
                                  verbose_name='Обменник',
                                  related_name='exchange_admin_orders')
     moderation = models.BooleanField('Модерация',
                                      default=False)
     time_create = models.DateTimeField('Время создания',
-                                       auto_now_add=True)
+                                       null=True,
+                                       blank=True,
+                                       default=timezone.now())
     
     class Meta:
         verbose_name = 'Заявка на подключение обменника к юзеру (новая)'
@@ -1011,10 +1091,10 @@ class NewExchangeAdminOrder(models.Model):
     def clean(self) -> None:
         super().clean_fields()
                 
-        if ExchangeAdminOrder.objects.filter(exchange_id=self.exchange_id).exists():
+        if NewExchangeAdminOrder.objects.filter(exchange__pk=self.exchange_id).exists():
             raise ValidationError('Заявка на этот обменник уже существует. Если хотите привязать нового адимна к этому обменнику, сначала удалите старую заявку и убедитесь, что у обменника нет действующего привязанного админа (Раздел "Общее" [Подключенные обменники к юзерам])')
 
-        if ExchangeAdminOrder.objects.filter(user_id=self.user_id,
+        if NewExchangeAdminOrder.objects.filter(user_id=self.user_id,
                                              moderation=False).exists():
             raise ValidationError('У пользователя есть неактивированная (непромодерированная) заявка. Дождитесь активации предыдущей заявки на стороне пользователя или удалите её в разделе "Общее" (Заявки на подключения обменников к юзерам) и создайте новую')
 
@@ -1046,17 +1126,18 @@ class NewExchangeAdmin(models.Model):
     user = models.ForeignKey(Guest,
                              on_delete=models.CASCADE,
                              verbose_name='Пользователь',
-                             related_name='new_liked_exchanges')
-    # exchange_marker = models.CharField('Маркер обменника',
-    #                                    max_length=255)
-    # exchange_name = models.CharField('Название обменника',
-    #                                  max_length=255)
-    # exchange_id = models.IntegerField('Id обменника')
-    exchange = models.ForeignKey(Exchanger,
+                             related_name='new_linked_exchanges')
+
+    # поменять на OneToOne ? (у одного обменника - один админ)
+    exchange = models.OneToOneField(Exchanger,
                                  on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 default=None,
                                  verbose_name='Обменник',
-                                 related_name='exchange_admins')
-    notification = models.BooleanField('Уведомления включены?', default=True)
+                                 related_name='exchange_admin')
+    notification = models.BooleanField('Уведомления включены?',
+                                       default=True)
     
     class Meta:
         unique_together = [('user', 'exchange')]

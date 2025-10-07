@@ -11,7 +11,7 @@ from xml.etree import ElementTree as ET
 
 from django_celery_beat.models import IntervalSchedule
 
-from general_models.models import BaseExchange
+from general_models.models import BaseExchange, Exchanger
 
 from .exc import RobotCheckError, TimeoutError, TechServiceWork
 

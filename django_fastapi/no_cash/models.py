@@ -4,7 +4,9 @@ from django.core.exceptions import ValidationError
 
 from general_models.models import (BaseExchangeDirection,
                                    BaseExchangeLinkCount,
+                                   NewBaseExchangeLinkCount,
                                    BaseDirection,
+                                   BaseNewDirection,
                                    ParseExchange,
                                    Valute,
                                    NewValute,
@@ -105,19 +107,28 @@ class Direction(BaseDirection):
             raise ValidationError('Валюты "Отдаём" и "Получаем" должны быть разные')
         
 # new Direction model
-class NewDirection(BaseDirection):
+class NewDirection(BaseNewDirection):
     valute_from = models.ForeignKey(NewValute,
                                     to_field='code_name',
                                     on_delete=models.CASCADE,
                                     verbose_name='Отдаём',
-                                    limit_choices_to=~Q(type_valute='Наличные'),
+                                    limit_choices_to=~Q(type_valute__in=('Наличные', 'ATM QR')),
                                     related_name='no_cash_valutes_from')
     valute_to = models.ForeignKey(NewValute,
                                   to_field='code_name',
                                   on_delete=models.CASCADE,
                                   verbose_name='Получаем',
-                                  limit_choices_to=~Q(type_valute='Наличные'),
+                                  limit_choices_to=~Q(type_valute__in=('Наличные', 'ATM QR')),
                                   related_name='no_cash_valutes_to')
+    
+    class Meta:
+        unique_together = (("valute_from", "valute_to"), )
+        verbose_name = 'Направление для обмена (новое)'
+        verbose_name_plural = 'Направления для обмена (новые)'
+        ordering = ['valute_from', 'valute_to']
+        indexes = [
+            models.Index(fields=['valute_from', 'valute_to'])
+        ]
     
     def clean(self) -> None:
         super().clean_fields()
@@ -143,19 +154,19 @@ class PopularDirection(models.Model):
 
 
 # new PopularDirection model
-class NewPopularDirection(models.Model):
-    name = models.CharField('Название',
-                            max_length=255)
-    directions = models.ManyToManyField(NewDirection,
-                                        verbose_name='Популярные направления',
-                                        blank=True)
+# class NewPopularDirection(models.Model):
+#     name = models.CharField('Название',
+#                             max_length=255)
+#     directions = models.ManyToManyField(NewDirection,
+#                                         verbose_name='Популярные направления',
+#                                         blank=True)
     
-    class Meta:
-        verbose_name = 'Популярное направление'
-        verbose_name_plural = 'Популярные направления'
+#     class Meta:
+#         verbose_name = 'Популярное направление'
+#         verbose_name_plural = 'Популярные направления'
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 #Модель готового направления
@@ -245,7 +256,7 @@ class ExchangeLinkCount(BaseExchangeLinkCount):
     
 
 # new ExchangeLinkCount model
-class NewExchangeLinkCount(BaseExchangeLinkCount):
+class NewExchangeLinkCount(NewBaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchanger,
                                  on_delete=models.SET_NULL,
                                  blank=True,
@@ -253,7 +264,7 @@ class NewExchangeLinkCount(BaseExchangeLinkCount):
                                  verbose_name='Обменник',
                                  related_name='no_cash_exchange_counts')
     user = models.ForeignKey(Guest,
-                             on_delete=models.SET_NULL,
+                             on_delete=models.CASCADE,
                              verbose_name='Гостевой пользователь',
                              related_name='new_no_cash_exchange_counts')
     exchange_direction = models.ForeignKey(NewExchangeDirection,

@@ -1,5 +1,7 @@
+from time import time
 import aiohttp
 import requests
+import copy
 
 from collections import defaultdict
 from typing import Literal
@@ -9,11 +11,14 @@ from django.db import connection, transaction
 
 from fastapi.exceptions import HTTPException
 
-from general_models.utils.endpoints import new_get_reviews_count_filters, try_generate_icon_url, get_reviews_count_filters
+from general_models.utils.endpoints import (new_get_reviews_count_filters,
+                                            try_generate_icon_url,
+                                            get_reviews_count_filters)
+from general_models.utils.base import annotate_string_field
 
 from general_models.schemas import MultipleName, MultipleName2
 
-from general_models.models import Valute
+from general_models.models import Valute, NewValute
 
 from cash.models import Direction as CashDirection, City
 
@@ -26,9 +31,18 @@ from partners.models import (Direction,
                              DirectionRate,
                              CountryDirectionRate,
                              NonCashDirection,
-                             NonCashDirectionRate)
+                             NonCashDirectionRate,
+                             NewNonCashDirection,
+                             NewNonCashDirectionRate,
+                             NewDirection,
+                             NewDirectionRate,
+                             NewCountryDirection,
+                             NewCountryDirectionRate,
+                             NewBankomat,
+                             NewQRValutePartner)
 
-from partners.schemas import (PartnerCityInfoSchema, PartnerCityInfoWithAmlSchema,
+from partners.schemas import (PartnerCityInfoSchema,
+                              PartnerCityInfoWithAmlSchema,
                               UpdatedTimeByPartnerCitySchema,
                               PartnerCitySchema2,
                               WeekDaySchema,
@@ -186,25 +200,94 @@ def get_partner_bankomats_by_valute(partner_id: int,
     return partner_bankomats
 
 
+def get_bankomats_by_valute(partner_id: int,
+                            valute_id: int,
+                            only_active: bool = False):
+    bankomats = NewBankomat.objects.prefetch_related('valutes')\
+                                .filter(valutes__pk=valute_id)\
+                                .all()
+
+    partner_valute = NewQRValutePartner.objects.filter(partner_id=partner_id,
+                                                       valute_id=valute_id)
+                                                
+    partner_bankomats = []
+
+    if partner_valute.exists():
+        partner_valute = partner_valute.first()
+
+        partner_valute_bankomats = partner_valute.bankomats\
+                                                    .values_list('pk',
+                                                                flat=True)
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'id': bankomat.pk,
+                'name': bankomat.name,
+                'available': bankomat.pk in partner_valute_bankomats,
+                'icon': try_generate_icon_url(bankomat)
+            }
+            partner_bankomats.append(partner_bankomat)
+    else:
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'id': bankomat.pk,
+                'name': bankomat.name,
+                'available': False,
+                'icon': try_generate_icon_url(bankomat)
+            }
+            partner_bankomats.append(partner_bankomat)
+    
+    if only_active:
+        partner_bankomats = [bankomat for bankomat in partner_bankomats \
+                             if bankomat['available']]
+
+    return partner_bankomats
+
+
 def test_get_partner_bankomats_by_valute(partner_id: int,
                                     bankomats: list[Bankomat],
                                     partner_valute_dict: dict,
                                     only_active: bool = False):
-    # bankomats = Bankomat.objects.prefetch_related('valutes')\
-    #                             .filter(valutes__name=valute)\
-    #                             .all()
-
-    # partner_valute = QRValutePartner.objects.filter(partner_id=partner_id,
-    #                                                 valute_id=valute)
     partner_valute = partner_valute_dict.get(partner_id)
                                                 
     partner_bankomats = []
 
     if partner_valute:
+        partner_valute_bankomats = [_bankomat.pk for _bankomat in partner_valute.bankomats.all()]
+        
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'id': bankomat.pk,
+                'name': bankomat.name,
+                'available': bankomat.pk in partner_valute_bankomats,
+                'icon': try_generate_icon_url(bankomat)
+            }
+            partner_bankomats.append(partner_bankomat)
+    else:
+        for bankomat in bankomats:
+            partner_bankomat = {
+                'id': bankomat.pk,
+                'name': bankomat.name,
+                'available': False,
+                'icon': try_generate_icon_url(bankomat)
+            }
+            partner_bankomats.append(partner_bankomat)
+    
+    if only_active:
+        partner_bankomats = [bankomat for bankomat in partner_bankomats \
+                             if bankomat['available']]
 
-        # partner_valute_bankomats = partner_valute.bankomats\
-        #                                             .values_list('pk',
-        #                                                         flat=True)
+    return partner_bankomats
+
+
+def new_get_partner_bankomats_by_valute(partner_id: int,
+                                    bankomats: list[Bankomat],
+                                    partner_valute_dict: dict,
+                                    only_active: bool = False):
+    partner_valute = partner_valute_dict.get(partner_id)
+                                                
+    partner_bankomats = []
+
+    if partner_valute:
         partner_valute_bankomats = [_bankomat.pk for _bankomat in partner_valute.bankomats.all()]
         
         for bankomat in bankomats:
@@ -1710,89 +1793,804 @@ def new_test_get_partner_directions2_with_aml2(valute_from: str,
     return result
 
 
+def generate_partner_city_direction(direction: NewDirection,
+                                    _bankomats: list[NewBankomat],
+                                    partner_valute_dict: dict):
+    # direction_dict = {
+    #     'exchange': direction.city.exchange,
+    #     # for sort
+    #     'is_vip': direction.city.exchange.is_vip,
+    #     'exchange_direction_id': direction.pk,
+    #     'direction': direction.direction,
+    #     'direction_marker': 'city',
+    #     'valute_from': direction.direction.valute_from_id,
+    #     'valute_to': direction.direction.valute_to_id,
+    #     'params': None,
+    #     'fromfee': None,
+    # }
 
-def get_no_cash_partner_directions(valute_from: str,
-                                   valute_to: str):
-    print(valute_from, valute_to)
-    review_counts = new_get_reviews_count_filters('exchange_direction')
+    city = direction.city
+
+    _valute_to: NewValute = direction.direction.valute_to
+    _partner_id = city.exchange.account.pk
     
-    partner_prefetch = Prefetch('direction_rates',
-                                queryset=NonCashDirectionRate.objects.order_by('min_rate_limit'))
+    min_amount = str(int(city.min_amount)) if city.min_amount else None
+    max_amount = str(int(city.max_amount)) if city.max_amount else None
+
+    exchange_rates = direction.direction_rates.all()
+
+    _in_count = direction.in_count
+    _out_count = direction.out_count
+    _direction_min_amount = direction.min_amount
+    _direction_max_amount = direction.max_amount
+
+    addittional_exchange_rates = None
+
+    if exchange_rates:
+        exchange_rate_list = [(el.in_count,
+                                el.out_count,
+                                el.min_rate_limit,
+                                el.max_rate_limit,
+                                el.rate_coefficient) for el in exchange_rates]
+        exchange_rate_list.append((_in_count,
+                                    _out_count,
+                                    _direction_min_amount,
+                                    _direction_max_amount,
+                                    None))
+
+        sorted_exchange_rates = sorted(exchange_rate_list,
+                                        key=lambda el: (-el[1], el[0]))
+        
+        best_exchange_rate = sorted_exchange_rates[0]
+        _in_count, _out_count, _, _, _ = best_exchange_rate
+
+        addittional_exchange_rates = sorted_exchange_rates
+
+    _in_count, _out_count = valid_value_for_partner_in_out_count(_in_count, _out_count)
+
+    if addittional_exchange_rates:
+        exchange_rate_list = []
+        for el in addittional_exchange_rates:
+            in_count, out_count = el[0], el[1]
+            in_count, out_count = valid_value_for_partner_in_out_count(in_count, out_count)
+            exchange_rate_list.append(
+                {
+                'in_count': in_count,
+                'out_count': out_count,
+                'min_count': el[2],
+                'max_count': el[3],
+                'rate_coefficient': el[-1],
+                }
+            )
+        direction.exchange_rates = exchange_rate_list
     
-    directions = NonCashDirection.objects.select_related('exchange',
-                                                                 'direction',
+    else:
+        direction.exchange_rates = None
+
+    direction.exchange = city.exchange
+    # direction.exchange_marker = 'partner'
+    direction.direction_marker = 'city'
+    direction.valute_from = direction.direction.valute_from.code_name
+    direction.valute_to = direction.direction.valute_to.code_name
+    direction.min_amount = min_amount
+    direction.max_amount = max_amount
+    direction.in_count = _in_count
+    direction.out_count = _out_count
+
+    direction.city_model = city.city
+    direction.country_model = city.city.country
+
+    direction.params = None
+    direction.fromfee = None
+
+    weekdays = WeekDaySchema(time_from=city.time_from,
+                                time_to=city.time_to)
+
+    weekends = WeekDaySchema(time_from=city.weekend_time_from,
+                                time_to=city.weekend_time_to)
+
+    working_days = {key.upper(): value \
+                    for key, value in WORKING_DAYS_DICT.items()}
+    
+    [working_days.__setitem__(day.code_name.upper(), True) \
+        for day in city.working_days.all()]
+
+    if _valute_to.type_valute == 'ATM QR':
+        bankomats = new_get_partner_bankomats_by_valute(_partner_id,
+                                                        _bankomats,
+                                                        partner_valute_dict,
+                                                        only_active=True)
+    else:
+        bankomats = None
+
+    direction.info = PartnerCityInfoWithAmlSchema(
+        delivery=city.has_delivery,
+        office=city.has_office,
+        working_days=working_days,
+        weekdays=weekdays,
+        weekends=weekends,
+        bankomats=bankomats,
+        high_aml=city.exchange.high_aml,
+        )
+    
+    # direction_dict.update({
+    #     'min_amount': min_amount,
+    #     'max_amount': max_amount,
+    #     'in_count': _in_count,
+    #     'out_count': _out_count,
+    #     'city_model': city_model,
+    #     'country_model': country_model,
+    #     'info': info,
+    # })
+    
+    return direction
+
+
+def generate_partner_city_direction_for_location(direction: NewDirection,
+                                                 _bankomats: list[NewBankomat],
+                                                 partner_valute_dict: dict):
+    direction_dict = {
+        'exchange': direction.city.exchange,
+        # for sort
+        'is_vip': direction.city.exchange.is_vip,
+        'exchange_direction_id': direction.pk,
+        'direction': direction.direction,
+        'direction_marker': 'city',
+        'valute_from': direction.direction.valute_from_id,
+        'valute_to': direction.direction.valute_to_id,
+        'params': None,
+        'fromfee': None,
+    }
+
+    city = direction.city
+
+    _valute_to: NewValute = direction.direction.valute_to
+    _partner_id = city.exchange.account.pk
+    
+    min_amount = str(int(city.min_amount)) if city.min_amount else None
+    max_amount = str(int(city.max_amount)) if city.max_amount else None
+
+    exchange_rates = direction.direction_rates.all()
+
+    _in_count = direction.in_count
+    _out_count = direction.out_count
+    _direction_min_amount = direction.min_amount
+    _direction_max_amount = direction.max_amount
+
+    addittional_exchange_rates = None
+
+    if exchange_rates:
+        exchange_rate_list = [(el.in_count,
+                                el.out_count,
+                                el.min_rate_limit,
+                                el.max_rate_limit,
+                                el.rate_coefficient) for el in exchange_rates]
+        exchange_rate_list.append((_in_count,
+                                    _out_count,
+                                    _direction_min_amount,
+                                    _direction_max_amount,
+                                    None))
+
+        sorted_exchange_rates = sorted(exchange_rate_list,
+                                        key=lambda el: (-el[1], el[0]))
+        
+        best_exchange_rate = sorted_exchange_rates[0]
+        _in_count, _out_count, _, _, _ = best_exchange_rate
+
+        addittional_exchange_rates = sorted_exchange_rates
+
+    _in_count, _out_count = valid_value_for_partner_in_out_count(_in_count, _out_count)
+
+    if addittional_exchange_rates:
+        exchange_rate_list = []
+        for el in addittional_exchange_rates:
+            in_count, out_count = el[0], el[1]
+            in_count, out_count = valid_value_for_partner_in_out_count(in_count, out_count)
+            exchange_rate_list.append(
+                {
+                'in_count': in_count,
+                'out_count': out_count,
+                'min_count': el[2],
+                'max_count': el[3],
+                'rate_coefficient': el[-1],
+                }
+            )
+        direction_dict['exchange_rates'] = exchange_rate_list
+    
+    else:
+        direction_dict['exchange_rates'] = None
+
+    # direction.exchange = city.exchange
+    # direction.exchange_marker = 'partner'
+    # direction.direction_marker = 'city'
+    # direction.valute_from = direction.direction.valute_from.code_name
+    # direction.valute_to = direction.direction.valute_to.code_name
+    # direction.min_amount = min_amount
+    # direction.max_amount = max_amount
+    # direction.in_count = _in_count
+    # direction.out_count = _out_count
+
+    city_model = city.city
+    country_model = city.city.country
+
+    # direction.params = None
+    # direction.fromfee = None
+
+    weekdays = WeekDaySchema(time_from=city.time_from,
+                                time_to=city.time_to)
+
+    weekends = WeekDaySchema(time_from=city.weekend_time_from,
+                                time_to=city.weekend_time_to)
+
+    working_days = {key.upper(): value \
+                    for key, value in WORKING_DAYS_DICT.items()}
+    
+    [working_days.__setitem__(day.code_name.upper(), True) \
+        for day in city.working_days.all()]
+
+    if _valute_to.type_valute == 'ATM QR':
+        bankomats = new_get_partner_bankomats_by_valute(_partner_id,
+                                                        _bankomats,
+                                                        partner_valute_dict,
+                                                        only_active=True)
+    else:
+        bankomats = None
+
+    info = PartnerCityInfoWithAmlSchema(
+        delivery=city.has_delivery,
+        office=city.has_office,
+        working_days=working_days,
+        weekdays=weekdays,
+        weekends=weekends,
+        bankomats=bankomats,
+        high_aml=city.exchange.high_aml,
+        )
+    
+    direction_dict.update({
+        'min_amount': min_amount,
+        'max_amount': max_amount,
+        'in_count': _in_count,
+        'out_count': _out_count,
+        'city_model': city_model,
+        'country_model': country_model,
+        'info': info,
+    })
+    
+    return direction_dict
+
+
+def get_partner_directions_with_aml(valute_from: str,
+                                     valute_to: str,
+                                     city: str = None):
+    # valute_to
+    _valute_to_obj = NewValute.objects.get(code_name=valute_to)
+    
+    if _valute_to_obj.type_valute == 'ATM QR':
+        # bankomats
+        _bankomats = NewBankomat.objects.filter(valutes__name=_valute_to_obj.name)\
+                                        .all()
+        # qrvalutepartner
+        partner_valute = NewQRValutePartner.objects.prefetch_related('bankomats')\
+                                                .filter(valute_id=_valute_to_obj.pk)
+        partner_valute_dict = {p_v.partner_id: p_v for p_v in partner_valute}
+    else:
+        _bankomats = None
+        partner_valute_dict = None
+
+    direction_rate_prefetch = Prefetch('direction_rates',
+                                       NewDirectionRate.objects.order_by('min_rate_limit'))
+
+    directions = NewDirection.objects\
+                            .select_related('direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to',
+                                            'city',
+                                            'city__city',
+                                            'city__city__country',
+                                            'city__exchange',
+                                            'city__exchange__account')\
+                            .prefetch_related(direction_rate_prefetch,
+                                              'city__working_days')\
+                            .annotate(direction_marker=annotate_string_field('city'))\
+                            .filter(direction__valute_from_id=valute_from,
+                                    direction__valute_to_id=valute_to,
+                                    is_active=True,
+                                    city__exchange__is_active=True,
+                                    city__exchange__partner_link__isnull=False)
+
+    country_direction_rate_prefetch = Prefetch('direction_rates',
+                                       NewCountryDirectionRate.objects.order_by('min_rate_limit'))
+    
+    unavailable_cities_by_partner_country_prefetch = Prefetch('country__exclude_cities',
+                                                            queryset=City.objects.select_related('country').filter(is_parse=True))
+    country_cities_prefetch = Prefetch('country__country__cities',
+                                        queryset=City.objects.select_related('country').filter(is_parse=True))
+
+    country_directions = NewCountryDirection.objects.select_related('direction',
                                                                  'direction__valute_from',
-                                                                 'direction__valute_to')\
-                                                    .prefetch_related(partner_prefetch)\
-                                                    .annotate(positive_review_count=review_counts['positive'])\
-                                                    .annotate(neutral_review_count=review_counts['neutral'])\
-                                                    .annotate(negative_review_count=review_counts['negative'])\
-                                                    .filter(direction__valute_from=valute_from,
-                                                            direction__valute_to=valute_to,
-                                                            is_active=True,
-                                                            exchange__is_active=True)
+                                                                 'direction__valute_to',
+                                                                 'country',
+                                                                 'country__exchange',
+                                                                 'country__exchange__account',
+                                                                 'country__country')\
+                                                .prefetch_related(country_direction_rate_prefetch,
+                                                                  unavailable_cities_by_partner_country_prefetch,
+                                                                  country_cities_prefetch,
+                                                                #   'country__country__cities',
+                                                                  'country__working_days')\
+                                                .annotate(direction_marker=annotate_string_field('country'))\
+                                                .filter(direction__valute_from=valute_from,
+                                                        direction__valute_to=valute_to,
+                                                        is_active=True,
+                                                        country__exchange__is_active=True,
+                                                        country__exchange__partner_link__isnull=False)
+
+    if city:
+        directions = directions.filter(city__city__code_name=city)
+        country_directions = country_directions.filter(country__country__cities__code_name=city)
 
     direction_list = []
     for direction in directions:
-
-        exchange_rates = direction.direction_rates.all()
-
-        _in_count = direction.in_count
-        _out_count = direction.out_count
-        _direction_min_amount = direction.min_amount
-        _direction_max_amount = direction.max_amount
-
-        addittional_exchange_rates = None
-
-        if exchange_rates:
-            exchange_rate_list = [(el.in_count,
-                                   el.out_count,
-                                   el.min_rate_limit,
-                                   el.max_rate_limit,
-                                   el.rate_coefficient) for el in exchange_rates]
-            exchange_rate_list.append((_in_count,
-                                       _out_count,
-                                       int(_direction_min_amount) if _direction_min_amount else None,
-                                       int(_direction_max_amount) if _direction_min_amount else None,
-                                       None))
-
-            sorted_exchange_rates = sorted(exchange_rate_list,
-                                           key=lambda el: (-el[1], el[0]))
-            
-            best_exchange_rate = sorted_exchange_rates[0]
-            _in_count, _out_count, _min_amount, _max_amount, _ = best_exchange_rate
-
-            addittional_exchange_rates = sorted_exchange_rates
-
-        print('after', _in_count, _out_count)
-
-        if addittional_exchange_rates:
-            direction.exchange_rates = [{'in_count': el[0],
-                                         'out_count': el[1],
-                                         'min_count': el[2],
-                                         'max_count': el[3],
-                                         'rate_coefficient': el[-1]} for el in addittional_exchange_rates]
-        else:
-            direction.exchange_rates = None
-
-        direction.exchange_marker = 'partner'
-        direction.valute_from = valute_from
-        direction.valute_to = valute_to
-        direction.min_amount = str(_direction_min_amount) if _direction_min_amount else None
-        direction.max_amount = str(_direction_max_amount) if _direction_max_amount else None
-        direction.in_count = _in_count
-        direction.out_count = _out_count
-        direction.params = None
-        direction.fromfee = None
-
-        # direction.info = PartnerCityInfoWithAmlSchema(
-        #     high_aml=direction.exchange.high_aml,
-        #     )
+        direction = generate_partner_city_direction(direction,
+                                                    _bankomats,
+                                                    partner_valute_dict)
         direction_list.append(direction)
+
+    country_direction_list = []
+    if country_directions.exists():
+
+        for direction in country_directions:
+            _partner_country = direction.country
+
+            excluded_cities_code_name_set = {city.code_name for city in _partner_country.exclude_cities.all()}
+
+            if city is not None and city in excluded_cities_code_name_set:
+                continue
+
+            _valute_to: NewValute = direction.direction.valute_to
+            _partner_id = direction.country.exchange.account.pk
+
+            min_amount = str(int(direction.country.min_amount)) \
+                if direction.country.min_amount else None
+            max_amount = str(int(direction.country.max_amount)) \
+                if direction.country.max_amount else None
+            
+            exchange_rates = direction.direction_rates.all()
+
+            _in_count = direction.in_count
+            _out_count = direction.out_count
+            _direction_min_amount = direction.min_amount
+            _direction_max_amount = direction.max_amount
+
+            addittional_exchange_rates = None
+
+            if exchange_rates:
+                exchange_rate_list = [(el.in_count,
+                                    el.out_count,
+                                    el.min_rate_limit,
+                                    el.max_rate_limit,
+                                    el.rate_coefficient) for el in exchange_rates]
+                exchange_rate_list.append((_in_count,
+                                        _out_count,
+                                        _direction_min_amount,
+                                        _direction_max_amount,
+                                        None))
+
+                sorted_exchange_rates = sorted(exchange_rate_list,
+                                            key=lambda el: (-el[1], el[0]))
+                
+                best_exchange_rate = sorted_exchange_rates[0]
+                _in_count, _out_count, _, _, _ = best_exchange_rate
+
+                addittional_exchange_rates = sorted_exchange_rates
+
+            _in_count, _out_count = valid_value_for_partner_in_out_count(_in_count, _out_count)
+
+            if addittional_exchange_rates:
+                exchange_rate_list = []
+                for el in addittional_exchange_rates:
+                    in_count, out_count = el[0], el[1]
+                    in_count, out_count = valid_value_for_partner_in_out_count(in_count, out_count)
+                    exchange_rate_list.append(
+                        {
+                        'in_count': in_count,
+                        'out_count': out_count,
+                        'min_count': el[2],
+                        'max_count': el[3],
+                        'rate_coefficient': el[-1],
+                        }
+                    )
+                direction.exchange_rates = exchange_rate_list
+
+            else:
+                direction.exchange_rates = None
+
+            direction.exchange = direction.country.exchange
+            # direction.exchange_marker = 'partner'
+            direction.direction_marker = 'country'
+            direction.valute_from = valute_from
+            direction.valute_to = valute_to
+            direction.min_amount = min_amount
+            direction.max_amount = max_amount
+            direction.in_count = _in_count
+            direction.out_count = _out_count
+            direction.params = None
+            direction.fromfee = None
+
+            weekdays = WeekDaySchema(time_from=direction.country.time_from,
+                                    time_to=direction.country.time_to)
+
+            weekends = WeekDaySchema(time_from=direction.country.weekend_time_from,
+                                    time_to=direction.country.weekend_time_to)
+
+            working_days = {key.upper(): value \
+                            for key, value in WORKING_DAYS_DICT.items()}
+            
+            [working_days.__setitem__(day.code_name.upper(), True) \
+            for day in _partner_country.working_days.all()]
+
+            if _valute_to.type_valute == 'ATM QR':
+                bankomats = new_get_partner_bankomats_by_valute(_partner_id,
+                                                                 _bankomats,
+                                                                 partner_valute_dict,
+                                                                 only_active=True)
+            else:
+                bankomats = None
+
+            direction.info = PartnerCityInfoWithAmlSchema(
+                delivery=direction.country.has_delivery,
+                office=direction.country.has_office,
+                working_days=working_days,
+                weekdays=weekdays,
+                weekends=weekends,
+                bankomats=bankomats,
+                high_aml=direction.country.exchange.high_aml,
+                )
+            country_direction_list.append(direction)
+
+    check_set = set()
+
+    result = []
+
+    # for sequence in (directions, country_directions):
+    for sequence in (direction_list, country_direction_list):
+        for direction in sequence:
+            if not direction.exchange.pk in check_set:
+                check_set.add(direction.exchange_id)
+                result.append(direction)
+
+    return result
+
+
+
+def get_partner_directions_with_location(valute_from: str,
+                                         valute_to: str):
+    start_time = time()
+    # valute_to
+    _valute_to_obj = NewValute.objects.get(code_name=valute_to)
     
-    for d in direction_list:
-        print(d.__dict__)
-    return direction_list
+    if _valute_to_obj.type_valute == 'ATM QR':
+        # bankomats
+        _bankomats = NewBankomat.objects.filter(valutes__name=_valute_to_obj.name)\
+                                        .all()
+        # qrvalutepartner
+        partner_valute = NewQRValutePartner.objects.prefetch_related('bankomats')\
+                                                .filter(valute_id=_valute_to_obj.pk)
+        partner_valute_dict = {p_v.partner_id: p_v for p_v in partner_valute}
+    else:
+        _bankomats = None
+        partner_valute_dict = None
+
+    direction_rate_prefetch = Prefetch('direction_rates',
+                                       NewDirectionRate.objects.order_by('min_rate_limit'))
+
+    directions = NewDirection.objects\
+                            .select_related('direction',
+                                            'direction__valute_from',
+                                            'direction__valute_to',
+                                            'city',
+                                            'city__city',
+                                            'city__city__country',
+                                            'city__exchange',
+                                            'city__exchange__account')\
+                            .prefetch_related(direction_rate_prefetch,
+                                              'city__working_days')\
+                            .annotate(direction_marker=annotate_string_field('city'))\
+                            .filter(direction__valute_from_id=valute_from,
+                                    direction__valute_to_id=valute_to,
+                                    is_active=True,
+                                    city__exchange__is_active=True,
+                                    city__exchange__partner_link__isnull=False)
+
+    country_direction_rate_prefetch = Prefetch('direction_rates',
+                                       NewCountryDirectionRate.objects.order_by('min_rate_limit'))
+    
+    unavailable_cities_by_partner_country_prefetch = Prefetch('country__exclude_cities',
+                                                            queryset=City.objects.select_related('country')\
+                                                                                .filter(is_parse=True))
+    country_cities_prefetch = Prefetch('country__country__cities',
+                                        queryset=City.objects.select_related('country')\
+                                                            .filter(is_parse=True))
+
+    country_directions = NewCountryDirection.objects.select_related('direction',
+                                                                 'direction__valute_from',
+                                                                 'direction__valute_to',
+                                                                 'country',
+                                                                 'country__exchange',
+                                                                 'country__exchange__account',
+                                                                 'country__country')\
+                                                .prefetch_related(country_direction_rate_prefetch,
+                                                                  unavailable_cities_by_partner_country_prefetch,
+                                                                  country_cities_prefetch,
+                                                                #   'country__country__cities',
+                                                                  'country__working_days')\
+                                                .annotate(direction_marker=annotate_string_field('country'))\
+                                                .filter(direction__valute_from_id=valute_from,
+                                                        direction__valute_to_id=valute_to,
+                                                        is_active=True,
+                                                        country__exchange__is_active=True,
+                                                        country__exchange__partner_link__isnull=False)
+
+    direction_list = []
+    for direction in directions:
+        direction_dict: dict = generate_partner_city_direction_for_location(direction,
+                                                                            _bankomats,
+                                                                            partner_valute_dict)
+        direction_list.append(direction_dict)
+
+    country_direction_list = []
+    if country_directions.exists():
+
+        for country_direction in country_directions:
+            _partner_country = country_direction.country
+            _country = _partner_country.country
+
+            country_cities: list[City] = _country.cities.all()
+            excluded_cities_code_name_set = {city.code_name for city in _partner_country.exclude_cities.all()}
+
+            _valute_to: NewValute = country_direction.direction.valute_to
+            _partner_id = country_direction.country.exchange.account.pk
+
+            min_amount = str(int(country_direction.country.min_amount)) \
+                if country_direction.country.min_amount else None
+            max_amount = str(int(country_direction.country.max_amount)) \
+                if country_direction.country.max_amount else None
+            
+            exchange_rates = country_direction.direction_rates.all()
+
+            _in_count = country_direction.in_count
+            _out_count = country_direction.out_count
+            _direction_min_amount = country_direction.min_amount
+            _direction_max_amount = country_direction.max_amount
+
+            addittional_exchange_rates = None
+
+            if exchange_rates:
+                exchange_rate_list = [(el.in_count,
+                                    el.out_count,
+                                    el.min_rate_limit,
+                                    el.max_rate_limit,
+                                    el.rate_coefficient) for el in exchange_rates]
+                exchange_rate_list.append((_in_count,
+                                        _out_count,
+                                        _direction_min_amount,
+                                        _direction_max_amount,
+                                        None))
+
+                sorted_exchange_rates = sorted(exchange_rate_list,
+                                            key=lambda el: (-el[1], el[0]))
+                
+                best_exchange_rate = sorted_exchange_rates[0]
+                _in_count, _out_count, _, _, _ = best_exchange_rate
+
+                addittional_exchange_rates = sorted_exchange_rates
+
+            _in_count, _out_count = valid_value_for_partner_in_out_count(_in_count, _out_count)
+
+            common_data_dict = {
+                'exchange_direction_id': country_direction.pk,
+                'exchange': country_direction.country.exchange,
+                # for sort
+                'is_vip': country_direction.country.exchange.is_vip,
+                'direction': country_direction.direction,
+                'direction_marker': 'country',
+                'valute_from': country_direction.direction.valute_from_id,
+                'valute_to': country_direction.direction.valute_to_id,
+                'params': None,
+                'fromfee': None,
+            }
+
+            if addittional_exchange_rates:
+                exchange_rate_list = []
+                for el in addittional_exchange_rates:
+                    in_count, out_count = el[0], el[1]
+                    in_count, out_count = valid_value_for_partner_in_out_count(in_count, out_count)
+                    exchange_rate_list.append(
+                        {
+                        'in_count': in_count,
+                        'out_count': out_count,
+                        'min_count': el[2],
+                        'max_count': el[3],
+                        'rate_coefficient': el[-1],
+                        }
+                    )
+                common_data_dict['exchange_rates'] = exchange_rate_list
+
+            else:
+                common_data_dict['exchange_rates'] = None
+
+            # _country_direction.exchange = _country_direction.country.exchange
+            # direction.exchange_marker = 'partner'
+            # _country_direction.direction_marker = 'country'
+            # _country_direction.valute_from = valute_from
+            # _country_direction.valute_to = valute_to
+            # _country_direction.min_amount = min_amount
+            # _country_direction.max_amount = max_amount
+            # _country_direction.in_count = _in_count
+            # _country_direction.out_count = _out_count
+            #
+            # _country_direction.city_model = city
+            # _country_direction.country_model = city.country
+            #
+            # _country_direction.params = None
+            # _country_direction.fromfee = None
+
+            weekdays = WeekDaySchema(time_from=country_direction.country.time_from,
+                                    time_to=country_direction.country.time_to)
+
+            weekends = WeekDaySchema(time_from=country_direction.country.weekend_time_from,
+                                    time_to=country_direction.country.weekend_time_to)
+
+            working_days = {key.upper(): value \
+                            for key, value in WORKING_DAYS_DICT.items()}
+            
+            [working_days.__setitem__(day.code_name.upper(), True) \
+            for day in _partner_country.working_days.all()]
+
+            if _valute_to.type_valute == 'ATM QR':
+                bankomats = new_get_partner_bankomats_by_valute(_partner_id,
+                                                                _bankomats,
+                                                                partner_valute_dict,
+                                                                only_active=True)
+            else:
+                bankomats = None
+
+            info = PartnerCityInfoWithAmlSchema(
+                delivery=country_direction.country.has_delivery,
+                office=country_direction.country.has_office,
+                working_days=working_days,
+                weekdays=weekdays,
+                weekends=weekends,
+                bankomats=bankomats,
+                high_aml=country_direction.country.exchange.high_aml,
+                )
+            
+            common_data_dict.update({
+                'min_amount': min_amount,
+                'max_amount': max_amount,
+                'in_count': _in_count,
+                'out_count': _out_count,
+                'country_model': country_direction.country.country,
+                'info': info,
+            })
+
+            for city in country_cities:
+                if city.code_name in excluded_cities_code_name_set:
+                    continue
+                
+                country_dict = copy.deepcopy(common_data_dict)
+                # _country_direction.country_model = city.country
+                country_dict['city_model'] = city
+
+                country_direction_list.append(country_dict)
+
+    check_set = set()
+
+    result = []
+
+    # for sequence in (directions, country_directions):
+    for sequence in (direction_list, country_direction_list):
+        for direction in sequence:
+            direction: dict
+            check_tuple = (direction['exchange'].pk,
+                           direction['direction'].valute_from_id,
+                           direction['direction'].valute_to_id,
+                           direction['city_model'].pk)
+            
+            if not check_tuple in check_set:
+                check_set.add(check_tuple)
+                result.append(direction)
+
+    # print(check_set)
+
+    print(f'time generating partner direction with location {time() - start_time} sec')
+
+    return result
+
+
+
+# def get_no_cash_partner_directions(valute_from: str,
+#                                    valute_to: str):
+#     print(valute_from, valute_to)
+#     review_counts = new_get_reviews_count_filters('exchange_direction')
+    
+#     partner_prefetch = Prefetch('direction_rates',
+#                                 queryset=NonCashDirectionRate.objects.order_by('min_rate_limit'))
+    
+#     directions = NonCashDirection.objects.select_related('exchange',
+#                                                                  'direction',
+#                                                                  'direction__valute_from',
+#                                                                  'direction__valute_to')\
+#                                                     .prefetch_related(partner_prefetch)\
+#                                                     .annotate(positive_review_count=review_counts['positive'])\
+#                                                     .annotate(neutral_review_count=review_counts['neutral'])\
+#                                                     .annotate(negative_review_count=review_counts['negative'])\
+#                                                     .filter(direction__valute_from=valute_from,
+#                                                             direction__valute_to=valute_to,
+#                                                             is_active=True,
+#                                                             exchange__is_active=True)
+
+#     direction_list = []
+#     for direction in directions:
+
+#         exchange_rates = direction.direction_rates.all()
+
+#         _in_count = direction.in_count
+#         _out_count = direction.out_count
+#         _direction_min_amount = direction.min_amount
+#         _direction_max_amount = direction.max_amount
+
+#         addittional_exchange_rates = None
+
+#         if exchange_rates:
+#             exchange_rate_list = [(el.in_count,
+#                                    el.out_count,
+#                                    el.min_rate_limit,
+#                                    el.max_rate_limit,
+#                                    el.rate_coefficient) for el in exchange_rates]
+#             exchange_rate_list.append((_in_count,
+#                                        _out_count,
+#                                        int(_direction_min_amount) if _direction_min_amount else None,
+#                                        int(_direction_max_amount) if _direction_min_amount else None,
+#                                        None))
+
+#             sorted_exchange_rates = sorted(exchange_rate_list,
+#                                            key=lambda el: (-el[1], el[0]))
+            
+#             best_exchange_rate = sorted_exchange_rates[0]
+#             _in_count, _out_count, _min_amount, _max_amount, _ = best_exchange_rate
+
+#             addittional_exchange_rates = sorted_exchange_rates
+
+#         print('after', _in_count, _out_count)
+
+#         if addittional_exchange_rates:
+#             direction.exchange_rates = [{'in_count': el[0],
+#                                          'out_count': el[1],
+#                                          'min_count': el[2],
+#                                          'max_count': el[3],
+#                                          'rate_coefficient': el[-1]} for el in addittional_exchange_rates]
+#         else:
+#             direction.exchange_rates = None
+
+#         direction.exchange_marker = 'partner'
+#         direction.valute_from = valute_from
+#         direction.valute_to = valute_to
+#         direction.min_amount = str(_direction_min_amount) if _direction_min_amount else None
+#         direction.max_amount = str(_direction_max_amount) if _direction_max_amount else None
+#         direction.in_count = _in_count
+#         direction.out_count = _out_count
+#         direction.params = None
+#         direction.fromfee = None
+
+#         # direction.info = PartnerCityInfoWithAmlSchema(
+#         #     high_aml=direction.exchange.high_aml,
+#         #     )
+#         direction_list.append(direction)
+    
+#     for d in direction_list:
+#         print(d.__dict__)
+#     return direction_list
 
 
 def valid_value_for_partner_in_out_count(in_count: float,
@@ -1905,6 +2703,118 @@ def new_get_no_cash_partner_directions(valute_from: str,
             direction.exchange_rates = None
 
         direction.exchange_marker = 'partner'
+        direction.valute_from = valute_from
+        direction.valute_to = valute_to
+        direction.min_amount = str(_direction_min_amount) if _direction_min_amount else None
+        direction.max_amount = str(_direction_max_amount) if _direction_max_amount else None
+        direction.in_count = _in_count
+        direction.out_count = _out_count
+        direction.params = None
+        direction.fromfee = None
+
+        # direction.info = PartnerCityInfoWithAmlSchema(
+        #     high_aml=direction.exchange.high_aml,
+        #     )
+        direction_list.append(direction)
+    
+    # for d in direction_list:
+    #     print(d.__dict__)
+    return direction_list
+
+
+def get_no_cash_partner_directions(valute_from: str,
+                                   valute_to: str):
+    # print(valute_from, valute_to)
+    # review_counts = new_get_reviews_count_filters('exchange_direction')
+    
+    partner_prefetch = Prefetch('direction_rates',
+                                queryset=NewNonCashDirectionRate.objects.order_by('min_rate_limit'))
+    
+    directions = NewNonCashDirection.objects.select_related('exchange',
+                                                                 'direction',
+                                                                 'direction__valute_from',
+                                                                 'direction__valute_to')\
+                                                    .prefetch_related(partner_prefetch)\
+                                                    .annotate(direction_marker=annotate_string_field('no_cash'))\
+                                                    .filter(direction__valute_from=valute_from,
+                                                            direction__valute_to=valute_to,
+                                                            is_active=True,
+                                                            exchange__is_active=True)
+                                                    # .values(
+                                                    #     'pk',
+                                                    #     'exchange',
+                                                    #     'direction__valute_from',
+                                                    #     'direction__valute_to',
+                                                    #     'in_count',
+                                                    #     'out_count',
+                                                    #     'min_amount',
+                                                    #     'max_amount',
+                                                    #     'params',
+                                                    #     'fromfee',
+                                                    # )\
+                                                    # .annotate(positive_review_count=review_counts['positive'])\
+                                                    # .annotate(neutral_review_count=review_counts['neutral'])\
+                                                    # .annotate(negative_review_count=review_counts['negative'])\
+
+    direction_list = []
+    for direction in directions:
+
+        exchange_rates = direction.direction_rates.all()
+
+        _in_count = direction.in_count
+        _out_count = direction.out_count
+        _direction_min_amount = direction.min_amount
+        _direction_max_amount = direction.max_amount
+
+        addittional_exchange_rates = None
+
+        if exchange_rates:
+            exchange_rate_list = [(el.in_count,
+                                   el.out_count,
+                                   el.min_rate_limit,
+                                   el.max_rate_limit,
+                                   el.rate_coefficient) for el in exchange_rates]
+            exchange_rate_list.append((_in_count,
+                                       _out_count,
+                                       int(_direction_min_amount) if _direction_min_amount else None,
+                                       int(_direction_max_amount) if _direction_min_amount else None,
+                                       None))
+
+            sorted_exchange_rates = sorted(exchange_rate_list,
+                                           key=lambda el: (-el[1], el[0]))
+            
+            best_exchange_rate = sorted_exchange_rates[0]
+            _in_count, _out_count, _, _, _ = best_exchange_rate
+
+            addittional_exchange_rates = sorted_exchange_rates
+
+        # print('after', _in_count, _out_count)
+        _in_count, _out_count = valid_value_for_partner_in_out_count(_in_count, _out_count)
+
+        if addittional_exchange_rates:
+            exchange_rate_list = []
+            for el in addittional_exchange_rates:
+                in_count, out_count = el[0], el[1]
+                in_count, out_count = valid_value_for_partner_in_out_count(in_count, out_count)
+                exchange_rate_list.append(
+                    {
+                    'in_count': in_count,
+                    'out_count': out_count,
+                    'min_count': el[2],
+                    'max_count': el[3],
+                    'rate_coefficient': el[-1],
+                    }
+                )
+            direction.exchange_rates = exchange_rate_list
+            # direction.exchange_rates = [{'in_count': el[0],
+            #                              'out_count': el[1],
+            #                              'min_count': el[2],
+            #                              'max_count': el[3],
+            #                              'rate_coefficient': el[-1]} for el in addittional_exchange_rates]
+        else:
+            direction.exchange_rates = None
+
+        # direction.exchange_marker = 'partner'
         direction.valute_from = valute_from
         direction.valute_to = valute_to
         direction.min_amount = str(_direction_min_amount) if _direction_min_amount else None
@@ -2662,65 +3572,65 @@ def test_get_partner_directions3(valute_from: str,
     return result
 
 
-def get_partner_directions_with_location(valute_from: str,
-                                         valute_to: str):
-    direction_name = valute_from + ' -> ' + valute_to
+# def get_partner_directions_with_location(valute_from: str,
+#                                          valute_to: str):
+#     direction_name = valute_from + ' -> ' + valute_to
 
-    review_counts = get_reviews_count_filters('partner_direction')
+#     review_counts = get_reviews_count_filters('partner_direction')
 
-    directions = Direction.objects\
-                            .select_related('direction',
-                                            'direction__valute_from',
-                                            'direction__valute_to',
-                                            'city',
-                                            'city__city',
-                                            'city__city__country',
-                                            'city__exchange')\
-                            .annotate(positive_review_count=review_counts['positive'])\
-                            .annotate(neutral_review_count=review_counts['neutral'])\
-                            .annotate(negative_review_count=review_counts['negative'])\
-                            .filter(direction__display_name=direction_name,
-                                    is_active=True,
-                                    city__exchange__partner_link__isnull=False)
+#     directions = Direction.objects\
+#                             .select_related('direction',
+#                                             'direction__valute_from',
+#                                             'direction__valute_to',
+#                                             'city',
+#                                             'city__city',
+#                                             'city__city__country',
+#                                             'city__exchange')\
+#                             .annotate(positive_review_count=review_counts['positive'])\
+#                             .annotate(neutral_review_count=review_counts['neutral'])\
+#                             .annotate(negative_review_count=review_counts['negative'])\
+#                             .filter(direction__display_name=direction_name,
+#                                     is_active=True,
+#                                     city__exchange__partner_link__isnull=False)
 
-    for direction in directions:
-        city: PartnerCity = direction.city
-        min_amount = str(int(city.min_amount)) if city.min_amount else None
-        max_amount = str(int(city.max_amount)) if city.max_amount else None
+#     for direction in directions:
+#         city: PartnerCity = direction.city
+#         min_amount = str(int(city.min_amount)) if city.min_amount else None
+#         max_amount = str(int(city.max_amount)) if city.max_amount else None
 
-        direction.exchange = direction.city.exchange
-        direction.exchange_marker = 'partner'
-        direction.valute_from = valute_from
-        direction.valute_to = valute_to
-        direction.min_amount = min_amount
-        direction.max_amount = max_amount
-        direction.params = None
-        direction.fromfee = None
+#         direction.exchange = direction.city.exchange
+#         direction.exchange_marker = 'partner'
+#         direction.valute_from = valute_from
+#         direction.valute_to = valute_to
+#         direction.min_amount = min_amount
+#         direction.max_amount = max_amount
+#         direction.params = None
+#         direction.fromfee = None
 
-        weekdays = WeekDaySchema(time_from=city.time_from,
-                                 time_to=city.time_to)
+#         weekdays = WeekDaySchema(time_from=city.time_from,
+#                                  time_to=city.time_to)
 
-        weekends = WeekDaySchema(time_from=city.weekend_time_from,
-                                 time_to=city.weekend_time_to)
+#         weekends = WeekDaySchema(time_from=city.weekend_time_from,
+#                                  time_to=city.weekend_time_to)
 
-        # working_days = WORKING_DAYS_DICT.copy()
-        # [working_days.__setitem__(day.code_name, True)\
-        #   for day in direction.city.working_days.all()]
-        working_days = {key.upper(): value \
-                        for key, value in WORKING_DAYS_DICT.items()}
+#         # working_days = WORKING_DAYS_DICT.copy()
+#         # [working_days.__setitem__(day.code_name, True)\
+#         #   for day in direction.city.working_days.all()]
+#         working_days = {key.upper(): value \
+#                         for key, value in WORKING_DAYS_DICT.items()}
         
-        [working_days.__setitem__(day.code_name.upper(), True) \
-         for day in city.working_days.all()]
+#         [working_days.__setitem__(day.code_name.upper(), True) \
+#          for day in city.working_days.all()]
 
-        direction.info = PartnerCityInfoSchema2(
-            delivery=direction.city.has_delivery,
-            office=direction.city.has_office,
-            working_days=working_days,
-            weekdays=weekdays,
-            weekends=weekends,
-            )
+#         direction.info = PartnerCityInfoSchema2(
+#             delivery=direction.city.has_delivery,
+#             office=direction.city.has_office,
+#             working_days=working_days,
+#             weekdays=weekdays,
+#             weekends=weekends,
+#             )
 
-    return directions
+#     return directions
 
 
 def generate_partner_cities(partner_cities: list[PartnerCity]):
@@ -2979,6 +3889,62 @@ def generate_partner_directions_by_3(directions: list[Direction],
     return directions
 
 
+def generate_partner_directions_by(directions: list[NewDirection | NewCountryDirection],
+                                   marker: str):
+    for direction in directions:
+        # print(direction.__dict__)
+        if direction.direction.valute_to.type_valute == 'ATM QR':
+            match marker:
+                case 'country':
+                    partner_id = direction.exchange.account.pk
+                case 'city':
+                    partner_id = direction.exchange.account.pk
+                case _:
+                    raise HTTPException(status_code=400,
+                                        detail='ATM QR in non cash direction!')
+
+            bankomats = get_bankomats_by_valute(partner_id,
+                                                direction.direction.valute_to.pk,
+                                                only_active=True)
+        else:
+            bankomats = None
+
+        direction.valute_from = direction.direction.valute_from.code_name
+        direction.icon_valute_from = try_generate_icon_url(direction.direction.valute_from)
+        direction.in_count_type = direction.direction.valute_from.type_valute
+
+        direction.valute_to = direction.direction.valute_to.code_name
+        direction.icon_valute_to = try_generate_icon_url(direction.direction.valute_to)
+        direction.out_count_type = direction.direction.valute_to.type_valute
+        direction.bankomats = bankomats
+
+        exchange_rates = []
+        
+        main_exchange_rate = {
+            'min_count': direction.min_amount,
+            'max_count': direction.max_amount,
+            'in_count': direction.in_count,
+            'out_count': direction.out_count,
+        }
+        exchange_rates.append(main_exchange_rate)
+
+        for direction_rate in direction.direction_rates.all():
+            additional_direction_rate = {
+                'id': direction_rate.pk,
+                'min_count': direction_rate.min_rate_limit,
+                'max_count': direction_rate.max_rate_limit,
+                'in_count': direction_rate.in_count,
+                'out_count': direction_rate.out_count,
+                'rate_coefficient': direction_rate.rate_coefficient,
+            }
+            exchange_rates.append(additional_direction_rate)
+        
+        direction.exchange_rates = exchange_rates
+
+    # print(len(connection.queries))
+    return directions
+
+
 def generate_valute_list(queries: list[CashDirection],
                          marker: str):
     valute_list = sorted({query.__getattribute__(marker) for query in queries},
@@ -3064,6 +4030,26 @@ def try_add_bankomats_to_valute(partner_id: int,
             
             # bankomat_ids = [bankomat.get('id') for bankomat in bankomats if bankomat.get('available')]
             # for bankomat in bankomats:
+            partner_valute.bankomats.add(*selected_bankomats)
+            partner_valute.bankomats.remove(*unselected_bankomats)
+
+
+def new_try_add_bankomats_to_valute(partner_id: int,
+                                    valute_to: str,
+                                    bankomats: list):
+    try:
+        valute_id = NewValute.objects.get(code_name=valute_to).pk
+    except Exception:
+        pass
+    else:
+        selected_bankomats = [bankomat.get('id') for bankomat in bankomats \
+                              if bankomat.get('available')]
+        unselected_bankomats = [bankomat.get('id') for bankomat in bankomats \
+                              if not bankomat.get('available')]
+        with transaction.atomic():
+            partner_valute, _ = NewQRValutePartner.objects.get_or_create(partner_id=partner_id,
+                                                                         valute_id=valute_id)
+            
             partner_valute.bankomats.add(*selected_bankomats)
             partner_valute.bankomats.remove(*unselected_bankomats)
 

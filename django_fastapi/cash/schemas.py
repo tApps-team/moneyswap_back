@@ -1,7 +1,11 @@
 from typing import Literal
 from pydantic import BaseModel, Field
 
-from general_models.schemas import InfoSchema, SpecialDirectionModel, SpecialDirectionMultiModel, MultipleName
+from general_models.schemas import (InfoSchema,
+                                    SpecialDirectionModel,
+                                    SpecialDirectionMultiModel,
+                                    MultipleName,
+                                    NewSpecialDirectionMultiModel)
 
 from partners.schemas import (PartnerCityInfoSchema,
                               PartnerCityInfoSchema2,
@@ -109,7 +113,19 @@ class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
     fromfee: float | None
 
 
+class NewSpecialCashDirectionMultiModel(NewSpecialDirectionMultiModel):
+    info: PartnerCityInfoSchema2 | InfoSchema | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
+
 class SpecialCashDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
+    info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
+
+class NewSpecialCashDirectionMultiWithAmlModel(NewSpecialDirectionMultiModel):
     info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
@@ -122,8 +138,22 @@ class SpecialCashDirectionMultiPrtnerModel(SpecialDirectionMultiModel):
     fromfee: float | None
 
 
+class NewSpecialCashDirectionMultiPrtnerModel(NewSpecialDirectionMultiModel):
+    # direction_marker: Literal['city', 'country']
+    info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
+
 class SpecialCashDirectionMultiPrtnerWithAmlModel(SpecialDirectionMultiModel):
     direction_marker: Literal['city', 'country']
+    info: PartnerCityInfoWithAmlSchema | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
+
+class NewSpecialCashDirectionMultiPrtnerWithAmlModel(NewSpecialDirectionMultiModel):
+    # direction_marker: Literal['city', 'country']
     info: PartnerCityInfoWithAmlSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
@@ -133,11 +163,23 @@ class SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel(SpecialCashDi
     exchange_rates: list[PartnerExchangeRate] | None
 
 
+class NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel(NewSpecialCashDirectionMultiPrtnerWithAmlModel):
+    exchange_rates: list[PartnerExchangeRate] | None
+
+
 class SpecialCashDirectionMultiPrtnerWithExchangeRatesModel(SpecialCashDirectionMultiPrtnerModel):
     exchange_rates: list[PartnerExchangeRate] | None
 
 
+class NewSpecialCashDirectionMultiPrtnerWithExchangeRatesModel(NewSpecialCashDirectionMultiPrtnerModel):
+    exchange_rates: list[PartnerExchangeRate] | None
+
+
 class SpecialCashDirectionMultiWithLocationModel(SpecialCashDirectionMultiModel):
+    location: SpecificCitySchema
+
+
+class NewSpecialCashDirectionMultiWithLocationModel(NewSpecialCashDirectionMultiModel):
     location: SpecificCitySchema
 
 
@@ -146,4 +188,8 @@ class SpecialCashDirectionMultiPrtnerWithLocationModel(SpecialCashDirectionMulti
 
 
 class SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel(SpecialCashDirectionMultiPrtnerWithExchangeRatesModel):
+    location: SpecificCitySchema
+
+
+class NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel(NewSpecialCashDirectionMultiPrtnerWithExchangeRatesModel):
     location: SpecificCitySchema
