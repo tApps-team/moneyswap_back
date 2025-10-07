@@ -252,8 +252,8 @@ class ExchangeDirection(BaseExchangeDirection):
     class Meta:
         # unique_together = (("exchange", "city", "valute_from", "valute_to"), )
         unique_together = (("exchange", "city", "direction"), )
-        verbose_name = 'Готовое направление'
-        verbose_name_plural = 'Готовые направления'
+        verbose_name = 'Готовое направление (старое)'
+        verbose_name_plural = 'Готовые направления (старые)'
         ordering = ['-is_active',
                     'exchange',
                     'city',
@@ -295,8 +295,8 @@ class NewExchangeDirection(BaseExchangeDirection):
     class Meta:
         # unique_together = (("exchange", "city", "valute_from", "valute_to"), )
         unique_together = (("exchange", "city", "direction"), )
-        verbose_name = 'Готовое направление'
-        verbose_name_plural = 'Готовые направления'
+        verbose_name = 'Готовое направление (новое)'
+        verbose_name_plural = 'Готовые направления (новые)'
         ordering = ['-is_active',
                     'exchange',
                     'city',
@@ -325,53 +325,6 @@ class PopularDirection(models.Model):
 
     def __str__(self):
         return self.name
-
-
-# new PopularDirection model
-# class NewPopularDirection(models.Model):
-#     name = models.CharField('Название',
-#                             max_length=255)
-#     directions = models.ManyToManyField(NewDirection,
-#                                         verbose_name='Популярные направления',
-#                                         blank=True)
-    
-#     class Meta:
-#         verbose_name = 'Популярное направление'
-#         verbose_name_plural = 'Популярные направления'
-
-#     def __str__(self):
-#         return self.name
-
-#Модель элемента чёрного списка
-# class BlackListElement(models.Model):
-#     # city = models.CharField('Город', max_length=100)
-#     city = models.ForeignKey(City,
-#                              verbose_name='Город',
-#                              on_delete=models.CASCADE,
-#                              related_name='black_list_cash_directions')
-#     # valute_from = models.CharField('Отдаём', max_length=10)
-#     # valute_to = models.CharField('Получаем', max_length=10)
-#     direction = models.ForeignKey(Direction,
-#                                   verbose_name='Направление для обмена',
-#                                   on_delete=models.CASCADE,
-#                                   related_name='black_list_directions')
-
-#     class Meta:
-#         verbose_name = 'Элемент чёрного списка'
-#         verbose_name_plural = 'Элементы чёрного списка'
-#         # unique_together = (("city",  "valute_from", "valute_to"), )
-#         unique_together = (("city",  "direction"), )
-#         ordering = ['city',
-#                     'direction__valute_from',
-#                     'direction__valute_to']
-#         # indexes = [
-#         #     models.Index(fields=['city', 'valute_from', 'valute_to'])
-#         # ]
-
-#     #для более красивого вывода в чёрном списке
-#     def __str__(self):
-#         # return f'({self.city}): {self.valute_from} -> {self.valute_to}\n\n'
-#         return f'({self.city}): {self.direction}\n\n'
     
 
 class ExchangeLinkCount(BaseExchangeLinkCount):

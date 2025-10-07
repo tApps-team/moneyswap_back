@@ -18,71 +18,6 @@ from general_models.models import (BaseExchangeDirection,
 #Модель обменника 
 class Exchange(ParseExchange):
     pass
-    # direction_black_list = models.ManyToManyField('Direction', verbose_name='Чёрный список')
-
-
-#Модель отзыва
-# class Review(BaseReview):
-#     exchange = models.ForeignKey(Exchange,
-#                                  on_delete=models.CASCADE,
-#                                  verbose_name='Безналичный обменник',
-#                                  related_name='reviews')
-#     guest = models.ForeignKey(Guest,
-#                               blank=True,
-#                               null=True,
-#                               default=None,
-#                               verbose_name='Гостевой пользователь',
-#                               related_name='no_cash_reviews',
-#                               on_delete=models.CASCADE)
-    
-#     class Meta:
-#         # unique_together = (('exchange','username','time_create'), )
-#         verbose_name = 'Отзыв'
-#         verbose_name_plural = 'Отзывы'
-#         ordering = ('-time_create', 'status', 'exchange')
-
-#     def __str__(self):
-#         return 'Безналичный' + super().__str__()
-
-
-#Модель комментария
-# class Comment(BaseComment):
-#     review = models.ForeignKey(Review,
-#                                on_delete=models.CASCADE,
-#                                verbose_name='Отзыв',
-#                                related_name='comments')
-#     guest = models.ForeignKey(Guest,
-#                               blank=True,
-#                               null=True,
-#                               default=None,
-#                               verbose_name='Гостевой пользователь',
-#                               related_name='no_cash_comments',
-#                               on_delete=models.CASCADE)
-    
-#     class Meta:
-#         unique_together = (('review','username','time_create'), )
-#         verbose_name = 'Комментарий'
-#         verbose_name_plural = 'Комментарии'
-#         ordering = ('-time_create', 'status', 'review')
-    
-#     def __str__(self):
-#         return 'Безналичный' + super().__str__()
-    
-
-# class AdminComment(BaseAdminComment):
-#     review = models.ForeignKey(Review,
-#                                on_delete=models.CASCADE,
-#                                verbose_name='Отзыв',
-#                                related_name='admin_comments')
-
-#     class Meta:
-#         # unique_together = (('review','username','time_create'), )
-#         verbose_name = 'Комментарий администрации'
-#         verbose_name_plural = 'Комментарии администрации'
-#         ordering = ('-time_create', 'review')
-
-#     def __str__(self):
-#         return 'Безналичный' + super().__str__()
 
 
 #Модель направления
@@ -153,22 +88,6 @@ class PopularDirection(models.Model):
         return self.name
 
 
-# new PopularDirection model
-# class NewPopularDirection(models.Model):
-#     name = models.CharField('Название',
-#                             max_length=255)
-#     directions = models.ManyToManyField(NewDirection,
-#                                         verbose_name='Популярные направления',
-#                                         blank=True)
-    
-#     class Meta:
-#         verbose_name = 'Популярное направление'
-#         verbose_name_plural = 'Популярные направления'
-
-#     def __str__(self):
-#         return self.name
-
-
 #Модель готового направления
 class ExchangeDirection(BaseExchangeDirection):
     exchange = models.ForeignKey(Exchange,
@@ -187,8 +106,8 @@ class ExchangeDirection(BaseExchangeDirection):
     class Meta:
         # unique_together = (("exchange", "valute_from", "valute_to"), )
         unique_together = (("exchange", "direction"), )
-        verbose_name = 'Готовое направление'
-        verbose_name_plural = 'Готовые направления'
+        verbose_name = 'Готовое направление (старое)'
+        verbose_name_plural = 'Готовые направления (старые)'
         ordering = ['-is_active',
                     'exchange',
                     'direction__valute_from',
@@ -222,8 +141,8 @@ class NewExchangeDirection(BaseExchangeDirection):
     
     class Meta:
         unique_together = (("exchange", "direction"), )
-        verbose_name = 'Готовое направление'
-        verbose_name_plural = 'Готовые направления'
+        verbose_name = 'Готовое направление (новое)'
+        verbose_name_plural = 'Готовые направления (новые)'
         ordering = ['-is_active',
                     'exchange',
                     'direction__valute_from',

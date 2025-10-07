@@ -767,7 +767,6 @@ class BaseExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 class NewBaseExchangeAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        # 'xml_url',
         'link_count',
         'is_active',
         'active_status',
@@ -777,7 +776,6 @@ class NewBaseExchangeAdmin(admin.ModelAdmin):
     readonly_fields = (
         'is_active',
         'get_total_direction_count',
-        'time_create',
         'get_icon',
         'link_count',
         )
@@ -791,24 +789,6 @@ class NewBaseExchangeAdmin(admin.ModelAdmin):
     search_fields = (
         'name',
     )
-    
-    # def link_count(self, obj):
-    #     link_count = 0
-
-    #     # for 
-    #     # exchange_link_count = obj.exchange_counts.all()
-
-    #     # _sum = sum([link.count for link in exchange_link_count])
-    #     # print(obj.link_count)
-    #     return link_count
-    
-    # link_count.short_description = 'Счетчик перехода по ссылке'
-
-    # def get_queryset(self, request: HttpRequest) -> QuerySet:
-    #     queryset = super().get_queryset(request)
-    #     # return queryset.annotate(link_count=Sum('exchange_counts__count'))
-    #     return queryset.prefetch_related('exchange_counts')
-
 
     def get_icon(self, obj):
         if obj.icon_url:
@@ -916,6 +896,58 @@ class BaseDirectionAdmin(admin.ModelAdmin):
                                         'valute_to')
     
 
+class NewBaseDirectionAdmin(admin.ModelAdmin):
+    list_display = (
+        'get_direction_name',
+        'popular_count',
+        'is_popular',
+        )
+    list_select_related = (
+        'valute_from',
+        'valute_to',
+        )
+    search_fields = (
+        'valute_from__code_name',
+        'valute_to__code_name',
+        )
+    readonly_fields = (
+        'popular_count',
+        'actual_course',
+        'previous_course',
+        )
+
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ['valute_from',
+                           'valute_to',
+                           'is_popular',
+                           'popular_count',
+                           'actual_course',
+                           'previous_course',
+                           ],
+            },
+        ),
+    ]
+
+    autocomplete_fields = ['valute_from',
+                           'valute_to']
+
+    def get_direction_name(self, obj):
+        return f'{obj.valute_from_id} -> {obj.valute_to_id}'
+    
+    get_direction_name.short_description = 'Название направления'
+    
+    def has_change_permission(self, request, obj = None):
+        return False
+    
+    def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
+        return super().get_queryset(request)\
+                        .select_related('valute_from',
+                                        'valute_to')
+    
+
 
 class BasePopularDirectionAdmin(admin.ModelAdmin):
     readonly_fields = (
@@ -966,6 +998,29 @@ class BaseExchangeLinkCountAdmin(admin.ModelAdmin):
     
     # def has_delete_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
     #     return False
+
+
+class NewBaseExchangeLinkCountAdmin(admin.ModelAdmin):
+    list_display = (
+        # 'exchange',
+        'exchange_direction',
+        'user',
+        'count',
+        )
+    list_filter = (
+        'exchange',
+        'user',
+    )
+
+    ordering = (
+        '-count',
+        '-user',
+        'exchange',
+    )
+
+    def has_change_permission(self, request: HttpRequest, obj: Any | None = ...) -> bool:
+        return False
+
 
 @admin.register(ExchangeAdminOrder)
 class ExchangeAdminOrderAdmin(admin.ModelAdmin):
@@ -1273,6 +1328,7 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
     link_count.short_description = 'Счетчик перехода по ссылкам'
 
     def save_model(self, request, obj, form, change):
+        # print(obj.__dict__)
         update_fields = []
 
         if change: 
@@ -1293,6 +1349,11 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
                                 obj.is_active = False
                                 update_fields.append('is_active')
                             
+                            elif value == 'active':
+                                update_fields.append('is_active')
+                                if not obj.xml_url:
+                                    obj.is_active = True
+                            
                             if value == 'disabled':
                                 obj.time_disable = timezone.now()
                             else:
@@ -1304,6 +1365,8 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
 
             obj.save(update_fields=update_fields)
         else:
+            if obj.active_status in ('disabled', 'scam', 'skip'):
+                obj.is_active = False
             print('NOT CHANGE! CREATE IN ADMIN MODEL!')
             super().save_model(request, obj, form, change)
 

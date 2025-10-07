@@ -17,7 +17,8 @@ from no_cash.models import (Exchange,
                             PopularDirection,
                             ExchangeLinkCount,
                             NewDirection,
-                            NewExchangeDirection)
+                            NewExchangeDirection,
+                            NewExchangeLinkCount)
 from no_cash.periodic_tasks import (manage_periodic_task_for_create,
                                     manage_periodic_task_for_update,
                                     manage_periodic_task_for_parse_black_list)
@@ -33,7 +34,9 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseAdminCommentStacked,
                                   BasePopularDirectionAdmin,
                                   BaseExchangeLinkCountAdmin,
-                                  BaseExchangeLinkCountStacked)
+                                  BaseExchangeLinkCountStacked,
+                                  NewBaseExchangeLinkCountAdmin,
+                                  NewBaseDirectionAdmin)
 from general_models.tasks import parse_reviews_for_exchange
 
 
@@ -41,39 +44,6 @@ from general_models.tasks import parse_reviews_for_exchange
 # @admin.register(Comment)
 class CommentAdmin(BaseCommentAdmin):
     pass
-
-
-#Отображение комментариев на странице связанного отзыва
-# class CommentStacked(BaseCommentStacked):
-#     model = Comment
-
-
-#Отображение комментариев администрации на странице связанного отзыва
-# class AdminCommentStacked(BaseAdminCommentStacked):
-#     model = AdminComment
-
-
-#Отображение отзывов в админ панели
-# @admin.register(Review)
-# class ReviewAdmin(BaseReviewAdmin):
-#     inlines = [
-#         CommentStacked,
-#         AdminCommentStacked,
-#         ]
-        
-    # def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
-    #     return super().get_queryset(request)\
-    #                     .select_related('guest')
-
-
-#Отображение отзывов на странице связанного обменника
-# class ReviewStacked(BaseReviewStacked):
-#     model = Review
-#     # raw_id_fields = ('guest', )
-
-#     def get_queryset(self, request):
-#         return super().get_queryset(request).select_related('exchange',
-#                                                             'guest')
 
 
 #Отображение готовых направлений на странице связанного обменника
@@ -218,8 +188,9 @@ class DirectionAdmin(BaseDirectionAdmin):
 
 
 @admin.register(NewDirection)
-class DirectionAdmin(BaseDirectionAdmin):
+class NewDirectionAdmin(NewBaseDirectionAdmin):
     pass
+
 
 # Кастомный фильтр для ExchangeDirection для отпимизации sql запросов ( решение для N+1 prodlem ) 
 class CustomDirectionFilter(admin.SimpleListFilter):
@@ -230,6 +201,22 @@ class CustomDirectionFilter(admin.SimpleListFilter):
         # Используйте select_related для оптимизации запроса
         directions = Direction.objects.select_related('valute_from',
                                                       'valute_to').distinct()
+        return [(d.id, str(d)) for d in directions]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(direction__id=self.value())
+        return queryset
+    
+
+class NewCustomDirectionFilter(admin.SimpleListFilter):
+    title = 'Направление для обмена'
+    parameter_name = 'direction'
+
+    def lookups(self, request, model_admin):
+        # Используйте select_related для оптимизации запроса
+        directions = NewDirection.objects.select_related('valute_from',
+                                                         'valute_to').distinct()
         return [(d.id, str(d)) for d in directions]
 
     def queryset(self, request, queryset):
@@ -261,7 +248,7 @@ class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
 class NewExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     list_filter = (
         'exchange',
-        CustomDirectionFilter,
+        NewCustomDirectionFilter,
     )
     def get_display_name(self, obj):
         return f'{obj.exchange} ({obj.direction})'
@@ -318,4 +305,9 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
 
 @admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    pass
+
+
+@admin.register(NewExchangeLinkCount)
+class NewExchangeListCountAdmin(NewBaseExchangeLinkCountAdmin):
     pass

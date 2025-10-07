@@ -27,8 +27,8 @@ from .utils.models import get_limit_direction, is_positive_validator
 class Exchange(BaseExchange):
     
     class Meta:
-        verbose_name = 'Обменник'
-        verbose_name_plural = 'Обменники'
+        verbose_name = 'Обменник (старый)'
+        verbose_name_plural = 'Обменники (старые)'
         ordering = ['name']
         indexes = [
             models.Index(fields=['name']),
@@ -58,8 +58,8 @@ class CustomUser(models.Model):
                                      default=None)
     
     class Meta:
-        verbose_name = 'Администратор обменника'
-        verbose_name_plural = 'Администраторы обменников'
+        verbose_name = 'Администратор обменника (старый)'
+        verbose_name_plural = 'Администраторы обменников (старые)'
 
     def __str__(self):
         return f'Пользователь: {self.user}, Обменник: {self.exchange}'
@@ -88,8 +88,8 @@ class NewCustomUser(models.Model):
                                      default=None)
     
     class Meta:
-        verbose_name = 'Администратор обменника'
-        verbose_name_plural = 'Администраторы обменников'
+        verbose_name = 'Администратор обменника (новый)'
+        verbose_name_plural = 'Администраторы обменников (новые)'
 
     def __str__(self):
         return f'Пользователь: {self.user}, Обменник: {self.exchange}'
@@ -161,8 +161,8 @@ class PartnerCountry(models.Model):
                                             null=True)
     
     class Meta:
-        verbose_name = 'Партнёрская страна'
-        verbose_name_plural = 'Партнёрские страны'
+        verbose_name = 'Партнёрская страна (старая)'
+        verbose_name_plural = 'Партнёрские страны (старые)'
         
         unique_together = (('exchange', 'country'),)
         ordering = ('exchange', 'country')
@@ -219,8 +219,8 @@ class NewPartnerCountry(models.Model):
                                             null=True)
     
     class Meta:
-        verbose_name = 'Партнёрская страна'
-        verbose_name_plural = 'Партнёрские страны'
+        verbose_name = 'Партнёрская страна (новая)'
+        verbose_name_plural = 'Партнёрские страны (новые)'
         
         unique_together = (('exchange', 'country'),)
         ordering = ('exchange', 'country')
@@ -276,8 +276,8 @@ class PartnerCity(models.Model):
         #
         unique_together = (('exchange', 'city'),)
         #
-        verbose_name = 'Партнёрский город'
-        verbose_name_plural = 'Партнёрские города'
+        verbose_name = 'Партнёрский город (старый)'
+        verbose_name_plural = 'Партнёрские города (старые)'
         ordering = ('exchange', 'city')
 
     def __str__(self):
@@ -332,8 +332,8 @@ class NewPartnerCity(models.Model):
         #
         unique_together = (('exchange', 'city'),)
         #
-        verbose_name = 'Партнёрский город'
-        verbose_name_plural = 'Партнёрские города'
+        verbose_name = 'Партнёрский город (новый)'
+        verbose_name_plural = 'Партнёрские города (новые)'
         ordering = ('exchange', 'city')
 
     def __str__(self):
@@ -386,8 +386,8 @@ class CountryDirection(models.Model):
     is_active = models.BooleanField('Активно?', default=True)
 
     class Meta:
-        verbose_name = 'Направление страны'
-        verbose_name_plural = 'Направления страны'
+        verbose_name = 'Направление страны (старое)'
+        verbose_name_plural = 'Направления страны (старые)'
         unique_together = (('country', 'direction'), )
         ordering = ('country__exchange', 'country', 'direction')
 
@@ -442,8 +442,8 @@ class NewCountryDirection(models.Model):
     is_active = models.BooleanField('Активно?', default=True)
 
     class Meta:
-        verbose_name = 'Направление страны'
-        verbose_name_plural = 'Направления страны'
+        verbose_name = 'Направление страны (новое)'
+        verbose_name_plural = 'Направления страны (новые)'
         unique_together = (('country', 'direction'), )
         ordering = ('country__exchange', 'country', 'direction')
 
@@ -498,8 +498,8 @@ class Direction(models.Model):
     is_active = models.BooleanField('Активно?', default=True)
 
     class Meta:
-        verbose_name = 'Направление'
-        verbose_name_plural = 'Направления'
+        verbose_name = 'Направление (старое)'
+        verbose_name_plural = 'Направления (старые)'
         unique_together = (('city', 'direction'), )
         ordering = ('city__exchange', 'city', 'direction')
 
@@ -555,8 +555,8 @@ class NewDirection(models.Model):
     is_active = models.BooleanField('Активно?', default=True)
 
     class Meta:
-        verbose_name = 'Направление'
-        verbose_name_plural = 'Направления'
+        verbose_name = 'Направление (новое)'
+        verbose_name_plural = 'Направления (новые)'
         unique_together = (('city', 'direction'), )
         ordering = ('city__exchange', 'city', 'direction')
 
@@ -601,8 +601,8 @@ class NonCashDirection(models.Model):
     is_active = models.BooleanField('Активно?', default=True)
 
     class Meta:
-        verbose_name = 'Безналичное направление'
-        verbose_name_plural = 'Безналичные направления'
+        verbose_name = 'Безналичное направление (старое)'
+        verbose_name_plural = 'Безналичные направления (старые)'
         unique_together = (('exchange', 'direction'), )
         ordering = ('exchange', 'direction')
 
@@ -648,73 +648,14 @@ class NewNonCashDirection(models.Model):
     is_active = models.BooleanField('Активно?', default=True)
 
     class Meta:
-        verbose_name = 'Безналичное направление'
-        verbose_name_plural = 'Безналичные направления'
+        verbose_name = 'Безналичное направление (новое)'
+        verbose_name_plural = 'Безналичные направления (новые)'
         unique_together = (('exchange', 'direction'), )
         ordering = ('exchange', 'direction')
 
     def __str__(self):
         return f'{self.exchange} - {self.direction}'
 
-# class Review(BaseReview):
-#     exchange = models.ForeignKey(Exchange,
-#                                  on_delete=models.CASCADE,
-#                                  verbose_name='Наличный обменник',
-#                                  related_name='reviews')
-#     guest = models.ForeignKey(Guest,
-#                               blank=True,
-#                               null=True,
-#                               default=None,
-#                               verbose_name='Гостевой пользователь',
-#                               related_name='partner_reviews',
-#                               on_delete=models.CASCADE)
-    
-#     class Meta:
-#         verbose_name = 'Отзыв'
-#         verbose_name_plural = 'Отзывы'
-#         ordering = ('-time_create', 'status', 'exchange')
-
-#     def __str__(self):
-#         return 'Партнёрский ' + super().__str__()
-
-
-# class Comment(BaseComment):
-#     review = models.ForeignKey(Review,
-#                                on_delete=models.CASCADE,
-#                                verbose_name='Отзыв',
-#                                related_name='comments')
-#     guest = models.ForeignKey(Guest,
-#                               blank=True,
-#                               null=True,
-#                               default=None,
-#                               verbose_name='Гостевой пользователь',
-#                               related_name='partner_comments',
-#                               on_delete=models.CASCADE)
-    
-#     class Meta:
-#         verbose_name = 'Комментарий'
-#         verbose_name_plural = 'Комментарии'
-#         ordering = ('-time_create', 'status', 'review')
-
-#     def __str__(self):
-#         return 'Партнёрский ' + super().__str__()
-    
-
-# class AdminComment(BaseAdminComment):
-#     review = models.ForeignKey(Review,
-#                                on_delete=models.CASCADE,
-#                                verbose_name='Отзыв',
-#                                related_name='admin_comments')
-
-#     class Meta:
-#         # unique_together = (('review','username','time_create'), )
-#         verbose_name = 'Комментарий администрации'
-#         verbose_name_plural = 'Комментарии администрации'
-#         ordering = ('-time_create', 'review')
-
-#     def __str__(self):
-#         return 'Партнёрский админский ' + super().__str__()
-    
 
 class ExchangeLinkCount(BaseExchangeLinkCount):
     exchange = models.ForeignKey(Exchange,
@@ -778,8 +719,8 @@ class CountryExchangeLinkCount(BaseExchangeLinkCount):
                                            null=True,
                                            default=None)
     class Meta:
-        verbose_name = 'Счётчик перехода по ссылке (страны)'
-        verbose_name_plural = 'Счётчики перехода по ссылкам (страны)'
+        verbose_name = 'Счётчик перехода по ссылке (страны) (старый)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (страны) (старые)'
         unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
 
 
@@ -825,8 +766,8 @@ class NonCashExchangeLinkCount(BaseExchangeLinkCount):
                                            null=True,
                                            default=None)
     class Meta:
-        verbose_name = 'Счётчик перехода по ссылке (безналичные)'
-        verbose_name_plural = 'Счётчики перехода по ссылкам (безналичные)'
+        verbose_name = 'Счётчик перехода по ссылке (безналичные) (старый)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (безналичные) (старые)'
         unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
 
 
@@ -878,8 +819,8 @@ class DirectionRate(BaseDirectionRate):
         return super().clean()
 
     class Meta:
-        verbose_name = 'Объём направления'
-        verbose_name_plural = 'Объёмы направлений'
+        verbose_name = 'Объём направления (старый)'
+        verbose_name_plural = 'Объёмы направлений (старые)'
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
 
 
@@ -937,8 +878,8 @@ class CountryDirectionRate(BaseDirectionRate):
         return super().clean()
     
     class Meta:
-        verbose_name = 'Объём направления (страны)'
-        verbose_name_plural = 'Объёмы направлений (страны)'
+        verbose_name = 'Объём направления (страны) (старый)'
+        verbose_name_plural = 'Объёмы направлений (страны) (старые)'
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
 
 
@@ -996,8 +937,8 @@ class NonCashDirectionRate(BaseDirectionRate):
         return super().clean()
 
     class Meta:
-        verbose_name = 'Объём направления (безналичные)'
-        verbose_name_plural = 'Объёмы направлений (безналичные)'
+        verbose_name = 'Объём направления (безналичные) (старый)'
+        verbose_name_plural = 'Объёмы направлений (безналичные) (старые)'
         unique_together = [('exchange', 'exchange_direction', 'min_rate_limit')]
 
 
@@ -1048,8 +989,8 @@ class Bankomat(models.Model):
                                 default='icons/country/russia.svg')
     
     class Meta:
-        verbose_name = 'Банкомат'
-        verbose_name_plural = 'Банкоматы'
+        verbose_name = 'Банкомат (старый)'
+        verbose_name_plural = 'Банкоматы (старые)'
 
     def __str__(self):
         return self.name

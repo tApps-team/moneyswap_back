@@ -191,13 +191,13 @@ def send_notification_after_add_comment(sender, instance, created, **kwargs):
 def new_send_notification_after_add_comment(sender, instance, created, **kwargs):
     
     if not created and instance.moderation == True:
-
-        exchange_admin = ExchangeAdmin.objects.filter(exchange_id=instance.review.exchange_id)\
+        exchange_id = instance.review.exchange_id
+        exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=exchange_id)\
                                                 .first()
         
         if exchange_admin:
             user_id = exchange_admin.user_id
-            exchange_id = exchange_admin.exchange_id
+            # exchange_id = exchange_admin.exchange_id
 
             # send notification to admin user in chat with bot
             async_to_sync(new_send_comment_notifitation_to_exchange_admin)(user_id,
@@ -205,9 +205,10 @@ def new_send_notification_after_add_comment(sender, instance, created, **kwargs)
                                                                            instance.review_id)
             
         # send notification to review owner in chat with bot
-        async_to_sync(new_send_comment_notifitation_to_review_owner)(instance.review.guest_id,
-                                                                     exchange_id,
-                                                                     instance.review_id)
+        if instance.guest_id != instance.review.guest_id:
+            async_to_sync(new_send_comment_notifitation_to_review_owner)(instance.review.guest_id,
+                                                                         exchange_id,
+                                                                         instance.review_id)
 
 
 @receiver(post_save, sender=Exchanger)

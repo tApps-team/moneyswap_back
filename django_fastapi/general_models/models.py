@@ -56,8 +56,8 @@ class Valute(models.Model):
                                      default=False)
 
     class Meta:
-        verbose_name = 'Валюта'
-        verbose_name_plural = 'Валюты'
+        verbose_name = 'Валюта (старая)'
+        verbose_name_plural = 'Валюты (старые)'
         ordering = ['code_name']
         indexes = [
             models.Index(fields=['code_name', ])
@@ -161,18 +161,6 @@ class Exchanger(models.Model):
                                       null=True,
                                       default=None)
     # возможно стоит поменять на datetime для авто вычисления возраста ✅
-    # age = models.CharField('Возраст',
-    #                        max_length=255,
-    #                        blank=True,
-    #                        null=True,
-    #                        default=None)
-
-    # ? изменить на DateField !
-    # models.DateField()
-    # age = models.DateTimeField('Дата открытия обменника',
-    #                            blank=True,
-    #                            null=True,
-    #                            default=None)
     age = models.DateField('Дата открытия обменника',
                            blank=True,
                            null=True,
@@ -269,8 +257,8 @@ class PartnerTimeUpdate(models.Model):
                                  choices=unit_time_choices)
     
     class Meta:
-        verbose_name = 'Управление временем партнёрских направлений'
-        verbose_name_plural = 'Управление временем партнёрских направлений'
+        verbose_name = 'Управление временем системных фоновых задач'
+        verbose_name_plural = 'Управление временем системных фоновых задач'
 
     def __str__(self):
         return self.name
@@ -576,8 +564,8 @@ class NewBaseReview(BaseReviewComment):
                                       default=None)
     
     class Meta:
-        verbose_name = 'Отзыв (новый)'
-        verbose_name_plural = 'Отзывы (новые)'
+        verbose_name = 'Отзыв (старый)'
+        verbose_name_plural = 'Отзывы (старые)'
         unique_together = (('exchange_name','username','time_create'), )
     
     def __str__(self):
@@ -610,8 +598,8 @@ class Review(BaseReviewComment):
                                       default=None)
     
     class Meta:
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
+        verbose_name = 'Отзыв (новый)'
+        verbose_name_plural = 'Отзывы (новые)'
         unique_together = (('exchange','username','time_create'), )
     
     def __str__(self):
@@ -635,8 +623,8 @@ class NewBaseComment(BaseReviewComment):
                                verbose_name='Отзыв',
                                related_name='comments')
     class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Комментарий (старый)'
+        verbose_name_plural = 'Комментарии (старые)'
         unique_together = (('review','username','time_create'), )
 
     def __str__(self):
@@ -661,8 +649,8 @@ class Comment(BaseReviewComment):
                                verbose_name='Отзыв',
                                related_name='comments')
     class Meta:
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Комментарий (новый)'
+        verbose_name_plural = 'Комментарии (новые)'
         unique_together = (('review','username','time_create'), )
 
     def __str__(self):
@@ -687,8 +675,8 @@ class NewBaseAdminComment(models.Model):
                                        help_text='Если оставить поля пустыми, время установится автоматически по московскому часовому поясу')
 
     class Meta:
-        verbose_name = 'Комментарий администрации'
-        verbose_name_plural = 'Комментарии администрации'
+        verbose_name = 'Комментарий администрации (старый)'
+        verbose_name_plural = 'Комментарии администрации (старые)'
 
     def __str__(self):
         if self.time_create is None:
@@ -712,8 +700,8 @@ class AdminComment(models.Model):
                                        help_text='Если оставить поля пустыми, время установится автоматически по московскому часовому поясу')
 
     class Meta:
-        verbose_name = 'Комментарий администрации'
-        verbose_name_plural = 'Комментарии администрации'
+        verbose_name = 'Комментарий администрации (новый)'
+        verbose_name_plural = 'Комментарии администрации (новые)'
 
     def __str__(self):
         if self.time_create is None:
@@ -878,8 +866,8 @@ class ParseExchange(BaseExchange):
     
     class Meta:
         abstract = True
-        verbose_name = 'Обменник'
-        verbose_name_plural = 'Обменники'
+        verbose_name = 'Обменник (старый)'
+        verbose_name_plural = 'Обменники (старые)'
         ordering = ['name']
         indexes = [
             models.Index(fields=['name']),
@@ -899,8 +887,8 @@ class BaseDirection(models.Model):
     class Meta:
         abstract = True
         unique_together = (("valute_from", "valute_to"), )
-        verbose_name = 'Направление для обмена'
-        verbose_name_plural = 'Направления для обмена'
+        verbose_name = 'Направление для обмена (старое)'
+        verbose_name_plural = 'Направления для обмена (старые)'
         ordering = ['valute_from', 'valute_to']
         indexes = [
             models.Index(fields=['valute_from', 'valute_to'])
@@ -973,8 +961,8 @@ class BaseExchangeLinkCount(models.Model):
     #                          verbose_name='Гостевой пользователь')
     
     class Meta:
-        verbose_name = 'Счётчик перехода по ссылке'
-        verbose_name_plural = 'Счётчики перехода по ссылкам'
+        verbose_name = 'Счётчик перехода по ссылке (старое)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (старые)'
         unique_together = [('exchange', 'user', 'exchange_direction', 'exchange_marker')]
         abstract = True
 
@@ -990,8 +978,8 @@ class NewBaseExchangeLinkCount(models.Model):
                                            default=0)
     
     class Meta:
-        verbose_name = 'Счётчик перехода по ссылке'
-        verbose_name_plural = 'Счётчики перехода по ссылкам'
+        verbose_name = 'Счётчик перехода по ссылке (новое)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (новые)'
         unique_together = [('exchange', 'user', 'exchange_direction',)]
         abstract = True
 
@@ -1041,8 +1029,8 @@ class ExchangeAdminOrder(models.Model):
                                        auto_now_add=True)
     
     class Meta:
-        verbose_name = 'Заявка на подключение обменника к юзеру'
-        verbose_name_plural = 'Заявки на подключения обменников к юзерам'
+        verbose_name = 'Заявка на подключение обменника к юзеру (старая)'
+        verbose_name_plural = 'Заявки на подключения обменников к юзерам (старые)'
 
     def __str__(self):
         return f'{self.user_id} {self.exchange_name}'
@@ -1114,8 +1102,8 @@ class ExchangeAdmin(models.Model):
     
     class Meta:
         unique_together = [('user', 'exchange_marker', 'exchange_id')]
-        verbose_name = 'Подключенный обменник к юзеру'
-        verbose_name_plural = 'Подключенные обменники к юзерам'
+        verbose_name = 'Подключенный обменник к юзеру (старый)'
+        verbose_name_plural = 'Подключенные обменники к юзерам (старые)'
 
     def __str__(self):
         return f'{self.user} {self.exchange_name} {self.exchange_marker}'

@@ -26,7 +26,9 @@ from general_models.admin import (BaseCommentAdmin,
                                   BaseAdminCommentStacked,
                                   BasePopularDirectionAdmin,
                                   BaseExchangeLinkCountAdmin,
-                                  BaseExchangeLinkCountStacked)
+                                  BaseExchangeLinkCountStacked,
+                                  NewBaseExchangeLinkCountAdmin,
+                                  NewBaseDirectionAdmin)
 from general_models.tasks import parse_reviews_for_exchange
 
 import no_cash.models as no_cash_models
@@ -39,7 +41,8 @@ from .models import (Country,
                      PopularDirection,
                      ExchangeLinkCount,
                      NewDirection,
-                     NewExchangeDirection)
+                     NewExchangeDirection,
+                     NewExchangeLinkCount)
 
 
 #Отображение городов в админ панели
@@ -299,12 +302,12 @@ class DirectionAdmin(BaseDirectionAdmin):
     
 
 @admin.register(NewDirection)
-class DirectionAdmin(BaseDirectionAdmin):
+class NewDirectionAdmin(NewBaseDirectionAdmin):
 
-    def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
-        readonly_fileds = super().get_readonly_fields(request, obj)
-        readonly_fileds += ('display_name', 'actual_course', 'previous_course')
-        return readonly_fileds
+    # def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
+    #     readonly_fileds = super().get_readonly_fields(request, obj)
+    #     readonly_fileds += ('actual_course', 'previous_course')
+    #     return readonly_fileds
 
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         return super().get_queryset(request).select_related('valute_from', 'valute_to')
@@ -410,4 +413,9 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
 
 @admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
+    pass
+
+
+@admin.register(NewExchangeLinkCount)
+class NewExchangeListCountAdmin(NewBaseExchangeLinkCountAdmin):
     pass
