@@ -939,8 +939,18 @@ class NewBaseDirectionAdmin(admin.ModelAdmin):
     
     get_direction_name.short_description = 'Название направления'
     
-    def has_change_permission(self, request, obj = None):
-        return False
+    # def has_change_permission(self, request, obj = None):
+    #     return False
+    def get_readonly_fields(self, request, obj=None):
+        """
+        При редактировании — только is_popular доступен для изменения.
+        При создании — все поля модели.
+        """
+
+        if obj:
+            all_fields = [f.name for f in self.model._meta.fields]
+            return [f for f in all_fields if f != 'is_popular']
+        return self.readonly_fields
     
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         return super().get_queryset(request)\
@@ -1203,6 +1213,27 @@ class ReviewAdmin(admin.ModelAdmin):
     ordering = (
         '-time_create',
     )
+    readonly_fields = (
+        'moderation',
+    )
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ['username',
+                           "text",
+                           "time_create",
+                           "status",
+                           "moderation",
+                           "grade",
+                           "review_from",
+                           "guest",
+                           "exchange",
+                           "transaction_id"]
+            },
+        ),
+    ]
+
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('guest',
@@ -1268,6 +1299,22 @@ class CommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
     ordering = (
         '-time_create',
     )
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ['username',
+                           "text",
+                           "time_create",
+                           "status",
+                           "moderation",
+                           "grade",
+                           "review_from",
+                           "guest",
+                           "exchange"]
+            },
+        ),
+    ]
 
     def exchange_name(self, obj):
         return obj.review.exchange.name

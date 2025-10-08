@@ -11,7 +11,10 @@ from general_models.models import ExchangeAdmin
 from general_models.utils.endpoints import send_review_notifitation_to_exchange_admin
 from general_models.utils.base import get_actual_datetime
 
-from .models import Exchange, Direction, ExchangeDirection
+from .models import (Exchange,
+                     Direction,
+                     ExchangeDirection,
+                     NewDirection)
 from .periodic_tasks import (manage_periodic_task_for_create,
                              manage_periodic_task_for_update,
                              manage_periodic_task_for_parse_black_list)
@@ -40,6 +43,22 @@ def try_create_reverse_direction(sender, instance, **kwargs):
         try:
             Direction.objects.create(valute_from_id=valute_to_id,
                                     valute_to_id=valute_from_id)
+        except Exception:
+            pass
+
+
+@receiver(post_save, sender=NewDirection)
+def new_try_create_reverse_direction(sender, instance, **kwargs):
+    valute_from_id = instance.valute_from_id
+    valute_to_id = instance.valute_to_id
+
+    if not NewDirection.objects.filter(valute_from_id=valute_to_id,
+                                       valute_to_id=valute_from_id)\
+                            .exists():
+        
+        try:
+            NewDirection.objects.create(valute_from_id=valute_to_id,
+                                         valute_to_id=valute_from_id)
         except Exception:
             pass
 
