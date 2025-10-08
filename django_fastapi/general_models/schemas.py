@@ -362,6 +362,7 @@ class BlackExchangeDetailSchema(BaseModel):
 
 
 class DetailExchangeSchema(BaseModel):
+    id: int = Field(alias='pk')
     exchangerName: MultipleName = Field(alias='multiple_name')
     iconUrl: str | None = Field(alias='icon',
                                 default=None)
