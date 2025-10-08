@@ -2186,43 +2186,6 @@ def get_valute_json_3(queries: List[NoCashExDir | CashExDir]):
     return res
 
 
-def get_valute_json(queries: List[NoCashExDir | CashExDir]):
-    
-    '''
-    Возвращает словарь валют с необходимыми данными 
-    '''
-
-    valutes = NewValute.objects.filter(code_name__in=queries)\
-                            .order_by('-is_popular', 'name')\
-                            .all()
-    
-    json_dict = {}
-    json_dict = defaultdict(list)
-
-    for valute in valutes:
-        icon_url = try_generate_icon_url(valute)
-
-        dict_key = (valute.type_valute, en_type_valute_dict[valute.type_valute])
-        json_dict[dict_key].append({
-            'id': valute.pk,
-            'name': ValuteTypeNameSchema(ru=valute.name,
-                                         en=valute.en_name),
-            'code_name': valute.code_name,
-            'icon_url': icon_url,
-            'is_popular': valute.is_popular,
-            }
-        )
-    
-    res = []
-    for idx, obj in enumerate(json_dict, start=1):
-        res.append(NewValuteListSchema(id=idx,
-                                    name=ValuteTypeNameSchema(ru=obj[0],
-                                                              en=obj[-1]),
-                                    currencies=json_dict[obj]))
-
-    return res
-
-
 def get_valute_json_4(queries: List[NoCashExDir | CashExDir]):
     
     '''
@@ -2257,6 +2220,44 @@ def get_valute_json_4(queries: List[NoCashExDir | CashExDir]):
     res = []
     for idx, obj in enumerate(json_dict, start=1):
         res.append(ValuteListSchema2(id=idx,
+                                    name=ValuteTypeNameSchema(ru=obj[0],
+                                                              en=obj[-1]),
+                                    currencies=json_dict[obj]))
+
+    return res
+
+
+def get_valute_json(queries: List[NoCashExDir | CashExDir]):
+    
+    '''
+    Возвращает словарь валют с необходимыми данными 
+    '''
+
+    valutes = NewValute.objects.filter(code_name__in=queries)\
+                            .order_by('-is_popular', 'name')\
+                            .all()
+    
+    json_dict = {}
+    json_dict = defaultdict(list)
+
+    for valute in valutes:
+        icon_url = try_generate_icon_url(valute)
+
+        dict_key = (valute.type_valute, en_type_valute_dict[valute.type_valute])
+        json_dict[dict_key].append({
+            'id': valute.pk,
+            'name': ValuteTypeNameSchema(ru=valute.name,
+                                         en=valute.en_name),
+            'code_name': valute.code_name,
+            'type_valute': valute.type_valute,
+            'icon_url': icon_url,
+            'is_popular': valute.is_popular,
+            }
+        )
+    
+    res = []
+    for idx, obj in enumerate(json_dict, start=1):
+        res.append(NewValuteListSchema(id=idx,
                                     name=ValuteTypeNameSchema(ru=obj[0],
                                                               en=obj[-1]),
                                     currencies=json_dict[obj]))

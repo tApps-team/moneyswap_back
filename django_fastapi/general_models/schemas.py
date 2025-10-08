@@ -241,6 +241,7 @@ class NewValuteTypeListSchema(BaseModel):
     id: int
     name: ValuteTypeNameSchema
     code_name: str
+    type_valute: str
     icon_url: str
     is_popular: bool
 
