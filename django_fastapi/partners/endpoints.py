@@ -969,12 +969,10 @@ def new_edit_admin_exchange_order(partner: new_partner_dependency,
         raise HTTPException(status_code=404,
                             detail='Exchanger not found in DB')
     else:
-        if not exchange_admin_order_query.exists():
+        if not exchange_admin_order_query.exists()\
+            and not hasattr(exchange, 'exchange_admin'):
             raise HTTPException(status_code=423,
-                                detail='Order for this exchanger does not exists in DB')
-        if not hasattr(exchange, 'exchange_admin'):
-            raise HTTPException(status_code=423,
-                                detail='ExchangeAdmin does not exists in DB')
+                                detail='Order for this exchanger or ExchangeAdmin does not exist in DB')
         try:
             with transaction.atomic():
                 exchange_admin_order_query.update(user_id=tg_id,
@@ -985,7 +983,7 @@ def new_edit_admin_exchange_order(partner: new_partner_dependency,
             raise HTTPException(status_code=400,
                                 detail='Error with editing ExchangeAdminOrder')
         else:
-            return 'https://t.me/MoneySwap_robot?start=partner_admin_activate'
+            return 'https://t.me/MoneySwap_robot?start=new_partner_admin_activate'
         
 
 @partner_router.delete('/delete_admin_exchange_order')
