@@ -47,7 +47,7 @@ def try_create_reverse_direction(sender, instance, **kwargs):
 
 
 @receiver(post_save, sender=NewDirection)
-def try_create_reverse_direction(sender, instance, **kwargs):
+def new_try_create_reverse_direction(sender, instance, **kwargs):
     valute_from_id = instance.valute_from_id
     valute_to_id = instance.valute_to_id
 
