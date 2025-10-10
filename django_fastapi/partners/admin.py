@@ -505,7 +505,7 @@ class NewDirectionAdmin(admin.ModelAdmin):
         return field
 
     def exchange_name(self, obj=None):
-        if obj.city.exchange:
+        if obj.city and obj.city.exchange:
             return obj.city.exchange
         else:
             return 'Нет связааного обменника'
