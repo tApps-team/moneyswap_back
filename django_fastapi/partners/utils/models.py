@@ -15,8 +15,10 @@ def get_limit_direction():
                       valute_to__type_valute='Наличные')
     fifth_filter = Q(valute_from__type_valute='Банкинг',
                       valute_to__type_valute='ATM QR')
+    sixth_filter = Q(valute_from__type_valute='Криптовалюта',
+                      valute_to__type_valute='ATM QR')
     
-    return first_limit | second_filter | third_filter | fourth_filter | fifth_filter
+    return first_limit | second_filter | third_filter | fourth_filter | fifth_filter | sixth_filter
 
 
 def get_limit_vautes():
