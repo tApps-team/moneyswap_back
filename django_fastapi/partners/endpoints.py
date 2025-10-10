@@ -910,7 +910,7 @@ def new_add_admin_exchange_order(partner: new_partner_dependency,
             raise HTTPException(status_code=400,
                                 detail='Error with creating ExchangeAdminOrder')
         else:
-            return 'https://t.me/MoneySwap_robot?start=partner_admin_activate'
+            return 'https://t.me/MoneySwap_robot?start=new_partner_admin_activate'
         
 
 @partner_router.post('/edit_admin_exchange_order')
