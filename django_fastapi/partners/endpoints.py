@@ -1040,12 +1040,10 @@ def new_edit_admin_exchange_order(partner: new_partner_dependency):
         raise HTTPException(status_code=404,
                             detail='Exchanger not found in DB')
     else:
-        if not exchange_admin_order_query.exists():
+        if not exchange_admin_order_query.exists()\
+            and not exchange_admin_query.exists():
             raise HTTPException(status_code=423,
-                                detail='Order for this exchanger does not exist in DB')
-        if not exchange_admin_query.exists():
-            raise HTTPException(status_code=423,
-                                detail='ExchangeAdmin does not exist in DB')
+                                detail='Order for this exchanger and ExchangeAdmin does not exist in DB')
         try:
             with transaction.atomic():
                 exchange_admin_query.delete()
