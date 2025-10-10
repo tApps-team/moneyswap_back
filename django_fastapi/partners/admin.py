@@ -295,8 +295,11 @@ class DirectionAdmin(admin.ModelAdmin):
         return field
 
     def exchange_name(self, obj=None):
-        return obj.city.exchange
-    
+        if obj.city.exchange:
+            return obj.city.exchange
+        else:
+            return 'Нет связааного обменника'
+        
     exchange_name.short_description = 'Партнёрский обменник'
 
     def course(self, obj=None):
@@ -502,7 +505,10 @@ class NewDirectionAdmin(admin.ModelAdmin):
         return field
 
     def exchange_name(self, obj=None):
-        return obj.city.exchange
+        if obj.city.exchange:
+            return obj.city.exchange
+        else:
+            return 'Нет связааного обменника'
     
     exchange_name.short_description = 'Партнёрский обменник'
 
