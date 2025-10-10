@@ -1055,7 +1055,7 @@ class ExchangeAdminOrderAdmin(admin.ModelAdmin):
     )
 
     def activate_link(self, obj):
-        return f'https://t.me/MoneySwap_robot?start=new_admin_activate'
+        return f'https://t.me/MoneySwap_robot?start=admin_activate'
     
     activate_link.short_description = 'Ссылка для активации'
 
@@ -1084,7 +1084,7 @@ class NewExchangeAdminOrderAdmin(admin.ModelAdmin):
     )
 
     def activate_link(self, obj):
-        return f'https://t.me/MoneySwap_robot?start=admin_activate'
+        return f'https://t.me/MoneySwap_robot?start=new_admin_activate'
     
     activate_link.short_description = 'Ссылка для активации'
 
