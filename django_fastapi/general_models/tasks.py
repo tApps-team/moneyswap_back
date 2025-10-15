@@ -109,8 +109,8 @@ def parse_actual_courses():
     #new
     # no_cash_direction_model = no_cash_models.NewDirection
     # no_cash_exchange_direction_model = no_cash_models.NewExchangeDirection
-    new_try_update_courses(no_cash_direction_model,
-                           no_cash_exchange_direction_model)
+    # new_try_update_courses(no_cash_direction_model,
+    #                        no_cash_exchange_direction_model)
 
     cash_direction_model = cash_models.Direction
     cash_exchange_direction_model = cash_models.ExchangeDirection
@@ -119,8 +119,8 @@ def parse_actual_courses():
     #new
     # cash_direction_model = cash_models.NewDirection
     # cash_exchange_direction_model = cash_models.NewExchangeDirection
-    new_try_update_courses(cash_direction_model,
-                           cash_exchange_direction_model)
+    # new_try_update_courses(cash_direction_model,
+    #                        cash_exchange_direction_model)
 
     # print(connection.queries[-5:])
     # print(len(connection.queries))
