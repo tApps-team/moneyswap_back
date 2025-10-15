@@ -30,7 +30,8 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.admin import NewUTMSourceFilter, ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
-from .models import (ExchangeAdmin,
+from .models import (AdminComment,
+                     ExchangeAdmin,
                      ExchangeAdminOrder,
                      NewBaseAdminComment,
                      NewBaseComment,
@@ -1193,6 +1194,17 @@ class NewBaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
         return super().get_queryset(request).select_related('guest')
     
 
+class AdminCommentStacked(admin.StackedInline):
+    model = AdminComment
+    extra = 0
+    classes = [
+        'collapse',
+        ]
+    
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('review')
+
+
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = (
@@ -1232,6 +1244,9 @@ class ReviewAdmin(admin.ModelAdmin):
                            "transaction_id"]
             },
         ),
+    ]
+    inlines = [
+        AdminCommentStacked,
     ]
 
 
