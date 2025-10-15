@@ -34,6 +34,7 @@ from cash.schemas import (SpecialCashDirectionMultiPrtnerExchangeRatesWithLocati
                           SpecialCashDirectionMultiModel,
                           SpecialCashDirectionMultiPrtnerWithLocationModel,
                           SpecialCashDirectionMultiPrtnerWithExchangeRatesModel)
+
 from no_cash.models import ExchangeDirection as NoCashExDir, Direction as NoCashDirection
 
 from general_models.models import (Comment,
@@ -64,7 +65,8 @@ from general_models.schemas import (SpecialDirectionMultiWithAmlModel,
                                     ValuteTypeNameSchema,
                                     TopCoinSchema,
                                     SpecialDirectionMultiModel,
-                                    InfoSchema)
+                                    InfoSchema,
+                                    NewExchangeLinkCountSchema)
 from general_models.utils.base import annotate_string_field
 from general_models.utils.http_exc import comment_exception_json, review_exception_json
 
@@ -2483,6 +2485,28 @@ def new_check_valute_on_cash(valute_from: str,
     return NewValute.objects.filter(code_name__in=(valute_from,valute_to),
                                  type_valute__in=('Наличные', 'ATM QR'))\
                             .exists()
+
+
+def check_exchange_direction_by_exchanger(data: NewExchangeLinkCountSchema):
+    marker = data.direction_marker
+    exchange_id = data.exchange_id
+    exchange_direction_id = data.exchange_direction_id
+
+    match marker:
+        case 'auto_cash':
+            _model = cash_models.NewExchangeDirection
+        case 'auto_no_cash':
+            _model = no_cash_models.NewExchangeDirection
+        case 'city':
+            _model = partner_models.NewDirection
+        case 'country':
+            _model = partner_models.NewCountryDirection
+        case 'no_cash':
+            _model = partner_models.NewNonCashDirection
+    
+    return _model.objects.filter(exchange_id=exchange_id,
+                                 pk=exchange_direction_id).exists()
+
 
 
 async def pust_to_send_bot(user_id: int,

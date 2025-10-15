@@ -13,7 +13,12 @@ from general_models.utils.base import get_actual_datetime, UNIT_TIME_CHOICES
 from general_models.utils.periodic_tasks import get_or_create_schedule
 from general_models.models import ExchangeAdmin, PartnerTimeUpdate
 
-from .models import Direction, Exchange, PartnerCountry, PartnerCity
+from .models import (Direction,
+                     Exchange,
+                     PartnerCountry,
+                     PartnerCity,
+                     NewPartnerCity,
+                     NewPartnerCountry)
 
 
 # Сигнал для создания периодической задачи, которая проверяет
@@ -107,6 +112,16 @@ def auto_time_update_for_partner_country(sender, instance, **kwargs):
 
 
 @receiver(pre_save, sender=PartnerCity)
+def auto_time_update_for_partner_country(sender, instance, **kwargs):
+    instance.time_update = timezone.now()
+
+
+@receiver(pre_save, sender=NewPartnerCountry)
+def auto_time_update_for_partner_country(sender, instance, **kwargs):
+    instance.time_update = timezone.now()
+
+
+@receiver(pre_save, sender=NewPartnerCity)
 def auto_time_update_for_partner_country(sender, instance, **kwargs):
     instance.time_update = timezone.now()
 

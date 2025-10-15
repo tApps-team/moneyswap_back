@@ -4,9 +4,11 @@ from asgiref.sync import async_to_sync
 
 from django.contrib.auth.models import User, Group
 from django.contrib.admin.models import LogEntry
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 from django.utils import timezone
+
+from django_celery_beat.models import PeriodicTask
 
 from partners.models import CustomUser
 
@@ -52,7 +54,7 @@ def add_fields_for_user(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=CustomOrder)
 def premoderation_custom_order(sender, instance, **kwargs):
     if instance.moderation and instance.status == 'Модерация':
-        # print('True')
+        
         instance.status = 'В обработке'
 
         user_id = instance.guest_id
@@ -217,3 +219,10 @@ def try_create_periodic_task_for_parse_directions(sender, instance, created, **k
         print(f'CREATING PERIODIC TASK TO PARSE DIRECTIONS FOR {instance.name}')
         manage_periodic_task_for_parse_directions(instance.pk,
                                                   instance.period_for_create)
+        
+
+#Сигнал для удаления периодических задач
+#при удалении обменника из БД
+@receiver(post_delete, sender=Exchanger)
+def delete_task_for_exchange(sender, instance, **kwargs):
+    PeriodicTask.objects.filter(name=f'{instance.pk} parse directions task').delete()

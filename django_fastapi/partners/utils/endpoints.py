@@ -111,51 +111,27 @@ async def request_to_bot_exchange_admin_direction_notification(user_id: int,
                 pass
     except Exception as ex:
         print(ex)
-# def get_partner_directions(city: str,
-#                            valute_from: str,
-#                            valute_to: str):
-#     direction_name = valute_from + ' -> ' + valute_to
 
-#     review_counts = get_reviews_count_filters('partner_direction')
 
-#     directions = Direction.objects\
-#                             .select_related('direction',
-#                                             'direction__valute_from',
-#                                             'direction__valute_to',
-#                                             'city',
-#                                             'city__city',
-#                                             'city__exchange')\
-#                             .annotate(positive_review_count=review_counts['positive'])\
-#                             .annotate(neutral_review_count=review_counts['neutral'])\
-#                             .annotate(negative_review_count=review_counts['negative'])\
-#                             .filter(direction__display_name=direction_name,
-#                                     city__city__code_name=city,
-#                                     is_active=True,
-#                                     city__exchange__partner_link__isnull=False)
+async def new_request_to_bot_exchange_admin_direction_notification(user_id: int,
+                                                                   _text: str):
+    payload = {
+        'user_id': user_id,
+        'text': _text,
+    }
+    # _url = f'https://api.moneyswap.online/exchange_admin_direction_notification?user_id={user_id}&text={_text}'
+    _url = f'https://api.moneyswap.online/new_exchange_admin_direction_notification'
+    timeout = aiohttp.ClientTimeout(total=5)
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(_url,
+                                    json=payload,
+                                   timeout=timeout) as response:
 
-#     for direction in directions:
-#         direction.exchange = direction.city.exchange
-#         direction.exchange_marker = 'partner'
-#         direction.valute_from = valute_from
-#         direction.valute_to = valute_to
-#         direction.min_amount = None
-#         direction.max_amount = None
-#         direction.params = None
-#         direction.fromfee = None
-#         #
-#         working_days = WORKING_DAYS_DICT.copy()
-#         [working_days.__setitem__(day.code_name, True)\
-#           for day in direction.city.working_days.all()]
+                pass
+    except Exception as ex:
+        print(ex)
 
-#         direction.info = PartnerCityInfoSchema(
-#             delivery=direction.city.has_delivery,
-#             office=direction.city.has_office,
-#             working_days=working_days,
-#             time_from=direction.city.time_from,
-#             time_to=direction.city.time_to
-#             )
-#         #
-#     return directions
 
 def get_partner_bankomats_by_valute(partner_id: int,
                                     valute: str,

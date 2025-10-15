@@ -19,12 +19,13 @@ from no_cash.utils.cache import get_or_set_no_cash_directions_cache, new_get_or_
 
 from config import SELENIUM_DRIVER
 
-from .models import NewBaseReview, Exchanger
+from .models import NewBaseReview, Exchanger, Review
 from .utils.periodic_tasks import try_get_xml_file
 
 from .utils.parse_reviews.selenium import parse_reviews
 from .utils.parse_exchange_info.base import parse_exchange_info
-from .utils.tasks import (try_update_courses,
+from .utils.tasks import (new_try_update_courses,
+                          try_update_courses,
                           generate_cash_direction_dict,
                           generate_no_cash_direction_dict)
 from .utils.parsers import parse_xml_and_create_or_update_directions
@@ -35,6 +36,9 @@ from .utils.parsers import parse_xml_and_create_or_update_directions
 @shared_task(name='delete_cancel_reviews')
 def delete_cancel_reviews():
     NewBaseReview.objects.filter(status='Отклонён').delete()
+    # new
+    # Review.objects.filter(status='Отклонён').delete()
+
 
 
 #WITH SELENIUM
@@ -83,6 +87,11 @@ def parse_reviews_for_exchange(exchange_name: str, marker: str):
 def update_popular_count_direction():
     cash_direction = cash_models.Direction.objects
     no_cash_directions = no_cash_models.Direction.objects
+    
+    #new
+    # cash_direction = cash_models.NewDirection.objects
+    # no_cash_directions = no_cash_models.NewDirection.objects
+
 
     cash_direction.update(popular_count=0)
     no_cash_directions.update(popular_count=0)
@@ -97,11 +106,21 @@ def parse_actual_courses():
     no_cash_exchange_direction_model = no_cash_models.ExchangeDirection
     try_update_courses(no_cash_direction_model,
                        no_cash_exchange_direction_model)
+    #new
+    # no_cash_direction_model = no_cash_models.NewDirection
+    # no_cash_exchange_direction_model = no_cash_models.NewExchangeDirection
+    # new_try_update_courses(no_cash_direction_model,
+    #                        no_cash_exchange_direction_model)
 
     cash_direction_model = cash_models.Direction
     cash_exchange_direction_model = cash_models.ExchangeDirection
     try_update_courses(cash_direction_model,
                        cash_exchange_direction_model)
+    #new
+    # cash_direction_model = cash_models.NewDirection
+    # cash_exchange_direction_model = cash_models.NewExchangeDirection
+    # new_try_update_courses(cash_direction_model,
+    #                        cash_exchange_direction_model)
 
     # print(connection.queries[-5:])
     # print(len(connection.queries))
@@ -151,6 +170,19 @@ def periodic_delete_unlinked_exchange_records():
         ('partner', partner_models.CountryDirectionRate),
         ('partner', partner_models.NonCashDirectionRate),
     ]
+
+    # new
+    # deleted_tuples_list = [
+    #     ('no_cash', no_cash_models.NewExchangeDirection),
+    #     ('cash', cash_models.NewExchangeDirection),
+    #     ('partner', partner_models.NewDirection),
+    #     ('partner', partner_models.NewCountryDirection),
+    #     ('partner', partner_models.NewNonCashDirection),
+    #     ('partner', partner_models.NewDirectionRate),
+    #     ('partner', partner_models.NewCountryDirectionRate),
+    #     ('partner', partner_models.NewNonCashDirectionRate),
+    # ]
+
 
     for marker, _model in deleted_tuples_list:
         _model: cash_models.ExchangeDirection # как пример для аннотации
