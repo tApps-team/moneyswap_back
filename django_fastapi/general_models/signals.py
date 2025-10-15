@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from asgiref.sync import async_to_sync
 
@@ -197,7 +197,7 @@ def new_send_notification_after_add_comment(sender, instance, created, **kwargs)
         exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=exchange_id)\
                                                 .first()
         
-        if exchange_admin:
+        if exchange_admin and instance.guest_id != exchange_admin.user_id:
             user_id = exchange_admin.user_id
             # exchange_id = exchange_admin.exchange_id
 
@@ -211,6 +211,31 @@ def new_send_notification_after_add_comment(sender, instance, created, **kwargs)
             async_to_sync(new_send_comment_notifitation_to_review_owner)(instance.review.guest_id,
                                                                          exchange_id,
                                                                          instance.review_id)
+            
+
+@receiver(post_save, sender=AdminComment)
+def new_send_notification_after_add_admin_comment(sender, instance, created, **kwargs):
+    # time_check = timezone.now() - timedelta(minutes=1)
+
+    if created:
+        exchange_id = instance.review.exchange_id
+        exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=exchange_id)\
+                                                .first()
+        
+        if exchange_admin:
+            user_id = exchange_admin.user_id
+            # exchange_id = exchange_admin.exchange_id
+
+            # send notification to admin user in chat with bot
+            async_to_sync(new_send_comment_notifitation_to_exchange_admin)(user_id,
+                                                                           exchange_id,
+                                                                           instance.review_id)
+            
+        # send notification to review owner in chat with bot
+        # if instance.guest_id != instance.review.guest_id:
+        async_to_sync(new_send_comment_notifitation_to_review_owner)(instance.review.guest_id,
+                                                                     exchange_id,
+                                                                     instance.review_id)
 
 
 @receiver(post_save, sender=Exchanger)

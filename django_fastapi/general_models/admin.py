@@ -1311,6 +1311,7 @@ class CommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
                            "moderation",
                            "grade",
                            "review_from",
+                           "review",
                            "guest"]
             },
         ),
