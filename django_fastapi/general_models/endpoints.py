@@ -94,6 +94,7 @@ from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
 from .utils.endpoints import (check_exchage_by_name,
                               check_exchage_marker,
+                              check_exchange_direction_by_exchanger,
                               check_perms_for_adding_comment,
                               check_perms_for_adding_review,
                               get_base_url,
@@ -3756,6 +3757,11 @@ def new_increase_link_count(data: NewExchangeLinkCountSchema):
                                                 .filter(exchange_id=data.exchange_id,
                                                         exchange_direction_id=data.exchange_direction_id,
                                                         user_id=data.user_id)
+    
+    if not check_exchange_direction_by_exchanger(data):
+        raise HTTPException(status_code=423,
+                            detail=f'ExchageDirection by given "exchange_direction_id" not found by given "exchange_id"')
+
     if not exchange_link_count_queryset.exists():
         try:
             exchange_link_count_queryset = exchange_link_count.objects.create(user_id=data.user_id,
