@@ -1294,6 +1294,7 @@ class CommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
     readonly_field = (
         'exchange_name',
+        'moderation',
     )
 
     ordering = (
