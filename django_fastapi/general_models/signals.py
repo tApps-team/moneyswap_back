@@ -23,7 +23,9 @@ from .models import (ExchangeAdmin,
                      Comment,
                      AdminComment,
                      NewExchangeAdmin)
-from .tasks import send_review_notification_task
+from .tasks import (send_comment_notification_to_exchange_admin_task,
+                    send_review_notification_to_exchange_admin_task,
+                    send_comment_notification_to_review_owner_task)
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.base import get_actual_datetime
 from .utils.periodic_tasks import request_to_bot_swift_sepa
@@ -143,14 +145,10 @@ def new_send_notification_after_add_review(sender, instance, created, **kwargs):
             user_id = exchange_admin.user_id
             exchange_id = instance.exchange_id
 
-            # send notification to admin user in chat with bot
-
-            # async_to_sync(new_send_review_notifitation_to_exchange_admin)(user_id,
-            #                                                           exchange_id,
-            #                                                           instance.pk)
-            send_review_notification_task.delay(user_id,
-                                                exchange_id,
-                                                instance.pk)
+            # send notification to admin user in chat with bot in background task
+            send_review_notification_to_exchange_admin_task.delay(user_id,
+                                                                  exchange_id,
+                                                                  instance.pk)
             pass
 
 
@@ -204,23 +202,23 @@ def new_send_notification_after_add_comment(sender, instance, created, **kwargs)
         
         if exchange_admin and instance.guest_id != exchange_admin.user_id:
             user_id = exchange_admin.user_id
-            # exchange_id = exchange_admin.exchange_id
 
             # send notification to admin user in chat with bot
-            async_to_sync(new_send_comment_notifitation_to_exchange_admin)(user_id,
-                                                                           exchange_id,
-                                                                           instance.review_id)
+            send_comment_notification_to_exchange_admin_task.delay(user_id,
+                                                                   exchange_id,
+                                                                   instance.pk)
+
             
         # send notification to review owner in chat with bot
         if instance.guest_id != instance.review.guest_id:
-            async_to_sync(new_send_comment_notifitation_to_review_owner)(instance.review.guest_id,
-                                                                         exchange_id,
-                                                                         instance.review_id)
+            send_comment_notification_to_review_owner_task.delay(user_id,
+                                                                 exchange_id,
+                                                                 instance.pk)
+
             
 
 @receiver(post_save, sender=AdminComment)
 def new_send_notification_after_add_admin_comment(sender, instance, created, **kwargs):
-    # time_check = timezone.now() - timedelta(minutes=1)
 
     if created:
         exchange_id = instance.review.exchange_id
@@ -229,18 +227,17 @@ def new_send_notification_after_add_admin_comment(sender, instance, created, **k
         
         if exchange_admin:
             user_id = exchange_admin.user_id
-            # exchange_id = exchange_admin.exchange_id
-
             # send notification to admin user in chat with bot
-            async_to_sync(new_send_comment_notifitation_to_exchange_admin)(user_id,
-                                                                           exchange_id,
-                                                                           instance.review_id)
+            send_comment_notification_to_exchange_admin_task.delay(user_id,
+                                                                   exchange_id,
+                                                                   instance.pk)
+
             
         # send notification to review owner in chat with bot
-        # if instance.guest_id != instance.review.guest_id:
-        async_to_sync(new_send_comment_notifitation_to_review_owner)(instance.review.guest_id,
-                                                                     exchange_id,
-                                                                     instance.review_id)
+        send_comment_notification_to_review_owner_task.delay(user_id,
+                                                             exchange_id,
+                                                             instance.pk)
+
 
 
 @receiver(post_save, sender=Exchanger)
