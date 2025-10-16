@@ -25,7 +25,9 @@ from .models import (ExchangeAdmin,
                      NewExchangeAdmin)
 from .tasks import (send_comment_notification_to_exchange_admin_task,
                     send_review_notification_to_exchange_admin_task,
-                    send_comment_notification_to_review_owner_task)
+                    send_comment_notification_to_review_owner_task,
+                    send_admin_comment_notification_to_exchange_admin_task,
+                    send_admin_comment_notification_to_review_owner_task)
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.base import get_actual_datetime
 from .utils.periodic_tasks import request_to_bot_swift_sepa
@@ -206,15 +208,14 @@ def new_send_notification_after_add_comment(sender, instance, created, **kwargs)
             # send notification to admin user in chat with bot
             send_comment_notification_to_exchange_admin_task.delay(user_id,
                                                                    exchange_id,
-                                                                   instance.pk)
+                                                                   instance.review_id)
 
             
         # send notification to review owner in chat with bot
         if instance.guest_id != instance.review.guest_id:
             send_comment_notification_to_review_owner_task.delay(user_id,
                                                                  exchange_id,
-                                                                 instance.pk)
-
+                                                                 instance.review_id)
             
 
 @receiver(post_save, sender=AdminComment)
@@ -230,14 +231,13 @@ def new_send_notification_after_add_admin_comment(sender, instance, created, **k
             # send notification to admin user in chat with bot
             send_comment_notification_to_exchange_admin_task.delay(user_id,
                                                                    exchange_id,
-                                                                   instance.pk)
+                                                                   instance.review_id)
 
             
         # send notification to review owner in chat with bot
         send_comment_notification_to_review_owner_task.delay(user_id,
                                                              exchange_id,
-                                                             instance.pk)
-
+                                                             instance.review_id)
 
 
 @receiver(post_save, sender=Exchanger)
