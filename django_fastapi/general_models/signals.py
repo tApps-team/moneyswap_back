@@ -23,6 +23,7 @@ from .models import (ExchangeAdmin,
                      Comment,
                      AdminComment,
                      NewExchangeAdmin)
+from .tasks import send_review_notification_task
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.base import get_actual_datetime
 from .utils.periodic_tasks import request_to_bot_swift_sepa
@@ -143,9 +144,13 @@ def new_send_notification_after_add_review(sender, instance, created, **kwargs):
             exchange_id = instance.exchange_id
 
             # send notification to admin user in chat with bot
-            async_to_sync(new_send_review_notifitation_to_exchange_admin)(user_id,
-                                                                      exchange_id,
-                                                                      instance.pk)
+
+            # async_to_sync(new_send_review_notifitation_to_exchange_admin)(user_id,
+            #                                                           exchange_id,
+            #                                                           instance.pk)
+            send_review_notification_task.delay(user_id,
+                                                exchange_id,
+                                                instance.pk)
             pass
 
 

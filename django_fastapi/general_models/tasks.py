@@ -1,3 +1,5 @@
+import asyncio
+
 from time import time
 
 from celery import shared_task
@@ -28,6 +30,7 @@ from .utils.tasks import (new_try_update_courses,
                           try_update_courses,
                           generate_cash_direction_dict,
                           generate_no_cash_direction_dict)
+from .utils.endpoints import new_send_review_notifitation_to_exchange_admin
 from .utils.parsers import parse_xml_and_create_or_update_directions
 
 
@@ -276,3 +279,9 @@ def create_update_directions_for_exchanger(exchange_id: int):
         #             new_run_no_cash_background_tasks(exchange,
         #                                              direction_dict,
         #                                              xml_file)
+
+
+
+@shared_task
+def send_review_notification_task(user_id, exchange_id, review_id):
+    asyncio.run(new_send_review_notifitation_to_exchange_admin(user_id, exchange_id, review_id))
