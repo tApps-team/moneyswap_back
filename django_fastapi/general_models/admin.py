@@ -1307,7 +1307,7 @@ class CommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
         'guest',
     )
 
-    readonly_field = (
+    readonly_fields= (
         'exchange_name',
         'moderation',
     )
