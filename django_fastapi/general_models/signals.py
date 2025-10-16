@@ -25,9 +25,7 @@ from .models import (ExchangeAdmin,
                      NewExchangeAdmin)
 from .tasks import (send_comment_notification_to_exchange_admin_task,
                     send_review_notification_to_exchange_admin_task,
-                    send_comment_notification_to_review_owner_task,
-                    send_admin_comment_notification_to_exchange_admin_task,
-                    send_admin_comment_notification_to_review_owner_task)
+                    send_comment_notification_to_review_owner_task)
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.base import get_actual_datetime
 from .utils.periodic_tasks import request_to_bot_swift_sepa
