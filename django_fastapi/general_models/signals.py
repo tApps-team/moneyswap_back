@@ -138,7 +138,7 @@ def new_send_notification_after_add_review(sender, instance, created, **kwargs):
         exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=instance.exchange_id)\
                                                 .first()
         
-        if exchange_admin:
+        if exchange_admin and not instance.has_send_to_admin:
             user_id = exchange_admin.user_id
             exchange_id = instance.exchange_id
 

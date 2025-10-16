@@ -1289,7 +1289,7 @@ class NewBaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
     
 
 @admin.register(Comment)
-class CommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
+class CommentAdmin(admin.ModelAdmin):
     list_display = (
         'username',
         'exchange_name',
@@ -1339,6 +1339,10 @@ class CommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
         return super().get_queryset(request).select_related('review',
                                                             'review__exchange',
                                                             'guest')
+    
+    def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
+        obj.moderation = obj.status == 'Опубликован'
+        return super().save_model(request, obj, form, change)
     
 
 class LinkedUrlStacked(admin.StackedInline):

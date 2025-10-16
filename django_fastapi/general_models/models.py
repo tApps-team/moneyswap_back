@@ -596,6 +596,8 @@ class Review(BaseReviewComment):
                                       blank=True,
                                       null=True,
                                       default=None)
+    has_send_to_admin = models.BooleanField('Уведомление отправлено админу',
+                                            default=False)
     
     class Meta:
         verbose_name = 'Отзыв (новый)'
@@ -1067,7 +1069,7 @@ class NewExchangeAdminOrder(models.Model):
     time_create = models.DateTimeField('Время создания',
                                        null=True,
                                        blank=True,
-                                       default=timezone.now())
+                                       default=timezone.now)
     
     class Meta:
         verbose_name = 'Заявка на подключение обменника к юзеру (новая)'
