@@ -211,7 +211,7 @@ def new_send_notification_after_add_comment(sender, instance, created, **kwargs)
             
         # send notification to review owner in chat with bot
         if instance.guest_id != instance.review.guest_id:
-            send_comment_notification_to_review_owner_task.delay(user_id,
+            send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
                                                                  exchange_id,
                                                                  instance.review_id)
             
@@ -233,7 +233,7 @@ def new_send_notification_after_add_admin_comment(sender, instance, created, **k
 
             
         # send notification to review owner in chat with bot
-        send_comment_notification_to_review_owner_task.delay(user_id,
+        send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
                                                              exchange_id,
                                                              instance.review_id)
 
