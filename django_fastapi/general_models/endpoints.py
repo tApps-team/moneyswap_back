@@ -543,8 +543,11 @@ def recreate_partner_city_direction_records(secret: str):
         new_exchange_id = exchanger_dict.get(exchange_en_name)
         
         if new_exchange_id:
-            new_city_id = partner_models.NewPartnerCity.objects.get(city_id=city_direction.city.city_id,
-                                                                    exchange_id=new_exchange_id).pk
+            try:
+                new_city_id = partner_models.NewPartnerCity.objects.get(city_id=city_direction.city.city_id,
+                                                                        exchange_id=new_exchange_id).pk
+            except Exception:
+                continue
             _valute_from = city_direction.direction.valute_from_id
             _valute_to = city_direction.direction.valute_to_id
 
