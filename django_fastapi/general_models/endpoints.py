@@ -585,7 +585,7 @@ def recreate_partner_city_direction_records(secret: str):
 
     except Exception as ex:
         print(ex)
-        res = 'ERROR'
+        res = ex
     else:
         res = 'EXCHANGER PARTNER CITY DIRECTIONS WITH DIRECTION RATES ADDED!!!'
         print(res)
