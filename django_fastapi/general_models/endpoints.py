@@ -326,6 +326,9 @@ def recreate_exchanger_records(secret: str):
                 
                 exchange_name_set.add(exchange.en_name)
                 _d = model_to_dict(exchange)
+
+                if isinstance(exchange, partner_models.Exchange):
+                    _d.pop('id')
                 # _d = exchange.__dict__
                 # _d.pop('_state')
                 # _id = _d.pop('id')
