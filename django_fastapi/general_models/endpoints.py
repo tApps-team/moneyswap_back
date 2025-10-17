@@ -531,64 +531,64 @@ def recreate_partner_city_direction_records(secret: str):
     
     exchanger_dict = {e.en_name: e.pk for e in Exchanger.objects.all()}
 
-    try:
-        for city_direction in partner_models.Direction.objects.select_related('exchange',
-                                                                              'direction',
-                                                                            'city',
-                                                                            'city__city')\
-                                                                .prefetch_related('direction_rates').all():
-            # print(city_direction.__dict__)
+    # try:
+    for city_direction in partner_models.Direction.objects.select_related('exchange',
+                                                                            'direction',
+                                                                        'city',
+                                                                        'city__city')\
+                                                            .prefetch_related('direction_rates').all():
+        # print(city_direction.__dict__)
+        # break
+        exchange_en_name = city_direction.exchange.en_name
+        new_exchange_id = exchanger_dict.get(exchange_en_name)
+        
+        if new_exchange_id:
+            new_city_id = partner_models.NewPartnerCity.objects.get(city_id=city_direction.city.city_id,
+                                                                    exchange_id=new_exchange_id).pk
+            _valute_from = city_direction.direction.valute_from_id
+            _valute_to = city_direction.direction.valute_to_id
+
+            new_direction_id = cash_models.NewDirection.objects.get(valute_from_id=_valute_from,
+                                                                    valute_to_id=_valute_to).pk
+            # if city_direction.exchange.name == 'test_ex':
+            _d = city_direction.__dict__
+            _d.pop('_state')
+            _d.pop('id')
+            _d.pop('exchange_id')
+            _d.pop('city_id')
+            _d.pop('direction_id')
+            prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
+            direction_rates = prefetch_dict.get('direction_rates')
+            # print(direction_rates)
+            _d['exchange_id'] = new_exchange_id
+            _d['city_id'] = new_city_id
+            _d['direction_id'] = new_direction_id
             # break
-            exchange_en_name = city_direction.exchange.en_name
-            new_exchange_id = exchanger_dict.get(exchange_en_name)
-            
-            if new_exchange_id:
-                new_city_id = partner_models.NewPartnerCity.objects.get(city_id=city_direction.city.city_id,
-                                                                        exchange_id=new_exchange_id).pk
-                _valute_from = city_direction.direction.valute_from_id
-                _valute_to = city_direction.direction.valute_to_id
 
-                new_direction_id = cash_models.NewDirection.objects.get(valute_from_id=_valute_from,
-                                                                        valute_to_id=_valute_to).pk
-                # if city_direction.exchange.name == 'test_ex':
-                _d = city_direction.__dict__
-                _d.pop('_state')
-                _d.pop('id')
-                _d.pop('exchange_id')
-                _d.pop('city_id')
-                _d.pop('direction_id')
-                prefetch_dict: dict = _d.pop('_prefetched_objects_cache')
-                direction_rates = prefetch_dict.get('direction_rates')
-                # print(direction_rates)
-                _d['exchange_id'] = new_exchange_id
-                _d['city_id'] = new_city_id
-                _d['direction_id'] = new_direction_id
-                # break
+            with transaction.atomic():
+                new_partner_city_direction = partner_models.NewDirection.objects.create(**_d)
 
-                with transaction.atomic():
-                    new_partner_city_direction = partner_models.NewDirection.objects.create(**_d)
+                if direction_rates:
+                    direction_rate_list = []
+                    for rate in direction_rates:
+                        # print(rate.__dict__)
+                        rate_dict: dict = rate.__dict__
+                        rate_dict.pop('_state')
+                        rate_dict.pop('id')
+                        rate_dict.pop('exchange_id')
+                        rate_dict.pop('exchange_direction_id')
+                        rate_dict['exchange_id'] = new_exchange_id
+                        rate_dict['exchange_direction_id'] = new_partner_city_direction.pk
+                        direction_rate_list.append(partner_models.NewDirectionRate(**rate_dict))
+                    
+                    partner_models.NewDirectionRate.objects.bulk_create(direction_rate_list)
 
-                    if direction_rates:
-                        direction_rate_list = []
-                        for rate in direction_rates:
-                            # print(rate.__dict__)
-                            rate_dict: dict = rate.__dict__
-                            rate_dict.pop('_state')
-                            rate_dict.pop('id')
-                            rate_dict.pop('exchange_id')
-                            rate_dict.pop('exchange_direction_id')
-                            rate_dict['exchange_id'] = new_exchange_id
-                            rate_dict['exchange_direction_id'] = new_partner_city_direction.pk
-                            direction_rate_list.append(partner_models.NewDirectionRate(**rate_dict))
-                        
-                        partner_models.NewDirectionRate.objects.bulk_create(direction_rate_list)
-
-    except Exception as ex:
-        print(ex)
-        res = ex
-    else:
-        res = 'EXCHANGER PARTNER CITY DIRECTIONS WITH DIRECTION RATES ADDED!!!'
-        print(res)
+    # except Exception as ex:
+    #     print(ex)
+    #     res = ex
+    # else:
+    res = 'EXCHANGER PARTNER CITY DIRECTIONS WITH DIRECTION RATES ADDED!!!'
+    print(res)
 
     return res
 
