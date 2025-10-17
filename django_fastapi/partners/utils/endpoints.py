@@ -120,7 +120,7 @@ async def new_request_to_bot_exchange_admin_direction_notification(user_id: int,
         'text': _text,
     }
     # _url = f'https://api.moneyswap.online/exchange_admin_direction_notification?user_id={user_id}&text={_text}'
-    _url = f'https://api.moneyswap.online/new_exchange_admin_direction_notification'
+    _url = f'https://api.moneyswap.online/exchange_admin_direction_notification'
     timeout = aiohttp.ClientTimeout(total=5)
     try:
         async with aiohttp.ClientSession() as session:

@@ -391,7 +391,7 @@ class CustomOrderAdmin(admin.ModelAdmin):
         return queryset.select_related('guest')
 
 #Отображение валют в админ панели
-@admin.register(Valute)
+# @admin.register(Valute)
 class ValuteAdmin(admin.ModelAdmin):
     list_display = (
         'name',
@@ -1033,7 +1033,7 @@ class NewBaseExchangeLinkCountAdmin(admin.ModelAdmin):
         return False
 
 
-@admin.register(ExchangeAdminOrder)
+# @admin.register(ExchangeAdminOrder)
 class ExchangeAdminOrderAdmin(admin.ModelAdmin):
     list_display = (
         'user_id',
@@ -1093,7 +1093,7 @@ class NewExchangeAdminOrderAdmin(admin.ModelAdmin):
         return super().get_queryset(request).select_related('exchange')
 
 
-@admin.register(ExchangeAdmin)
+# @admin.register(ExchangeAdmin)
 class ExchangeAdminAdmin(admin.ModelAdmin):
     list_display = (
         'user',
@@ -1163,7 +1163,7 @@ class NewBaseCommentStacked(admin.StackedInline):
                                                             'guest')
 
 
-@admin.register(NewBaseReview)
+# @admin.register(NewBaseReview)
 class NewBaseReviewAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
         'username',
@@ -1259,7 +1259,7 @@ class ReviewAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
     
     
-@admin.register(NewBaseComment)
+# @admin.register(NewBaseComment)
 class NewBaseCommentAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
         'username',

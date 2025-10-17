@@ -40,9 +40,9 @@ from .utils.parsers import parse_xml_and_create_or_update_directions
 #со статусом "Отклонён" из БД
 @shared_task(name='delete_cancel_reviews')
 def delete_cancel_reviews():
-    NewBaseReview.objects.filter(status='Отклонён').delete()
+    # NewBaseReview.objects.filter(status='Отклонён').delete()
     # new
-    # Review.objects.filter(status='Отклонён').delete()
+    Review.objects.filter(status='Отклонён').delete()
 
 
 
@@ -90,12 +90,12 @@ def parse_reviews_for_exchange(exchange_name: str, marker: str):
 
 @shared_task(name='update_popular_count_direction_time')
 def update_popular_count_direction():
-    cash_direction = cash_models.Direction.objects
-    no_cash_directions = no_cash_models.Direction.objects
+    # cash_direction = cash_models.Direction.objects
+    # no_cash_directions = no_cash_models.Direction.objects
     
     #new
-    # cash_direction = cash_models.NewDirection.objects
-    # no_cash_directions = no_cash_models.NewDirection.objects
+    cash_direction = cash_models.NewDirection.objects
+    no_cash_directions = no_cash_models.NewDirection.objects
 
 
     cash_direction.update(popular_count=0)
@@ -107,25 +107,25 @@ def update_popular_count_direction():
 def parse_actual_courses():
     # print(len(connection.queries))
 
-    no_cash_direction_model = no_cash_models.Direction
-    no_cash_exchange_direction_model = no_cash_models.ExchangeDirection
-    try_update_courses(no_cash_direction_model,
-                       no_cash_exchange_direction_model)
+    # no_cash_direction_model = no_cash_models.Direction
+    # no_cash_exchange_direction_model = no_cash_models.ExchangeDirection
+    # try_update_courses(no_cash_direction_model,
+    #                    no_cash_exchange_direction_model)
     #new
-    # no_cash_direction_model = no_cash_models.NewDirection
-    # no_cash_exchange_direction_model = no_cash_models.NewExchangeDirection
-    # new_try_update_courses(no_cash_direction_model,
-    #                        no_cash_exchange_direction_model)
+    no_cash_direction_model = no_cash_models.NewDirection
+    no_cash_exchange_direction_model = no_cash_models.NewExchangeDirection
+    new_try_update_courses(no_cash_direction_model,
+                           no_cash_exchange_direction_model)
 
-    cash_direction_model = cash_models.Direction
-    cash_exchange_direction_model = cash_models.ExchangeDirection
-    try_update_courses(cash_direction_model,
-                       cash_exchange_direction_model)
+    # cash_direction_model = cash_models.Direction
+    # cash_exchange_direction_model = cash_models.ExchangeDirection
+    # try_update_courses(cash_direction_model,
+    #                    cash_exchange_direction_model)
     #new
-    # cash_direction_model = cash_models.NewDirection
-    # cash_exchange_direction_model = cash_models.NewExchangeDirection
-    # new_try_update_courses(cash_direction_model,
-    #                        cash_exchange_direction_model)
+    cash_direction_model = cash_models.NewDirection
+    cash_exchange_direction_model = cash_models.NewExchangeDirection
+    new_try_update_courses(cash_direction_model,
+                           cash_exchange_direction_model)
 
     # print(connection.queries[-5:])
     # print(len(connection.queries))
@@ -165,32 +165,32 @@ def periodic_delete_unlinked_exchange_records():
 
     exchangedirection_delete_filter = Q(exchange_id__isnull=True)
 
-    deleted_tuples_list = [
-        ('no_cash', no_cash_models.ExchangeDirection),
-        ('cash', cash_models.ExchangeDirection),
-        ('partner', partner_models.Direction),
-        ('partner', partner_models.CountryDirection),
-        ('partner', partner_models.NonCashDirection),
-        ('partner', partner_models.DirectionRate),
-        ('partner', partner_models.CountryDirectionRate),
-        ('partner', partner_models.NonCashDirectionRate),
-    ]
+    # deleted_tuples_list = [
+    #     ('no_cash', no_cash_models.ExchangeDirection),
+    #     ('cash', cash_models.ExchangeDirection),
+    #     ('partner', partner_models.Direction),
+    #     ('partner', partner_models.CountryDirection),
+    #     ('partner', partner_models.NonCashDirection),
+    #     ('partner', partner_models.DirectionRate),
+    #     ('partner', partner_models.CountryDirectionRate),
+    #     ('partner', partner_models.NonCashDirectionRate),
+    # ]
 
     # new
-    # deleted_tuples_list = [
-    #     ('no_cash', no_cash_models.NewExchangeDirection),
-    #     ('cash', cash_models.NewExchangeDirection),
-    #     ('partner', partner_models.NewDirection),
-    #     ('partner', partner_models.NewCountryDirection),
-    #     ('partner', partner_models.NewNonCashDirection),
-    #     ('partner', partner_models.NewDirectionRate),
-    #     ('partner', partner_models.NewCountryDirectionRate),
-    #     ('partner', partner_models.NewNonCashDirectionRate),
-    # ]
+    deleted_tuples_list = [
+        ('no_cash', no_cash_models.NewExchangeDirection),
+        ('cash', cash_models.NewExchangeDirection),
+        ('partner', partner_models.NewDirection),
+        ('partner', partner_models.NewCountryDirection),
+        ('partner', partner_models.NewNonCashDirection),
+        ('partner', partner_models.NewDirectionRate),
+        ('partner', partner_models.NewCountryDirectionRate),
+        ('partner', partner_models.NewNonCashDirectionRate),
+    ]
 
 
     for marker, _model in deleted_tuples_list:
-        _model: cash_models.ExchangeDirection # как пример для аннотации
+        _model: cash_models.NewExchangeDirection # как пример для аннотации
 
         if batch_size <= 0:
             print(f'end with RETURN {batch_size}')

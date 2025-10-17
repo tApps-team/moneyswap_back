@@ -71,7 +71,7 @@ class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
 
 
 #Отображение обменников в админ панели
-@admin.register(Exchange)
+# @admin.register(Exchange)
 class ExchangeAdmin(BaseExchangeAdmin):
     # list_display = ('link_count', )
     inlines = [
@@ -182,7 +182,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
         # return queryset.annotate(direction_count=Coalesce(Subquery(direction_count_subquery), Value(0)))
 
 #Отображение направлений в админ панели
-@admin.register(Direction)
+# @admin.register(Direction)
 class DirectionAdmin(BaseDirectionAdmin):
     pass
 
@@ -226,7 +226,7 @@ class NewCustomDirectionFilter(admin.SimpleListFilter):
 
 
 #Отображение готовых направлений в админ панели
-@admin.register(ExchangeDirection)
+# @admin.register(ExchangeDirection)
 class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     list_filter = (
         'exchange',
@@ -279,7 +279,7 @@ class NewExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
 #         return queryset
 
 
-@admin.register(PopularDirection)
+# @admin.register(PopularDirection)
 class PopularDirectionAdmin(BasePopularDirectionAdmin):
     list_display = (
         'name',
@@ -303,7 +303,7 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
-@admin.register(ExchangeLinkCount)
+# @admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 

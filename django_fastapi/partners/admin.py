@@ -66,7 +66,7 @@ from .utils.cache import (get_or_set_user_account_cache,
                           set_user_account_cache)
 
 
-@admin.register(CustomUser)
+# @admin.register(CustomUser)
 class UserAdmin(admin.ModelAdmin):
     list_display = (
         'user',
@@ -156,7 +156,7 @@ class ChangeOrderStatusActionForm(AdminActionForm):
 
 
 
-@admin.register(Direction)
+# @admin.register(Direction)
 class DirectionAdmin(admin.ModelAdmin):
     actions = (
         'update_direction_course',
@@ -616,7 +616,7 @@ class PartnerCityStacked(admin.StackedInline):
     get_city_name.short_description = 'Город'
 
 
-@admin.register(PartnerCountry)
+# @admin.register(PartnerCountry)
 class PartnerCountryAdmin(admin.ModelAdmin):
     list_display = (
         'exchange',
@@ -792,7 +792,7 @@ class NewPartnerCountryAdmin(admin.ModelAdmin):
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
-@admin.register(CountryDirection)
+# @admin.register(CountryDirection)
 class CountryDirectionAdmin(admin.ModelAdmin):
     actions = (
         'update_direction_course',
@@ -1139,7 +1139,7 @@ class CustomDirectionFilter(admin.SimpleListFilter):
         return queryset
 
 
-@admin.register(NonCashDirection)
+# @admin.register(NonCashDirection)
 class NonCashDirectionAdmin(admin.ModelAdmin):
     actions = (
         'update_direction_course',
@@ -1463,7 +1463,7 @@ class NewNonCashDirectionAdmin(admin.ModelAdmin):
                          f'Выбранные направления успешно обновлены!({len(queryset)} шт)')
 
 
-@admin.register(PartnerCity)
+# @admin.register(PartnerCity)
 class PartnerCityAdmin(admin.ModelAdmin):
     list_display = (
         'city',
@@ -1914,7 +1914,7 @@ class CommentAdmin(BaseCommentAdmin):
 #     model = ExchangeLinkCount
 
 
-@admin.register(Exchange)
+# @admin.register(Exchange)
 class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
     list_display = (
         'pk',
@@ -2195,7 +2195,7 @@ class ExchangeAdmin(ReviewAdminMixin, admin.ModelAdmin):
 
 
 
-@admin.register(ExchangeLinkCount)
+# @admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request)\
@@ -2217,7 +2217,7 @@ class NewExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
-@admin.register(CountryExchangeLinkCount)
+# @admin.register(CountryExchangeLinkCount)
 class CountryExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request)\
@@ -2239,7 +2239,7 @@ class NewCountryExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
-@admin.register(NonCashExchangeLinkCount)
+# @admin.register(NonCashExchangeLinkCount)
 class NonCashExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request)\
@@ -2261,7 +2261,7 @@ class NewNonCashExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
-@admin.register(DirectionRate)
+# @admin.register(DirectionRate)
 class DirectionRateAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
@@ -2285,7 +2285,7 @@ class NewDirectionRateAdmin(admin.ModelAdmin):
     raw_id_fields = ('exchange', 'exchange_direction')
 
 
-@admin.register(CountryDirectionRate)
+# @admin.register(CountryDirectionRate)
 class CountryDirectionRateAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
@@ -2309,7 +2309,7 @@ class NewCountryDirectionRateAdmin(admin.ModelAdmin):
     raw_id_fields = ('exchange', 'exchange_direction')
 
 
-@admin.register(NonCashDirectionRate)
+# @admin.register(NonCashDirectionRate)
 class NonCashDirectionRateRateAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
@@ -2334,7 +2334,7 @@ class NewNonCashDirectionRateRateAdmin(admin.ModelAdmin):
 
 
 #Отображение банкоматов в админ панели
-@admin.register(Bankomat)
+# @admin.register(Bankomat)
 class BankomatAdmin(admin.ModelAdmin):
     list_display = (
         'name',

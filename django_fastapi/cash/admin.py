@@ -184,7 +184,7 @@ class ExchangeLinkCountStacked(BaseExchangeLinkCountStacked):
 
 
 #Отображение обменников в админ панели
-@admin.register(Exchange)
+# @admin.register(Exchange)
 class ExchangeAdmin(BaseExchangeAdmin):
     inlines = [
         ExchangeDirectionStacked,
@@ -289,7 +289,7 @@ class ExchangeAdmin(BaseExchangeAdmin):
 
 
 #Отображение направлений в админ панели
-@admin.register(Direction)
+# @admin.register(Direction)
 class DirectionAdmin(BaseDirectionAdmin):
 
     def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
@@ -347,7 +347,7 @@ class NewCustomDirectionFilter(admin.SimpleListFilter):
 
 
 #Отображение готовых направлений в админ панели
-@admin.register(ExchangeDirection)
+# @admin.register(ExchangeDirection)
 class ExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
     list_filter = (
         'exchange',
@@ -387,7 +387,7 @@ class NewExchangeDirectionAdmin(BaseExchangeDirectionAdmin):
                                                             'city')
     
 
-@admin.register(PopularDirection)
+# @admin.register(PopularDirection)
 class PopularDirectionAdmin(BasePopularDirectionAdmin):
     list_display = (
         'name',
@@ -411,7 +411,7 @@ class PopularDirectionAdmin(BasePopularDirectionAdmin):
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
-@admin.register(ExchangeLinkCount)
+# @admin.register(ExchangeLinkCount)
 class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
