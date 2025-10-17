@@ -325,13 +325,13 @@ def recreate_exchanger_records(secret: str):
             if exchange.en_name not in exchange_name_set:
                 
                 exchange_name_set.add(exchange.en_name)
-                _d = model_to_dict(exchange)
+                # _d = model_to_dict(exchange)
 
-                if isinstance(exchange, partner_models.Exchange):
-                    _d.pop('id')
-                # _d = exchange.__dict__
-                # _d.pop('_state')
-                # _id = _d.pop('id')
+                # if isinstance(exchange, partner_models.Exchange):
+                #     _d.pop('id')
+                _d = exchange.__dict__
+                _d.pop('_state')
+                _d.pop('id')
                 if _d.get('age'):
                     _d['age'] = parse_relative_date(_d['age'])
                 
@@ -339,17 +339,17 @@ def recreate_exchanger_records(secret: str):
                 # print(_d)
                 create_list.append(Exchanger(**_d))
 
-# try:
-    # Exchanger.objects.bulk_create(create_list)
-    for exchanger in create_list:
-        exchanger.save(force_insert=True)
-# except Exception as ex:
-#     print(ex)
-#     res = 'ERROR'
-# else:
-    res = 'EXCHANGERS ADDED!!!'
-    # print('len unique set', len(exchange_name_set))
-    print(res)
+    try:
+        # Exchanger.objects.bulk_create(create_list)
+        for exchanger in create_list:
+            exchanger.save(force_insert=True)
+    except Exception as ex:
+        print(ex)
+        res = 'ERROR'
+    else:
+        res = 'EXCHANGERS ADDED!!!'
+        # print('len unique set', len(exchange_name_set))
+        print(res)
 
     return res
 
