@@ -491,8 +491,8 @@ def get_partner_directions_by(partner: partner_dependency,
                                                 marker)
 
 
-# @new_partner_router.get('/directions_by',
-#                     response_model=list[DirectionSchema3])
+@new_partner_router.get('/directions_by',
+                    response_model=list[DirectionSchema3])
 def new_get_partner_directions_by(partner: new_partner_dependency,
                                   id: int,
                                   marker: Literal['country', 'city']):
