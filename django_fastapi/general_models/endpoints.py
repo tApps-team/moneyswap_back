@@ -1241,7 +1241,7 @@ def recreate_exchange_admin_records(secret: str):
 
 ################################################################################################
 
-@common_router.get('/available_valutes_2')
+# @common_router.get('/available_valutes_2')
 def get_available_valutes2(request: Request,
                           query: AvailableValutesQuery = Depends()):
     params = query.params()
@@ -1266,9 +1266,9 @@ def available_valutes(request: Request,
     return valute_dict
 
 
-@common_router.get('/specific_valute',
-                   response_model=SpecificValuteSchema,
-                   response_model_by_alias=False)
+# @common_router.get('/specific_valute',
+#                    response_model=SpecificValuteSchema,
+#                    response_model_by_alias=False)
 def get_specific_valute(code_name: str):
     code_name = code_name.upper()
     try:
@@ -1337,9 +1337,9 @@ new_test_union_directions_response_models2 = Union[SpecialCashDirectionMultiPrtn
                                          SpecialDirectionMultiWithAmlModel]
 
 
-@common_router.get('/directions',
-                   response_model=list[new_test_union_directions_response_models2],
-                   response_model_by_alias=False)
+# @common_router.get('/directions',
+#                    response_model=list[new_test_union_directions_response_models2],
+#                    response_model_by_alias=False)
 def get_current_exchange_directions2(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
     params = query.params()
@@ -1382,9 +1382,9 @@ def get_current_exchange_directions(request: Request,
     return exchange_direction_list
 
 
-@common_router.get('/popular_directions',
-                   response_model=list[PopularDirectionSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/popular_directions',
+#                    response_model=list[PopularDirectionSchema],
+#                    response_model_by_alias=False)
 def get_popular_directions(exchange_marker: str,
                            limit: int = None):
     limit = 9 if limit is None else limit
@@ -1485,9 +1485,9 @@ def new_get_popular_directions(segment_marker: Literal['cash',
     return res
 
 
-@common_router.get('/random_directions',
-                   response_model=list[PopularDirectionSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/random_directions',
+#                    response_model=list[PopularDirectionSchema],
+#                    response_model_by_alias=False)
 def get_random_directions(exchange_marker: str,
                           limit: int = None):
     print(len(connection.queries))
@@ -1623,9 +1623,9 @@ def new_get_random_directions(segment_marker: Literal['cash',
     return res
 
 
-@common_router.get('/similar_directions',
-                   response_model=list[PopularDirectionSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/similar_directions',
+#                    response_model=list[PopularDirectionSchema],
+#                    response_model_by_alias=False)
 def get_similar_directions(exchange_marker: str,
                            valute_from: str,
                            valute_to: str,
@@ -1859,8 +1859,8 @@ def new_get_similar_directions(segment_marker: Literal['no_cash',
     return similar_directions
 
 
-@common_router.get('/similar_cities_by_direction',
-                   response_model=list[CityModel])
+# @common_router.get('/similar_cities_by_direction',
+#                    response_model=list[CityModel])
 def get_similar_cities_by_direction(valute_from: str,
                                     valute_to: str,
                                     city: str):
@@ -2091,9 +2091,9 @@ def new_get_similar_cities_by_direction(valute_from: str,
         return cities
 
 
-@common_router.get('/exchange_list',
-                   response_model=list[NewCommonExchangeSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/exchange_list',
+#                    response_model=list[NewCommonExchangeSchema],
+#                    response_model_by_alias=False)
 def get_exchange_list():
     # print(len(connection.queries))
 
@@ -2387,9 +2387,9 @@ def new_get_exchange_detail_info(exchange_id: int):
         return exchange
 
 
-@common_router.get('/exchangers_blacklist',
-                   response_model=list[BlackListExchangeSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/exchangers_blacklist',
+#                    response_model=list[BlackListExchangeSchema],
+#                    response_model_by_alias=False)
 def get_black_exchange_list():
     queries = []
 
@@ -2491,9 +2491,9 @@ def new_get_black_exchange_list():
     return exchange_black_list
 
 
-@common_router.get('/exchange_blacklist_detail',
-                   response_model=NewDetailBlackListExchangeSchema,
-                   response_model_by_alias=False)
+# @common_router.get('/exchange_blacklist_detail',
+#                    response_model=NewDetailBlackListExchangeSchema,
+#                    response_model_by_alias=False)
 def get_exchange_detail_info(exchange_id: int,
                              exchange_marker: str):
 
@@ -2574,9 +2574,9 @@ def new_get_black_exchange_detail_info(exchange_id: int):
         return exchange
 
 
-@common_router.get('/exchange_detail',
-                   response_model=NewDetailExchangeSchema,
-                   response_model_by_alias=False)
+# @common_router.get('/exchange_detail',
+#                    response_model=NewDetailExchangeSchema,
+#                    response_model_by_alias=False)
 def get_exchange_detail_info(exchange_id: int,
                              exchange_marker: str):
 
@@ -2636,9 +2636,9 @@ def get_exchange_detail_info(exchange_id: int,
     return exchange
 
 
-@common_router.get('/direction_pair_by_exchange',
-                   response_model=list[DirectionSideBarSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/direction_pair_by_exchange',
+#                    response_model=list[DirectionSideBarSchema],
+#                    response_model_by_alias=False)
 def new_get_all_directions_by_exchange(exchange_id: int,
                                    exchange_marker: str):
     # print(len(connection.queries))
@@ -2979,7 +2979,7 @@ def add_feedback_form(feedback: FeedbackFormSchema):
 
 # Эндпоинт для получения актуального курса обмена
 # для выбранного направления
-@common_router.get('/actual_course')
+# @common_router.get('/actual_course')
 def get_actual_course_for_direction(valute_from: str, valute_to: str):
     valute_from, valute_to = valute_from.upper(), valute_to.upper()
     
@@ -3023,9 +3023,9 @@ def new_get_actual_course_for_direction(valute_from: str,
     return generate_actual_course(direction) 
 
 
-@common_router.get('/top_exchanges',
-                   response_model=list[TopExchangeSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/top_exchanges',
+#                    response_model=list[TopExchangeSchema],
+#                    response_model_by_alias=False)
 def new_get_top_exchanges():
     limit = 10
     # print(len(connection.queries))
@@ -3123,9 +3123,9 @@ def get_top_exchanges():
                                                    el['name']))
 
 
-@common_router.get('/top_coins',
-                   response_model=list[TopCoinSchema],
-                   response_model_by_alias=False)
+# @common_router.get('/top_coins',
+#                    response_model=list[TopCoinSchema],
+#                    response_model_by_alias=False)
 def get_top_coins():
     usd = 'CASHUSD'
     limit = 10
@@ -3167,8 +3167,8 @@ def new_get_top_coins():
     return coin_list
 
 
-@review_router.get('/reviews_by_exchange',
-                   response_model=NewReviewsByExchangeSchema)
+# @review_router.get('/reviews_by_exchange',
+#                    response_model=NewReviewsByExchangeSchema)
 def new_get_reviews_by_exchange(exchange_name: str,
                             page: int,
                             review_id: int = None,
@@ -3382,7 +3382,7 @@ def get_reviews_by_exchange(exchange_id: int,
                                    content=review_list)
 
 
-@review_router.post('/add_review_by_exchange')
+# @review_router.post('/add_review_by_exchange')
 def new_add_review_by_exchange(review: NewAddReviewSchema):
     check_exchage_by_name(review.exchange_name)
 
@@ -3461,7 +3461,7 @@ def add_review_by_exchange(review: AddReviewSchema):
         return {'status': 'success'}
     
 
-@review_router.get('/check_user_review_permission')
+# @review_router.get('/check_user_review_permission')
 def check_user_review_permission(exchange_name: str,
                                  tg_id: int):
     return new_check_perms_for_adding_review(exchange_name,
@@ -3475,9 +3475,9 @@ def new_check_user_review_permission(exchange_id: int,
                                          tg_id)
 
 
-@review_router.get('/get_comments_by_review',
-                   response_model=list[CommentSchema],
-                   response_model_exclude_none=True)
+# @review_router.get('/get_comments_by_review',
+#                    response_model=list[CommentSchema],
+#                    response_model_exclude_none=True)
 def new_get_comments_by_review(review_id: int):
     try:
         review = NewBaseReview.objects.get(pk=review_id)
@@ -3618,7 +3618,7 @@ def get_comments_by_review(review_id: int):
     return comment_list
 
 
-@review_router.post('/add_comment_by_review')
+# @review_router.post('/add_comment_by_review')
 def new_add_comment_by_comment(comment: NewAddCommentSchema):
 
     new_check_perms_for_adding_comment(review_id=comment.review_id,
@@ -3670,7 +3670,7 @@ def add_comment_by_comment(comment: NewAddCommentSchema):
         return {'status': 'success'}
 
 
-@review_router.get('/check_user_comment_permission')
+# @review_router.get('/check_user_comment_permission')
 def new_check_user_review_permission(review_id: int,
                                      tg_id: int):
     return new_check_perms_for_adding_comment(review_id,
@@ -3691,7 +3691,7 @@ exchange_link_count_dict = {
 }
 
 
-@common_router.post('/increase_link_count')
+# @common_router.post('/increase_link_count')
 def increase_link_count(data: ExchangeLinkCountSchema):
     exchange_link_count: Union[cash_models.ExchangeLinkCount,
                                no_cash_models.ExchangeLinkCount,
@@ -3781,8 +3781,8 @@ def new_increase_link_count(data: NewExchangeLinkCountSchema):
     return {'status': 'success'}
 
 
-@common_router.get('/sitemap_directions',
-                   response_model=NewSiteMapDirectonSchema)
+# @common_router.get('/sitemap_directions',
+#                    response_model=NewSiteMapDirectonSchema)
 def new_get_directions_for_sitemap(page: int,
                                element_on_page: int = None):
     

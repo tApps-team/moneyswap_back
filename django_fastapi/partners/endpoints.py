@@ -125,9 +125,9 @@ new_partner_router = APIRouter(prefix='/partner',
 
 
 
-@partner_router.get('/partner_cities',
-                    response_model=list[PartnerCitySchema3],
-                    response_model_by_alias=False)
+# @partner_router.get('/partner_cities',
+#                     response_model=list[PartnerCitySchema3],
+#                     response_model_by_alias=False)
 def get_partner_cities(partner: partner_dependency):
     partner_id = partner.get('partner_id')
 
@@ -157,9 +157,9 @@ def new_get_partner_cities(partner: new_partner_dependency):
     return generate_partner_cities2(partner_cities)
 
 
-@partner_router.get('/partner_countries',
-                    response_model=list[PartnerCountrySchema3],
-                    response_model_by_alias=False)
+# @partner_router.get('/partner_countries',
+#                     response_model=list[PartnerCountrySchema3],
+#                     response_model_by_alias=False)
 def get_partner_countries(partner: partner_dependency):
     partner_id = partner.get('partner_id')
 
@@ -187,9 +187,9 @@ def new_get_partner_countries(partner: new_partner_dependency):
     return generate_partner_countries(partner_counrties)
 
 
-@partner_router.get('/cities_for_exclude_by_partner_country',
-                    response_model=ExcludedCitiesByPartnerCountry,
-                    response_model_by_alias=False)
+# @partner_router.get('/cities_for_exclude_by_partner_country',
+#                     response_model=ExcludedCitiesByPartnerCountry,
+#                     response_model_by_alias=False)
 def get_cities_for_exclude_by_partner_country(partner: partner_dependency,
                                               country_id: int):
     # print(len(connection.queries))
@@ -343,7 +343,7 @@ def new_get_cities_for_exclude_by_partner_country(partner: new_partner_dependenc
     return response
 
 
-@partner_router.patch('/edit_excluded_cities_by_partner_country')
+# @partner_router.patch('/edit_excluded_cities_by_partner_country')
 def edit_excluded_cities_by_partner_country(partner: partner_dependency,
                                             data: EditExcludedCitySchema):
     # print(len(connection.queries))
@@ -455,8 +455,8 @@ def get_cities_for_country(country_name: str):
     return cities
 
 
-@partner_router.get('/directions_by',
-                    response_model=list[DirectionSchema3])
+# @partner_router.get('/directions_by',
+#                     response_model=list[DirectionSchema3])
 def get_partner_directions_by(partner: partner_dependency,
                               id: int,
                               marker: Literal['country', 'city']):
@@ -491,8 +491,8 @@ def get_partner_directions_by(partner: partner_dependency,
                                                 marker)
 
 
-@new_partner_router.get('/directions_by',
-                    response_model=list[DirectionSchema3])
+# @new_partner_router.get('/directions_by',
+#                     response_model=list[DirectionSchema3])
 def new_get_partner_directions_by(partner: new_partner_dependency,
                                   id: int,
                                   marker: Literal['country', 'city']):
@@ -527,8 +527,8 @@ def new_get_partner_directions_by(partner: new_partner_dependency,
                                           marker)
 
 
-@partner_router.get('/no_cash_directions',
-                    response_model=list[NoCashDirectionSchema])
+# @partner_router.get('/no_cash_directions',
+#                     response_model=list[NoCashDirectionSchema])
 def get_partner_no_cash_directions(partner: partner_dependency):
     # print(len(connection.queries))
     partner_id = partner.get('partner_id')
@@ -584,7 +584,7 @@ def new_get_partner_no_cash_directions(partner: new_partner_dependency):
                                           marker)
 
 
-@partner_router.get('/available_valutes')
+# @partner_router.get('/available_valutes')
 def get_available_valutes_for_partner2(base: str,
                                        is_no_cash: bool = False):
     base = base.upper()
@@ -629,7 +629,7 @@ def get_available_valutes_for_partner(base: str,
     return get_valute_json(queries)
 
 
-@partner_router.post('/change_password')
+# @partner_router.post('/change_password')
 def change_user_password(partner: partner_dependency,
                          new_password: NewPasswordSchema):
     partner_id = partner.get('partner_id')
@@ -665,8 +665,8 @@ def new_change_user_password(partner: new_partner_dependency,
                 'details': 'password changed'}
 
 
-@partner_router.get('/actual_course',
-                    response_model=ActualCourseSchema)
+# @partner_router.get('/actual_course',
+#                     response_model=ActualCourseSchema)
 def get_actual_course_for_direction(partner: partner_dependency,
                                     valute_from: str,
                                     valute_to: str):
@@ -708,8 +708,8 @@ def new_get_actual_course_for_direction(partner: new_partner_dependency,
     return generate_actual_course(direction)
 
 
-@partner_router.get('/account_info',
-                    response_model=NewAccountInfoSchema)
+# @partner_router.get('/account_info',
+#                     response_model=NewAccountInfoSchema)
 def get_account_info(partner: partner_dependency):
     partner_id = partner.get('partner_id')
 
@@ -788,7 +788,7 @@ def new_get_account_info(partner: new_partner_dependency):
         return exchange
 
 
-@partner_router.get('/switch_notification_activity')
+# @partner_router.get('/switch_notification_activity')
 def switch_notification_activity(partner: partner_dependency):
     partner_id = partner.get('partner_id')
 
@@ -847,7 +847,7 @@ def new_switch_notification_activity(partner: new_partner_dependency):
                 return new_value
 
 
-@partner_router.post('/add_admin_exchange_order')
+# @partner_router.post('/add_admin_exchange_order')
 def add_admin_exchange_order(partner: partner_dependency,
                              tg_id: int):
     partner_id = partner.get('partner_id')
@@ -913,7 +913,7 @@ def new_add_admin_exchange_order(partner: new_partner_dependency,
             return 'https://t.me/MoneySwap_robot?start=new_partner_admin_activate'
         
 
-@partner_router.post('/edit_admin_exchange_order')
+# @partner_router.post('/edit_admin_exchange_order')
 def edit_admin_exchange_order(partner: partner_dependency,
                              tg_id: int):
     partner_id = partner.get('partner_id')
@@ -986,7 +986,7 @@ def new_edit_admin_exchange_order(partner: new_partner_dependency,
             return 'https://t.me/MoneySwap_robot?start=new_partner_admin_activate'
         
 
-@partner_router.delete('/delete_admin_exchange_order')
+# @partner_router.delete('/delete_admin_exchange_order')
 def edit_admin_exchange_order(partner: partner_dependency):
     partner_id = partner.get('partner_id')
 
@@ -1066,7 +1066,7 @@ def get_valid_active_direction_str(direction):
     return f'{direction} (активно✅, отключится через {formatted_time}🕚)'
         
 
-@partner_router.post('/add_partner_city_country')
+# @partner_router.post('/add_partner_city_country')
 def add_partner_city_country(partner: partner_dependency,
                              data: AddPartnerCityCountrySchema):
     # print(len(connection.queries))
@@ -1206,7 +1206,7 @@ def add_partner_city_country(partner: new_partner_dependency,
                     'marker': marker}
 
 
-@partner_router.patch('/edit_partner_city_country')
+# @partner_router.patch('/edit_partner_city_country')
 def edit_partner_city_country(partner: partner_dependency,
                              data: AddPartnerCityCountrySchema):
     # print(len(connection.queries))
@@ -1377,7 +1377,7 @@ def new_edit_partner_city_country(partner: new_partner_dependency,
             'details': f'Партнёрск{prefix} {_text} {name} изменен{suffix}'}
 
 
-@partner_router.delete('/delete_partner_city_country')
+# @partner_router.delete('/delete_partner_city_country')
 def delete_partner_city_country(partner: partner_dependency,
                                 data: DeletePartnerCityCountrySchema):
     partner_id = partner.get('partner_id')
@@ -1418,7 +1418,7 @@ def new_delete_partner_city_country(partner: new_partner_dependency,
         return f'{data.marker.capitalize()} has been deleted'
 
 
-@partner_router.post('/add_partner_direction')
+# @partner_router.post('/add_partner_direction')
 def add_partner_direction(partner: partner_dependency,
                           new_direction: NewAddPartnerDirectionSchema):
     partner_id = partner.get('partner_id')
@@ -1701,7 +1701,7 @@ def new_add_partner_direction(partner: new_partner_dependency,
                                 detail=f'Такое направление на уровне {_location_text} уже существует')
 
 
-@partner_router.post('/add_partner_no_cash_direction')
+# @partner_router.post('/add_partner_no_cash_direction')
 def add_partner_direction(partner: partner_dependency,
                           new_direction: AddPartnerNoCashDirectionSchema):
     partner_id = partner.get('partner_id')
@@ -1900,7 +1900,7 @@ def new_add_partner_noncash_direction(partner: new_partner_dependency,
                                 detail='Такое безналичное направление уже существует')
 
 
-@partner_router.patch('/edit_partner_directions')
+# @partner_router.patch('/edit_partner_directions')
 def edit_partner_directions_by(partner: partner_dependency,
                                response_body: NewListEditedPartnerDirectionSchema):
     # print(len(connection.queries))
@@ -2120,7 +2120,7 @@ def new_edit_partner_directions_by(partner: new_partner_dependency,
                 'details': f'updated {len(edited_direction_list)} directions'}
 
 
-@partner_router.patch('/edit_partner_no_cash_directions')
+# @partner_router.patch('/edit_partner_no_cash_directions')
 def edit_partner_no_cash_directions(partner: partner_dependency,
                                     response_body: ListEditedPartnerNoCashDirectionSchema):
     # print(len(connection.queries))
@@ -2316,7 +2316,7 @@ def new_edit_partner_no_cash_directions(partner: new_partner_dependency,
                 'details': f'updated {len(edited_direction_list)} directions'}
 
 
-@partner_router.delete('/delete_partner_direction')
+# @partner_router.delete('/delete_partner_direction')
 def delete_partner_direction(partner: partner_dependency,
                              data: DeletePartnerDirectionSchema):
     partner_id = partner.get('partner_id')
@@ -2405,7 +2405,7 @@ exchange_link_count_dict = {
     'no_cash': NonCashExchangeLinkCount,
 }
 
-@partner_router.post('/increase_link_count')
+# @partner_router.post('/increase_link_count')
 def increase_link_count(data: ExchangeLinkCountSchema):
     exchange_link_count: Union[ExchangeLinkCount,
                                CountryExchangeLinkCount] = exchange_link_count_dict.get(data.direction_marker)
@@ -2442,9 +2442,9 @@ def increase_link_count(data: ExchangeLinkCountSchema):
     return {'status': 'success'}
 
 
-@partner_router.get('/bankomats_by_valute',
-                         response_model=list[BankomatDetailSchema],
-                         response_model_by_alias=False)
+# @partner_router.get('/bankomats_by_valute',
+#                          response_model=list[BankomatDetailSchema],
+#                          response_model_by_alias=False)
 def get_bankomat_list_by_valute(partner: partner_dependency,
                                 valute: str):
     partner_id = partner.get('partner_id')

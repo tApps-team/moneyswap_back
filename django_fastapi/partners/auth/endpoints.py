@@ -26,7 +26,7 @@ new_partner_dependency = Annotated[dict, Depends(new_get_current_partner)]
 
 
 
-@auth_router.post('/token')
+# @auth_router.post('/token')
 def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     partner = authenticate_partner(form_data.username,
                                    form_data.password)
@@ -42,7 +42,7 @@ def new_login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, D
     return generate_tokens(partner)
     
 
-@auth_router.post('/refresh')
+# @auth_router.post('/refresh')
 def refresh_tokens(token: RefreshToken):
     partner = get_partner_or_raise_exception(token.refresh_token)
     return generate_tokens(partner)
