@@ -336,17 +336,17 @@ def recreate_exchanger_records(secret: str):
                 # print(_d)
                 create_list.append(Exchanger(**_d))
 
-    try:
-        # Exchanger.objects.bulk_create(create_list)
-        for exchanger in create_list:
-            exchanger.save(force_insert=True)
-    except Exception as ex:
-        print(ex)
-        res = 'ERROR'
-    else:
-        res = 'EXCHANGERS ADDED!!!'
-        # print('len unique set', len(exchange_name_set))
-        print(res)
+# try:
+    # Exchanger.objects.bulk_create(create_list)
+    for exchanger in create_list:
+        exchanger.save(force_insert=True)
+# except Exception as ex:
+#     print(ex)
+#     res = 'ERROR'
+# else:
+    res = 'EXCHANGERS ADDED!!!'
+    # print('len unique set', len(exchange_name_set))
+    print(res)
 
     return res
 
