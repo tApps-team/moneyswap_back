@@ -218,9 +218,9 @@ def get_available_coutries(request: Request):
 
 
 #
-# @cash_router.get('/specific_city',
-#                  response_model=SpecificCitySchema,
-#                  response_model_by_alias=False)
+@cash_router.get('/specific_city',
+                 response_model=SpecificCitySchema,
+                 response_model_by_alias=False)
 def get_specific_city(code_name: str):
     code_name = code_name.upper()
     try:

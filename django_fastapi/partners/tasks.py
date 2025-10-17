@@ -65,39 +65,39 @@ def parse_cash_courses():
             sleep(0.4)
 
 
-# @shared_task(name='check_update_time_for_directions')
-# def check_update_time_for_directions():
-#     time_delta = get_timedelta()
-#     # check_time = datetime.now() - time_delta
+@shared_task(name='check_update_time_for_directions')
+def check_update_time_for_directions():
+    time_delta = get_timedelta()
+    # check_time = datetime.now() - time_delta
     
-#     # with transaction.atomic():
-#     #     PartnerDirection.objects\
-#     #                     .filter(time_update__lt=check_time)\
-#     #                     .update(is_active=False)
+    # with transaction.atomic():
+    #     PartnerDirection.objects\
+    #                     .filter(time_update__lt=check_time)\
+    #                     .update(is_active=False)
         
-#     #     CountryDirection.objects\
-#     #                     .filter(time_update__lt=check_time)\
-#     #                     .update(is_active=False)
+    #     CountryDirection.objects\
+    #                     .filter(time_update__lt=check_time)\
+    #                     .update(is_active=False)
         
-#     #     NonCashDirection.objects\
-#     #                     .filter(time_update__lt=check_time)\
-#     #                     .update(is_active=False)
+    #     NonCashDirection.objects\
+    #                     .filter(time_update__lt=check_time)\
+    #                     .update(is_active=False)
     
-#     # new
-#     check_time = timezone.now() - time_delta
+    # new
+    check_time = timezone.now() - time_delta
     
-#     with transaction.atomic():
-#         partner_models.NewDirection.objects\
-#                         .filter(time_update__lt=check_time)\
-#                         .update(is_active=False)
+    with transaction.atomic():
+        partner_models.NewDirection.objects\
+                        .filter(time_update__lt=check_time)\
+                        .update(is_active=False)
         
-#         partner_models.NewCountryDirection.objects\
-#                         .filter(time_update__lt=check_time)\
-#                         .update(is_active=False)
+        partner_models.NewCountryDirection.objects\
+                        .filter(time_update__lt=check_time)\
+                        .update(is_active=False)
         
-#         partner_models.NewNonCashDirection.objects\
-#                         .filter(time_update__lt=check_time)\
-#                         .update(is_active=False)
+        partner_models.NewNonCashDirection.objects\
+                        .filter(time_update__lt=check_time)\
+                        .update(is_active=False)
 
 
 # @shared_task(name='exchange_admin_notifications')
