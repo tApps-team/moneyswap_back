@@ -326,7 +326,7 @@ def recreate_exchanger_records(secret: str):
                 exchange_name_set.add(exchange.en_name)
                 _d = exchange.__dict__
                 _d.pop('_state')
-                # _d.pop('id')
+                _d.pop('id')
                 if _d.get('age'):
                     _d['age'] = parse_relative_date(_d['age'])
                 # print(_d)
