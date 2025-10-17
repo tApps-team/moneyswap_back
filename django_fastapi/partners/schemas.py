@@ -148,8 +148,8 @@ class DirectionSchema2(BaseModel):
 
 
 class PartnerExchangeRate(BaseModel):
-    min_count: int | None
-    max_count: int | None
+    min_count: int | float | None
+    max_count: int | float | None
     in_count: float
     out_count: float
     rate_coefficient: float | None = Field(default=None)
