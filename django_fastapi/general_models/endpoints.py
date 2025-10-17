@@ -12,6 +12,7 @@ from collections import Counter
 
 from asgiref.sync import async_to_sync
 
+from django.forms.models import model_to_dict
 from django.contrib.admin.models import LogEntry
 from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch, Sum, Value, IntegerField
 from django.db.models.functions import Coalesce
@@ -324,20 +325,21 @@ def recreate_exchanger_records(secret: str):
             if exchange.en_name not in exchange_name_set:
                 
                 exchange_name_set.add(exchange.en_name)
-                _d = exchange.__dict__
-                _d.pop('_state')
-                _id = _d.pop('id')
+                _d = model_to_dict(exchange)
+                # _d = exchange.__dict__
+                # _d.pop('_state')
+                # _id = _d.pop('id')
                 if _d.get('age'):
                     _d['age'] = parse_relative_date(_d['age'])
                 
-                _d['id'] = _id
+                # _d['id'] = _id
                 # print(_d)
                 create_list.append(Exchanger(**_d))
 
     try:
         # Exchanger.objects.bulk_create(create_list)
         for exchanger in create_list:
-            exchanger.save()
+            exchanger.save(force_insert=True)
     except Exception as ex:
         print(ex)
         res = 'ERROR'
