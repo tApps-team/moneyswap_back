@@ -15,6 +15,7 @@ from partners.models import CustomUser
 from .models import (ExchangeAdmin,
                      NewBaseComment,
                      Valute,
+                     NewValute,
                      CustomOrder,
                      NewBaseReview,
                      NewBaseAdminComment,
@@ -40,6 +41,12 @@ from .utils.endpoints import (send_comment_notifitation_to_exchange_admin,
 #Сигнал для автоматической установки английского названия
 #валюты(если оно не указано) при создании валюты в БД
 @receiver(pre_save, sender=Valute)
+def add_en_name_to_valute_obj(sender, instance, **kwargs):
+    if instance.en_name is None:
+        instance.en_name = instance.name
+
+
+@receiver(pre_save, sender=NewValute)
 def add_en_name_to_valute_obj(sender, instance, **kwargs):
     if instance.en_name is None:
         instance.en_name = instance.name
@@ -236,6 +243,12 @@ def new_send_notification_after_add_admin_comment(sender, instance, created, **k
         send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
                                                              exchange_id,
                                                              instance.review_id)
+
+
+@receiver(pre_save, sender=Exchanger)
+def add_en_name_to_valute_obj(sender, instance, **kwargs):
+    if instance.en_name is None:
+        instance.en_name = instance.name
 
 
 @receiver(post_save, sender=Exchanger)
