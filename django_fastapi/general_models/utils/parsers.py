@@ -2,6 +2,7 @@ from xml.etree import ElementTree as ET
 from xml.etree.ElementTree import Element
 
 from io import BytesIO
+from time import time
 
 from lxml import etree
 
@@ -143,6 +144,8 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
 
     time_action = timezone.now()
 
+    start_parse_time = time()
+
     for event, element in etree.iterparse(BytesIO(xml_file), events=('end',), tag='item'):
         # if any(v for v in dict_for_parse.values()):
             try:
@@ -181,7 +184,7 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
             finally:
                 element.clear()
     
-    # print('время парсинга xml', time() - start_parse_time)
+    print(f'время парсинга xml {exchange.name} - {time() - start_parse_time} sec')
     
     # with transaction.atomic():
     #     try:
@@ -219,7 +222,7 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
         except Exception as ex:
             print('CREATE/UPDATE NO CASH ERROR')
             print(ex)
-            
+
     # CASH CREATE/UPDATE
     with transaction.atomic():
         try:
