@@ -208,6 +208,8 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
         'city_id',
     ]
 
+    start_db_time = time()
+
     # NO CASH CREATE/UPDATE
     with transaction.atomic():
         try:
@@ -238,3 +240,5 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
         except Exception as ex:
             print('CREATE/UPDATE CASH ERROR')
             print(ex)
+
+    print(f'время обновления в бд {exchange.name} - {time() - start_db_time} sec')
