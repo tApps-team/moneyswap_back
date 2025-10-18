@@ -183,29 +183,31 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
     
     # print('время парсинга xml', time() - start_parse_time)
     
+    # with transaction.atomic():
+    #     try:
+    update_fields = [
+        'in_count',
+        'out_count',
+        'min_amount',
+        'max_amount',
+        'is_active',
+        'time_action',
+    ]
+    unique_fields = [
+        'exchange_id',
+        'direction_id',
+    ]
+    additional_cash_update_fields = [
+        'fromfee',
+        'params',
+    ]
+    additional_cash_unique_fields = [
+        'city_id',
+    ]
+
+    # NO CASH CREATE/UPDATE
     with transaction.atomic():
         try:
-            update_fields = [
-                'in_count',
-                'out_count',
-                'min_amount',
-                'max_amount',
-                'is_active',
-                'time_action',
-            ]
-            unique_fields = [
-                'exchange_id',
-                'direction_id',
-            ]
-            additional_cash_update_fields = [
-                'fromfee',
-                'params',
-            ]
-            additional_cash_unique_fields = [
-                'city_id',
-            ]
-
-            # NO CASH CREATE/UPDATE
             no_cash_models.NewExchangeDirection.objects.bulk_create(no_cash_bulk_create_list,
                                                                     update_conflicts=True,
                                                                     update_fields=update_fields,
@@ -214,8 +216,13 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
             no_cash_models.NewExchangeDirection.objects.filter(Q(exchange_id=exchange.pk) \
                                                                 & ~Q(time_action=time_action))\
                                                         .update(is_active=False)
+        except Exception as ex:
+            print('CREATE/UPDATE NO CASH ERROR')
+            print(ex)
             
-            # CASH CREATE/UPDATE
+    # CASH CREATE/UPDATE
+    with transaction.atomic():
+        try:
             cash_models.NewExchangeDirection.objects.bulk_create(cash_bulk_create_list,
                                                                  update_conflicts=True,
                                                                  update_fields=update_fields + additional_cash_update_fields,
@@ -226,5 +233,5 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
                                                     .update(is_active=False)
 
         except Exception as ex:
-            print('CREATE/UPDATE ERROR')
+            print('CREATE/UPDATE CASH ERROR')
             print(ex)
