@@ -228,11 +228,13 @@ def create_update_directions_for_exchanger(exchange_id: int):
         if exchange.active_status in ('disabled', 'scam', 'skip'):
             return
         
-        start_direction_time = time()
+        start_cache_time = time()
 
         all_cash_directions = new_get_or_set_cash_directions_cache()
 
         all_no_cash_directions = new_get_or_set_no_cash_directions_cache()
+
+        print(f'время получения направлений из кэша - {time() - start_cache_time} sec')
 
         if all_cash_directions or all_no_cash_directions:
             # print(f'request to exchanger {exchange.name}')
@@ -242,7 +244,7 @@ def create_update_directions_for_exchanger(exchange_id: int):
             # print('get xml file', time() - start_time)
         
             if xml_file is not None and exchange.is_active:
-                # start_generate_time = time()
+                start_generate_time = time()
                 direction_dict = {}
 
                 if all_cash_directions:
@@ -252,7 +254,7 @@ def create_update_directions_for_exchanger(exchange_id: int):
                     generate_no_cash_direction_dict(direction_dict,
                                                     all_no_cash_directions)
 
-                print('время генерации словаря направлений', time() - start_direction_time)
+                print(f'время генерации словаря направлений - {time() - start_generate_time} sec')
                 if direction_dict:
                     parse_xml_and_create_or_update_directions(exchange,
                                                               xml_file,
