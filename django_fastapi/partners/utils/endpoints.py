@@ -2039,7 +2039,11 @@ def get_partner_directions_with_aml(valute_from: str,
                                      valute_to: str,
                                      city: str = None):
     # valute_to
-    _valute_to_obj = NewValute.objects.get(code_name=valute_to)
+    try:
+        _valute_to_obj = NewValute.objects.get(code_name=valute_to)
+    except Exception:
+        raise HTTPException(status_code=404,
+                            detail='Valute To not found')
     
     if _valute_to_obj.type_valute == 'ATM QR':
         # bankomats
@@ -2243,8 +2247,11 @@ def get_partner_directions_with_location(valute_from: str,
                                          valute_to: str):
     start_time = time()
     # valute_to
-    _valute_to_obj = NewValute.objects.get(code_name=valute_to)
-    
+    try:
+        _valute_to_obj = NewValute.objects.get(code_name=valute_to)
+    except Exception:
+        raise HTTPException(status_code=404,
+                            detail=f'Valute To not found')
     if _valute_to_obj.type_valute == 'ATM QR':
         # bankomats
         _bankomats = NewBankomat.objects.filter(valutes__name=_valute_to_obj.name)\

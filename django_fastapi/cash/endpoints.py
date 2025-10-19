@@ -223,6 +223,9 @@ def get_available_coutries(request: Request):
                  response_model_by_alias=False)
 def get_specific_city(code_name: str):
     code_name = code_name.upper()
+    if len(code_name) > 10:
+        raise HTTPException(status_code=400,
+                            detail='Invalid "code_name"')
     try:
         city = City.objects.select_related('country').get(code_name=code_name)
     except ObjectDoesNotExist:
