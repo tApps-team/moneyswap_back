@@ -446,7 +446,8 @@ def get_countries():
                     response_model_by_alias=False)
 def get_cities_for_country(country_name: str):
     cities =  City.objects.select_related('country')\
-                            .filter(country__name=country_name).all()
+                            .filter(country__name=country_name,
+                                    is_parse=True).all()
     
     for city in cities:
         city.multiple_name = MultipleName(name=city.name,
@@ -1191,8 +1192,8 @@ def add_partner_city_country(partner: new_partner_dependency,
 
             new_obj = _model.objects.create(**_data)
             
-            if marker == 'city':
-                make_city_active(new_obj.city)
+            # if marker == 'city':
+            #     make_city_active(new_obj.city)
 
         except IntegrityError:
             _text = 'Такая страна' if marker == 'country' else 'Такой город'
