@@ -151,11 +151,18 @@ async def new_try_get_xml_file(exchange: BaseExchange,
 async def request_to_xml_file(xml_url: str,
                               timeout: int = None):
     DEFAULT_TIMEOUT = 5
-    headers = {
-        # 'User-Agent': 'My User Agent 1.0',
-        'User-Agent': 'curl/7.88.1',
+    # headers = {
+    #     # 'User-Agent': 'My User Agent 1.0',
+    #     'User-Agent': 'curl/7.88.1',
 
+    # }
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                    'AppleWebKit/537.36 (KHTML, like Gecko) '
+                    'Chrome/127.0.0.0 Safari/537.36',
+        'Accept': 'application/xml, text/xml;q=0.9, */*;q=0.8',
     }
+
 
     # if timeout and timeout > 0:
     #     _timeout = timeout
