@@ -101,7 +101,8 @@ async def request_to_xml_file(xml_url: str,
                               timeout: int = None):
     DEFAULT_TIMEOUT = 5
     headers = {
-        'User-Agent': 'My User Agent 1.0',
+        # 'User-Agent': 'My User Agent 1.0',
+        'User-Agent': 'curl/7.88.1',
     }
 
     # if timeout and timeout > 0:
