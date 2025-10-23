@@ -5,7 +5,7 @@ import asyncio
 
 import aiohttp
 
-from asgiref.sync import async_to_sync
+from asgiref.sync import async_to_sync, sync_to_async
 
 from xml.etree import ElementTree as ET
 
@@ -75,6 +75,57 @@ def try_get_xml_file(exchange: BaseExchange) -> str | None:
         return xml_file
 
 
+async def new_try_get_xml_file(exchange: BaseExchange,
+                               session) -> str | None:
+    '''
+    Возвращает XML файл в формате строки или None
+    '''
+    
+    try:
+        is_active, xml_file = await new_request_to_xml_file(exchange.xml_url,
+                                                            session,
+                                                            exchange.timeout)
+    except RobotCheckError as ex:
+        print('Robot check error', ex)
+        exchange.is_active = False
+        exchange.active_status = 'robot check error'
+        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # print(exchange.__dict__)
+    except TimeoutError as ex:
+        print('Timeout error', ex)
+        exchange.is_active = False
+        exchange.active_status = 'timeout error'
+        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # print(exchange.__dict__)
+    except TechServiceWork as ex:
+        print(ex)
+        exchange.is_active = False
+        exchange.active_status = 'inactive'
+        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # print(exchange.__dict__)
+    except Exception as ex:
+        print(f'CHECK ACTIVE EXCEPTION!!! {exchange.name}', ex)
+        # if exchange.is_active:
+        exchange.is_active = False
+        exchange.active_status = 'inactive'
+        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # print(exchange.__dict__)
+    else:
+        # if exchange.period_for_update != 0:
+            # if exchange.is_active != is_active:
+        exchange.is_active = is_active
+        exchange.active_status = 'active'
+        # else:
+        #     exchange.is_active = False
+        #     exchange.active_status = 'unactive'
+
+        await sync_to_async(exchange.save, thread_sensitive=True)()
+            # print(exchange.__dict__)
+
+        return xml_file
+
+
+
 # def request_to_xml_file(xml_url: str):
 #     headers = requests.utils.default_headers()
 #     headers.update({
@@ -101,7 +152,9 @@ async def request_to_xml_file(xml_url: str,
                               timeout: int = None):
     DEFAULT_TIMEOUT = 5
     headers = {
-        'User-Agent': 'My User Agent 1.0',
+        # 'User-Agent': 'My User Agent 1.0',
+        'User-Agent': 'curl/7.88.1',
+
     }
 
     # if timeout and timeout > 0:
@@ -121,8 +174,8 @@ async def request_to_xml_file(xml_url: str,
 
                 if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
 
-                    # if xml_url == 'https://obmenko.org/export.xml':
-                    #     print('test22', content_type, await response.text(), sep='***')
+                    if xml_url == 'https://helpchange.cc/request-exportxml.xml?lang=ru':
+                        print('test22', content_type, await response.text(), sep='***')
 
                     raise RobotCheckError(f'{xml_url} требует проверку на робота')
                 else:
@@ -133,6 +186,42 @@ async def request_to_xml_file(xml_url: str,
                         raise TechServiceWork(f'{xml_url} на тех обслуживании')
                         # is_active = False
                     return (is_active, xml_file)
+    except asyncio.TimeoutError as ex:
+        raise TimeoutError(f'{xml_url} не вернул ответ за {_timeout} секунд')
+
+
+
+async def new_request_to_xml_file(xml_url: str,
+                              session,
+                              timeout: int = None):
+    DEFAULT_TIMEOUT = 5
+    headers = {
+        'User-Agent': 'My User Agent 1.0',
+    }
+
+    _timeout = timeout if timeout and timeout > 0 else DEFAULT_TIMEOUT
+
+    timeout = aiohttp.ClientTimeout(total=_timeout)
+    try:
+        async with session.get(xml_url,
+                            headers=headers,
+                            timeout=timeout) as response:
+            content_type = response.headers['Content-Type']
+
+            if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
+
+                # if xml_url == 'https://obmenko.org/export.xml':
+                #     print('test22', content_type, await response.text(), sep='***')
+
+                raise RobotCheckError(f'{xml_url} требует проверку на робота')
+            else:
+                xml_file = await response.text()
+                root = ET.fromstring(xml_file)
+                is_active = True
+                if root.text == 'Техническое обслуживание':
+                    raise TechServiceWork(f'{xml_url} на тех обслуживании')
+                    # is_active = False
+                return (is_active, xml_file)
     except asyncio.TimeoutError as ex:
         raise TimeoutError(f'{xml_url} не вернул ответ за {_timeout} секунд')
 

@@ -1,12 +1,18 @@
 import asyncio
 
+import aiohttp
+import aiofiles
+
 from time import time
+from collections import defaultdict
 
 from celery import shared_task
 from celery_once import QueueOnce
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+
+from asgiref.sync import sync_to_async
 
 from django.db.models import Value, CharField, Q
 
@@ -22,7 +28,7 @@ from no_cash.utils.cache import get_or_set_no_cash_directions_cache, new_get_or_
 from config import SELENIUM_DRIVER
 
 from .models import NewBaseReview, Exchanger, Review
-from .utils.periodic_tasks import try_get_xml_file
+from .utils.periodic_tasks import try_get_xml_file, new_try_get_xml_file
 
 from .utils.parse_reviews.selenium import parse_reviews
 from .utils.parse_exchange_info.base import parse_exchange_info
@@ -136,23 +142,25 @@ def parse_actual_courses():
 @shared_task(name='parse_actual_exchanges_info')
 def parse_actual_exchanges_info():
 
-    def annotate_field(exchange_marker):
-        return Value(exchange_marker,
-                     output_field=CharField())
+    # def annotate_field(exchange_marker):
+    #     return Value(exchange_marker,
+    #                  output_field=CharField())
 
-    no_cash_exchanges = no_cash_models.Exchange.objects\
-                                                .annotate(exchange_marker=annotate_field('no_cash'))\
-                                                .values_list('pk',
-                                                             'en_name',
-                                                             'exchange_marker')\
-                                                .all()
-    cash_exchanges = cash_models.Exchange.objects\
-                                            .annotate(exchange_marker=annotate_field('cash'))\
-                                            .values_list('pk',
-                                                         'en_name',
-                                                         'exchange_marker')\
-                                            .all()
-    exchange_list = no_cash_exchanges.union(cash_exchanges)
+    # no_cash_exchanges = no_cash_models.Exchange.objects\
+    #                                             .annotate(exchange_marker=annotate_field('no_cash'))\
+    #                                             .values_list('pk',
+    #                                                          'en_name',
+    #                                                          'exchange_marker')\
+    #                                             .all()
+    # cash_exchanges = cash_models.Exchange.objects\
+    #                                         .annotate(exchange_marker=annotate_field('cash'))\
+    #                                         .values_list('pk',
+    #                                                      'en_name',
+    #                                                      'exchange_marker')\
+    #                                         .all()
+    # exchange_list = no_cash_exchanges.union(cash_exchanges)
+    exchange_list = Exchanger.objects.values_list('pk',
+                                                  'en_name')
 
     parse_exchange_info(exchange_list)
     # for exchange in exchange_list:
@@ -245,7 +253,7 @@ def create_update_directions_for_exchanger(exchange_id: int):
         
             if xml_file is not None and exchange.is_active:
                 start_generate_time = time()
-                direction_dict = {}
+                direction_dict = defaultdict(dict)
 
                 if all_cash_directions:
                     generate_cash_direction_dict(direction_dict,
@@ -264,28 +272,98 @@ def create_update_directions_for_exchanger(exchange_id: int):
         print(ex, exchange_id)
 
 
-        # all_no_cash_directions = get_or_set_no_cash_directions_cache()
+@shared_task(base=QueueOnce,
+             once={'graceful': True},
+             queue='io_queue',
+             name='get_xml_file_for_exchangers')
+def get_xml_file_for_exchangers():
+    asyncio.run(_get_xml_file_for_exchangers())
+
+
+async def _get_xml_file_for_exchangers():
+    exchangers = await sync_to_async(
+        lambda: list(
+            Exchanger.objects.filter(xml_url__isnull=False)
+            .exclude(active_status__in=('disabled', 'scam', 'skip'))
+        ),
+        thread_sensitive=True
+    )()
+
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_one(session, e) for e in exchangers]
         
-        # if all_no_cash_directions:
-        #     # direction_list = get_no_cash_direction_set_for_creating(all_no_cash_directions,
-        #     #                                                         exchange)
-                    
-        #     # if direction_list:
-        #         print(f'no cash {exchange.name}')
-        #         start_time = time()
-        #         xml_file = try_get_xml_file(exchange)
-        #         print(f'безнал время на получения xml файла {time() - start_time} sec')
+        await asyncio.gather(*tasks)
 
-        #         if xml_file is not None and exchange.is_active:
-        #             #
-        #             # if exchange.name == 'Bixter':
-        #             #     print('Bixter', xml_file)
-        #             #
-        #             direction_dict = generate_direction_dict(all_no_cash_directions)
-        #             new_run_no_cash_background_tasks(exchange,
-        #                                              direction_dict,
-        #                                              xml_file)
 
+path_to_xml = './xml_files/{}.xml'
+
+
+async def fetch_one(session, exchange):
+    start_time = time()
+    xml_file = await new_try_get_xml_file(exchange,
+                                          session)
+    print(f'Задача для Exchanger {exchange.name}! время получения xml {time() - start_time} sec')
+
+    if xml_file:
+        await save_xml_to_disk(exchange_id=exchange.pk,
+                               xml_data=xml_file)
+
+
+async def save_xml_to_disk(exchange_id: int,
+                           xml_data: str):
+    # путь к файлу
+    path = path_to_xml.format(exchange_id)
+    
+    # асинхронное открытие и запись
+    async with aiofiles.open(path, 'w', encoding='utf-8') as f:
+        await f.write(xml_data)
+    
+    parse_xml_for_exchanger.delay(exchange_id)
+
+
+@shared_task(base=QueueOnce,
+             once={'graceful': True},
+             queue='cpu_queue',
+             name='parse_xml_for_exchanger')
+def parse_xml_for_exchanger(exchange_id: int):
+    try:
+        exchange = Exchanger.objects.get(pk=exchange_id)
+
+        path = path_to_xml.format(exchange_id)
+
+        start_read_xml_time = time()
+        with open(path, encoding='utf-8') as f:
+            xml_file = f.read()
+
+        print(f'время чтения xml с диска - {time() - start_read_xml_time} sec')
+        
+        start_cache_time = time()
+
+        all_cash_directions = new_get_or_set_cash_directions_cache()
+
+        all_no_cash_directions = new_get_or_set_no_cash_directions_cache()
+
+        print(f'время получения направлений из кэша - {time() - start_cache_time} sec')
+
+        if all_cash_directions or all_no_cash_directions:
+            start_generate_time = time()
+            direction_dict = defaultdict(dict)
+
+            if all_cash_directions:
+                generate_cash_direction_dict(direction_dict,
+                                                all_cash_directions[-1])
+            if all_no_cash_directions:
+                generate_no_cash_direction_dict(direction_dict,
+                                                all_no_cash_directions)
+
+            print(f'время генерации словаря направлений - {time() - start_generate_time} sec')
+            if direction_dict:
+                parse_xml_and_create_or_update_directions(exchange,
+                                                            xml_file,
+                                                            direction_dict)
+
+    except Exception as ex:
+        print(ex, exchange_id)
 
 
 @shared_task

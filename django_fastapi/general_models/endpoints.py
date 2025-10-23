@@ -53,6 +53,8 @@ from general_models.utils.endpoints import (positive_review_count_filter,
                                             generate_top_exchanges_query_by_model)
 from general_models.utils.base import annotate_number_field, annotate_string_field
 
+from general_models.tasks import parse_actual_exchanges_info
+
 import no_cash.models as no_cash_models
 from no_cash.endpoints import (no_cash_exchange_directions2,
                                no_cash_exchange_directions,
@@ -90,6 +92,8 @@ from cash.models import Direction, Country, Exchange
 import partners.models as partner_models
 
 from partners.utils.endpoints import generate_actual_course
+
+from .periodic_tasks import manage_periodic_task_for_parse_directions
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
 from .utils.http_exc import http_exception_json, review_exception_json
@@ -1244,6 +1248,41 @@ def recreate_exchange_admin_records(secret: str):
         res = 'EXCHANGER ADMINS ADDED!!!'
     
     return res
+
+
+@test_router.get('/recreate_backgound_task_exchangers')
+def recreate_backgound_task_exchangers(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    exchangers = Exchanger.objects.filter(xml_url__isnull=False)\
+                                    .exclude(active_status__in=('scam', 'skip'))\
+                                    .all()
+    
+    try:
+        for exchanger in exchangers:
+            interval = exchanger.period_for_create
+            if interval and interval > 0:
+                manage_periodic_task_for_parse_directions(exchanger.pk,
+                                                        interval)
+    except Exception as ex:
+        res = 'ERROR'
+        print(ex)
+    else:
+        res = 'TASK HAS BEEN RECREATED SUCCESSFULLY'
+
+    return res
+
+
+
+@test_router.get('/run_parse_exchangers_info')
+def run_parse_exchangers_info(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    parse_actual_exchanges_info.delay()
+
+    print('TASK RUNNING...')
 
 
 ################################################################################################

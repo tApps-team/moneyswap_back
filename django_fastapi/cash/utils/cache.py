@@ -43,11 +43,11 @@ def new_generate_all_cash_directions(cash_directions,
     cities_for_parse = cities_for_parse.values_list('pk',
                                                     'code_name')\
                                         .all()
-    all_cash_directions = set()
+    all_cash_directions = list()
 
     for city_id, city_code_name in cities_for_parse:
         for direction_id, valute_from, valute_to in cash_directions:
-            all_cash_directions.add((city_id, city_code_name, direction_id, valute_from, valute_to))
+            all_cash_directions.append((city_id, city_code_name, direction_id, valute_from, valute_to))
             
     cache.set('new_all_cash_directions', all_cash_directions, 3600)
 

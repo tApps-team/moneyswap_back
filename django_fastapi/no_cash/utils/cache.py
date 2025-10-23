@@ -38,4 +38,4 @@ def new_get_or_set_no_cash_directions_cache():
                                              'valute_to')\
                                 .all()
         cache.set('new_all_no_cash_directions', all_no_cash_directions, 60)#вывести время в settings
-    return set(all_no_cash_directions)
+    return list(all_no_cash_directions)

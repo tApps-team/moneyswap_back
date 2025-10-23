@@ -272,24 +272,39 @@ def new_try_update_courses(direction_model: new_direction_union,
     )
 
 
-def generate_cash_direction_dict(direction_dict: dict,
-                                 direction_set: set):
-    for city_id, city_code_name, directon_id, valute_from, valute_to in direction_set:
-        if not direction_dict.get(city_code_name):
-            direction_dict[city_code_name] = dict()
+# def generate_cash_direction_dict(direction_dict: dict,
+#                                  direction_set: set):
+#     for city_id, city_code_name, directon_id, valute_from, valute_to in direction_set:
+#         if not direction_dict.get(city_code_name):
+#             direction_dict[city_code_name] = dict()
         
-        inner_key = f'{valute_from} {valute_to}'
-        if not direction_dict[city_code_name].get(inner_key):
-            direction_dict[city_code_name][inner_key] = (city_id, directon_id)
+#         inner_key = f'{valute_from} {valute_to}'
+#         if not direction_dict[city_code_name].get(inner_key):
+#             direction_dict[city_code_name][inner_key] = (city_id, directon_id)
+
+from collections import defaultdict
+
+def generate_cash_direction_dict(direction_dict: defaultdict, direction_list: list):
+    # if not isinstance(direction_dict, defaultdict):
+    #     direction_dict = defaultdict(dict, direction_dict)
+    
+    for city_id, city_code_name, direction_id, valute_from, valute_to in direction_list:
+        # inner_key = f'{valute_from} {valute_to}'
+        inner_key = (valute_from, valute_to)
+        if inner_key not in direction_dict[city_code_name]:
+            direction_dict[city_code_name][inner_key] = (city_id, direction_id)
+
+    return direction_dict
 
 
-def generate_no_cash_direction_dict(direction_dict: dict,
-                                    direction_set: set):
+def generate_no_cash_direction_dict(direction_dict: defaultdict,
+                                    direction_list: list):
     no_cash_key = 'NOCASH'
-    direction_dict[no_cash_key] = dict()
+    # direction_dict[no_cash_key] = dict()
 
-    for direction_id, valute_from, valute_to in direction_set:
-        key = f'{valute_from} {valute_to}'
+    for direction_id, valute_from, valute_to in direction_list:
+        # key = f'{valute_from} {valute_to}'
+        key = (valute_from, valute_to)
         direction_dict[no_cash_key][key] = direction_id
 
 

@@ -137,13 +137,14 @@ services:
   #   networks:
   #     - common-network
 
-  celery_worker:
+  celery_cpu_worker:
     build: .
     pull_policy: build
     restart: always
     networks:
       - common-network
-    command: sh -c 'celery -A project worker -l info -c 4'
+    command: sh -c 'celery -A project worker -l info -Q cpu_queue -c 2 -n cpu@%h'
+    # command: sh -c 'celery -A project worker -l info -c 4'
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
@@ -158,6 +159,8 @@ services:
       # - rabbitmq3
       - firefox
     cpus: '2.0'
+    volumes:
+      - xml_files_data:/app/xml_files
     logging:
       driver: "json-file"
       options:
@@ -166,6 +169,34 @@ services:
     #   resources:
     #     limits:
     #       cpus: '1.0'
+
+  celery_io_worker:
+    build: .
+    pull_policy: build
+    restart: always
+    networks:
+      - common-network
+    command: sh -c 'celery -A project worker -l info -Q io_queue -c 2 -n io@%h'
+    environment:
+      - POSTGRES_HOST=psql_db
+      - SELENIUM_DRIVER=firefox
+      - REDIS_HOST=redis_db
+      - PGBOUNCER_HOST=pgbouncer
+    env_file:
+      - ./.env
+    depends_on:
+      - redis_db
+      - psql_db
+      - pgbouncer
+      # - rabbitmq3
+      - firefox
+    cpus: '1.0'
+    volumes:
+      - xml_files_data:/app/xml_files
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "20m"
 
 
   celery_beat:
@@ -186,7 +217,8 @@ services:
       - redis_db
       - psql_db
       - pgbouncer
-      - celery_worker
+      - celery_cpu_worker
+      - celery_io_worker
       # - rabbitmq3
     logging:
       driver: "json-file"
@@ -263,6 +295,7 @@ volumes:
   static:
   media:
   pgbouncer_data:
+  xml_files_data:
 
 networks:
   common-network:

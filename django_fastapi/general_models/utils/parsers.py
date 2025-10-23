@@ -32,8 +32,9 @@ def parse_cash_direction_by_city(dict_for_parse: dict,
     valute_to = element.xpath('./to/text()')
     
     if all(el for el in (valute_from, valute_to)):
-        inner_key = f'{valute_from[0]} {valute_to[0]}'
-        
+        # inner_key = f'{valute_from[0]} {valute_to[0]}'
+        inner_key = (valute_from[0], valute_to[0])
+
         if dict_for_parse.get(city, None) is not None:
             if dict_for_parse[city].get(inner_key):
                 city_id, direction_id = dict_for_parse[city].get(inner_key)
@@ -78,7 +79,7 @@ def parse_cash_direction_by_city(dict_for_parse: dict,
                     try:
                         cash_bulk_create_list.append(cash_models.NewExchangeDirection(**d))
                         
-                        dict_for_parse[city].pop(inner_key)
+                        # dict_for_parse[city].pop(inner_key)
 
                     except Exception as ex:
                         # print('тут ошибка 2')
@@ -96,8 +97,9 @@ def parse_no_cash_direction(dict_for_parse: dict,
     valute_to = element.xpath('./to/text()')
     
     if all(el for el in (valute_from, valute_to)):
-        key = f'{valute_from[0]} {valute_to[0]}'
-        
+        # key = f'{valute_from[0]} {valute_to[0]}'
+        key = (valute_from[0], valute_to[0])
+
         if dict_for_parse[no_cash_dict_key].get(key):
             direction_id = dict_for_parse[no_cash_dict_key].pop(key)
 
@@ -186,8 +188,6 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
     
     print(f'время парсинга xml {exchange.name} - {time() - start_parse_time} sec')
     
-    # with transaction.atomic():
-    #     try:
     update_fields = [
         'in_count',
         'out_count',
