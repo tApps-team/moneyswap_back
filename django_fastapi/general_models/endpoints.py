@@ -25,6 +25,7 @@ from django.utils import timezone
 from fastapi import APIRouter, Request, Depends, HTTPException
 
 from .utils.periodic_tasks import get_or_create_schedule
+from .utils.endpoints import get_valute_json
 from general_models.models import (ExchangeAdmin,
                                    NewBaseAdminComment,
                                    NewBaseComment,
@@ -1275,14 +1276,43 @@ def recreate_backgound_task_exchangers(secret: str):
 
 
 
-@test_router.get('/run_parse_exchangers_info')
-def run_parse_exchangers_info(secret: str):
+# @test_router.get('/run_parse_exchangers_info')
+# def run_parse_exchangers_info(secret: str):
+#     if secret != DEV_HANDLER_SECRET:
+#         raise HTTPException(status_code=400)
+    
+#     parse_actual_exchanges_info.delay()
+
+#     print('TASK RUNNING...')
+
+
+@test_router.get('/update_age_for_exchangers')
+def update_age_for_exchangers(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
     
-    parse_actual_exchanges_info.delay()
+    filename = './new_age.json'
 
-    print('TASK RUNNING...')
+    with open(filename, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    update_fields = [
+        'age',
+    ]
+    update_list = []
+
+    for exchanger in Exchanger.objects.all():
+        if exchanger.en_name in data:
+            age = data[exchanger.en_name]
+            valid_age = parse_relative_date(age)
+            exchanger.age = valid_age
+            update_list.append(exchanger)
+    
+    len_update = Exchanger.objects.bulk_update(update_list,
+                                               update_fields)
+
+    return len_update
+    
 
 
 ################################################################################################
@@ -1310,6 +1340,14 @@ def available_valutes(request: Request,
         valute_dict = cash_valutes(request, params)
     
     return valute_dict
+
+
+@new_common_router.get('/all_valutes')
+def all_valutes():
+    valutes = NewValute.objects.all()
+    
+    return get_valute_json(valutes,
+                           is_valute_query=True)
 
 
 # @common_router.get('/specific_valute',
@@ -2042,6 +2080,9 @@ def new_get_similar_cities_by_direction(valute_from: str,
     try:
         city_model = cash_models.City.objects.select_related('country')\
                                             .get(code_name=city)
+        direction_id = cash_models.NewDirection.objects.get(valute_from_id=valute_from,
+                                                            valute_to_id=valute_to).pk
+        _country = city_model.country
     except ObjectDoesNotExist:
         raise HTTPException(status_code=404,
                             detail='City not found by given "city"')
@@ -2095,25 +2136,22 @@ def new_get_similar_cities_by_direction(valute_from: str,
         similar_city_pks |= country_cites_pk
         similar_city_pks -= set([city_model.pk])
 
-        exchange_count_filter = Q(cash_directions__direction__valute_from_id=valute_from,
-                                cash_directions__direction__valute_to_id=valute_to,
-                                cash_directions__exchange__is_active=True,
-                                cash_directions__is_active=True)
-        partner_city_exchange_count_filter = Q(new_partner_cities__partner_directions__direction__valute_from_id=valute_from,
-                                        new_partner_cities__partner_directions__direction__valute_to_id=valute_to,
+        exchange_count_filter = Q(new_cash_directions__direction_id=direction_id,
+                                new_cash_directions__exchange__is_active=True,
+                                new_cash_directions__is_active=True)
+        partner_city_exchange_count_filter = Q(new_partner_cities__partner_directions__direction_id=direction_id,
                                         new_partner_cities__partner_directions__is_active=True)
-        partner_country_exchange_count_filter = Q(country__new_partner_countries__partner_directions__direction__valute_from_id=valute_from,
-                                                    country__new_partner_countries__partner_directions__direction__valute_to_id=valute_to,
+        partner_country_exchange_count_filter = Q(country__new_partner_countries__partner_directions__direction_id=direction_id,
                                                     country__new_partner_countries__partner_directions__is_active=True)
 
-        cities = city_model.country.cities\
-                                    .annotate(exchange_count=Count('cash_directions',
+        cities = _country.cities\
+                                    .annotate(exchange_count=Count('new_cash_directions',
                                                         filter=exchange_count_filter))\
                                     .filter(pk__in=similar_city_pks)\
                                     .order_by('pk')\
                                     .all()
         
-        partner_cities = list(city_model.country.cities\
+        partner_cities = list(_country.cities\
                                     .annotate(partner_exchange_count=Count('new_partner_cities__partner_directions',
                                                                 filter=partner_city_exchange_count_filter))\
                                     .filter(pk__in=similar_city_pks)\
@@ -2122,7 +2160,7 @@ def new_get_similar_cities_by_direction(valute_from: str,
                                     .order_by('pk')\
                                     .all())
         
-        partner_country_cities = list(city_model.country.cities\
+        partner_country_cities = list(_country.cities\
                                     .annotate(partner_exchange_count=Count('country__new_partner_countries__partner_directions',
                                                                 filter=partner_country_exchange_count_filter))\
                                     .filter(pk__in=similar_city_pks)\
@@ -2130,7 +2168,115 @@ def new_get_similar_cities_by_direction(valute_from: str,
                                                 flat=True)\
                                     .order_by('pk')\
                                     .all())
+                
+        for idx in range(len(cities)):
+            cities[idx].exchange_count += partner_cities[idx] + partner_country_cities[idx]
+
+        return cities
+    
+
+@new_common_router.get('/extended_similar_cities_by_direction',
+                   response_model=list[CityModel])
+def new_get_extended_similar_cities_by_direction(valute_from: str,
+                                                 valute_to: str,
+                                                 city: str):
+    valute_from, valute_to, city = [el.upper() for el in (valute_from, valute_to, city)]
+
+    cash_direction_model = cash_models.NewExchangeDirection
+    partner_city_direction_model = partner_models.NewDirection
+    partner_country_direction_model = partner_models.NewCountryDirection
+
+    try:
+        city_model = cash_models.City.objects.select_related('country')\
+                                            .get(code_name=city)
+        direction_id = cash_models.NewDirection.objects.get(valute_from_id=valute_from,
+                                                            valute_to_id=valute_to).pk
+    except ObjectDoesNotExist:
+        raise HTTPException(status_code=404,
+                            detail='City not found by given "city"')
+    else:
+        similar_cities = cash_direction_model.objects.select_related('direction',
+                                                                'exchange',
+                                                                'city')\
+                                                    .exclude(city__code_name=city)\
+                                                    .filter(direction__valute_from_id=valute_from,
+                                                            direction__valute_to_id=valute_to,
+                                                            is_active=True,
+                                                            exchange__is_active=True)\
+                                                    .values_list('city__pk',
+                                                                 flat=True)
         
+        similar_partner_cities = partner_city_direction_model.objects.select_related('direction',
+                                                                                'city',
+                                                                                'city__city',
+                                                                                'city__exchange')\
+                                                                .exclude(city__city__code_name=city)\
+                                                                .filter(direction__valute_from_id=valute_from,
+                                                                        direction__valute_to_id=valute_to,
+                                                                        is_active=True,
+                                                                        city__exchange__is_active=True)\
+                                                                .values_list('city__city__pk',
+                                                                            flat=True)
+        
+        similar_partner_country_directions = partner_country_direction_model.objects.select_related('direction',
+                                                                                'country',
+                                                                                'country__country',
+                                                                                'country__exchange')\
+                                                                .prefetch_related('country__country__cities',
+                                                                                  'country__exclude_cities')\
+                                                                .filter(direction__valute_from_id=valute_from,
+                                                                        direction__valute_to_id=valute_to,
+                                                                        is_active=True,
+                                                                        country__exchange__is_active=True)
+        
+        country_cites_pk = set()
+        for country_direction in similar_partner_country_directions:
+            available_cities = country_direction.country.country.cities.all()
+            available_city_pks = {c.pk for c in available_cities}
+
+            exclude_cities = country_direction.country.exclude_cities.all()
+            exclude_city_pks = {c.pk for c in exclude_cities}
+
+            country_cites_pk = available_city_pks - exclude_city_pks
+        
+        similar_city_pks = set(similar_cities.union(similar_partner_cities))
+
+        similar_city_pks |= country_cites_pk
+        similar_city_pks -= set([city_model.pk])
+
+        exchange_count_filter = Q(new_cash_directions__direction_id=direction_id,
+                                new_cash_directions__exchange__is_active=True,
+                                new_cash_directions__is_active=True)
+        partner_city_exchange_count_filter = Q(new_partner_cities__partner_directions__direction_id=direction_id,
+                                        new_partner_cities__partner_directions__is_active=True)
+        partner_country_exchange_count_filter = Q(country__new_partner_countries__partner_directions__direction_id=direction_id,
+                                                    country__new_partner_countries__partner_directions__is_active=True)
+
+        cities = cash_models.City.objects\
+                                    .annotate(exchange_count=Count('new_cash_directions',
+                                                        filter=exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .order_by('pk')\
+                                    .all()
+        
+        partner_cities = list(cash_models.City.objects\
+                                    .annotate(partner_exchange_count=Count('new_partner_cities__partner_directions',
+                                                                filter=partner_city_exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .values_list('partner_exchange_count',
+                                                flat=True)\
+                                    .order_by('pk')\
+                                    .all())
+        
+        partner_country_cities = list(cash_models.City.objects\
+                                    .annotate(partner_exchange_count=Count('country__new_partner_countries__partner_directions',
+                                                                filter=partner_country_exchange_count_filter))\
+                                    .filter(pk__in=similar_city_pks)\
+                                    .values_list('partner_exchange_count',
+                                                flat=True)\
+                                    .order_by('pk')\
+                                    .all())
+                
         for idx in range(len(cities)):
             cities[idx].exchange_count += partner_cities[idx] + partner_country_cities[idx]
 

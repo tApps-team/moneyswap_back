@@ -1,5 +1,6 @@
 import random
 import requests
+import json
 
 from time import sleep
 
@@ -14,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from config import SELENIUM_DRIVER
 
-from .queries import update_exchange_to_db
+from .queries import add_to_json_dict
 
 
 
@@ -135,11 +136,23 @@ def parse_exchange_info(exchange_list: list[tuple[int, str]]):
     # exchange_name = en_name.lower()
 
     options = Options()
+    filename = './new_age.json'
+
+    with open(filename, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    exchange_names = set(data.keys())
+
     try:
         driver = webdriver.Remote(f'http://{SELENIUM_DRIVER}:4444', options=options)
 
         for exchange in exchange_list:
             _id, en_name = exchange
+            
+            if en_name in exchange_names:
+                print(f'{en_name} skipped')
+                continue
+
             url = f'https://www.bestchange.ru/{en_name.lower()}-exchanger.html'
             try:
                 driver.get(url)
@@ -172,8 +185,9 @@ def parse_exchange_info(exchange_list: list[tuple[int, str]]):
                 exchange_info = next(exchange_info_gen)
                 exchange_info_gen.close()
 
-                update_exchange_to_db(_id,
-                                      exchange_info)
+                add_to_json_dict(filename,
+                                 en_name,
+                                 exchange_info['age'])
                 
             except Exception as ex:
                 print(ex)

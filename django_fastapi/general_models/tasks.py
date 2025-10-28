@@ -44,7 +44,9 @@ from .utils.parsers import parse_xml_and_create_or_update_directions
 
 #Задача для периодического удаления отзывов и комментариев
 #со статусом "Отклонён" из БД
-@shared_task(name='delete_cancel_reviews')
+# @shared_task(name='delete_cancel_reviews')
+@shared_task(name='delete_cancel_reviews',
+             queue='io_queue')
 def delete_cancel_reviews():
     # NewBaseReview.objects.filter(status='Отклонён').delete()
     # new
@@ -94,7 +96,9 @@ def parse_reviews_for_exchange(exchange_name: str, marker: str):
         driver.quit()
 
 
-@shared_task(name='update_popular_count_direction_time')
+# @shared_task(name='update_popular_count_direction_time')
+@shared_task(name='update_popular_count_direction_time',
+             queue='io_queue')
 def update_popular_count_direction():
     # cash_direction = cash_models.Direction.objects
     # no_cash_directions = no_cash_models.Direction.objects
@@ -109,7 +113,9 @@ def update_popular_count_direction():
 
 
 ################
-@shared_task(name='parse_actual_courses')
+# @shared_task(name='parse_actual_courses')
+@shared_task(name='parse_actual_courses',
+             queue='io_queue')
 def parse_actual_courses():
     # print(len(connection.queries))
 
@@ -167,7 +173,9 @@ def parse_actual_exchanges_info():
     #     parse_exchange_info(exchange)
 
 
-@shared_task(name='periodic_delete_unlinked_exchange_records')
+# @shared_task(name='periodic_delete_unlinked_exchange_records')
+@shared_task(name='periodic_delete_unlinked_exchange_records',
+             queue='io_queue')
 def periodic_delete_unlinked_exchange_records():
     batch_size = 1000
 
@@ -366,16 +374,19 @@ def parse_xml_for_exchanger(exchange_id: int):
         print(ex, exchange_id)
 
 
-@shared_task
+# @shared_task
+@shared_task(queue='io_queue')
 def send_review_notification_to_exchange_admin_task(user_id, exchange_id, review_id):
     asyncio.run(new_send_review_notifitation_to_exchange_admin(user_id, exchange_id, review_id))
 
 
-@shared_task
+# @shared_task
+@shared_task(queue='io_queue')
 def send_comment_notification_to_exchange_admin_task(user_id, exchange_id, review_id):
     asyncio.run(new_send_comment_notifitation_to_exchange_admin(user_id, exchange_id, review_id))
 
 
-@shared_task
+# @shared_task
+@shared_task(queue='io_queue')
 def send_comment_notification_to_review_owner_task(user_id, exchange_id, review_id):
     asyncio.run(new_send_comment_notifitation_to_review_owner(user_id, exchange_id, review_id))

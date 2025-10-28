@@ -65,7 +65,9 @@ def parse_cash_courses():
             sleep(0.4)
 
 
-@shared_task(name='check_update_time_for_directions')
+# @shared_task(name='check_update_time_for_directions')
+@shared_task(name='check_update_time_for_directions',
+             queue='io_queue')
 def check_update_time_for_directions():
     time_delta = get_timedelta()
     # check_time = datetime.now() - time_delta
@@ -306,7 +308,9 @@ def check_update_time_for_directions():
 #     pass  
 
 # new
-@shared_task(name='exchange_admin_notifications')
+# @shared_task(name='exchange_admin_notifications')
+@shared_task(name='exchange_admin_notifications',
+             queue='io_queue')
 def exchange_admin_notifications():
     partner_exchange_admins = NewExchangeAdmin.objects.filter(notification=True)\
                                                     .values_list('exchange_id', 'user_id')

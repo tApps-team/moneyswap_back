@@ -2229,15 +2229,18 @@ def get_valute_json_4(queries: List[NoCashExDir | CashExDir]):
     return res
 
 
-def get_valute_json(queries: List[NoCashExDir | CashExDir]):
+def get_valute_json(queries: List[NoCashExDir | CashExDir],
+                    is_valute_query: bool = False):
     
     '''
     Возвращает словарь валют с необходимыми данными 
     '''
-
-    valutes = NewValute.objects.filter(code_name__in=queries)\
-                            .order_by('-is_popular', 'name')\
-                            .all()
+    if not is_valute_query:
+        valutes = NewValute.objects.filter(code_name__in=queries)\
+                                .order_by('-is_popular', 'name')\
+                                .all()
+    else:
+        valutes = queries
     
     json_dict = {}
     json_dict = defaultdict(list)
