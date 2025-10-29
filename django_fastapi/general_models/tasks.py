@@ -280,6 +280,8 @@ def create_update_directions_for_exchanger(exchange_id: int):
         print(ex, exchange_id)
 
 
+SEM = asyncio.Semaphore(50)
+
 @shared_task(base=QueueOnce,
              once={'graceful': True},
              queue='io_queue',
@@ -298,7 +300,9 @@ async def _get_xml_file_for_exchangers():
         thread_sensitive=True
     )()
 
-    async with aiohttp.ClientSession() as session:
+    conn = aiohttp.TCPConnector(limit=50)
+
+    async with aiohttp.ClientSession(connector=conn) as session:
         tasks = [fetch_one(session, e) for e in exchangers]
         
         await asyncio.gather(*tasks)
@@ -308,14 +312,15 @@ path_to_xml = './xml_files/{}.xml'
 
 
 async def fetch_one(session, exchange):
-    start_time = time()
-    xml_file = await new_try_get_xml_file(exchange,
-                                          session)
-    print(f'Задача для Exchanger {exchange.name}! время получения xml {time() - start_time} sec')
+    async with SEM:
+        start_time = time()
+        xml_file = await new_try_get_xml_file(exchange,
+                                            session)
+        print(f'Задача для Exchanger {exchange.name}! время получения xml {time() - start_time} sec')
 
-    if xml_file:
-        await save_xml_to_disk(exchange_id=exchange.pk,
-                               xml_data=xml_file)
+        if xml_file:
+            await save_xml_to_disk(exchange_id=exchange.pk,
+                                xml_data=xml_file)
 
 
 async def save_xml_to_disk(exchange_id: int,

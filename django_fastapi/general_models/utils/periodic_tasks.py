@@ -211,7 +211,10 @@ async def new_request_to_xml_file(xml_url: str,
 
     _timeout = timeout if timeout and timeout > 0 else DEFAULT_TIMEOUT
 
-    timeout = aiohttp.ClientTimeout(total=_timeout)
+    timeout = aiohttp.ClientTimeout(connect=_timeout,
+                                    sock_connect=_timeout,
+                                    sock_read=_timeout)
+
     try:
         async with session.get(xml_url,
                             headers=headers,
