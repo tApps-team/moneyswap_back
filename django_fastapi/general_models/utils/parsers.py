@@ -27,6 +27,8 @@ def parse_cash_direction_by_city(dict_for_parse: dict,
                                  city: str,
                                  exchange: Exchanger,
                                  cash_bulk_create_list: list,
+                                 cash_set: set,
+                                 cash_duble_list: list,
                                  time_action: timezone):
     valute_from = element.xpath('./from/text()')
     valute_to = element.xpath('./to/text()')
@@ -76,20 +78,29 @@ def parse_cash_direction_by_city(dict_for_parse: dict,
                     print(f'{ex} | {exchange.name} direction_id {direction_id}')
                     pass
                 else:
-                    try:
-                        cash_bulk_create_list.append(cash_models.NewExchangeDirection(**d))
-                        
-                        # dict_for_parse[city].pop(inner_key)
+                    unique_key = (exchange.pk, direction_id, city_id)
 
-                    except Exception as ex:
-                        # print('тут ошибка 2')
-                        print(ex)
+                    if unique_key not in cash_set:
+                        cash_set.add(unique_key)
+                        try:
+                            cash_bulk_create_list.append(cash_models.NewExchangeDirection(**d))
+                            
+                            # dict_for_parse[city].pop(inner_key)
+
+                        except Exception as ex:
+                            # print('тут ошибка 2')
+                            print(ex)
+                    else:
+                        cash_duble_list.append(unique_key)
+
 
 
 def parse_no_cash_direction(dict_for_parse: dict,
                             element: Element,
                             exchange: Exchanger,
                             no_cash_bulk_create_list: list,
+                            no_cash_set: set,
+                            no_cash_duble_list: list,
                             time_action: timezone):
     no_cash_dict_key = 'NOCASH'
 
@@ -127,13 +138,17 @@ def parse_no_cash_direction(dict_for_parse: dict,
                 # continue
 
             else:
-                try:
-                    no_cash_bulk_create_list.append(no_cash_models.NewExchangeDirection(**d))
+                unique_key = (exchange.pk, direction_id)
+                if unique_key not in no_cash_set:
+                    no_cash_set.add(unique_key)
+                    try:
+                        no_cash_bulk_create_list.append(no_cash_models.NewExchangeDirection(**d))
 
-                except Exception as ex:
-                    print(ex)
-                    # continue
-    
+                    except Exception as ex:
+                        print(ex)
+                        # continue
+                else:
+                    no_cash_duble_list.append(unique_key)    
 
 
 def parse_xml_and_create_or_update_directions(exchange: Exchanger,
@@ -142,7 +157,12 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
     xml_file = xml_file.encode()
 
     cash_bulk_create_list = []
+    cash_set = set()
+    cash_duble_list = []
+
     no_cash_bulk_create_list = []
+    no_cash_set = set()
+    no_cash_duble_list = []
 
     time_action = timezone.now()
 
@@ -162,23 +182,29 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
                                                      city,
                                                      exchange,
                                                      cash_bulk_create_list,
-                                                     time_action)
+                                                     cash_set=cash_set,
+                                                     cash_duble_list=cash_duble_list,
+                                                     time_action=time_action)
                     else:
                         cities = [c.strip() for c in city.split(',')]
                         
                         for city in cities:
                             parse_cash_direction_by_city(dict_for_parse,
-                                                         element,
-                                                         city,
-                                                         exchange,
-                                                         cash_bulk_create_list,
-                                                         time_action)
+                                                        element,
+                                                        city,
+                                                        exchange,
+                                                        cash_bulk_create_list,
+                                                        cash_set=cash_set,
+                                                        cash_duble_list=cash_duble_list,
+                                                        time_action=time_action)
                 else:
                     parse_no_cash_direction(dict_for_parse,
                                             element,
                                             exchange,
                                             no_cash_bulk_create_list,
-                                            time_action)
+                                            no_cash_set=no_cash_set,
+                                            no_cash_duble_list=no_cash_duble_list,
+                                            time_action=time_action)
 
             except Exception as ex:
                 print('ошибка парсинга направления', ex)
@@ -226,6 +252,7 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
         except Exception as ex:
             print('CREATE/UPDATE NO CASH ERROR')
             print(ex)
+            print('DUBLES', no_cash_duble_list)
 
     # CASH CREATE/UPDATE
     with transaction.atomic():
@@ -242,5 +269,6 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
         except Exception as ex:
             print('CREATE/UPDATE CASH ERROR')
             print(ex)
+            print('DUBLES', cash_duble_list)
 
     print(f'время обновления в бд {exchange.name} - {time() - start_db_time} sec')

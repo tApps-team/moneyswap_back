@@ -201,7 +201,7 @@ async def request_to_xml_file(xml_url: str,
 async def new_request_to_xml_file(xml_url: str,
                               session,
                               timeout: int = None):
-    DEFAULT_TIMEOUT = 5
+    DEFAULT_TIMEOUT = 10 # временно для теста на сервере
     headers = {
         'User-Agent': 'My User Agent 1.0',
     }
