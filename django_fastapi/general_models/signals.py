@@ -251,16 +251,16 @@ def add_en_name_to_valute_obj(sender, instance, **kwargs):
         instance.en_name = instance.name
 
 
-@receiver(post_save, sender=Exchanger)
-def try_create_periodic_task_for_parse_directions(sender, instance, created, **kwargs):
-    if created and instance.xml_url is not None:
-        print(f'CREATING PERIODIC TASK TO PARSE DIRECTIONS FOR {instance.name}')
-        manage_periodic_task_for_parse_directions(instance.pk,
-                                                  instance.period_for_create)
+# @receiver(post_save, sender=Exchanger)
+# def try_create_periodic_task_for_parse_directions(sender, instance, created, **kwargs):
+#     if created and instance.xml_url is not None:
+#         print(f'CREATING PERIODIC TASK TO PARSE DIRECTIONS FOR {instance.name}')
+#         manage_periodic_task_for_parse_directions(instance.pk,
+#                                                   instance.period_for_create)
         
 
 #Сигнал для удаления периодических задач
 #при удалении обменника из БД
-@receiver(post_delete, sender=Exchanger)
-def delete_task_for_exchange(sender, instance, **kwargs):
-    PeriodicTask.objects.filter(name=f'{instance.pk} parse directions task').delete()
+# @receiver(post_delete, sender=Exchanger)
+# def delete_task_for_exchange(sender, instance, **kwargs):
+#     PeriodicTask.objects.filter(name=f'{instance.pk} parse directions task').delete()

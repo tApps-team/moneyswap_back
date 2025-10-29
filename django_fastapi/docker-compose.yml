@@ -143,8 +143,8 @@ services:
     restart: always
     networks:
       - common-network
-    # command: sh -c 'celery -A project worker -l info -Q cpu_queue -c 2 -n cpu@%h'
-    command: sh -c 'celery -A project worker -l info -c 4'
+    command: sh -c 'celery -A project worker -l info -Q cpu_queue -c 2 -n cpu@%h'
+    # command: sh -c 'celery -A project worker -l info -c 4'
     environment:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox

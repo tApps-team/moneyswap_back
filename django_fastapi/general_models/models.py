@@ -197,11 +197,13 @@ class Exchanger(models.Model):
                                             default=90,
                                             help_text='Значение - положительное целое число.При установлении в 0, останавливает периодическую задачу',
                                             validators=[is_positive_validate])
+    is_parse = models.BooleanField('Активация фоновой задачи парсинга',
+                                   default=True)
     timeout = models.IntegerField('Кастомный таймаут',
                                   null=True,
                                   blank=True,
                                   default=None,
-                                  help_text='Значение должно быть больше 0 и не больше 15',
+                                  help_text='Значение должно быть больше 0 и не больше 15 (по умолчанию используется значение 5)',
                                   validators=[custom_timeout_validate])
     
     class Meta:

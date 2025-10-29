@@ -291,7 +291,8 @@ def get_xml_file_for_exchangers():
 async def _get_xml_file_for_exchangers():
     exchangers = await sync_to_async(
         lambda: list(
-            Exchanger.objects.filter(xml_url__isnull=False)
+            Exchanger.objects.filter(xml_url__isnull=False,
+                                     is_parse=True)
             .exclude(active_status__in=('disabled', 'scam', 'skip'))
         ),
         thread_sensitive=True

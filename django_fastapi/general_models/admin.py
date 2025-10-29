@@ -818,8 +818,9 @@ class NewBaseExchangeAdmin(admin.ModelAdmin):
             {
                 'fields': [
                     "xml_url",
-                    "period_for_create",
+                    # "period_for_create",
                     "timeout",
+                    "is_parse",
                 ],
                 'classes': [
                     'collapse',
@@ -1069,19 +1070,22 @@ class NewExchangeAdminOrderAdmin(admin.ModelAdmin):
         'moderation',
         'time_create',
     )
-    readonly_fields = (
-        'moderation',
-        'exchange',
-        'activate_link',
-    )
+
     fields = (
         'user_id',
         'exchange',
         'activate_link',
+        'moderation',
     )
 
     ordering = (
         '-time_create',
+    )
+
+    _readonly_fields = (
+        'exchange',
+        'activate_link',
+        'moderation',
     )
 
     def activate_link(self, obj):
@@ -1091,6 +1095,17 @@ class NewExchangeAdminOrderAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).select_related('exchange')
+    
+    def get_readonly_fields(self, request, obj=None):
+        """
+        При редактировании — всё, кроме "exchange" доступно для изменения.
+        При создании — все поля модели.
+        """
+
+        if obj:
+            return self._readonly_fields
+        return self._readonly_fields[1:]
+
 
 
 # @admin.register(ExchangeAdmin)
@@ -1396,7 +1411,7 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
 
     def save_model(self, request, obj, form, change):
         # print(obj.__dict__)
-        update_fields = []
+        update_fields = set()
 
         if change: 
             # print(form.cleaned_data.items())
@@ -1408,32 +1423,42 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
                     continue
                 if value != form.initial[key]:
                     match key:
-                        case 'period_for_create':
-                            manage_periodic_task_for_parse_directions(obj.pk,
-                                                                      value)
+                        # case 'period_for_create':
+                        #     manage_periodic_task_for_parse_directions(obj.pk,
+                        #                                               value)
+                        case 'is_parse':
+                            if value == False:
+                                obj.active_status = 'inactive'
+                                update_fields.add('active_status')
+                                obj.is_active = False
+                                update_fields.add('is_active')
                         case 'active_status':
                             if value in ('disabled', 'scam', 'skip'):
                                 obj.is_active = False
-                                update_fields.append('is_active')
+                                update_fields.add('is_active')
                             
                             elif value == 'active':
-                                update_fields.append('is_active')
                                 if not obj.xml_url:
                                     obj.is_active = True
+                                    update_fields.add('is_active')
                             
                             if value == 'disabled':
                                 obj.time_disable = timezone.now()
                             else:
                                 obj.time_disable = None
 
-                            update_fields.append('time_disable')
+                            update_fields.add('time_disable')
                                 
-                    update_fields.append(key)
+                    update_fields.add(key)
 
-            obj.save(update_fields=update_fields)
+            obj.save(update_fields=list(update_fields))
         else:
             if obj.active_status in ('disabled', 'scam', 'skip'):
                 obj.is_active = False
+            if obj.is_parse == False:
+                if obj.active_status not in ('disabled', 'scam', 'skip'):
+                    obj.active_status = 'inactive'
+                    obj.is_active = False
             print('NOT CHANGE! CREATE IN ADMIN MODEL!')
             super().save_model(request, obj, form, change)
 
