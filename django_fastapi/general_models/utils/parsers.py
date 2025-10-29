@@ -218,8 +218,7 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
             no_cash_models.NewExchangeDirection.objects.bulk_create(no_cash_bulk_create_list,
                                                                     update_conflicts=True,
                                                                     update_fields=update_fields,
-                                                                    unique_fields=unique_fields,
-                                                                    batch_size=batch_size)
+                                                                    unique_fields=unique_fields)
             
             no_cash_models.NewExchangeDirection.objects.filter(Q(exchange_id=exchange.pk) \
                                                                 & ~Q(time_action=time_action))\
@@ -234,8 +233,7 @@ def parse_xml_and_create_or_update_directions(exchange: Exchanger,
             cash_models.NewExchangeDirection.objects.bulk_create(cash_bulk_create_list,
                                                                  update_conflicts=True,
                                                                  update_fields=update_fields + additional_cash_update_fields,
-                                                                 unique_fields=unique_fields + additional_cash_unique_fields,
-                                                                 batch_size=batch_size)
+                                                                 unique_fields=unique_fields + additional_cash_unique_fields)
             
             cash_models.NewExchangeDirection.objects.filter(Q(exchange_id=exchange.pk) \
                                                             & ~Q(time_action=time_action))\
