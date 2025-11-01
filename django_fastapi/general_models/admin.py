@@ -286,6 +286,9 @@ class GuestAdmin(admin.ModelAdmin):
         if obj.partner_country_link_count:
             sum_count += obj.partner_country_link_count
 
+        if obj.partner_noncash_link_count:
+            sum_count += obj.partner_country_link_count
+
         # sum_count += obj.no_cash_link_count + obj.cash_link_count\
         #                  + obj.partner_link_count + obj.partner_country_link_count
         
@@ -308,25 +311,31 @@ class GuestAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
 
-        no_cash_link_count_subquery = no_cash_models.ExchangeLinkCount.objects.filter(
+        no_cash_link_count_subquery = no_cash_models.NewExchangeLinkCount.objects.filter(
             user_id=OuterRef('tg_id')
         ).values('user_id').annotate(
             total_count=Coalesce(Sum('count'), Value(0))
         ).values('total_count')
 
-        cash_link_count_subquery = cash_models.ExchangeLinkCount.objects.filter(
+        cash_link_count_subquery = cash_models.NewExchangeLinkCount.objects.filter(
             user_id=OuterRef('tg_id')
         ).values('user_id').annotate(
             total_count=Coalesce(Sum('count'), Value(0))
         ).values('total_count')
 
-        partner_link_count_subquery = partner_models.ExchangeLinkCount.objects.filter(
+        partner_link_count_subquery = partner_models.NewExchangeLinkCount.objects.filter(
             user_id=OuterRef('tg_id')
         ).values('user_id').annotate(
             total_count=Coalesce(Sum('count'), Value(0))
         ).values('total_count')
 
-        partner_country_link_count_subquery = partner_models.CountryExchangeLinkCount.objects.filter(
+        partner_country_link_count_subquery = partner_models.NewCountryExchangeLinkCount.objects.filter(
+            user_id=OuterRef('tg_id')
+        ).values('user_id').annotate(
+            total_count=Coalesce(Sum('count'), Value(0))
+        ).values('total_count')
+
+        partner_noncash_link_count_subquery = partner_models.NewNonCashExchangeLinkCount.objects.filter(
             user_id=OuterRef('tg_id')
         ).values('user_id').annotate(
             total_count=Coalesce(Sum('count'), Value(0))
@@ -335,7 +344,8 @@ class GuestAdmin(admin.ModelAdmin):
         return queryset.annotate(no_cash_link_count=Subquery(no_cash_link_count_subquery),
                                  cash_link_count=Subquery(cash_link_count_subquery),
                                 partner_link_count=Subquery(partner_link_count_subquery),
-                                partner_country_link_count=Subquery(partner_country_link_count_subquery))
+                                partner_country_link_count=Subquery(partner_country_link_count_subquery),
+                                partner_noncash_link_count=Subquery(partner_noncash_link_count_subquery))
 
 
 @admin.register(CustomOrder)
