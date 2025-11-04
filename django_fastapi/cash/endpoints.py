@@ -43,6 +43,7 @@ from .schemas import (MultipleName,
                       SpecificCountrySchema,
                       SpecificCitySchema)
 from .utils.endpoints import (get_available_countries,
+                              test_get_available_countries,
                               get_available_countries2,
                               get_available_countries3)
 from .utils.cache import get_or_set_cache_available_countries, get_or_set_cache_available_countries2, get_or_set_cache_available_countries3, get_or_set_cache_available_countries4, get_or_set_cache_available_countries5
@@ -213,6 +214,23 @@ def get_available_coutries3(request: Request):
 def get_available_coutries(request: Request):
 
     countries = get_available_countries(request)
+
+    return countries
+
+
+def get_available_coutries3(request: Request):
+
+    countries = get_or_set_cache_available_countries5(request)
+
+    return countries
+
+
+@new_cash_router.get('/test_countries',
+                 response_model=List[RuEnCountryModel1],
+                 response_model_by_alias=False)
+def test_get_available_coutries(request: Request):
+
+    countries = test_get_available_countries(request)
 
     return countries
 

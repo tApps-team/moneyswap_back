@@ -1275,6 +1275,44 @@ def recreate_backgound_task_exchangers(secret: str):
     return res
 
 
+@test_router.get('/create_exchangedirections_from_countrydirections')
+def create_exchangedirections_from_countrydirections(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    create_list = []
+    
+    cities_prefetch = Prefetch('country__country__cities',
+                               queryset=cash_models.City.objects.filter(is_parse=True))
+
+    for country_direction in partner_models.NewCountryDirection.objects.select_related('country')\
+                                                                    .prefetch_related('country__exclude_cities',
+                                                                                      cities_prefetch).all():
+        cities = set(country_direction.country.country.cities.all())
+        exclude_cities = set(country_direction.country.exclude_cities.all())
+
+        cities -= exclude_cities
+
+        for city in cities:
+            data = {
+                'in_count': country_direction.in_count,
+                'out_count': country_direction.out_count,
+                'min_amount': country_direction.country.min_amount or country_direction.min_amount or '-',
+                'max_amount': country_direction.country.max_amount or country_direction.max_amount or '-',
+                'is_active': country_direction.is_active,
+                'time_action': country_direction.time_update,
+                'exchange_id': country_direction.exchange_id,
+                'direction_id': country_direction.direction_id,
+                'country_direction_id': country_direction.pk,
+                'city_id': city.pk,
+            }
+            create_list.append(cash_models.NewExchangeDirection(**data))
+
+        # break
+
+    # print(create_list)
+
+    cash_models.NewExchangeDirection.objects.bulk_create(create_list)
 
 # @test_router.get('/run_parse_exchangers_info')
 # def run_parse_exchangers_info(secret: str):
