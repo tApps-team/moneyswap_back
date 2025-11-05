@@ -287,7 +287,7 @@ class GuestAdmin(admin.ModelAdmin):
             sum_count += obj.partner_country_link_count
 
         if obj.partner_noncash_link_count:
-            sum_count += obj.partner_country_link_count
+            sum_count += obj.partner_noncash_link_count
 
         # sum_count += obj.no_cash_link_count + obj.cash_link_count\
         #                  + obj.partner_link_count + obj.partner_country_link_count
