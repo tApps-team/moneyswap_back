@@ -1297,8 +1297,8 @@ def create_exchangedirections_from_countrydirections(secret: str):
             data = {
                 'in_count': country_direction.in_count,
                 'out_count': country_direction.out_count,
-                'min_amount': country_direction.country.min_amount or country_direction.min_amount or '-',
-                'max_amount': country_direction.country.max_amount or country_direction.max_amount or '-',
+                'min_amount': country_direction.country.min_amount or country_direction.min_amount,
+                'max_amount': country_direction.country.max_amount or country_direction.max_amount,
                 'is_active': country_direction.is_active,
                 'time_action': country_direction.time_update,
                 'exchange_id': country_direction.exchange_id,
@@ -1491,6 +1491,7 @@ new_union_directions_response_models = Union[NewSpecialCashDirectionMultiPrtnerE
                    response_model_by_alias=False)
 def get_current_exchange_directions(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
+    # print(len(connection.queries))
     start_time = time()
     params = query.params()
 
@@ -1500,8 +1501,27 @@ def get_current_exchange_directions(request: Request,
         exchange_direction_list = cash_exchange_directions(request, params)
 
     print(f'all run time /directions {time() - start_time} sec | {len(exchange_direction_list)} el')
+    # print(len(connection.queries))
 
     return exchange_direction_list
+
+
+# @new_common_router.get('/test_directions',
+#                    response_model=list[new_union_directions_response_models],
+#                    response_model_by_alias=False)
+# def get_current_exchange_directions(request: Request,
+#                                     query: SpecificDirectionsQuery = Depends()):
+#     start_time = time()
+#     params = query.params()
+
+#     if not params['city']:
+#         exchange_direction_list = no_cash_exchange_directions(request, params)
+#     else:
+#         exchange_direction_list = cash_exchange_directions(request, params)
+
+#     print(f'all run time /directions {time() - start_time} sec | {len(exchange_direction_list)} el')
+
+#     return exchange_direction_list
 
 
 # @common_router.get('/popular_directions',

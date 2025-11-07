@@ -942,8 +942,16 @@ class BaseExchangeDirection(models.Model):
     out_count = models.DecimalField('Сколько получаем',
                                     max_digits=20,
                                     decimal_places=5)
-    min_amount = models.CharField('Минимальное количество', max_length=50)
-    max_amount = models.CharField('Максимальное количество', max_length=50)
+    min_amount = models.CharField('Минимальное количество',
+                                  max_length=50,
+                                  blank=True,
+                                  null=True,
+                                  default=None)
+    max_amount = models.CharField('Максимальное количество',
+                                  max_length=50,
+                                  blank=True,
+                                  null=True,
+                                  default=True)
     is_active = models.BooleanField('Активно?', default=True)
     time_action = models.DateTimeField('Время изменения',
                                        default=None,

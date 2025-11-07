@@ -250,6 +250,9 @@ def add_en_name_to_valute_obj(sender, instance, **kwargs):
     if instance.en_name is None:
         instance.en_name = instance.name
 
+    if instance.time_create is None:
+        instance.time_create = timezone.now()
+
 
 # @receiver(post_save, sender=Exchanger)
 # def try_create_periodic_task_for_parse_directions(sender, instance, created, **kwargs):

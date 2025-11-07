@@ -19,6 +19,7 @@ from general_models.utils.endpoints import (get_exchange_direction_list,
                                             negative_review_count_filter,
                                             test_get_exchange_direction_list,
                                             test_get_exchange_direction_list_with_aml,
+                                            test_new_get_exchange_direction_list_with_aml,
                                             new_get_exchange_direction_list_with_aml,
                                             new_get_exchange_direction_list_with_aml_and_location,
                                             try_generate_icon_url,
@@ -34,8 +35,15 @@ from partners.utils.endpoints import (get_partner_directions,
                                       test_get_partner_directions2,
                                       test_get_partner_directions2_with_aml,
                                       get_partner_directions_with_aml,
-                                      test_get_partner_directions3)
-from partners.models import CountryDirection, Direction as PartnerDirection, PartnerCountry, NewCountryDirection, NewDirection as NewPartnerDirection
+                                      test_get_partner_directions3,
+                                      test_get_partner_directions_with_aml,
+                                      get_bankomats_and_partner_valute_dict)
+from partners.models import (CountryDirection,
+                             Direction as PartnerDirection,
+                             PartnerCountry,
+                             NewCountryDirection,
+                             NewDirection as NewPartnerDirection,
+                             NewCountryDirectionRate)
 
 from .models import City, ExchangeDirection, Country, NewExchangeDirection
 from .schemas import (MultipleName,
@@ -786,13 +794,26 @@ def cash_exchange_directions(request: Request,
 
     city, valute_from, valute_to = (params[key] for key in params)
 
+
+    country_direction_rate_prefetch = Prefetch('country_direction__direction_rates',
+                                       NewCountryDirectionRate.objects.order_by('min_rate_limit'))
+    
+    _bankomats, partner_valute_dict = get_bankomats_and_partner_valute_dict(valute_to)
+
     queries = NewExchangeDirection.objects\
                                 .select_related('exchange',
+                                                'exchange__account',
                                                 'city',
                                                 'city__country',
                                                 'direction',
+                                                'country_direction',
+                                                'country_direction__country',
                                                 'direction__valute_from',
                                                 'direction__valute_to')\
+                                .prefetch_related(country_direction_rate_prefetch,
+                                                #   unavailable_cities_by_partner_country_prefetch,
+                                                #   country_cities_prefetch,
+                                                  'country_direction__country__working_days')\
                                 .annotate(direction_marker=annotate_string_field('auto_cash'))\
                                 .filter(city__code_name=city,
                                         direction__valute_from=valute_from,
@@ -801,9 +822,12 @@ def cash_exchange_directions(request: Request,
                                         exchange__is_active=True)\
 
     
-    partner_directions = get_partner_directions_with_aml(valute_from,
+    # доп параметры bankomats, partner_valute_dict
+    partner_directions = test_get_partner_directions_with_aml(valute_from,
                                                          valute_to,
-                                                         city)
+                                                         city,
+                                                         _bankomats=_bankomats,
+                                                         partner_valute_dict=partner_valute_dict)
     
     queries = sorted(list(queries) + list(partner_directions),
                      key=lambda query: (-query.exchange.is_vip,
@@ -817,10 +841,13 @@ def cash_exchange_directions(request: Request,
                                          valute_to=valute_to,
                                          city=city)
 
-    return new_get_exchange_direction_list_with_aml(queries,
+    # доп параметры bankomats, partner_valute_dict
+    return test_new_get_exchange_direction_list_with_aml(queries,
                                                     valute_from,
                                                     valute_to,
-                                                    city=city)
+                                                    city=city,
+                                                    _bankomats=_bankomats,
+                                                    partner_valute_dict=partner_valute_dict)
 
 
 

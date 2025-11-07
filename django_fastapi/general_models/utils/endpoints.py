@@ -70,6 +70,9 @@ from general_models.schemas import (SpecialDirectionMultiWithAmlModel,
 from general_models.utils.base import annotate_string_field
 from general_models.utils.http_exc import comment_exception_json, review_exception_json
 
+from partners.utils.endpoints import generate_partner_direction_country_level
+
+
 availabale_active_status_list = [
     'active',
     'inactive',
@@ -1629,6 +1632,223 @@ def new_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExD
                      key=lambda el: (-el.is_vip,
                                      -el.out_count,
                                      el.in_count))
+
+
+# def generate_partner_direction_country_level(direction: NewExchangeDirection,
+#                                              _bankomats: list[NewBankomat],
+#                                              partner_valute_dict: dict):
+#     _valute_to: NewValute = direction.direction.valute_to
+#     _partner_id = direction.country_direction.country.exchange.account.pk
+#     _partner_country = direction.country_direction.country
+
+#     # сделать поля min_amount и max_amount необязательными в cash_models.NewExchangeDirection
+#     min_amount = str(int(direction.country.min_amount)) \
+#         if direction.country.min_amount else None
+#     max_amount = str(int(direction.country.max_amount)) \
+#         if direction.country.max_amount else None
+    
+#     exchange_rates = direction.country_direction.direction_rates.all()
+
+#     _in_count = direction.in_count
+#     _out_count = direction.out_count
+#     _direction_min_amount = direction.min_amount
+#     _direction_max_amount = direction.max_amount
+
+#     addittional_exchange_rates = None
+
+#     if exchange_rates:
+#         exchange_rate_list = [(el.in_count,
+#                             el.out_count,
+#                             el.min_rate_limit,
+#                             el.max_rate_limit,
+#                             el.rate_coefficient) for el in exchange_rates]
+#         exchange_rate_list.append((_in_count,
+#                                 _out_count,
+#                                 _direction_min_amount,
+#                                 _direction_max_amount,
+#                                 None))
+
+#         sorted_exchange_rates = sorted(exchange_rate_list,
+#                                     key=lambda el: (-el[1], el[0]))
+        
+#         best_exchange_rate = sorted_exchange_rates[0]
+#         _in_count, _out_count, _, _, _ = best_exchange_rate
+
+#         addittional_exchange_rates = sorted_exchange_rates
+
+#     _in_count, _out_count = valid_value_for_partner_in_out_count(_in_count, _out_count)
+
+#     if addittional_exchange_rates:
+#         exchange_rate_list = []
+#         for el in addittional_exchange_rates:
+#             in_count, out_count = el[0], el[1]
+#             in_count, out_count = valid_value_for_partner_in_out_count(in_count, out_count)
+#             exchange_rate_list.append(
+#                 {
+#                 'in_count': in_count,
+#                 'out_count': out_count,
+#                 'min_count': el[2],
+#                 'max_count': el[3],
+#                 'rate_coefficient': el[-1],
+#                 }
+#             )
+#         direction.exchange_rates = exchange_rate_list
+
+#     else:
+#         direction.exchange_rates = None
+
+#     # direction.exchange = direction.country.exchange
+#     # direction.exchange_marker = 'partner'
+#     direction.direction_marker = 'country'
+#     direction.valute_from = direction.direction.valute_from
+#     direction.valute_to = direction.direction.valute_to
+#     direction.min_amount = min_amount
+#     direction.max_amount = max_amount
+#     direction.in_count = _in_count
+#     direction.out_count = _out_count
+#     direction.params = None
+#     direction.fromfee = None
+
+#     weekdays = WeekDaySchema(time_from=direction.country_direction.country.time_from,
+#                             time_to=direction.country_direction.country.time_to)
+
+#     weekends = WeekDaySchema(time_from=direction.country_direction.country.weekend_time_from,
+#                             time_to=direction.country_direction.country.weekend_time_to)
+
+#     working_days = {key.upper(): value \
+#                     for key, value in WORKING_DAYS_DICT.items()}
+    
+#     [working_days.__setitem__(day.code_name.upper(), True) \
+#     for day in _partner_country.working_days.all()]
+
+#     if _valute_to.type_valute == 'ATM QR':
+#         bankomats = new_get_partner_bankomats_by_valute(_partner_id,
+#                                                             _bankomats,
+#                                                             partner_valute_dict,
+#                                                             only_active=True)
+#     else:
+#         bankomats = None
+
+#     direction.info = PartnerCityInfoWithAmlSchema(
+#         delivery=direction.country_direction.country.has_delivery,
+#         office=direction.country_direction.country.has_office,
+#         working_days=working_days,
+#         weekdays=weekdays,
+#         weekends=weekends,
+#         bankomats=bankomats,
+#         high_aml=direction.exchange.high_aml,
+#         )
+    
+#     return direction
+
+
+
+def test_new_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | CashExDir],
+                                        valute_from: str,
+                                        valute_to: str,
+                                        city: str = None,
+                                        with_location: bool = False,
+                                        is_no_cash: bool = False,
+                                        _bankomats: list[partner_models.NewBankomat] | None = None,
+                                        partner_valute_dict: dict | None = None):
+    '''
+    Возвращает список готовых направлений с необходимыми данными
+    '''
+
+    if city and with_location:
+        raise AttributeError('сity and with_location args can`t use together')
+    
+    reviews_dict = get_review_count_dict()
+
+    direction_list = []
+
+    partner_link_pattern = f'&cur_from={valute_from}&cur_to={valute_to}'
+    
+    if city:
+        partner_link_pattern += f'&city={city}'
+
+    # start_time = time()
+
+    for _id, query in enumerate(queries, start=1):
+        if hasattr(query, 'country_direction_id') and query.country_direction_id:
+            # print('HAS COUNTRY DIRECTION ID')
+            query = generate_partner_direction_country_level(query,
+                                                             _bankomats,
+                                                             partner_valute_dict)
+
+        _partner_link: str = query.exchange.partner_link
+       
+        if query.exchange.xml_url:
+            if _partner_link.startswith('https://t.me'):
+                pass
+            else:
+                partner_link = get_valid_partner_link(_partner_link)
+                query.exchange.__dict__['partner_link'] = partner_link + partner_link_pattern
+
+                if with_location:
+                    query.exchange.__dict__['partner_link'] += f'&city={query.city.code_name}'
+
+        valute_from_obj = query.direction.valute_from
+        icon_url_valute_from = try_generate_icon_url(valute_from_obj)
+        type_valute_from = valute_from_obj.type_valute
+
+        valute_to_obj = query.direction.valute_to
+        icon_url_valute_to = try_generate_icon_url(valute_to_obj)
+        type_valute_to = valute_to_obj.type_valute
+
+        exchange_direction = query.__dict__ | query.exchange.__dict__
+        exchange_direction['id'] = _id
+        exchange_direction['exchange_direction_id'] = query.pk
+        exchange_direction['exchange_id'] = query.exchange.pk
+        # print('CHECK!!!', exchange_direction)
+
+        if count_dict := reviews_dict.get(query.exchange.pk):
+            positive_count = count_dict['positive_count']
+            neutral_count = count_dict['neutral_count']
+            negative_count = count_dict['negative_count']
+        else:
+            positive_count = neutral_count = negative_count = 0
+
+        exchange_direction['review_count'] = ReviewCountSchema(
+            positive=positive_count,
+            neutral=neutral_count,
+            negative=negative_count,
+            )
+
+        exchange_direction['name'] = MultipleName(name=exchange_direction['name'],
+                                                  en_name=exchange_direction['en_name'])
+        exchange_direction['valute_from'] = valute_from
+        exchange_direction['icon_valute_from'] = icon_url_valute_from
+        exchange_direction['type_valute_from'] = type_valute_from
+
+        exchange_direction['valute_to'] = valute_to
+        exchange_direction['icon_valute_to'] = icon_url_valute_to
+        exchange_direction['type_valute_to'] = type_valute_to
+
+        if not exchange_direction.get('info'):
+            exchange_direction['info'] = InfoSchema(high_aml=exchange_direction['high_aml'])
+
+        if with_location:
+            new_add_location_to_exchange_direction(exchange_direction,
+                                                   query)
+            
+        round_valute_values(exchange_direction)
+
+        schema_model = get_schema_model_by_exchange_marker_with_aml(exchange_direction['direction_marker'],
+                                                                    with_location,
+                                                                    is_no_cash=is_no_cash)
+
+        exchange_direction = schema_model(**exchange_direction)
+
+        direction_list.append(exchange_direction)
+
+    # print(f'time generating direction list {time() - start_time} sec | {len(direction_list)} el')
+
+    return sorted(direction_list,
+                     key=lambda el: (-el.is_vip,
+                                     -el.out_count,
+                                     el.in_count))
+
 
 
 def new_get_exchange_direction_list_with_aml_and_location(directions: List[dict],
