@@ -426,7 +426,7 @@ class ExchangeLinkCountSchema(BaseModel):
 class NewExchangeLinkCountSchema(BaseModel):
     user_id: int
     exchange_id: int
-    direction_marker: Literal['auto_no_cash',
+    direction_marker: Literal['auto_noncash',
                               'auto_cash',
                               'city',
                               'country',
