@@ -2498,7 +2498,7 @@ def check_exchange_direction_by_exchanger(data: NewExchangeLinkCountSchema):
     match marker:
         case 'auto_cash':
             _model = cash_models.NewExchangeDirection
-        case 'auto_no_cash':
+        case 'auto_noncash':
             _model = no_cash_models.NewExchangeDirection
         case 'city':
             _model = partner_models.NewDirection
