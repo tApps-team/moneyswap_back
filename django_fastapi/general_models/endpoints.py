@@ -3923,7 +3923,7 @@ def increase_link_count(data: ExchangeLinkCountSchema):
 
 new_exchange_link_count_dict = {
     'auto_cash': cash_models.NewExchangeLinkCount,
-    'auto_no_cash': no_cash_models.NewExchangeLinkCount,
+    'auto_noncash': no_cash_models.NewExchangeLinkCount,
     'city': partner_models.NewExchangeLinkCount,
     'country': partner_models.NewCountryExchangeLinkCount,
     'no_cash': partner_models.NewNonCashExchangeLinkCount,

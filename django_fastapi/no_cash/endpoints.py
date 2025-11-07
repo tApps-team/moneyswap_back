@@ -476,7 +476,7 @@ def no_cash_exchange_directions(request: Request,
                                                 'direction',
                                                 'direction__valute_from',
                                                 'direction__valute_to')\
-                                .annotate(direction_marker=annotate_string_field('auto_no_cash'))\
+                                .annotate(direction_marker=annotate_string_field('auto_noncash'))\
                                 .filter(direction__valute_from=valute_from,
                                         direction__valute_to=valute_to,
                                         is_active=True,
