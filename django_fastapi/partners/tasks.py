@@ -97,7 +97,7 @@ def check_update_time_for_directions():
         country_directions = partner_models.NewCountryDirection.objects\
                         .filter(time_update__lt=check_time)\
                         # .update(is_active=False)
-        country_direction_pks = country_directions.values_list('pk', flat=True)
+        country_direction_pks = list(country_directions.values_list('pk', flat=True))
         country_directions.update(is_active=False)
         update_related_directions_by_country_directions.delay(country_direction_pks)
         
