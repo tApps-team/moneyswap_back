@@ -18,6 +18,7 @@ from general_models.models import ExchangeAdmin, NewExchangeAdmin, Exchanger
 
 from cash.models import Direction
 
+import cash.models as cash_models
 import partners.models as partner_models
 
 from .models import Direction as PartnerDirection, CountryDirection, NonCashDirection, Exchange
@@ -455,3 +456,65 @@ def exchange_admin_notifications():
             async_to_sync(new_request_to_bot_exchange_admin_direction_notification)(user_id,
                                                                                     _text)
             sleep(0.3)
+
+
+@shared_task(queue='io_queue')
+def update_related_directions_by_country_directions(country_direction_pks: list[int]):
+    country_directions = partner_models.NewCountryDirection.objects.filter(pk__in=country_direction_pks)
+
+    # print(len(country_directions))
+
+    for country_direction in country_directions:
+        update_data = {
+            'in_count': country_direction.in_count,
+            'out_count': country_direction.out_count,
+            'is_active': country_direction.is_active,
+            'time_action': country_direction.time_update,
+        }
+
+        cash_models.NewExchangeDirection.objects.filter(country_direction_id=country_direction.pk)\
+                                                .update(**update_data)
+        
+
+@shared_task(queue='io_queue')
+def create_remove_directions_for_excluded_cities_by_country_directions(country_id: int,
+                                                                       active_pks: list[int],
+                                                                       inactive_pks: list[int]):
+        if partner_models.NewPartnerCountry.objects.filter(pk=country_id).exists():
+            parnter_directions = partner_models.NewCountryDirection.objects.filter(country_id=country_id)
+
+            create_list = []
+
+            for direction in parnter_directions:
+                data = {
+                    'in_count': direction.in_count,
+                    'out_count': direction.out_count,
+                    'min_amount': direction.country.min_amount,
+                    'max_amount': direction.country.max_amount,
+                    'is_active': direction.is_active,
+                    'time_action': direction.time_update,
+                    # 'time_action': timezone.now(),
+                    'exchange_id': direction.exchange_id,
+                    'direction_id': direction.direction_id,
+                    'country_direction_id': direction.pk,
+                }
+                for city_id in active_pks:
+                    data.update(
+                        {'city_id': city_id}
+                    )
+                    create_list.append(cash_models.NewExchangeDirection(**data))
+            
+            try:
+                if create_list:
+                    cash_models.NewExchangeDirection.objects.bulk_create(create_list,
+                                                                        ignore_conflicts=True)
+                if inactive_pks:
+                    partner_direction_pks = parnter_directions.values_list('pk', flat=True)
+                    cash_models.NewExchangeDirection.objects.filter(country_direction_id__in=partner_direction_pks,
+                                                                    city_id__in=inactive_pks).delete()
+            except Exception as ex:
+                print(f'ERROR WITH CREATE/DELETE DIRECTIONS FOR EXCLUDE CITIES PARTNER COUNTRY {country_id}', ex)
+            else:
+                print(f'SUCCESS CREATE/DELETE DIRECTIONS FOR EXCLUDE CITIES PARTNER COUNTRY {country_id}')
+        else:
+            print(f'PARTNER COUNTRY NOT FOUND BY GIVEN "COUNTRY_ID" {country_id}')

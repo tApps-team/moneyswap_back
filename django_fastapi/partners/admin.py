@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 
 from django import forms
 from django.contrib import admin, messages
-from django.db.models import Sum, Value, OuterRef, Subquery, Count
+from django.db.models import Sum, Value, OuterRef, Subquery, Count, ForeignKey
 from django.db.models.functions import Coalesce
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
@@ -29,6 +29,8 @@ from general_models.utils.admin import ReviewAdminMixin
 from partners.utils.endpoints import get_course_count
 
 from no_cash.models import Direction as NoCashDirection
+
+import cash.models as cash_models
 
 from cash.models import City
 
@@ -64,6 +66,8 @@ from .utils.admin import (make_city_active,
                           get_saved_course)
 from .utils.cache import (get_or_set_user_account_cache,
                           set_user_account_cache)
+
+from .tasks import update_related_directions_by_country_directions
 
 
 # @admin.register(CustomUser)
@@ -389,8 +393,9 @@ class NewDirectionAdmin(admin.ModelAdmin):
         'out_count',
     )
     list_filter = (
-        'city__city',
-        'city__exchange__name',
+        # 'city__city',
+        # 'city__exchange__name',
+        'exchange',
         'direction',
         )
     readonly_fields = (
@@ -541,7 +546,8 @@ class NewDirectionAdmin(admin.ModelAdmin):
                                             'direction__valute_from',
                                             'direction__valute_to',
                                             'city__city',
-                                            'city__exchange')
+                                            'city__exchange',
+                                            'exchange')
 
         if request.user.is_superuser or (request.user.groups.filter(name__in=('Модераторы',
                                                                               'тест',
@@ -1003,14 +1009,24 @@ class NewCountryDirectionAdmin(admin.ModelAdmin):
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         if change:
             update_fields = set()
+
             if not form.cleaned_data.get('id'):
+                print(22)
                 for key, value in form.cleaned_data.items():
+                    if isinstance(value, cash_models.NewDirection) or \
+                       isinstance(value, NewPartnerCountry):
+                        continue
                     if value != form.initial[key]:
+                        print(f'value {value}, type {type(value)}')
+                        print(f'old value {form.initial[key]}')
+
                         update_fields.add(key)
     
                 update_field_time_update(obj, update_fields)
                 obj.save(update_fields=update_fields)
+                update_related_directions_by_country_directions.delay([obj.pk])
             else:
+                print(33)
                 for key in ('in_count', 'out_count'):
                     if form.cleaned_data[key] != form.initial[key]:
                         # update_field_time_update(obj, update_fields)
@@ -1055,6 +1071,7 @@ class NewCountryDirectionAdmin(admin.ModelAdmin):
                 ]
                 NewCountryDirection.objects.bulk_update(update_objs,
                                               fields=update_fields)
+                update_related_directions_by_country_directions.delay(pks)
                 # self.message_user(request, f"{len(update_objs)} записей успешно обновлено!", messages.SUCCESS)
                 self.message_user(request, f'Выбранные направления страны успешно обновлены!({len(update_objs)} шт)', messages.SUCCESS)
             # for query in connection.queries:

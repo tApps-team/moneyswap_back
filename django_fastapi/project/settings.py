@@ -12,25 +12,25 @@ from config import (DB_USER,
                     PGBOUNCER_HOST)
 
 
-# sentry_sdk.init(
-#     dsn="https://092663a7578a856b241d61d8c326be00@o4506694926336000.ingest.sentry.io/4506739040190464",
-#     # Set traces_sample_rate to 1.0 to capture 100%
-#     # of transactions for performance monitoring.
-#     traces_sample_rate=1.0,
-#     # Set profiles_sample_rate to 1.0 to profile 100%
-#     # of sampled transactions.
-#     # We recommend adjusting this value in production.
-#     profiles_sample_rate=1.0,
-# )
+sentry_sdk.init(
+    dsn="https://092663a7578a856b241d61d8c326be00@o4506694926336000.ingest.sentry.io/4506739040190464",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1.0,
+)
 
 ####SWITCH FOR DEV/PROD#########
 # PROD
-# DEBUG = False
-# STATIC_URL = "/static/"
+DEBUG = False
+STATIC_URL = "/static/"
 
 # DEV
-DEBUG = True
-STATIC_URL = "/django/static/"
+# DEBUG = True
+# STATIC_URL = "/django/static/"
 
 
 #################################
