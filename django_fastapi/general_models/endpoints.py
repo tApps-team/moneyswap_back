@@ -1347,7 +1347,8 @@ def increase_popular_count(data: IncreasePopularCountSchema):
 
 @test_router.post('/increase_link_count')
 def increase_link_count(data: IncreaseExchangeLinkCountSchema):
-    direction_display = f'{data.valute_from.upper()} -> {data.valute_to.upper()}'
+    valute_from, valute_to = data.valute_from.upper(), data.valute_to.upper()
+    direction_display = f'{valute_from} -> {valute_to}'
     insert_data = {
         'user_id': data.user_id,
         'exchange_id': data.exchange_id,
@@ -1355,6 +1356,20 @@ def increase_link_count(data: IncreaseExchangeLinkCountSchema):
         'direction_display': direction_display,
         'city_id': data.city_id,
     }
+    if data.city_id:
+        _marker = 'Cash'
+        exists_direction = cash_models.NewDirection.objects.filter(valute_from_id=valute_from,
+                                                                   valute_to_id=valute_to)\
+                                                            .exists()
+    else:
+        _marker = 'No cash'
+        exists_direction = no_cash_models.NewDirection.objects.filter(valute_from_id=valute_from,
+                                                                      valute_to_id=valute_to)\
+                                                                .exists()
+    if not exists_direction:
+        raise HTTPException(status_code=404,
+                            detail=f'{_marker} direction {direction_display} not found in DB')
+    
     try:
         ExchangeLinkCount.objects.create(**insert_data)
     except Exception as ex:
