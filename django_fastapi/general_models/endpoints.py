@@ -4280,33 +4280,33 @@ def get_directions_for_sitemap(page: int,
                                 .order_by()\
                                 .distinct('direction_id')
     
-    partner_country_directions = partner_models.NewCountryDirection.objects\
-                                .select_related('direction',
-                                                'exchange',
-                                                'country',
-                                                'country__country')\
-                                .filter(is_active=True,
-                                        exchange__is_active=True)\
-                                .prefetch_related('country__country__cities',
-                                                  'country__exclude_cities')\
-                                .annotate(direction_marker=annotate_string_field('cash'))\
-                                .order_by()\
+    # partner_country_directions = partner_models.NewCountryDirection.objects\
+    #                             .select_related('direction',
+    #                                             'exchange',
+    #                                             'country',
+    #                                             'country__country')\
+    #                             .filter(is_active=True,
+    #                                     exchange__is_active=True)\
+    #                             .prefetch_related('country__country__cities',
+    #                                               'country__exclude_cities')\
+    #                             .annotate(direction_marker=annotate_string_field('cash'))\
+    #                             .order_by()\
 
-    partner_country_direction_set = set()
-    for country_direction in partner_country_directions:
-        cities = [city.code_name for city in country_direction.country.country.cities.all()]
-        exclude_cities = {city.code_name for city in country_direction.country.exclude_cities.all()}
+    # partner_country_direction_set = set()
+    # for country_direction in partner_country_directions:
+    #     cities = [city.code_name for city in country_direction.country.country.cities.all()]
+    #     exclude_cities = {city.code_name for city in country_direction.country.exclude_cities.all()}
         
-        for city in cities:
-            if city not in exclude_cities:
-                direction_tuple = (
-                    country_direction.direction.valute_from_id,
-                    country_direction.direction.valute_to_id,
-                    country_direction.direction_marker,
-                    city,
-                )
-                if direction_tuple not in partner_country_direction_set:
-                    partner_country_direction_set.add(direction_tuple)
+    #     for city in cities:
+    #         if city not in exclude_cities:
+    #             direction_tuple = (
+    #                 country_direction.direction.valute_from_id,
+    #                 country_direction.direction.valute_to_id,
+    #                 country_direction.direction_marker,
+    #                 city,
+    #             )
+    #             if direction_tuple not in partner_country_direction_set:
+    #                 partner_country_direction_set.add(direction_tuple)
 
     directions = no_cash_directions.union(cash_directions,
                                           partner_city_directions,
@@ -4314,7 +4314,8 @@ def get_directions_for_sitemap(page: int,
 
     result = []
 
-    all_directions = list(set(directions) | partner_country_direction_set)
+    # all_directions = list(set(directions) | partner_country_direction_set)
+    all_directions = directions
 
     pages = 1 if element_on_page is None else ceil(len(all_directions) / element_on_page)
 
