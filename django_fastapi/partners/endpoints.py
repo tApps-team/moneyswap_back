@@ -76,13 +76,21 @@ from .utils.endpoints import (generate_partner_cities,
                               get_partner_bankomats_by_valute,
                               convert_min_max_count)
 
+from .tasks import create_remove_directions_for_excluded_cities_by_country_directions
+
 from .schemas import (AddPartnerCountrySchema,
                       AddPartnerDirectionSchema3,
                       AddBankomatSchema,
                       BankomatDetailSchema,
-                      DeletePartnerDirectionSchema, DirectionSchema2, DirectionSchema3, EditExcludedCitySchema, ExcludedCitiesByPartnerCountry,
+                      DeletePartnerDirectionSchema,
+                      DirectionSchema2,
+                      DirectionSchema3,
+                      EditExcludedCitySchema,
+                      ExcludedCitiesByPartnerCountry,
                       ListEditedPartnerDirectionSchema2,
-                      DeletePartnerCityCountrySchema, NewAccountInfoSchema, NoCashDirectionSchema,
+                      DeletePartnerCityCountrySchema,
+                      NewAccountInfoSchema,
+                      NoCashDirectionSchema,
                       PartnerCitySchema,
                       CountrySchema,
                       CitySchema,
@@ -417,6 +425,11 @@ def new_edit_excluded_cities_by_partner_country(partner: new_partner_dependency,
             with transaction.atomic():
                 partner_country.exclude_cities.remove(*active_city_pks)
                 partner_country.exclude_cities.add(*unactive_city_pks)
+
+            if active_city_pks or unactive_city_pks:
+                create_remove_directions_for_excluded_cities_by_country_directions.delay(country_id,
+                                                                                         active_city_pks,
+                                                                                         unactive_city_pks)
                 
         except Exception as ex:
             print(ex)
@@ -1629,23 +1642,21 @@ def new_add_partner_direction(partner: new_partner_dependency,
 
         try:
             if marker == 'city':
-                city = partner_models.NewPartnerCity.objects.select_related('city')\
+                city = partner_models.NewPartnerCity.objects.select_related('city',
+                                                                            'city__country')\
                                                             .get(pk=_id)
-                country_direction = partner_models.NewCountryDirection.objects\
-                                        .select_related('country',
-                                                        'country__country',
-                                                        'exchange',
-                                                        'exchange__account',
-                                                        'direction')\
-                                        .prefetch_related('country__country__cities')\
-                                        .filter(country__country__cities__code_name=city.city.code_name,
-                                                exchange__account=partner_id,
-                                                direction__valute_from_id=valute_from,
-                                                direction__valute_to_id=valute_to)
+
+                country_direction = cash_models.NewExchangeDirection.objects.select_related('exchange',
+                                                                                            'exchange__account')\
+                                                                            .filter(exchange__account__pk=partner_id,
+                                                                                    direction__valute_from_id=valute_from,
+                                                                                    direction__valute_to_id=valute_to,
+                                                                                    city_id=city.city_id,
+                                                                                    country_direction_id__isnull=False)
                 
                 if country_direction.exists():
                     raise HTTPException(status_code=424,
-                                        detail='Такое направление уже существует на уровне партнерской страны')
+                                        detail=f'Такое направление уже существует на уровне партнерской страны {city.city.country.name}')
             
             with transaction.atomic():
                 new_partner_direction = direction_model.objects.create(**data)
@@ -1692,6 +1703,40 @@ def new_add_partner_direction(partner: new_partner_dependency,
                         bulk_create_list.append(new_exchangedirection_rate)
                     
                     sub_foreign_key_model.objects.bulk_create(bulk_create_list)
+                
+                if marker == 'country':
+                    cash_direction_list = []
+                    country_cities_prefetch = Prefetch('country__cities',
+                                                       queryset=cash_models.City.objects.filter(is_parse=True))
+                    partner_country = partner_models.NewPartnerCountry.objects.select_related('country')\
+                                                                            .prefetch_related(country_cities_prefetch,
+                                                                                              'exclude_cities')\
+                                                                            .get(pk=_id)
+                    cities = set(partner_country.country.cities.all())
+                    exclude_cities = set(partner_country.exclude_cities.all())
+
+                    cities -= exclude_cities
+
+                    data = {
+                        'in_count': new_partner_direction.in_count,
+                        'out_count': new_partner_direction.out_count,
+                        'min_amount': partner_country.min_amount,
+                        'max_amount': partner_country.max_amount,
+                        'is_active': new_partner_direction.is_active,
+                        'time_action': new_partner_direction.time_update,
+                        'exchange_id': new_partner_direction.exchange_id,
+                        'direction_id': new_partner_direction.direction_id,
+                        'country_direction_id': new_partner_direction.pk,
+                        # 'city_id': city.pk,
+                    }
+
+                    for city in cities:
+                        data.update(
+                            {'city_id': city.pk, }
+                        )
+                        cash_direction_list.append(cash_models.NewExchangeDirection(**data))
+                    
+                    cash_models.NewExchangeDirection.objects.bulk_create(cash_direction_list)
 
             return {'status': 'success',
                     'details': f'Партнерское направление {valute_from} -> {valute_to} добавлено'}
@@ -2110,7 +2155,24 @@ def new_edit_partner_directions_by(partner: new_partner_dependency,
                 if direction_rate_id_set:
                     print('in delete', direction_rate_id_set)
                     direction_rate_model.objects.filter(pk__in=direction_rate_id_set).delete()
+                
+                if marker == 'country':
+                    update_data = {
+                        'in_count': main_exchange_rate['in_count'],
+                        'out_count': main_exchange_rate['out_count'],
+                        'is_active': edited_direction['is_active'],
+                        'time_action': edited_direction['time_update'],
+                    }
+                    # if _min_amount := main_exchange_rate.get('min_amount'):
+                    #     update_data['min_amount'] = _min_amount
+                    # if _max_amount := main_exchange_rate.get('max_amount'):
+                    #     update_data['max_amount'] = _max_amount
 
+                    cash_models.NewExchangeDirection.objects.select_related('exchange',
+                                                                            'exchange__account')\
+                                                            .filter(exchange__account__pk=partner_id,
+                                                                    country_direction_id=_id)\
+                                                            .update(**update_data)
             if city:
                 city.update(time_update=timezone.now())
     except Exception as ex:

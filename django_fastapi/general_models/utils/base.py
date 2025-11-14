@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django_celery_beat.models import IntervalSchedule
 
 from django.db.models import CharField, Value, IntegerField
-
+from django.conf import settings
 from django.utils import timezone
 
 from fastapi import APIRouter
@@ -65,3 +65,20 @@ def get_valid_active_direction_str(direction):
 
     formatted_time = f"{hours:02d} часов {minutes:02d} минут]"
     return f'{direction} (активно✅, отключится через {formatted_time}🕚)'
+
+
+def try_generate_icon_url(obj) -> str | None:
+    '''
+    Генерирует путь до иконки переданного объекта.
+    '''
+    
+    icon_url = None
+
+    if obj.icon_url.name:
+        icon_url = settings.PROTOCOL + settings.SITE_DOMAIN\
+                                            + obj.icon_url.url
+    if not icon_url:
+        icon_url = settings.PROTOCOL + settings.SITE_DOMAIN\
+                                            + '/media/icons/valute/BTC.svg'
+
+    return icon_url

@@ -1,5 +1,5 @@
 # from fastapi import FastAPI, File, UploadFile
-from typing import Literal
+from typing import Literal, Optional
 from enum import Enum
 from datetime import datetime
 
@@ -47,47 +47,10 @@ class NewSpecificValuteSchema(BaseModel):
     type_valute: MultipleName = Field(alias='multiple_type')
 
 
-#Схема готового направления для отображения в json ответе
-class SpecialDirectionModel(BaseModel):
-    id: int
-    name: str
-    # name: MultipleName
-    partner_link: str | None
-    valute_from: str
-    icon_valute_from: str | None
-    valute_to: str
-    icon_valute_to: str | None
-    in_count: float
-    out_count: float
-    min_amount: str
-    max_amount: str
-
-
 class ReviewCountSchema(BaseModel):
     positive: int = Field(default=0)
     neutral: int = Field(default=0)
     negative: int = Field(default=0)
-
-
-class SpecialDirectionMultiModel(BaseModel):
-    id: int
-    # name: str
-    name: MultipleName
-    exchange_id: int
-    exchange_marker: str
-    partner_link: str | None
-    is_vip: bool
-    # review_count: int
-    review_count: ReviewCountSchema
-    valute_from: str
-    icon_valute_from: str | None
-    valute_to: str
-    icon_valute_to: str | None
-    in_count: float
-    out_count: float
-    min_amount: str | None
-    max_amount: str | None
-    exchange_direction_id: int
 
 
 class NewSpecialDirectionMultiModel(BaseModel):
@@ -106,6 +69,10 @@ class NewSpecialDirectionMultiModel(BaseModel):
     min_amount: str | None
     max_amount: str | None
     exchange_direction_id: int
+    # direction_marker: str
+
+
+class ExtendedSpecialDirectionMultiModel(NewSpecialDirectionMultiModel):
     direction_marker: str
 
 
@@ -113,11 +80,11 @@ class InfoSchema(BaseModel):
     high_aml: bool
 
 
-class SpecialDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
+class NewSpecialDirectionMultiWithAmlModel(NewSpecialDirectionMultiModel):
     info: InfoSchema
 
 
-class NewSpecialDirectionMultiWithAmlModel(NewSpecialDirectionMultiModel):
+class ExtendedSpecialDirectionMultiWithAmlModel(ExtendedSpecialDirectionMultiModel):
     info: InfoSchema
 
 
@@ -129,11 +96,11 @@ class PartnerExchangeRate(BaseModel):
     rate_coefficient: float | None = Field(default=None)
 
 
-class SpecialPartnerNoCashDirectionSchema(SpecialDirectionMultiWithAmlModel):
+class NewSpecialPartnerNoCashDirectionSchema(NewSpecialDirectionMultiWithAmlModel):
     exchange_rates: list[PartnerExchangeRate] | None
 
 
-class NewSpecialPartnerNoCashDirectionSchema(NewSpecialDirectionMultiWithAmlModel):
+class ExtendedSpecialPartnerNoCashDirectionSchema(ExtendedSpecialDirectionMultiWithAmlModel):
     exchange_rates: list[PartnerExchangeRate] | None
 
 
@@ -501,3 +468,17 @@ class NewSiteMapDirectonSchema2(BaseModel):
     pages: int
     element_on_page: int | None = Field(default=None)
     directions: list[SiteMapDirectonSchemaNew]
+
+
+class IncreasePopularCountSchema(BaseModel):
+    valute_from: str
+    valute_to: str
+    city_code_name: Optional[str] = None
+
+
+class IncreaseExchangeLinkCountSchema(BaseModel):
+    user_id: int
+    exchange_id : int
+    valute_from: str
+    valute_to: str
+    city_id: Optional[int] = None

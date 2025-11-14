@@ -1,5 +1,7 @@
 from time import time
 
+from collections import defaultdict
+
 from celery import shared_task
 
 from celery_once import QueueOnce
@@ -15,6 +17,8 @@ from .utils.tasks import (get_cash_direction_set_for_creating,
                           generate_direction_dict,
                           generate_direction_dict_2)
 from .utils.cache import get_or_set_cash_directions_cache
+
+import partners.models as partner_models
 
 from .models import Exchange, ExchangeDirection, Direction, City
 
@@ -349,3 +353,26 @@ def try_create_black_list_direction(dict_for_parse: dict,
             # exchange.direction_black_list.remove(black_list_element)
         except Exception:
             pass
+
+
+@shared_task(queue='io_queue')
+def add_cities_to_exclude_cities_for_partner_countries(city_pks: list[int]):
+    cities = City.objects.select_related('country').filter(pk__in=city_pks)
+
+    cities_dict = defaultdict(list)
+
+    for _city in cities:
+        cities_dict[_city.country_id].append(_city)
+
+    partner_countries = partner_models.NewPartnerCountry.objects.select_related('country').all()
+
+    partner_country_dict = defaultdict(list)
+
+    for _country in partner_countries:
+        partner_country_dict[_country.country_id].append(_country)
+
+    for country_id in cities_dict:
+        if list_countries := partner_country_dict.get(country_id):
+            for _country in list_countries:
+                _country: partner_models.NewPartnerCountry
+                _country.exclude_cities.add(*cities_dict[country_id])

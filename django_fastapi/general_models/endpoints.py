@@ -1,4 +1,3 @@
-import os
 import json
 import re
 
@@ -12,8 +11,6 @@ from collections import Counter
 
 from asgiref.sync import async_to_sync
 
-from django.forms.models import model_to_dict
-from django.contrib.admin.models import LogEntry
 from django.db.models import Count, Q, OuterRef, Subquery, F, Prefetch, Sum, Value, IntegerField
 from django.db.models.functions import Coalesce
 from django.db import connection, transaction
@@ -24,7 +21,6 @@ from django.utils import timezone
 
 from fastapi import APIRouter, Request, Depends, HTTPException
 
-from .utils.periodic_tasks import get_or_create_schedule
 from .utils.endpoints import get_valute_json
 from general_models.models import (ExchangeAdmin,
                                    NewBaseAdminComment,
@@ -42,52 +38,34 @@ from general_models.models import (ExchangeAdmin,
                                    ExchangeAdminOrder,
                                    NewExchangeAdmin,
                                    NewExchangeAdminOrder,
+                                   ExchangeLinkCount,
                                    en_type_valute_dict)
-from general_models.utils.endpoints import (positive_review_count_filter,
-                                            neutral_review_count_filter,
-                                            negative_review_count_filter,
-                                            availabale_active_status_list,
-                                            get_reviews_count_filters,
+from general_models.utils.endpoints import (availabale_active_status_list,
                                             get_exchange,
-                                            get_review_count_dict,
-                                            generate_image_icon,
-                                            generate_top_exchanges_query_by_model)
+                                            get_review_count_dict)
 from general_models.utils.base import annotate_number_field, annotate_string_field
 
-from general_models.tasks import parse_actual_exchanges_info
 
 import no_cash.models as no_cash_models
-from no_cash.endpoints import (no_cash_exchange_directions2,
-                               no_cash_exchange_directions,
+from no_cash.endpoints import (no_cash_exchange_directions,
+                               test_no_cash_exchange_directions,
                                no_cash_valutes,
-                               no_cash_valutes_2,
-                               no_cash_valutes_3,
-                               test_no_cash_exchange_directions2,
-                               test_no_cash_exchange_directions3,
-                               test_no_cash_exchange_directions4)
+                               no_cash_valutes_3)
 
 import cash.models as cash_models
 from cash.endpoints import (cash_valutes,
                             cash_exchange_directions,
-                            cash_valutes_2,
-                            cash_exchange_directions2,
-                            cash_valutes_3,
-                            test_cash_exchange_directions2,
-                            test_cash_exchange_directions22,
-                            test_cash_exchange_directions3)
+                            test_cash_exchange_directions,
+                            cash_valutes_3)
 from cash.schemas import (NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                          ExtendedSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
                           NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                          ExtendedSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
                           NewSpecialCashDirectionMultiWithAmlModel,
+                          ExtendedSpecialCashDirectionMultiWithAmlModel,
                           NewSpecialCashDirectionMultiWithLocationModel,
-                          SpecialCashDirectionMultiModel,
-                          CityModel,
-                          SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
-                          SpecialCashDirectionMultiWithAmlModel,
-                          SpecialCashDirectionMultiWithLocationModel,
-                          SpecialCashDirectionMultiPrtnerWithLocationModel,
-                          SpecialCashDirectionMultiPrtnerModel,
-                          SpecialCashDirectionMultiPrtnerWithExchangeRatesModel,
-                          SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel)
+                          ExtendedSpecialCashDirectionMultiWithLocationModel,
+                          CityModel)
 from cash.models import Direction, Country, Exchange
 
 import partners.models as partner_models
@@ -97,9 +75,7 @@ from partners.utils.endpoints import generate_actual_course
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 
 from .utils.query_models import AvailableValutesQuery, SpecificDirectionsQuery
-from .utils.http_exc import http_exception_json, review_exception_json
 from .utils.endpoints import (check_exchage_by_name,
-                              check_exchage_marker,
                               check_exchange_direction_by_exchanger,
                               check_perms_for_adding_comment,
                               check_perms_for_adding_review,
@@ -107,11 +83,9 @@ from .utils.endpoints import (check_exchage_by_name,
                               get_exchange_dircetions_dict_tuple,
                               new_get_exchange_directions_count_dict,
                               get_exchange_with_direction_count,
-                              get_exchange_with_direction_count_for_exchange_list,
                               new_check_perms_for_adding_comment,
                               new_check_perms_for_adding_review,
                               new_generate_top_exchanges_query_by_model,
-                              new_get_reviews_count_filters,
                               new_send_comment_notifitation,
                               new_send_review_notifitation,
                               pust_to_send_bot,
@@ -123,48 +97,36 @@ from .utils.endpoints import (check_exchage_by_name,
                               generate_coin_for_schema,
                               send_review_notifitation)
 
-from .schemas import (AddCommentSchema,
-                      BlackListExchangeSchema,
-                      DetailBlackListExchangeSchema,
-                      NewAddCommentSchema,
+from .schemas import (NewAddCommentSchema,
                       NewAddReviewSchema,
-                      NewCommonExchangeSchema,
                       ExchangeListElementSchema,
-                      NewDetailBlackListExchangeSchema,
-                      NewDetailExchangeSchema,
                       NewExchangeLinkCountSchema,
                       NewReviewsByExchangeSchema,
-                      NewSiteMapDirectonSchema,
                       NewSiteMapDirectonSchema2,
                       NewSpecialDirectionMultiWithAmlModel,
+                      ExtendedSpecialDirectionMultiWithAmlModel,
                       NewSpecialPartnerNoCashDirectionSchema,
+                      ExtendedSpecialPartnerNoCashDirectionSchema,
                       NewTopExchangeSchema,
                       PopularDirectionSchema,
-                      SpecialDirectionMultiWithAmlModel,
-                      SpecialPartnerNoCashDirectionSchema,
                       ValuteModel,
-                      EnValuteModel,
-                      SpecialDirectionMultiModel,
                       ReviewViewSchema,
                       ReviewsByExchangeSchema,
                       AddReviewSchema,
                       CommentSchema,
                       CommentRoleEnum,
-                      ValuteListSchema,
-                      SpecificValuteSchema,
                       MultipleName,
-                      CommonExchangeSchema,
                       ReviewCountSchema,
                       DetailExchangeSchema,
                       DirectionSideBarSchema,
                       ExchangeLinkCountSchema,
-                      TopExchangeSchema,
                       TopCoinSchema,
                       FeedbackFormSchema,
-                      SiteMapDirectonSchema,
                       NewSpecificValuteSchema,
                       NewBlackListExchangeSchema,
-                      BlackExchangeDetailSchema)
+                      BlackExchangeDetailSchema,
+                      IncreasePopularCountSchema,
+                      IncreaseExchangeLinkCountSchema)
 
 from config import DEV_HANDLER_SECRET
 
@@ -191,7 +153,7 @@ new_review_router = APIRouter(prefix='/reviews',
 ################################################################################################
 # СИСТЕМНЫЕ АПИ РУЧКИ ДЛЯ ПЕРЕНОСА ДАННЫХ ИЗ СТАРЫХ ТАБЛИЦ В НОВЫЕ ( РЕДИЗАЙН БД )
 
-@test_router.get('/recreate_valute_records')
+# @test_router.get('/recreate_valute_records')
 def recreate_valute_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -214,7 +176,7 @@ def recreate_valute_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_directions_records')
+# @test_router.get('/recreate_directions_records')
 def recreate_directions_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -316,7 +278,7 @@ def format_relative_date(dt: datetime) -> str:
     return " ".join(parts)
 
 
-@test_router.get('/recreate_exchanger_records')
+# @test_router.get('/recreate_exchanger_records')
 def recreate_exchanger_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -395,7 +357,9 @@ def recreate_auto_no_cash_links_records(secret: str):
 
                     create_list.append(no_cash_models.NewExchangeLinkCount(**data))
     try:
-        no_cash_models.NewExchangeLinkCount.objects.bulk_create(create_list)
+        _list = no_cash_models.NewExchangeLinkCount.objects.bulk_create(create_list,
+                                                                ignore_conflicts=True)
+        print(len(_list))
     except Exception as ex:
         print(ex)
         res = 'ERROR'
@@ -442,7 +406,9 @@ def recreate_auto_cash_links_records(secret: str):
 
                     create_list.append(cash_models.NewExchangeLinkCount(**data))
     try:
-        cash_models.NewExchangeLinkCount.objects.bulk_create(create_list)
+        _list = cash_models.NewExchangeLinkCount.objects.bulk_create(create_list,
+                                                             ignore_conflicts=True)
+        print(len(_list))
     except Exception as ex:
         print(ex)
         res = 'ERROR'
@@ -453,7 +419,7 @@ def recreate_auto_cash_links_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_countries_records')
+# @test_router.get('/recreate_partner_countries_records')
 def recreate_partner_countries_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -496,7 +462,7 @@ def recreate_partner_countries_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_cities_records')
+# @test_router.get('/recreate_partner_cities_records')
 def recreate_partner_cities_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -536,7 +502,7 @@ def recreate_partner_cities_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_city_direction_records')
+# @test_router.get('/recreate_partner_city_direction_records')
 def recreate_partner_city_direction_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -608,7 +574,7 @@ def recreate_partner_city_direction_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_country_direction_records')
+# @test_router.get('/recreate_partner_country_direction_records')
 def recreate_partner_country_direction_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -675,7 +641,7 @@ def recreate_partner_country_direction_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_noncash_direction_records')
+# @test_router.get('/recreate_partner_noncash_direction_records')
 def recreate_partner_noncash_direction_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -736,7 +702,7 @@ def recreate_partner_noncash_direction_records(secret: str):
     return res
     
 
-@test_router.get('/union_partner_city_link_count_records_by_marker')
+# @test_router.get('/union_partner_city_link_count_records_by_marker')
 def recreate_partner_city_link_count_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -763,7 +729,7 @@ def recreate_partner_city_link_count_records(secret: str):
     print('delete', _delete)
 
 
-@test_router.get('/recreate_partner_city_link_count_records')
+# @test_router.get('/recreate_partner_city_link_count_records')
 def recreate_partner_city_link_count_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -817,7 +783,7 @@ def recreate_partner_city_link_count_records(secret: str):
     return res
 
 
-@test_router.get('/union_partner_country_link_count_records_by_marker')
+# @test_router.get('/union_partner_country_link_count_records_by_marker')
 def union_partner_country_link_count_records_by_marker(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -844,7 +810,7 @@ def union_partner_country_link_count_records_by_marker(secret: str):
     print('delete', _delete)
 
 
-@test_router.get('/recreate_partner_country_link_count_records')
+# @test_router.get('/recreate_partner_country_link_count_records')
 def recreate_partner_country_link_count_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -900,7 +866,7 @@ def recreate_partner_country_link_count_records(secret: str):
     return res
 
 
-@test_router.get('/union_partner_noncash_link_count_records_by_marker')
+# @test_router.get('/union_partner_noncash_link_count_records_by_marker')
 def union_partner_noncash_link_count_records_by_marker(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -927,7 +893,7 @@ def union_partner_noncash_link_count_records_by_marker(secret: str):
     print('delete', _delete)
 
 
-@test_router.get('/recreate_partner_noncash_link_count_records')
+# @test_router.get('/recreate_partner_noncash_link_count_records')
 def recreate_partner_noncash_link_count_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -980,7 +946,7 @@ def recreate_partner_noncash_link_count_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_exchanger_review_records')
+# @test_router.get('/recreate_exchanger_review_records')
 def recreate_exchanger_review_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1047,7 +1013,7 @@ def recreate_exchanger_review_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_bankomat_records')
+# @test_router.get('/recreate_partner_bankomat_records')
 def recreate_partner_bankomat_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1081,7 +1047,7 @@ def recreate_partner_bankomat_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_custom_user_records')
+# @test_router.get('/recreate_partner_custom_user_records')
 def recreate_partner_custom_user_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1119,7 +1085,7 @@ def recreate_partner_custom_user_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_partner_qrvalute_partner_records')
+# @test_router.get('/recreate_partner_qrvalute_partner_records')
 def recreate_partner_qrvalute_partner_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1176,7 +1142,7 @@ def recreate_partner_qrvalute_partner_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_exchange_admin_order_records')
+# @test_router.get('/recreate_exchange_admin_order_records')
 def recreate_exchange_admin_order_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1207,7 +1173,7 @@ def recreate_exchange_admin_order_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_exchange_admin_records')
+# @test_router.get('/recreate_exchange_admin_records')
 def recreate_exchange_admin_records(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1251,7 +1217,7 @@ def recreate_exchange_admin_records(secret: str):
     return res
 
 
-@test_router.get('/recreate_backgound_task_exchangers')
+# @test_router.get('/recreate_backgound_task_exchangers')
 def recreate_backgound_task_exchangers(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1275,6 +1241,44 @@ def recreate_backgound_task_exchangers(secret: str):
     return res
 
 
+@test_router.get('/create_exchangedirections_from_countrydirections')
+def create_exchangedirections_from_countrydirections(secret: str):
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    create_list = []
+    
+    cities_prefetch = Prefetch('country__country__cities',
+                               queryset=cash_models.City.objects.filter(is_parse=True))
+
+    for country_direction in partner_models.NewCountryDirection.objects.select_related('country')\
+                                                                    .prefetch_related('country__exclude_cities',
+                                                                                      cities_prefetch).all():
+        cities = set(country_direction.country.country.cities.all())
+        exclude_cities = set(country_direction.country.exclude_cities.all())
+
+        cities -= exclude_cities
+
+        for city in cities:
+            data = {
+                'in_count': country_direction.in_count,
+                'out_count': country_direction.out_count,
+                'min_amount': country_direction.country.min_amount,
+                'max_amount': country_direction.country.max_amount,
+                'is_active': country_direction.is_active,
+                'time_action': country_direction.time_update,
+                'exchange_id': country_direction.exchange_id,
+                'direction_id': country_direction.direction_id,
+                'country_direction_id': country_direction.pk,
+                'city_id': city.pk,
+            }
+            create_list.append(cash_models.NewExchangeDirection(**data))
+
+        # break
+
+    # print(create_list)
+
+    cash_models.NewExchangeDirection.objects.bulk_create(create_list)
 
 # @test_router.get('/run_parse_exchangers_info')
 # def run_parse_exchangers_info(secret: str):
@@ -1286,7 +1290,7 @@ def recreate_backgound_task_exchangers(secret: str):
 #     print('TASK RUNNING...')
 
 
-@test_router.get('/update_age_for_exchangers')
+# @test_router.get('/update_age_for_exchangers')
 def update_age_for_exchangers(secret: str):
     if secret != DEV_HANDLER_SECRET:
         raise HTTPException(status_code=400)
@@ -1313,6 +1317,117 @@ def update_age_for_exchangers(secret: str):
 
     return len_update
     
+
+@test_router.post('/increase_popular_count')
+def increase_popular_count(data: IncreasePopularCountSchema):
+
+    if data.city_code_name is None:
+        direction_model = no_cash_models.NewDirection
+    else:
+        direction_model = cash_models.NewDirection
+
+    valute_from, valute_to = data.valute_from.upper(), data.valute_to.upper()
+
+    try:
+        direction_model.objects.filter(valute_from_id=valute_from,
+                                       valute_to_id=valute_to)\
+                                .update(popular_count=F('popular_count') + 1)
+        
+        if data.city_code_name:
+            cash_models.City.objects.filter(code_name=data.city_code_name.upper())\
+                                        .update(popular_count=F('popular_count') + 1)
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=400,
+                            detail='error with try increase popular count')
+    else:
+        return {'status': 'success',
+                'detail': 'increase popular count successfully'}
+
+
+@test_router.post('/increase_link_count')
+def increase_link_count(data: IncreaseExchangeLinkCountSchema):
+    direction_display = f'{data.valute_from.upper()} -> {data.valute_to.upper()}'
+    insert_data = {
+        'user_id': data.user_id,
+        'exchange_id': data.exchange_id,
+        'time_create': timezone.now(),
+        'direction_display': direction_display,
+        'city_id': data.city_id,
+    }
+    try:
+        ExchangeLinkCount.objects.create(**insert_data)
+    except Exception as ex:
+        print(ex)
+        raise HTTPException(status_code=400,
+                            detail='error with try add exchange link count to DB')
+    else:
+        return {'status': 'success',
+                'detail': 'exchange link count has benn added successfully'}
+    
+# @test_router.get('/test_increase')
+def test_increase(secret: str):
+    # ex_counts = ExchangeLinkCount.objects.all()
+
+    # for _count in ex_counts:
+    #     print(_count.__dict__, _count.time_create.astimezone())
+    if secret != DEV_HANDLER_SECRET:
+        raise HTTPException(status_code=400)
+    
+    create_list = []
+    error_list = []
+    error_count = 0
+    for marker, model in (('no_cash',no_cash_models.NewExchangeLinkCount),
+                  ('cash',cash_models.NewExchangeLinkCount),
+                  ('city',partner_models.NewExchangeLinkCount),
+                  ('country',partner_models.NewCountryExchangeLinkCount),
+                  ('noncash',partner_models.NewNonCashExchangeLinkCount)):
+        
+        exchange_counts = model.objects.select_related('exchange_direction',
+                                                       'exchange_direction__direction')
+        if marker == 'cash':
+            exchange_counts = exchange_counts.select_related('exchange_direction__city')
+        elif marker == 'city':
+            exchange_counts = exchange_counts.select_related('exchange_direction__city',
+                                                             'exchange_direction__city__city')
+            
+        for _count in exchange_counts:
+            if marker == 'cash':
+                city_id = _count.exchange_direction.city_id
+            elif marker == 'city':
+                try:
+                    city_id = _count.exchange_direction.city.city_id
+                except Exception:
+                    error_list.append((_count.pk,marker))
+                    error_count += _count.count
+                    continue
+            else:
+                city_id = None
+            for i in range(_count.count):
+                try:
+                    direction_display = f'{_count.exchange_direction.direction.valute_from_id} -> {_count.exchange_direction.direction.valute_to_id}'
+                except Exception:
+                    error_list.append((_count.pk,marker))
+                    error_count += _count.count
+                    break
+
+                data = {
+                    'user_id': _count.user_id,
+                    'exchange_id': _count.exchange_id,
+                    'time_create': None,
+                    'direction_display': direction_display,
+                    'city_id': city_id,
+                }
+                create_list.append(ExchangeLinkCount(**data))
+    
+    try:
+        ExchangeLinkCount.objects.bulk_create(create_list)
+    except Exception as ex:
+        print(ex)
+    else:
+        print(error_list)
+        print(error_count)
+        print('SUCCESS')
 
 
 ################################################################################################
@@ -1393,53 +1508,59 @@ def new_get_specific_valute(code_name: str):
         return valute
 
 
-union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
-                                         SpecialCashDirectionMultiPrtnerWithLocationModel,
-                                         SpecialCashDirectionMultiWithLocationModel,
-                                         SpecialCashDirectionMultiPrtnerWithExchangeRatesModel,
-                                         SpecialCashDirectionMultiPrtnerModel,
-                                         SpecialCashDirectionMultiModel,
-                                         SpecialDirectionMultiModel]
+# union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+#                                          SpecialCashDirectionMultiPrtnerWithLocationModel,
+#                                          SpecialCashDirectionMultiWithLocationModel,
+#                                          SpecialCashDirectionMultiPrtnerWithExchangeRatesModel,
+#                                          SpecialCashDirectionMultiPrtnerModel,
+#                                          SpecialCashDirectionMultiModel,
+#                                          SpecialDirectionMultiModel]
 
-new_test_union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
-                                         SpecialCashDirectionMultiPrtnerWithLocationModel,
-                                         SpecialCashDirectionMultiWithLocationModel,
-                                         SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
-                                         SpecialCashDirectionMultiPrtnerModel,
-                                         SpecialCashDirectionMultiWithAmlModel,
-                                         SpecialPartnerNoCashDirectionSchema,
-                                         SpecialDirectionMultiWithAmlModel]
+# new_test_union_directions_response_models = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+#                                          SpecialCashDirectionMultiPrtnerWithLocationModel,
+#                                          SpecialCashDirectionMultiWithLocationModel,
+#                                          SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+#                                          SpecialCashDirectionMultiPrtnerModel,
+#                                          SpecialCashDirectionMultiWithAmlModel,
+#                                          SpecialPartnerNoCashDirectionSchema,
+#                                          SpecialDirectionMultiWithAmlModel]
 
 
-new_test_union_directions_response_models2 = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
-                                         SpecialCashDirectionMultiPrtnerWithLocationModel,
-                                         SpecialCashDirectionMultiWithLocationModel,
-                                         SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
-                                         SpecialCashDirectionMultiPrtnerModel,
-                                         SpecialCashDirectionMultiWithAmlModel,
-                                         SpecialPartnerNoCashDirectionSchema,
-                                         SpecialDirectionMultiWithAmlModel]
+# new_test_union_directions_response_models2 = Union[SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+#                                          SpecialCashDirectionMultiPrtnerWithLocationModel,
+#                                          SpecialCashDirectionMultiWithLocationModel,
+#                                          SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+#                                          SpecialCashDirectionMultiPrtnerModel,
+#                                          SpecialCashDirectionMultiWithAmlModel,
+#                                          SpecialPartnerNoCashDirectionSchema,
+#                                          SpecialDirectionMultiWithAmlModel]
 
 
 # @common_router.get('/directions',
 #                    response_model=list[new_test_union_directions_response_models2],
 #                    response_model_by_alias=False)
-def get_current_exchange_directions2(request: Request,
-                                    query: SpecificDirectionsQuery = Depends()):
-    params = query.params()
-    if not params['city']:
-        exchange_direction_list = test_no_cash_exchange_directions4(request, params)
-    else:
-        exchange_direction_list = test_cash_exchange_directions22(request, params)
+# def get_current_exchange_directions2(request: Request,
+#                                     query: SpecificDirectionsQuery = Depends()):
+#     params = query.params()
+#     if not params['city']:
+#         exchange_direction_list = test_no_cash_exchange_directions4(request, params)
+#     else:
+#         exchange_direction_list = test_cash_exchange_directions22(request, params)
 
-    # for query in connection.queries:
-    #     print(query)
-    #     print('*' * 8)
+#     # for query in connection.queries:
+#     #     print(query)
+#     #     print('*' * 8)
 
-    return exchange_direction_list
+#     return exchange_direction_list
 
+new_union_directions_response_models = Union[ExtendedSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+                                              ExtendedSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
+                                              ExtendedSpecialCashDirectionMultiWithLocationModel,
+                                              ExtendedSpecialCashDirectionMultiWithAmlModel,
+                                              ExtendedSpecialPartnerNoCashDirectionSchema,
+                                              ExtendedSpecialDirectionMultiWithAmlModel]
 
-new_union_directions_response_models = Union[NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
+test_new_union_directions_response_models = Union[NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel,
                                               NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel,
                                               NewSpecialCashDirectionMultiWithLocationModel,
                                               NewSpecialCashDirectionMultiWithAmlModel,
@@ -1453,6 +1574,7 @@ new_union_directions_response_models = Union[NewSpecialCashDirectionMultiPrtnerE
                    response_model_by_alias=False)
 def get_current_exchange_directions(request: Request,
                                     query: SpecificDirectionsQuery = Depends()):
+    # print(len(connection.queries))
     start_time = time()
     params = query.params()
 
@@ -1462,6 +1584,27 @@ def get_current_exchange_directions(request: Request,
         exchange_direction_list = cash_exchange_directions(request, params)
 
     print(f'all run time /directions {time() - start_time} sec | {len(exchange_direction_list)} el')
+    # print(len(connection.queries))
+
+    return exchange_direction_list
+
+
+@test_router.get('/directions',
+                   response_model=list[test_new_union_directions_response_models],
+                   response_model_by_alias=False)
+def get_current_exchange_directions(request: Request,
+                                    query: SpecificDirectionsQuery = Depends()):
+    # print(len(connection.queries))
+    start_time = time()
+    params = query.params()
+
+    if not params['city']:
+        exchange_direction_list = test_no_cash_exchange_directions(request, params)
+    else:
+        exchange_direction_list = test_cash_exchange_directions(request, params)
+
+    print(f'all run time /directions {time() - start_time} sec | {len(exchange_direction_list)} el')
+    # print(len(connection.queries))
 
     return exchange_direction_list
 
@@ -3884,41 +4027,41 @@ exchange_link_count_dict = {
 
 
 # @common_router.post('/increase_link_count')
-def increase_link_count(data: ExchangeLinkCountSchema):
-    exchange_link_count: Union[cash_models.ExchangeLinkCount,
-                               no_cash_models.ExchangeLinkCount,
-                               partner_models.ExchangeLinkCount] = exchange_link_count_dict.get(data.exchange_marker)
+# def increase_link_count(data: ExchangeLinkCountSchema):
+#     exchange_link_count: Union[cash_models.ExchangeLinkCount,
+#                                no_cash_models.ExchangeLinkCount,
+#                                partner_models.ExchangeLinkCount] = exchange_link_count_dict.get(data.exchange_marker)
 
-    if not exchange_link_count:
-        raise HTTPException(status_code=400,
-                            detail='invalid marker')
+#     if not exchange_link_count:
+#         raise HTTPException(status_code=400,
+#                             detail='invalid marker')
 
-    check_user = Guest.objects.filter(tg_id=data.user_id)
+#     check_user = Guest.objects.filter(tg_id=data.user_id)
 
-    if not check_user.exists():
-        raise HTTPException(status_code=400)
+#     if not check_user.exists():
+#         raise HTTPException(status_code=400)
 
-    exchange_link_count_queryset = exchange_link_count.objects\
-                                                .filter(exchange_id=data.exchange_id,
-                                                        exchange_marker=data.exchange_marker,
-                                                        exchange_direction_id=data.exchange_direction_id,
-                                                        user_id=data.user_id)
-    if not exchange_link_count_queryset.exists():
-        try:
-            exchange_link_count_queryset = exchange_link_count.objects.create(user_id=data.user_id,
-                                                                            exchange_id=data.exchange_id,
-                                                                            exchange_marker=data.exchange_marker,
-                                                                            exchange_direction_id=data.exchange_direction_id,
-                                                                            count=1)
-        except IntegrityError:
-            raise HTTPException(status_code=400,
-                                detail='Constraint error. This row already exists')
-            # return {'status': 'error',
-            #         'details': 'Constraint error. This row already exists'}
-    else:
-        exchange_link_count_queryset.update(count=F('count') + 1)
+#     exchange_link_count_queryset = exchange_link_count.objects\
+#                                                 .filter(exchange_id=data.exchange_id,
+#                                                         exchange_marker=data.exchange_marker,
+#                                                         exchange_direction_id=data.exchange_direction_id,
+#                                                         user_id=data.user_id)
+#     if not exchange_link_count_queryset.exists():
+#         try:
+#             exchange_link_count_queryset = exchange_link_count.objects.create(user_id=data.user_id,
+#                                                                             exchange_id=data.exchange_id,
+#                                                                             exchange_marker=data.exchange_marker,
+#                                                                             exchange_direction_id=data.exchange_direction_id,
+#                                                                             count=1)
+#         except IntegrityError:
+#             raise HTTPException(status_code=400,
+#                                 detail='Constraint error. This row already exists')
+#             # return {'status': 'error',
+#             #         'details': 'Constraint error. This row already exists'}
+#     else:
+#         exchange_link_count_queryset.update(count=F('count') + 1)
 
-    return {'status': 'success'}
+#     return {'status': 'success'}
 
 
 new_exchange_link_count_dict = {

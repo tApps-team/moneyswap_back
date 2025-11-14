@@ -2,10 +2,9 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 from general_models.schemas import (InfoSchema,
-                                    SpecialDirectionModel,
-                                    SpecialDirectionMultiModel,
                                     MultipleName,
-                                    NewSpecialDirectionMultiModel)
+                                    NewSpecialDirectionMultiModel,
+                                    ExtendedSpecialDirectionMultiModel)
 
 from partners.schemas import (PartnerCityInfoSchema,
                               PartnerCityInfoSchema2,
@@ -102,94 +101,144 @@ class LocationSchema(BaseModel):
     city: RuEnCityModel
 
 
-class SpecialCashDirectionModel(SpecialDirectionModel):
-    params: str
-    fromfee: float | None
+# class SpecialCashDirectionModel(SpecialDirectionModel):
+#     params: str
+#     fromfee: float | None
 
 
-class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
-    info: PartnerCityInfoSchema2 | None = Field(default=None)
-    params: str | None
-    fromfee: float | None
+# class SpecialCashDirectionMultiModel(SpecialDirectionMultiModel):
+#     info: PartnerCityInfoSchema2 | None = Field(default=None)
+#     params: str | None
+#     fromfee: float | None
 
 
 class NewSpecialCashDirectionMultiModel(NewSpecialDirectionMultiModel):
+    city_id: int
     info: PartnerCityInfoSchema2 | InfoSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
 
 
-class SpecialCashDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
-    info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
+class ExtendedSpecialCashDirectionMultiModel(ExtendedSpecialDirectionMultiModel):
+    city_id: int
+    info: PartnerCityInfoSchema2 | InfoSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
+
+
+# class SpecialCashDirectionMultiWithAmlModel(SpecialDirectionMultiModel):
+#     info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
+#     params: str | None
+#     fromfee: float | None
 
 
 class NewSpecialCashDirectionMultiWithAmlModel(NewSpecialDirectionMultiModel):
+    city_id : int
     info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
 
 
-class SpecialCashDirectionMultiPrtnerModel(SpecialDirectionMultiModel):
-    direction_marker: Literal['city', 'country']
-    info: PartnerCityInfoSchema2 | None = Field(default=None)
+class ExtendedSpecialCashDirectionMultiWithAmlModel(ExtendedSpecialDirectionMultiModel):
+    info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
+    city_id : int
     params: str | None
     fromfee: float | None
+
+
+# class SpecialCashDirectionMultiPrtnerModel(SpecialDirectionMultiModel):
+#     direction_marker: Literal['city', 'country']
+#     info: PartnerCityInfoSchema2 | None = Field(default=None)
+#     params: str | None
+#     fromfee: float | None
 
 
 class NewSpecialCashDirectionMultiPrtnerModel(NewSpecialDirectionMultiModel):
     # direction_marker: Literal['city', 'country']
+    city_id: int
     info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
 
 
-class SpecialCashDirectionMultiPrtnerWithAmlModel(SpecialDirectionMultiModel):
-    direction_marker: Literal['city', 'country']
-    info: PartnerCityInfoWithAmlSchema | None = Field(default=None)
+class ExtendedSpecialCashDirectionMultiPrtnerModel(ExtendedSpecialDirectionMultiModel):
+    # direction_marker: Literal['city', 'country']
+    city_id: int
+    info: PartnerCityInfoWithAmlSchema | InfoSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
+
+
+# class SpecialCashDirectionMultiPrtnerWithAmlModel(SpecialDirectionMultiModel):
+#     direction_marker: Literal['city', 'country']
+#     info: PartnerCityInfoWithAmlSchema | None = Field(default=None)
+#     params: str | None
+#     fromfee: float | None
 
 
 class NewSpecialCashDirectionMultiPrtnerWithAmlModel(NewSpecialDirectionMultiModel):
     # direction_marker: Literal['city', 'country']
+    city_id: int
     info: PartnerCityInfoWithAmlSchema | None = Field(default=None)
     params: str | None
     fromfee: float | None
 
 
-class SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel(SpecialCashDirectionMultiPrtnerWithAmlModel):
-    exchange_rates: list[PartnerExchangeRate] | None
+class ExtendedSpecialCashDirectionMultiPrtnerWithAmlModel(ExtendedSpecialDirectionMultiModel):
+    # direction_marker: Literal['city', 'country']
+    city_id: int
+    info: PartnerCityInfoWithAmlSchema | None = Field(default=None)
+    params: str | None
+    fromfee: float | None
+
+
+# class SpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel(SpecialCashDirectionMultiPrtnerWithAmlModel):
+#     exchange_rates: list[PartnerExchangeRate] | None
 
 
 class NewSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel(NewSpecialCashDirectionMultiPrtnerWithAmlModel):
     exchange_rates: list[PartnerExchangeRate] | None
 
 
-class SpecialCashDirectionMultiPrtnerWithExchangeRatesModel(SpecialCashDirectionMultiPrtnerModel):
+class ExtendedSpecialCashDirectionMultiPrtnerWithExchangeRatesWithAmlModel(ExtendedSpecialCashDirectionMultiPrtnerWithAmlModel):
     exchange_rates: list[PartnerExchangeRate] | None
+
+
+# class SpecialCashDirectionMultiPrtnerWithExchangeRatesModel(SpecialCashDirectionMultiPrtnerModel):
+#     exchange_rates: list[PartnerExchangeRate] | None
 
 
 class NewSpecialCashDirectionMultiPrtnerWithExchangeRatesModel(NewSpecialCashDirectionMultiPrtnerModel):
     exchange_rates: list[PartnerExchangeRate] | None
 
 
-class SpecialCashDirectionMultiWithLocationModel(SpecialCashDirectionMultiModel):
-    location: SpecificCitySchema
+class ExtendedSpecialCashDirectionMultiPrtnerWithExchangeRatesModel(ExtendedSpecialCashDirectionMultiPrtnerModel):
+    exchange_rates: list[PartnerExchangeRate] | None
+
+
+# class SpecialCashDirectionMultiWithLocationModel(SpecialCashDirectionMultiModel):
+#     location: SpecificCitySchema
 
 
 class NewSpecialCashDirectionMultiWithLocationModel(NewSpecialCashDirectionMultiModel):
     location: SpecificCitySchema
 
 
-class SpecialCashDirectionMultiPrtnerWithLocationModel(SpecialCashDirectionMultiPrtnerModel):
+class ExtendedSpecialCashDirectionMultiWithLocationModel(ExtendedSpecialCashDirectionMultiModel):
     location: SpecificCitySchema
 
 
-class SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel(SpecialCashDirectionMultiPrtnerWithExchangeRatesModel):
-    location: SpecificCitySchema
+# class SpecialCashDirectionMultiPrtnerWithLocationModel(SpecialCashDirectionMultiPrtnerModel):
+#     location: SpecificCitySchema
+
+
+# class SpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel(SpecialCashDirectionMultiPrtnerWithExchangeRatesModel):
+#     location: SpecificCitySchema
 
 
 class NewSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel(NewSpecialCashDirectionMultiPrtnerWithExchangeRatesModel):
+    location: SpecificCitySchema
+
+
+class ExtendedSpecialCashDirectionMultiPrtnerExchangeRatesWithLocationModel(ExtendedSpecialCashDirectionMultiPrtnerWithExchangeRatesModel):
     location: SpecificCitySchema

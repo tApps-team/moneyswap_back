@@ -1,13 +1,14 @@
 from collections.abc import Sequence
 from typing import Any
 
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models.query import QuerySet
 from django.db.models import Count, Q, Sum, Value, Subquery, OuterRef, Prefetch
 from django.db.models.functions import Coalesce
 from django.http.request import HttpRequest
 from django.utils.safestring import mark_safe
 from django.utils import timezone
+from django.shortcuts import redirect
 
 from general_models.utils.endpoints import try_generate_icon_url
 
@@ -44,6 +45,8 @@ from .models import (Country,
                      NewExchangeDirection,
                      NewExchangeLinkCount)
 
+from .tasks import add_cities_to_exclude_cities_for_partner_countries
+
 
 #Отображение городов в админ панели
 @admin.register(City)
@@ -69,6 +72,74 @@ class CityAdmin(admin.ModelAdmin):
         'country__name',
         )
     list_per_page = 20
+
+    def save_model(self, request, obj, form, change):
+        if change:
+            update_fields = []
+            for key, value in form.cleaned_data.items():
+                if key == 'id':
+                    continue
+                if value != form.initial[key]:
+                    match key:
+                        case 'is_parse':
+                            update_fields.append(key)
+
+            if update_fields:
+                obj.save(update_fields=update_fields)
+                add_cities_to_exclude_cities_for_partner_countries.delay([obj.pk])
+        else:
+            if obj.is_parse == True:
+                add_cities_to_exclude_cities_for_partner_countries.delay([obj.pk])
+            return super().save_model(request, obj, form, change)
+
+    # Перехватываю list_editable для оптимизации SELECT запросов в один
+    def changelist_view(self, request, extra_context=None):
+        # print(request.POST)
+
+        if request.method == 'POST' and '_save' in request.POST:
+            obj_count = int(request.POST['form-TOTAL_FORMS'])
+            pks = [int(request.POST[f'form-{i}-id']) for i in range(obj_count)]
+            objs = list(City.objects.filter(pk__in=pks))  # один SELECT
+            obj_dict = {o.pk: o for o in objs}
+
+            update_objs = []
+            city_pks = []
+
+            for i in range(obj_count):
+                obj_pk = int(request.POST[f'form-{i}-id'])
+                
+                try:
+                    is_parse = request.POST[f'form-{i}-is_parse'] # str 'on'
+                except KeyError:
+                    is_parse = False
+                else:
+                    is_parse = True
+                
+                obj = obj_dict[obj_pk]
+
+                if obj.is_parse != is_parse:
+                    obj.is_parse = is_parse
+                    update_objs.append(obj)
+                    
+                    if is_parse == True:
+                        city_pks.append(obj_pk)
+
+            if update_objs:
+                update_fields = [
+                    'is_parse',
+                ]
+                City.objects.bulk_update(update_objs,
+                                         fields=update_fields)
+                # фоновая задача для добавления городов с включенным парсингом
+                # в исключенные города партнерских стран
+                if city_pks:
+                    add_cities_to_exclude_cities_for_partner_countries.delay(city_pks)
+                
+                self.message_user(request, f'Выбранные города успешно обновлены!({len(update_objs)} шт)', messages.SUCCESS)
+                
+                return redirect(f"{request.path}?{request.META.get('QUERY_STRING','')}")
+
+        return super().changelist_view(request, extra_context)
 
 
 #Отображение городов на странице связанной страны
@@ -108,6 +179,15 @@ class CountryAdmin(admin.ModelAdmin):
             return mark_safe(f"<img src='{icon_url}' width=40")
     
     get_icon.short_description = 'Текущий флаг'
+
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save()
+        changed_ids = [city.pk for city in instances if city.is_parse == True] # нужны только те, в которых включили парсинг
+        # фоновая задача для добавления городов с включенным парсингом
+        # в исключенные города партнерских стран
+        if changed_ids:
+            add_cities_to_exclude_cities_for_partner_countries.delay(changed_ids)
+
 
 
 #Отображение комментариев в админ панели

@@ -203,3 +203,63 @@ def get_available_countries(request: Request):
     available_countries = get_available_countries3(countries)
     
     return available_countries
+
+
+def test_get_available_countries(request: Request):
+
+    city_cash_direction_exists = cash_models.NewExchangeDirection.objects.filter(
+        city=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    city_partner_city_direction_exists = partner_models.NewDirection.objects.filter(
+        city__city=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    # city_partner_country_direction_exists = partner_models.NewCountryDirection.objects.filter(
+    #     country__country=OuterRef('country_id'),
+    #     is_active=True,
+    #     exchange__is_active=True
+    # )
+
+    prefetch_cities_queryset =  cash_models.City.objects.order_by('name')\
+                                            .select_related('country')\
+                                            .annotate(has_cash_directions=Exists(city_cash_direction_exists),
+                                                      has_partner_city_directions=Exists(city_partner_city_direction_exists))\
+                                            .filter(Q(has_cash_directions=True) \
+                                                    | Q(has_partner_city_directions=True))
+
+
+    prefetch_cities = Prefetch('cities', prefetch_cities_queryset)
+
+    country_cash_direction_exists = cash_models.NewExchangeDirection.objects.filter(
+        city__country=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    country_partner_city_direction_exists = partner_models.NewDirection.objects.filter(
+        city__city__country=OuterRef('pk'),
+        is_active=True,
+        exchange__is_active=True
+    )
+    # country_partner_country_direction_exists = partner_models.NewCountryDirection.objects.filter(
+    #     country__country=OuterRef('pk'),
+    #     is_active=True,
+    #     exchange__is_active=True
+    # )
+    
+    countries = Country.objects\
+                                .prefetch_related(prefetch_cities)\
+                                .annotate(has_cash_directions=Exists(country_cash_direction_exists),
+                                          has_partner_directions=Exists(country_partner_city_direction_exists))\
+                                .filter(Q(has_cash_directions=True) | Q(has_partner_directions=True))\
+                                .order_by('-is_popular', 'name')\
+                                .all()
+
+    if not countries:
+        http_exception_json(status_code=404, param=request.url)
+
+    available_countries = get_available_countries3(countries)
+    
+    return available_countries

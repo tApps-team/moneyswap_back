@@ -942,8 +942,16 @@ class BaseExchangeDirection(models.Model):
     out_count = models.DecimalField('Сколько получаем',
                                     max_digits=20,
                                     decimal_places=5)
-    min_amount = models.CharField('Минимальное количество', max_length=50)
-    max_amount = models.CharField('Максимальное количество', max_length=50)
+    min_amount = models.CharField('Минимальное количество',
+                                  max_length=50,
+                                  blank=True,
+                                  null=True,
+                                  default=None)
+    max_amount = models.CharField('Максимальное количество',
+                                  max_length=50,
+                                  blank=True,
+                                  null=True,
+                                  default=True)
     is_active = models.BooleanField('Активно?', default=True)
     time_action = models.DateTimeField('Время изменения',
                                        default=None,
@@ -1138,3 +1146,35 @@ class NewExchangeAdmin(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.exchange.name}'
+    
+
+class ExchangeLinkCount(models.Model):
+    exchange = models.ForeignKey(Exchanger,
+                                 on_delete=models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name='Обменник',
+                                 related_name='exchange_counts')
+    user = models.ForeignKey(Guest,
+                             on_delete=models.CASCADE,
+                             verbose_name='Гостевой пользователь',
+                             related_name='exchange_counts')
+    city = models.ForeignKey('cash.City',
+                             on_delete=models.SET_NULL,
+                             blank=True,
+                             null=True,
+                             default=None)
+    direction_display = models.CharField('Направление',
+                                         max_length=255)
+    time_create = models.DateTimeField('Время создания',
+                                       blank=True,
+                                       null=True,
+                                       default=timezone.now)
+    
+    class Meta:
+        verbose_name = 'Счётчик перехода по ссылке (новое)'
+        verbose_name_plural = 'Счётчики перехода по ссылкам (новые)'
+        # unique_together = [('exchange', 'user', 'direction_display', 'city')]
+
+    def __str__(self):
+        return f'{self.user} {self.exchange} {self.direction_display}'

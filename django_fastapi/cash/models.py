@@ -289,6 +289,13 @@ class NewExchangeDirection(BaseExchangeDirection):
                              blank=True,
                              null=True,
                              related_name='new_cash_directions')
+    country_direction = models.ForeignKey('partners.NewCountryDirection',
+                                          verbose_name='Партерское направление страны',
+                                          related_name='directions',
+                                          on_delete=models.CASCADE,
+                                          blank=True,
+                                          null=True,
+                                          default=None)
     fromfee = models.FloatField('Процент', blank=True, null=True)
     params = models.CharField('Параметры', max_length=100, blank=True, null=True)
 
