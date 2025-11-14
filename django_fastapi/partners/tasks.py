@@ -94,9 +94,12 @@ def check_update_time_for_directions():
                         .filter(time_update__lt=check_time)\
                         .update(is_active=False)
         
-        partner_models.NewCountryDirection.objects\
+        country_directions = partner_models.NewCountryDirection.objects\
                         .filter(time_update__lt=check_time)\
-                        .update(is_active=False)
+                        # .update(is_active=False)
+        country_direction_pks = country_directions.values_list('pk', flat=True)
+        country_directions.update(is_active=False)
+        update_related_directions_by_country_directions.delay(country_direction_pks)
         
         partner_models.NewNonCashDirection.objects\
                         .filter(time_update__lt=check_time)\
