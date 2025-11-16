@@ -11,6 +11,21 @@ from config import (DB_USER,
                     REDIS_URL,
                     PGBOUNCER_HOST)
 
+# убирает предупреждения вида "UPDATE general_models_exchanger"
+def strip_exchanger_update_spans(event, hint):
+    # performance events (transactions)
+    if event.get("type") == "transaction":
+        spans = event.get("spans", [])
+        filtered = []
+        for span in spans:
+            desc = span.get("description") or ""
+            if "UPDATE general_models_exchanger" in desc:
+                # пропускаем эти спаны
+                continue
+            filtered.append(span)
+        event["spans"] = filtered
+    return event
+
 
 sentry_sdk.init(
     dsn="https://092663a7578a856b241d61d8c326be00@o4506694926336000.ingest.sentry.io/4506739040190464",
@@ -21,14 +36,7 @@ sentry_sdk.init(
     # of sampled transactions.
     # We recommend adjusting this value in production.
     profiles_sample_rate=1.0,
-    _experiments={
-        "db": {
-            "ignored_queries": [
-                r"UPDATE\s+general_models_exchanger",
-                # если хочешь игнорировать любые UPDATE в этой таблице
-            ]
-        }
-    }
+    before_send_transaction=strip_exchanger_update_spans,
 )
 
 ####SWITCH FOR DEV/PROD#########
