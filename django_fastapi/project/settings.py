@@ -21,6 +21,14 @@ sentry_sdk.init(
     # of sampled transactions.
     # We recommend adjusting this value in production.
     profiles_sample_rate=1.0,
+    _experiments={
+        "db": {
+            "ignored_queries": [
+                r"UPDATE\s+general_models_exchanger",
+                # если хочешь игнорировать любые UPDATE в этой таблице
+            ]
+        }
+    }
 )
 
 ####SWITCH FOR DEV/PROD#########

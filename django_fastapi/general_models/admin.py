@@ -47,7 +47,8 @@ from .models import (AdminComment,
                      Review,
                      Comment,
                      NewExchangeAdmin,
-                     NewExchangeAdminOrder)
+                     NewExchangeAdminOrder,
+                     ExchangeLinkCount)
 
 from no_cash import models as no_cash_models
 from cash import models as cash_models
@@ -189,7 +190,7 @@ class CustomDateTimeFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         today = datetime.now()
-        print(today)
+        # print(today)
         if self.value() == 'today':
             start_of_today = today.replace(hour=0, minute=0, second=0, microsecond=0)
             end_of_today = today.replace(hour=23, minute=59, second=59, microsecond=999999)
@@ -1532,3 +1533,47 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
                                                                 distinct=True))
             
         return queryset
+    
+
+@admin.register(ExchangeLinkCount)
+class ExchangeLinkCountAdmin(admin.ModelAdmin):
+    list_display = (
+        'exchange',
+        'direction_display',
+        'city',
+        'time_create',
+    )
+    readonly_fields = (
+        'exchange',
+        'city',
+        'user',
+        'time_create',
+        'direction_display',
+    )
+
+    list_filter = (
+        'exchange',
+        CustomDateTimeFilter,
+        'city',
+    )
+
+    fieldsets = [
+        (
+            None,
+            {
+                "fields": ['exchange',
+                           'user',
+                           'direction_display',
+                           'time_create',
+                           'city']
+            },
+        ),
+    ]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('exchange',
+                                                            'user',
+                                                            'city')
+    
+    def has_add_permission(self, request):
+        return False

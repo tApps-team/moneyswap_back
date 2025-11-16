@@ -1160,6 +1160,7 @@ class ExchangeLinkCount(models.Model):
                              verbose_name='Гостевой пользователь',
                              related_name='exchange_counts')
     city = models.ForeignKey('cash.City',
+                             verbose_name='Город',
                              on_delete=models.SET_NULL,
                              blank=True,
                              null=True,
