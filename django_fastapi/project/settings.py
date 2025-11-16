@@ -12,19 +12,19 @@ from config import (DB_USER,
                     PGBOUNCER_HOST)
 
 # убирает предупреждения вида "UPDATE general_models_exchanger"
-def strip_exchanger_update_spans(event, hint):
-    # performance events (transactions)
-    if event.get("type") == "transaction":
-        spans = event.get("spans", [])
-        filtered = []
-        for span in spans:
-            desc = span.get("description") or ""
-            if "UPDATE general_models_exchanger" in desc:
-                # пропускаем эти спаны
-                continue
-            filtered.append(span)
-        event["spans"] = filtered
-    return event
+# def strip_exchanger_update_spans(event, hint):
+#     # performance events (transactions)
+#     if event.get("type") == "transaction":
+#         spans = event.get("spans", [])
+#         filtered = []
+#         for span in spans:
+#             desc = span.get("description") or ""
+#             if "UPDATE general_models_exchanger" in desc:
+#                 # пропускаем эти спаны
+#                 continue
+#             filtered.append(span)
+#         event["spans"] = filtered
+#     return event
 
 
 sentry_sdk.init(
@@ -36,7 +36,7 @@ sentry_sdk.init(
     # of sampled transactions.
     # We recommend adjusting this value in production.
     profiles_sample_rate=1.0,
-    before_send_transaction=strip_exchanger_update_spans,
+    # before_send_transaction=strip_exchanger_update_spans,
 )
 
 ####SWITCH FOR DEV/PROD#########

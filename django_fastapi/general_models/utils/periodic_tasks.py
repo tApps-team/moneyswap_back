@@ -87,42 +87,85 @@ async def new_try_get_xml_file(exchange: BaseExchange,
                                                             exchange.timeout)
     except RobotCheckError as ex:
         print('Robot check error', ex)
-        exchange.is_active = False
-        exchange.active_status = 'robot check error'
-        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # exchange.is_active = False
+        # exchange.active_status = 'robot check error'
+
+        _is_active = False
+        _active_status = 'robot check error'
+
+        return(
+            _is_active,
+            _active_status,
+        )
+
+        # await sync_to_async(exchange.save, thread_sensitive=True)()
         # print(exchange.__dict__)
+        # return
     except TimeoutError as ex:
         print('Timeout error', ex)
-        exchange.is_active = False
-        exchange.active_status = 'timeout error'
-        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # exchange.is_active = False
+        # exchange.active_status = 'timeout error'
+        _is_active = False
+        _active_status = 'timeout error'
+
+        return(
+            _is_active,
+            _active_status,
+        )
+
+        # await sync_to_async(exchange.save, thread_sensitive=True)()
         # print(exchange.__dict__)
     except TechServiceWork as ex:
         print(ex)
-        exchange.is_active = False
-        exchange.active_status = 'inactive'
-        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # exchange.is_active = False
+        # exchange.active_status = 'inactive'
+        _is_active = False
+        _active_status = 'inactive'
+
+        return(
+            _is_active,
+            _active_status,
+        )
+
+        # await sync_to_async(exchange.save, thread_sensitive=True)()
         # print(exchange.__dict__)
     except Exception as ex:
         print(f'CHECK ACTIVE EXCEPTION!!! {exchange.name}', ex)
         # if exchange.is_active:
-        exchange.is_active = False
-        exchange.active_status = 'inactive'
-        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # exchange.is_active = False
+        # exchange.active_status = 'inactive'
+        _is_active = False
+        _active_status = 'inactive'
+
+        return(
+            _is_active,
+            _active_status,
+        )
+
+        # await sync_to_async(exchange.save, thread_sensitive=True)()
         # print(exchange.__dict__)
     else:
         # if exchange.period_for_update != 0:
             # if exchange.is_active != is_active:
-        exchange.is_active = is_active
-        exchange.active_status = 'active'
+        # exchange.is_active = is_active
+        # exchange.active_status = 'active'
+        _is_active = is_active
+        _active_status = 'active'
+
         # else:
         #     exchange.is_active = False
         #     exchange.active_status = 'unactive'
 
-        await sync_to_async(exchange.save, thread_sensitive=True)()
+        # await sync_to_async(exchange.save, thread_sensitive=True)()
             # print(exchange.__dict__)
 
-        return xml_file
+        # return xml_file
+        return(
+            _is_active,
+            _active_status,
+            xml_file,
+        )
+
 
 
 

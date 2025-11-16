@@ -306,7 +306,19 @@ async def _get_xml_file_for_exchangers():
     async with aiohttp.ClientSession(connector=conn) as session:
         tasks = [fetch_one(session, e, SEM) for e in exchangers]
         
-        await asyncio.gather(*tasks)
+        results = await asyncio.gather(*tasks)
+    
+    exchanger_dict = {e.pk: e for e in exchangers}
+
+    for ex_id, _is_active, _active_status in results:
+        obj = exchanger_dict.get(ex_id)
+        obj.is_active = _is_active
+        obj.active_status = _active_status
+
+    await sync_to_async(
+        Exchanger.objects.bulk_update,
+        thread_sensitive=True
+    )(exchangers, ["is_active", "active_status"])
 
 
 path_to_xml = './xml_files/{}.xml'
@@ -315,13 +327,30 @@ path_to_xml = './xml_files/{}.xml'
 async def fetch_one(session, exchange, SEM):
     async with SEM:
         start_time = time()
-        xml_file = await new_try_get_xml_file(exchange,
-                                            session)
-        print(f'Задача для Exchanger {exchange.name}! время получения xml {time() - start_time} sec')
-
-        if xml_file:
+        # xml_file = await new_try_get_xml_file(exchange,
+        #                                     session)
+        exchanger_data = await new_try_get_xml_file(exchange,
+                                                    session)
+        
+        if len(exchanger_data) == 2:
+            _is_active, _active_status = exchanger_data
+        else:
+            _is_active, _active_status, xml_file = exchanger_data
+        # if xml_file:
             await save_xml_to_disk(exchange_id=exchange.pk,
-                                xml_data=xml_file)
+                                   xml_data=xml_file)
+            
+        print(f'Задача для Exchanger {exchange.name}! время получения xml {time() - start_time} sec')
+        
+        return (
+            exchange.pk,
+            _is_active,
+            _active_status,
+        )
+
+        # if xml_file:
+        #     await save_xml_to_disk(exchange_id=exchange.pk,
+        #                         xml_data=xml_file)
 
 
 async def save_xml_to_disk(exchange_id: int,
