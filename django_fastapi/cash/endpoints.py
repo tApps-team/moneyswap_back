@@ -345,9 +345,9 @@ def cash_exchange_directions(request: Request,
     if not queries:
         http_exception_json(status_code=404, param=request.url)
 
-    new_increase_popular_count_direction(valute_from=valute_from,
-                                         valute_to=valute_to,
-                                         city=city)
+    # new_increase_popular_count_direction(valute_from=valute_from,
+    #                                      valute_to=valute_to,
+    #                                      city=city)
 
     # доп параметры bankomats, partner_valute_dict
     return test_new_get_exchange_direction_list_with_aml(queries,
