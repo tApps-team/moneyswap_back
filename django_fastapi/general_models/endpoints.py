@@ -1380,7 +1380,7 @@ def increase_link_count(data: IncreaseExchangeLinkCountSchema):
         return {'status': 'success',
                 'detail': 'exchange link count has benn added successfully'}
     
-# @test_router.get('/test_increase')
+@test_router.get('/test_increase')
 def test_increase(secret: str):
     # ex_counts = ExchangeLinkCount.objects.all()
 
@@ -3421,10 +3421,11 @@ def new_get_top_exchanges():
                   reverse=True)[:limit]
 
 
-@new_common_router.get('/top_exchanges',
-                   response_model=list[NewTopExchangeSchema],
-                   response_model_by_alias=False)
+# @new_common_router.get('/top_exchanges',
+#                    response_model=list[NewTopExchangeSchema],
+#                    response_model_by_alias=False)
 def get_top_exchanges():
+    # start_time = time()
     limit = 10
 
     review_count_dict = get_review_count_dict()
@@ -3469,8 +3470,48 @@ def get_top_exchanges():
             
         top_exchange['icon'] = generate_image_icon2(top_exchange['icon_url'])
 
+    # print(f'время выполнения теста {time() - start_time} sec')
+
     return sorted(top_exchangers, key=lambda el: (-el['total_link_count'],
                                                    el['name']))
+
+
+@new_common_router.get('/top_exchanges',
+                   response_model=list[NewTopExchangeSchema],
+                   response_model_by_alias=False)
+def get_top_exchanges():
+    # start_time = time()
+    limit = 10
+
+    review_count_dict = get_review_count_dict()
+
+    top_exchangers = (
+        Exchanger.objects
+        .annotate(link_counts=Count('exchange_counts'))\
+        .order_by(F('link_counts').desc(nulls_last=True),
+                  'name')\
+        .values('pk',
+                'name',
+                'icon_url',
+                'link_counts')
+    )[:limit]
+                                                
+    for top_exchange in top_exchangers:
+        top_exchange['total_link_count'] = top_exchange['link_counts'] or 0
+        try:
+            top_exchange['reviews'] = ReviewCountSchema(positive=review_count_dict[top_exchange['pk']]['positive_count'],
+                                                        neutral=review_count_dict[top_exchange['pk']]['neutral_count'],
+                                                        negative=review_count_dict[top_exchange['pk']]['negative_count'])
+        except Exception as ex:
+            top_exchange['reviews'] = ReviewCountSchema(positive=0,
+                                                        neutral=0,
+                                                        negative=0)
+            
+        top_exchange['icon'] = generate_image_icon2(top_exchange['icon_url'])
+    
+    # print(connection.queries)
+    # print(f'время выполнения теста {time() - start_time} sec')
+    return top_exchangers
 
 
 # @common_router.get('/top_coins',
@@ -4034,11 +4075,11 @@ def check_user_review_permission(review_id: int,
                                               tg_id)
 
 
-exchange_link_count_dict = {
-    'cash': cash_models.ExchangeLinkCount,
-    'no_cash': no_cash_models.ExchangeLinkCount,
-    'partner': partner_models.ExchangeLinkCount,
-}
+# exchange_link_count_dict = {
+#     'cash': cash_models.ExchangeLinkCount,
+#     'no_cash': no_cash_models.ExchangeLinkCount,
+#     'partner': partner_models.ExchangeLinkCount,
+# }
 
 
 # @common_router.post('/increase_link_count')

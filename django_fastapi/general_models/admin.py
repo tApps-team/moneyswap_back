@@ -49,6 +49,7 @@ from .models import (AdminComment,
                      NewExchangeAdmin,
                      NewExchangeAdminOrder,
                      ExchangeLinkCount)
+from .tasks import send_review_notification_to_exchange_admin_task
 
 from no_cash import models as no_cash_models
 from cash import models as cash_models
@@ -167,6 +168,11 @@ class PartnerTimeUpdateAdmin(admin.ModelAdmin):
                     task = 'update_popular_count_direction_time_task'
                     edit_time_for_task_check_directions_on_active(task,
                                                                   fields_to_update_task)
+                case 'Управление временем периодической задачи парсинга XML файла':
+                    # print('here!!!')
+                    task = 'task for get xml files'
+                    edit_time_for_task_check_directions_on_active(task,
+                                                                  fields_to_update_task)
                 # case 'Управление временем жизни направлений':
                 #     edit_time_live_for_partner_directions(fields_to_update_task)
         else:
@@ -246,10 +252,6 @@ class GuestAdmin(admin.ModelAdmin):
         CustomDateTimeFilter,
         ("time_create", DateRangeFilterBuilder()),
         NewUTMSourceFilter,
-        # ('time_create', DateRangeQuickSelectListFilterBuilder()),
-        # ("time_create", NumericRangeFilterBuilder()),
-        # 'time_create',
-        # UTMSourceSecondPartFilter,
         )
     ordering = (
         '-time_create',
@@ -257,96 +259,25 @@ class GuestAdmin(admin.ModelAdmin):
     )
     search_fields = (
         'username',
+        'tg_id',
     )
 
-    def link_count(self, obj):
-        # print(obj.__dict__)
-        # no_cash_count = no_cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
-        #                                                         .aggregate(count=Sum('count'))
-        # cash_count = cash_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
-        #                                                         .aggregate(count=Sum('count'))
-        # partner_count = partner_models.ExchangeLinkCount.objects.filter(user_id=obj.tg_id)\
-        #                                                         .aggregate(count=Sum('count'))
-        
-        # sum_count = [count for count in (no_cash_count,
-        #                                  cash_count,
-        #                                  partner_count) if count is not None]
-        sum_count = 0
-
-        # sum_count = []
-
-        if obj.no_cash_link_count:
-            sum_count += obj.no_cash_link_count
-
-        if obj.cash_link_count:
-            sum_count += obj.cash_link_count
-
-        if obj.partner_link_count:
-            sum_count += obj.partner_link_count
-
-        if obj.partner_country_link_count:
-            sum_count += obj.partner_country_link_count
-
-        if obj.partner_noncash_link_count:
-            sum_count += obj.partner_noncash_link_count
-
-        # sum_count += obj.no_cash_link_count + obj.cash_link_count\
-        #                  + obj.partner_link_count + obj.partner_country_link_count
-        
-        return sum_count
-
-
-        # for count in (no_cash_count, cash_count, partner_count):
-        #     if count['count'] is not None:
-        #         sum_count.append(count['count'])
-
-        # # res = no_cash_count['count'] +\
-        # #         cash_count['count'] +\
-        # #         partner_count['count']
-        # res = sum(sum_count) if sum_count else 0
-        # # print(res)
-        # return res
+    def link_count(self, obj):        
+        return obj.link_counts or 0
     
     link_count.short_description = 'Счётчик перехода по ссылкам обменников'
+    link_count.admin_order_field = 'link_counts'
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
 
-        no_cash_link_count_subquery = no_cash_models.NewExchangeLinkCount.objects.filter(
+        exchange_link_count_subquery = ExchangeLinkCount.objects.filter(
             user_id=OuterRef('tg_id')
         ).values('user_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
+            total_count=Coalesce(Count('id'), Value(0))
         ).values('total_count')
 
-        cash_link_count_subquery = cash_models.NewExchangeLinkCount.objects.filter(
-            user_id=OuterRef('tg_id')
-        ).values('user_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
-
-        partner_link_count_subquery = partner_models.NewExchangeLinkCount.objects.filter(
-            user_id=OuterRef('tg_id')
-        ).values('user_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
-
-        partner_country_link_count_subquery = partner_models.NewCountryExchangeLinkCount.objects.filter(
-            user_id=OuterRef('tg_id')
-        ).values('user_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
-
-        partner_noncash_link_count_subquery = partner_models.NewNonCashExchangeLinkCount.objects.filter(
-            user_id=OuterRef('tg_id')
-        ).values('user_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
-
-        return queryset.annotate(no_cash_link_count=Subquery(no_cash_link_count_subquery),
-                                 cash_link_count=Subquery(cash_link_count_subquery),
-                                partner_link_count=Subquery(partner_link_count_subquery),
-                                partner_country_link_count=Subquery(partner_country_link_count_subquery),
-                                partner_noncash_link_count=Subquery(partner_noncash_link_count_subquery))
+        return queryset.annotate(link_counts=Coalesce(Subquery(exchange_link_count_subquery), Value(0)))
 
 
 @admin.register(CustomOrder)
@@ -1282,7 +1213,40 @@ class ReviewAdmin(admin.ModelAdmin):
     
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         obj.moderation = obj.status == 'Опубликован'
-        return super().save_model(request, obj, form, change)
+
+        update_fields = set(['moderation'])
+
+        if change:
+            task_marker = False
+
+            for key, value in form.cleaned_data.items():
+                if key == 'id':
+                    continue
+                if value != form.initial[key]:
+                    match key:
+                        case 'status':
+                            setattr(obj, key, value)
+                            task_marker = value == 'Опубликован'
+                            update_fields.add(key)
+
+                        case _:
+                            setattr(obj, key, value)
+                            update_fields.add(key)
+                                
+                    update_fields.add(key)
+
+            obj.save(update_fields=list(update_fields))
+            
+            if task_marker and not obj.has_send_to_admin:
+                exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=obj.exchange_id)\
+                                                        .first()
+                if exchange_admin:
+                    print('run task...')
+                    send_review_notification_to_exchange_admin_task.delay(exchange_admin.user_id,
+                                                                          obj.exchange_id,
+                                                                          obj.pk)
+        else:
+            return super().save_model(request, obj, form, change)
     
     
 # @admin.register(NewBaseComment)
@@ -1406,19 +1370,10 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
     get_total_direction_count.short_description = 'Кол-во активных направлений'
 
     def link_count(self, obj):
-        link_count = 0
-
-        for link_field in ('cash_link_count',
-                           'no_cash_link_count',
-                           'manual_city_link_count',
-                           'manual_country_link_count',
-                           'manual_noncash_link_count'):
-            if _count := obj.__dict__.get(link_field):
-                link_count += _count
-            
-        return link_count
+        return obj.link_counts or 0
 
     link_count.short_description = 'Счетчик перехода по ссылкам'
+    link_count.admin_order_field = 'link_counts'
 
     def save_model(self, request, obj, form, change):
         # print(obj.__dict__)
@@ -1477,61 +1432,51 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
         queryset = super().get_queryset(request)
 
         # аттонации кол-ва переходов по направлениям обменника
-        no_cash_link_count_subquery = no_cash_models.NewExchangeLinkCount.objects.filter(
+        exchange_link_count_subquery = ExchangeLinkCount.objects.filter(
             exchange_id=OuterRef('id')
         ).values('exchange_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
+            total_count=Coalesce(Count('id'), Value(0))
         ).values('total_count')
 
-        cash_link_count_subquery = cash_models.NewExchangeLinkCount.objects.filter(
-            exchange_id=OuterRef('id')
-        ).values('exchange_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
+        queryset = queryset.annotate(link_counts=Coalesce(Subquery(exchange_link_count_subquery), Value(0)))
 
-        partner_link_count_subquery = partner_models.NewExchangeLinkCount.objects.filter(
-            exchange_id=OuterRef('id')
-        ).values('exchange_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
-
-        partner_country_link_count_subquery = partner_models.NewCountryExchangeLinkCount.objects.filter(
-            exchange_id=OuterRef('id')
-        ).values('exchange_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
-
-        partner_noncash_link_count_subquery = partner_models.NewNonCashExchangeLinkCount.objects.filter(
-            exchange_id=OuterRef('id')
-        ).values('exchange_id').annotate(
-            total_count=Coalesce(Sum('count'), Value(0))
-        ).values('total_count')
-
-        queryset = queryset.annotate(no_cash_link_count=Subquery(no_cash_link_count_subquery),
-                                     cash_link_count=Subquery(cash_link_count_subquery),
-                                     manual_city_link_count=Subquery(partner_link_count_subquery),
-                                     manual_country_link_count=Subquery(partner_country_link_count_subquery),
-                                     manual_noncash_link_count=Subquery(partner_noncash_link_count_subquery))
-        
         if not request.resolver_match.view_name.endswith("changelist"):
 
-            # аттонации кол-ва активных направлений
-            queryset = queryset.annotate(cash_direction_count=Count('cash_directions',
-                                                                filter=Q(cash_directions__is_active=True),
-                                                                distinct=True))\
-                            .annotate(no_cash_direction_count=Count('no_cash_directions',
-                                                                filter=Q(no_cash_directions__is_active=True),
-                                                                distinct=True))\
-                            .annotate(manual_city_direction_count=Count('city_directions',
-                                                                filter=Q(city_directions__is_active=True),
-                                                                distinct=True))\
-                            .annotate(manual_country_direction_count=Count('country_directions',
-                                                                filter=Q(country_directions__is_active=True),
-                                                                distinct=True))\
-                            .annotate(manual_noncash_direction_count=Count('noncash_directions',
-                                                                filter=Q(noncash_directions__is_active=True),
-                                                                distinct=True))
+            # # аттонации кол-ва активных направлений
+            no_cash_directions_subquery = no_cash_models.NewExchangeDirection.objects.filter(
+                exchange_id=OuterRef('id'),
+                is_active = True,
+            ).values('exchange_id').annotate(
+                total_count=Coalesce(Count('id'), Value(0))
+            ).values('total_count')
+
+            cash_directions_subquery = cash_models.NewExchangeDirection.objects.filter(
+                exchange_id=OuterRef('id'),
+                is_active = True,
+            ).values('exchange_id').annotate(
+                total_count=Coalesce(Count('id'), Value(0))
+            ).values('total_count')
+
+            partner_city_directions_subquery = partner_models.NewDirection.objects.filter(
+                exchange_id=OuterRef('id'),
+                is_active = True,
+            ).values('exchange_id').annotate(
+                total_count=Coalesce(Count('id'), Value(0))
+            ).values('total_count')
+
+            partner_noncash_directions_subquery = partner_models.NewNonCashDirection.objects.filter(
+                exchange_id=OuterRef('id'),
+                is_active = True,
+            ).values('exchange_id').annotate(
+                total_count=Coalesce(Count('id'), Value(0))
+            ).values('total_count')
             
+            queryset = queryset.annotate(cash_direction_count=Coalesce(Subquery(no_cash_directions_subquery), Value(0)))\
+                            .annotate(no_cash_direction_count=Coalesce(Subquery(cash_directions_subquery), Value(0)))\
+                            .annotate(manual_noncash_direction_count=Coalesce(Subquery(partner_city_directions_subquery), Value(0)))\
+                            .annotate(manual_country_direction_count=Coalesce(Subquery(partner_noncash_directions_subquery), Value(0)))\
+
+
         return queryset
     
 

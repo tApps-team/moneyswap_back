@@ -106,10 +106,11 @@ def update_popular_count_direction():
     #new
     cash_direction = cash_models.NewDirection.objects
     no_cash_directions = no_cash_models.NewDirection.objects
-
+    cities = cash_models.City.objects
 
     cash_direction.update(popular_count=0)
     no_cash_directions.update(popular_count=0)
+    cities.update(popular_count=0)
 
 
 ################
@@ -181,23 +182,18 @@ def periodic_delete_unlinked_exchange_records():
 
     exchangedirection_delete_filter = Q(exchange_id__isnull=True)
 
-    # deleted_tuples_list = [
-    #     ('no_cash', no_cash_models.ExchangeDirection),
-    #     ('cash', cash_models.ExchangeDirection),
-    #     ('partner', partner_models.Direction),
-    #     ('partner', partner_models.CountryDirection),
-    #     ('partner', partner_models.NonCashDirection),
-    #     ('partner', partner_models.DirectionRate),
-    #     ('partner', partner_models.CountryDirectionRate),
-    #     ('partner', partner_models.NonCashDirectionRate),
-    # ]
+    partner_city_exchangedirection_delete_filter = Q(exchange_id__isnull=True) \
+                                                    | Q(city_id__isnull=True)
+
+    partner_country_exchangedirection_delete_filter = Q(exchange_id__isnull=True) \
+                                                    | Q(country_id__isnull=True)
 
     # new
     deleted_tuples_list = [
         ('no_cash', no_cash_models.NewExchangeDirection),
         ('cash', cash_models.NewExchangeDirection),
-        ('partner', partner_models.NewDirection),
-        ('partner', partner_models.NewCountryDirection),
+        ('city_partner', partner_models.NewDirection),
+        ('country_partner', partner_models.NewCountryDirection),
         ('partner', partner_models.NewNonCashDirection),
         ('partner', partner_models.NewDirectionRate),
         ('partner', partner_models.NewCountryDirectionRate),
@@ -212,9 +208,19 @@ def periodic_delete_unlinked_exchange_records():
             print(f'end with RETURN {batch_size}')
             return
         
-        record_pks_on_delete = _model.objects.filter(exchangedirection_delete_filter)\
-                                                .values_list('pk',
-                                                             flat=True)[:batch_size]
+        match marker:
+            case 'city_partner':
+                record_pks_on_delete = _model.objects.filter(partner_city_exchangedirection_delete_filter)\
+                                                        .values_list('pk',
+                                                                    flat=True)[:batch_size]
+            case 'country_partner':
+                record_pks_on_delete = _model.objects.filter(partner_country_exchangedirection_delete_filter)\
+                                                        .values_list('pk',
+                                                                    flat=True)[:batch_size]
+            case _:
+                record_pks_on_delete = _model.objects.filter(exchangedirection_delete_filter)\
+                                                        .values_list('pk',
+                                                                    flat=True)[:batch_size]
 
         len_records_on_delete = len(record_pks_on_delete)
 
@@ -230,7 +236,6 @@ def periodic_delete_unlinked_exchange_records():
 
     else:
         print(f'end with ELSE {batch_size}')
-
 
 
 #new (одна задача на добавление и обновление направлений)

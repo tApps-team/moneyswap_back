@@ -15,7 +15,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         try:
-            schedule = get_or_create_schedule(1, IntervalSchedule.HOURS)
+            schedule = get_or_create_schedule(1, IntervalSchedule.HOURS) # for prod
+            # schedule = get_or_create_schedule(90, IntervalSchedule.SECONDS) # for test
             PeriodicTask.objects.create(
                 interval=schedule,
                 name='task for delete unlinked records from db',

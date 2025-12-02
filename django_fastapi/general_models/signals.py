@@ -140,23 +140,23 @@ def new_change_time_create_for_admin_comment(sender, instance, **kwargs):
         instance.time_create = timezone.now()
 
 
-@receiver(post_save, sender=Review)
-def new_send_notification_after_add_review(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Review)
+# def new_send_notification_after_add_review(sender, instance, created, **kwargs):
     
-    if not created and instance.moderation == True:
+#     if not created and instance.moderation == True:
 
-        exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=instance.exchange_id)\
-                                                .first()
+#         exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=instance.exchange_id)\
+#                                                 .first()
         
-        if exchange_admin and not instance.has_send_to_admin:
-            user_id = exchange_admin.user_id
-            exchange_id = instance.exchange_id
+#         if exchange_admin and not instance.has_send_to_admin:
+#             user_id = exchange_admin.user_id
+#             exchange_id = instance.exchange_id
 
-            # send notification to admin user in chat with bot in background task
-            send_review_notification_to_exchange_admin_task.delay(user_id,
-                                                                  exchange_id,
-                                                                  instance.pk)
-            pass
+#             # send notification to admin user in chat with bot in background task
+#             send_review_notification_to_exchange_admin_task.delay(user_id,
+#                                                                   exchange_id,
+#                                                                   instance.pk)
+#             pass
 
 
 @receiver(post_save, sender=NewBaseComment)
