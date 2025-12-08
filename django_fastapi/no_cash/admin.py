@@ -1,15 +1,18 @@
 from typing import Any
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.shortcuts import redirect, render
 from django.db.models.query import QuerySet
 from django.db.models import Count, Q, Sum, Value, Subquery, OuterRef, Prefetch, F
 from django.db.models.functions import Coalesce
 from django.http import HttpRequest
 from django.db.models import Sum, Count
 from django.contrib.admin import SimpleListFilter
+from django.urls import path
 
 from django.utils import timezone
 
 import cash.models as cash_models
+from cash.forms import BulkDirectionForm
 
 from no_cash.models import (Exchange,
                             Direction,
@@ -189,6 +192,69 @@ class DirectionAdmin(BaseDirectionAdmin):
 
 @admin.register(NewDirection)
 class NewDirectionAdmin(NewBaseDirectionAdmin):
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                'bulk-add/',
+                self.admin_site.admin_view(self.bulk_create_directions_view),
+                name='bulk_create_directions',
+            ),
+        ]
+        return custom_urls + urls
+
+    def bulk_create_directions_view(self, request):
+
+        if request.method == "POST":
+            form = BulkDirectionForm(request.POST)
+            if form.is_valid():
+                valute_from = form.cleaned_data["valute_from"]
+                valute_to_list = form.cleaned_data["valute_to"]
+
+                direction_list = [(valute_from, valute_to) for valute_to in valute_to_list]
+                direction_list += [(valute_to, valute_from) for valute_from, valute_to in direction_list]
+
+                create_list = []
+                for direction in direction_list:
+                    valute_from, valute_to = direction
+                    valute_from_type = valute_from.type_valute
+                    valute_to_type = valute_to.type_valute
+
+                    # проверка что направления будут безналичные
+                    check_set = set(['Наличные', 'ATM QR'])
+                    
+                    if set([valute_from_type, valute_to_type]).intersection(check_set):
+                        print('NO NO NO')
+                        continue
+
+                    data = {
+                        'valute_from_id': valute_from.code_name,
+                        'valute_to_id': valute_to.code_name,
+                    }
+
+                    create_list.append(NewDirection(**data))
+                
+                try:
+                    NewDirection.objects.bulk_create(create_list,
+                                                     ignore_conflicts=True)
+                    self.message_user(request, "Направления успешно созданы")
+                except Exception as ex:
+                    print(ex)
+                    self.message_user(request,
+                                      "Возникла ошибка при создании",
+                                      level=messages.WARNING)
+
+                return redirect("..")
+
+        else:
+            form = BulkDirectionForm()
+
+        context = dict(
+            self.admin_site.each_context(request),
+            form=form,
+        )
+
+        return render(request, "admin/bulk_create_directions.html", context)
     pass
 
 

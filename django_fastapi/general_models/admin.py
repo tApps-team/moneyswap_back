@@ -1357,12 +1357,19 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
     def get_total_direction_count(self, obj):
         direction_count = 0
 
-        for count_field in ('cash_direction_count',
+        for count_field in (
+            # 'cash_direction_count',
                             'no_cash_direction_count',
                             'manual_city_direction_count',
                             # 'manual_country_direction_count',
                             'manual_noncash_direction_count'):
             if _count := obj.__dict__.get(count_field):
+                direction_count += _count
+        
+        if _count := obj.__dict__.get('manual_country_direction_count'):
+            direction_count += _count
+        else:
+            if _count := obj.__dict__.get('cash_direction_count'):
                 direction_count += _count
 
         return direction_count
@@ -1464,6 +1471,13 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
                 total_count=Coalesce(Count('id'), Value(0))
             ).values('total_count')
 
+            partner_country_directions_subquery = partner_models.NewCountryDirection.objects.filter(
+                exchange_id=OuterRef('id'),
+                is_active = True,
+            ).values('exchange_id').annotate(
+                total_count=Coalesce(Count('id'), Value(0))
+            ).values('total_count')
+
             partner_noncash_directions_subquery = partner_models.NewNonCashDirection.objects.filter(
                 exchange_id=OuterRef('id'),
                 is_active = True,
@@ -1475,7 +1489,7 @@ class ExchangerAdmin(NewBaseExchangeAdmin):
                             .annotate(no_cash_direction_count=Coalesce(Subquery(no_cash_directions_subquery), Value(0)))\
                             .annotate(manual_city_direction_count=Coalesce(Subquery(partner_city_directions_subquery), Value(0)))\
                             .annotate(manual_noncash_direction_count=Coalesce(Subquery(partner_noncash_directions_subquery), Value(0)))\
-                            # .annotate(manual_country_direction_count=Coalesce(Subquery(partner_noncash_directions_subquery), Value(0)))\
+                            .annotate(manual_country_direction_count=Coalesce(Subquery(partner_country_directions_subquery), Value(0)))\
 
 
         return queryset

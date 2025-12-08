@@ -402,19 +402,36 @@ class NewDirectionAdmin(NewBaseDirectionAdmin):
         if request.method == "POST":
             form = BulkDirectionForm(request.POST)
             if form.is_valid():
-                valute_from = form.cleaned_data["valute_from"].code_name
+                valute_from = form.cleaned_data["valute_from"]
                 valute_to_list = form.cleaned_data["valute_to"]
-                print(valute_from)
-                print(valute_to_list)
-                # for v in valute_to_list:
-                #     print(v)
-                    # if v.code_name != valute_from:
-                    #     NewDirection.objects.create(
-                    #         valute_from_id=valute_from,
-                    #         valute_to_id=v.code_name
-                    #     )
 
-                self.message_user(request, "Направления успешно созданы")
+                direction_list = [(valute_from, valute_to) for valute_to in valute_to_list]
+                direction_list += [(valute_to, valute_from) for valute_from, valute_to in direction_list]
+
+                create_list = []
+                for direction in direction_list:
+                    valute_from, valute_to = direction
+                    
+                    if valute_from.type_valute == 'ATM QR':
+                        continue
+
+                    data = {
+                        'valute_from_id': valute_from.code_name,
+                        'valute_to_id': valute_to.code_name,
+                    }
+
+                    create_list.append(NewDirection(**data))
+                
+                try:
+                    NewDirection.objects.bulk_create(create_list,
+                                                     ignore_conflicts=True)
+                    self.message_user(request, "Направления успешно созданы")
+                except Exception as ex:
+                    print(ex)
+                    self.message_user(request,
+                                      "Возникла ошибка при создании",
+                                      level=messages.WARNING)
+
                 return redirect("..")
 
         else:

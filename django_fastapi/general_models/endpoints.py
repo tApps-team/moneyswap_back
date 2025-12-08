@@ -3279,7 +3279,7 @@ def new_get_all_directions_by_exchange(exchange_id: int):
                     if _count:
                         pair_count += _count
 
-            else:
+            else:                  
                 for _count in (direction.auto_pair_count,
                                direction.partner_city_pair_count,
                                direction.partner_country_pair_count):

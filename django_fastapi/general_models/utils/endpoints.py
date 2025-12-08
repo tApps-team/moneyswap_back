@@ -1014,13 +1014,13 @@ def new_get_exchange_directions_count_dict(exchange_list: list[Exchanger],
         .annotate(total=Count("id"))\
         .values_list("city__exchange_id", "total")\
 
-    # partner_country_exchange_directions = partner_models.NewCountryDirection.objects\
-    #     .select_related('country__exchange')\
-    #     .filter(is_active=True,
-    #             country__exchange__is_active=True)\
-    #     .values("country__exchange_id")\
-    #     .annotate(total=Count("id"))\
-    #     .values_list("country__exchange_id", "total")\
+    partner_country_exchange_directions = partner_models.NewCountryDirection.objects\
+        .select_related('country__exchange')\
+        .filter(is_active=True,
+                country__exchange__is_active=True)\
+        .values("country__exchange_id")\
+        .annotate(total=Count("id"))\
+        .values_list("country__exchange_id", "total")\
 
     partner_noncash_exchange_directions = partner_models.NewNonCashDirection.objects\
         .select_related('exchange')\
@@ -1039,17 +1039,22 @@ def new_get_exchange_directions_count_dict(exchange_list: list[Exchanger],
     no_cash_exchange_directions = dict(no_cash_exchange_directions)
     cash_exchange_directions = dict(cash_exchange_directions)
     partner_city_exchange_directions = dict(partner_city_exchange_directions)
-    # partner_country_exchange_directions = dict(partner_country_exchange_directions)
+    partner_country_exchange_directions = dict(partner_country_exchange_directions)
     partner_noncash_exchange_directions = dict(partner_noncash_exchange_directions)
 
     # print(no_cash_exchange_directions,cash_exchange_directions, partner_noncash_exchange_directions, partner_city_exchange_directions, sep='\n\n')
 
     for exchange_id in exchange_direction_count_dict.keys():
         exchange_direction_count_dict[exchange_id] += no_cash_exchange_directions.get(exchange_id, 0)
-        exchange_direction_count_dict[exchange_id] += cash_exchange_directions.get(exchange_id, 0)
         exchange_direction_count_dict[exchange_id] += partner_city_exchange_directions.get(exchange_id, 0)
-        # exchange_direction_count_dict[exchange_id] += partner_country_exchange_directions.get(exchange_id, 0)
         exchange_direction_count_dict[exchange_id] += partner_noncash_exchange_directions.get(exchange_id, 0)
+        
+        if _count := partner_country_exchange_directions.get(exchange_id):
+            # exchange_direction_count_dict[exchange_id] += cash_exchange_directions.get(exchange_id, 0)
+            exchange_direction_count_dict[exchange_id] += _count
+        else:
+            if _count := cash_exchange_directions.get(exchange_id):
+                exchange_direction_count_dict[exchange_id] += partner_country_exchange_directions.get(exchange_id, 0)        
 
     if not _pk:
         return exchange_direction_count_dict
