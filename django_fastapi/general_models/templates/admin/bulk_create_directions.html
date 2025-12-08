@@ -1,0 +1,53 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+
+    <!-- 1. Загружаем admin jQuery -->
+    <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'admin/js/jquery.init.js' %}"></script>
+
+    <!-- 2. Делаем её глобальной для Select2 -->
+    <script>
+        window.jQuery = django.jQuery;
+        window.$ = django.jQuery;
+    </script>
+
+    <!-- 3. Теперь можно подключать select2 и другие виджеты -->
+    
+    <style>
+        .select2-selection__choice {
+            color: #211c1c !important;
+        }
+        .select2-results__option {
+            color: #006600 !important;
+        }
+        .select2-selection__rendered {
+            color: #0000ff !important;
+        }
+    </style>
+
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+<h1>Создание направлений</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+
+    <button class="button default" type="submit">Создать</button>
+</form>
+
+<!-- 4. Инициализируем двухсторонний список -->
+<script>
+django.jQuery(function($){
+    SelectFilter.init("id_valute_to", "Получаем", false, "admin/");
+});
+</script>
+
+{% endblock %}

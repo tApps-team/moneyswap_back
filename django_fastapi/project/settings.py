@@ -112,12 +112,14 @@ INSTALLED_APPS = [
     'django_summernote',
     'django_admin_action_forms',
     'rangefilter',
+    'django_select2',
 
     "general_models",
     "no_cash",
     "cash",
     "partners",
-    'seo_admin'
+    'seo_admin',
+
 ]
 
 MIDDLEWARE = [

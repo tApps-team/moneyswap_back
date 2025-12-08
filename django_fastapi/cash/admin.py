@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.shortcuts import redirect, render
 from django.urls import path
 
+from general_models.models import NewValute
 from general_models.utils.endpoints import try_generate_icon_url
 
 from .periodic_tasks import (manage_periodic_task_for_create,
@@ -47,7 +48,7 @@ from .models import (Country,
                      NewExchangeLinkCount)
 
 from .tasks import add_cities_to_exclude_cities_for_partner_countries
-# from .forms import DirectionsBulkCreateForm
+from .forms import BulkDirectionForm
 
 
 #Отображение городов в админ панели
@@ -385,49 +386,46 @@ class DirectionAdmin(BaseDirectionAdmin):
 
 @admin.register(NewDirection)
 class NewDirectionAdmin(NewBaseDirectionAdmin):
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path(
+                'bulk-add/',
+                self.admin_site.admin_view(self.bulk_create_directions_view),
+                name='bulk_create_directions',
+            ),
+        ]
+        return custom_urls + urls
 
-    # def get_readonly_fields(self, request: HttpRequest, obj: Any | None = ...) -> list[str] | tuple[Any, ...]:
-    #     readonly_fileds = super().get_readonly_fields(request, obj)
-    #     readonly_fileds += ('actual_course', 'previous_course')
-    # #     return readonly_fileds
-    # def get_urls(self):
-    #     urls = super().get_urls()
-    #     custom_urls = [
-    #         path(
-    #             "bulk-create/",
-    #             self.admin_site.admin_view(self.bulk_create_view),
-    #             name="direction_bulk_create"
-    #         ),
-    #     ]
-    #     return custom_urls + urls
+    def bulk_create_directions_view(self, request):
 
-    # def bulk_create_view(self, request):
-    #     if request.method == "POST":
-    #         form = DirectionsBulkCreateForm(request.POST)
-    #         if form.is_valid():
-    #             valute_from = form.cleaned_data["valute_from"]
-    #             valute_to_list = form.cleaned_data["valute_to"]
+        if request.method == "POST":
+            form = BulkDirectionForm(request.POST)
+            if form.is_valid():
+                valute_from = form.cleaned_data["valute_from"].code_name
+                valute_to_list = form.cleaned_data["valute_to"]
+                print(valute_from)
+                print(valute_to_list)
+                # for v in valute_to_list:
+                #     print(v)
+                    # if v.code_name != valute_from:
+                    #     NewDirection.objects.create(
+                    #         valute_from_id=valute_from,
+                    #         valute_to_id=v.code_name
+                    #     )
 
-    #             created = 0
-    #             for v_to in valute_to_list:
-    #                 if v_to == valute_from:
-    #                     continue
-    #                 NewDirection.objects.get_or_create(
-    #                     valute_from=valute_from,
-    #                     valute_to=v_to
-    #                 )
-    #                 created += 1
+                self.message_user(request, "Направления успешно созданы")
+                return redirect("..")
 
-    #             messages.success(request, f"Создано направлений: {created}")
-    #             return redirect("..")
-    #     else:
-    #         form = DirectionsBulkCreateForm()
+        else:
+            form = BulkDirectionForm()
 
-    #     context = {
-    #         "form": form,
-    #         "title": "Пакетное создание Direction",
-    #     }
-    #     return render(request, "admin/directions_bulk_create.html", context)
+        context = dict(
+            self.admin_site.each_context(request),
+            form=form,
+        )
+
+        return render(request, "admin/bulk_create_directions.html", context)
     
     def get_queryset(self, request: HttpRequest) -> QuerySet[Any]:
         return super().get_queryset(request).select_related('valute_from', 'valute_to')

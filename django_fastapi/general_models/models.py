@@ -491,6 +491,7 @@ class BaseReviewComment(models.Model):
 
     review_from_list = [
         ('bestchange', 'bestchange'),
+        ('ai', 'ai'),
         ('moneyswap', 'moneyswap'),
     ]
     #

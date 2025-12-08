@@ -1014,13 +1014,13 @@ def new_get_exchange_directions_count_dict(exchange_list: list[Exchanger],
         .annotate(total=Count("id"))\
         .values_list("city__exchange_id", "total")\
 
-    partner_country_exchange_directions = partner_models.NewCountryDirection.objects\
-        .select_related('country__exchange')\
-        .filter(is_active=True,
-                country__exchange__is_active=True)\
-        .values("country__exchange_id")\
-        .annotate(total=Count("id"))\
-        .values_list("country__exchange_id", "total")\
+    # partner_country_exchange_directions = partner_models.NewCountryDirection.objects\
+    #     .select_related('country__exchange')\
+    #     .filter(is_active=True,
+    #             country__exchange__is_active=True)\
+    #     .values("country__exchange_id")\
+    #     .annotate(total=Count("id"))\
+    #     .values_list("country__exchange_id", "total")\
 
     partner_noncash_exchange_directions = partner_models.NewNonCashDirection.objects\
         .select_related('exchange')\
@@ -1033,21 +1033,22 @@ def new_get_exchange_directions_count_dict(exchange_list: list[Exchanger],
         no_cash_exchange_directions = no_cash_exchange_directions.filter(exchange_id=_pk)
         cash_exchange_directions = cash_exchange_directions.filter(exchange_id=_pk)
         partner_city_exchange_directions = partner_city_exchange_directions.filter(city__exchange_id=_pk)
-        partner_country_exchange_directions = partner_country_exchange_directions.filter(country__exchange_id=_pk)
+        # partner_country_exchange_directions = partner_country_exchange_directions.filter(country__exchange_id=_pk)
         partner_noncash_exchange_directions = partner_noncash_exchange_directions.filter(exchange_id=_pk)
 
     no_cash_exchange_directions = dict(no_cash_exchange_directions)
     cash_exchange_directions = dict(cash_exchange_directions)
     partner_city_exchange_directions = dict(partner_city_exchange_directions)
-    partner_country_exchange_directions = dict(partner_country_exchange_directions)
+    # partner_country_exchange_directions = dict(partner_country_exchange_directions)
     partner_noncash_exchange_directions = dict(partner_noncash_exchange_directions)
 
+    # print(no_cash_exchange_directions,cash_exchange_directions, partner_noncash_exchange_directions, partner_city_exchange_directions, sep='\n\n')
 
     for exchange_id in exchange_direction_count_dict.keys():
         exchange_direction_count_dict[exchange_id] += no_cash_exchange_directions.get(exchange_id, 0)
         exchange_direction_count_dict[exchange_id] += cash_exchange_directions.get(exchange_id, 0)
         exchange_direction_count_dict[exchange_id] += partner_city_exchange_directions.get(exchange_id, 0)
-        exchange_direction_count_dict[exchange_id] += partner_country_exchange_directions.get(exchange_id, 0)
+        # exchange_direction_count_dict[exchange_id] += partner_country_exchange_directions.get(exchange_id, 0)
         exchange_direction_count_dict[exchange_id] += partner_noncash_exchange_directions.get(exchange_id, 0)
 
     if not _pk:
@@ -1056,8 +1057,9 @@ def new_get_exchange_directions_count_dict(exchange_list: list[Exchanger],
     else:
         no_cash_sigment = bool(no_cash_exchange_directions or partner_noncash_exchange_directions)
         
-        cash_sigment = bool(cash_exchange_directions or partner_city_exchange_directions or partner_country_exchange_directions)
-        
+        # cash_sigment = bool(cash_exchange_directions or partner_city_exchange_directions or partner_country_exchange_directions)
+        cash_sigment = bool(cash_exchange_directions or partner_city_exchange_directions)
+
         if no_cash_sigment and cash_sigment:
             segment_marker = 'both'
         elif no_cash_sigment:
@@ -1789,7 +1791,19 @@ def test_new_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | Ca
 
     # start_time = time()
 
+    check_set = set()
+
     for _id, query in enumerate(queries, start=1):
+        
+        unique_key = (query.exchange_id,
+                      query.direction.valute_from_id,
+                      query.direction.valute_to_id,
+                      query.city)
+        if unique_key in check_set:
+            continue
+
+        check_set.add(unique_key)
+
         if hasattr(query, 'country_direction_id') and query.country_direction_id:
             # print('HAS COUNTRY DIRECTION ID')
             query = generate_partner_direction_country_level(query,

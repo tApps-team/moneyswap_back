@@ -37,6 +37,7 @@ urlpatterns = [
     path('admin22/', custom_admin_site.urls),
     path('sentry-debug/', trigger_error),
     path('summernote/', include('django_summernote.urls')),
+    path("select2/", include("django_select2.urls")),
     ]
 
 
