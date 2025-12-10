@@ -1799,11 +1799,15 @@ def test_new_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | Ca
     check_set = set()
 
     for _id, query in enumerate(queries, start=1):
-        
+        try:
+            _city_id = query.city.city_id if hasattr(query, "city") and hasattr(query.city, "city_id") else query.city_id
+        except Exception:
+            _city_id = None
+
         unique_key = (query.exchange_id,
                       query.direction.valute_from_id,
                       query.direction.valute_to_id,
-                      query.city)
+                      _city_id)
         if unique_key in check_set:
             continue
 
