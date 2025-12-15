@@ -78,6 +78,7 @@ class ExtendedSpecialDirectionMultiModel(NewSpecialDirectionMultiModel):
 
 class InfoSchema(BaseModel):
     high_aml: bool
+    has_delivery: Optional[bool] = False
 
 
 class NewSpecialDirectionMultiWithAmlModel(NewSpecialDirectionMultiModel):

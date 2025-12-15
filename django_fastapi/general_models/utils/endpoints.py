@@ -1873,7 +1873,16 @@ def test_new_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | Ca
         exchange_direction['type_valute_to'] = type_valute_to
 
         if not exchange_direction.get('info'):
-            exchange_direction['info'] = InfoSchema(high_aml=exchange_direction['high_aml'])
+            info = {
+                'high_aml': exchange_direction['high_aml'],
+            }
+            # exchange_direction['info'] = InfoSchema(high_aml=exchange_direction['high_aml'])
+            
+            if _params := exchange_direction.get('params'):
+                if _params.find('delivery') != -1:
+                    info.update({'has_delivery': True})
+
+            exchange_direction['info'] = InfoSchema(**info)
 
         if exchange_direction.get('_city_id'):
             exchange_direction['city_id'] = exchange_direction.get('_city_id')
