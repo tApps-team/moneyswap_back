@@ -1880,7 +1880,7 @@ def test_new_get_exchange_direction_list_with_aml(queries: List[NoCashExDir | Ca
             
             if _params := exchange_direction.get('params'):
                 if _params.find('delivery') != -1:
-                    info.update({'has_delivery': True})
+                    info.update({'delivery': True})
 
             exchange_direction['info'] = InfoSchema(**info)
 
