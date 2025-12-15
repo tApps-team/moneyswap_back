@@ -1,6 +1,6 @@
 import re
 import requests
-
+import ssl
 import asyncio
 
 import aiohttp
@@ -252,6 +252,8 @@ async def new_request_to_xml_file(xml_url: str,
         'Accept': 'application/xml, text/xml;q=0.9, */*;q=0.8',
     }
 
+    ssl_context = ssl.create_default_context()
+
     _timeout = timeout if timeout and timeout > 0 else DEFAULT_TIMEOUT
 
     timeout = aiohttp.ClientTimeout(connect=_timeout,
@@ -261,6 +263,7 @@ async def new_request_to_xml_file(xml_url: str,
     try:
         async with session.get(xml_url,
                             headers=headers,
+                            ssl=ssl_context,
                             timeout=timeout) as response:
             content_type = response.headers['Content-Type']
 
@@ -274,10 +277,12 @@ async def new_request_to_xml_file(xml_url: str,
                 xml_file = await response.text()
                 root = ET.fromstring(xml_file)
                 is_active = True
+                
                 if root.text == 'Техническое обслуживание':
                     raise TechServiceWork(f'{xml_url} на тех обслуживании')
                     # is_active = False
                 return (is_active, xml_file)
+            
     except asyncio.TimeoutError as ex:
         raise TimeoutError(f'{xml_url} не вернул ответ за {_timeout} секунд')
 
