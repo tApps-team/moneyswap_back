@@ -9,7 +9,9 @@ from django.db import connection, transaction
 
 from fastapi.exceptions import HTTPException
 
-from general_models.utils.base import annotate_string_field, try_generate_icon_url
+# from general_models.utils.endpoints import round_in_out_count_values
+from general_models.utils.base import annotate_string_field, try_generate_icon_url, round_in_out_count_values
+
 
 from general_models.schemas import MultipleName, MultipleName2
 
@@ -1443,14 +1445,25 @@ def generate_valute_list2(queries: list[CashDirection],
 
 
 def generate_actual_course(direction: CashDirection):
+    # print(direction.__dict__)
     in_out_count = get_partner_in_out_count(direction.actual_course)
     icon_valute_from = try_generate_icon_url(direction.valute_from)
     icon_valute_to = try_generate_icon_url(direction.valute_to)
+
+    # print('before', in_out_count)
 
     if in_out_count is not None:
         in_count, out_count = in_out_count
     else:
         in_count = out_count = 0
+
+    if in_count != 0 and out_count != 0:
+        new_in_out_count = round_in_out_count_values(direction,
+                                                in_count,
+                                                out_count)
+        # print('NEW',new_in_out_count)
+        
+        in_count, out_count = new_in_out_count
 
     return {
         'valute_from': direction.valute_from.code_name,

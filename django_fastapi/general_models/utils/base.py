@@ -10,6 +10,11 @@ from fastapi import APIRouter
 
 from general_models.models import PartnerTimeUpdate
 
+import no_cash.models as no_cash_models
+import cash.models as cash_models
+
+
+DEFAUT_ROUND = 3
 
 v2_api_router = APIRouter(prefix='/v2',
                           tags=['Новая версия API'])
@@ -82,3 +87,74 @@ def try_generate_icon_url(obj) -> str | None:
                                             + '/media/icons/valute/BTC.svg'
 
     return icon_url
+
+
+def round_in_out_count_values(direction: cash_models.NewDirection | no_cash_models.NewDirection,
+                              in_count: float,
+                              out_count: float):
+
+    '''
+    Округляет значения "min_amount" и "max_amount"
+    '''
+
+    try:
+        valute_from = direction.valute_from
+        type_valute_from = direction.valute_from.type_valute
+
+        valute_to = direction.valute_to
+        type_valute_to = direction.valute_to.type_valute
+        
+        valute_type_set = set((type_valute_from,type_valute_to))
+        check_valutes = valute_type_set.intersection(set(('Наличные',
+                                                         'Банкинг',
+                                                         'Денежные переводы',
+                                                         'ATM QR')))
+
+        tether_set = set(('USDTTRC20', 'USDTERC20', 'USDTBEP20', 'USDCERC20', 'USDCTRC20'))
+        
+        if check_valutes:
+            if set((valute_from.code_name,
+                    valute_to.code_name)).intersection(tether_set):
+                # 3 знака
+                # print('here')
+                _sign_number = 3
+
+                in_count = round(in_count, _sign_number)
+                out_count = round(out_count, _sign_number)
+                pass
+            # else:
+            # поменял по просьбе Андрея модера
+            elif len(check_valutes) == 2:
+                # 1 знак
+                _sign_number = 3
+                
+                in_count = round(in_count, _sign_number)
+                out_count = round(out_count, _sign_number)
+            else:
+                # 1 знак
+                # print('here 2')
+                _sign_number = 1
+
+                in_count = round(in_count, _sign_number)
+                out_count = round(out_count, _sign_number)
+        elif type_valute_from == 'Криптовалюта' and type_valute_to == 'Криптовалюта':
+            # 5 знаков
+            _sign_number = 5
+
+            in_count = round(in_count, _sign_number)
+            out_count = round(out_count, _sign_number)
+        else:
+            _sign_number = DEFAUT_ROUND
+
+            in_count = round(in_count, _sign_number)
+            out_count = round(out_count, _sign_number)
+        
+        return (
+            in_count,
+            out_count,
+        )
+
+    except Exception as ex:
+        print(ex)
+        pass
+

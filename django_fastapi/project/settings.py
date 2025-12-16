@@ -46,7 +46,7 @@ STATIC_URL = "/static/"
 
 # DEV
 # DEBUG = True
-STATIC_URL = "/django/static/"
+# STATIC_URL = "/django/static/"
 
 
 #################################

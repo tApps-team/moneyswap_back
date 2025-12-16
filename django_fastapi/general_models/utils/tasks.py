@@ -3,7 +3,7 @@ from typing import Union
 from decimal import Decimal, ROUND_HALF_UP
 
 from django.core.cache import cache
-from django.db.models import Prefetch, Subquery, OuterRef
+from django.db.models import Prefetch, Subquery, OuterRef, Q
 from django.db import connection
 
 from bs4 import BeautifulSoup
@@ -225,15 +225,29 @@ def new_try_update_courses(direction_model: new_direction_union,
 
     bulk_update_fields = ['actual_course',
                           'previous_course']
-    # if direction_model == cash_models.Direction:
-        # bulk_update_fields.append('previous_course')
 
     # подзапрос для лучшего направления обмена
-    best_exchange_qs = exchange_direction_model.objects.filter(
-        direction_id=OuterRef('pk'),
-        is_active=True,
-        exchange__is_active=True,
-    ).order_by('-out_count', 'in_count')
+    if exchange_direction_model == cash_models.NewExchangeDirection:
+        # print('filter...!')
+        _filter = Q(direction_id=OuterRef('pk'),
+                    country_direction__isnull=False,
+                    is_active=True,
+                    exchange__is_active=True,)
+    else:
+        _filter = Q(direction_id=OuterRef('pk'),
+                    is_active=True,
+                    exchange__is_active=True,)
+
+    # best_exchange_qs = exchange_direction_model.objects.filter(
+    #     direction_id=OuterRef('pk'),
+    #     is_active=True,
+    #     exchange__is_active=True,
+    # ).order_by('-out_count', 'in_count')
+    best_exchange_qs = exchange_direction_model.objects.filter(_filter)\
+                                                        .order_by('-out_count',
+                                                                'in_count')
+
+
 
     # добавляем поля best_in_count / best_out_count прямо в queryset
     directions = direction_model.objects.annotate(
