@@ -229,13 +229,11 @@ def new_try_update_courses(direction_model: new_direction_union,
     # подзапрос для лучшего направления обмена
     if exchange_direction_model == cash_models.NewExchangeDirection:
         # print('filter...!')
-        _filter = Q(direction_id=OuterRef('pk'),
-                    country_direction__isnull=False,
+        _filter = Q(country_direction_id__isnull=True,
                     is_active=True,
                     exchange__is_active=True,)
     else:
-        _filter = Q(direction_id=OuterRef('pk'),
-                    is_active=True,
+        _filter = Q(is_active=True,
                     exchange__is_active=True,)
 
     # best_exchange_qs = exchange_direction_model.objects.filter(
@@ -243,47 +241,80 @@ def new_try_update_courses(direction_model: new_direction_union,
     #     is_active=True,
     #     exchange__is_active=True,
     # ).order_by('-out_count', 'in_count')
-    best_exchange_qs = exchange_direction_model.objects.filter(_filter)\
-                                                        .order_by('-out_count',
-                                                                'in_count')
+    # best_exchange_qs = exchange_direction_model.objects.filter(_filter)\
+    #                                                     .order_by('-out_count',
+    #                                                             'in_count')
+    
+    best_exchanges = (
+        exchange_direction_model.objects
+        .filter(_filter)
+        .order_by(
+            'direction_id',
+            '-out_count',
+            'in_count',
+        )
+        .distinct('direction_id')
+        .values(
+            'direction_id',
+            'in_count',
+            'out_count',
+        )
+    )
 
+    best_map = {
+        row['direction_id']: (row['in_count'], row['out_count'])
+        for row in best_exchanges
+    }
 
 
     # добавляем поля best_in_count / best_out_count прямо в queryset
-    directions = direction_model.objects.annotate(
-        best_in_count=Subquery(best_exchange_qs.values('in_count')[:1]),
-        best_out_count=Subquery(best_exchange_qs.values('out_count')[:1]),
-    )
+    # directions = direction_model.objects.annotate(
+    #     best_in_count=Subquery(best_exchange_qs.values('in_count')[:1]),
+    #     best_out_count=Subquery(best_exchange_qs.values('out_count')[:1]),
+    # )
+
+    directions = direction_model.objects.all()
 
     update_list = []
 
     for direction in directions:
-        in_count = direction.best_in_count
-        out_count = direction.best_out_count
+        best_rate = best_map.get(direction.pk)
+        
+        if best_rate:
+            in_count, out_count = best_rate
+        # in_count = direction.best_in_count
+        # out_count = direction.best_out_count
 
-        actual_course = None
-        if in_count and out_count:
-            if out_count == 1:
-                actual_course = out_count / in_count
+            actual_course = None
+
+            # print('in out',in_count, out_count)
+            
+            if in_count and out_count:
+                if out_count == 1:
+                    actual_course = out_count / in_count
+                else:
+                    actual_course = out_count
+            
+            # print('rate',actual_course)
+
+            # логика previous_course
+            if direction.valute_to_id == 'CASHUSD':
+                direction.previous_course = direction.actual_course
+            # elif direction_model == cash_models.Direction:
             else:
-                actual_course = out_count
+                direction.previous_course = None
 
-        # логика previous_course
-        if direction.valute_to_id == 'CASHUSD':
-            direction.previous_course = direction.actual_course
-        # elif direction_model == cash_models.Direction:
-        else:
-            direction.previous_course = None
+            direction.actual_course = actual_course
+            update_list.append(direction)
 
-        direction.actual_course = actual_course
-        update_list.append(direction)
-
+    print(direction_model, len(update_list))
     # массовое обновление
     direction_model.objects.bulk_update(
         update_list,
         bulk_update_fields,
         batch_size=1000
     )
+    # print('QUERIES',connection.queries[:-5])
 
 
 # def generate_cash_direction_dict(direction_dict: dict,
