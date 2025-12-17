@@ -307,7 +307,7 @@ def new_try_update_courses(direction_model: new_direction_union,
             direction.actual_course = actual_course
             update_list.append(direction)
 
-    print(direction_model, len(update_list))
+    # print(direction_model, len(update_list))
     # массовое обновление
     direction_model.objects.bulk_update(
         update_list,
