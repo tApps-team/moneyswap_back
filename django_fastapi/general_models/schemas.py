@@ -66,9 +66,10 @@ class NewSpecialDirectionMultiModel(BaseModel):
     icon_valute_to: str | None
     in_count: float
     out_count: float
-    min_amount: str | None
-    max_amount: str | None
+    min_amount: float | None
+    max_amount: float | None
     exchange_direction_id: int
+    # 22
     # direction_marker: str
 
 
