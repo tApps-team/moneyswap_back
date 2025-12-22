@@ -17,6 +17,7 @@ import no_cash.models as no_cash_models
 
 # from cash.utils.parsers import new_parse_create_direction_by_city
 
+from .base import check_valid_min_max_amount
 from .exc import NoFoundXmlElement
 from .tasks import make_valid_values_for_dict
 
@@ -59,6 +60,10 @@ def parse_cash_direction_by_city(dict_for_parse: dict,
                     max_amount = element.xpath('./maxAmount/text()')
 
                 try:
+                    if not check_valid_min_max_amount(min_amount,
+                                                      max_amount):
+                        return
+                    
                     d = {
                         'in_count': element.xpath('./in/text()')[0],
                         'out_count': element.xpath('./out/text()')[0],
@@ -121,6 +126,10 @@ def parse_no_cash_direction(dict_for_parse: dict,
                 max_amount = element.xpath('./maxAmount/text()')
 
             try:
+                if not check_valid_min_max_amount(min_amount,
+                                                  max_amount):
+                    return
+                
                 d = {
                     'in_count': element.xpath('./in/text()')[0],
                     'out_count': element.xpath('./out/text()')[0],

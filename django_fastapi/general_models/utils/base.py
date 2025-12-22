@@ -158,3 +158,10 @@ def round_in_out_count_values(direction: cash_models.NewDirection | no_cash_mode
         print(ex)
         pass
 
+
+def check_valid_min_max_amount(min_amount: str | None,
+                               max_amount: str | None):
+    # может вылететь ошибка если один из параметров = None, ловиться в try/except
+    min_amount, max_amount = min_amount[0].split()[0], max_amount[0].split()[0]
+    
+    return float(min_amount) < float(max_amount)
