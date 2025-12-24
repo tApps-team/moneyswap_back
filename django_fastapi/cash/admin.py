@@ -386,6 +386,10 @@ class DirectionAdmin(BaseDirectionAdmin):
 
 @admin.register(NewDirection)
 class NewDirectionAdmin(NewBaseDirectionAdmin):
+    
+    class Media:
+        js = ('cash/js/test_1.js', )
+
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
@@ -440,6 +444,7 @@ class NewDirectionAdmin(NewBaseDirectionAdmin):
         context = dict(
             self.admin_site.each_context(request),
             form=form,
+            title='Создание наличных направлений',
         )
 
         return render(request, "admin/bulk_create_directions.html", context)
