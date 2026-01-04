@@ -3328,9 +3328,9 @@ def add_feedback_form(feedback: FeedbackFormSchema):
         print(ex)
         raise HTTPException(status_code=400)
     else:
-        # async_to_sync(pust_to_send_bot)(user_id=1,
-        #                                 order_id=feedback_form.pk,
-        #                                 marker='feedback_form')
+        async_to_sync(pust_to_send_bot)(user_id=1,
+                                        order_id=feedback_form.pk,
+                                        marker='feedback_form')
         return {'status': 'success',
                 'details': 'feedback added'}
 
