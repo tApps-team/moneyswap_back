@@ -2,13 +2,14 @@ from datetime import datetime, timedelta
 
 from django_celery_beat.models import IntervalSchedule
 
-from django.db.models import CharField, Value, IntegerField
+from django.db.models import CharField, Value, IntegerField, Q
 from django.conf import settings
 from django.utils import timezone
 
 from fastapi import APIRouter
 
-from general_models.models import PartnerTimeUpdate
+from general_models.models import PartnerTimeUpdate, FeedbackForm
+from general_models.schemas import FeedbackFormSchema
 
 import no_cash.models as no_cash_models
 import cash.models as cash_models
@@ -165,3 +166,18 @@ def check_valid_min_max_amount(min_amount: str | None,
     min_amount, max_amount = min_amount[0].split()[0], max_amount[0].split()[0]
     
     return float(min_amount) < float(max_amount)
+
+
+
+def feedback_form_validate(feedback: FeedbackFormSchema):
+    time_check = timezone.now() - timedelta(minutes=1)
+
+    first_check_exists = Q(username=feedback.username) & Q(time_create__gt=time_check)
+
+    second_check_exists = Q(reasons=feedback.reasons) & Q(time_create__gt=time_check)
+
+    third_check_exists = Q(email=feedback.email) & Q(time_create__gt=time_check)
+
+    return not FeedbackForm.objects.filter(first_check_exists |
+                                      second_check_exists |
+                                      third_check_exists).exists()

@@ -43,8 +43,9 @@ from general_models.models import (ExchangeAdmin,
 from general_models.utils.endpoints import (availabale_active_status_list,
                                             get_exchange,
                                             get_review_count_dict)
-from general_models.utils.base import annotate_number_field, annotate_string_field
-
+from general_models.utils.base import (annotate_number_field,
+                                       annotate_string_field,
+                                       feedback_form_validate)
 
 import no_cash.models as no_cash_models
 from no_cash.endpoints import (no_cash_exchange_directions,
@@ -3303,26 +3304,33 @@ def add_feedback_form(feedback: FeedbackFormSchema):
     if feedback.reasons.lower() == 'проблема с обменником':
         feedback.reasons = 'Проблемма с обменником'
 
-    check_datetime = datetime.now() - timedelta(minutes=2)
+    check_datetime = timezone.now() - timedelta(minutes=2)
     
+    #light validation
     if FeedbackForm.objects.filter(reasons=feedback.reasons,
                                    username=feedback.username,
                                    email=feedback.email,
                                    time_create__gt=check_datetime)\
                             .exists():
         raise HTTPException(status_code=423)
-        # return {'status': 'success',
-        #         'details': 'duble feedback has been ignored'}
 
+    # heavy validation (from spam message)
+    if feedback.email.find('@') == -1:
+        raise HTTPException(status_code=400)
+    
+    if not feedback_form_validate(feedback):
+        # print('heavy validation...')
+        raise HTTPException(status_code=423)
+    
     try:
         feedback_form = FeedbackForm.objects.create(**feedback.model_dump())
     except Exception as ex:
         print(ex)
         raise HTTPException(status_code=400)
     else:
-        async_to_sync(pust_to_send_bot)(user_id=1,
-                                        order_id=feedback_form.pk,
-                                        marker='feedback_form')
+        # async_to_sync(pust_to_send_bot)(user_id=1,
+        #                                 order_id=feedback_form.pk,
+        #                                 marker='feedback_form')
         return {'status': 'success',
                 'details': 'feedback added'}
 
