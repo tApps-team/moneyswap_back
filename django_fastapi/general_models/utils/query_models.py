@@ -1,5 +1,7 @@
-from fastapi import Query
+from fastapi import Query, HTTPException
 from fastapi.openapi.models import Example
+
+from pydantic import BaseModel, validator
 
 
 #Описание для Swagger`a
@@ -35,6 +37,22 @@ class SpecificDirectionsQuery:
                                           example='btc'),
                  valute_to: str = Query(description='Кодовое сокращение валюты',
                                         example='cashrub')):
+        if valute_from and not valute_from.isalpha():
+            raise HTTPException(
+                status_code=400,
+                detail='Incorrect value "valute_from"'
+            )
+
+        if valute_to and not valute_to.isalpha():
+            raise HTTPException(
+                status_code=400,
+                detail='Incorrect value "valute_to"'
+        )
+        if city and not city.isalpha():
+            raise HTTPException(
+                status_code=400,
+                detail='Incorrect value "city"'
+        )
         self.city = None if not city else city.upper()
         self.valute_from = valute_from.upper()
         self.valute_to = valute_to.upper()
