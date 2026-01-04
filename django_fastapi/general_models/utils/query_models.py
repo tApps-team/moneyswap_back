@@ -37,17 +37,17 @@ class SpecificDirectionsQuery:
                                           example='btc'),
                  valute_to: str = Query(description='Кодовое сокращение валюты',
                                         example='cashrub')):
-        if valute_from and not valute_from.isalpha():
-            raise HTTPException(
-                status_code=400,
-                detail='Incorrect value "valute_from"'
-            )
+        # if valute_from and not valute_from.isalpha():
+        #     raise HTTPException(
+        #         status_code=400,
+        #         detail='Incorrect value "valute_from"'
+        #     )
 
-        if valute_to and not valute_to.isalpha():
-            raise HTTPException(
-                status_code=400,
-                detail='Incorrect value "valute_to"'
-        )
+        # if valute_to and not valute_to.isalpha():
+        #     raise HTTPException(
+        #         status_code=400,
+        #         detail='Incorrect value "valute_to"'
+        # )
         if city and not city.isalpha():
             raise HTTPException(
                 status_code=400,
