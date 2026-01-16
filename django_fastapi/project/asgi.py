@@ -32,9 +32,18 @@ from general_models.api.v2 import api_router as api_v2_router
 def get_application() -> FastAPI:
     app = FastAPI(title='MoneySwap API', debug=settings.DEBUG)
 
+    CLIENT_ORIGINS = [
+    "https://app.moneyswap.online",
+    "https://www.moneyswap.online",
+    "https://moneyswap.online",
+    "https://partner.moneyswap.online",
+
+    ]
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        # allow_origins=["*"],
+        allow_origins=CLIENT_ORIGINS,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
