@@ -37,7 +37,9 @@ def get_application() -> FastAPI:
     "https://www.moneyswap.online",
     "https://moneyswap.online",
     "https://partner.moneyswap.online",
-
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://localhost:4173',
     ]
 
     app.add_middleware(
