@@ -2220,7 +2220,7 @@ class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
-@admin.register(NewExchangeLinkCount)
+# @admin.register(NewExchangeLinkCount)
 class NewExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request)\
@@ -2242,7 +2242,7 @@ class CountryExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
-@admin.register(NewCountryExchangeLinkCount)
+# @admin.register(NewCountryExchangeLinkCount)
 class NewCountryExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request)\
@@ -2264,7 +2264,7 @@ class NonCashExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
-@admin.register(NewNonCashExchangeLinkCount)
+# @admin.register(NewNonCashExchangeLinkCount)
 class NewNonCashExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     def get_queryset(self, request):
         return super().get_queryset(request)\

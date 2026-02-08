@@ -379,6 +379,6 @@ class ExchangeListCountAdmin(BaseExchangeLinkCountAdmin):
     pass
 
 
-@admin.register(NewExchangeLinkCount)
+# @admin.register(NewExchangeLinkCount)
 class NewExchangeListCountAdmin(NewBaseExchangeLinkCountAdmin):
     pass

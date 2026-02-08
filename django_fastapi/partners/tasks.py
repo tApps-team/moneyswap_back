@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from celery import shared_task
 
 from django.db.models import Q, Prefetch
-from django.db import transaction
+from django.db import transaction, connection
 
 from django.utils import timezone
 
@@ -99,7 +99,9 @@ def check_update_time_for_directions():
                         # .update(is_active=False)
         country_direction_pks = list(country_directions.values_list('pk', flat=True))
         country_directions.update(is_active=False)
-        update_related_directions_by_country_directions.delay(country_direction_pks)
+        
+        if country_direction_pks:
+            update_related_directions_by_country_directions.delay(country_direction_pks)
         
         partner_models.NewNonCashDirection.objects\
                         .filter(time_update__lt=check_time)\
@@ -461,23 +463,59 @@ def exchange_admin_notifications():
             sleep(0.3)
 
 
+# @shared_task(queue='io_queue')
+# def update_related_directions_by_country_directions(country_direction_pks: list[int]):
+#     country_directions = partner_models.NewCountryDirection.objects.filter(pk__in=country_direction_pks)
+
+#     # print(len(country_directions))
+
+#     for country_direction in country_directions:
+#         update_data = {
+#             'in_count': country_direction.in_count,
+#             'out_count': country_direction.out_count,
+#             'is_active': country_direction.is_active,
+#             'time_action': country_direction.time_update,
+#         }
+
+#         cash_models.NewExchangeDirection.objects.filter(country_direction_id=country_direction.pk)\
+#                                                 .update(**update_data)
+
+from django.db.models import OuterRef, Subquery
+
 @shared_task(queue='io_queue')
 def update_related_directions_by_country_directions(country_direction_pks: list[int]):
-    country_directions = partner_models.NewCountryDirection.objects.filter(pk__in=country_direction_pks)
 
-    # print(len(country_directions))
+    # print(len(connection.queries))
 
-    for country_direction in country_directions:
-        update_data = {
-            'in_count': country_direction.in_count,
-            'out_count': country_direction.out_count,
-            'is_active': country_direction.is_active,
-            'time_action': country_direction.time_update,
-        }
+    country_direction_subquery = partner_models.NewCountryDirection.objects.filter(
+        pk=OuterRef('country_direction_id')
+    ).order_by()
 
-        cash_models.NewExchangeDirection.objects.filter(country_direction_id=country_direction.pk)\
-                                                .update(**update_data)
-        
+    cash_models.NewExchangeDirection.objects.filter(
+        country_direction_id__in=country_direction_pks
+    ).update(
+        in_count=Subquery(country_direction_subquery.values('in_count')[:1]),
+        out_count=Subquery(country_direction_subquery.values('out_count')[:1]),
+        is_active=Subquery(country_direction_subquery.values('is_active')[:1]),
+        time_action=Subquery(country_direction_subquery.values('time_update')[:1]),
+    )
+    # country_directions = partner_models.NewCountryDirection.objects.filter(pk__in=country_direction_pks)
+
+    # print(len(connection.queries))
+
+    # print(connection.queries[-1:])
+
+    # for country_direction in country_directions:
+    #     update_data = {
+    #         'in_count': country_direction.in_count,
+    #         'out_count': country_direction.out_count,
+    #         'is_active': country_direction.is_active,
+    #         'time_action': country_direction.time_update,
+    #     }
+
+    #     cash_models.NewExchangeDirection.objects.filter(country_direction_id=country_direction.pk)\
+    #                                             .update(**update_data)
+
 
 @shared_task(queue='io_queue')
 def create_remove_directions_for_excluded_cities_by_country_directions(country_id: int,

@@ -308,6 +308,8 @@ def new_try_update_courses(direction_model: new_direction_union,
             update_list.append(direction)
 
     # print(direction_model, len(update_list))
+
+    # sentry видит несколько update`ов как N+1, не обращаю внимания #
     # массовое обновление
     direction_model.objects.bulk_update(
         update_list,
