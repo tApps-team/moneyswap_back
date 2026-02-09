@@ -1054,7 +1054,7 @@ def new_get_exchange_directions_count_dict(exchange_list: list[Exchanger],
             exchange_direction_count_dict[exchange_id] += _count
         else:
             if _count := cash_exchange_directions.get(exchange_id):
-                exchange_direction_count_dict[exchange_id] += partner_country_exchange_directions.get(exchange_id, 0)        
+                exchange_direction_count_dict[exchange_id] += _count
 
     if not _pk:
         return exchange_direction_count_dict
