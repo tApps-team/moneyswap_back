@@ -315,15 +315,22 @@ async def _get_xml_file_for_exchangers():
     
     exchanger_dict = {e.pk: e for e in exchangers}
 
+    update_list = []
+    
     for ex_id, _is_active, _active_status in results:
         obj = exchanger_dict.get(ex_id)
+        
+        if obj.active_status in {'disabled', 'scam', 'skip'}:
+            continue
+        
         obj.is_active = _is_active
         obj.active_status = _active_status
+        update_list.append(obj)
 
     await sync_to_async(
         Exchanger.objects.bulk_update,
         thread_sensitive=True
-    )(exchangers, ["is_active", "active_status"])
+    )(update_list, ["is_active", "active_status"])
 
 
 path_to_xml = './xml_files/{}.xml'
