@@ -4,6 +4,9 @@ import ssl
 import asyncio
 
 import aiohttp
+import httpx
+
+from httpx import AsyncClient
 
 from asgiref.sync import async_to_sync, sync_to_async
 
@@ -242,7 +245,7 @@ async def request_to_xml_file(xml_url: str,
 
 
 async def new_request_to_xml_file(xml_url: str,
-                              session,
+                              session: AsyncClient,
                               timeout: int = None):
     DEFAULT_TIMEOUT = 10 # временно для теста на сервере
     headers = {
@@ -252,41 +255,44 @@ async def new_request_to_xml_file(xml_url: str,
         'Accept': 'application/xml, text/xml;q=0.9, */*;q=0.8',
     }
 
-    ssl_context = ssl.create_default_context()
+    # ssl_context = ssl.create_default_context()
 
     _timeout = timeout if timeout and timeout > 0 else DEFAULT_TIMEOUT
 
-    timeout = aiohttp.ClientTimeout(connect=_timeout,
-                                    sock_connect=_timeout,
-                                    sock_read=_timeout)
+    # timeout = aiohttp.ClientTimeout(connect=_timeout,
+    #                                 sock_connect=_timeout,
+    #                                 sock_read=_timeout)
 
     try:
-        async with session.get(xml_url,
-                            headers=headers,
-                            ssl=ssl_context,
-                            timeout=timeout) as response:
+        # async with session.get(xml_url,
+        #                     headers=headers,
+        #                     ssl=ssl_context,
+        #                     timeout=timeout) as response:
+        response = await session.get(xml_url,
+                                     headers=headers,
+                                     timeout=_timeout)
             # content_type = response.headers['Content-Type']
-            content_type = response.headers.get('Content-Type', '').lower()
+        content_type = response.headers.get('Content-Type', '').lower()
 
             # if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
-            if 'xml' not in content_type:
+        if 'xml' not in content_type:
 
-                if xml_url == 'https://loderunner.exchange/request-exportxml.xml?hcron=lk2882HdHrtvM':
-                    print('test22', content_type, await response.text(), sep='***')
+            if xml_url == 'https://loderunner.exchange/request-exportxml.xml?hcron=lk2882HdHrtvM':
+                print('test22', content_type, response.text, sep='***')
 
-                raise RobotCheckError(f'{xml_url} требует проверку на робота')
-            else:
-                xml_file = await response.text()
-                root = ET.fromstring(xml_file)
-                is_active = True
-                
-                if root.text == 'Техническое обслуживание':
-                    raise TechServiceWork(f'{xml_url} на тех обслуживании')
-                    # is_active = False
-                return (is_active, xml_file)
+            raise RobotCheckError(f'{xml_url} требует проверку на робота')
+        else:
+            xml_file = response.text
+            root = ET.fromstring(xml_file)
+            is_active = True
+            
+            if root.text == 'Техническое обслуживание':
+                raise TechServiceWork(f'{xml_url} на тех обслуживании')
+                # is_active = False
+            return (is_active, xml_file)
             
     except asyncio.TimeoutError as ex:
-        raise TimeoutError(f'{xml_url} не вернул ответ за {_timeout} секунд')
+        raise TimeoutError(f'{xml_url} не вернул ответ за 10 секунд')
 
 
 def request_to_bot_swift_sepa(data: dict):

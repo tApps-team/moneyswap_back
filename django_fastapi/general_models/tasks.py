@@ -2,6 +2,7 @@ import asyncio
 
 import aiohttp
 import aiofiles
+import httpx
 
 from time import time
 from collections import defaultdict
@@ -306,11 +307,17 @@ async def _get_xml_file_for_exchangers():
         thread_sensitive=True
     )()
 
-    conn = aiohttp.TCPConnector(limit=50)
+    # conn = aiohttp.TCPConnector(limit=50)
 
-    async with aiohttp.ClientSession(connector=conn) as session:
-        tasks = [fetch_one(session, e, SEM) for e in exchangers]
+    # async with aiohttp.ClientSession(connector=conn) as session:
+    #     tasks = [fetch_one(session, e, SEM) for e in exchangers]
         
+    #     results = await asyncio.gather(*tasks)
+    limits = httpx.Limits(max_connections=50, max_keepalive_connections=50)
+
+    async with httpx.AsyncClient(http2=True,
+                                 limits=limits) as session:
+        tasks = [fetch_one(session, e, SEM) for e in exchangers]
         results = await asyncio.gather(*tasks)
     
     exchanger_dict = {e.pk: e for e in exchangers}
