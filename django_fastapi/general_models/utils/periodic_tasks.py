@@ -265,12 +265,14 @@ async def new_request_to_xml_file(xml_url: str,
                             headers=headers,
                             ssl=ssl_context,
                             timeout=timeout) as response:
-            content_type = response.headers['Content-Type']
+            # content_type = response.headers['Content-Type']
+            content_type = response.headers.get('Content-Type', '').lower()
 
-            if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
+            # if not re.match(r'^[a-zA-Z]+\/xml?', content_type):
+            if 'xml' not in content_type:
 
-                # if xml_url == 'https://obmenko.org/export.xml':
-                #     print('test22', content_type, await response.text(), sep='***')
+                if xml_url == 'https://loderunner.exchange/request-exportxml.xml?hcron=lk2882HdHrtvM':
+                    print('test22', content_type, await response.text(), sep='***')
 
                 raise RobotCheckError(f'{xml_url} требует проверку на робота')
             else:

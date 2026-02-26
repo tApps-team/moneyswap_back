@@ -387,22 +387,22 @@ def parse_xml_for_exchanger(exchange_id: int):
 
         path = path_to_xml.format(exchange_id)
 
-        start_read_xml_time = time()
+        # start_read_xml_time = time()
         with open(path, encoding='utf-8') as f:
             xml_file = f.read()
 
-        print(f'время чтения xml с диска - {time() - start_read_xml_time} sec')
+        # print(f'время чтения xml с диска - {time() - start_read_xml_time} sec')
         
-        start_cache_time = time()
+        # start_cache_time = time()
 
         all_cash_directions = new_get_or_set_cash_directions_cache()
 
         all_no_cash_directions = new_get_or_set_no_cash_directions_cache()
 
-        print(f'время получения направлений из кэша - {time() - start_cache_time} sec')
+        # print(f'время получения направлений из кэша - {time() - start_cache_time} sec')
 
         if all_cash_directions or all_no_cash_directions:
-            start_generate_time = time()
+            # start_generate_time = time()
             direction_dict = defaultdict(dict)
 
             if all_cash_directions:
@@ -412,7 +412,7 @@ def parse_xml_for_exchanger(exchange_id: int):
                 generate_no_cash_direction_dict(direction_dict,
                                                 all_no_cash_directions)
 
-            print(f'время генерации словаря направлений - {time() - start_generate_time} sec')
+            # print(f'время генерации словаря направлений - {time() - start_generate_time} sec')
             if direction_dict:
                 parse_xml_and_create_or_update_directions(exchange,
                                                             xml_file,

@@ -1381,7 +1381,7 @@ def increase_link_count(data: IncreaseExchangeLinkCountSchema):
         return {'status': 'success',
                 'detail': 'exchange link count has benn added successfully'}
     
-@test_router.get('/test_increase')
+# @test_router.get('/test_increase')
 def test_increase(secret: str):
     # ex_counts = ExchangeLinkCount.objects.all()
 
