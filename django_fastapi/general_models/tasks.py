@@ -323,11 +323,19 @@ async def _get_xml_file_for_exchangers():
     exchanger_dict = {e.pk: e for e in exchangers}
 
     update_list = []
+
+    exchanger_ids_for_skip = await sync_to_async(
+        lambda: list(
+            Exchanger.objects.filter(active_status__in=('disabled', 'scam', 'skip'))\
+            .values_list('pk', flat=True)
+        ),
+        thread_sensitive=True
+    )()
     
     for ex_id, _is_active, _active_status in results:
         obj = exchanger_dict.get(ex_id)
         
-        if obj.active_status in {'disabled', 'scam', 'skip'}:
+        if obj.pk in set(exchanger_ids_for_skip):
             continue
         
         obj.is_active = _is_active
