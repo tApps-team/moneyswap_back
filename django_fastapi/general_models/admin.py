@@ -11,6 +11,7 @@ from django.http.request import HttpRequest
 from django.contrib.admin import AdminSite
 from django.contrib.admin.models import LogEntry
 from django.utils import timezone
+from django.db import transaction
 
 from django_celery_beat.models import (SolarSchedule,
                                        PeriodicTask,
@@ -30,6 +31,7 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.admin import NewUTMSourceFilter, ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
+from .utils.redis import publish_review_notification
 from .models import (AdminComment,
                      ExchangeAdmin,
                      ExchangeAdminOrder,
@@ -1241,10 +1243,17 @@ class ReviewAdmin(admin.ModelAdmin):
                 exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=obj.exchange_id)\
                                                         .first()
                 if exchange_admin:
-                    print('run task...')
-                    send_review_notification_to_exchange_admin_task.delay(exchange_admin.user_id,
-                                                                          obj.exchange_id,
-                                                                          obj.pk)
+                    print('publish new ivent to redis channel...')
+                    # send_review_notification_to_exchange_admin_task.delay(exchange_admin.user_id,
+                    #                                                       obj.exchange_id,
+                    #                                                       obj.pk)
+                    transaction.on_commit(
+                        lambda: publish_review_notification(
+                            exchange_admin.user_id,
+                            obj.exchange_id,
+                            obj.pk
+                        )
+                    )
         else:
             return super().save_model(request, obj, form, change)
     

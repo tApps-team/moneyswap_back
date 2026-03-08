@@ -36,6 +36,7 @@ services:
       - POSTGRES_HOST=psql_db
       - SELENIUM_DRIVER=firefox
       - REDIS_HOST=redis_db
+      - SUB_REDIS_HOST=redis_tg_bot_db
       - PGBOUNCER_HOST=pgbouncer
     env_file:
       - ./.env
