@@ -243,7 +243,7 @@ def new_send_notification_after_add_admin_comment(sender, instance, created, **k
             transaction.on_commit(
                 lambda: publish_comment_notification_to_exchange_admin(
                     exchange_admin.user_id,
-                    instance.exchange_id,
+                    exchange_admin.exchange_id,
                     instance.review_id,
                 )
             )
@@ -255,7 +255,7 @@ def new_send_notification_after_add_admin_comment(sender, instance, created, **k
         transaction.on_commit(
             lambda: publish_comment_notification_to_review_owner(
                 instance.review.guest_id,
-                instance.exchange_id,
+                instance.review.exchange_id,
                 instance.review_id,
             )
         )
