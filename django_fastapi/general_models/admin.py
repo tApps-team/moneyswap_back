@@ -1372,7 +1372,7 @@ class CommentAdmin(admin.ModelAdmin):
             obj.save(update_fields=list(update_fields))
             
             if task_marker:
-                exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=obj.exchange_id)\
+                exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=obj.review.exchange_id)\
                                                         .first()
                 # if exchange_admin:
                 if exchange_admin and obj.guest_id != exchange_admin.user_id:
@@ -1384,8 +1384,8 @@ class CommentAdmin(admin.ModelAdmin):
                     transaction.on_commit(
                         lambda: publish_comment_notification_to_exchange_admin(
                             exchange_admin.user_id,
-                            obj.exchange_id,
-                            obj.pk,
+                            exchange_admin.exchange_id,
+                            obj.review_id,
                         )
                     )
                 if obj.guest_id != obj.review.guest_id:
@@ -1395,7 +1395,7 @@ class CommentAdmin(admin.ModelAdmin):
                     transaction.on_commit(
                         lambda: publish_comment_notification_to_review_owner(
                             obj.review.guest_id,
-                            obj.exchange_id,
+                            obj.review.exchange_id,
                             obj.review_id,
                         )
                     )
