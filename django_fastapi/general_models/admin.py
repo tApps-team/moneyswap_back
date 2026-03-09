@@ -31,7 +31,10 @@ from partners.utils.periodic_tasks import edit_time_for_task_check_directions_on
 from .periodic_tasks import manage_periodic_task_for_parse_directions
 from .utils.admin import NewUTMSourceFilter, ReviewAdminMixin, DateTimeRangeFilter, UTMSourceFilter
 from .utils.endpoints import try_generate_icon_url
-from .utils.redis import publish_review_notification
+from .utils.redis import (EventNotificatonEnum,
+                          publish_review_notification_to_exchange_admin,
+                          publish_comment_notification_to_exchange_admin,
+                          publish_comment_notification_to_review_owner)
 from .models import (AdminComment,
                      ExchangeAdmin,
                      ExchangeAdminOrder,
@@ -1243,12 +1246,12 @@ class ReviewAdmin(admin.ModelAdmin):
                 exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=obj.exchange_id)\
                                                         .first()
                 if exchange_admin:
-                    print('publish new ivent to redis channel...')
+                    print('publish new review event to redis channel...')
                     # send_review_notification_to_exchange_admin_task.delay(exchange_admin.user_id,
                     #                                                       obj.exchange_id,
                     #                                                       obj.pk)
                     transaction.on_commit(
-                        lambda: publish_review_notification(
+                        lambda: publish_review_notification_to_exchange_admin(
                             exchange_admin.user_id,
                             obj.exchange_id,
                             obj.pk
@@ -1339,9 +1342,67 @@ class CommentAdmin(admin.ModelAdmin):
                                                             'review__exchange',
                                                             'guest')
     
+    # def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
+        # obj.moderation = obj.status == 'Опубликован'
+        # return super().save_model(request, obj, form, change)
     def save_model(self, request: Any, obj: Any, form: Any, change: Any) -> None:
         obj.moderation = obj.status == 'Опубликован'
-        return super().save_model(request, obj, form, change)
+
+        update_fields = set(['moderation'])
+
+        if change:
+            task_marker = False
+
+            for key, value in form.cleaned_data.items():
+                if key == 'id':
+                    continue
+                if value != form.initial[key]:
+                    match key:
+                        case 'status':
+                            setattr(obj, key, value)
+                            task_marker = value == 'Опубликован'
+                            update_fields.add(key)
+
+                        case _:
+                            setattr(obj, key, value)
+                            update_fields.add(key)
+                                
+                    update_fields.add(key)
+
+            obj.save(update_fields=list(update_fields))
+            
+            if task_marker:
+                exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=obj.exchange_id)\
+                                                        .first()
+                # if exchange_admin:
+                if exchange_admin and obj.guest_id != exchange_admin.user_id:
+                    # user_id = exchange_admin.user_id
+                    print('publish new comment event to redis channel...')
+                    # send_review_notification_to_exchange_admin_task.delay(exchange_admin.user_id,
+                    #                                                       obj.exchange_id,
+                    #                                                       obj.pk)
+                    transaction.on_commit(
+                        lambda: publish_comment_notification_to_exchange_admin(
+                            exchange_admin.user_id,
+                            obj.exchange_id,
+                            obj.pk,
+                        )
+                    )
+                if obj.guest_id != obj.review.guest_id:
+                    # send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
+                    #                                                     exchange_id,
+                    #                                                     instance.review_id)
+                    transaction.on_commit(
+                        lambda: publish_comment_notification_to_review_owner(
+                            obj.review.guest_id,
+                            obj.exchange_id,
+                            obj.review_id,
+                        )
+                    )
+
+        else:
+            return super().save_model(request, obj, form, change)
+
     
 
 class LinkedUrlStacked(admin.StackedInline):

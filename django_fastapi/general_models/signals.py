@@ -7,6 +7,7 @@ from django.contrib.admin.models import LogEntry
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 from django.utils import timezone
+from django.db import transaction
 
 from django_celery_beat.models import PeriodicTask
 
@@ -36,6 +37,8 @@ from .utils.endpoints import (send_comment_notifitation_to_exchange_admin,
                               new_send_comment_notifitation_to_exchange_admin,
                               new_send_comment_notifitation_to_review_owner,
                               new_send_review_notifitation_to_exchange_admin)
+from .utils.redis import (publish_comment_notification_to_exchange_admin,
+                          publish_comment_notification_to_review_owner)
 
 
 #Сигнал для автоматической установки английского названия
@@ -199,28 +202,28 @@ def send_notification_after_add_comment(sender, instance, created, **kwargs):
                                                                  instance.review_id)
 
 
-@receiver(post_save, sender=Comment)
-def new_send_notification_after_add_comment(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Comment)
+# def new_send_notification_after_add_comment(sender, instance, created, **kwargs):
     
-    if not created and instance.moderation == True:
-        exchange_id = instance.review.exchange_id
-        exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=exchange_id)\
-                                                .first()
+#     if not created and instance.moderation == True:
+#         exchange_id = instance.review.exchange_id
+#         exchange_admin = NewExchangeAdmin.objects.filter(exchange_id=exchange_id)\
+#                                                 .first()
         
-        if exchange_admin and instance.guest_id != exchange_admin.user_id:
-            user_id = exchange_admin.user_id
+#         if exchange_admin and instance.guest_id != exchange_admin.user_id:
+#             user_id = exchange_admin.user_id
 
-            # send notification to admin user in chat with bot
-            send_comment_notification_to_exchange_admin_task.delay(user_id,
-                                                                   exchange_id,
-                                                                   instance.review_id)
+#             # send notification to admin user in chat with bot
+#             send_comment_notification_to_exchange_admin_task.delay(user_id,
+#                                                                    exchange_id,
+#                                                                    instance.review_id)
 
             
-        # send notification to review owner in chat with bot
-        if instance.guest_id != instance.review.guest_id:
-            send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
-                                                                 exchange_id,
-                                                                 instance.review_id)
+#         # send notification to review owner in chat with bot
+#         if instance.guest_id != instance.review.guest_id:
+#             send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
+#                                                                  exchange_id,
+#                                                                  instance.review_id)
             
 
 @receiver(post_save, sender=AdminComment)
@@ -232,17 +235,30 @@ def new_send_notification_after_add_admin_comment(sender, instance, created, **k
                                                 .first()
         
         if exchange_admin:
-            user_id = exchange_admin.user_id
+            # user_id = exchange_admin.user_id
             # send notification to admin user in chat with bot
-            send_comment_notification_to_exchange_admin_task.delay(user_id,
-                                                                   exchange_id,
-                                                                   instance.review_id)
-
+            # send_comment_notification_to_exchange_admin_task.delay(user_id,
+            #                                                        exchange_id,
+            #                                                        instance.review_id)
+            transaction.on_commit(
+                lambda: publish_comment_notification_to_exchange_admin(
+                    exchange_admin.user_id,
+                    instance.exchange_id,
+                    instance.review_id,
+                )
+            )
             
         # send notification to review owner in chat with bot
-        send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
-                                                             exchange_id,
-                                                             instance.review_id)
+        # send_comment_notification_to_review_owner_task.delay(instance.review.guest_id,
+        #                                                      exchange_id,
+        #                                                      instance.review_id)
+        transaction.on_commit(
+            lambda: publish_comment_notification_to_review_owner(
+                instance.review.guest_id,
+                instance.exchange_id,
+                instance.review_id,
+            )
+        )
 
 
 @receiver(pre_save, sender=Exchanger)

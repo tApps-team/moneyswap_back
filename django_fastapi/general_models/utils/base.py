@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+from enum import Enum
+
 from django_celery_beat.models import IntervalSchedule
 
 from django.db.models import CharField, Value, IntegerField, Q
@@ -27,6 +29,14 @@ UNIT_TIME_CHOICES = {
     'HOUR': IntervalSchedule.HOURS,
     'DAY': IntervalSchedule.DAYS,
     }
+
+
+class EventNotificatonEnum(str, Enum):
+    # REVIEW_OWNER = 'review_owner'
+    REVIEW_EXCHANGE_ADMIN = 'review_exchange_admin'
+    COMMENT_OWNER = 'comment_owner'
+    COMMENT_EXCHANGE_ADMIN = 'comment_exchange_admin'
+    # ADMIN_COMMENT = 'admin_comment'
 
 
 def get_actual_datetime():
