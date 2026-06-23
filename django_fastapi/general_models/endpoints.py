@@ -1508,6 +1508,8 @@ def get_specific_valute(code_name: str):
                    response_model_by_alias=False)
 def new_get_specific_valute(code_name: str):
     code_name = code_name.upper()
+    if len(code_name) > 10:
+        raise HTTPException(status_code=400)
     try:
         valute = NewValute.objects.get(code_name=code_name)
     except ObjectDoesNotExist:
