@@ -42,7 +42,9 @@ def get_application() -> FastAPI:
     'http://localhost:5173',
     'http://localhost:4173',
     'https://moneyswap-webapp.vercel.app/',
-    'http://moneyswap-webapp.vercel.app/'
+    'http://moneyswap-webapp.vercel.app/',
+    'https://moneyswap-webapp.vercel.app',
+    'http://moneyswap-webapp.vercel.app',
     ]
 
     app.add_middleware(
