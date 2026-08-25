@@ -3498,6 +3498,7 @@ def get_top_exchanges():
     top_exchangers = (
         Exchanger.objects
         .annotate(link_counts=Count('exchange_counts'))\
+        .filter(is_active=True)\
         .order_by(F('link_counts').desc(nulls_last=True),
                   'name')\
         .values('pk',
