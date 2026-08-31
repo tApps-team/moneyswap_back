@@ -45,6 +45,8 @@ def get_application() -> FastAPI:
     'http://moneyswap-webapp.vercel.app/',
     'https://moneyswap-webapp.vercel.app',
     'http://moneyswap-webapp.vercel.app',
+    'https://moneyswap-webapp-git-dev-t-apps.vercel.app',
+    'http://moneyswap-webapp-git-dev-t-apps.vercel.app',
     ]
 
     app.add_middleware(
