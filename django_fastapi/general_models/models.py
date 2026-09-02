@@ -93,7 +93,10 @@ class NewValute(models.Model):
                                    max_length=30,
                                    choices=type_valute_list)
     icon_url = models.FileField('Иконка валюты',
-                                upload_to='icons/valute/')
+                                upload_to='icons/valute/',
+                                blank=True,
+                                null=True,
+                                default='icons/exchange/empty_icon.svg')
     available_for_partners = models.BooleanField('Доступно для партнёров',
                                                  default=False)
     is_popular = models.BooleanField('Популярная',
