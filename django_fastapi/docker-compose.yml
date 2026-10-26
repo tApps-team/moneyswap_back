@@ -28,8 +28,8 @@ services:
     pull_policy: build
     restart: always
     cpus: '2.0'
-    ports:
-     - '8000:8000'
+    # ports:
+    #  - '8000:8000'
     networks:
       - common-network
     environment:
