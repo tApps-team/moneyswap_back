@@ -3495,7 +3495,7 @@ def get_top_exchanges():
 
     review_count_dict = get_review_count_dict()
 
-    print('22')
+    # print('22')
 
     # top_exchangers = (
     #     Exchanger.objects
@@ -3513,7 +3513,8 @@ def get_top_exchanges():
         .filter(top_position__isnull=False,
                 is_active=True)  # или active_status='active'
         .annotate(link_counts=Count('exchange_counts'))
-        .order_by('top_position__position')
+        .order_by('-is_vip',
+                  'top_position__position')
         .values('pk', 'name', 'icon_url', 'link_counts')
         [:limit]
     )
