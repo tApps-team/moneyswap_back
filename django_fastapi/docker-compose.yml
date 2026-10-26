@@ -28,8 +28,8 @@ services:
     pull_policy: build
     restart: always
     cpus: '2.0'
-    # ports:
-    #  - '8000:8000'
+    ports:
+     - '8000:8000'
     networks:
       - common-network
     environment:
@@ -286,6 +286,11 @@ services:
       # - ./pgbouncer_hba.conf:/etc/pgbouncer/pgbouncer_hba.conf
       - ./userlist.txt:/etc/pgbouncer/userlist.txt
       - pgbouncer_data:/var/run/pgbouncer
+    logging:
+      driver: "json-file"
+      options:
+          max-size: "20m"
+
 
 volumes:
   selenium-data:

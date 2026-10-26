@@ -19,6 +19,8 @@ from django_celery_beat.models import (SolarSchedule,
                                        ClockedSchedule,
                                        CrontabSchedule)
 
+from adminsortable2.admin import SortableAdminMixin
+
 from rangefilter.filters import (
     DateRangeFilterBuilder,
     DateTimeRangeFilterBuilder,
@@ -39,7 +41,7 @@ from .models import (AdminComment,
                      ExchangeAdmin,
                      ExchangeAdminOrder,
                      NewBaseAdminComment,
-                     NewBaseComment,
+                     NewBaseComment, TopExchange,
                      Valute,
                      PartnerTimeUpdate,
                      Guest,
@@ -1607,3 +1609,22 @@ class ExchangeLinkCountAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         return False
+
+
+# TOP_LIMIT = 10
+
+@admin.register(TopExchange)
+class TopExchangeAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = ('exchange', 'position')
+    list_editable = ('position',)        # меняем порядок прямо в списке
+    autocomplete_fields = ('exchange',)  # поиск по обменникам вместо огромного select
+    ordering = ('position',)
+
+    # def has_add_permission(self, request):
+    #     # не даём добавить больше 10 позиций
+    #     return TopExchange.objects.count() < TOP_LIMIT
+
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     if db_field.name == 'exchange':
+    #         kwargs['queryset'] = Exchanger.objects.filter(active_status='active')
+    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)

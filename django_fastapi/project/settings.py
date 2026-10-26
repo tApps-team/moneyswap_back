@@ -113,6 +113,7 @@ INSTALLED_APPS = [
     'django_admin_action_forms',
     'rangefilter',
     'django_select2',
+    'adminsortable2',
 
     "general_models",
     "no_cash",

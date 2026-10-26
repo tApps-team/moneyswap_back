@@ -224,6 +224,25 @@ class Exchanger(models.Model):
         return self.name
 
 
+class TopExchange(models.Model):
+    exchange = models.OneToOneField(Exchanger,
+                                    on_delete=models.CASCADE,
+                                    related_name='top_position',
+                                    verbose_name='Обменник',
+                                    limit_choices_to={'is_active': True})
+    position = models.PositiveIntegerField('Позиция в выдаче',
+                                           default=0,
+                                           db_index=True)
+
+    class Meta:
+        verbose_name = 'Топ обменник'
+        verbose_name_plural = 'Топ обменников'
+        ordering = ['position']
+
+    def __str__(self):
+        return f'{self.position}. {self.exchange}'
+
+
 # Модель связанных (похожих) ссылок на обменник
 class LinkedUrl(models.Model):
     exchange = models.ForeignKey(Exchanger,

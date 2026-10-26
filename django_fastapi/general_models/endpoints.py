@@ -3495,17 +3495,28 @@ def get_top_exchanges():
 
     review_count_dict = get_review_count_dict()
 
-    top_exchangers = (
+    print('22')
+
+    # top_exchangers = (
+    #     Exchanger.objects
+    #     .annotate(link_counts=Count('exchange_counts'))\
+    #     .filter(is_active=True)\
+    #     .order_by(F('link_counts').desc(nulls_last=True),
+    #               'name')\
+    #     .values('pk',
+    #             'name',
+    #             'icon_url',
+    #             'link_counts')
+    # )[:limit]
+    top_exchangers = list(
         Exchanger.objects
-        .annotate(link_counts=Count('exchange_counts'))\
-        .filter(is_active=True)\
-        .order_by(F('link_counts').desc(nulls_last=True),
-                  'name')\
-        .values('pk',
-                'name',
-                'icon_url',
-                'link_counts')
-    )[:limit]
+        .filter(top_position__isnull=False,
+                is_active=True)  # или active_status='active'
+        .annotate(link_counts=Count('exchange_counts'))
+        .order_by('top_position__position')
+        .values('pk', 'name', 'icon_url', 'link_counts')
+        [:limit]
+    )
                                                 
     for top_exchange in top_exchangers:
         top_exchange['total_link_count'] = top_exchange['link_counts'] or 0
