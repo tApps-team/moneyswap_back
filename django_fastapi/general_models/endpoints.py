@@ -3515,7 +3515,7 @@ def get_top_exchanges():
         .annotate(link_counts=Count('exchange_counts'))
         .order_by('-is_vip',
                   'top_position__position')
-        .values('pk', 'name', 'icon_url', 'link_counts')
+        .values('pk', 'name', 'icon_url', 'link_counts', 'is_vip')
         [:limit]
     )
                                                 

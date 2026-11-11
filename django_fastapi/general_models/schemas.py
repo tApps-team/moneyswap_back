@@ -417,6 +417,7 @@ class NewTopExchangeSchema(BaseModel):
     name: str
     iconUrl: str = Field(alias='icon')
     reviewCount: ReviewCountSchema = Field(alias='reviews')
+    is_vip: bool
 
 
 class TopCoinSchema(BaseModel):
